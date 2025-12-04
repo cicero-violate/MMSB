@@ -1,252 +1,223 @@
-Below is the **updated high-level pending work** followed by the **exact next steps** based on the new state of MMSB after:
+Understood — here is the **updated high-level pending work**, rewritten cleanly, deduplicated, and correctly reflecting the fact that **v0.1.0-alpha is shipped** and Phase 1 is fully complete.
 
-* Documentation set completed
-* Examples tested successfully
-* Detailed tracking artifacts updated
-* PENDING_WORK_detailed + high-level updated
-* Task 6.5 officially marked complete
-* Repository now **release-ready**
-
-This is the authoritative, latest roadmap.
+This version is suitable for `PENDING_WORK_high_level.md`.
 
 ---
 
-# **🔥 UPDATED HIGH-LEVEL PENDING WORK (POST-DOCUMENTATION)**
+# **MMSB — High-Level Pending Work (Updated Post-Release)**
 
-**Phase 1 is now *fully complete*.**
-You are officially in **Phase 2: Optimization & Instrumentation**.
-
-## **PHASE 1 — PRODUCTION READINESS (100% COMPLETE)**
-
-These tasks required for a production-ready MMSB are all done:
-
-### **1. Core Engine** – COMPLETE
-
-### **2. GPU Runtime** – COMPLETE
-
-### **3. Graph Engine (Propagation)** – COMPLETE
-
-### **4. Error Handling** – COMPLETE
-
-### **5. Public API** – COMPLETE
-
-### **6. Observability (Stats + Monitoring)** – COMPLETE
-
-### **7. Benchmark Suite (Baseline captured)** – COMPLETE
-
-### **8. Documentation Set (README + 3 docs + 2 examples)** – COMPLETE
-
-**Result:** MMSB is now **release-grade** and can be tagged today.
-
-**Completion:** **71% (15 / 21 tasks)**
+**Release:** v0.1.0-alpha (Complete)
+**Phase 1:** 100% Shipped
+**Phase 2:** Active
+**Phase 3+:** Planned
 
 ---
 
-# **PHASE 2 — PERFORMANCE OPTIMIZATION BACKLOG (NEW PRIMARY FOCUS)**
+# **0. Completed Milestones (Phase 1 – DONE)**
 
-These tasks are **not required for correctness**, but required for hitting the long-term semiring-performance targets.
+### **Core Engine**
 
-## **2.1 Propagation Optimization (Critical)**
+* Page abstraction (CPU/GPU buffers, epoching, metadata)
+* Delta system (mask gen, CPU+GPU merge, sparse/dense flows)
+* TLog (append, serialize, replay, checkpointing)
+* Dependency graph (propagation, recomputation registry)
+* Thread-safe allocator + global lock discipline
 
-**Current:** ~500μs/hop
-**Goal:** <50μs/hop
-**Approach:**
+### **GPU Support**
 
-* Batch propagation updates
-* Reduce lock contention
-* Inline passthrough paths
-* Reduce event chatter
-* Optional: async propagation worker
+* Delta merge kernel
+* Zero/copy kernels
+* PageOps suite
+* DeviceSync + error handling
 
-**Priority:** **CRITICAL**
-**Effort:** 4–6 hours
+### **Observability**
+
+* MMSBStats
+* Monitoring pipeline
+* Event System (typed)
+* Logging hooks
+
+### **Public API**
+
+* `mmsb_start`, `mmsb_stop`
+* `create_page`, `update_page`, `query_page`
+* `@mmsb` macro
+
+### **Validation**
+
+* 30 test cases (all passing)
+* Benchmarks + baseline JSON
+* Verified examples (`quickstart.jl`, `tutorial.jl`)
+
+### **Documentation**
+
+* README
+* Architecture.md
+* API.md
+* SerializationSpec.md
+* Example scripts
+
+### **Release**
+
+* Project.toml updated
+* RELEASE_NOTES.md published
+* Tag `v0.1.0-alpha` pushed
+* Files committed and synced
+* Phase 1 declared complete
 
 ---
 
-## **2.2 Sparse Delta Optimization (High)**
+# **1. Phase 2 — Performance Optimization (Primary Active Work)**
 
-**Current:** ~200μs
-**Goal:** <50μs
-**Approach:**
+## **1.1 Propagation Engine Optimization — CRITICAL**
 
-* SIMD mask comparison
-* Delta object pool
-* In-place delta writes
+**Target:** 10× speedup (500μs → <50μs)
+**Why:** Currently the #1 bottleneck in real workloads.
+**Status:** Not started.
 
-**Priority:** **HIGH**
-**Effort:** 3–4 hours
+**Work Items**
+
+* Replace global lock with queue-driven propagation worker
+* Batch propagation events
+* Inline fast-path for passthrough dependencies
+* Multi-threaded child recomputation
+* Remove function-call indirection in hot path
+* Profiling + tests for timing targets
 
 ---
 
-## **2.3 Allocation Optimization (Medium)**
+## **1.2 SIMD Sparse Delta Optimization — HIGH**
 
-**Current:** ~5μs
-**Goal:** <1μs
-**Approach:**
+**Target:** 4× speedup (200μs → <50μs)
+**Why:** Mask generation and delta construction are the next bottleneck.
 
-* Allocation cache
+**Work Items**
+
+* SIMD mask comparison using AVX2
+* Delta object pooling
+* In-place delta application (no allocation)
+* Benchmarks + regression tests
+
+---
+
+## **1.3 Page Allocation Fast Path — MEDIUM**
+
+**Target:** 5× improvement (5μs → <1μs)
+**Why:** High-volume page activity in some workloads.
+
+**Work Items**
+
+* Page cache for ≤4KB pages
 * Lazy zeroing
-* Pre-reserved page IDs
-
-**Priority:** **MEDIUM**
-**Effort:** 2–3 hours
+* Pre-allocation of ID ranges
+* Micro-benchmarks
 
 ---
 
-# **PHASE 3 — ADVANCED INSTRUMENTATION & COMPILER HOOKS (OPTIONAL)**
+# **2. Phase 3 — Advanced Capabilities (Research / Not Scheduled)**
 
-Not needed for runtime stability or release.
-These unlock the **Algebraic OS / MIR / SSA integration model**.
-
-## **3.1 Base/Core Hooking for State Tracking** – NOT STARTED
-
-## **3.2 AbstractInterpreter Hooks for SSA/IR** – NOT STARTED
-
-## **3.3 SSA/IR Serialization** – NOT STARTED
-
-## **3.4 World-Age Tracking Layer** – NOT STARTED
-
-**Priority:** Low
-**Effort:** 20–30 hours total (research tasks)
+These are foundational but not immediately required for v0.2.0.
 
 ---
 
-# **PHASE 4 — EXTENDED RUNTIME (OPTIONAL)**
+## **2.1 Unified Memory Allocator (CPU+GPU)** — LOW
 
-These are long-term distributed/runtime ambitions.
+A unified abstraction over:
 
-## **4.1 Unified Memory (CUDA UVM)**
+* CPU DRAM
+* GPU VRAM
+* CUDA pinned memory
+* Potential future backends
 
-Makes GPU propagation near-zero cost.
-
-## **4.2 Event Serialization / Distributed Mode**
-
-Useful when MMSB is networked.
-
----
-
-# **📌 HIGH-LEVEL SUMMARY**
-
-```
-PHASE 1 (Release Readiness): 100% COMPLETE
-PHASE 2 (Performance):       next
-PHASE 3 (Instrumentation):   future
-PHASE 4 (Distributed):       far future
-```
-
-MMSB is now ready for **v0.1.0-alpha** release.
+**Goal:** Zero-copy deltas & cross-device propagation.
 
 ---
 
-# **🎯 NEXT CONCRETE STEPS (ACTIONABLE LIST)**
+## **2.2 Event Serialization Engine — LOW**
 
-These steps complete the transition from "all tasks done" → "official release".
+Serialize event streams for:
+
+* Debugging time travel
+* Observability dashboards
+* Distributed replay (future)
+
+Currently deprioritized in favor of propagation optimization.
 
 ---
 
-## **STEP 1 — Smoke-test docs workflows (5 minutes)**
+## **2.3 Instrumentation Layer (Compiler Integration)** — R&D
 
-You already did this, but for completeness:
+The longer-term compiler phase.
+
+Includes:
+
+* Base/Core/Compiler hooking
+* AbstractInterpreter integration
+* SSA/IR capture and serialization
+* world-age tracking
+* Linking compiled code changes to MMSB pages
+
+**Not required for v0.2.0 or v0.3.0.**
+This becomes relevant once MMSB is used for live program analysis.
+
+---
+
+# **3. Phase 4 — Distributed MMSB (v0.3.0+)**
+
+(Not needed immediately, but on roadmap.)
+
+* Cross-node page synchronization
+* Distributed dependency graph
+* Consensus for epochs / page invalidation
+* Network delta propagation
+
+---
+
+# **4. Immediate Next Steps (Actionable)**
+
+### **Step 1 — Publish GitHub Release (pre-release)**
+
+* Use v0.1.0-alpha tag
+* Attach baseline benchmarks
+* Include RELEASE_NOTES.md
+
+### **Step 2 — Start Phase 2**
+
+Priority:
+
+1. Propagation Engine (critical)
+2. SIMD Sparse Delta (high)
+3. Allocation fast-path (medium)
+
+### **Step 3 — Keep benchmarks ready**
+
+Run selective benchmarks during optimization iterations:
 
 ```bash
-julia --startup-file=no --project examples/quickstart.jl
-julia --startup-file=no --project examples/tutorial.jl
-```
-
-Both passed in your logs.
-
-**Status: COMPLETE**
-
----
-
-## **STEP 2 — Run full tests with project environment (2 minutes)**
-
-Ensures CI will pass:
-
-```bash
-julia --startup-file=no --project -e 'using Pkg; Pkg.test()'
-```
-
-You already validated locally — all **30 tests** pass.
-
-**Status: COMPLETE**
-
----
-
-## **STEP 3 — OPTIONAL: Run benchmark subset (5 minutes)**
-
-```bash
-MMSB_BENCH_CATEGORIES='allocation,delta' julia --startup-file=no benchmark/benchmarks.jl
-```
-
-Ensures baseline didn’t regress.
-
----
-
-## **STEP 4 — Tag Release v0.1.0-alpha (10 minutes)**
-
-```bash
-git add -A
-git commit -m "Release v0.1.0-alpha: stable MMSB core + GPU + docs"
-git tag -a v0.1.0-alpha -m "Initial alpha release with full documentation, API, GPU, benchmarks, and monitoring."
-git push origin main
-git push origin v0.1.0-alpha
+MMSB_BENCH_CATEGORIES='propagation,delta' julia benchmark/benchmarks.jl
 ```
 
 ---
 
-## **STEP 5 — Publish GitHub Release (15 minutes)**
+# **5. Summary**
 
-Attach:
+| Phase                           | Status            | Notes                    |
+| ------------------------------- | ----------------- | ------------------------ |
+| **Phase 1 – Core System**       | **100% complete** | Released as v0.1.0-alpha |
+| **Phase 2 – Performance**       | **Active**        | Highest priority next    |
+| **Phase 3 – Advanced Features** | Planned           | Compiler/IR integration  |
+| **Phase 4 – Distributed**       | Planned           | Multi-node MMSB          |
 
-* `benchmark/results/baseline.json`
-* `RELEASE_NOTES_v0.1.0.md`
-
-Mark as **pre-release** (alpha).
-
----
-
-## **STEP 6 — Begin Phase 2: Optimization Sprint (Choose 1 of 3)**
-
-**Order of operations:**
-
-1. Propagation batching
-2. SIMD deltas
-3. Allocation fast path
-
-This gets you from **500μs → <50μs propagation**.
+MMSB now has a fully working foundation, a published alpha release, full documentation, and a validated runtime. The next push is purely performance engineering — and that will transform MMSB from "working system" into "fastest system."
 
 ---
 
-# **🧠 SUMMARY FOR YOU PERSONALLY**
+If you want, I can also generate:
 
-MMSB is now:
+* a **Kanban board**,
+* a **Gantt timeline**,
+* a **GitHub Projects migration**,
+* a **DAG diagram of all pending work**,
+* or a **priority-sorted Sprint plan** for Phase 2.
 
-* Feature complete
-* API complete
-* GPU complete
-* Test complete
-* Documentation complete
-* Monitoring complete
-* Benchmark complete
-* Release-ready
-
-The only remaining work is **performance tuning** (Phase 2).
-
-**You have entered the optimization phase — the most enjoyable execution state.
-This is where the 10× speedups happen.**
-
----
-
-If you want, I can now generate:
-
-* **PHASE 2 Performance Roadmap**
-* **PropagationEngine.jl patch prototype**
-* **SIMD delta prototype**
-* **Allocation fast path patch**
-
-Just say:
-
-**"Generate Phase 2 plan"**
-or
-**"Give me the propagation optimization patch"**
+Just say *“generate the planning structure”*.
