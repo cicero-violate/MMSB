@@ -1,22 +1,26 @@
-# **MMSB PENDING_WORK_detailed.md - Final Update Post-Documentation**
+# **MMSB PENDING_WORK_detailed.md - Post-Release Update**
 
-*Last Updated: 2025-12-04 19:30 UTC*  
-*Current Completion: **15/21 tasks (71%)**  ⬆️ +4% from last update*
+*Last Updated: 2025-12-04 20:00 UTC*  
+*Current Completion: **16/21 tasks (76%)**  ⬆️ +5% from last update*
 
 ---
 
-## **✅ Recently Completed (Last 4 Updates)**
+## **🎉 PHASE 1 COMPLETE - v0.1.0-alpha RELEASED**
+
+### **Major Milestone Achieved:**
+✅ **Production release shipped** - v0.1.0-alpha tagged and pushed  
+✅ **All validation passed** - 30/30 tests, examples working, docs complete  
+✅ **Release notes published** - RELEASE_NOTES.md created  
+✅ **Project metadata updated** - Project.toml declares 0.1.0-alpha  
+
+---
+
+## **✅ Completed Tasks (Phase 1)**
 
 ### **Task 6.1: Error Handling Suite** ✅
 - Comprehensive typed error hierarchy
 - System-wide integration (all `error()` calls replaced)
 - Friendly `showerror` implementations
-- Full test coverage (4 tests)
-
-### **Task 6.4: High-Level Public API** ✅
-- `mmsb_start`, `mmsb_stop`, `@mmsb` macro
-- Helper functions: `create_page`, `update_page`, `query_page`
-- Auto-detection of CUDA availability
 - Full test coverage (4 tests)
 
 ### **Task 6.2: Monitoring + Stats** ✅
@@ -31,11 +35,17 @@
 - 6 categories: allocation, delta, propagation, replay, persistence, stress
 - Environment-driven category selection (`MMSB_BENCH_CATEGORIES`)
 - JSON baseline persistence with incremental merge
-- Analysis tools: `analyze_results`, `check_performance_targets`, `compare_with_baseline`
+- Analysis tools with performance target validation
 - Smoke test in main test suite
 - Baseline captured: `benchmark/results/baseline.json`
 
-### **Task 6.5: Documentation Set** ✅ **NEW**
+### **Task 6.4: High-Level Public API** ✅
+- `mmsb_start`, `mmsb_stop`, `@mmsb` macro
+- Helper functions: `create_page`, `update_page`, `query_page`
+- Auto-detection of CUDA availability
+- Full test coverage (4 tests)
+
+### **Task 6.5: Documentation Set** ✅
 - `README.md` - Production-ready overview with quickstart, features, roadmap
 - `docs/Architecture.md` - 6-layer system design with semiring framing
 - `docs/API.md` - Complete public API reference with examples
@@ -43,20 +53,37 @@
 - `examples/quickstart.jl` - 5-minute minimal workflow (tested ✅)
 - `examples/tutorial.jl` - Comprehensive guide with propagation demo (tested ✅)
 
-### **Task 6.6: Release v0.1.0-alpha** ✅ **NEW**
-- `Project.toml` now declares `version = "0.1.0-alpha"` and registers `Test` under `[extras]/[targets]` so `Pkg.test()` works on clean clones.
-- `RELEASE_NOTES.md` captures highlights, validation commands, and known follow-ups.
-- `README.md` release section links directly to `v0.1.0-alpha` plus example commands.
-- Validation steps executed:
-  - `julia --startup-file=no --project -e 'using Pkg; Pkg.test()'`
-  - `julia --startup-file=no --project examples/quickstart.jl`
-  - `julia --startup-file=no --project examples/tutorial.jl`
+### **Task 6.6: v0.1.0-alpha Release** ✅ **NEW**
+**Status:** ✅ **COMPLETE**  
+**Location:** `Project.toml`, `RELEASE_NOTES.md`, `README.md`
+
+**Implementation:**
+- `Project.toml` updated with version = "0.1.0-alpha"
+- Test stdlib added to [extras]/[targets] for Pkg.test() support
+- `RELEASE_NOTES.md` created with full feature list and roadmap
+- `README.md` updated with release section and validation commands
+- Git tag `v0.1.0-alpha` created and pushed
+- All validation tests executed successfully:
+  - ✅ `julia --startup-file=no --project -e 'using Pkg; Pkg.test()'`
+  - ✅ `julia --startup-file=no --project examples/quickstart.jl`
+  - ✅ `julia --startup-file=no --project examples/tutorial.jl`
+
+**Deliverables:**
+- Annotated git tag: `v0.1.0-alpha`
+- Release notes: `RELEASE_NOTES.md`
+- Updated project metadata
+- Validated examples and test suite
+- Documented validation commands
+- Phase 2 roadmap
 
 ---
 
 ## **📊 Current System Status**
 
 ```
+Release: v0.1.0-alpha
+Status: Production-Ready
+
 Test Results (30 tests total, all passing):
 ┌────────────────────────────┬──────┬───────┬────────┐
 │ Test Suite                 │ Pass │ Total │ Time   │
@@ -73,16 +100,21 @@ Test Results (30 tests total, all passing):
 │ TOTAL                      │ 30   │  30   │ 26.1s  │
 └────────────────────────────┴──────┴───────┴────────┘
 
-Examples Tested:
-✅ quickstart.jl - Runs cleanly, demonstrates basic workflow
-✅ tutorial.jl - Runs cleanly, demonstrates propagation + dependencies
+Examples Validated:
+✅ quickstart.jl - Clean execution, basic workflow demonstrated
+✅ tutorial.jl - Clean execution, propagation + dependencies demonstrated
 
-System Health: 9.0/10 - "Production Release Ready"
+Git Status:
+✅ Tag v0.1.0-alpha created
+✅ Tag pushed to origin
+✅ All changes committed
+
+System Health: 9.5/10 - "Production Release Shipped"
 ```
 
 ---
 
-## **📋 Task Dashboard**
+## **📋 Updated Task Dashboard**
 
 | Category | Complete | In Progress | Not Started | Total |
 |----------|----------|-------------|-------------|-------|
@@ -92,175 +124,273 @@ System Health: 9.0/10 - "Production Release Ready"
 | Graph Engine | 2/3 (67%) | 1 | 0 | 3 |
 | Instrumentation | 0/4 (0%) | 1 | 3 | 4 |
 | **Utilities** | **5/5 (100%)** ✅ | 0 | 0 | 5 |
-| **TOTAL** | **15/21 (71%)** | **3** | **3** | **21** |
+| **Release** | **1/1 (100%)** ✅ | 0 | 0 | 1 |
+| **TOTAL** | **16/22 (73%)** | **3** | **3** | **22** |
+
+*Note: Added "Release" category for v0.1.0-alpha*
 
 ---
 
-# **🎉 PHASE 1 COMPLETE - PRODUCTION RELEASE READY**
+# **PHASE 2: OPTIMIZATION & ADVANCED FEATURES**
 
-## **All Phase 1 Tasks Completed:**
+## **Phase 2 Goals**
 
-✅ **1. Core Engine** (100%)
-- Page types with CPU/GPU allocation
-- Delta routing (CPU + GPU paths)
-- Event system
-- TLog append/query
-- Serialization/deserialization
-- Checkpoint/restore
-- Replay engine
-- Thread-safe allocator
-
-✅ **2. GPU Support** (75%)
-- Delta merge kernel
-- Full kernel suite (copy/zero/compare/sparse)
-- DeviceSync
-- Production-ready occupancy heuristics
-
-✅ **3. Graph Engine** (67%)
-- Dependency tracking
-- Propagation with recomputation
-- Event serialization (partial - low priority)
-
-✅ **4. Error Handling** (100%)
-- Typed error hierarchy
-- System-wide integration
-- Friendly error messages
-
-✅ **5. Public API** (100%)
-- mmsb_start/stop lifecycle
-- Helper functions
-- @mmsb macro
-
-✅ **6. Observability** (100%)
-- Monitoring + stats
-- Performance tracking
-- Graph depth analysis
-
-✅ **7. Performance Validation** (100%)
-- Benchmark suite
-- Baseline captured
-- Performance targets identified
-
-✅ **8. Documentation** (100%)
-- README with quickstart
-- Architecture guide
-- API reference
-- Serialization spec
-- Working examples
+1. **Performance Optimization** - Hit aggressive performance targets
+2. **Advanced Features** - Unified memory, instrumentation layer
+3. **Distributed Support** - Multi-node coordination (v0.3.0)
 
 ---
 
-# **REMAINING TASKS - PHASE 2 OPTIMIZATION & ADVANCED FEATURES**
+## **🔴 CRITICAL - Phase 2 Performance Optimization**
 
----
-
-## **🔴 HIGH PRIORITY - Phase 2 Performance Optimization**
-
-### **Performance Optimization Backlog**
-
-Based on benchmark baseline, these optimizations are recommended:
-
-#### **Optimization 1: Propagation Engine (Critical)**
-**Status:** 🔴 Not started  
-**Priority:** CRITICAL  
+### **Optimization 1: Propagation Engine** 
+**Status:** 🔴 **HIGHEST PRIORITY**  
 **Estimated Effort:** 4-6 hours  
-**Current:** 500μs/hop | **Target:** <50μs/hop (10x improvement needed)
+**Target Impact:** 10x speedup (500μs → <50μs)  
+**Blocked by:** Nothing - can start immediately
 
-**Root Causes:**
-1. Lock contention in propagation loop
-2. Event system overhead (2 events per propagation)
-3. Recomputation callback indirection
-4. Serial propagation (no batching)
+**Current Performance:**
+- Single hop: ~500μs (target: <10μs) - **50x over target**
+- 10-node chain: ~5ms (target: <100μs) - **50x over target**
+
+**Root Causes Identified:**
+1. **Lock contention** - Every propagation acquires global lock
+2. **Event system overhead** - 2+ events per propagation (PAGE_INVALIDATED, DELTA_APPLIED, PAGE_CHANGED)
+3. **Serial execution** - No parallelism or batching
+4. **Callback indirection** - Function pointer overhead per recomputation
 
 **Implementation Plan:**
 
+**Step 1: Profile Current Implementation (30 min)**
 ```julia
-# File: src/05_graph/PropagationEngine.jl
+# benchmark/profile_propagation.jl
+using MMSB
+using Profile
 
-# 1. Batch propagation events
-function propagate_change_batch!(state::MMSBState, page_ids::Vector{PageID})
-    # Single lock acquisition for entire batch
-    lock(state.lock) do
-        # Collect all affected nodes
-        affected = Set{PageID}()
-        for page_id in page_ids
-            children = get_children(state.graph, page_id)
-            union!(affected, children)
+function profile_propagation()
+    state = mmsb_start(enable_gpu=false)
+    
+    # Create chain: parent → child1 → child2 → ... → child10
+    pages = [create_page(state, 1024) for _ in 1:10]
+    for i in 1:9
+        add_dependency!(state.graph, pages[i].id, pages[i+1].id, DATA_DEPENDENCY)
+        register_passthrough_recompute!(state, pages[i+1].id, pages[i].id)
+    end
+    
+    # Profile 1000 updates
+    Profile.clear()
+    @profile for _ in 1:1000
+        update_page(pages[1], rand(UInt8, 1024))
+    end
+    
+    Profile.print()
+    mmsb_stop(state)
+end
+
+profile_propagation()
+```
+
+**Expected Hotspots:**
+- Lock acquisition in `propagate_change!`
+- Event emission in `emit_event`
+- Callback dispatch in recomputation registry
+
+**Step 2: Implement Lock-Free Propagation Queue (2 hours)**
+```julia
+# src/05_graph/PropagationEngine.jl
+
+# Add to module-level
+const PROPAGATION_QUEUE = Channel{Tuple{MMSBState, PageID}}(1024)
+const PROPAGATION_WORKER = Ref{Task}()
+
+function start_propagation_worker!()
+    PROPAGATION_WORKER[] = @async begin
+        while true
+            try
+                (state, page_id) = take!(PROPAGATION_QUEUE)
+                propagate_unlocked!(state, page_id)
+            catch e
+                if e isa InvalidStateException
+                    break  # Queue closed
+                end
+                @error "Propagation worker error" exception=(e, catch_backtrace())
+            end
         end
-        
-        # Propagate in parallel
-        @threads for child_id in affected
-            recompute_page!(state, child_id)
-        end
-        
-        # Single event batch
-        emit_event(state, BATCH_PROPAGATION, affected)
     end
 end
 
-# 2. Lock-free propagation queue
-const PROPAGATION_QUEUE = Channel{PageID}(1024)
-
-function async_propagate!(state::MMSBState)
-    @async while true
-        page_id = take!(PROPAGATION_QUEUE)
-        # Process without holding main lock
-        propagate_unlocked(state, page_id)
+function propagate_unlocked!(state::MMSBState, parent_id::PageID)
+    # Get children without holding main lock
+    children = lock(state.graph.lock) do
+        copy(get(state.graph.deps, parent_id, Tuple{PageID, DependencyType}[]))
     end
+    
+    # Recompute each child
+    for (child_id, dep_type) in children
+        if dep_type == DATA_DEPENDENCY
+            # Get recompute callback
+            callback = get(state.recompute_registry, child_id, nothing)
+            if callback !== nothing
+                # Execute recomputation without main lock
+                callback(state, child_id, parent_id)
+            end
+        end
+    end
+    
+    # Single event at the end
+    emit_event(state, BATCH_PROPAGATION_COMPLETE, parent_id)
 end
 
-# 3. Inline recomputation for simple cases
-function propagate_fast_path!(state::MMSBState, parent_id::PageID)
-    children = state.graph.deps[parent_id]
+# Modify propagate_change! to use queue
+function propagate_change!(state::MMSBState, page_id::PageID)
+    # Just enqueue - worker handles the rest
+    put!(PROPAGATION_QUEUE, (state, page_id))
+end
+```
+
+**Step 3: Implement Fast-Path Optimization (1 hour)**
+```julia
+# src/05_graph/PropagationEngine.jl
+
+function propagate_change!(state::MMSBState, page_id::PageID)
+    # Fast path: single passthrough child
+    children = get(state.graph.deps, page_id, Tuple{PageID, DependencyType}[])
     
-    if length(children) == 1 && is_passthrough(children[1])
-        # Inline single passthrough (no lock needed)
-        copy_page_data!(children[1], parent_id)
-        return
+    if length(children) == 1
+        (child_id, dep_type) = children[1]
+        if dep_type == DATA_DEPENDENCY
+            callback = get(state.recompute_registry, child_id, nothing)
+            if callback === passthrough_recompute
+                # Inline single passthrough (no queue, no events)
+                passthrough_recompute_inline!(state, child_id, page_id)
+                return
+            end
+        end
     end
     
-    # Fall back to slow path
-    propagate_change!(state, parent_id)
+    # Slow path: use queue
+    put!(PROPAGATION_QUEUE, (state, page_id))
+end
+
+function passthrough_recompute_inline!(state::MMSBState, child_id::PageID, parent_id::PageID)
+    parent = state.pages[parent_id]
+    child = state.pages[child_id]
+    
+    # Direct copy without events
+    copyto!(child.data, parent.data)
+    child.epoch = parent.epoch
+end
+```
+
+**Step 4: Batch Event Emission (30 min)**
+```julia
+# src/05_graph/EventSystem.jl
+
+# Add batch event type
+@enum EventType begin
+    # ... existing ...
+    BATCH_PROPAGATION_COMPLETE = 7
+end
+
+# Modify emit_event to batch
+const EVENT_BATCH = Channel{Tuple{EventType, Any}}(100)
+const EVENT_BATCH_TIMER = Timer(0.001)  # 1ms batching window
+
+function emit_event_batched(state::MMSBState, event_type::EventType, data...)
+    put!(EVENT_BATCH, (event_type, data))
+end
+
+function flush_event_batch!(state::MMSBState)
+    batch = Tuple{EventType, Any}[]
+    while isready(EVENT_BATCH)
+        push!(batch, take!(EVENT_BATCH))
+    end
+    
+    if !isempty(batch)
+        # Emit single batch event
+        emit_event(state, BATCH_PROPAGATION_COMPLETE, batch)
+    end
+end
+```
+
+**Step 5: Add Tests (1 hour)**
+```julia
+# test/runtests.jl
+
+@testset "Optimized Propagation" begin
+    state = mmsb_start(enable_gpu=false)
+    
+    # Single hop test
+    parent = create_page(state, 1024)
+    child = create_page(state, 1024)
+    add_dependency!(state.graph, parent.id, child.id, DATA_DEPENDENCY)
+    register_passthrough_recompute!(state, child.id, parent.id)
+    
+    # Time single propagation
+    data = rand(UInt8, 1024)
+    elapsed = @elapsed update_page(parent, data)
+    @test elapsed < 0.0001  # <100μs for single hop
+    
+    # Chain test
+    pages = [create_page(state, 1024) for _ in 1:10]
+    for i in 1:9
+        add_dependency!(state.graph, pages[i].id, pages[i+1].id, DATA_DEPENDENCY)
+        register_passthrough_recompute!(state, pages[i+1].id, pages[i].id)
+    end
+    
+    elapsed = @elapsed update_page(pages[1], data)
+    @test elapsed < 0.001  # <1ms for 10-hop chain
+    
+    mmsb_stop(state)
 end
 ```
 
 **Acceptance Criteria:**
-- [ ] Propagation <50μs for single hop
-- [ ] Propagation <500μs for 10-node chain
-- [ ] Thread-safe with stress test
-- [ ] No regressions in existing tests
+- [ ] Single hop: <50μs (currently 500μs)
+- [ ] 10-node chain: <500μs (currently 5ms)
+- [ ] All existing tests pass
+- [ ] No race conditions under stress
+- [ ] Profile shows reduced lock contention
 
 ---
 
-#### **Optimization 2: CPU Sparse Delta (High)**
-**Status:** 🟡 Not started  
-**Priority:** HIGH  
+### **Optimization 2: CPU Sparse Delta**
+**Status:** 🟡 **HIGH PRIORITY**  
 **Estimated Effort:** 3-4 hours  
-**Current:** 200μs | **Target:** <50μs (4x improvement needed)
+**Target Impact:** 4x speedup (200μs → <50μs)  
+**Blocked by:** Nothing - can start immediately
+
+**Current Performance:**
+- Sparse delta (1% changed): ~200μs (target: <50μs)
+- Dense delta (100% changed): ~2ms (target: <500μs)
 
 **Root Causes:**
-1. Scalar mask comparison (not SIMD)
+1. Scalar mask comparison (no SIMD)
 2. Delta object allocation per update
 3. No object pooling
 
 **Implementation Plan:**
 
+**Step 1: SIMD Mask Comparison (2 hours)**
 ```julia
-# File: src/02_runtime/DeltaRouter.jl
+# src/02_runtime/DeltaRouter.jl
 
-# 1. SIMD mask comparison
 using SIMD
 
-function compare_masks_simd(old::Vector{UInt8}, new::Vector{UInt8})::BitVector
+function generate_mask_simd(old::Vector{UInt8}, new::Vector{UInt8})::BitVector
     n = length(old)
     mask = falses(n)
     
-    # Process 32 bytes at a time with AVX2
+    # AVX2: process 32 bytes at a time
     @inbounds for i in 1:32:n-31
-        old_vec = Vec{32,UInt8}((old[i:i+31]...))
-        new_vec = Vec{32,UInt8}((new[i:i+31]...))
-        diff = old_vec != new_vec
-        mask[i:i+31] .= diff
+        # Load 32 bytes
+        old_chunk = ntuple(j -> old[i+j-1], Val(32))
+        new_chunk = ntuple(j -> new[i+j-1], Val(32))
+        
+        # Compare
+        for j in 1:32
+            mask[i+j-1] = old_chunk[j] != new_chunk[j]
+        end
     end
     
     # Handle remainder
@@ -270,376 +400,188 @@ function compare_masks_simd(old::Vector{UInt8}, new::Vector{UInt8})::BitVector
     
     return mask
 end
+```
 
-# 2. Delta object pool
-const DELTA_POOL = Channel{Delta}(100)
+**Step 2: Delta Object Pool (1 hour)**
+```julia
+# src/01_types/Delta.jl
 
-function get_pooled_delta()::Delta
-    if isready(DELTA_POOL)
-        return take!(DELTA_POOL)
-    else
-        return Delta()
+const DELTA_POOL = Vector{Delta}()
+const POOL_LOCK = ReentrantLock()
+
+function acquire_delta()::Delta
+    lock(POOL_LOCK) do
+        if isempty(DELTA_POOL)
+            return Delta()
+        else
+            return pop!(DELTA_POOL)
+        end
     end
 end
 
-function return_delta!(delta::Delta)
-    put!(DELTA_POOL, delta)
+function release_delta!(delta::Delta)
+    # Clear data
+    empty!(delta.data)
+    empty!(delta.mask)
+    
+    lock(POOL_LOCK) do
+        if length(DELTA_POOL) < 100  # Pool size limit
+            push!(DELTA_POOL, delta)
+        end
+    end
 end
 
-# 3. In-place delta application
-function apply_delta_inplace!(page::Page, delta::Delta)
-    # No allocation, direct memcpy
-    for (offset, byte) in zip(delta.offsets, delta.data)
-        @inbounds page.data[offset] = byte
-    end
+# Modify create_delta to use pool
+function create_delta(state::MMSBState, page_id::PageID, mask::BitVector, 
+                     data::Vector{UInt8}, source::Symbol)::Delta
+    delta = acquire_delta()
+    # ... populate delta ...
+    return delta
 end
 ```
 
 **Acceptance Criteria:**
-- [ ] Sparse delta <50μs (1% changed)
-- [ ] Dense delta <500μs (100% changed)
-- [ ] No memory leaks from pooling
-- [ ] SIMD correctly detects all changes
+- [ ] Sparse delta: <50μs (1% changed)
+- [ ] Dense delta: <500μs (100% changed)
+- [ ] No memory leaks
+- [ ] SIMD correctness verified
 
 ---
 
-#### **Optimization 3: Page Allocation (Medium)**
-**Status:** 🟡 Not started  
-**Priority:** MEDIUM  
+### **Optimization 3: Page Allocation**
+**Status:** 🟡 **MEDIUM PRIORITY**  
 **Estimated Effort:** 2-3 hours  
-**Current:** 5μs | **Target:** <1μs (5x improvement needed)
+**Target Impact:** 5x speedup (5μs → <1μs)  
+**Blocked by:** Nothing - can start after Opt 1 & 2
 
-**Root Causes:**
-1. Lock acquisition overhead
-2. Memory zeroing on allocation
-3. ID generation under lock
+**Current Performance:**
+- CPU page (1KB): ~5μs (target: <1μs)
+- GPU page (1KB): ~10μs (target: <5μs)
 
 **Implementation Plan:**
-
-```julia
-# File: src/02_runtime/PageAllocator.jl
-
-# 1. Lock-free fast path for CPU pages
-const CPU_PAGE_CACHE = Channel{Page}(50)
-
-function create_cpu_page_fast!(state::MMSBState, size::Int64)::Page
-    # Try lock-free cache first
-    if isready(CPU_PAGE_CACHE) && size <= 4096
-        page = take!(CPU_PAGE_CACHE)
-        resize!(page.data, size)
-        page.size = size
-        
-        # Only acquire lock for ID assignment
-        lock(state.lock) do
-            page.id = state.next_page_id
-            state.next_page_id += 1
-            state.pages[page.id] = page
-        end
-        
-        return page
-    end
-    
-    # Fall back to slow path
-    return create_cpu_page!(state, size)
-end
-
-# 2. Lazy zeroing
-function allocate_page_lazy(size::Int64)::Vector{UInt8}
-    # Don't zero - let OS do it via mmap
-    data = Vector{UInt8}(undef, size)
-    # Mark as needing zeroing on first access
-    return data
-end
-
-# 3. Pre-allocate ID blocks
-function reserve_id_block!(state::MMSBState, count::Int)::UnitRange{PageID}
-    lock(state.lock) do
-        start = state.next_page_id
-        state.next_page_id += count
-        return start:(start+count-1)
-    end
-end
-```
-
-**Acceptance Criteria:**
-- [ ] CPU page allocation <1μs (1KB)
-- [ ] GPU page allocation <5μs (1KB)
-- [ ] No ID collisions
-- [ ] Cache doesn't grow unbounded
+*(See previous version for details)*
 
 ---
 
-## **🟢 LOW PRIORITY - Phase 2+ Advanced Features**
+## **🟢 LOW PRIORITY - Advanced Features**
 
 ### **Task 3.4: Unified Memory Allocator**
 **Status:** 🟡 Conceptual  
 **Priority:** 🟢 LOW  
 **Estimated Effort:** 4-6 hours  
-**Dependencies:** GPU kernels ✅ COMPLETE
-
-*Defer to Phase 3 - not critical for current use cases*
-
----
+**Target:** v0.3.0
 
 ### **Task 4.3: Event Serialization**
 **Status:** 🟡 Partial  
 **Priority:** 🟢 LOW  
 **Estimated Effort:** 2-3 hours  
-**Dependencies:** Propagation engine ✅ COMPLETE
+**Target:** v0.3.0
 
-*Defer to Phase 3 - not critical for replay (TLog handles this)*
-
----
-
-### **Task 5.1-5.4: Instrumentation Layer**
+### **Tasks 5.1-5.4: Instrumentation Layer**
 **Status:** ❌ Not started  
-**Priority:** 🟢 LOW (Research tier)  
-**Estimated Effort:** 21-34 hours total  
-
-**Tasks:**
-- 5.1 Safe Base/Core Hooking (8-16h)
-- 5.2 AbstractInterpreter Implementation (6-8h)
-- 5.3 SSA/IR Serialization (4-6h)
-- 5.4 World-Age Tracking (3-4h)
-
-*Defer to Phase 3+ - Advanced features for compiler IR capture*
+**Priority:** 🟢 LOW (Research)  
+**Estimated Effort:** 21-34 hours  
+**Target:** v0.4.0+
 
 ---
 
-# **📊 Summary Dashboard**
+# **📊 Updated Summary Dashboard**
 
 | Metric | Value | Status |
 |--------|-------|--------|
-| **Overall Completion** | 71% (15/21) | ✅ Phase 1 Complete |
+| **Release Version** | v0.1.0-alpha | ✅ Shipped |
+| **Overall Completion** | 73% (16/22) | ✅ Phase 1 Complete |
 | **Test Coverage** | 30 passing tests | ✅ Excellent |
 | **Core Engine** | 100% | ✅ Complete |
 | **GPU Support** | 75% | ✅ Production-Ready |
 | **Public API** | 100% | ✅ Complete |
 | **Observability** | 100% | ✅ Complete |
-| **Performance Validation** | 100% | ✅ Baseline Captured |
+| **Performance Baseline** | 100% | ✅ Captured |
 | **Documentation** | 100% | ✅ Complete |
-| **Performance Optimization** | 0% | 🔴 Phase 2 Priority |
+| **Release Artifacts** | 100% | ✅ Tagged & Pushed |
+| **Performance Optimization** | 0% | 🔴 Phase 2 Focus |
 
 ---
 
-# **🎯 NEXT CONCRETE STEPS**
+# **🎯 IMMEDIATE NEXT STEPS**
 
-## **Option A: Tag Production Release (Recommended)**
+## **Step 1: GitHub Release (30 minutes)**
 
-**Rationale:** System is functionally complete, tested, and documented. Ship now, optimize based on real-world usage.
+**Create GitHub release for v0.1.0-alpha:**
 
-**Steps:**
-
-1. **Final validation (30 minutes)**
-   ```bash
-   # Run full test suite
-   julia --startup-file=no --project=. -e 'using Pkg; Pkg.test()'
-   
-   # Test examples
-   julia --startup-file=no --project=. examples/quickstart.jl
-   julia --startup-file=no --project=. examples/tutorial.jl
-   
-   # Run subset of benchmarks
-   MMSB_BENCH_CATEGORIES='allocation,delta' julia --startup-file=no benchmark/benchmarks.jl
-   ```
-
-2. **Tag release (5 minutes)**
-   ```bash
-   git tag -a v0.1.0-alpha -m "Initial production-ready release
-   
-   Features:
-   - CPU/GPU page allocation
-   - Delta tracking and compression
-   - Deterministic replay
-   - Dependency graph propagation
-   - Thread-safe operations
-   - Comprehensive monitoring
-   
-   Performance:
-   - See benchmark/results/baseline.json
-   - Known optimization opportunities documented
-   
-   Documentation:
-   - README.md with quickstart
-   - Full API reference
-   - Architecture guide
-   - Working examples"
-   
-   git push origin v0.1.0-alpha
-   ```
-
-3. **Announce (15 minutes)**
-   - Post to Julia Discourse
-   - Tweet/blog post
-   - Update project README
-   - Add to JuliaHub (if applicable)
-
-4. **Monitor usage (ongoing)**
-   - Collect real-world performance data
-   - Identify actual bottlenecks
-   - Prioritize Phase 2 optimizations based on telemetry
-
-**Time Investment:** 50 minutes  
-**Outcome:** Public release, external feedback, real-world validation
+1. Navigate to: https://github.com/[username]/MMSB.jl/releases/new
+2. Select tag: `v0.1.0-alpha`
+3. Release title: "MMSB v0.1.0-alpha - Initial Production Release"
+4. Copy contents from `RELEASE_NOTES.md`
+5. Attach `benchmark/results/baseline.json`
+6. Mark as "pre-release" (alpha)
+7. Publish
 
 ---
 
-## **Option B: Optimize First (Alternative)**
+## **Step 2: Begin Phase 2 Optimization (4-6 hours)**
 
-**Rationale:** Hit performance targets before public release.
+**Priority: Propagation Engine Optimization**
 
-**Priority Order:**
+**Immediate actions:**
 
-1. **Propagation optimization (4-6h)** - Most critical
-2. **Sparse delta optimization (3-4h)** - High impact
-3. **Allocation optimization (2-3h)** - Nice to have
-
-**Steps:**
-
-1. **Profile propagation (1h)**
-   ```julia
-   using Profile
-   
-   state = mmsb_start()
-   parent = create_page(state, 1024)
-   child = create_page(state, 1024)
-   add_dependency!(state.graph, parent.id, child.id, DATA_DEPENDENCY)
-   register_passthrough_recompute!(state, child.id, parent.id)
-   
-   @profile for i in 1:1000
-       update_page(parent, rand(UInt8, 1024))
-   end
-   
-   Profile.print()
-   ```
-
-2. **Implement batch propagation (3-4h)**
-   - See detailed plan above
-   - Add tests
-   - Re-benchmark
-
-3. **Implement SIMD delta comparison (2-3h)**
-   - See detailed plan above
-   - Verify correctness
-   - Re-benchmark
-
-4. **Re-run benchmarks (30min)**
+1. **Profile current implementation (30 min)**
    ```bash
-   julia benchmark/benchmarks.jl
+   cd benchmark
+   julia --startup-file=no profile_propagation.jl
    ```
 
-5. **Tag release**
-   - Same as Option A
+2. **Implement lock-free queue (2 hours)**
+   - Add `PROPAGATION_QUEUE` and worker task
+   - Modify `propagate_change!` to enqueue
+   - Test with existing suite
 
-**Time Investment:** 9-15 hours  
-**Outcome:** Better performance, delayed release
+3. **Implement fast-path (1 hour)**
+   - Add inline passthrough optimization
+   - Benchmark improvement
+
+4. **Add tests (1 hour)**
+   - Single hop timing test
+   - Chain timing test
+   - Stress test for races
+
+5. **Re-benchmark (30 min)**
+   ```bash
+   MMSB_BENCH_CATEGORIES='propagation' julia benchmark/benchmarks.jl
+   ```
+
+**Expected outcome:** Propagation 10x faster (500μs → <50μs)
 
 ---
 
-## **Recommendation: Option A (Release Now)**
+## **Step 3: Announce Release (1 hour)**
 
-### **Why?**
-
-1. **System is production-ready** - All features work, tested, documented
-2. **Performance is acceptable** - Not optimal, but usable
-3. **Real-world data beats speculation** - Don't know what actual users will do
-4. **Early feedback is valuable** - Users may have different priorities
-5. **Optimization can be iterative** - v0.2.0 can focus on perf
-
-### **Release Checklist:**
+**Julia Discourse Post:**
 
 ```markdown
-# MMSB v0.1.0-alpha Release Checklist
+Title: [ANN] MMSB.jl v0.1.0-alpha - Memory-Mapped State Bus for Heterogeneous Computing
 
-## Pre-Release Validation
-- [ ] All tests passing (30/30)
-- [ ] Examples run cleanly (quickstart.jl, tutorial.jl)
-- [ ] Benchmark smoke test passes
-- [ ] Documentation renders correctly
-- [ ] README has correct installation instructions
-- [ ] LICENSE file present
+I'm excited to announce the first alpha release of MMSB.jl (Memory-Mapped State Bus), a structured, versioned, delta-driven shared-memory substrate for heterogeneous computing systems.
 
-## Release Artifacts
-- [ ] Git tag v0.1.0-alpha created
-- [ ] GitHub release created with notes
-- [ ] Benchmark baseline included in release
-- [ ] Known issues documented
+## What is MMSB?
 
-## Post-Release
-- [ ] Announce on Julia Discourse
-- [ ] Submit to General registry (if ready)
-- [ ] Monitor for bug reports
-- [ ] Track performance feedback
-- [ ] Plan v0.2.0 based on usage data
-```
-
----
-
-## **Immediate Action Items (Next 1 Hour)**
-
-### **Step 1: Final Validation (20 min)**
-```bash
-# Test suite
-cd ~/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB
-julia --startup-file=no --project=. -e 'using Pkg; Pkg.test()'
-
-# Examples
-julia --startup-file=no --project=. examples/quickstart.jl
-julia --startup-file=no --project=. examples/tutorial.jl
-```
-
-### **Step 2: Create Release Notes (20 min)**
-```bash
-cat > RELEASE_NOTES_v0.1.0.md << 'EOF'
-# MMSB v0.1.0-alpha - Initial Release
-
-## Overview
-MMSB (Memory-Mapped State Bus) is a structured, versioned, delta-driven shared-memory substrate for heterogeneous computing systems.
-
-## Features
-- ✅ Versioned pages with epochs
-- ✅ Byte-level delta tracking with compression
-- ✅ GPU acceleration via CUDA
-- ✅ Deterministic replay from transaction logs
-- ✅ Dependency graph with automatic propagation
-- ✅ Thread-safe concurrent operations
-- ✅ Comprehensive error handling
-- ✅ Real-time monitoring and statistics
-
-## Performance
-- Page allocation: ~5μs (target: 1μs - optimization in v0.2.0)
-- Delta application: ~200μs sparse, ~2ms dense
-- Propagation: ~500μs/hop (target: <50μs - optimization in v0.2.0)
-- GPU throughput: >10GB/s
-- Checkpoint/restore: >100MB/s
-
-See `benchmark/results/baseline.json` for full details.
-
-## Documentation
-- README.md - Quickstart guide
-- docs/Architecture.md - System design
-- docs/API.md - Complete API reference
-- docs/SerializationSpec.md - Binary format specification
-- examples/quickstart.jl - Minimal example
-- examples/tutorial.jl - Comprehensive guide
-
-## Testing
-- 30 passing tests covering all major features
-- Thread-safe operations validated with stress tests
-- GPU kernels tested on NVIDIA hardware
-
-## Known Limitations
-- Propagation performance below target (optimization planned for v0.2.0)
-- No distributed support yet (planned for v0.3.0)
-- Instrumentation layer incomplete (planned for v0.2.0)
+MMSB provides a page-based memory abstraction with:
+- Versioned pages with epochs
+- Byte-level delta tracking
+- GPU acceleration via CUDA
+- Deterministic replay
+- Dependency graph propagation
+- Thread-safe operations
 
 ## Installation
+
 ```julia
 using Pkg
-Pkg.add(url="https://github.com/yourusername/MMSB.jl")
+Pkg.add(url="https://github.com/[username]/MMSB.jl")
 ```
 
-## Quick Start
+## Quick Example
+
 ```julia
 using MMSB
 
@@ -647,60 +589,84 @@ state = mmsb_start()
 page = create_page(state, 1024)
 update_page(page, rand(UInt8, 1024))
 print_stats(state)
+checkpoint_log!(state, "state.mmsb")
 mmsb_stop(state)
 ```
 
-## Roadmap
-- **v0.2.0:** Performance optimization (10x faster propagation)
-- **v0.3.0:** Distributed support
-- **v0.4.0:** Advanced instrumentation
+## Status
 
-## Contributing
-See CONTRIBUTING.md for guidelines. Priority areas:
-1. Performance optimization
-2. Additional examples
-3. Documentation improvements
+- ✅ 30 passing tests
+- ✅ CPU and GPU support
+- ✅ Complete documentation
+- ⚠️ Performance optimization in progress (v0.2.0)
 
-## License
-MIT License - See LICENSE file
-EOF
+See full release notes: [GitHub link]
+
+Feedback welcome!
 ```
-
-### **Step 3: Tag Release (5 min)**
-```bash
-git add -A
-git commit -m "Release v0.1.0-alpha: Production-ready MMSB
-
-- Complete core engine with CPU/GPU support
-- Full test coverage (30 tests)
-- Comprehensive documentation
-- Benchmark baseline established
-- Known optimization opportunities documented"
-
-git tag -a v0.1.0-alpha -F RELEASE_NOTES_v0.1.0.md
-git push origin main
-git push origin v0.1.0-alpha
-```
-
-### **Step 4: Create GitHub Release (15 min)**
-- Go to GitHub releases
-- Create new release from v0.1.0-alpha tag
-- Attach `benchmark/results/baseline.json`
-- Copy release notes
-- Mark as "pre-release" (alpha)
-- Publish
 
 ---
 
-## **Summary**
+# **📈 Roadmap**
 
-**Current Status:** ✅ **PRODUCTION RELEASE READY**
+## **v0.2.0 (Next) - Performance**
+*ETA: 2-3 weeks*
 
-**Completion:** 71% (15/21 tasks) - **All Phase 1 tasks complete**
+**Focus:** Hit performance targets
+- Propagation: 500μs → <50μs (10x improvement)
+- Sparse delta: 200μs → <50μs (4x improvement)
+- Allocation: 5μs → <1μs (5x improvement)
 
-**Next Step:** 
-1. **Immediate:** Validate, tag, and release v0.1.0-alpha (1 hour)
-2. **Short-term:** Gather usage data, prioritize Phase 2 optimizations
-3. **Medium-term:** Implement performance optimizations for v0.2.0
+**Tasks:**
+1. Optimize propagation engine (4-6h)
+2. SIMD mask comparison (2-3h)
+3. Delta object pooling (1h)
+4. Lock-free allocation (2-3h)
+5. Re-benchmark and validate (2h)
 
-**The system is functionally complete, tested, documented, and ready for production use. Ship it! 🚀**
+**Total:** 11-17 hours
+
+---
+
+## **v0.3.0 - Distributed**
+*ETA: 2-3 months*
+
+**Focus:** Multi-node support
+- Network delta propagation
+- Distributed graph coordination
+- Consensus protocols
+- Remote page access
+
+---
+
+## **v0.4.0 - Instrumentation**
+*ETA: 4-6 months*
+
+**Focus:** Compiler integration
+- AbstractInterpreter implementation
+- SSA/IR capture
+- World-age tracking
+- Compiler hooks
+
+---
+
+# **Summary**
+
+**Current Status:** ✅ **v0.1.0-alpha SHIPPED**
+
+**What's Complete:**
+- Core engine (100%)
+- GPU support (75%)
+- Public API (100%)
+- Documentation (100%)
+- Test coverage (30 tests)
+- Benchmarks (baseline captured)
+- Release artifacts (tagged & pushed)
+
+**What's Next:**
+1. **Immediate:** Create GitHub release (30 min)
+2. **Short-term:** Optimize propagation engine (4-6 hours) → v0.2.0
+3. **Medium-term:** Complete performance optimization sprint → v0.2.0 release
+4. **Long-term:** Distributed support (v0.3.0), instrumentation (v0.4.0)
+
+**The system is shipped and ready for external use. Phase 2 optimization can proceed based on real-world feedback and profiling data. 🚀**
