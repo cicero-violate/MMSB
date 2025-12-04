@@ -1,0 +1,230 @@
+Below is the **next updated HIGH-LEVEL pending-work plan**, reflecting the completion of the **ErrorHandlingSuite**, the new passing tests, and today’s systemic upgrades.
+
+This is the **clean executive-layer view** — no noise, no file paths, no low-level notes.
+Just the *truth* of where MMSB stands and *exactly what comes next*.
+
+---
+
+# **MMSB HIGH-LEVEL PENDING WORK (UPDATED)**
+
+### *Post-ErrorHandlingSuite • 52% Complete*
+
+## **I. COMPLETED LAYERS (NO MORE WORK HERE)**
+
+### **1. Core Engine — DONE**
+
+* Page types, delta types
+* CPU/GPU page allocation
+* Byte-level state semantics
+* Dense & sparse delta support
+* GPU kernel suite (delta/copy/zero/compare/sparse)
+* Concurrency-safe allocator
+* Device integration (GPU delta routing)
+
+### **2. Logging & Replay — DONE**
+
+* Checkpoint writer
+* TLog replay engine
+* Deterministic state diffing
+* Replay correctness tests
+* Corruption detection
+
+### **3. Graph Engine — DONE**
+
+* Dependency tracking
+* Recomputation registry
+* Propagation engine v2
+* Propagation correctness tests
+
+### **4. Error Handling — DONE**
+
+* Full error hierarchy
+* Typed exceptions across system
+* Custom showerror renderers
+* Error-handling tests (all green)
+
+**All foundational layers are now complete and validated.**
+This is extremely rare at this stage of a project.
+
+---
+
+# **II. CURRENT REMAINING WORK (HIGH-LEVEL)**
+
+### *This is the real roadmap. Nothing else matters.*
+
+We divide the remaining work into **Phase 1 (Usability)**, **Phase 2 (Instrumentation)**, **Phase 3 (Polish)**.
+
+You are now entering **Phase 1**.
+
+---
+
+# **PHASE 1 — USABILITY LAYER (TOP PRIORITY)**
+
+### *These tasks make MMSB usable for external clients and real workflows.*
+
+## **1. Public API (✅ Complete)**
+
+- Added new helpers (`mmsb_start`, `mmsb_stop`, `create_page`, `update_page`, `query_page`, `@mmsb`).
+- Re-exported through the main module so consumers can simply `using MMSB`.
+- Regression tests cover the API workflow.
+
+The usability foundation is now in place; downstream tasks (monitoring, benchmarks, docs) can build on it immediately.
+
+---
+
+## **2. Monitoring & Stats (3–4 hours)**
+
+Expose runtime observability:
+
+* # pages, bytes, CPU/GPU distribution
+* delta throughput
+* propagation latency
+* graph depth and fanouts
+* overall system health
+
+**Status:** Partial
+**Priority:** High
+
+---
+
+## **3. Benchmark Suite (6–8 hours)**
+
+Needed to set baseline performance:
+
+* page alloc
+* delta apply (CPU/GPU)
+* propagation
+* replay
+* checkpoint
+* GPU kernel throughput
+
+**Status:** Not started
+**Priority:** High
+
+Benchmarks will reveal bottlenecks and guide optimization.
+
+---
+
+# **PHASE 2 — INSTRUMENTATION LAYER (ADVANCED)**
+
+### *Optional for initial release, required for future IR/Compiler integration.*
+
+## **4. Safe Base/Core Hooking**
+
+Build hooks using CompilerPluginTools (recommended).
+
+## **5. Custom AbstractInterpreter**
+
+Capture inference events, IR transitions, and method-level metadata.
+
+## **6. SSA/IR Serialization**
+
+Binary representation of CodeInfo.
+
+## **7. World-Age Tracking**
+
+Mark IR pages stale on method redefinition.
+
+**Status:** Not started
+**Priority:** Medium
+**Dependencies:** Public API + stable runtime
+
+This phase unlocks the “introspection” story of MMSB.
+
+---
+
+# **PHASE 3 — POLISH AND ADVANCED RUNTIME**
+
+### *These round out the system, but are not blockers.*
+
+## **8. Unified Memory (CUDA UVM)**
+
+Simplify CPU/GPU page coherence.
+
+## **9. Event Serialization**
+
+Persist event streams for post-hoc analysis.
+
+## **10. Documentation Set**
+
+* README
+* Architecture
+* Serialization spec
+* Memory model
+* API reference
+* Tutorial notebook
+
+**Status:** Partial
+**Priority:** Medium–Low
+
+---
+
+# **III. PROGRESS SUMMARY**
+
+| Layer                    | Status   |
+| ------------------------ | -------- |
+| Engine (CPU/GPU)         | **100%** |
+| Logging & Replay         | **100%** |
+| Graph Runtime            | **100%** |
+| Error Handling           | **100%** |
+| Public API               | 100%     |
+| Monitoring               | 20%      |
+| Benchmarking             | 0%       |
+| Instrumentation (IR/SSA) | 0–10%    |
+| Documentation            | 20%      |
+
+**Total completion:** **52% → System Core is DONE.**
+Remaining work is usability, integrations, and polish.
+
+---
+
+# **IV. NEW EXECUTION ORDER (UPDATED)**
+
+### **Immediate (today / next 4 hours)**
+
+1. **Monitoring & Stats** — surface telemetry for live runs
+2. **Benchmark Suite** — validate performance envelope
+
+### **Medium-term (next week)**
+
+3. Instrumentation (hooks + interpreter + SSA)
+4. World-age tracking
+
+### **Long-term polish**
+
+5. Unified Memory
+6. Event Serialization
+7. Docs
+
+---
+
+# **V. SYSTEM STATUS: "ENGINE COMPLETE, SHELL REMAINS"**
+
+The project has transitioned from:
+
+**building the engine → exposing the engine → augmenting the engine.**
+
+The difficult part is done.
+What’s left is:
+
+* making MMSB nice
+* making MMSB observable
+* making MMSB fast
+* making MMSB accessible
+* making MMSB documentable
+
+This is the fun part.
+
+---
+
+If you want, I can generate:
+
+* **New ROADMAP.md**
+* **New HIGH-LEVEL_API_SPEC.md**
+* **Next atomic tasks**
+* **Mermaid DAG** showing remaining tasks only
+
+Just say:
+
+**“Generate the roadmap”** or
+**“Give next atomic tasks”**

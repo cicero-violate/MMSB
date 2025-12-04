@@ -1,0 +1,29 @@
+Instrumentation Layer Summary
+The instrumentation layer provides:
+
+BaseHooks: Runtime function interception
+
+Base.invoke → method dispatch tracking
+Base.setfield!/getfield → mutation tracking
+Requires method table manipulation
+
+
+CoreHooks: Core module interception
+
+Core.CodeInfo creation monitoring
+Core.MethodInstance specialization tracking
+Works via custom interpreter pattern
+
+
+CompilerHooks: Compiler pipeline integration
+
+MMSBInterpreter <: AbstractInterpreter
+Intercepts typeinf, abstract_call, optimize
+Logs IR transformations and type inference
+
+
+InstrumentationManager: Unified control
+
+Enable/disable all hooks
+Configuration management
+Lifecycle coordination

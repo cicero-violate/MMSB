@@ -1,0 +1,35 @@
+## **Runtime Layer Summary**
+
+The runtime layer provides:
+
+1. **PageAllocator**: Page lifecycle (create, delete, migrate, resize)
+2. **DeltaRouter**: Central dispatch for delta application and propagation
+3. **TLog**: Append-only transaction log with query/checkpoint/compress
+4. **ReplayEngine**: Deterministic state reconstruction and time-travel debugging
+
+**Key Control Flows:**
+```
+User/System Creates Delta
+    ↓
+DeltaRouter.route_delta!
+    ↓
+├→ Validate & Append to TLog
+├→ Apply to CPU or GPU page
+└→ Trigger propagation via ShadowPageGraph
+    ↓
+Dependency children notified
+    ↓
+Downstream recomputation scheduled
+```
+
+**Replay Flow:**
+```
+Load TLog or Checkpoint
+    ↓
+ReplayEngine.replay_to_epoch
+    ↓
+├→ Filter deltas by epoch
+├→ Create fresh pages
+└→ Apply deltas sequentially
+    ↓
+Reconstructed state (deterministic)

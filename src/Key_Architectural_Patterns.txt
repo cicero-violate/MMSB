@@ -1,0 +1,15 @@
+Key Architectural Patterns:
+
+Page = Versioned Memory: Every state is a page with epoch
+Delta = Minimal Change: Only changed bytes propagate
+Graph = Dependencies: ShadowPageGraph tracks relationships
+TLog = History: Append-only log enables replay
+Events = Coordination: Pub-sub for loose coupling
+Interpreter = Hooks: AbstractInterpreter for compiler integration
+
+What Makes This Novel:
+
+Below databases, above DRAM: New abstraction layer
+Unified CPU/GPU state: Single coherent memory model
+Deterministic replay: Full state reconstruction from log
+Byte-level deltas: Minimal overhead, maximum efficiency

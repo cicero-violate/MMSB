@@ -42,8 +42,9 @@ MMSB is a deterministic, delta-driven shared-memory fabric that lets CPU, GPU, a
 | `test/` | Deterministic regression suites. |
 
 ## Release Readiness
-- **Status:** Core runtime, GPU support, propagation, benchmarks, and monitoring are complete. Documentation (Task 6.5) is now satisfied via the docs above.
+- **Current tag:** `v0.1.0-alpha` (see `RELEASE_NOTES.md` for validation + checks).
 - **Testing:** `julia --startup-file=no --project -e 'using Pkg; Pkg.test()'`
+- **Examples:** `julia --startup-file=no --project examples/quickstart.jl`, `examples/tutorial.jl`
 - **Performance Baseline:** Captured in `benchmark/results/baseline.json` with known hotspots (propagation ≈500 μs, sparse delta ≈200 μs, alloc ≈5 μs). Optimization is deferred to the post-release performance track.
 
 ## Operational Model

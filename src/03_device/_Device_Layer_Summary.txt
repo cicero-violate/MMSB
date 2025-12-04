@@ -1,0 +1,38 @@
+## **Device Layer Summary**
+
+The device layer provides:
+
+1. **GPUKernels**: High-performance CUDA kernels for page operations
+   - `delta_merge_kernel!`: Main delta application on GPU
+   - `page_copy_kernel!`: Fast GPU-side copying
+   - `sparse_delta_apply_kernel!`: Optimized for sparse updates
+   - `page_compare_kernel!`: GPU-accelerated comparison
+
+2. **DeviceSync**: CPU ↔ GPU synchronization
+   - Explicit transfer functions
+   - Batch synchronization for efficiency
+   - Async transfer support (future)
+   - Statistics and monitoring
+
+3. **UnifiedMemory**: CUDA Unified Memory integration
+   - Transparent CPU/GPU access
+   - Prefetching hints
+   - Memory locality control
+   - Requires CC >= 6.0
+
+**Key Control Flow:**
+```
+Delta arrives at DeltaRouter
+    ↓
+Check page.location
+    ↓
+    ├─ CPU_LOCATION
+    │   └→ Direct byte copy
+    │
+    ├─ GPU_LOCATION
+    │   ├→ Upload delta to GPU
+    │   ├→ Launch delta_merge_kernel!
+    │   └→ Synchronize
+    │
+    └─ UNIFIED_LOCATION
+        └→ Direct access (auto-migration)

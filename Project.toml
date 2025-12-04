@@ -1,0 +1,20 @@
+name = "MMSB"
+uuid = "8e464427-1522-4382-b3ea-4966b903a233"
+version = "0.1.0-alpha"
+authors = ["Cicero Bugash <cicero.bugash@gmail.com>"]
+
+[deps]
+CUDA = "052768ef-5323-5732-b1bb-66c8b64840ba"
+Logging = "56ddb016-857b-54e1-b83d-db4d58db5568"
+Serialization = "9e88b42a-f829-5b0c-bbe9-9e923198166b"
+
+[compat]
+CUDA = "5.9.5"
+Logging = "1.11.0"
+Serialization = "1.11.0"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
