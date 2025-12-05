@@ -28,24 +28,25 @@ MMSB is a deterministic, delta-driven shared-memory fabric that lets CPU, GPU, a
    - `docs/SerializationSpec.md` — binary contract for pages, deltas, and checkpoints
 
 ## Repository Map
-| Path | Purpose |
-| --- | --- |
-| `src/01_types` | Page, delta, graph, and state definitions (page-aligned state forms). |
-| `src/02_runtime` | Allocator, delta router, TLog, replay engine. |
-| `src/03_device` | CUDA kernels plus device sync helpers. |
-| `src/04_instrumentation` | Compiler hook plumbing and instrumentation manager. |
-| `src/05_graph` | Propagation engine and event system. |
-| `src/utils` | Monitoring/statistics helpers. |
-| `examples/` | Runnable Julia demos (`quickstart.jl`, `tutorial.jl`). |
-| `docs/` | Architecture, API, and serialization references. |
-| `benchmark/` | Benchmark harness and captured baselines. |
-| `test/` | Deterministic regression suites. |
+| Path                     | Purpose                                                               |
+| ---                      | ---                                                                   |
+| `src/01_types`           | Page, delta, graph, and state definitions (page-aligned state forms). |
+| `src/02_runtime`         | Allocator, delta router, TLog, replay engine.                         |
+| `src/03_device`          | CUDA kernels plus device sync helpers.                                |
+| `src/04_instrumentation` | Compiler hook plumbing and instrumentation manager.                   |
+| `src/05_graph`           | Propagation engine and event system.                                  |
+| `src/utils`              | Monitoring/statistics helpers.                                        |
+| `examples/`              | Runnable Julia demos (`quickstart.jl`, `tutorial.jl`).                |
+| `docs/`                  | Architecture, API, and serialization references.                      |
+| `benchmark/`             | Benchmark harness and captured baselines.                             |
+| `test/`                  | Deterministic regression suites.                                      |
 
 ## Release Readiness
 - **Current tag:** `v0.1.0-alpha` (see `RELEASE_NOTES.md` for validation + checks).
 - **Testing:** `julia --startup-file=no --project -e 'using Pkg; Pkg.test()'`
 - **Examples:** `julia --startup-file=no --project examples/quickstart.jl`, `examples/tutorial.jl`
 - **Performance Baseline:** Captured in `benchmark/results/baseline.json` with known hotspots (propagation ≈500 μs, sparse delta ≈200 μs, alloc ≈5 μs). Optimization is deferred to the post-release performance track.
+- **Phase 2 kickoff:** Propagation command buffers + deduplicated queues reduce redundant recompute work and power `batch_route_deltas!` to update whole waves at once.
 
 ## Operational Model
 - **Semiring discipline:** Every module treats deltas as additive merges (`⊕`) and propagations as causal applies (`⊗`).
