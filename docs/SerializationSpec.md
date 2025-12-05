@@ -3,13 +3,13 @@
 All serialized artifacts obey a single rule: `state × delta → state′` must hold even when the payload is replayed outside the original process. Formats are designed for deterministic rehydration and forward compatibility.
 
 ## Data Types
-| Name | Julia Type | Description |
-| --- | --- | --- |
-| `PageID` | `UInt64` | Globally unique page handle. |
-| `DeltaID` | `UInt64` | Globally unique delta handle. |
-| `Epoch` | `UInt32` | Monotonic counter per page. |
-| `Timestamp` | `UInt64` | Nanoseconds since epoch. |
-| `PageLocation` | `Int32` | Enum tag (`0=CPU`, `1=GPU`, `2=UNIFIED`). |
+| Name           | Julia Type | Description                               |
+| ---            | ---        | ---                                       |
+| `PageID`       | `UInt64`   | Globally unique page handle.              |
+| `DeltaID`      | `UInt64`   | Globally unique delta handle.             |
+| `Epoch`        | `UInt32`   | Monotonic counter per page.               |
+| `Timestamp`    | `UInt64`   | Nanoseconds since epoch.                  |
+| `PageLocation` | `Int32`    | Enum tag (`0=CPU`, `1=GPU`, `2=UNIFIED`). |
 
 ## Page Payload (`serialize_page`)
 Pages are serialized via Julia Serialization with the tuple:
@@ -48,15 +48,15 @@ Also serialized via Julia Serialization:
 ## Transaction Log (`checkpoint_log!`)
 Binary layout written directly to `IO`:
 
-| Order | Type | Description |
-| --- | --- | --- |
-| 1 | `String` | Magic header `"MMSBCHK1"`. |
-| 2 | `UInt32` | Version (`1` as of Task 6.5). |
-| 3 | `UInt64` | Capture timestamp (`time_ns()`). |
-| 4 | `Int64` | Number of serialized pages (`page_count`). |
-| `repeat page_count` | — | For each page: `PageID`, `Int64` byte length, raw bytes from `serialize_page`. |
-| Next | `Int64` | Number of serialized deltas (`delta_count`). |
-| `repeat delta_count` | — | For each delta: `Int64` byte length, raw bytes from `serialize_delta`. |
+| Order                | Type     | Description                                                                    |
+| ---                  | ---      | ---                                                                            |
+| 1                    | `String` | Magic header `"MMSBCHK1"`.                                                     |
+| 2                    | `UInt32` | Version (`1` as of Task 6.5).                                                  |
+| 3                    | `UInt64` | Capture timestamp (`time_ns()`).                                               |
+| 4                    | `Int64`  | Number of serialized pages (`page_count`).                                     |
+| `repeat page_count`  | —        | For each page: `PageID`, `Int64` byte length, raw bytes from `serialize_page`. |
+| Next                 | `Int64`  | Number of serialized deltas (`delta_count`).                                   |
+| `repeat delta_count` | —        | For each delta: `Int64` byte length, raw bytes from `serialize_delta`.         |
 
 ### Validation
 - `load_checkpoint!` asserts the magic/version and raises `SerializationError` when corruption is detected (bad lengths, truncated RLE payloads, or unsupported versions).
