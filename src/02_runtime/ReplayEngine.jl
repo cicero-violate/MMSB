@@ -5,6 +5,7 @@ using ..DeltaTypes: Delta
 using ..MMSBStateTypes: MMSBState, MMSBConfig, register_page!, get_page
 using ..FFIWrapper
 using ..TLog
+using ..PageAllocator: _allocator_handle
 
 export replay_to_epoch, replay_to_timestamp, replay_from_checkpoint
 export replay_page_history, verify_state_consistency
