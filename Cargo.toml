@@ -30,4 +30,4 @@ name = "rust_smoke_replay_full_cuda"
 name = "rust_smoke_checkpoint_roundtrip"
 
 [[example]]
-name = "rust_comprehensive_test_internal"
+name = "rust_comprehensive_internal_tests"
