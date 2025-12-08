@@ -17,10 +17,10 @@ include("ffi/FFIWrapper.jl")
 # Core type system
 include("01_types/Errors.jl")
 include("01_types/Page.jl")
+include("01_types/MMSBState.jl")
 include("02_runtime/PageAllocator.jl")
 include("01_types/Delta.jl")
 include("01_types/ShadowPageGraph.jl")
-include("01_types/MMSBState.jl")
 
 # Rust error mapping shim (depends on FFI + ErrorTypes)
 include("ffi/RustErrors.jl")
