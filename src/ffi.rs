@@ -650,30 +650,27 @@ pub extern "C" fn mmsb_tlog_summary(path: *const c_char, out: *mut TLogSummary) 
     }
 
     let path_str = match unsafe { CStr::from_ptr(path).to_str() } {
-        Ok(s) => s.to_owned(),
+        Ok(s) => s,
         Err(_) => {
             set_last_error(MMSBErrorCode::IOError);
             return -1;
         }
     };
 
-    let log = match TransactionLog::new(&path_str) {
-        Ok(log) => log,
+    match crate::runtime::tlog::summary(path_str) {
+        Ok(summary) => {
+            unsafe {
+                (*out).total_deltas = summary.total_deltas;
+                (*out).total_bytes = summary.total_bytes;
+                (*out).last_epoch = summary.last_epoch;
+            }
+            0
+        }
         Err(e) => {
             set_last_error(log_error_code(&e));
-            return -1;
+            -1
         }
-    };
-
-    let summary = log.summary();
-
-    unsafe {
-        (*out).total_deltas = summary.total_deltas;
-        (*out).total_bytes = summary.total_bytes;
-        (*out).last_epoch = summary.last_epoch;
     }
-
-    0
 }
 
 // ──────────────────────────────────────────────────────────────
