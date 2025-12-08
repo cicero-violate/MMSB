@@ -581,15 +581,22 @@ pub extern "C" fn mmsb_checkpoint_load(
     }
 }
 
+// src/ffi.rs — ONLY THESE TWO FUNCTIONS
+
 #[no_mangle]
 pub extern "C" fn mmsb_tlog_reader_new(path: *const c_char) -> TLogReaderHandle {
     if path.is_null() {
         set_last_error(MMSBErrorCode::InvalidHandle);
         return TLogReaderHandle::null();
     }
-    let path_str = unsafe { CStr::from_ptr(path) }
-        .to_string_lossy()
-        .to_string();
+    let path_str = match unsafe { CStr::from_ptr(path).to_str() } {
+        Ok(s) => s.to_owned(),
+        Err(_) => {
+            set_last_error(MMSBErrorCode::IOError);
+            return TLogReaderHandle::null();
+        }
+    };
+
     match TransactionLogReader::open(path_str) {
         Ok(reader) => TLogReaderHandle {
             ptr: Box::into_raw(Box::new(reader)),
@@ -601,6 +608,8 @@ pub extern "C" fn mmsb_tlog_reader_new(path: *const c_char) -> TLogReaderHandle 
     }
 }
 
+
+
 #[no_mangle]
 pub extern "C" fn mmsb_tlog_reader_free(handle: TLogReaderHandle) {
     if !handle.ptr.is_null() {
@@ -610,7 +619,6 @@ pub extern "C" fn mmsb_tlog_reader_free(handle: TLogReaderHandle) {
     }
 }
 
-// src/ffi.rs
 #[no_mangle]
 pub extern "C" fn mmsb_tlog_reader_next(handle: TLogReaderHandle) -> DeltaHandle {
     if handle.ptr.is_null() {
@@ -633,6 +641,7 @@ pub extern "C" fn mmsb_tlog_reader_next(handle: TLogReaderHandle) -> DeltaHandle
         }
     }
 }
+
 
 #[no_mangle]
 pub extern "C" fn mmsb_tlog_summary(path: *const c_char, out: *mut TLogSummary) -> i32 {
