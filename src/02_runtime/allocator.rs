@@ -87,13 +87,8 @@ impl PageAllocator {
     }
 
     pub fn release(&self, page_id: PageID) {
-        if let Some(raw_ptr) = self.pages.lock().remove(&page_id) {
-            println!("ALLOCATOR: Releasing ownership of page {} — dropping Box", page_id.0);
-            unsafe {
-                let _box = Box::from_raw(raw_ptr);
-                // Box drops here → memory freed when last Arc gone
-            }
-        }
+        let _ = self.pages.lock().remove(&page_id); // This drops the Box<Page> immediately
+        println!("[ALLOCATOR] Released page {} — allocator no longer owns it", page_id.0);
     }
 
     pub fn len(&self) -> usize {
