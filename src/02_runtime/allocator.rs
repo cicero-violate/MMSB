@@ -78,7 +78,17 @@ impl PageAllocator {
         }
     }
 
-    pub fn release(&self, page_id: PageID) { self.free(page_id); }
+    pub fn release(&self, page_id: PageID) {
+        if let Some(boxed_page) = self.pages.lock().remove(&page_id) {
+            println!("[ALLOCATOR] release({}): ownership transferred — Box removed from map but NOT dropped (caller now owns it)", page_id.0);
+            // DO NOT drop the Box here!
+            // The raw pointer from allocate_raw is now the sole owner.
+            // Dropping boxed_page here would free the memory → use-after-free
+            std::mem::forget(boxed_page);
+        } else {
+            println!("[ALLOCATOR] release({}): page not found — already released?", page_id.0);
+        }
+    }
 
     pub fn acquire_page(&self, page_id: PageID) -> Option<*mut Page> {
         self.pages.lock().get(&page_id).map(|b| &**b as *const Page as *mut Page)
