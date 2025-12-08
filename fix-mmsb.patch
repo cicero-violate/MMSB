@@ -1,0 +1,32 @@
+--- a/src/02_runtime/mod.rs
++++ b/src/02_runtime/mod.rs
+@@ -13,7 +13,7 @@ use crate::types::*;
+ use crate::runtime::allocator::PageAllocator;
+ use crate::runtime::tlog;
+ 
+-pub use tlog::{next_delta_id, TransactionLog};
++pub use tlog::TransactionLog;
+ 
+ pub struct Runtime {
+     allocator: PageAllocator,
+
+--- a/src/ffi.rs
++++ b/src/ffi.rs
+@@ -548,7 +548,7 @@ pub extern "C" fn mmsb_checkpoint_write(
+     let path_str = unsafe { CStr::from_ptr(path) }
+         .to_string_lossy()
+         .to_string();
+-    match checkpoint::write_checkpoint(allocator_ref, path_str) {
++    match checkpoint::write_checkpoint(allocator_ref, log_ref, path_str) {
+         Ok(_) => 0,
+         Err(_) => {
+             set_last_error(MMSBErrorCode::SnapshotError);
+@@ -575,7 +575,7 @@ pub extern "C" fn mmsb_checkpoint_load(
+     let path_str = unsafe { CStr::from_ptr(path) }
+         .to_string_lossy()
+         .to_string();
+-    match checkpoint::load_checkpoint(allocator, path_str).map_or_else(
++    match checkpoint::load_checkpoint(allocator_ref, log_ref, path_str).map_or_else(
+         |err| {
+             set_last_error(log_error_code(&err));
+             -1

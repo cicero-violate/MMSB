@@ -13,4 +13,4 @@ pub use allocator_stats::AllocatorStats;
 pub use checkpoint::{load_checkpoint, write_checkpoint};
 pub use delta_merge::merge_deltas;
 pub use simd_mask::generate_mask;
-pub use tlog::{next_delta_id, TransactionLog};
+pub use tlog::TransactionLog;
