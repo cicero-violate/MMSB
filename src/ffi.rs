@@ -563,18 +563,32 @@ pub extern "C" fn mmsb_checkpoint_load(
     log: TLogHandle,
     path: *const c_char,
 ) -> i32 {
+    eprintln!("\n=== mmsb_checkpoint_load CALLED ===");
+    eprintln!("   allocator.ptr = {:p}", allocator.ptr);
+    eprintln!("   log.ptr       = {:p}", log.ptr);
+    eprintln!("   path          = {}", 
+        if path.is_null() { "<null>" } else { unsafe { CStr::from_ptr(path) }.to_string_lossy() });
+
     if allocator.ptr.is_null() || log.ptr.is_null() || path.is_null() {
+        eprintln!("   INVALID HANDLE → returning -1");
         set_last_error(MMSBErrorCode::InvalidHandle);
         return -1;
     }
+
     let allocator_ref = unsafe { &*allocator.ptr };
     let log_ref = unsafe { &*log.ptr };
     let path_str = unsafe { CStr::from_ptr(path) }
         .to_string_lossy()
         .to_string();
+
+    eprintln!("   Calling checkpoint::load_checkpoint(...)");
     match checkpoint::load_checkpoint(allocator_ref, log_ref, path_str) {
-        Ok(_) => 0,
-        Err(_) => {
+        Ok(_) => {
+            eprintln!("   checkpoint::load_checkpoint() → OK");
+            0
+        }
+        Err(e) => {
+            eprintln!("   checkpoint::load_checkpoint() → ERROR: {e:?}");
             set_last_error(MMSBErrorCode::SnapshotError);
             -1
         }
