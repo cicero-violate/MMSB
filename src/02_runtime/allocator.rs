@@ -1,8 +1,10 @@
 use crate::types::{Epoch, Page, PageError, PageID, PageLocation};
+use crate::types::{Delta, DeltaID, Source};
 use parking_lot::Mutex;
 use std::collections::HashMap;
 use std::ffi::c_void;
 use std::sync::atomic::{AtomicU64, Ordering};
+
 
 extern "C" {
     fn cudaMallocManaged(ptr: *mut *mut c_void, size: usize, flags: u32) -> i32;
