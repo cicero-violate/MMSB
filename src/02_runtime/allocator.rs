@@ -67,7 +67,7 @@ impl PageAllocator {
         }
         let page = Box::new(Page::new(page_id_hint, size, loc)?);
         let ptr = Box::into_raw(page);
-        println!("[ALLOCATOR] Allocated page ID {} at {:p}", page_id_hint.0, ptr);
+        println!("[ALLOCATOR] allocate_raw(id={}) → raw ptr = {:p}", page_id_hint.0, ptr);
         self.pages.lock().insert(page_id_hint, unsafe { Box::from_raw(ptr) });
         Ok(ptr)
     }
