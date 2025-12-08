@@ -14,7 +14,6 @@ pub struct TransactionLog {
     entries: RwLock<VecDeque<Delta>>,
     writer: RwLock<Option<BufWriter<File>>>,
     path: PathBuf,
-    reader_offset: std::sync::atomic::AtomicU64,
 }
 
 #[derive(Debug)]
