@@ -24,20 +24,20 @@ mutable struct Page
     state::Symbol
 end
 
-# THE ONE AND ONLY CONSTRUCTOR — ONLY CALLED BY THE ALLOCATOR
+# THE ONE AND ONLY CONSTRUCTOR
 function Page(handle::FFIWrapper.RustPageHandle, id::PageID, location::PageLocation, size::Int;
               metadata::Dict{Symbol,Any} = Dict{Symbol,Any}())
     @assert size > 0 "Page size must be positive, got: $size"
-    @oan assert handle.ptr ≠ C_NULL "Cannot create Page with NULL handle"
+    @assert handle.ptr ≠ C_NULL "Cannot create Page with NULL handle"
 
     page = Page(handle, id, location, size, Dict{Symbol,Any}(), :allocated)
 
-    # FINALIZER: Release via global allocator — THE ONLY CORRECT WAY
+    # FINALIZER: Use the global allocator
     finalizer(page) do p
         try
             FFIWrapper.rust_allocator_release!(_allocator_handle(), UInt64(p.id))
         catch
-            # Silent during shutdown — normal for finalizers
+            # Silent during shutdown
         end
     end
 
@@ -45,7 +45,7 @@ function Page(handle::FFIWrapper.RustPageHandle, id::PageID, location::PageLocat
     page
 end
 
-# Helper constructors (internal only)
+# Helper constructor for UInt64 IDs (internal only)
 Page(handle::FFIWrapper.RustPageHandle, id::UInt64, location::PageLocation, size::Int; kwargs...) =
     Page(handle, PageID(id), location, size; kwargs...)
 
