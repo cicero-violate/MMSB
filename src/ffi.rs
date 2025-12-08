@@ -10,6 +10,7 @@ use std::os::raw::c_char;
 use std::panic;
 use std::ptr;
 use std::thread_local;
+use std::ffi::CStr;
 
 #[repr(C)]
 #[derive(Clone, Copy)]
