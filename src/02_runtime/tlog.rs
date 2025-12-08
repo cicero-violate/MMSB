@@ -143,16 +143,17 @@ impl TransactionLog {
 }
 
 impl TransactionLogReader {
-    pub fn open(path: impl AsRef<Path>) -> std::io::Result<Self> {
+    pub fn open(path: impl AsRef<Path>, tlog: &TransactionLog) -> std::io::Result<Self> {
         let file = File::open(path)?;
-        if file.metadata()?.len() == 0 {
-            return Ok(Self {
-                reader: BufReader::new(file),
-            });
-        }
         let mut reader = BufReader::new(file);
-        validate_header(&mut reader)?;
-        Ok(Self { reader })
+
+        let offset = tlog.get_reader_offset();
+        if offset > 0 {
+            reader.seek(SeekFrom::Start(offset))?;
+            // Don't reset here — let caller decide
+        }
+
+        Ok(Self { reader, tlog: tlog.clone() })
     }
 
     pub fn next(&mut self) -> std::io::Result<Option<Delta>> {
