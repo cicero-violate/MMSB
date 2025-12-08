@@ -8,7 +8,6 @@ use std::path::{Path, PathBuf};
 const MAGIC: &[u8] = b"MMSBLOG1";
 const VERSION: u32 = 1;
 
-
 #[derive(Debug)]
 pub struct TransactionLog {
     entries: RwLock<VecDeque<Delta>>,
@@ -42,18 +41,8 @@ impl TransactionLog {
             entries: RwLock::new(VecDeque::new()),
             writer: RwLock::new(Some(writer)),
             path,
-            // reader_offset: std::sync::atomic::AtomicU64::new(0), // ← ADD THIS
         })
     }
-
-    // ← ADD THESE TWO FUNCTIONS
-    // pub fn set_reader_offset(&self, offset: u64) {
-    //     self.reader_offset.store(offset, std::sync::atomic::Ordering::Relaxed);
-    // }
-
-    // pub fn get_reader_offset(&self) -> u64 {
-    //     self.reader_offset.load(std::sync::atomic::Ordering::Relaxed)
-    // }
 
     pub fn append(&self, delta: Delta) -> std::io::Result<()> {
         {
@@ -92,74 +81,52 @@ impl TransactionLog {
         }
     }
 
-    pub fn truncate(&self, offset: u64) -> std::io::Result<()> {
-        {
-            let mut writer_lock = self.writer.write();
-            if let Some(writer) = writer_lock.as_mut() {
-                writer.flush()?;
-            }
-            let mut file = OpenOptions::new().write(true).open(&self.path)?;
-            file.set_len(offset)?;
-            file.seek(SeekFrom::Start(offset))?;
-            *writer_lock = Some(BufWriter::new(file));
-        }
-        self.entries.write().clear();
-        Ok(())
-    }
-
-    pub fn summary(path: impl AsRef<Path>) -> std::io::Result<LogSummary> {
-        let file = match File::open(path.as_ref()) {
-            Ok(file) => file,
-            Err(err) if err.kind() == std::io::ErrorKind::NotFound => {
-                return Err(err);
-            }
-            Err(err) => return Err(err),
-        };
-        if file.metadata()?.len() == 0 {
-            return Ok(LogSummary::default());
-        }
-
-        let mut reader = BufReader::new(file);
-        validate_header(&mut reader)?;
-        let mut summary = LogSummary::default();
-        loop {
-            let start = reader.stream_position()?;
-            match read_frame(&mut reader)? {
-                Some(delta) => {
-                    summary.total_deltas += 1;
-                    summary.total_bytes += (reader.stream_position()? - start) as u64;
-                    summary.last_epoch = delta.epoch.0;
-                }
-                None => break,
-            }
-        }
-        Ok(summary)
-    }
-
-    pub fn path(&self) -> &Path {
-        &self.path
-    }
+    // No truncate method needed — remove it if present
 }
 
 impl TransactionLogReader {
     pub fn open(path: impl AsRef<Path>) -> std::io::Result<Self> {
         let file = File::open(path)?;
-        Ok(Self {
-            reader: BufReader::new(file),
-        })
+        let mut reader = BufReader::new(file);
+        validate_header(&mut reader)?;
+        Ok(Self { reader })
     }
 
     pub fn next(&mut self) -> std::io::Result<Option<Delta>> {
         read_frame(&mut self.reader)
     }
+
+    pub fn free(self) {}
 }
 
-pub fn next_delta_id(counter: &std::sync::atomic::AtomicU64) -> DeltaID {
-    use std::sync::atomic::Ordering;
-    DeltaID(counter.fetch_add(1, Ordering::Relaxed))
+impl Drop for TransactionLogReader {
+    fn drop(&mut self) {}
 }
 
-fn serialize_frame(writer: &mut impl Write, delta: &Delta) -> std::io::Result<()> {
+pub fn summary(path: impl AsRef<Path>) -> std::io::Result<LogSummary> {
+    let file = match File::open(path.as_ref()) {
+        Ok(file) => file,
+        Err(err) if err.kind() == std::io::ErrorKind::NotFound => {
+            return Err(err);
+        }
+        Err(err) => return Err(err),
+    };
+    if file.metadata()?.len() == 0 {
+        return Ok(LogSummary::default());
+    }
+    let mut reader = BufReader::new(file);
+    validate_header(&mut reader)?;
+
+    let mut summary = LogSummary::default();
+    while let Ok(Some(delta)) = read_frame(&mut reader) {
+        summary.total_deltas += 1;
+        summary.total_bytes += delta.mask.len() as u64 + delta.payload.len() as u64 + 32;
+        summary.last_epoch = summary.last_epoch.max(delta.epoch.0);
+    }
+    Ok(summary)
+}
+
+fn serialize_frame(writer: &mut BufWriter<File>, delta: &Delta) -> std::io::Result<()> {
     writer.write_all(&delta.delta_id.0.to_le_bytes())?;
     writer.write_all(&delta.page_id.0.to_le_bytes())?;
     writer.write_all(&delta.epoch.0.to_le_bytes())?;
