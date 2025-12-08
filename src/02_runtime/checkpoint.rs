@@ -37,9 +37,10 @@ pub fn write_checkpoint(
     Ok(())
 }
 
+// src/02_runtime/checkpoint.rs
 pub fn load_checkpoint(
     allocator: &PageAllocator,
-    tlog: &TransactionLog,
+    _tlog: &TransactionLog,  // ← we don't use it anymore
     path: impl AsRef<Path>,
 ) -> std::io::Result<()> {
     let mut reader = BufReader::new(File::open(path)?);
@@ -65,9 +66,9 @@ pub fn load_checkpoint(
     reader.read_exact(&mut page_count_bytes)?;
     let page_count = u32::from_le_bytes(page_count_bytes) as usize;
 
+    // SKIP the log_offset — we don't need it
     let mut log_offset_bytes = [0u8; 8];
-    reader.read_exact(&mut log_offset_bytes)?;
-    let log_offset = u64::from_le_bytes(log_offset_bytes);
+    reader.read_exact(&mut log_offset_bytes)?; // just read and ignore
 
     let mut snapshots = Vec::with_capacity(page_count);
     for _ in 0..page_count {
@@ -114,9 +115,6 @@ pub fn load_checkpoint(
     allocator
         .restore_from_snapshot(snapshots)
         .map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err.to_string()))?;
-
-    // ← THIS IS THE ONLY LINE YOU ADD
-    // tlog.set_reader_offset(log_offset);
 
     Ok(())
 }
