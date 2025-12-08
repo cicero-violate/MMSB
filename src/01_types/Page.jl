@@ -1,7 +1,6 @@
 module PageTypes
 
 using ..FFIWrapper
-using ..PageAllocator: _allocator_handle
 
 export Page, PageID, PageLocation, CPU_LOCATION, GPU_LOCATION, UNIFIED_LOCATION,
        is_gpu_page, is_cpu_page, page_size_bytes,
