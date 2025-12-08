@@ -198,18 +198,27 @@ impl Page {
     }
 
     pub fn set_metadata_blob(&mut self, blob: &[u8]) -> Result<(), PageError> {
+        if blob.is_empty() {
+            // Empty blob = no metadata → perfectly valid
+            self.metadata = Metadata::new();
+            return Ok(());
+        }
+
         let mut cursor = 0usize;
         let entry_count = read_u32(blob, &mut cursor)? as usize;
         let mut entries = Vec::with_capacity(entry_count);
+
         for _ in 0..entry_count {
             let key_len = read_u32(blob, &mut cursor)? as usize;
             let key_bytes = read_bytes(blob, &mut cursor, key_len)?;
             let value_len = read_u32(blob, &mut cursor)? as usize;
             let value_bytes = read_bytes(blob, &mut cursor, value_len)?;
+
             let key = String::from_utf8(key_bytes)
                 .map_err(|_| PageError::MetadataDecode("invalid utf-8 key"))?;
             entries.push((key, value_bytes));
         }
+
         self.metadata = Metadata::from_entries(entries);
         Ok(())
     }
