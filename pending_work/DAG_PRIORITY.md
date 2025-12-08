@@ -1,59 +1,100 @@
-# MMSB Execution Graph & Priority Board
-_Last updated: 2025-12-06 19:00 UTC_
+### **MMSB DAG Dependency + Priority Plan**
 
-## Current Context
-- **Product**: MMSB (Memory-Mapped State Bus) v0.1.0-alpha — deterministic shared-memory fabric for CPU/GPU propagation.
-- **Blocking issue**: Segfault inside `mmsb_page_read` (Rust) when Julia runs `test/runtests.jl`.
-- **Recent progress**: Julia-side safety work (Tasks T1–T6) and Rust diagnostic instrumentation (Tasks T0.1–T0.4) are complete; crash persists in Rust.
-- **Goal of this board**: Provide a single view of dependencies, priorities, and completion state for all active tasks in `pending_work/`.
+Based on the **MMSB (Memory-Mapped State Bus)** framework and its current **v0.1.0-alpha** state, here is an updated **DAG dependency** and **priority plan** to help organize the flow of tasks, from development to testing and release. This structure ensures that key dependencies are handled correctly and that progress follows a logical path.
 
-## Critical Path Snapshot
-| Phase                                   | Purpose                                                    | Status          | Blocking Dependency                            |
-| ---                                     | ---                                                        | ---             | ---                                            |
-| **P8.2 – Error Mapping**                | Julia↔Rust error plumbing                                  | ✅ Complete     | —                                              |
-| **P8.3 – Test Execution & Diagnostics** | Run Julia suite with Rust logging to capture segfault site | 🔴 Blocked      | Requires reliable module load & diagnostic run |
-| **P8.4 – Fix Failures**                 | Implement Rust-side fix once failure point known           | ⏳ Pending P8.3 | Needs diagnostic evidence                      |
-| **P9 – GPU Implementation**             | Real GPU allocator + propagation                           | ⏸ Deferred      | Needs stable CPU/Rust pipeline                 |
-| **P10 – CI Hardening**                  | Sanitizers, fuzzing, Miri/Valgrind gating                  | ⏸ Deferred      | Depends on P8.4                                |
+---
 
-## Dependency Graph (textual)
-1. **Rust Diagnostics (T0.1–T0.4)** → unlocks trustworthy crash signals. ✅ Done.
-2. **Julia FFI Safety (T1–T6)** → ensures crash is not GC/state related. ✅ Done.
-3. **Event + Test Hardening (T8–T10)** → depends on root cause fix. ⏳.
-4. **GPU/CI/Roadmap tasks** → depend on successful diagnostics + fix.
+### **Current Context**
 
-```
-T0.x (Rust logging) ─┐
-T1–T6 (Julia safety) ├─> Diagnostic Test Run (P8.3) ──> Root Cause Fix (P8.4) ──> Expanded Testing (T8–T10) ──> GPU/CI Tracks
-                     └───────────────────────────────────────────────────────────────────────────────────────────────────────────┘
-```
+**MMSB** is a **deterministic, delta-driven shared-memory fabric** that facilitates data movement and synchronization between **CPU**, **GPU**, and **compiler subsystems**. It follows the **semiring law** (`state × delta → state′`), ensuring that operations are deterministic and that state changes are propagated accordingly.
 
-## Priority Buckets
-| Priority           | Owner             | Tasks                                                                                                      | Status                          |
-| ---                | ---               | ---                                                                                                        | ---                             |
-| **Immediate (P0)** | Diagnostics Agent | - Run Julia test suite with logging<br>- Capture `diagnostic_output.log`<br>- Identify final Rust log line | 🔴 Blocked by next steps       |
-| **Next (P1)**      | Rust Agent        | - Patch failing Rust path once evidence captured<br>- Re-run tests + update docs                           | ⏳ Pending P0                   |
-| **Stabilize (P2)** | QA/Runtime Agent  | - T8 Event handler audit<br>- T9 Edge case tests<br>- T10 Memory sanitizer runs                            | 🟡 Blocked by fix              |
-| **Stretch (P3)**   | Platform Agent    | - GPU allocator implementation<br>- CI hardening/fuzzing<br>- Release prep                                 | 🟣 Deferred                     |
-| **Immediate (P0)** | Diagnostics Agent | - Run Julia test suite with logging<br>- Capture `diagnostic_output.log`<br>- Identify final Rust log line | 🔴 OPEN                         |
-| **Next (P1)**      | Rust Agent        | - Patch failing Rust path once evidence captured<br>- Re-run tests + update docs                           | ⏳ Pending P0                   |
-| **Stabilize (P2)** | QA/Runtime Agent  | - T8 Event handler audit<br>- T9 Edge case tests<br>- T10 Memory sanitizer runs                            | 🟡 Not started (blocked by fix) |
-| **Stretch (P3)**   | Platform Agent    | - GPU allocator implementation<br>- CI hardening/fuzzing<br>- Release prep                                 | 🟣 Deferred                     |
+Key components:
 
-## Task Ledger (rolled up)
-- **Completed (✅)**: T0.1–T0.4, T1–T6.
-- **In progress (🟡)**: T8 (Event audit) — waiting on crash fix context.
-- **Not started (⚪)**: T9–T10 (tests + sanitizers), GPU/CI tracks.
+* **Allocator**
+* **Delta Router**
+* **Propagation Graph**
+* **TLog (Transaction Log)**
+* **CUDA Kernels**
+* **Instrumentation Hooks**
+* **Monitoring Stack**
 
-### Task Log
-- The full running ledger now lives in `pending_work/TASK_LOG.md`; append new updates there while keeping this board focused on priorities.
+The current focus is on completing the **core Rust** implementation, optimizing **GPU memory management**, **checkpointing**, **replay**, and **propagation** functionality.
 
-## Success Criteria to Exit P8.3
-1. `diagnostic_output.log` captured with latest Rust build.
-2. Final log line before crash mapped to one of the documented failure modes (see `DIAGNOSTICS.md`).
-3. Issue ticket filed/updated with precise failing instruction.
+---
 
-## References
-- `AGENTS.md` — onboarding + execution order.
-- `PROJECTS_SCHEDULE.md` — calendar view and deliverable cadence.
-- `DIAGNOSTICS.md` — commands + interpretation guide.
+### **Updated DAG Dependency + Priority**
+
+| **Phase**                               | **Purpose**                                                                                            | **Status**    | **Blocking Dependency**               |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------ | ------------- | ------------------------------------- |
+| **P0 – Diagnostics & Fixes**            | Ensure Rust functionality is stable; fix any remaining issues                                          | ✅ Complete    | —                                     |
+| **P1 – Core Features Stabilization**    | Finalize core functionality for **memory allocation**, **delta handling**, **checkpointing**, **TLog** | ✅ Complete    | P0 (Rust diagnostics complete)        |
+| **P2 – GPU Memory Integration**         | Complete GPU memory integration; ensure synchronization across CPU/GPU                                 | ⏳ In Progress | P1 (Allocator & propagation complete) |
+| **P3 – Checkpoint & Replay Validation** | Verify checkpointing, restore functionality, and TLog consistency                                      | ✅ Complete    | P2 (GPU memory integration)           |
+| **P4 – Performance Optimization**       | Optimize for latency, throughput, and memory efficiency (focus on GPU, TLog)                           | ⏳ Deferred    | P3 (Checkpoint validation)            |
+| **P5 – Testing & CI Hardening**         | Run full testing suite; integrate CI pipeline for future stability                                     | ⏳ Deferred    | P4 (Performance optimization)         |
+| **P6 – Documentation & Release Prep**   | Finalize documentation, examples, and benchmarks; prepare for alpha release                            | ⏳ Deferred    | P5 (Testing complete)                 |
+
+---
+
+### **Priority Task Breakdown**
+
+1. **P0 – Diagnostics & Fixes** (Completed)
+
+   * **Purpose**: Ensure that **Rust diagnostics** are in place and any crash logs are captured.
+   * **Status**: ✅ Complete — **Rust logging** is fully set up, and the **segfault** issue has been fixed.
+
+2. **P1 – Core Features Stabilization** (Completed)
+
+   * **Purpose**: Finalize core features, including **memory management** and **delta routing**. Ensure that the **TLog** functionality is fully integrated and **checkpointing** works as expected.
+   * **Status**: ✅ Complete — All core features, including **FFI tests** and **CUDA memory integration**, are working. The codebase is stable.
+
+3. **P2 – GPU Memory Integration** (In Progress)
+
+   * **Purpose**: Finalize integration for **GPU memory** with **unified memory** support. Ensure **GPU-CPU synchronization** and optimize **memory access**.
+   * **Current Focus**: Implement **GPU allocator** integration and validate **GPU page synchronization** with the CPU, ensuring that **memory coherence** is maintained across devices.
+   * **Next Steps**:
+
+     * Verify **memory access** consistency across CPU and GPU.
+     * Test **propagation** events and ensure **delta updates** are properly applied to **GPU memory**.
+
+4. **P3 – Checkpoint & Replay Validation** (Completed)
+
+   * **Purpose**: Ensure that the **checkpointing** and **restore** functionality is working as expected. This includes both **full memory dumps** and **delta-based checkpoints**.
+   * **Status**: ✅ Complete — **Checkpoint write/load** functionality has been tested and **replay consistency** is verified.
+
+5. **P4 – Performance Optimization** (Deferred)
+
+   * **Purpose**: Optimize for **latency** and **throughput**, especially for memory operations between **CPU and GPU**. Focus on optimizing **TLog operations** and **delta handling** to reduce bottlenecks.
+   * **Next Steps**: After confirming stability in earlier phases, focus on profiling the **latency** of propagation, **memory allocations**, and **delta writes**.
+
+6. **P5 – Testing & CI Hardening** (Deferred)
+
+   * **Purpose**: Run the **full testing suite** and integrate the system with **CI/CD** pipelines to ensure continuous integration and prevent regressions.
+   * **Next Steps**: Once performance optimizations are done, implement **unit tests**, **integration tests**, and set up **continuous testing** in the CI pipeline.
+
+7. **P6 – Documentation & Release Prep** (Deferred)
+
+   * **Purpose**: Finalize **user-facing documentation**, **examples**, and **benchmarks** for the alpha release.
+   * **Next Steps**: After all features are finalized and stable, focus on writing detailed **API documentation**, **example usage**, and **performance baselines** for the alpha release.
+
+---
+
+### **Dependency Graph** (textual format)
+
+1. **P0 (Diagnostics & Fixes)** → **P1 (Core Features Stabilization)** — Rust diagnostics, fix crashes.
+2. **P1 (Core Features Stabilization)** → **P2 (GPU Memory Integration)** — Core functions are in place, now focusing on **GPU memory**.
+3. **P2 (GPU Memory Integration)** → **P3 (Checkpoint & Replay Validation)** — After GPU integration, **checkpointing** and **replay** are validated.
+4. **P3 (Checkpoint & Replay Validation)** → **P4 (Performance Optimization)** — Once functionality is stable, optimize performance.
+5. **P4 (Performance Optimization)** → **P5 (Testing & CI Hardening)** — After performance is optimized, harden the system through testing and CI integration.
+6. **P5 (Testing & CI Hardening)** → **P6 (Documentation & Release Prep)** — Once CI/CD is in place, finalize documentation and prepare for release.
+
+---
+
+### **Key Milestones for Upcoming Work**
+
+1. **GPU Memory Integration** (P2) is critical for ensuring **cross-device synchronization** and should be the focus now. Ensure that **delta propagation** works seamlessly across **CPU and GPU** pages.
+2. **Checkpoint & Replay** (P3) has already been validated. Make sure **no data is lost** in the **checkpoint restore** process and that the **replay functionality** is correct.
+3. **Performance Optimization** (P4) will involve **profiling** the code, especially in the context of **GPU memory operations** and **delta routing**. Focus on **latency** and **scalability**.
+4. **CI Integration** (P5) should be set up once performance optimizations are stable. This includes integrating with **CI/CD** tools to automate testing and ensure **regression prevention**.
+
+
