@@ -26,3 +26,6 @@ name = "rust_smoke_test"
 
 [[example]]
 name = "rust_smoke_test_minimal"
+
+[[example]]
+name = "rust_smoke_replay_full"
