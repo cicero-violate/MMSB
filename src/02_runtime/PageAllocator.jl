@@ -21,7 +21,7 @@ const _ALLOCATOR = Ref{FFIWrapper.RustAllocatorHandle}(FFIWrapper.RustAllocatorH
 function _allocator_handle()
     handle = _ALLOCATOR[]
     if handle.ptr == C_NULL
-        handle = FFIWrapper.rust_allocator_new(Int32(CPU_LOCATION))
+        handle = FFIWrapper.rust_allocator_new()
         _ALLOCATOR[] = handle
     end
     handle
