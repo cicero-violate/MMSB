@@ -10,7 +10,7 @@ const SNAPSHOT_VERSION: u32 = 1;
 
 pub fn write_checkpoint(
     allocator: &PageAllocator,
-    tlog: &TransactionLog,
+    tlog: &mut TransactionLog,
     path: impl AsRef<Path>,
 ) -> std::io::Result<()> {
     let pages = allocator.snapshot_pages();
@@ -114,6 +114,9 @@ pub fn load_checkpoint(
     allocator
         .restore_from_snapshot(snapshots)
         .map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err.to_string()))?;
+
+    // ← THIS IS THE ONLY LINE YOU ADD
+    tlog.set_reader_offset(log_offset);
 
     Ok(())
 }
