@@ -533,6 +533,7 @@ pub extern "C" fn mmsb_tlog_append(handle: TLogHandle, delta: DeltaHandle) -> i3
     }
 }
 
+// In src/ffi.rs — REPLACE mmsb_checkpoint_write
 #[no_mangle]
 pub extern "C" fn mmsb_checkpoint_write(
     allocator: AllocatorHandle,
@@ -542,11 +543,19 @@ pub extern "C" fn mmsb_checkpoint_write(
     eprintln!("\n=== mmsb_checkpoint_write CALLED ===");
     eprintln!("   allocator.ptr = {:p}", allocator.ptr);
     eprintln!("   log.ptr       = {:p}", log.ptr);
-    eprintln!("   path          = {}", 
-        if path.is_null() { "<null>" } else { unsafe { CStr::from_ptr(path) }.to_string_lossy() });
+    eprintln!(
+        "   path          = {}",
+        if path.is_null() {
+            "<null>"
+        } else {
+            unsafe { CStr::from_ptr(path) }
+                .to_string_lossy()
+                .as_ref()
+        }
+    );
 
     if allocator.ptr.is_null() || log.ptr.is_null() || path.is_null() {
-        eprintln!("   INVALID HANDLE");
+        eprintln!("   INVALID HANDLE → returning -1");
         set_last_error(MMSBErrorCode::InvalidHandle);
         return -1;
     }
@@ -555,7 +564,7 @@ pub extern "C" fn mmsb_checkpoint_write(
     let log_ref = unsafe { &*log.ptr };
     let path_str = unsafe { CStr::from_ptr(path) }
         .to_string_lossy()
-        .to_string();
+        .into_owned();
 
     eprintln!("   Calling checkpoint::write_checkpoint(...)");
     match checkpoint::write_checkpoint(allocator_ref, log_ref, path_str) {
@@ -571,6 +580,7 @@ pub extern "C" fn mmsb_checkpoint_write(
     }
 }
 
+// In src/ffi.rs — REPLACE mmsb_checkpoint_load
 #[no_mangle]
 pub extern "C" fn mmsb_checkpoint_load(
     allocator: AllocatorHandle,
@@ -580,8 +590,16 @@ pub extern "C" fn mmsb_checkpoint_load(
     eprintln!("\n=== mmsb_checkpoint_load CALLED ===");
     eprintln!("   allocator.ptr = {:p}", allocator.ptr);
     eprintln!("   log.ptr       = {:p}", log.ptr);
-    eprintln!("   path          = {}", 
-        if path.is_null() { "<null>" } else { unsafe { CStr::from_ptr(path) }.to_string_lossy() });
+    eprintln!(
+        "   path          = {}",
+        if path.is_null() {
+            "<null>"
+        } else {
+            unsafe { CStr::from_ptr(path) }
+                .to_string_lossy()
+                .as_ref()
+        }
+    );
 
     if allocator.ptr.is_null() || log.ptr.is_null() || path.is_null() {
         eprintln!("   INVALID HANDLE → returning -1");
@@ -593,23 +611,23 @@ pub extern "C" fn mmsb_checkpoint_load(
     let log_ref = unsafe { &*log.ptr };
     let path_str = unsafe { CStr::from_ptr(path) }
         .to_string_lossy()
-        .to_string();
+        .into_owned();
 
     eprintln!("   Calling checkpoint::load_checkpoint(...)");
     match checkpoint::load_checkpoint(allocator_ref, log_ref, path_str) {
         Ok(_) => {
-            eprintln!("   checkpoint::load_checkpoint() → OK");
+            eprintln!("   checkpoint::load_checkpoint() → SUCCESS");
             0
         }
         Err(e) => {
-            eprintln!("   checkpoint::load_checkpoint() → ERROR: {e:?}");
+            eprintln!("   checkpoint::load_checkpoint() → FAILED: {e:?}");
             set_last_error(MMSBErrorCode::SnapshotError);
             -1
         }
     }
 }
 
-// src/ffi.rs — ONLY THESE TWO FUNCTIONS
+
 
 #[no_mangle]
 pub extern "C" fn mmsb_tlog_reader_new(path: *const c_char) -> TLogReaderHandle {
