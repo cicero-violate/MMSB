@@ -129,20 +129,54 @@ impl PageAllocator {
     }
 
     pub fn restore_from_snapshot(&self, snapshots: Vec<PageSnapshotData>) -> Result<(), PageError> {
+        eprintln!("\n=== RESTORE_FROM_SNAPSHOT STARTED ===");
+        eprintln!("   Clearing existing {} pages", self.pages.lock().len());
+    
         let mut pages = self.pages.lock();
         pages.clear();
-        for snapshot in snapshots {
+
+        for (i, snapshot) in snapshots.iter().enumerate() {
+            eprintln!("   [{i}] Restoring page ID={:?} size={} epoch={} loc={:?}", 
+                snapshot.page_id, snapshot.size, snapshot.epoch, snapshot.location);
+
+            // 1. Create the page
             let mut page = Box::new(Page::new(
                 snapshot.page_id,
                 snapshot.size,
                 snapshot.location,
-            )?);
+            ).map_err(|e| {
+                eprintln!("      Page::new() FAILED: {e}");
+                PageError::AllocFailed
+            })?);
+
+            // 2. Set epoch
             page.set_epoch(Epoch(snapshot.epoch));
-            page.data_mut_slice().copy_from_slice(&snapshot.data);
-            page.set_metadata_blob(&snapshot.metadata_blob)
-                .map_err(|_| PageError::MetadataDecode("restore failed"))?;
+            eprintln!("      Epoch set to {}", snapshot.epoch);
+
+            // 3. Copy data
+            let dst = page.data_mut_slice();
+            if dst.len() != snapshot.data.len() {
+                eprintln!("      SIZE MISMATCH: page expects {} bytes, snapshot has {}", dst.len(), snapshot.data.len());
+                return Err(PageError::InvalidData);
+            }
+            dst.copy_from_slice(&snapshot.data);
+            eprintln!("      Data copied ({} bytes)", snapshot.data.len());
+
+            // 4. THIS WAS THE REAL BUG — YOU WERE SWALLOWING THE ERROR
+            eprintln!("      Applying metadata blob ({} bytes)...", snapshot.metadata_blob.len());
+            if let Err(e) = page.set_metadata_blob(&snapshot.metadata_blob) {
+                eprintln!("      METADATA DECODE FAILED: {e}");
+                eprintln!("      This usually means your metadata format changed!");
+                return Err(e); // ← DO NOT HIDE THE REAL ERROR
+            }
+            eprintln!("      Metadata applied successfully");
+
+            // 5. Insert
             pages.insert(snapshot.page_id, page);
+            eprintln!("      Page restored and inserted");
         }
+
+        eprintln!("=== RESTORE_FROM_SNAPSHOT SUCCESS: {} pages restored ===", snapshots.len());
         Ok(())
     }
 }
