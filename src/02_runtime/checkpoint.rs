@@ -116,7 +116,7 @@ pub fn load_checkpoint(
         .map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err.to_string()))?;
 
     // ← THIS IS THE ONLY LINE YOU ADD
-    tlog.set_reader_offset(log_offset);
+    // tlog.set_reader_offset(log_offset);
 
     Ok(())
 }
