@@ -636,7 +636,6 @@ pub extern "C" fn mmsb_checkpoint_load(
 }
 
 
-
 #[no_mangle]
 pub extern "C" fn mmsb_tlog_reader_new(path: *const c_char) -> TLogReaderHandle {
     if path.is_null() {
