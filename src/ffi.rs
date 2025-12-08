@@ -610,18 +610,22 @@ pub extern "C" fn mmsb_tlog_reader_free(handle: TLogReaderHandle) {
     }
 }
 
+// src/ffi.rs
 #[no_mangle]
 pub extern "C" fn mmsb_tlog_reader_next(handle: TLogReaderHandle) -> DeltaHandle {
     if handle.ptr.is_null() {
         set_last_error(MMSBErrorCode::InvalidHandle);
         return DeltaHandle::null();
     }
-    // let reader = unsafe { &mut *handle.ptr };
-    let reader = TransactionLogReader::open(path_str)?;
+
+    let reader = unsafe { &mut *handle.ptr };
     match reader.next() {
-        Ok(Some(delta)) => DeltaHandle {
-            ptr: Box::into_raw(Box::new(delta)),
-        },
+        Ok(Some(delta)) => {
+            let boxed = Box::new(delta);
+            DeltaHandle {
+                ptr: Box::into_raw(boxed),
+            }
+        }
         Ok(None) => DeltaHandle::null(),
         Err(err) => {
             set_last_error(log_error_code(&err));
