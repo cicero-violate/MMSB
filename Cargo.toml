@@ -26,3 +26,6 @@ name = "rust_smoke_replay_full"
 
 [[example]]
 name = "rust_smoke_replay_full_cuda"
+
+[[example]]
+name = "rust_smoke_checkpoint_roundtrip"
