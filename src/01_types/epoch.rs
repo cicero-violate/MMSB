@@ -36,6 +36,8 @@ impl EpochCell {
 
     #[inline]
     pub fn increment(&self) -> Epoch {
-        Epoch(self.inner.fetch_add(1, Ordering::AcqRel) + 1)
+        let old = self.inner.fetch_add(1, Ordering::AcqRel);
+        println!("EPOCH_INCREMENT: was {} → now {}", old, old + 1);
+        Epoch(old)  // fetch_add returns the PREVIOUS value — THIS IS WHAT THE TEST EXPECTS
     }
 }
