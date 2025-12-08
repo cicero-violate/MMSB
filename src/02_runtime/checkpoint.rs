@@ -114,6 +114,6 @@ pub fn load_checkpoint(
     allocator
         .restore_from_snapshot(snapshots)
         .map_err(|err| std::io::Error::new(std::io::ErrorKind::Other, err.to_string()))?;
-    tlog.truncate(log_offset)?;
+
     Ok(())
 }
