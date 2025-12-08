@@ -19,7 +19,7 @@ cuda = ["cuda-sys"]
 
 # ←←←← ADD THIS BLOCK ↓↓↓↓
 [[example]]
-name = "rust_smoke_final"
+name = "rust_smoke_test_ffi"
 
 [[example]]
 name = "rust_smoke_replay_full"
