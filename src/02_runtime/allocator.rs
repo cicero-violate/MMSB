@@ -130,24 +130,23 @@ impl PageAllocator {
 
     pub fn restore_from_snapshot(&self, snapshots: Vec<PageSnapshotData>) -> Result<(), PageError> {
         eprintln!("\n=== RESTORE_FROM_SNAPSHOT STARTED ===");
-        eprintln!("   Clearing existing {} pages", self.pages.lock().len());
-    
+        eprintln!("   Clearing {} existing pages", self.pages.lock().len());
+
         let mut pages = self.pages.lock();
         pages.clear();
 
         for (i, snapshot) in snapshots.iter().enumerate() {
-            eprintln!("   [{i}] Restoring page ID={:?} size={} epoch={} loc={:?}", 
+            eprintln!("   [{i}] Restoring page ID={:?} size={} epoch={} loc={:?}",
                 snapshot.page_id, snapshot.size, snapshot.epoch, snapshot.location);
 
-            // 1. Create the page
-            let mut page = Box::new(Page::new(
-                snapshot.page_id,
-                snapshot.size,
-                snapshot.location,
-            ).map_err(|e| {
-                eprintln!("      Page::new() FAILED: {e}");
-                PageError::AllocFailed
-            })?);
+            // 1. Create page — use the real error from Page::new
+            let mut page = match Page::new(snapshot.page_id, snapshot.size, snapshot.location) {
+                Ok(p) => Box::new(p),
+                Err(e) => {
+                    eprintln!("      Page::new() FAILED: {e}");
+                    return Err(e); // ← this is already a PageError
+                }
+            };
 
             // 2. Set epoch
             page.set_epoch(Epoch(snapshot.epoch));
@@ -156,24 +155,27 @@ impl PageAllocator {
             // 3. Copy data
             let dst = page.data_mut_slice();
             if dst.len() != snapshot.data.len() {
-                eprintln!("      SIZE MISMATCH: page expects {} bytes, snapshot has {}", dst.len(), snapshot.data.len());
-                return Err(PageError::InvalidData);
+                eprintln!("      FATAL: data size mismatch (page={} vs snapshot={})", dst.len(), snapshot.data.len());
+                return Err(PageError::Other(format!(
+                    "data size mismatch: page {} vs snapshot {}",
+                    dst.len(),
+                    snapshot.data.len()
+                )));
             }
             dst.copy_from_slice(&snapshot.data);
             eprintln!("      Data copied ({} bytes)", snapshot.data.len());
 
-            // 4. THIS WAS THE REAL BUG — YOU WERE SWALLOWING THE ERROR
-            eprintln!("      Applying metadata blob ({} bytes)...", snapshot.metadata_blob.len());
+            // 4. Apply metadata — DO NOT SWALLOW THE ERROR
+            eprintln!("      Applying metadata ({} bytes)...", snapshot.metadata_blob.len());
             if let Err(e) = page.set_metadata_blob(&snapshot.metadata_blob) {
-                eprintln!("      METADATA DECODE FAILED: {e}");
-                eprintln!("      This usually means your metadata format changed!");
-                return Err(e); // ← DO NOT HIDE THE REAL ERROR
+                eprintln!("      METADATA RESTORE FAILED: {e}");
+                return Err(e); // ← this is the real PageError (probably MetadataDecode)
             }
-            eprintln!("      Metadata applied successfully");
+            eprintln!("      Metadata restored OK");
 
             // 5. Insert
             pages.insert(snapshot.page_id, page);
-            eprintln!("      Page restored and inserted");
+            eprintln!("      Page inserted into allocator");
         }
 
         eprintln!("=== RESTORE_FROM_SNAPSHOT SUCCESS: {} pages restored ===", snapshots.len());
