@@ -180,24 +180,34 @@ pub extern "C" fn mmsb_page_read(handle: PageHandle, dst: *mut u8, len: usize) -
     eprintln!("  dst = {:p}", dst);
     eprintln!("  requested len = {}", len);
 
-    // Null pointer checks
-    if handle.ptr.is_null() || dst.is_null() {
-        eprintln!("  ERROR: NULL pointer detected");
+    if handle.ptr.is_null() {
+        eprintln!("  ERROR: Invalid page handle (null)");
         set_last_error(MMSBErrorCode::InvalidHandle);
         return 0;
     }
 
-    // Safe immutable access — this is a READ operation
-    let page = unsafe { &*handle.ptr };
+    // Special case: len == 0 → just return page size (used by tests)
+    if len == 0 {
+        let page = unsafe { &*handle.ptr };
+        let size = page.size();
+        eprintln!("  Returning page size: {} (len=0 query)", size);
+        return size;
+    }
 
-    let page_size = page.size();                    // public &self method
+    // Normal case: dst must not be null
+    if dst.is_null() {
+        eprintln!("  ERROR: dst is null but len > 0");
+        set_last_error(MMSBErrorCode::InvalidHandle);
+        return 0;
+    }
+
+    let page = unsafe { &*handle.ptr };
+    let page_size = page.size();
     let bytes_to_copy = len.min(page_size);
 
     eprintln!("  page size = {}, copying {} bytes", page_size, bytes_to_copy);
 
-    // Use immutable data_slice() — zero mutation, fully safe
     let src_slice = page.data_slice();
-
     unsafe {
         std::ptr::copy_nonoverlapping(src_slice.as_ptr(), dst, bytes_to_copy);
     }
