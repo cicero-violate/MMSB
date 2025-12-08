@@ -23,3 +23,6 @@ name = "rust_smoke_test_ffi"
 
 [[example]]
 name = "rust_smoke_replay_full"
+
+[[example]]
+name = "rust_smoke_replay_full_cuda"
