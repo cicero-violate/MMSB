@@ -43,18 +43,18 @@ impl TransactionLog {
             entries: RwLock::new(VecDeque::new()),
             writer: RwLock::new(Some(writer)),
             path,
-            reader_offset: std::sync::atomic::AtomicU64::new(0), // ← ADD THIS
+            // reader_offset: std::sync::atomic::AtomicU64::new(0), // ← ADD THIS
         })
     }
 
     // ← ADD THESE TWO FUNCTIONS
-    pub fn set_reader_offset(&self, offset: u64) {
-        self.reader_offset.store(offset, std::sync::atomic::Ordering::Relaxed);
-    }
+    // pub fn set_reader_offset(&self, offset: u64) {
+    //     self.reader_offset.store(offset, std::sync::atomic::Ordering::Relaxed);
+    // }
 
-    pub fn get_reader_offset(&self) -> u64 {
-        self.reader_offset.load(std::sync::atomic::Ordering::Relaxed)
-    }
+    // pub fn get_reader_offset(&self) -> u64 {
+    //     self.reader_offset.load(std::sync::atomic::Ordering::Relaxed)
+    // }
 
     pub fn append(&self, delta: Delta) -> std::io::Result<()> {
         {
