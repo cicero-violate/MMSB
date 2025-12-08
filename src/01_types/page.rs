@@ -285,13 +285,30 @@ impl Drop for Page {
 
 impl Clone for Page {
     fn clone(&self) -> Self {
-        let mut new_page = Self::new(self.id, self.capacity, self.location).unwrap();
-        unsafe {
-            std::ptr::copy_nonoverlapping(self.data, new_page.data, self.capacity);
-            std::ptr::copy_nonoverlapping(self.mask, new_page.mask, (self.capacity + 7) / 8);
-        }
+        // Allocate new memory for the clone
+        let layout_data = std::alloc::Layout::array::<u8>(self.capacity).expect("invalid capacity");
+        let data = unsafe { std::alloc::alloc(layout_data) };
+        unsafe { std::ptr::copy_nonoverlapping(self.data, data, self.capacity); }
+
+        let mask_size = (self.capacity + 7) / 8;
+        let layout_mask = std::alloc::Layout::array::<u8>(mask_size).expect("invalid mask size");
+        let mask = unsafe { std::alloc::alloc(layout_mask) };
+        unsafe { std::ptr::copy_nonoverlapping(self.mask, mask, mask_size); }
+
+        // Create the new page with the cloned buffers
+        let mut new_page = Self {
+            id: self.id,
+            epoch: EpochCell::new(self.epoch.load().0),  // Deep copy the epoch value
+            data,
+            mask,
+            capacity: self.capacity,
+            location: self.location,
+            metadata: self.metadata.clone(),
+        };
+
+        // Set the epoch (if needed, but we already copied it)
         new_page.set_epoch(self.epoch());
-        new_page.metadata = self.metadata.clone();
+
         new_page
     }
 }
