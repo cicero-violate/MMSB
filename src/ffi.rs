@@ -616,7 +616,8 @@ pub extern "C" fn mmsb_tlog_reader_next(handle: TLogReaderHandle) -> DeltaHandle
         set_last_error(MMSBErrorCode::InvalidHandle);
         return DeltaHandle::null();
     }
-    let reader = unsafe { &mut *handle.ptr };
+    // let reader = unsafe { &mut *handle.ptr };
+    let reader = TransactionLogReader::open(path_str)?;
     match reader.next() {
         Ok(Some(delta)) => DeltaHandle {
             ptr: Box::into_raw(Box::new(delta)),
