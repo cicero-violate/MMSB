@@ -16,8 +16,8 @@ include("ffi/FFIWrapper.jl")
 
 # Core type system
 include("01_types/Errors.jl")
-include("02_runtime/PageAllocator.jl")
 include("01_types/Page.jl")
+include("02_runtime/PageAllocator.jl")
 include("01_types/Delta.jl")
 include("01_types/ShadowPageGraph.jl")
 include("01_types/MMSBState.jl")
