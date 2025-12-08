@@ -11,31 +11,35 @@ module MMSB
 
 using CUDA
 
+# Rust FFI bridge must be available before type modules choose their backend.
+include("ffi/FFIWrapper.jl")
+
 # Core type system
 include("01_types/Errors.jl")
+include("02_runtime/PageAllocator.jl")
 include("01_types/Page.jl")
 include("01_types/Delta.jl")
 include("01_types/ShadowPageGraph.jl")
 include("01_types/MMSBState.jl")
 
+# Rust error mapping shim (depends on FFI + ErrorTypes)
+include("ffi/RustErrors.jl")
+
 # Event system is shared by runtime/graph layers
 include("05_graph/EventSystem.jl")
 
 # Device kernels are required by the runtime delta router
-include("03_device/GPUKernels.jl")
 
 # Utilities
 include("utils/Monitoring.jl")
 
 # Runtime layer
 include("02_runtime/PageAllocator.jl")
-include("02_runtime/DeltaRouter.jl")
 include("02_runtime/TLog.jl")
+include("02_runtime/DeltaRouter.jl")
 include("02_runtime/ReplayEngine.jl")
 
 # Remaining device management helpers
-include("03_device/DeviceSync.jl")
-include("03_device/UnifiedMemory.jl")
 
 # Instrumentation layer (Julia compiler hooks)
 include("04_instrumentation/BaseHook.jl")
