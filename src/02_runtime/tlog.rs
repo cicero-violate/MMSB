@@ -8,11 +8,13 @@ use std::path::{Path, PathBuf};
 const MAGIC: &[u8] = b"MMSBLOG1";
 const VERSION: u32 = 1;
 
+// Add this field to TransactionLog
 #[derive(Debug)]
 pub struct TransactionLog {
     entries: RwLock<VecDeque<Delta>>,
     writer: RwLock<Option<BufWriter<File>>>,
     path: PathBuf,
+    reader_offset: std::sync::atomic::AtomicU64,
 }
 
 #[derive(Debug)]
