@@ -27,7 +27,7 @@ function _blank_state_like(state::MMSBState)::MMSBState
         for (_, page) in state.pages
             # Use the global allocator to create a shadow page with the correct ID
             handle = FFIWrapper.rust_allocator_allocate(
-                PageAllocator._allocator_handle(),
+                _allocator_handle(),
                 UInt64(page.id),
                 page.size,
                 Int32(page.location)
