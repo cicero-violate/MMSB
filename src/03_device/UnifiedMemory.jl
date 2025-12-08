@@ -54,30 +54,11 @@ Create page with CUDA Unified Memory.
 - Requires careful prefetching for performance
 """
 function create_unified_page!(state::MMSBState, size::Int64)::Page
-    """
-    @assert is_unified_memory_available() "Unified Memory not available"
-    
-    # Allocate unified memory CuArrays
-    # Use CUDA.Mem.alloc with CUDA.Mem.UNIFIED flag
-    data = CuArray{UInt8}(undef, size)  # TODO: Use unified flag
-    mask = CuArray{Bool}(undef, size)
-    
     page_id = allocate_page_id!(state)
-    
-    page = Page(
-        page_id,
-        UInt32(0),      # epoch
-        mask,
-        data,
-        UNIFIED_LOCATION,
-        size,
-        Dict{Symbol,Any}()
-    )
-    
-    register_page!(state, page)
-    
-    return page
-    """
+    handle = ccall((:mmsb_allocator_allocate, libmmsb), PageHandle,
+                   (AllocatorHandle, UInt64, Csize_t, Int32),
+                   state.allocator, page_id.0, size, 2)  # 2 = Unified
+    Page(handle.ptr, page_id, size, UNIFIED_LOCATION)
 end
 
 """
