@@ -36,8 +36,8 @@ function Page(handle::FFIWrapper.RustPageHandle, id::PageID, location::PageLocat
 end
 
 # Helper constructor for UInt64 IDs (internal only)
-Page(handle::FFIWrapper.RustPageHandle, id::UInt64, location::PageLocation, size::Int; kwargs...) =
-    Page(handle, PageID(id), location, size; kwargs...)
+# Page(handle::FFIWrapper.RustPageHandle, id::UInt64, location::PageLocation, size::Int; kwargs...) =
+#     Page(handle, PageID(id), location, size; kwargs...)
 
 is_gpu_page(page::Page) = page.location in (GPU_LOCATION, UNIFIED_LOCATION)
 is_cpu_page(page::Page) = page.location == CPU_LOCATION
