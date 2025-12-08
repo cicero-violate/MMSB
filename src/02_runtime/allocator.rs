@@ -139,7 +139,7 @@ impl PageAllocator {
             eprintln!("   [{i}] Restoring page ID={:?} size={} epoch={} loc={:?}",
                 snapshot.page_id, snapshot.size, snapshot.epoch, snapshot.location);
 
-            // 1. Create the page — propagate real PageError
+            // 1. Create page — real error from Page::new
             let mut page = match Page::new(snapshot.page_id, snapshot.size, snapshot.location) {
                 Ok(p) => Box::new(p),
                 Err(e) => {
@@ -152,20 +152,20 @@ impl PageAllocator {
             page.set_epoch(Epoch(snapshot.epoch));
             eprintln!("      Epoch set to {}", snapshot.epoch);
 
-            // 3. Copy data — safe check
+            // 3. Copy data — size mismatch is impossible if snapshot was written correctly
             let dst = page.data_mut_slice();
             if dst.len() != snapshot.data.len() {
                 eprintln!("      FATAL: data size mismatch! page={} snapshot={}", dst.len(), snapshot.data.len());
-                return Err(PageError::InvalidArgument); // ← this variant DEFINITELY exists
+                return Err(PageError::MetadataDecode("data size mismatch in snapshot"));
             }
             dst.copy_from_slice(&snapshot.data);
             eprintln!("      Data copied ({} bytes)", snapshot.data.len());
 
-            // 4. Apply metadata — DO NOT SWALLOW ERROR
+            // 4. Apply metadata — THIS IS WHERE IT WAS FAILING
             eprintln!("      Applying metadata ({} bytes)...", snapshot.metadata_blob.len());
             if let Err(e) = page.set_metadata_blob(&snapshot.metadata_blob) {
                 eprintln!("      METADATA RESTORE FAILED: {e}");
-                return Err(e); // ← this is already PageError::MetadataDecode or whatever you have
+                return Err(e); // ← this is PageError::MetadataDecode(...)
             }
             eprintln!("      Metadata restored OK");
 
