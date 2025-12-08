@@ -1,0 +1,4 @@
+| Agent ID | Task ## | Description / Context | Action Taken | Status | Results (PASS OR FAIL) | Notes |
+| codex | 6.5 | Ship documentation set | Authored README/docs/examples + updated pending work | Done | PASS | Ready for release handoff |
+| codex | release | Validate+tag v0.1.0-alpha | Tests + docs + git push/tag | Done | PASS | Tag published upstream |
+| codex | Phase2 | Propagation optimization wave 1 | Added batch propagation + queue dedup, updated docs/tests | Done | PASS | Pkg.test() + batch route validations |

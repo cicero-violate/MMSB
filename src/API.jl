@@ -14,7 +14,7 @@ using ..MMSBStateTypes: MMSBState, MMSBConfig, get_page
 using ..PageAllocator: create_cpu_page!, create_gpu_page!
 using ..DeltaRouter: create_delta, route_delta!
 using ..TLog: checkpoint_log!
-using ..PageTypes: Page, PageID, PageLocation, CPU_LOCATION, GPU_LOCATION
+using ..PageTypes: Page, PageID, PageLocation, CPU_LOCATION, GPU_LOCATION, read_page
 using ..ErrorTypes: PageNotFoundError, InvalidDeltaError, GPUMemoryError, UnsupportedLocationError
 
 export mmsb_start, mmsb_stop, create_page, update_page, query_page, @mmsb
@@ -91,8 +91,15 @@ function update_page(state::MMSBState, page_id::PageID, bytes::AbstractVector{UI
     page === nothing && throw(PageNotFoundError(UInt64(page_id), "update_page"))
     length(bytes) == page.size || throw(InvalidDeltaError("update payload size mismatch", UInt64(page_id)))
     data_vec = Vector{UInt8}(bytes)
-    current = Vector{UInt8}(page.data)
-    mask = Vector{Bool}(current .!= data_vec)
+    current = read_page(page)
+    mask = Vector{Bool}(undef, length(current))
+    local changed = false
+    @inbounds for i in eachindex(current)
+        diff = current[i] != data_vec[i]
+        mask[i] = diff
+        changed |= diff
+    end
+    changed || return page
     delta = create_delta(state, page_id, mask, data_vec, source)
     route_delta!(state, delta)
     return page
@@ -106,7 +113,7 @@ Return a copy of the page bytes for inspection.
 function query_page(state::MMSBState, page_id::PageID)::Vector{UInt8}
     page = get_page(state, page_id)
     page === nothing && throw(PageNotFoundError(UInt64(page_id), "query_page"))
-    return Vector{UInt8}(page.data)
+    return read_page(page)
 end
 
 macro mmsb(state_expr, body)

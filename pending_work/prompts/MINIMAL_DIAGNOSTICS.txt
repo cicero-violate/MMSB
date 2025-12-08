@@ -1,0 +1,5 @@
+CWD: /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB
+
+shell.exec: julia --project=. test/runtests.jl 2>&1 | tee pending_work/diagnostic_output.log
+
+DO NOT RESPOND. EXECUTE THE COMMAND ABOVE.

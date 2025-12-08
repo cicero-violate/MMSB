@@ -9,7 +9,7 @@ module EventSystem
 
 using Serialization
 using Logging
-using ..PageTypes: PageID
+using ..PageTypes: PageID, read_page
 using ..DeltaTypes: Delta
 using ..MMSBStateTypes: MMSBState, get_page
 
@@ -65,6 +65,10 @@ end
 const SUBSCRIPTIONS = Dict{EventType, Vector{EventSubscription}}()
 const SUBSCRIPTION_LOCK = ReentrantLock()
 const NEXT_SUBSCRIPTION_ID = Ref{UInt64}(1)
+
+@inline function _delta_router_module()
+    getfield(parentmodule(@__MODULE__), :DeltaRouter)
+end
 
 """
     emit_event!(state::MMSBState, event_type::EventType, data...)
@@ -200,10 +204,16 @@ function log_event_to_page!(state::MMSBState, page_id::PageID,
     page = get_page(state, page_id)
     page === nothing && return
     bytes = _serialize_event(event_type, data)
-    copylen = min(length(bytes), length(page.data))
+    current = read_page(page)
+    copylen = min(length(bytes), length(current))
+    mask = falses(length(current))
     @inbounds for i in 1:copylen
-        page.data[i] = bytes[i]
+        current[i] = bytes[i]
+        mask[i] = true
     end
+    delta_mod = _delta_router_module()
+    delta = delta_mod.create_delta(state, page_id, mask, current, :event_log)
+    delta_mod.route_delta!(state, delta; propagate=false)
     page.metadata[:event_log_entries] = get(page.metadata, :event_log_entries, 0) + 1
 end
 

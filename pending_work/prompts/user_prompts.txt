@@ -1,0 +1,41 @@
+═══════════════════════════════════════════════════════════════════
+MMSB AGENT USER PROMPTS
+═══════════════════════════════════════════════════════════════════
+
+Instructions:
+1. Set AGENTS.md as the system prompt in ChatGPT Actions
+2. Paste ONE of these as the user message
+3. The agent will execute immediately
+
+---
+
+DIAGNOSTICS AGENT:
+Diagnostics Agent
+
+---
+
+PLANNING AGENT:
+Planning Agent
+
+---
+
+RUST CORE AGENT:
+Rust Core Agent
+
+---
+
+JULIA AGENT:
+Julia Agent
+
+═══════════════════════════════════════════════════════════════════
+
+That's it. Just the role name. The system prompt handles everything else.
+
+The system prompt (AGENTS.md) tells the agent to:
+1. Read its role playbook immediately
+2. Read DAG and TASK_LOG
+3. Execute the next task
+4. Write results to files
+5. Report completion
+
+No additional instructions needed in user prompt.

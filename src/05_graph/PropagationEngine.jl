@@ -8,7 +8,7 @@ through dependent pages based on edge types.
 module PropagationEngine
 
 using Base: time_ns
-using ..PageTypes: PageID
+using ..PageTypes: PageID, read_page
 using ..MMSBStateTypes: MMSBState, get_page
 using ..GraphTypes: EdgeType, DATA_DEPENDENCY, CONTROL_DEPENDENCY,
     GPU_SYNC_DEPENDENCY, COMPILER_DEPENDENCY, get_children
@@ -28,14 +28,19 @@ export register_recompute_fn!, register_passthrough_recompute!, queue_recomputat
     BATCH      # Accumulate and propagate in batches
 end
 
-const PROPAGATION_QUEUES = IdDict{MMSBState, Vector{PageID}}()
+mutable struct PropagationQueue
+    order::Vector{PageID}
+    pending::Set{PageID}
+end
+
+const PROPAGATION_BUFFERS = IdDict{MMSBState, PropagationQueue}()
 
 """
 Fetch (or create) the recomputation queue for a state.
 """
-function _queue(state::MMSBState)::Vector{PageID}
-    return get!(PROPAGATION_QUEUES, state) do
-        PageID[]
+function _buffer(state::MMSBState)::PropagationQueue
+    return get!(PROPAGATION_BUFFERS, state) do
+        PropagationQueue(PageID[], Set{PageID}())
     end
 end
 
@@ -63,7 +68,7 @@ function register_passthrough_recompute!(state::MMSBState, target_page_id::PageI
     register_recompute_fn!(state, target_page_id, function (st, _)
         source = get_page(st, source_page_id)
         source === nothing && throw(PageNotFoundError(UInt64(source_page_id), "register_passthrough_recompute!"))
-        return Vector{UInt8}(transform(Vector{UInt8}(source.data)))
+        return Vector{UInt8}(transform(read_page(source)))
     end)
 end
 
@@ -73,8 +78,11 @@ end
 Ensure page_id is scheduled for recomputation exactly once.
 """
 function queue_recomputation!(state::MMSBState, page_id::PageID)
-    queue = _queue(state)
-    page_id ∈ queue || push!(queue, page_id)
+    buffer = _buffer(state)
+    if page_id ∉ buffer.pending
+        push!(buffer.order, page_id)
+        push!(buffer.pending, page_id)
+    end
 end
 
 """
@@ -82,33 +90,62 @@ end
 
 Propagate change notification through dependency graph.
 """
-function propagate_change!(state::MMSBState, changed_page_id::PageID, 
-                          mode::PropagationMode=IMMEDIATE)
+function propagate_change!(state::MMSBState, changed_page_id::PageID,
+                           mode::PropagationMode=IMMEDIATE)
+    propagate_change!(state, PageID[changed_page_id], mode)
+end
+
+function propagate_change!(state::MMSBState, changed_pages::AbstractVector{PageID},
+                           mode::PropagationMode=IMMEDIATE)
+    isempty(changed_pages) && return
     start_ns = time_ns()
-    children = get_children(state.graph, changed_page_id)
-    isempty(children) && return
-    for (child_id, edge_type) in children
-        handle_propagation!(state, child_id, edge_type, mode)
-    end
+    commands = _aggregate_children(state, changed_pages)
+    isempty(commands) && return
+    _execute_command_buffer!(state, commands, mode)
     track_propagation_latency!(state, time_ns() - start_ns)
 end
 
-"""
-    handle_propagation!(state, page_id, edge_type, mode)
+function _aggregate_children(state::MMSBState, parents::AbstractVector{PageID})
+    commands = Dict{PageID, Set{EdgeType}}()
+    for parent in parents
+        for (child, edge_type) in get_children(state.graph, parent)
+            edges = get!(commands, child) do
+                Set{EdgeType}()
+            end
+            push!(edges, edge_type)
+        end
+    end
+    return commands
+end
 
-Handle propagation for specific edge type.
-"""
-function handle_propagation!(state::MMSBState, page_id::PageID, 
-                             edge_type::EdgeType, mode::PropagationMode)
-    if edge_type == DATA_DEPENDENCY
-        emit_event!(state, PAGE_INVALIDATED, page_id)
-        mode == IMMEDIATE ? recompute_page!(state, page_id) : queue_recomputation!(state, page_id)
-    elseif edge_type == CONTROL_DEPENDENCY
-        mark_page_stale!(state, page_id)
-    elseif edge_type == GPU_SYNC_DEPENDENCY
-        schedule_gpu_sync!(state, page_id)
-    elseif edge_type == COMPILER_DEPENDENCY
-        invalidate_compilation!(state, page_id)
+function _execute_command_buffer!(state::MMSBState,
+                                  commands::Dict{PageID, Set{EdgeType}},
+                                  mode::PropagationMode)
+    for (page_id, edges) in commands
+        _apply_edges!(state, page_id, edges, mode)
+    end
+end
+
+function _apply_edges!(state::MMSBState, page_id::PageID,
+                       edges::Set{EdgeType}, mode::PropagationMode)
+    if DATA_DEPENDENCY in edges
+        _handle_data_dependency!(state, page_id, mode)
+        delete!(edges, DATA_DEPENDENCY)
+    end
+    for edge_type in edges
+        edge_type == CONTROL_DEPENDENCY && mark_page_stale!(state, page_id)
+        edge_type == GPU_SYNC_DEPENDENCY && schedule_gpu_sync!(state, page_id)
+        edge_type == COMPILER_DEPENDENCY && invalidate_compilation!(state, page_id)
+    end
+end
+
+function _handle_data_dependency!(state::MMSBState, page_id::PageID,
+                                  mode::PropagationMode)
+    emit_event!(state, PAGE_INVALIDATED, page_id)
+    if mode == IMMEDIATE
+        recompute_page!(state, page_id)
+    else
+        queue_recomputation!(state, page_id)
     end
 end
 
@@ -152,9 +189,10 @@ end
 Execute all queued propagation tasks.
 """
 function execute_propagation!(state::MMSBState)
-    queue = _queue(state)
-    while !isempty(queue)
-        page_id = popfirst!(queue)
+    buffer = _buffer(state)
+    while !isempty(buffer.order)
+        page_id = popfirst!(buffer.order)
+        delete!(buffer.pending, page_id)
         recompute_page!(state, page_id)
     end
 end
@@ -169,10 +207,13 @@ function recompute_page!(state::MMSBState, page_id::PageID)
     page === nothing && return
     recompute_fn = get(page.metadata, :recompute_fn, nothing)
     recompute_fn === nothing && return
-    baseline = Vector{UInt8}(page.data)
+    baseline = read_page(page)
     new_data = recompute_fn(state, page)
     length(new_data) == page.size || throw(InvalidDeltaError("Recompute returned incorrect length", UInt64(page_id)))
-    mask = Vector{Bool}(baseline .!= new_data)
+    mask = Vector{Bool}(undef, page.size)
+    @inbounds for i in eachindex(baseline)
+        mask[i] = baseline[i] != new_data[i]
+    end
     any(mask) || begin
         page.metadata[:stale] = false
         return

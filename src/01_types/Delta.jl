@@ -1,189 +1,106 @@
-# src/types/Delta.jl
-"""
-Delta - Represents a byte-level state change
-
-Deltas capture minimal change sets for page updates.
-Contains only changed bytes with mask + data.
-"""
 module DeltaTypes
 
 using Serialization
 using ..PageTypes: PageID
+using ..FFIWrapper
 
-export Delta, DeltaID, delta_byte_count, compress_delta, merge_deltas,
-       dense_data, is_sparse_delta, serialize_delta, deserialize_delta
+export Delta, DeltaID, new_delta_handle, apply_delta!, dense_data,
+       serialize_delta, deserialize_delta
 
 const DeltaID = UInt64
-const SPARSE_THRESHOLD = 0.25
-
-"""
-    Delta
-
-Represents a byte-level change to a page.
-"""
-struct Delta
+mutable struct Delta
     id::DeltaID
     page_id::PageID
     epoch::UInt32
-    mask::BitVector
-    data::Vector{UInt8}
+    is_sparse::Bool
+    mask::Vector{UInt8}
+    payload::Vector{UInt8}
     timestamp::UInt64
     source::Symbol
+    handle::FFIWrapper.RustDeltaHandle
     
-    function Delta(id::DeltaID, page_id::PageID, epoch::UInt32, 
-                   mask::AbstractVector{Bool}, data::AbstractVector{UInt8}, source::Symbol)
-        @assert length(mask) == length(data) "Delta mask/data length mismatch"
-        mask_vec = BitVector(mask)
-        payload = _compress_payload(mask_vec, Vector{UInt8}(data))
-        return new(
-            id,
-            page_id,
-            epoch,
-            mask_vec,
-            payload,
-            time_ns(),
-            source,
-        )
-    end
-    
-    function Delta(id::DeltaID, page_id::PageID, epoch::UInt32, 
-                   mask::AbstractVector{Bool}, data::AbstractVector{UInt8}, 
-                   source::Symbol, timestamp::UInt64)
-        @assert length(mask) == length(data) || length(data) == count(identity, mask)
-        mask_vec = BitVector(mask)
-        payload = Vector{UInt8}(data)
-        return new(id, page_id, epoch, mask_vec, payload, timestamp, source)
-    end
-end
-
-"""
-Decide whether to store sparse or dense payloads and build buffer accordingly.
-"""
-function _compress_payload(mask::BitVector, data::Vector{UInt8})::Vector{UInt8}
-    changed = count(identity, mask)
-    changed == 0 && return UInt8[]
-    ratio = changed / length(mask)
-    if ratio <= SPARSE_THRESHOLD
-        compressed = Vector{UInt8}(undef, changed)
-        idx = 1
-        @inbounds for i in eachindex(mask)
-            if mask[i]
-                compressed[idx] = data[i]
-                idx += 1
-            end
+    # Inner constructor
+    function Delta(id::DeltaID, page_id::PageID, epoch::UInt32,
+                   mask::Vector{UInt8}, payload::Vector{UInt8}, source::Symbol=:ffi;
+                   is_sparse::Bool=false)
+        handle = FFIWrapper.rust_delta_new(id, page_id, epoch, mask, payload, source; is_sparse=is_sparse)
+        timestamp = FFIWrapper.rust_delta_timestamp(handle)
+        delta = new(id, page_id, epoch, is_sparse, copy(mask), copy(payload), timestamp, source, handle)
+        finalizer(delta) do d
+            FFIWrapper.rust_delta_free!(d.handle)
         end
-        return compressed
-    else
-        return copy(data)
+        delta
+    end
+
+    function Delta(handle::FFIWrapper.RustDeltaHandle)
+        handle.ptr == C_NULL && error("Cannot construct Delta from null handle")
+        id = FFIWrapper.rust_delta_id(handle)
+        page_id = PageID(FFIWrapper.rust_delta_page_id(handle))
+        epoch = FFIWrapper.rust_delta_epoch(handle)
+        is_sparse = FFIWrapper.rust_delta_is_sparse(handle)
+        timestamp = FFIWrapper.rust_delta_timestamp(handle)
+        source = Symbol(FFIWrapper.rust_delta_source(handle))
+        mask = FFIWrapper.rust_delta_mask(handle)
+        payload = FFIWrapper.rust_delta_payload(handle)
+        delta = new(id, page_id, epoch, is_sparse, mask, payload, timestamp, source, handle)
+        finalizer(delta) do d
+            FFIWrapper.rust_delta_free!(d.handle)
+        end
+        delta
     end
 end
 
-"""
-    delta_byte_count(delta::Delta) -> Int
+function new_delta_handle(id::DeltaID, page_id::PageID, epoch::UInt32,
+                          mask::Vector{UInt8}, payload::Vector{UInt8}, source::Symbol=:ffi;
+                          is_sparse::Bool=false)
+    FFIWrapper.rust_delta_new(id, page_id, epoch, mask, payload, source; is_sparse=is_sparse)
+end
 
-Count number of changed bytes in delta.
-"""
-delta_byte_count(delta::Delta)::Int = count(identity, delta.mask)
+function apply_delta!(page_handle::FFIWrapper.RustPageHandle, delta::Delta)
+    FFIWrapper.rust_delta_apply!(page_handle, delta.handle)
+end
 
-"""
-    is_sparse_delta(delta::Delta) -> Bool
-
-Return true if the delta stores only changed bytes.
-"""
-is_sparse_delta(delta::Delta)::Bool = length(delta.data) != length(delta.mask)
-
-"""
-    dense_data(delta::Delta) -> Vector{UInt8}
-
-Materialize a dense byte vector (length == mask length) for a delta.
-"""
 function dense_data(delta::Delta)::Vector{UInt8}
-    len = length(delta.mask)
-    if !is_sparse_delta(delta)
-        return copy(delta.data)
+    if !delta.is_sparse
+        return copy(delta.payload)
     end
-    dense = zeros(UInt8, len)
+    dense = Vector{UInt8}(undef, length(delta.mask))
     idx = 1
-    @inbounds for i in 1:len
-        if delta.mask[i]
-            dense[i] = delta.data[idx]
+    @inbounds for i in eachindex(delta.mask)
+        if delta.mask[i] != 0
+            dense[i] = delta.payload[idx]
             idx += 1
+        else
+            dense[i] = 0x00
         end
     end
-    return dense
+    dense
 end
 
-"""
-    compress_delta(delta::Delta) -> Delta
-
-Create a compressed version of delta (sparse representation).
-"""
-function compress_delta(delta::Delta)::Delta
-    dense = dense_data(delta)
-    return Delta(
-        delta.id,
-        delta.page_id,
-        delta.epoch,
-        delta.mask,
-        dense,
-        delta.source,
-    )
-end
-
-"""
-    merge_deltas(d1::Delta, d2::Delta) -> Delta
-
-Merge two deltas targeting the same page with d2 taking precedence.
-"""
-function merge_deltas(d1::Delta, d2::Delta)::Delta
-    @assert d1.page_id == d2.page_id "Cannot merge deltas across pages"
-    merged_mask = copy(d1.mask)
-    merged_data = dense_data(d1)
-    d2_dense = dense_data(d2)
-    @inbounds for i in eachindex(d2.mask)
-        if d2.mask[i]
-            merged_mask[i] = true
-            merged_data[i] = d2_dense[i]
-        end
-    end
-    new_epoch = max(d1.epoch, d2.epoch)
-    return Delta(d2.id, d2.page_id, new_epoch, merged_mask, merged_data, d2.source)
-end
-
-"""
-    serialize_delta(delta::Delta) -> Vector{UInt8}
-
-Serialize a delta to a compact byte vector.
-"""
 function serialize_delta(delta::Delta)::Vector{UInt8}
+    bool_mask = map(x -> x != 0, delta.mask)
     payload = (
         delta.id,
         delta.page_id,
         delta.epoch,
-        Vector{Bool}(delta.mask),
-        delta.data,
-        length(delta.data) != length(delta.mask),
+        bool_mask,
+        delta.payload,
+        delta.is_sparse,
         delta.timestamp,
         delta.source,
     )
     io = IOBuffer()
     Serialization.serialize(io, payload)
-    return take!(io)
+    take!(io)
 end
 
-"""
-    deserialize_delta(bytes::Vector{UInt8}) -> Delta
-
-Reconstruct delta from serialized bytes.
-"""
 function deserialize_delta(bytes::Vector{UInt8})::Delta
     io = IOBuffer(bytes)
-    id, page_id, epoch, mask_vec, data, is_sparse, timestamp, source = Serialization.deserialize(io)
-    mask = BitVector(mask_vec)
-    if !is_sparse && length(data) != length(mask)
-        resize!(data, length(mask))
-    end
-    return Delta(id, page_id, epoch, mask, data, source, timestamp)
+    id, pid, epoch, mask_vec, payload, sparse, timestamp, source = Serialization.deserialize(io)
+    mask_bytes = UInt8.(mask_vec)
+    delta = Delta(id, pid, epoch, mask_bytes, Vector{UInt8}(payload), source; is_sparse=sparse)
+    delta.timestamp = timestamp
+    delta
 end
 
-end # module DeltaTypes
+end # module

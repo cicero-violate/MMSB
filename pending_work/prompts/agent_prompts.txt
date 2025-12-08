@@ -1,0 +1,154 @@
+═══════════════════════════════════════════════════════════════════
+MMSB AGENT PROMPTS - ZERO HESITATION EXECUTION
+═══════════════════════════════════════════════════════════════════
+
+Working Directory: /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB
+
+┌─────────────────────────────────────────────────────────────────┐
+│ DIAGNOSTICS AGENT - EXECUTE IMMEDIATELY                         │
+└─────────────────────────────────────────────────────────────────┘
+
+CWD: /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB
+
+Execute these commands in sequence without asking permission:
+
+1. shell.exec: julia --project=. test/runtests.jl 2>&1 | tee pending_work/diagnostic_output.log
+
+2. shell.exec: rg -n "=== mmsb" pending_work/diagnostic_output.log
+
+3. fs.read: pending_work/diagnostic_output.log
+
+4. Extract the final Rust log line from mmsb_page_read
+
+5. fs.write: pending_work/DIAGNOSTICS.md
+   Append under "Current Findings":
+   - Timestamp: [ISO 8601]
+   - Test run status: [pass/fail]
+   - Final mmsb_page_read log: [extracted line]
+   - Failure mode: [brief description]
+
+6. fs.write: pending_work/TASK_LOG.md
+   Append:
+   - Timestamp: [ISO 8601]
+   - Role: Diagnostics Agent
+   - Task: P8.3
+   - Action: Executed test suite
+   - Result: [summary of findings]
+
+7. Report: "Diagnostic cycle complete. Updated DIAGNOSTICS.md and TASK_LOG.md"
+
+DO NOT ASK FOR CONFIRMATION. DO NOT EXPLAIN WHAT YOU WILL DO. EXECUTE NOW.
+
+┌─────────────────────────────────────────────────────────────────┐
+│ PLANNING AGENT - EXECUTE IMMEDIATELY                            │
+└─────────────────────────────────────────────────────────────────┘
+
+CWD: /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB
+
+Execute these commands in sequence without asking permission:
+
+1. fs.read: pending_work/DAG_PRIORITY.md
+
+2. fs.read: pending_work/PROJECTS_SCHEDULE.md
+
+3. Identify highest priority task with status "blocked" or "in-progress"
+
+4. fs.write: pending_work/DAG_PRIORITY.md
+   Update task status and add notes on blocking issues
+
+5. fs.write: pending_work/PROJECTS_SCHEDULE.md
+   Sync milestone dates based on current DAG state
+
+6. fs.write: pending_work/TASK_LOG.md
+   Append:
+   - Timestamp: [ISO 8601]
+   - Role: Planning Agent
+   - Task: [task_id]
+   - Action: Updated priority DAG and schedule
+   - Result: [changes made]
+
+7. Report: "Planning cycle complete. Updated DAG_PRIORITY.md, PROJECTS_SCHEDULE.md, TASK_LOG.md"
+
+DO NOT ASK FOR CONFIRMATION. DO NOT EXPLAIN WHAT YOU WILL DO. EXECUTE NOW.
+
+┌─────────────────────────────────────────────────────────────────┐
+│ RUST CORE AGENT - EXECUTE IMMEDIATELY                           │
+└─────────────────────────────────────────────────────────────────┘
+
+CWD: /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB
+
+Execute these commands in sequence without asking permission:
+
+1. fs.read: pending_work/DAG_PRIORITY.md
+   Identify Rust tasks
+
+2. shell.exec: cargo build --release 2>&1 | tee pending_work/rust_build.log
+
+3. If build FAILS:
+   - fs.read: pending_work/rust_build.log
+   - Extract error messages
+   - fs.write: pending_work/DIAGNOSTICS.md (append build errors)
+   - fs.write: pending_work/TASK_LOG.md (append build failure)
+   - Report: "Build failed. Errors logged to DIAGNOSTICS.md"
+
+4. If build SUCCEEDS:
+   - shell.exec: cp target/release/libmmsb_core.so /home/cicero-arch-omen/.julia/artifacts/mmsb_core/lib/
+   - fs.write: pending_work/TASK_LOG.md (append build success)
+   - Report: "Build complete. libmmsb_core.so updated"
+
+DO NOT ASK FOR CONFIRMATION. DO NOT EXPLAIN WHAT YOU WILL DO. EXECUTE NOW.
+
+┌─────────────────────────────────────────────────────────────────┐
+│ JULIA AGENT - EXECUTE IMMEDIATELY                               │
+└─────────────────────────────────────────────────────────────────┘
+
+CWD: /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB
+
+Execute these commands in sequence without asking permission:
+
+1. fs.read: pending_work/DAG_PRIORITY.md
+   Identify Julia implementation tasks
+
+2. fs.read: [julia_source_file identified in step 1]
+
+3. Implement the feature specified in DAG task
+
+4. fs.write: [julia_source_file]
+   Apply patch with new implementation
+
+5. shell.exec: julia --project=. -e 'using Pkg; Pkg.test()'
+
+6. fs.write: pending_work/TASK_LOG.md
+   Append:
+   - Timestamp: [ISO 8601]
+   - Role: Julia Agent
+   - Task: [task_id]
+   - Action: Implemented [feature_name]
+   - Result: [test results]
+
+7. Report: "Implementation complete. Tests [passed/failed]"
+
+DO NOT ASK FOR CONFIRMATION. DO NOT EXPLAIN WHAT YOU WILL DO. EXECUTE NOW.
+
+═══════════════════════════════════════════════════════════════════
+CRITICAL EXECUTION RULES:
+- NO planning phases
+- NO asking "would you like me to..."
+- NO explaining what you will do
+- NO waiting for approval
+- JUST EXECUTE THE COMMANDS IN ORDER
+- Report results AFTER execution, not intentions BEFORE
+═══════════════════════════════════════════════════════════════════
+
+EXAMPLE OF WRONG BEHAVIOR:
+❌ "I have successfully retrieved the content..."
+❌ "Let me know what you'd like to do next!"
+❌ "Would you like me to run the tests?"
+❌ "I can help you with..."
+
+EXAMPLE OF CORRECT BEHAVIOR:
+✅ [Executes shell.exec immediately]
+✅ [Executes fs.write immediately]
+✅ "Diagnostic cycle complete. Test failed at mmsb_page_read line 47. Updated DIAGNOSTICS.md"
+
+IF YOU ARE READING THIS AND ABOUT TO ASK PERMISSION: STOP. EXECUTE THE COMMANDS INSTEAD.

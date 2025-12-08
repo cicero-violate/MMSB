@@ -9,6 +9,7 @@ module Monitoring
 
 using ..PageTypes: Page, PageID, PageLocation, CPU_LOCATION, GPU_LOCATION, UNIFIED_LOCATION
 using ..MMSBStateTypes: MMSBState
+using ..FFIWrapper
 using ..GraphTypes: get_children
 
 export MMSBStats, get_stats, print_stats, reset_stats!, track_delta_latency!, track_propagation_latency!
@@ -84,8 +85,10 @@ function get_stats(state::MMSBState)::MMSBStats
             end
         end
         total_pages = cpu + gpu + unified
-        total_deltas = length(state.tlog)
-        total_delta_bytes = sum((length(delta.data) for delta in state.tlog); init=0)
+        logging_enabled = state.config.enable_logging
+        summary = logging_enabled ? FFIWrapper.rust_tlog_summary(state.config.tlog_path) : nothing
+        total_deltas = summary === nothing ? 0 : summary.total_deltas
+        total_delta_bytes = summary === nothing ? 0 : summary.total_bytes
         avg_delta = total_deltas > 0 ? total_delta_bytes / total_deltas : 0.0
         nodes = length(state.graph.deps)
         edges = sum((length(children) for children in values(state.graph.deps)); init=0)
