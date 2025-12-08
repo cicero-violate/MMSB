@@ -539,18 +539,32 @@ pub extern "C" fn mmsb_checkpoint_write(
     log: TLogHandle,
     path: *const c_char,
 ) -> i32 {
+    eprintln!("\n=== mmsb_checkpoint_write CALLED ===");
+    eprintln!("   allocator.ptr = {:p}", allocator.ptr);
+    eprintln!("   log.ptr       = {:p}", log.ptr);
+    eprintln!("   path          = {}", 
+        if path.is_null() { "<null>" } else { unsafe { CStr::from_ptr(path) }.to_string_lossy() });
+
     if allocator.ptr.is_null() || log.ptr.is_null() || path.is_null() {
+        eprintln!("   INVALID HANDLE");
         set_last_error(MMSBErrorCode::InvalidHandle);
         return -1;
     }
+
     let allocator_ref = unsafe { &*allocator.ptr };
     let log_ref = unsafe { &*log.ptr };
     let path_str = unsafe { CStr::from_ptr(path) }
         .to_string_lossy()
         .to_string();
+
+    eprintln!("   Calling checkpoint::write_checkpoint(...)");
     match checkpoint::write_checkpoint(allocator_ref, log_ref, path_str) {
-        Ok(_) => 0,
-        Err(_) => {
+        Ok(_) => {
+            eprintln!("   checkpoint::write_checkpoint() → SUCCESS");
+            0
+        }
+        Err(e) => {
+            eprintln!("   checkpoint::write_checkpoint() → FAILED: {e:?}");
             set_last_error(MMSBErrorCode::SnapshotError);
             -1
         }
