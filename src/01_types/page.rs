@@ -96,8 +96,8 @@ impl Page {
          let data_ptr = if location == PageLocation::Unified {
              #[cfg(feature = "cuda")]
              {
-                 let mut ptr = std::ptr::null_mut();
-                 let ret = unsafe { cudaMallocManaged(&mut ptr as *mut _ as *mut *mut c_void, size, 0) };
+                 let mut ptr: *mut c_void = std::ptr::null_mut();
+                 let ret = unsafe { cudaMallocManaged(&mut ptr, size, 0) };
                  if ret != 0 {
                      eprintln!("cudaMallocManaged failed with error code: {}", ret);
                      return Err(PageError::AllocError(ret));
