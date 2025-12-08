@@ -87,8 +87,12 @@ impl PageAllocator {
     }
 
     pub fn free(&self, page_id: PageID) {
-        self.pages.lock().remove(&page_id);
-        println!("Freeing page with ID: {}", page_id.0); // Debug log
+        if let Some(raw_ptr) = self.pages.lock().remove(&page_id) {
+            println!("[ALLOCATOR] Freeing page {} — dropping Box", page_id.0);
+            unsafe {
+                let _ = Box::from_raw(raw_ptr);
+            }
+        }
     }
 
     pub fn release(&self, page_id: PageID) {
@@ -120,10 +124,7 @@ impl PageAllocator {
     }
 
     pub fn acquire_page(&self, page_id: PageID) -> Option<*mut Page> {
-        let pages = self.pages.lock();
-        pages
-            .get(&page_id)
-            .map(|page| page.as_ref() as *const Page as *mut Page)
+        self.pages.lock().get(&page_id).copied()
     }
 
     pub fn snapshot_pages(&self) -> Vec<PageSnapshotData> {
