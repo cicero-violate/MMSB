@@ -31,15 +31,6 @@ function Page(handle::FFIWrapper.RustPageHandle, id::PageID, location::PageLocat
 
     page = Page(handle, id, location, size, Dict{Symbol,Any}(), :allocated)
 
-    # FINALIZER: Use the global allocator
-    finalizer(page) do p
-        try
-            FFIWrapper.rust_allocator_release!(_allocator_handle(), UInt64(p.id))
-        catch
-            # Silent during shutdown
-        end
-    end
-
     _apply_metadata!(page, metadata)
     page
 end
