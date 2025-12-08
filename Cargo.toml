@@ -17,7 +17,6 @@ cuda-sys = { version = "0.2", optional = true }
 default = ["cuda"]
 cuda = ["cuda-sys"]
 
-# ←←←← ADD THIS BLOCK ↓↓↓↓
 [[example]]
 name = "rust_smoke_test_ffi"
 
