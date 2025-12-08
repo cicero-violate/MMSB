@@ -642,13 +642,13 @@ pub extern "C" fn mmsb_tlog_reader_next(handle: TLogReaderHandle) -> DeltaHandle
     }
 }
 
-
 #[no_mangle]
 pub extern "C" fn mmsb_tlog_summary(path: *const c_char, out: *mut TLogSummary) -> i32 {
     if path.is_null() || out.is_null() {
         set_last_error(MMSBErrorCode::InvalidHandle);
         return -1;
     }
+
     let path_str = match unsafe { CStr::from_ptr(path).to_str() } {
         Ok(s) => s.to_owned(),
         Err(_) => {
@@ -656,38 +656,24 @@ pub extern "C" fn mmsb_tlog_summary(path: *const c_char, out: *mut TLogSummary) 
             return -1;
         }
     };
-    let log = match TransactionLog::new(path_str) {
+
+    let log = match TransactionLog::new(&path_str) {
         Ok(log) => log,
         Err(e) => {
             set_last_error(log_error_code(&e));
             return -1;
         }
     };
+
     let summary = log.summary();
+
     unsafe {
         (*out).total_deltas = summary.total_deltas;
         (*out).total_bytes = summary.total_bytes;
         (*out).last_epoch = summary.last_epoch;
     }
+
     0
-}
-    let path_str = unsafe { CStr::from_ptr(path) }   // ← THIS IS OUTSIDE THE FUNCTION
-        .to_string_lossy()
-        .to_string();
-    match TransactionLog::get_summary(path_str) {    // ← THIS IS DEAD CODE, NEVER COMPILES
-        Ok(summary) => {
-            unsafe {
-                (*out).total_deltas = summary.total_deltas;
-                (*out).total_bytes = summary.total_bytes;
-                (*out).last_epoch = summary.last_epoch;
-            }
-            0
-        }
-        Err(err) => {
-            set_last_error(log_error_code(&err));
-            -1
-        }
-    }
 }
 
 // ──────────────────────────────────────────────────────────────
