@@ -1,6 +1,7 @@
 module PageTypes
 
 using ..FFIWrapper
+using ..MMSBStateTypes: _reserve_page_id_unlocked!  # only thing we actually need
 
 export Page, PageID, PageLocation, CPU_LOCATION, GPU_LOCATION, UNIFIED_LOCATION,
        is_gpu_page, is_cpu_page, page_size_bytes,
