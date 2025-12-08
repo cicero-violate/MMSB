@@ -97,14 +97,10 @@ impl Page {
              #[cfg(feature = "cuda")]
              {
                  let mut ptr: *mut c_void = std::ptr::null_mut();
-                 let ret = unsafe { cudaMallocManaged(&mut ptr, size, 0) };
+                 let ret = unsafe { cudaMallocManaged(&mut ptr as *mut *mut c_void, size, 1) };
                  if ret != 0 {
                      eprintln!("cudaMallocManaged failed with error code: {}", ret);
                      return Err(PageError::AllocError(ret));
-                 }
-                 if ptr.is_null() {
-                     eprintln!("cudaMallocManaged succeeded but returned null pointer!");
-                     return Err(PageError::AllocError(-1));
                  }
                  ptr as *mut u8
              }
