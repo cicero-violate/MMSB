@@ -70,14 +70,19 @@ impl PageAllocator {
         location: Option<PageLocation>,
     ) -> Result<*mut Page, PageError> {
         let loc = location.unwrap_or(self.config.default_location);
-        // If the page already exists → return error (or overwrite? we choose error for safety)
+
         if self.pages.lock().contains_key(&page_id_hint) {
             return Err(PageError::AlreadyExists(page_id_hint));
         }
-        let mut page = Box::new(Page::new(page_id_hint, size, loc)?);
-        let ptr = page.as_mut() as *mut Page;
-        self.pages.lock().insert(page_id_hint, page);
-        println!("Allocated page ID {} at {:p}", page_id_hint.0, ptr);
+
+        let page_box = Box::new(Page::new(page_id_hint, size, loc)?);
+        let ptr = Box::into_raw(page_box);  // ← NOW WE LEAK THE BOX ON PURPOSE
+
+        println!("[ALLOCATOR] Allocated page ID {} at {:p}", page_id_hint.0, ptr);
+
+        // Store the raw pointer, not Box
+        self.pages.lock().insert(page_id_hint, ptr as *mut Page);
+
         Ok(ptr)
     }
 
