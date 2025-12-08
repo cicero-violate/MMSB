@@ -1,37 +1,15 @@
-# src/02_runtime/ReplayEngine.jl
-"""
-ReplayEngine - Deterministic state reconstruction
-
-Enables time-travel debugging and state verification by replaying
-transaction logs to reconstruct historical states.
-"""
 module ReplayEngine
 
-using Serialization
-using ..PageTypes: Page, PageID
-using ..DeltaTypes: Delta, dense_data
+using ..PageTypes: Page, PageID, read_page, initialize!, activate!, PageLocation
+using ..DeltaTypes: Delta
 using ..MMSBStateTypes: MMSBState, MMSBConfig, register_page!, get_page
-using ..DeltaRouter: apply_delta_to_page!, create_delta
+using ..FFIWrapper
+using ..TLog
 
 export replay_to_epoch, replay_to_timestamp, replay_from_checkpoint
 export replay_page_history, verify_state_consistency
 export replay_with_predicate, incremental_replay!, compute_diff
 
-"""
-Deep copy a page for replay purposes.
-"""
-function _clone_page(page::Page)::Page
-    clone = Page(page.id, page.size, page.location)
-    clone.epoch = page.epoch
-    clone.mask .= page.mask
-    clone.data .= page.data
-    clone.metadata = Dict{Symbol,Any}(page.metadata)
-    return clone
-end
-
-"""
-Create an empty MMSBState that mirrors another state's configuration and page registry (without data).
-"""
 function _blank_state_like(state::MMSBState)::MMSBState
     config = MMSBConfig(
         enable_logging=state.config.enable_logging,
@@ -40,190 +18,141 @@ function _blank_state_like(state::MMSBState)::MMSBState
         page_size_default=state.config.page_size_default,
         max_tlog_size=state.config.max_tlog_size,
         checkpoint_interval=state.config.checkpoint_interval,
+        tlog_path=state.config.tlog_path,
     )
-    new_state = MMSBState(config)
+    clone = MMSBState(config)
+
     lock(state.lock) do
-        for (id, page) in state.pages
-            shadow = Page(page.id, page.size, page.location)
+        for (_, page) in state.pages
+            # Use the global allocator to create a shadow page with the correct ID
+            handle = FFIWrapper.rust_allocator_allocate(
+                PageAllocator._allocator_handle(),
+                UInt64(page.id),
+                page.size,
+                Int32(page.location)
+            )
+            shadow = Page(handle, page.id, page.location, page.size)
+
+            # Initialize and copy current data
+            initialize!(shadow)
+            activate!(shadow)
+
+            GC.@preserve page shadow begin
+                data = read_page(page)
+                mask = fill(UInt8(1), page.size)
+                FFIWrapper.rust_page_write_masked!(
+                    shadow.handle, mask, data;
+                    is_sparse=false,
+                    epoch=FFIWrapper.rust_page_epoch(page.handle)
+                )
+            end
+
             shadow.metadata = Dict{Symbol,Any}(page.metadata)
-            register_page!(new_state, shadow)
+            register_page!(clone, shadow)
         end
     end
-    return new_state
+
+    clone
 end
 
-"""
-Create a deep copy of a state (used for predicate captures).
-"""
-function _snapshot_state(state::MMSBState)::MMSBState
-    clone = MMSBState(deepcopy(state.config))
-    lock(state.lock) do
-        for (id, page) in state.pages
-            register_page!(clone, _clone_page(page))
-        end
-    end
-    return clone
-end
-
-"""
-Iterate through deltas in chronological order with optional filter.
-"""
-function _chronological_deltas(state::MMSBState;
-                               predicate::Function=(d -> true))::Vector{Delta}
-    lock(state.lock) do
-        return [delta for delta in sort(state.tlog; by = d -> d.epoch) if predicate(delta)]
+function _apply_delta!(page::Page, delta::Delta)
+    GC.@preserve page delta begin
+        FFIWrapper.rust_delta_apply!(page.handle, delta.handle)
     end
 end
 
-"""
-    replay_to_epoch(state, target_epoch)
+function _all_deltas(state::MMSBState)
+    TLog.query_log(state)
+end
 
-Reconstruct MMSB state at specific epoch.
-"""
 function replay_to_epoch(state::MMSBState, target_epoch::UInt32)::MMSBState
     replay_state = _blank_state_like(state)
-    deltas = _chronological_deltas(state; predicate = d -> d.epoch <= target_epoch)
-    for delta in deltas
-        page = get_page(replay_state, delta.page_id)
-        page === nothing && continue
-        apply_delta_to_page!(page, delta)
+    GC.@preserve replay_state begin
+        for delta in _all_deltas(state)
+            delta.epoch <= target_epoch || continue
+            page = get_page(replay_state, delta.page_id)
+            page === nothing && continue
+            _apply_delta!(page, delta)
+        end
     end
-    return replay_state
+    replay_state
 end
 
-"""
-    replay_to_timestamp(state, target_time)
-
-Reconstruct state at specific nanosecond timestamp.
-"""
 function replay_to_timestamp(state::MMSBState, target_time::UInt64)::MMSBState
     replay_state = _blank_state_like(state)
-    deltas = _chronological_deltas(state; predicate = d -> d.timestamp <= target_time)
-    for delta in deltas
-        page = get_page(replay_state, delta.page_id)
-        page === nothing && continue
-        apply_delta_to_page!(page, delta)
-    end
-    return replay_state
-end
-
-"""
-    replay_from_checkpoint(path, target_epoch)
-
-Load checkpoint and optionally replay to specific epoch.
-"""
-function replay_from_checkpoint(checkpoint_path::String, 
-                               target_epoch::Union{UInt32, Nothing}=nothing)::MMSBState
-    io = open(checkpoint_path, "r")
-    deltas, pages = deserialize(io)
-    close(io)
-    state = MMSBState(MMSBConfig())
-    state.pages = deepcopy(pages)
-    state.tlog = deepcopy(deltas)
-    if target_epoch === nothing
-        for (_, page) in state.pages
-            page.epoch = UInt32(0)
+    GC.@preserve replay_state begin
+        for delta in _all_deltas(state)
+            delta.timestamp <= target_time || continue
+            page = get_page(replay_state, delta.page_id)
+            page === nothing && continue
+            _apply_delta!(page, delta)
         end
-        incremental_replay!(state, state.tlog)
-        return state
-    else
-        return replay_to_epoch(state, target_epoch)
     end
+    replay_state
 end
 
-"""
-    replay_page_history(state, page_id) -> Vector{Page}
-
-Replay all versions of a single page.
-"""
-function replay_page_history(state::MMSBState, page_id::PageID)::Vector{Page}
-    history = Page[]
-    page_template = get_page(state, page_id)
-    page_template === nothing && return history
-    working_page = Page(page_template.id, page_template.size, page_template.location)
-    working_page.metadata = Dict{Symbol,Any}(page_template.metadata)
-    deltas = _chronological_deltas(state; predicate = d -> d.page_id == page_id)
-    for delta in deltas
-        apply_delta_to_page!(working_page, delta)
-        push!(history, _clone_page(working_page))
-    end
-    return history
+function replay_from_checkpoint(path::AbstractString,
+                                target_epoch::Union{UInt32, Nothing}=nothing)::MMSBState
+    config = MMSBConfig(tlog_path=path)
+    state = MMSBState(config)
+    TLog.load_checkpoint!(state, path)
+    target_epoch === nothing ? state : replay_to_epoch(state, target_epoch)
 end
 
-"""
-    verify_state_consistency(state) -> Bool
+function replay_page_history(state::MMSBState, page_id::PageID)::Vector{Vector{UInt8}}
+    history = Vector{Vector{UInt8}}()
+    working = get_page(state, page_id)
+    working === nothing && return history
+    shadow = Page(working.id, working.size, working.location)
+    # T6: Initialize shadow page for replay
+    initialize!(shadow)
+    activate!(shadow)
+    GC.@preserve working shadow begin
+        data = read_page(working)
+        mask = fill(UInt8(1), working.size)
+        FFIWrapper.rust_page_write_masked!(shadow.handle, mask, data;
+                                           is_sparse=false,
+                                           epoch=FFIWrapper.rust_page_epoch(working.handle))
+        deltas = TLog.query_log(state; page_id=page_id)
+        for delta in deltas
+            _apply_delta!(shadow, delta)
+            push!(history, read_page(shadow))
+        end
+    end
+    history
+end
 
-Verify that current state matches tlog replay.
-"""
 function verify_state_consistency(state::MMSBState)::Bool
-    reconstructed = replay_to_epoch(state, typemax(UInt32))
+    replayed = replay_to_epoch(state, typemax(UInt32))
     lock(state.lock) do
         for (id, page) in state.pages
-            replay_page = get_page(reconstructed, id)
+            replay_page = get_page(replayed, id)
             replay_page === nothing && return false
-            if page.size != replay_page.size || page.epoch != replay_page.epoch
-                return false
-            end
-            if Vector{UInt8}(page.data) != Vector{UInt8}(replay_page.data)
+            if read_page(page) != read_page(replay_page)
                 return false
             end
         end
     end
-    return true
+    true
 end
 
-"""
-    replay_with_predicate(state, predicate) -> Vector{Tuple{UInt32,MMSBState}}
-
-Replay log and capture states matching predicate.
-"""
 function replay_with_predicate(state::MMSBState, predicate::Function)
-    captures = Vector{Tuple{UInt32,MMSBState}}()
-    replay_state = _blank_state_like(state)
-    for delta in _chronological_deltas(state)
-        page = get_page(replay_state, delta.page_id)
+    captures = Vector{Tuple{UInt32,Delta}}()
+    for delta in _all_deltas(state)
+        predicate(delta.epoch, delta) && push!(captures, (delta.epoch, delta))
+    end
+    captures
+end
+
+function incremental_replay!(state::MMSBState, deltas::Vector{Delta})
+    for delta in deltas
+        page = get_page(state, delta.page_id)
         page === nothing && continue
-        apply_delta_to_page!(page, delta)
-        predicate(delta.epoch, delta) && push!(captures, (delta.epoch, _snapshot_state(replay_state)))
+        _apply_delta!(page, delta)
     end
-    return captures
+    state
 end
 
-"""
-    incremental_replay!(base_state, deltas)
+compute_diff(::MMSBState, ::MMSBState) = error("compute_diff pending Rust replay parity")
 
-Apply deltas to existing state (mutating).
-"""
-function incremental_replay!(base_state::MMSBState, deltas::Vector{Delta})
-    sorted = sort(deltas; by = d -> d.epoch)
-    for delta in sorted
-        page = get_page(base_state, delta.page_id)
-        page === nothing && continue
-        apply_delta_to_page!(page, delta)
-    end
-    return base_state
-end
-
-"""
-    compute_diff(state1, state2) -> Vector{Delta}
-
-Compute deltas needed to transform state1 into state2.
-"""
-function compute_diff(state1::MMSBState, state2::MMSBState)::Vector{Delta}
-    diffs = Delta[]
-    ids = union(keys(state1.pages), keys(state2.pages))
-    for id in ids
-        page2 = get_page(state2, id)
-        page2 === nothing && continue
-        baseline = get_page(state1, id)
-        baseline_bytes = baseline === nothing ? zeros(UInt8, page2.size) : Vector{UInt8}(baseline.data)
-        target_bytes = Vector{UInt8}(page2.data)
-        mask = Vector{Bool}(baseline_bytes .!= target_bytes)
-        any(mask) || continue
-        delta = create_delta(state2, id, mask, target_bytes, :diff)
-        push!(diffs, delta)
-    end
-    return diffs
-end
-
-end # module ReplayEngine
+end # module
