@@ -97,11 +97,14 @@ impl Page {
              #[cfg(feature = "cuda")]
              {
                  let mut ptr = std::ptr::null_mut();
-                 // cudaMemAttachGlobal = 1, cudaMemAttachHost = 2 — 1 is correct for multi-GPU access
-                 // let ret = unsafe { cudaMallocManaged(&mut ptr as *mut _ as *mut *mut c_void, size, 1) };
                  let ret = unsafe { cudaMallocManaged(&mut ptr as *mut _ as *mut *mut c_void, size, 0) };
                  if ret != 0 {
+                     eprintln!("cudaMallocManaged failed with error code: {}", ret);
                      return Err(PageError::AllocError(ret));
+                 }
+                 if ptr.is_null() {
+                     eprintln!("cudaMallocManaged succeeded but returned null pointer!");
+                     return Err(PageError::AllocError(-1));
                  }
                  ptr as *mut u8
              }
