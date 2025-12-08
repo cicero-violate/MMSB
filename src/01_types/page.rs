@@ -199,7 +199,6 @@ impl Page {
 
     pub fn set_metadata_blob(&mut self, blob: &[u8]) -> Result<(), PageError> {
         if blob.is_empty() {
-            // Empty blob = no metadata → perfectly valid
             self.metadata = Metadata::new();
             return Ok(());
         }
