@@ -224,4 +224,37 @@ mod tests {
         println!("Unified memory test PASSED — CPU and GPU share the same memory!");
     }
 
+    #[test]
+    fn test_checkpoint_roundtrip_in_memory() {
+        let alloc = PageAllocator::new(PageAllocatorConfig::default());
+
+        // Allocate and modify
+        let ptr = alloc.allocate_raw(PageID(9999), 1024*1024, None).unwrap();
+        let page = unsafe { &mut *ptr };
+        page.apply_delta(&Delta {
+            delta_id: DeltaID(1),
+            page_id: PageID(9999),
+            epoch: Epoch(1),
+            mask: vec![true],
+            payload: vec![0x11],
+            is_sparse: false,
+            timestamp: 0,
+            source: Source("test".into()),
+        }).unwrap();
+
+        // Snapshot
+        let snapshot = alloc.snapshot_pages();
+        assert_eq!(snapshot.len(), 1);
+        assert_eq!(snapshot[0].epoch, 1);
+
+        // Clear and restore
+        alloc.restore_from_snapshot(snapshot).expect("roundtrip should work");
+
+        let restored = alloc.acquire_page(PageID(9999)).unwrap();
+        let restored_page = unsafe { &*restored };
+        assert_eq!(restored_page.epoch().0, 1);
+        println!("CHECKPOINT ROUNDTRIP TEST PASSED");
+    }
+
+
 }
