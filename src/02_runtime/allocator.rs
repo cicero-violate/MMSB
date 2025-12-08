@@ -52,10 +52,7 @@ pub struct PageSnapshotData {
 
 impl PageAllocator {
     pub fn new(config: PageAllocatorConfig) -> Self {
-        println!(
-            "Allocating new PageAllocator instance with config: {:?}",
-            config
-        ); // Debug log
+        println!("Allocating new PageAllocator instance with config: {:?}", config);
         Self {
             config,
             pages: Mutex::new(HashMap::new()),
@@ -63,46 +60,28 @@ impl PageAllocator {
         }
     }
 
-    pub fn allocate_raw(
-        &self,
-        page_id_hint: PageID,
-        size: usize,
-        location: Option<PageLocation>,
-    ) -> Result<*mut Page, PageError> {
+    pub fn allocate_raw(&self, page_id_hint: PageID, size: usize, location: Option<PageLocation>) -> Result<*mut Page, PageError> {
         let loc = location.unwrap_or(self.config.default_location);
-
         if self.pages.lock().contains_key(&page_id_hint) {
             return Err(PageError::AlreadyExists(page_id_hint));
         }
-
-        let page_box = Box::new(Page::new(page_id_hint, size, loc)?);
-        let ptr = Box::into_raw(page_box);  // ← NOW WE LEAK THE BOX ON PURPOSE
-
+        let page = Box::new(Page::new(page_id_hint, size, loc)?);
+        let ptr = Box::into_raw(page);
         println!("[ALLOCATOR] Allocated page ID {} at {:p}", page_id_hint.0, ptr);
-
-        // Store the raw pointer, not Box
-        self.pages.lock().insert(page_id_hint, ptr as *mut Page);
-
+        self.pages.lock().insert(page_id_hint, unsafe { Box::from_raw(ptr) });
         Ok(ptr)
     }
 
     pub fn free(&self, page_id: PageID) {
-        if let Some(raw_ptr) = self.pages.lock().remove(&page_id) {
-            println!("[ALLOCATOR] Freeing page {} — dropping Box", page_id.0);
-            unsafe {
-                let _ = Box::from_raw(raw_ptr);
-            }
+        if let Some(_) = self.pages.lock().remove(&page_id) {
+            println!("[ALLOCATOR] Freed page {}", page_id.0);
         }
     }
 
-    pub fn release(&self, page_id: PageID) {
-        if let Some(raw_ptr) = self.pages.lock().remove(&page_id) {
-            println!("[ALLOCATOR] Releasing page {} — reconstructing Box to drop", page_id.0);
-            unsafe {
-                let _dropped = Box::from_raw(raw_ptr);
-                // Box drops here — only if no Arc holds it
-            }
-        }
+    pub fn release(&self, page_id: PageID) { self.free(page_id); }
+
+    pub fn acquire_page(&self, page_id: PageID) -> Option<*mut Page> {
+        self.pages.lock().get(&page_id).map(|b| &**b as *const Page as *mut Page)
     }
 
     pub fn len(&self) -> usize {
@@ -121,10 +100,6 @@ impl PageAllocator {
                 metadata: page.metadata_blob(),
             })
             .collect()
-    }
-
-    pub fn acquire_page(&self, page_id: PageID) -> Option<*mut Page> {
-        self.pages.lock().get(&page_id).copied()
     }
 
     pub fn snapshot_pages(&self) -> Vec<PageSnapshotData> {
