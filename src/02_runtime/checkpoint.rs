@@ -10,7 +10,7 @@ const SNAPSHOT_VERSION: u32 = 1;
 
 pub fn write_checkpoint(
     allocator: &PageAllocator,
-    tlog: &mut TransactionLog,
+    tlog: &TransactionLog,
     path: impl AsRef<Path>,
 ) -> std::io::Result<()> {
     let pages = allocator.snapshot_pages();
