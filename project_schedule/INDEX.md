@@ -2,15 +2,15 @@
 
 ## Quick Navigation
 
-| Document | Lines | Purpose | Read When |
-|----------|-------|---------|-----------|
-| **README.md** | 53 | Quick overview | First time viewing |
-| **_SUMMARY.md** | 174 | Executive summary with math | Need high-level picture |
-| **ARCHITECTURE.md** | 513 | Complete specification | Planning work or understanding system |
-| **PROJECT_SCHEDULE.md** | 188 | Timeline and phases | Checking progress or planning sprints |
-| **DAG_DEPENDENCIES.md** | 323 | Task dependencies | Finding next task to work on |
-| **TASK_LOG.md** | 371 | Detailed task tracking | Updating or checking task status |
-| **AGENTS.md** | 507 | AI agent workflow | You're an AI agent working on MMSB |
+| Document                | Lines | Purpose                     | Read When                             |
+|-------------------------+-------+-----------------------------+---------------------------------------|
+| **README.md**           |    53 | Quick overview              | First time viewing                    |
+| **_SUMMARY.md**         |   174 | Executive summary with math | Need high-level picture               |
+| **ARCHITECTURE.md**     |   513 | Complete specification      | Planning work or understanding system |
+| **PROJECT_SCHEDULE.md** |   188 | Timeline and phases         | Checking progress or planning sprints |
+| **DAG_DEPENDENCIES.md** |   323 | Task dependencies           | Finding next task to work on          |
+| **TASK_LOG.md**         |   371 | Detailed task tracking      | Updating or checking task status      |
+| **AGENTS.md**           |   507 | AI agent workflow           | You're an AI agent working on MMSB    |
 
 **Total:** 2,129 lines of structured planning
 
