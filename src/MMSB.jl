@@ -105,6 +105,7 @@ include("10_agent_interface/InstrumentationManager.jl")
 include("10_agent_interface/checkpoint_api.jl")
 include("10_agent_interface/event_subscription.jl")
 include("10_agent_interface/AgentProtocol.jl")
+using .AgentProtocol
 
 # Layer 11: External Agents
 include("11_agents/AgentTypes.jl")
