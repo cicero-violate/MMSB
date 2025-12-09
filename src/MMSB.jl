@@ -76,14 +76,14 @@ include("07_intention/attractor_states.jl")
 include("10_agent_interface/API.jl")
 
 # # Layer 8: Reasoning Engine
-# include("08_reasoning/ReasoningTypes.jl")
-# include("08_reasoning/structural_inference.jl")
-# include("08_reasoning/constraint_propagation.jl")
-# include("08_reasoning/dependency_inference.jl")
-# include("08_reasoning/pattern_formation.jl")
-# include("08_reasoning/rule_evaluation.jl")
-# include("08_reasoning/logic_engine.jl")
-# include("08_reasoning/reasoning_engine.jl")
+include("08_reasoning/ReasoningTypes.jl")
+include("08_reasoning/structural_inference.jl")
+include("08_reasoning/constraint_propagation.jl")
+include("08_reasoning/dependency_inference.jl")
+include("08_reasoning/pattern_formation.jl")
+include("08_reasoning/rule_evaluation.jl")
+include("08_reasoning/logic_engine.jl")
+include("08_reasoning/reasoning_engine.jl")
 
 # # Layer 9: Planning Engine
 # include("09_planning/PlanningTypes.jl")
