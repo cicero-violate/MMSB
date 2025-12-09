@@ -8,7 +8,7 @@ module EntropyReduction
 
 export compute_entropy, reduce_entropy!
 
-using Statistics
+# using Statistics  # Not in Project.toml
 
 """
     compute_entropy(access_frequencies) -> Float64
