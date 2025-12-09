@@ -53,7 +53,7 @@ include("03_dag/GraphDSL.jl")
 include("04_propagation/PropagationEngine.jl")
 include("04_propagation/PropagationScheduler.jl")
 
-include("10_agent_interface/API.jl")
+# include("10_agent_interface/API.jl")
 
 # Layer 5: Adaptive Memory
 include("05_adaptive/AdaptiveLayout.jl")
