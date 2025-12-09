@@ -1,4 +1,4 @@
-use crate::types::{Delta, DeltaID, Epoch, PageID, Source};
+use crate::page::{Delta, DeltaID, Epoch, PageID, Source};
 use std::fs::File;
 use std::io::{BufReader, Read};
 use std::path::Path;

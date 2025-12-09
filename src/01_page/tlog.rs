@@ -1,4 +1,4 @@
-use crate::types::{Delta, DeltaID, Epoch, PageID, Source};
+use crate::page::{Delta, DeltaID, Epoch, PageID, Source};
 use parking_lot::RwLock;
 use std::collections::VecDeque;
 use std::fs::{File, OpenOptions};

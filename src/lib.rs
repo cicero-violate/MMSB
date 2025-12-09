@@ -2,9 +2,10 @@
 #![allow(dead_code)]
 
 #[path = "00_physical/mod.rs"]  pub mod physical;
-#[path = "01_types/mod.rs"]      pub mod types;
-#[path = "02_runtime/mod.rs"]   pub mod runtime;
-#[path = "05_graph/mod.rs"]      pub mod graph;
+#[path = "01_page/mod.rs"]      pub mod page;
+#[path = "02_semiring/mod.rs"]  pub mod semiring;
+#[path = "03_dag/mod.rs"]       pub mod dag;
+#[path = "04_propagation/mod.rs"] pub mod propagation;
 
 mod ffi;
 pub use ffi::*;

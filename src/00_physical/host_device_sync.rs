@@ -1,4 +1,4 @@
-use crate::types::PageID;
+use crate::page::PageID;
 
 #[derive(Debug, Default)]
 pub struct HostDeviceSync {

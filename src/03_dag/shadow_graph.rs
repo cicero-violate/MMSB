@@ -1,5 +1,5 @@
 use super::edge_types::EdgeType;
-use crate::types::PageID;
+use crate::page::PageID;
 use parking_lot::RwLock;
 use std::collections::{HashMap, HashSet};
 

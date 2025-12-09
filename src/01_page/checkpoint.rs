@@ -1,6 +1,6 @@
 use crate::physical::allocator::{PageAllocator, PageSnapshotData};
 use super::tlog::TransactionLog;
-use crate::types::{PageID, PageLocation};
+use crate::page::{PageID, PageLocation};
 use std::fs::File;
 use std::io::{BufReader, BufWriter, Read, Write};
 use std::path::Path;

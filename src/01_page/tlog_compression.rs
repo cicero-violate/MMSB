@@ -1,4 +1,4 @@
-use crate::types::Delta;
+use crate::page::Delta;
 
 pub fn compact(deltas: &[Delta]) -> Vec<Delta> {
     if deltas.len() <= 1 {

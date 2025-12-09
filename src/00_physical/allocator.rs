@@ -1,9 +1,8 @@
-use crate::types::{Epoch, Page, PageError, PageID, PageLocation};
-use crate::types::{Delta, DeltaID, Source};
+use crate::page::{Epoch, Page, PageError, PageID, PageLocation};
 use parking_lot::Mutex;
 use std::collections::HashMap;
 use std::ffi::c_void;
-use std::sync::atomic::{AtomicU64, Ordering};
+use std::sync::atomic::AtomicU64;
 
 
 extern "C" {
@@ -181,6 +180,7 @@ impl PageAllocator {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::page::{Delta, DeltaID, Source};
 
     #[test]
     fn test_page_info_metadata_roundtrip() {

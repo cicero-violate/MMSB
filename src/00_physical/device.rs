@@ -1,4 +1,4 @@
-use crate::types::{Page, PageID};
+use crate::page::{Page, PageID};
 use parking_lot::RwLock;
 use std::collections::HashMap;
 use std::sync::Arc;

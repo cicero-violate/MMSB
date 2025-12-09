@@ -16,16 +16,16 @@ include("ffi/FFIWrapper.jl")
 
 # Core type system
 include("01_types/Errors.jl")
-include("01_types/Page.jl")
-include("01_types/Delta.jl")
-include("01_types/ShadowPageGraph.jl")
+include("01_page/Page.jl")
+include("01_page/Delta.jl")
+include("03_dag/ShadowPageGraph.jl")
 include("01_types/MMSBState.jl")
 
 # Rust error mapping shim (depends on FFI + ErrorTypes)
 include("ffi/RustErrors.jl")
 
 # Event system is shared by runtime/graph layers
-include("05_graph/EventSystem.jl")
+include("03_dag/EventSystem.jl")
 
 # Device kernels are required by the runtime delta router
 
@@ -39,9 +39,11 @@ include("00_physical/DeviceSync.jl")
 include("00_physical/GPUKernels.jl")
 
 # Runtime layer
-include("02_runtime/TLog.jl")
-include("02_runtime/DeltaRouter.jl")
-include("02_runtime/ReplayEngine.jl")
+include("01_page/TLog.jl")
+include("02_semiring/Semiring.jl")
+include("02_semiring/SemiringConfig.jl")
+include("02_semiring/DeltaRouter.jl")
+include("01_page/ReplayEngine.jl")
 
 # Instrumentation layer (Julia compiler hooks)
 include("04_instrumentation/BaseHook.jl")
@@ -50,8 +52,10 @@ include("04_instrumentation/CompilerHooks.jl")
 include("04_instrumentation/InstrumentationManager.jl")
 
 # Graph and dependency tracking
-include("05_graph/DependencyGraph.jl")
-include("05_graph/PropagationEngine.jl")
+include("03_dag/DependencyGraph.jl")
+include("03_dag/GraphDSL.jl")
+include("04_propagation/PropagationEngine.jl")
+include("04_propagation/PropagationScheduler.jl")
 
 include("API.jl")
 

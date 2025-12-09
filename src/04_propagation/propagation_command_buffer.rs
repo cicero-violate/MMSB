@@ -1,4 +1,4 @@
-use crate::types::{Page, PageID};
+use crate::page::{Page, PageID};
 use std::sync::Arc;
 
 #[derive(Debug, Clone)]

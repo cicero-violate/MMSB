@@ -1,13 +1,12 @@
+use crate::page::checkpoint;
+use crate::page::tlog::{TransactionLog, TransactionLogReader};
+use crate::page::{Delta, DeltaID, Epoch, Page, PageError, PageID, PageLocation, Source};
 use crate::physical::allocator::{PageAllocator, PageAllocatorConfig};
-use crate::runtime::checkpoint;
-use crate::runtime::tlog::{TransactionLog, TransactionLogReader};
-use crate::types::{Delta, DeltaID, Epoch, Page, PageError, PageID, PageLocation, Source};
 use std::cell::RefCell;
 use std::cmp::min;
-use std::ffi::{CStr, CString};
+use std::ffi::CStr;
 use std::io::ErrorKind;
 use std::os::raw::c_char;
-use std::panic;
 use std::ptr;
 use std::thread_local;
 
@@ -709,7 +708,7 @@ pub extern "C" fn mmsb_tlog_summary(path: *const c_char, out: *mut TLogSummary) 
         }
     };
 
-    match crate::runtime::tlog::summary(path_str) {
+    match crate::page::tlog::summary(path_str) {
         Ok(summary) => {
             unsafe {
                 (*out).total_deltas = summary.total_deltas;
