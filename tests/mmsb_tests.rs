@@ -3,7 +3,7 @@
 use mmsb_core::runtime::allocator::{PageAllocator, PageAllocatorConfig};
 use mmsb_core::runtime::checkpoint::{load_checkpoint, write_checkpoint};
 use mmsb_core::runtime::tlog::TransactionLog;
-use mmsb_core::types::{Delta, DeltaID, Epoch, Page, PageID, Source};
+use mmsb_core::page::{Delta, DeltaID, Epoch, Page, PageID, Source};
 use std::sync::Arc;
 
 fn read_page(page: &Page) -> Vec<u8> {

@@ -1,4 +1,4 @@
-use crate::types::Page;
+use crate::page::Page;
 
 /// Placeholder fast-path propagation implementation.
 pub fn passthrough(_source: &Page, _target: &mut Page) {
