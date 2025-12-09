@@ -1,5 +1,5 @@
 using Test
-using MMSB
+# MMSB already loaded in runtests.jl
 
 @testset "Phase 4 Integration: Agents + Applications" begin
     config = MMSBConfig(tlog_path=tempname() * ".tlog")

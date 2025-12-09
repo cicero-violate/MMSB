@@ -1,5 +1,4 @@
 using Test
-using MMSB
 using MMSB.AgentTypes
 using MMSB.RLAgents
 using MMSB.SymbolicAgents

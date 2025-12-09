@@ -1,5 +1,4 @@
 using Test
-using MMSB
 using MMSB.CheckpointAPI
 using MMSB.EventSubscription
 using MMSB.AgentProtocol
