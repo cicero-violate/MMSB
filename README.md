@@ -167,4 +167,4 @@ See `project_schedule/PHASE_5.md` for detailed DAG and task list.
 
 ## License
 
-MIT
+APACHE 2.0
