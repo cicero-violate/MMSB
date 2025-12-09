@@ -23,7 +23,7 @@ end
 
 SymbolicAgent() = SymbolicAgent(AgentState(Rule[]), Dict{Symbol, Any}())
 
-function AgentProtocol.observe(agent::SymbolicAgent, state::MMSBState)
+function observe(agent::SymbolicAgent, state::MMSBState)
     inferred = structural_inference(state.graph)
     return (graph_structure = inferred, pages = state.pages)
 end

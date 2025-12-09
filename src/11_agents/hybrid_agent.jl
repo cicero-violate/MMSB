@@ -19,7 +19,7 @@ end
 
 HybridAgent(mix_ratio=0.5) = HybridAgent(SymbolicAgent(), RLAgent(nothing, lr=0.001), mix_ratio)
 
-function AgentProtocol.observe(agent::HybridAgent, state::MMSBState)
+function observe(agent::HybridAgent, state::MMSBState)
     return (
         symbolic_obs = observe(agent.symbolic, state),
         rl_obs = observe(agent.rl, state)

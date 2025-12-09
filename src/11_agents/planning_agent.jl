@@ -19,7 +19,7 @@ end
 
 PlanningAgent(horizon=10, depth=5) = PlanningAgent(AgentState(AgentAction[]), horizon, depth)
 
-function AgentProtocol.observe(agent::PlanningAgent, state::MMSBState)
+function observe(agent::PlanningAgent, state::MMSBState)
     return (
         intention = compute_intention(state),
         current_plan = agent.agent_state.internal_state

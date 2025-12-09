@@ -20,7 +20,7 @@ function RLAgent(initial_state::T; lr=0.001, γ=0.99) where T
     RLAgent{T}(AgentState(initial_state), AgentMemory(), lr, γ)
 end
 
-function AgentProtocol.observe(agent::RLAgent, state::MMSBState)
+function observe(agent::RLAgent, state::MMSBState)
     return (
         n_pages = length(state.pages),
         graph_size = length(state.graph.nodes),
