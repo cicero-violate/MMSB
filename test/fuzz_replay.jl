@@ -20,7 +20,7 @@ using .MMSB.PageTypes: read_page
     end
 
     # Randomized replay target - should not crash
-    target_epoch = UInt32(max(d.epoch for d in deltas))
+    target_epoch = UInt32(maximum(d.epoch for d in deltas))
     GC.gc()
     replayed = MMSB.ReplayEngine.replay_to_epoch(state, target_epoch)
     GC.gc()
@@ -28,4 +28,3 @@ using .MMSB.PageTypes: read_page
     @test replay_page !== nothing
     @test length(read_page(replay_page)) == 128
 end
-
