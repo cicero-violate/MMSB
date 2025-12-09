@@ -44,8 +44,8 @@ import MMSB: AbstractAgent, observe, plan, AgentAction
     @testset "Agent Protocol" begin
         struct TestAgent <: AbstractAgent end
         
-        AgentProtocol.observe(agent::TestAgent, state::MMSBState) = state.pages
-        AgentProtocol.plan(agent::TestAgent, obs::Any) = AgentAction[]
+        observe(agent::TestAgent, state::MMSBState) = state.pages
+        plan(agent::TestAgent, obs::Any) = AgentAction[]
         
         config = MMSBConfig(tlog_path=tempname() * ".tlog")
         state = MMSBState(config)

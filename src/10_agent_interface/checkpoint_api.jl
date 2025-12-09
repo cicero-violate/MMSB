@@ -6,7 +6,7 @@ module CheckpointAPI
 export create_checkpoint, restore_checkpoint, list_checkpoints
 
 using ..MMSBStateTypes: MMSBState
-using ..FFIWrapper
+using ..FFIWrapper: LIBMMSB
 
 function create_checkpoint(state::MMSBState, name::String)::String
     checkpoint_id = "ckpt_$(time_ns())_$(name)"
