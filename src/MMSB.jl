@@ -31,6 +31,7 @@ include("03_dag/EventSystem.jl")
 
 # Utilities
 # include("utils/Monitoring.jl")
+include("06_utility/Monitoring.jl")
 
 # Physical memory layer
 include("00_physical/PageAllocator.jl")
