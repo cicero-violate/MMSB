@@ -98,6 +98,8 @@ include("05_adaptive/LocalityAnalysis.jl")
 # include("09_planning/optimization_planning.jl")
 # include("09_planning/planning_engine.jl")
 
+include("API.jl")
+
 # # Instrumentation layer (Julia compiler hooks)
 # include("10_agent_interface/BaseHook.jl")
 # include("10_agent_interface/CoreHooks.jl")
