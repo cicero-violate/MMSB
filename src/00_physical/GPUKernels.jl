@@ -1,4 +1,4 @@
-# src/03_device/GPUKernels.jl
+# src/00_physical/GPUKernels.jl
 """
 GPUKernels - CUDA kernels for GPU-side page operations
 

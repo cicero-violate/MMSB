@@ -2,7 +2,7 @@
 
 The runtime layer provides:
 
-1. **PageAllocator**: Page lifecycle (create, delete, migrate, resize)
+1. **PageAllocator** (Layer 0 physical): Page lifecycle (create, delete, migrate, resize)
 2. **DeltaRouter**: Central dispatch for delta application and propagation
 3. **TLog**: Append-only transaction log with query/checkpoint/compress
 4. **ReplayEngine**: Deterministic state reconstruction and time-travel debugging

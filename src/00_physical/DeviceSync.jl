@@ -1,4 +1,4 @@
-# src/03_device/DeviceSync.jl
+# src/00_physical/DeviceSync.jl
 """
 DeviceSync - CPU ↔ GPU synchronization primitives
 

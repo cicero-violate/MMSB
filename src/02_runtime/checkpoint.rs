@@ -1,4 +1,4 @@
-use super::allocator::{PageAllocator, PageSnapshotData};
+use crate::physical::allocator::{PageAllocator, PageSnapshotData};
 use super::tlog::TransactionLog;
 use crate::types::{PageID, PageLocation};
 use std::fs::File;
