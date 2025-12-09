@@ -75,8 +75,6 @@ include("05_adaptive/LocalityAnalysis.jl")
 # include("07_intention/structural_preferences.jl")
 # include("07_intention/attractor_states.jl")
 
-
-
 # # # Layer 8: Reasoning Engine
 # include("08_reasoning/ReasoningTypes.jl")
 # include("08_reasoning/structural_inference.jl")
