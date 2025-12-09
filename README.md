@@ -92,27 +92,27 @@ simulate_step!(world)
 
 ## Repository Map
 
-| Path | Purpose |
-|------|---------|
-| `src/ffi/` | Rust FFI wrapper and error mapping |
-| `src/00_physical/` | Page allocator, unified memory, GPU kernels |
-| `src/01_page/` | Pages, deltas, TLog, checkpoint/replay |
-| `src/02_semiring/` | Semiring algebra, delta routing |
-| `src/03_dag/` | ShadowPageGraph, dependency tracking |
-| `src/04_propagation/` | CPU/GPU propagation engine |
-| `src/05_adaptive/` | Layout optimization, graph rewriting |
-| `src/06_utility/` | Cost functions, monitoring, telemetry |
-| `src/07_intention/` | Goal emergence, attractor states |
-| `src/08_reasoning/` | Inference engine, constraints, logic |
-| `src/09_planning/` | MCTS, RL planning, Enzyme integration |
-| `src/10_agent_interface/` | Checkpoint API, events, protocol |
-| `src/11_agents/` | RL/symbolic/planning/hybrid agents |
-| `src/12_applications/` | LLM tools, world sim, multi-agent, finance |
-| `test/` | Comprehensive test suite (Layers 0-12) |
-| `examples/` | Quickstart and tutorial demos |
-| `benchmark/` | Performance benchmarks and baselines |
-| `docs/` | Architecture, API, serialization specs |
-| `project_schedule/` | Development roadmap and task tracking |
+| Path                      | Purpose                                     |
+|---------------------------+---------------------------------------------|
+| `src/ffi/`                | Rust FFI wrapper and error mapping          |
+| `src/00_physical/`        | Page allocator, unified memory, GPU kernels |
+| `src/01_page/`            | Pages, deltas, TLog, checkpoint/replay      |
+| `src/02_semiring/`        | Semiring algebra, delta routing             |
+| `src/03_dag/`             | ShadowPageGraph, dependency tracking        |
+| `src/04_propagation/`     | CPU/GPU propagation engine                  |
+| `src/05_adaptive/`        | Layout optimization, graph rewriting        |
+| `src/06_utility/`         | Cost functions, monitoring, telemetry       |
+| `src/07_intention/`       | Goal emergence, attractor states            |
+| `src/08_reasoning/`       | Inference engine, constraints, logic        |
+| `src/09_planning/`        | MCTS, RL planning, Enzyme integration       |
+| `src/10_agent_interface/` | Checkpoint API, events, protocol            |
+| `src/11_agents/`          | RL/symbolic/planning/hybrid agents          |
+| `src/12_applications/`    | LLM tools, world sim, multi-agent, finance  |
+| `test/`                   | Comprehensive test suite (Layers 0-12)      |
+| `examples/`               | Quickstart and tutorial demos               |
+| `benchmark/`              | Performance benchmarks and baselines        |
+| `docs/`                   | Architecture, API, serialization specs      |
+| `project_schedule/`       | Development roadmap and task tracking       |
 
 ## Operational Model
 - **Semiring discipline** — Deltas as additive merges (`⊕`), propagations as causal applies (`⊗`)
