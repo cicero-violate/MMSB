@@ -1,17 +1,16 @@
 # src/MMSB.jl
 """
 MMSB - Memory-Mapped State Bus
-
-A structured, versioned, delta-driven shared-memory substrate providing 
-deterministic state coherence across CPU, GPU, and program components.
-
-Entry point module that exports all public APIs.
 """
 module MMSB
 
 using CUDA
 
-# Rust FFI bridge must be available before type modules choose their backend.
+# ============================================================================
+# ACTIVE LAYERS (Layers 0-5 + API)
+# ============================================================================
+
+# FFI bridge
 include("ffi/FFIWrapper.jl")
 
 # Core type system
@@ -21,16 +20,13 @@ include("01_page/Delta.jl")
 include("03_dag/ShadowPageGraph.jl")
 include("01_types/MMSBState.jl")
 
-# Rust error mapping shim (depends on FFI + ErrorTypes)
+# Rust error mapping
 include("ffi/RustErrors.jl")
 
-# Event system is shared by runtime/graph layers
+# Event system
 include("03_dag/EventSystem.jl")
 
-# Device kernels are required by the runtime delta router
-
 # Utilities
-# include("utils/Monitoring.jl")
 include("06_utility/Monitoring.jl")
 
 # Physical memory layer
@@ -46,14 +42,11 @@ include("02_semiring/SemiringConfig.jl")
 include("02_semiring/DeltaRouter.jl")
 include("01_page/ReplayEngine.jl")
 
-
 # Graph and dependency tracking
 include("03_dag/DependencyGraph.jl")
 include("03_dag/GraphDSL.jl")
 include("04_propagation/PropagationEngine.jl")
 include("04_propagation/PropagationScheduler.jl")
-
-# include("10_agent_interface/API.jl")
 
 # Layer 5: Adaptive Memory
 include("05_adaptive/AdaptiveLayout.jl")
@@ -61,12 +54,18 @@ include("05_adaptive/GraphRewriting.jl")
 include("05_adaptive/EntropyReduction.jl")
 include("05_adaptive/LocalityAnalysis.jl")
 
-# Layer 6: Utility Engine
+# Public API (load after all infrastructure)
+include("API.jl")
+
+# ============================================================================
+# INACTIVE LAYERS (To be enabled incrementally)
+# ============================================================================
+
+# # Layer 6: Utility Engine
 # include("06_utility/cost_functions.jl")
 # include("06_utility/utility_engine.jl")
 # include("06_utility/entropy_measure.jl")
 # include("06_utility/CostAggregation.jl")
-# include("06_utility/Monitoring.jl")
 
 # # Layer 7: Intention Engine
 # include("07_intention/IntentionTypes.jl")
@@ -75,7 +74,7 @@ include("05_adaptive/LocalityAnalysis.jl")
 # include("07_intention/structural_preferences.jl")
 # include("07_intention/attractor_states.jl")
 
-# # # Layer 8: Reasoning Engine
+# # Layer 8: Reasoning Engine
 # include("08_reasoning/ReasoningTypes.jl")
 # include("08_reasoning/structural_inference.jl")
 # include("08_reasoning/constraint_propagation.jl")
@@ -96,19 +95,14 @@ include("05_adaptive/LocalityAnalysis.jl")
 # include("09_planning/optimization_planning.jl")
 # include("09_planning/planning_engine.jl")
 
-include("API.jl")
-
-# # Instrumentation layer (Julia compiler hooks)
+# # Layer 10: Agent Interface
 # include("10_agent_interface/BaseHook.jl")
 # include("10_agent_interface/CoreHooks.jl")
 # include("10_agent_interface/CompilerHooks.jl")
 # include("10_agent_interface/InstrumentationManager.jl")
-
-# Layer 10: Agent Interface (moved instrumentation here)
 # include("10_agent_interface/checkpoint_api.jl")
 # include("10_agent_interface/event_subscription.jl")
 # include("10_agent_interface/AgentProtocol.jl")
-# using .AgentProtocol
 
 # # Layer 11: External Agents
 # include("11_agents/AgentTypes.jl")
@@ -126,12 +120,13 @@ include("API.jl")
 # include("12_applications/financial_modeling.jl")
 # include("12_applications/memory_driven_reasoning.jl")
 
+# ============================================================================
+# PUBLIC API EXPORTS
+# ============================================================================
 
-# Public API
 using .API: mmsb_start, mmsb_stop, create_page, update_page, query_page, @mmsb
 using .Monitoring: get_stats, print_stats, reset_stats!, track_delta_latency!, track_propagation_latency!
 
-# Public API
 export MMSBState, Page, Delta, ShadowPageGraph
 export create_page, delete_page, apply_delta
 export add_dependency, remove_dependency
