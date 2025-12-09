@@ -73,7 +73,7 @@ include("05_adaptive/LocalityAnalysis.jl")
 # include("07_intention/structural_preferences.jl")
 # include("07_intention/attractor_states.jl")
 
-# include("10_agent_interface/API.jl")
+include("10_agent_interface/API.jl")
 
 # # # Layer 8: Reasoning Engine
 # include("08_reasoning/ReasoningTypes.jl")
