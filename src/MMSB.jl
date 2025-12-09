@@ -163,6 +163,7 @@ export AbstractAgent, observe, act!, plan, AgentAction
 
 # Layer 11 exports
 using .AgentTypes
+using .AgentTypes: push_memory!
 using .RLAgents
 using .SymbolicAgents
 using .PlanningAgents
