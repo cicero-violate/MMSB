@@ -206,32 +206,32 @@ Tests: `julia --project=. -e 'using Pkg; Pkg.test()'` PASS (all core tests passi
 | P0       | L5.6    | Create `GraphRewriting.jl`        | ✓      | L5.7     |
 | P0       | L5.7    | Create `EntropyReduction.jl`      | ✓      | L5.8     |
 | P0       | L5.8    | Create `LocalityAnalysis.jl`      | ✓      | L5.9     |
-| P0       | L5.9    | Test page reordering              | ☐      | L6.1     |
+| P0       | L5.9    | Test page reordering              | ✓      | L6.1     |
 | P1       | L5.10   | Benchmark cache hit improvement   | ☐      | -        |
 
 #### Layer 6: Utility Engine (Week 9)
 | Priority | Task ID | Task                               | Status | Blocking |
 |----------+---------+------------------------------------+--------+----------|
-| P0       | L6.1    | Create `06_utility/` folder        | ☐      | All L6   |
-| P0       | L6.2    | Implement `cost_functions.jl`      | ☐      | L6.3     |
-| P0       | L6.3    | Implement `utility_engine.jl`      | ☐      | L6.4     |
-| P0       | L6.4    | Implement `telemetry.rs`           | ☐      | L6.5     |
-| P0       | L6.5    | Move `Monitoring.jl` from `utils/` | ☐      | L6.6     |
-| P0       | L6.6    | Create `entropy_measure.jl`        | ☐      | L6.7     |
-| P0       | L6.7    | Create `CostAggregation.jl`        | ☐      | L6.8     |
+| P0       | L6.1    | Create `06_utility/` folder        | ✓      | All L6   |
+| P0       | L6.2    | Implement `cost_functions.jl`      | ✓      | L6.3     |
+| P0       | L6.3    | Implement `utility_engine.jl`      | ✓      | L6.4     |
+| P0       | L6.4    | Implement `telemetry.rs`           | ✓      | L6.5     |
+| P0       | L6.5    | Move `Monitoring.jl` from `utils/` | ✓      | L6.6     |
+| P0       | L6.6    | Create `entropy_measure.jl`        | ✓      | L6.7     |
+| P0       | L6.7    | Create `CostAggregation.jl`        | ✓      | L6.8     |
 | P0       | L6.8    | Test cost functions                | ☐      | L7.1     |
 | P1       | L6.9    | Validate utility computation       | ☐      | -        |
 
 #### Layer 7: Intention Engine (Week 10)
 | Priority | Task ID | Task                                  | Status | Blocking    |
 |----------+---------+---------------------------------------+--------+-------------|
-| P0       | L7.1    | Create `07_intention/` folder         | ☐      | All L7      |
-| P0       | L7.2    | Implement `intention_engine.jl`       | ☐      | L7.3        |
-| P0       | L7.3    | Implement `goal_emergence.jl`         | ☐      | L7.4        |
+| P0       | L7.1    | Create `07_intention/` folder         | ✓      | All L7      |
+| P0       | L7.2    | Implement `intention_engine.jl`       | ✓      | L7.3        |
+| P0       | L7.3    | Implement `goal_emergence.jl`         | ✓      | L7.4        |
 
-| P0       | L7.4    | Implement `structural_preferences.jl` | ☐      | L7.5        |
-| P0       | L7.5    | Implement `attractor_states.jl`       | ☐      | L7.6        |
-| P0       | L7.6    | Create `IntentionTypes.jl`            | ☐      | L7.7        |
+| P0       | L7.4    | Implement `structural_preferences.jl` | ✓      | L7.5        |
+| P0       | L7.5    | Implement `attractor_states.jl`       | ✓      | L7.6        |
+| P0       | L7.6    | Create `IntentionTypes.jl`            | ✓      | L7.7        |
 | P0       | L7.7    | Test intention generation             | ☐      | PHASE2-TEST |
 | P1       | L7.8    | Validate attractor convergence        | ☐      | -           |
 

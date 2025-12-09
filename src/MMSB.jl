@@ -63,6 +63,20 @@ include("05_adaptive/GraphRewriting.jl")
 include("05_adaptive/EntropyReduction.jl")
 include("05_adaptive/LocalityAnalysis.jl")
 
+# Layer 6: Utility Engine
+include("06_utility/cost_functions.jl")
+include("06_utility/utility_engine.jl")
+include("06_utility/entropy_measure.jl")
+include("06_utility/CostAggregation.jl")
+include("06_utility/Monitoring.jl")
+
+# Layer 7: Intention Engine
+include("07_intention/IntentionTypes.jl")
+include("07_intention/intention_engine.jl")
+include("07_intention/goal_emergence.jl")
+include("07_intention/structural_preferences.jl")
+include("07_intention/attractor_states.jl")
+
 include("API.jl")
 
 # Public API

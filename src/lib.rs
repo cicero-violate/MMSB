@@ -7,6 +7,7 @@
 #[path = "03_dag/mod.rs"]       pub mod dag;
 #[path = "04_propagation/mod.rs"] pub mod propagation;
 #[path = "05_adaptive/mod.rs"]  pub mod adaptive;
+#[path = "06_utility/mod.rs"]   pub mod utility;
 
 pub mod ffi;
 pub use ffi::*;
