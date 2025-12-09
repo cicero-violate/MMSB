@@ -125,6 +125,7 @@ include("12_applications/memory_driven_reasoning.jl")
 # ============================================================================
 
 using .API: mmsb_start, mmsb_stop, create_page, update_page, query_page, @mmsb
+using .MMSBStateTypes: MMSBState, MMSBConfig
 using .Monitoring: get_stats, print_stats, reset_stats!, track_delta_latency!, track_propagation_latency!
 
 export MMSBState, Page, Delta, ShadowPageGraph
@@ -152,6 +153,7 @@ export Strategy, RolloutResult, DecisionGraph, PlanningState
 # Layer 10 exports
 using .CheckpointAPI
 using .EventSubscription
+using .EventSubscription: PAGE_CREATED, PAGE_MODIFIED, DELTA_APPLIED, GRAPH_UPDATED, CHECKPOINT_CREATED, emit_event
 using .AgentProtocol
 export create_checkpoint, restore_checkpoint, list_checkpoints
 export subscribe_to_events, unsubscribe, EventType, @event
