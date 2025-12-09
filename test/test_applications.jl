@@ -1,5 +1,4 @@
 using Test
-using MMSB
 import MMSB: MMSBState, MMSBConfig, create_page, allocate_page_id!
 import MMSB: MMSBContext, World, add_entity!, simulate_step!
 import MMSB: AgentCoordinator, register_agent!, Portfolio, compute_value

@@ -1,5 +1,4 @@
 using Test
-using MMSB
 import MMSB: MMSBState, MMSBConfig, observe, AgentAction
 import MMSB: RLAgent, SymbolicAgent, PlanningAgent, HybridAgent
 import MMSB: AgentState, AgentMemory, push_memory!, execute_plan_step

@@ -1,5 +1,4 @@
 using Test
-using MMSB
 import MMSB: MMSBState, MMSBConfig, create_page
 import MMSB: create_checkpoint, restore_checkpoint, list_checkpoints
 import MMSB: subscribe_to_events, unsubscribe, emit_event

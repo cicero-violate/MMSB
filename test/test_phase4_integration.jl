@@ -1,5 +1,4 @@
 using Test
-using MMSB
 import MMSB: MMSBState, MMSBConfig, create_page, emit_event
 import MMSB: RLAgent, SymbolicAgent, PlanningAgent, HybridAgent
 import MMSB: subscribe_to_events, unsubscribe, PAGE_CREATED, create_checkpoint
