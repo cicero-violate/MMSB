@@ -1,3 +1,4 @@
+#![allow(unused_imports)]
 // examples/rust_smoke_replay_full_cuda.rs
 // THE FINAL BOSS TEST: CUDA + FULL REPLAY FROM TLOG ONLY
 // This proves: GPU memory state is perfectly captured and restored via TLog.

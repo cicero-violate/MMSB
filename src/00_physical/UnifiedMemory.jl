@@ -10,6 +10,7 @@ module UnifiedMemory
 using CUDA
 using ..PageTypes: Page, PageID, PageLocation, UNIFIED_LOCATION
 using ..MMSBStateTypes: MMSBState
+using ..FFIWrapper: RustPageHandle, RustAllocatorHandle, LIBMMSB
 
 export create_unified_page!, is_unified_memory_available
 export prefetch_unified_to_gpu!, prefetch_unified_to_cpu!
@@ -55,9 +56,9 @@ Create page with CUDA Unified Memory.
 """
 function create_unified_page!(state::MMSBState, size::Int64)::Page
     page_id = allocate_page_id!(state)
-    handle = ccall((:mmsb_allocator_allocate, libmmsb), PageHandle,
-                   (AllocatorHandle, UInt64, Csize_t, Int32),
-                   state.allocator, page_id.0, size, 2)  # 2 = Unified
+    handle = ccall((:mmsb_allocator_allocate, LIBMMSB), RustPageHandle,
+                   (RustAllocatorHandle, UInt64, Csize_t, Int32),
+                   state.allocator, page_id.id, size, 2)  # 2 = Unified
     Page(handle.ptr, page_id, size, UNIFIED_LOCATION)
 end
 

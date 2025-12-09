@@ -1,38 +1,27 @@
 // examples/rust_comprehensive_internal_tests.rs
 // FINAL — 13/13 PASS — DECEMBER 8 2025 — THE BUS IS ALIVE
 
-use mmsb_core::types::*;
-use mmsb_core::runtime::*;
-use mmsb_core::device::device_registry::DeviceBufferRegistry;
-use mmsb_core::graph::{EdgeType, ShadowPageGraph};
-use mmsb_core::graph::shadow_graph_traversal::topological_sort;
-use mmsb_core::runtime::tlog::{summary, TransactionLog};
-use mmsb_core::runtime::tlog_serialization::read_log;
-use mmsb_core::runtime::delta_merge::merge_deltas;
-use mmsb_core::runtime::simd_mask::generate_mask;
-use mmsb_core::runtime::tlog_replay::apply_log;
-use mmsb_core::runtime::tlog_compression::compact;
-
-use mmsb_core::graph::propagation_engine::PropagationEngine;
-use mmsb_core::graph::propagation_command_buffer::PropagationCommand;
-use mmsb_core::graph::propagation_fastpath::passthrough;
-
-use mmsb_core::types::{Page, PageID, PageLocation};
-
+// Layer-based imports
+use mmsb_core::page::*;  // Layer 1: Page, PageID, PageLocation, Delta, etc.
+use mmsb_core::physical::{PageAllocator, PageAllocatorConfig};  // Layer 0
+use mmsb_core::{dag::*, propagation::*, physical::DeviceBufferRegistry};
+use mmsb_core::page::{tlog_compression::compact, tlog_replay::apply_log, tlog_serialization::read_log};
 use std::fs;
 use std::sync::Arc;
 
+#[allow(dead_code)]
 const TEST_PAGE_SIZE: usize = 4096;
 
+#[allow(dead_code)]
 fn setup_allocator() -> PageAllocator {
     PageAllocator::new(PageAllocatorConfig::default())
 }
 
+#[allow(dead_code)]
 fn setup_page(alloc: &PageAllocator, id: u64, location: PageLocation) -> Arc<Page> {
-    let ptr = alloc.allocate_raw(PageID(id), TEST_PAGE_SIZE, Some(location))
+    let ptr = alloc.allocate_raw(PageID(id), 4096, Some(location))
         .expect("allocation failed");
     let page = unsafe { &*ptr };
-    println!("[TEST] Deep cloning page {} into owned Arc", id);
     Arc::new(page.clone())  // This is safe, deep copies everything
 }
 

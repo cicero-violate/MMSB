@@ -16,19 +16,6 @@ using ..FFIWrapper
 
 export create_page!, delete_page!, migrate_page!, resize_page!, clone_page, allocator_handle
 
-const _ALLOCATOR = Ref{FFIWrapper.RustAllocatorHandle}(FFIWrapper.RustAllocatorHandle(C_NULL))
-
-function _allocator_handle()
-    handle = _ALLOCATOR[]
-    if handle.ptr == C_NULL
-        handle = FFIWrapper.rust_allocator_new()
-        _ALLOCATOR[] = handle
-    end
-    handle
-end
-
-allocator_handle() = _allocator_handle()
-
 """
 Create and register a page with the requested location.
 """
@@ -38,7 +25,7 @@ function create_page!(state::MMSBState, size::Int64, location::PageLocation;
         id = _reserve_page_id_unlocked!(state)
         # FFI call only passes scalar values and returns a handle; no Julia buffers
         # are exposed to Rust by pointer here, so no GC.@preserve is required.
-        handle = FFIWrapper.rust_allocator_allocate(_allocator_handle(), UInt64(id), size, Int32(location))
+        handle = FFIWrapper.rust_allocator_allocate(state.allocator_handle, UInt64(id), size, Int32(location))
         Page(handle, id, location, size; metadata=Dict{Symbol,Any}(metadata))
     end
     lock(state.lock) do
@@ -75,7 +62,7 @@ function delete_page!(state::MMSBState, page_id::PageID)
     end
     # Release only passes the allocator handle and page id (scalar); no Julia
     # object memory is passed by pointer, so GC.@preserve is not needed here.
-    FFIWrapper.rust_allocator_release!(_allocator_handle(), UInt64(page_id))
+    FFIWrapper.rust_allocator_release!(state.allocator_handle, UInt64(page_id))
     return nothing
 end
 

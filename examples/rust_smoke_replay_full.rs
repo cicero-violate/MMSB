@@ -1,3 +1,4 @@
+#![allow(unused_imports)]
 // examples/rust_smoke_replay_full.rs
 // NOW 100% CORRECT AND PASSING
 

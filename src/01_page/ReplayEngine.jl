@@ -5,7 +5,6 @@ using ..DeltaTypes: Delta
 using ..MMSBStateTypes: MMSBState, MMSBConfig, register_page!, get_page
 using ..FFIWrapper
 using ..TLog
-using ..PageAllocator: _allocator_handle
 
 export replay_to_epoch, replay_to_timestamp, replay_from_checkpoint
 export replay_page_history, verify_state_consistency
@@ -27,7 +26,7 @@ function _blank_state_like(state::MMSBState)::MMSBState
         for (_, page) in state.pages
             # Use the global allocator to create a shadow page with the correct ID
             handle = FFIWrapper.rust_allocator_allocate(
-                _allocator_handle(),
+                clone.allocator_handle,
                 UInt64(page.id),
                 page.size,
                 Int32(page.location)
@@ -37,16 +36,6 @@ function _blank_state_like(state::MMSBState)::MMSBState
             # Initialize and copy current data
             initialize!(shadow)
             activate!(shadow)
-
-            GC.@preserve page shadow begin
-                data = read_page(page)
-                mask = fill(UInt8(1), page.size)
-                FFIWrapper.rust_page_write_masked!(
-                    shadow.handle, mask, data;
-                    is_sparse=false,
-                    epoch=FFIWrapper.rust_page_epoch(page.handle)
-                )
-            end
 
             shadow.metadata = Dict{Symbol,Any}(page.metadata)
             register_page!(clone, shadow)

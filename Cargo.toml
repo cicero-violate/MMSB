@@ -6,7 +6,7 @@ edition = "2021"
 [lib]
 name = "mmsb_core"
 path = "src/lib.rs"
-crate-type = ["cdylib", "rlib"]   # order doesn’t matter anymore, but cdylib first is fine
+crate-type = ["cdylib", "rlib", "staticlib"]
 
 [dependencies]
 parking_lot = "0.12"

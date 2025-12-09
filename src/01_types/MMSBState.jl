@@ -51,6 +51,7 @@ Global MMSB state containing all pages, logs, and metadata.
 mutable struct MMSBState
     pages::Dict{PageID, Page}
     tlog_handle::FFIWrapper.RustTLogHandle
+    allocator_handle::FFIWrapper.RustAllocatorHandle
     graph::ShadowPageGraph
     next_page_id::Ref{PageID}
     next_delta_id::Ref{DeltaID}
@@ -60,9 +61,12 @@ mutable struct MMSBState
     function MMSBState(config::MMSBConfig)
         handle = FFIWrapper.rust_tlog_new(config.tlog_path)
         handle.ptr == C_NULL && error("Failed to initialize Rust TLog at $(config.tlog_path)")
+        allocator = FFIWrapper.rust_allocator_new()
+        allocator.ptr == C_NULL && error("Failed to initialize Rust allocator")
         state = new(
             Dict{PageID, Page}(),
             handle,
+            allocator,
             ShadowPageGraph(),
             Ref{PageID}(PageID(1)),
             Ref{DeltaID}(DeltaID(1)),
@@ -71,6 +75,7 @@ mutable struct MMSBState
         )
         finalizer(state) do st
             st.tlog_handle.ptr != C_NULL && FFIWrapper.rust_tlog_free!(st.tlog_handle)
+            st.allocator_handle.ptr != C_NULL && FFIWrapper.rust_allocator_free!(st.allocator_handle)
         end
         return state
     end

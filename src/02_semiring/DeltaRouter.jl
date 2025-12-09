@@ -11,6 +11,7 @@ using Base: time_ns
 using ..PageTypes: Page, PageID
 using ..DeltaTypes: Delta
 using ..MMSBStateTypes: MMSBState, allocate_delta_id!, get_page
+using ..ErrorTypes: InvalidDeltaError
 using ..GraphTypes: get_children
 using ..EventSystem: emit_event!, PAGE_CHANGED, PAGE_INVALIDATED, DELTA_APPLIED
 using ..ErrorTypes: PageNotFoundError
@@ -53,7 +54,7 @@ function create_delta(state::MMSBState, page_id::PageID,
         mask_bytes[i] = mask[i] ? UInt8(1) : UInt8(0)
     end
     data_vec = Vector{UInt8}(data)
-    length(mask_bytes) == length(data_vec) || error("Mask/data length mismatch for page $(page_id)")
+    length(mask_bytes) == length(data_vec) || throw(InvalidDeltaError("Mask/data length mismatch", page_id))
     delta_id = allocate_delta_id!(state)
     epoch = GC.@preserve page begin
         UInt32(FFIWrapper.rust_page_epoch(page.handle) + 1)

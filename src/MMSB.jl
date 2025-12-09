@@ -57,6 +57,12 @@ include("03_dag/GraphDSL.jl")
 include("04_propagation/PropagationEngine.jl")
 include("04_propagation/PropagationScheduler.jl")
 
+# Layer 5: Adaptive Memory
+include("05_adaptive/AdaptiveLayout.jl")
+include("05_adaptive/GraphRewriting.jl")
+include("05_adaptive/EntropyReduction.jl")
+include("05_adaptive/LocalityAnalysis.jl")
+
 include("API.jl")
 
 # Public API

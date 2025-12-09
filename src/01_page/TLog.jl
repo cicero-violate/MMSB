@@ -4,7 +4,6 @@ using Base: C_NULL
 using ..FFIWrapper
 using ..MMSBStateTypes: MMSBState
 using ..PageTypes: Page, PageID, PageLocation, metadata_from_blob, initialize!, activate!
-using ..PageAllocator: allocator_handle
 using ..DeltaTypes: Delta
 using ..RustErrors: RustFFIError, rethrow_translated
 
@@ -107,7 +106,7 @@ end
 function checkpoint_log!(state::MMSBState, path::AbstractString)
     _with_rust_errors("Checkpoint write failed: $(path)") do
         GC.@preserve state begin
-            FFIWrapper.rust_checkpoint_write!(allocator_handle(), state.tlog_handle, path)
+            FFIWrapper.rust_checkpoint_write!(state.allocator_handle, state.tlog_handle, path)
         end
     end
 end
@@ -115,18 +114,18 @@ end
 function load_checkpoint!(state::MMSBState, path::AbstractString)
     _with_rust_errors("Checkpoint load failed: $(path)") do
         GC.@preserve state begin
-            FFIWrapper.rust_checkpoint_load!(allocator_handle(), state.tlog_handle, path)
+            FFIWrapper.rust_checkpoint_load!(state.allocator_handle, state.tlog_handle, path)
         end
     end
     _refresh_pages!(state)
 end
 
 function _refresh_pages!(state::MMSBState)
-    infos = FFIWrapper.rust_allocator_page_infos(allocator_handle())
+    infos = FFIWrapper.rust_allocator_page_infos(state.allocator_handle)
     lock(state.lock) do
         empty!(state.pages)
         for info in infos
-            handle = FFIWrapper.rust_allocator_acquire_page(allocator_handle(), info.page_id)
+            handle = FFIWrapper.rust_allocator_acquire_page(state.allocator_handle, info.page_id)
             handle.ptr == C_NULL && continue
             page = Page(handle, PageID(info.page_id), PageLocation(info.location), Int(info.size))
             if info.metadata_len == 0 || info.metadata_ptr == C_NULL

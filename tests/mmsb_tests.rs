@@ -1,8 +1,8 @@
 // tests/mmsb_tests.rs
 
-use mmsb_core::runtime::allocator::{PageAllocator, PageAllocatorConfig};
-use mmsb_core::runtime::checkpoint::{load_checkpoint, write_checkpoint};
-use mmsb_core::runtime::tlog::TransactionLog;
+use mmsb_core::physical::{PageAllocator, PageAllocatorConfig};
+use mmsb_core::page::{load_checkpoint, write_checkpoint};
+use mmsb_core::page::tlog::TransactionLog;
 use mmsb_core::page::{Delta, DeltaID, Epoch, Page, PageID, Source};
 use std::sync::Arc;
 
@@ -47,7 +47,7 @@ fn test_thread_safe_allocator() {
         .map(|i| {
             let alloc = Arc::clone(&allocator);
             std::thread::spawn(move || {
-                let ptr = alloc.allocate_raw(PageID(0), 256, None).unwrap();
+                let ptr = alloc.allocate_raw(PageID(i), 256, None).unwrap();
                 let page = unsafe { &mut *ptr };
                 page.data_mut_slice()[0] = i as u8;
             })

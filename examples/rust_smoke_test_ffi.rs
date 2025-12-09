@@ -3,7 +3,7 @@
 // This tests allocator, pages, deltas, metadata, tlog, reader, checkpoint, summary, list_pages, and error handling
 
 use mmsb_core::*;
-use std::ffi::CString;
+use std::ffi::{CStr, CString};
 use std::fs;
 use std::ptr;
 

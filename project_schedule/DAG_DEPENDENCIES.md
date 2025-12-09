@@ -191,14 +191,14 @@ Blocker: Test execution requires CUDA runtime (environment dependency only)
 #### Layer 5: Adaptive Memory (Weeks 7-8)
 | Priority | Task ID | Task                              | Status | Blocking |
 |----------+---------+-----------------------------------+--------+----------|
-| P0       | L5.1    | Create `05_adaptive/` folder      | ☐      | All L5   |
-| P0       | L5.2    | Implement `memory_layout.rs`      | ☐      | L5.3     |
-| P0       | L5.3    | Implement `page_clustering.rs`    | ☐      | L5.4     |
-| P0       | L5.4    | Implement `locality_optimizer.rs` | ☐      | L5.5     |
-| P0       | L5.5    | Create `AdaptiveLayout.jl`        | ☐      | L5.6     |
-| P0       | L5.6    | Create `GraphRewriting.jl`        | ☐      | L5.7     |
-| P0       | L5.7    | Create `EntropyReduction.jl`      | ☐      | L5.8     |
-| P0       | L5.8    | Create `LocalityAnalysis.jl`      | ☐      | L5.9     |
+| P0       | L5.1    | Create `05_adaptive/` folder      | ✓      | All L5   |
+| P0       | L5.2    | Implement `memory_layout.rs`      | ✓      | L5.3     |
+| P0       | L5.3    | Implement `page_clustering.rs`    | ✓      | L5.4     |
+| P0       | L5.4    | Implement `locality_optimizer.rs` | ✓      | L5.5     |
+| P0       | L5.5    | Create `AdaptiveLayout.jl`        | ✓      | L5.6     |
+| P0       | L5.6    | Create `GraphRewriting.jl`        | ✓      | L5.7     |
+| P0       | L5.7    | Create `EntropyReduction.jl`      | ✓      | L5.8     |
+| P0       | L5.8    | Create `LocalityAnalysis.jl`      | ✓      | L5.9     |
 | P0       | L5.9    | Test page reordering              | ☐      | L6.1     |
 | P1       | L5.10   | Benchmark cache hit improvement   | ☐      | -        |
 
