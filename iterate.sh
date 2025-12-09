@@ -21,3 +21,7 @@ echo "--------------------------------------------------"
 echo "Running rust_smoke_checkpoint_roundtrip..."
 RUST_BACKTRACE=full RUSTFLAGS="-A warnings" cargo test --example rust_comprehensive_internal_tests
 echo "--------------------------------------------------"
+
+echo "Running cargo test"
+RUST_BACKTRACE=full RUSTFLAGS="-A warnings" cargo test 
+echo "--------------------------------------------------"
