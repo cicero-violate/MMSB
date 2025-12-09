@@ -1,4 +1,4 @@
-q// examples/rust_smoke_checkpoint_roundtrip.rs
+// examples/rust_smoke_checkpoint_roundtrip.rs
 use mmsb_core::*;
 use std::ffi::CString;
 use std::fs;
