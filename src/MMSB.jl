@@ -62,10 +62,10 @@ include("API.jl")
 # ============================================================================
 
 # # Layer 6: Utility Engine
-# include("06_utility/cost_functions.jl")
-# include("06_utility/utility_engine.jl")
-# include("06_utility/entropy_measure.jl")
-# include("06_utility/CostAggregation.jl")
+include("06_utility/cost_functions.jl")
+include("06_utility/utility_engine.jl")
+include("06_utility/entropy_measure.jl")
+include("06_utility/CostAggregation.jl")
 
 # # Layer 7: Intention Engine
 # include("07_intention/IntentionTypes.jl")
