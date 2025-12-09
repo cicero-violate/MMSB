@@ -1,4 +1,4 @@
-# src/02_runtime/PageAllocator.jl
+# src/00_physical/PageAllocator.jl
 """
 PageAllocator - Page creation and lifecycle management
 

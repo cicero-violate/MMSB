@@ -32,13 +32,16 @@ include("05_graph/EventSystem.jl")
 # Utilities
 include("utils/Monitoring.jl")
 
+# Physical memory layer
+include("00_physical/PageAllocator.jl")
+include("00_physical/UnifiedMemory.jl")
+include("00_physical/DeviceSync.jl")
+include("00_physical/GPUKernels.jl")
+
 # Runtime layer
-include("02_runtime/PageAllocator.jl")
 include("02_runtime/TLog.jl")
 include("02_runtime/DeltaRouter.jl")
 include("02_runtime/ReplayEngine.jl")
-
-# Remaining device management helpers
 
 # Instrumentation layer (Julia compiler hooks)
 include("04_instrumentation/BaseHook.jl")

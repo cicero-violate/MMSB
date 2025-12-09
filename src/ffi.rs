@@ -1,4 +1,4 @@
-use crate::runtime::allocator::{PageAllocator, PageAllocatorConfig};
+use crate::physical::allocator::{PageAllocator, PageAllocatorConfig};
 use crate::runtime::checkpoint;
 use crate::runtime::tlog::{TransactionLog, TransactionLogReader};
 use crate::types::{Delta, DeltaID, Epoch, Page, PageError, PageID, PageLocation, Source};

@@ -1,4 +1,4 @@
-# src/03_device/UnifiedMemory.jl
+# src/00_physical/UnifiedMemory.jl
 """
 UnifiedMemory - CUDA Unified Memory management
 

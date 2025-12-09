@@ -89,14 +89,14 @@ PHASE3-TEST ── L10-INTERFACE ── L10-PROTOCOL ── L10-TEST
 #### Layer 0: Physical Memory (Week 1)
 | Priority | Task ID | Task                                         | Status | Blocking |
 |----------+---------+----------------------------------------------+--------+----------|
-| P0       | L0.1    | Create `00_physical/` folder structure       | ☐      | All L0   |
-| P0       | L0.2    | Move `allocator.rs` from `02_runtime/`       | ☐      | L0.3     |
-| P0       | L0.3    | Move `allocator_stats.rs` from `02_runtime/` | ☐      | L0.4     |
-| P0       | L0.4    | Move device files from `03_device/`          | ☐      | L0.5     |
-| P0       | L0.5    | Move Julia files (`PageAllocator.jl`, etc)   | ☐      | L0.6     |
-| P0       | L0.6    | Create `00_physical/mod.rs`                  | ☐      | L0.7     |
-| P0       | L0.7    | Update `lib.rs` imports                      | ☐      | L0.8     |
-| P0       | L0.8    | Run allocator tests                          | ☐      | L1.1     |
+| P0       | L0.1    | Create `00_physical/` folder structure       | ✓      | All L0   |
+| P0       | L0.2    | Move `allocator.rs` from `02_runtime/`       | ✓      | L0.3     |
+| P0       | L0.3    | Move `allocator_stats.rs` from `02_runtime/` | ✓      | L0.4     |
+| P0       | L0.4    | Move device files from `03_device/`          | ✓      | L0.5     |
+| P0       | L0.5    | Move Julia files (`PageAllocator.jl`, etc)   | ✓      | L0.6     |
+| P0       | L0.6    | Create `00_physical/mod.rs`                  | ✓      | L0.7     |
+| P0       | L0.7    | Update `lib.rs` imports                      | ✓      | L0.8     |
+| P0       | L0.8    | Run allocator tests                          | ✓      | L1.1     |
 | P1       | L0.9    | Benchmark allocator performance              | ☐      | -        |
 
 #### Layer 1: Page Layer (Weeks 2-3)
