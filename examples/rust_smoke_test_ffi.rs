@@ -1,4 +1,4 @@
-// examples/rust_smoke_final.rs
+
 // Comprehensive smoke test covering all FFI functions from ffi.rs
 // This tests allocator, pages, deltas, metadata, tlog, reader, checkpoint, summary, list_pages, and error handling
 
