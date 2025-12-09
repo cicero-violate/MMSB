@@ -9,8 +9,8 @@ using ..AgentProtocol: AbstractAgent, AgentAction
 import ..AgentProtocol: observe
 using ..AgentTypes: AgentState
 using ..MMSBStateTypes: MMSBState
-using ..PlanningEngine: search_plan, rollout_simulation
-using ..IntentionEngine: compute_intention
+# using ..PlanningEngine: search_plan, rollout_simulation  # TODO: Phase 3
+# using ..IntentionEngine: compute_intention  # TODO: Phase 3
 
 struct PlanningAgent <: AbstractAgent
     agent_state::AgentState{Vector{AgentAction}}
@@ -22,13 +22,13 @@ PlanningAgent(horizon=10, depth=5) = PlanningAgent(AgentState(AgentAction[]), ho
 
 function observe(agent::PlanningAgent, state::MMSBState)
     return (
-        intention = compute_intention(state),
+        intention = nothing,  # compute_intention(state),
         current_plan = agent.agent_state.internal_state
     )
 end
 
 function generate_plan(agent::PlanningAgent, state::MMSBState, goal::Any)::Vector{AgentAction}
-    plan = search_plan(state, goal, agent.search_depth)
+    plan = AgentAction[]  # search_plan(state, goal, agent.search_depth)
     agent.agent_state.internal_state = plan
     return plan
 end

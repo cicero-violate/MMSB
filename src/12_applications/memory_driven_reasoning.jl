@@ -6,8 +6,8 @@ module MemoryDrivenReasoning
 export ReasoningContext, reason_over_memory, temporal_reasoning
 
 using ..MMSBStateTypes: MMSBState
-using ..ReasoningEngine: structural_inference
-using ..TLog: replay_tlog
+# using ..ReasoningEngine: structural_inference  # TODO: Phase 3
+# using ..TLog: replay_tlog  # TODO: Phase 1
 
 struct ReasoningContext
     state::MMSBState
@@ -16,7 +16,7 @@ struct ReasoningContext
 end
 
 function reason_over_memory(ctx::ReasoningContext)::Dict{Symbol, Any}
-    inference = structural_inference(ctx.state.graph)
+    inference = nothing  # structural_inference(ctx.state.graph)
     return Dict(:inference => inference, :query => ctx.query)
 end
 

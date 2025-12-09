@@ -9,7 +9,7 @@ using ..AgentProtocol: AbstractAgent, AgentAction
 import ..AgentProtocol: observe
 using ..AgentTypes: AgentState
 using ..MMSBStateTypes: MMSBState
-using ..ReasoningEngine: structural_inference, constraint_propagation
+# using ..ReasoningEngine: structural_inference, constraint_propagation  # TODO: Phase 3
 
 struct Rule
     pattern::Function
@@ -25,7 +25,7 @@ end
 SymbolicAgent() = SymbolicAgent(AgentState(Rule[]), Dict{Symbol, Any}())
 
 function observe(agent::SymbolicAgent, state::MMSBState)
-    inferred = structural_inference(state.graph)
+    inferred = nothing  # structural_inference(state.graph)
     return (graph_structure = inferred, pages = state.pages)
 end
 
