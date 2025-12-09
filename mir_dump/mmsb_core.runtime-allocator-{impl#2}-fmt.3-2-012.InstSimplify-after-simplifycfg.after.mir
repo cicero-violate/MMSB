@@ -1,0 +1,42 @@
+// MIR for `runtime::allocator::<impl at src/02_runtime/allocator.rs:14:10: 14:15>::fmt` after InstSimplify-after-simplifycfg
+
+fn allocator::<impl at src/02_runtime/allocator.rs:14:10: 14:15>::fmt(_1: &PageAllocatorConfig, _2: &mut Formatter<'_>) -> Result<(), std::fmt::Error> {
+    debug self => _1;
+    debug f => _2;
+    let mut _0: std::result::Result<(), std::fmt::Error>;
+    let mut _3: &mut std::fmt::Formatter<'_>;
+    let mut _4: &str;
+    let _5: &str;
+    let mut _6: &str;
+    let _7: &str;
+    let mut _8: &dyn std::fmt::Debug;
+    let mut _9: &&types::page::PageLocation;
+    let _10: &&types::page::PageLocation;
+    let _11: &types::page::PageLocation;
+
+    bb0: {
+        _3 = copy _2;
+        _5 = const "PageAllocatorConfig";
+        _4 = copy _5;
+        _7 = const "default_location";
+        _6 = copy _7;
+        _11 = &((*_1).0: types::page::PageLocation);
+        _10 = &_11;
+        _9 = copy _10;
+        _8 = move _9 as &dyn std::fmt::Debug (PointerCoercion(Unsize, Implicit));
+        _0 = Formatter::<'_>::debug_struct_field1_finish(move _3, move _4, move _6, move _8) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        return;
+    }
+}
+
+alloc311 (size: 16, align: 1) {
+    64 65 66 61 75 6c 74 5f 6c 6f 63 61 74 69 6f 6e │ default_location
+}
+
+alloc310 (size: 19, align: 1) {
+    0x00 │ 50 61 67 65 41 6c 6c 6f 63 61 74 6f 72 43 6f 6e │ PageAllocatorCon
+    0x10 │ 66 69 67                                        │ fig
+}

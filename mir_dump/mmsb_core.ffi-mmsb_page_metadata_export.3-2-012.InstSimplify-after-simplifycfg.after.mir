@@ -1,0 +1,142 @@
+// MIR for `ffi::mmsb_page_metadata_export` after InstSimplify-after-simplifycfg
+
+fn mmsb_page_metadata_export(_1: PageHandle, _2: *mut u8, _3: usize) -> usize {
+    debug handle => _1;
+    debug dst => _2;
+    debug len => _3;
+    let mut _0: usize;
+    let _4: ();
+    let mut _5: bool;
+    let mut _6: *mut types::page::Page;
+    let mut _7: bool;
+    let mut _8: *mut u8;
+    let mut _9: !;
+    let _10: ();
+    let mut _11: ffi::MMSBErrorCode;
+    let _12: &types::page::Page;
+    let mut _14: &types::page::Page;
+    let mut _16: usize;
+    let mut _17: usize;
+    let mut _18: &std::vec::Vec<u8>;
+    let _19: ();
+    let _20: ();
+    let mut _21: *const u8;
+    let mut _22: &std::vec::Vec<u8>;
+    let mut _23: *mut u8;
+    let mut _24: usize;
+    let mut _25: *mut types::page::Page;
+    let mut _26: *const ();
+    let mut _27: usize;
+    let mut _28: usize;
+    let mut _29: usize;
+    let mut _30: usize;
+    let mut _31: bool;
+    let mut _32: *const ();
+    let mut _33: usize;
+    let mut _34: bool;
+    let mut _35: bool;
+    let mut _36: bool;
+    scope 1 {
+        debug page => _12;
+        let _13: std::vec::Vec<u8>;
+        scope 2 {
+            debug blob => _13;
+            let _15: usize;
+            scope 3 {
+                debug copy_len => _15;
+            }
+        }
+    }
+
+    bb0: {
+        _6 = copy (_1.0: *mut types::page::Page);
+        _5 = std::ptr::mut_ptr::<impl *mut Page>::is_null(move _6) -> [return: bb1, unwind terminate(abi)];
+    }
+
+    bb1: {
+        switchInt(move _5) -> [0: bb2, otherwise: bb4];
+    }
+
+    bb2: {
+        _8 = copy _2;
+        _7 = std::ptr::mut_ptr::<impl *mut u8>::is_null(move _8) -> [return: bb3, unwind terminate(abi)];
+    }
+
+    bb3: {
+        switchInt(move _7) -> [0: bb6, otherwise: bb4];
+    }
+
+    bb4: {
+        _11 = MMSBErrorCode::InvalidHandle;
+        _10 = set_last_error(move _11) -> [return: bb5, unwind terminate(abi)];
+    }
+
+    bb5: {
+        _0 = const 0_usize;
+        goto -> bb12;
+    }
+
+    bb6: {
+        _25 = copy (_1.0: *mut types::page::Page);
+        _26 = copy _25 as *const () (PtrToPtr);
+        _27 = copy _26 as usize (Transmute);
+        _28 = AlignOf(types::page::Page);
+        _29 = Sub(copy _28, const 1_usize);
+        _30 = BitAnd(copy _27, copy _29);
+        _31 = Eq(copy _30, const 0_usize);
+        assert(copy _31, "misaligned pointer dereference: address must be a multiple of {} but is {}", copy _28, copy _27) -> [success: bb15, unwind unreachable];
+    }
+
+    bb7: {
+        _16 = copy _3;
+        _18 = &_13;
+        _17 = Vec::<u8>::len(move _18) -> [return: bb8, unwind: bb13];
+    }
+
+    bb8: {
+        _15 = <usize as Ord>::min(move _16, move _17) -> [return: bb9, unwind: bb13];
+    }
+
+    bb9: {
+        _22 = &_13;
+        _21 = Vec::<u8>::as_ptr(move _22) -> [return: bb10, unwind: bb13];
+    }
+
+    bb10: {
+        _23 = copy _2;
+        _24 = copy _15;
+        _20 = std::ptr::copy_nonoverlapping::<u8>(move _21, move _23, move _24) -> [return: bb11, unwind: bb13];
+    }
+
+    bb11: {
+        _0 = copy _15;
+        drop(_13) -> [return: bb12, unwind: bb14];
+    }
+
+    bb12: {
+        return;
+    }
+
+    bb13 (cleanup): {
+        drop(_13) -> [return: bb14, unwind terminate(cleanup)];
+    }
+
+    bb14 (cleanup): {
+        terminate(abi);
+    }
+
+    bb15: {
+        _32 = copy _25 as *const () (PtrToPtr);
+        _33 = copy _32 as usize (Transmute);
+        _34 = Eq(copy _33, const 0_usize);
+        _35 = BitAnd(copy _34, const true);
+        _36 = Not(copy _35);
+        assert(copy _36, "null pointer dereference occurred") -> [success: bb16, unwind unreachable];
+    }
+
+    bb16: {
+        _12 = &(*_25);
+        _14 = copy _12;
+        _13 = Page::metadata_blob(move _14) -> [return: bb7, unwind terminate(abi)];
+    }
+}

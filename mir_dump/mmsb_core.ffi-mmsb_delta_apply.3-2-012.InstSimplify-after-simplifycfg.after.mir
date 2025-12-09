@@ -1,0 +1,159 @@
+// MIR for `ffi::mmsb_delta_apply` after InstSimplify-after-simplifycfg
+
+fn mmsb_delta_apply(_1: PageHandle, _2: DeltaHandle) -> i32 {
+    debug page => _1;
+    debug delta => _2;
+    let mut _0: i32;
+    let _3: ();
+    let mut _4: bool;
+    let mut _5: *mut types::page::Page;
+    let mut _6: bool;
+    let mut _7: *mut types::delta::Delta;
+    let mut _8: !;
+    let _9: ();
+    let mut _10: ffi::MMSBErrorCode;
+    let _11: &mut types::page::Page;
+    let mut _12: &mut types::page::Page;
+    let mut _14: std::result::Result<(), types::page::PageError>;
+    let mut _15: &mut types::page::Page;
+    let mut _16: &types::delta::Delta;
+    let mut _17: isize;
+    let _18: ();
+    let mut _19: ffi::MMSBErrorCode;
+    let mut _20: *mut types::page::Page;
+    let mut _21: *mut types::delta::Delta;
+    let mut _28: *const ();
+    let mut _29: usize;
+    let mut _30: usize;
+    let mut _31: usize;
+    let mut _32: usize;
+    let mut _33: bool;
+    let mut _34: *const ();
+    let mut _35: usize;
+    let mut _36: bool;
+    let mut _37: bool;
+    let mut _38: bool;
+    scope 1 {
+        debug page_ref => _11;
+        let _13: &types::delta::Delta;
+        let mut _22: *const ();
+        let mut _23: usize;
+        let mut _24: usize;
+        let mut _25: usize;
+        let mut _26: usize;
+        let mut _27: bool;
+        let mut _39: *const ();
+        let mut _40: usize;
+        let mut _41: bool;
+        let mut _42: bool;
+        let mut _43: bool;
+        scope 2 {
+            debug delta_ref => _13;
+        }
+    }
+
+    bb0: {
+        _5 = copy (_1.0: *mut types::page::Page);
+        _4 = std::ptr::mut_ptr::<impl *mut Page>::is_null(move _5) -> [return: bb1, unwind terminate(abi)];
+    }
+
+    bb1: {
+        switchInt(move _4) -> [0: bb2, otherwise: bb4];
+    }
+
+    bb2: {
+        _7 = copy (_2.0: *mut types::delta::Delta);
+        _6 = std::ptr::mut_ptr::<impl *mut Delta>::is_null(move _7) -> [return: bb3, unwind terminate(abi)];
+    }
+
+    bb3: {
+        switchInt(move _6) -> [0: bb6, otherwise: bb4];
+    }
+
+    bb4: {
+        _10 = MMSBErrorCode::InvalidHandle;
+        _9 = set_last_error(move _10) -> [return: bb5, unwind terminate(abi)];
+    }
+
+    bb5: {
+        _0 = const -1_i32;
+        goto -> bb12;
+    }
+
+    bb6: {
+        _20 = copy (_1.0: *mut types::page::Page);
+        _28 = copy _20 as *const () (PtrToPtr);
+        _29 = copy _28 as usize (Transmute);
+        _30 = AlignOf(types::page::Page);
+        _31 = Sub(copy _30, const 1_usize);
+        _32 = BitAnd(copy _29, copy _31);
+        _33 = Eq(copy _32, const 0_usize);
+        assert(copy _33, "misaligned pointer dereference: address must be a multiple of {} but is {}", copy _30, copy _29) -> [success: bb14, unwind unreachable];
+    }
+
+    bb7: {
+        _17 = discriminant(_14);
+        switchInt(move _17) -> [0: bb10, 1: bb9, otherwise: bb8];
+    }
+
+    bb8: {
+        unreachable;
+    }
+
+    bb9: {
+        _19 = MMSBErrorCode::AllocError;
+        _18 = set_last_error(move _19) -> [return: bb11, unwind terminate(abi)];
+    }
+
+    bb10: {
+        _0 = const 0_i32;
+        goto -> bb12;
+    }
+
+    bb11: {
+        _0 = const -1_i32;
+        goto -> bb12;
+    }
+
+    bb12: {
+        return;
+    }
+
+    bb13: {
+        _39 = copy _21 as *const () (PtrToPtr);
+        _40 = copy _39 as usize (Transmute);
+        _41 = Eq(copy _40, const 0_usize);
+        _42 = BitAnd(copy _41, const true);
+        _43 = Not(copy _42);
+        assert(copy _43, "null pointer dereference occurred") -> [success: bb16, unwind unreachable];
+    }
+
+    bb14: {
+        _34 = copy _20 as *const () (PtrToPtr);
+        _35 = copy _34 as usize (Transmute);
+        _36 = Eq(copy _35, const 0_usize);
+        _37 = BitAnd(copy _36, const true);
+        _38 = Not(copy _37);
+        assert(copy _38, "null pointer dereference occurred") -> [success: bb15, unwind unreachable];
+    }
+
+    bb15: {
+        _12 = &mut (*_20);
+        _11 = copy _12;
+        _21 = copy (_2.0: *mut types::delta::Delta);
+        _22 = copy _21 as *const () (PtrToPtr);
+        _23 = copy _22 as usize (Transmute);
+        _24 = AlignOf(types::delta::Delta);
+        _25 = Sub(copy _24, const 1_usize);
+        _26 = BitAnd(copy _23, copy _25);
+        _27 = Eq(copy _26, const 0_usize);
+        assert(copy _27, "misaligned pointer dereference: address must be a multiple of {} but is {}", copy _24, copy _23) -> [success: bb13, unwind unreachable];
+    }
+
+    bb16: {
+        _13 = &(*_21);
+        _15 = copy _11;
+        _16 = copy _13;
+        _14 = Page::apply_delta(move _15, move _16) -> [return: bb7, unwind terminate(abi)];
+    }
+}

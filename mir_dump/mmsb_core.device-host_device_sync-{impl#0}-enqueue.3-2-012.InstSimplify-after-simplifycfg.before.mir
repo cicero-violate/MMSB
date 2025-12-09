@@ -1,0 +1,20 @@
+// MIR for `device::host_device_sync::<impl at src/03_device/host_device_sync.rs:8:1: 8:20>::enqueue` before InstSimplify-after-simplifycfg
+
+fn host_device_sync::<impl at src/03_device/host_device_sync.rs:8:1: 8:20>::enqueue(_1: &mut HostDeviceSync, _2: PageID) -> () {
+    debug self => _1;
+    debug page_id => _2;
+    let mut _0: ();
+    let _3: ();
+    let mut _4: &mut std::vec::Vec<types::page::PageID>;
+    let mut _5: types::page::PageID;
+
+    bb0: {
+        _4 = &mut ((*_1).0: std::vec::Vec<types::page::PageID>);
+        _5 = copy _2;
+        _3 = Vec::<PageID>::push(move _4, move _5) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        return;
+    }
+}

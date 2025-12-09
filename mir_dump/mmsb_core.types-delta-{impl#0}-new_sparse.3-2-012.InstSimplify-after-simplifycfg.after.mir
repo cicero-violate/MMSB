@@ -1,0 +1,153 @@
+// MIR for `types::delta::<impl at src/01_types/delta.rs:24:1: 24:11>::new_sparse` after InstSimplify-after-simplifycfg
+
+fn delta::<impl at src/01_types/delta.rs:24:1: 24:11>::new_sparse(_1: DeltaID, _2: PageID, _3: Epoch, _4: Vec<bool>, _5: Vec<u8>, _6: delta::Source) -> Result<Delta, DeltaError> {
+    debug delta_id => _1;
+    debug page_id => _2;
+    debug epoch => _3;
+    debug mask => _4;
+    debug payload => _5;
+    debug source => _6;
+    let mut _0: std::result::Result<types::delta::Delta, types::delta::DeltaError>;
+    let _7: usize;
+    let mut _8: std::iter::Filter<std::slice::Iter<'_, bool>, {closure@src/01_types/delta.rs:60:42: 60:47}>;
+    let mut _9: std::slice::Iter<'_, bool>;
+    let mut _10: &[bool];
+    let _11: &[bool];
+    let mut _12: &std::vec::Vec<bool>;
+    let mut _13: {closure@src/01_types/delta.rs:60:42: 60:47};
+    let _14: ();
+    let mut _15: bool;
+    let mut _16: usize;
+    let mut _17: usize;
+    let mut _18: &std::vec::Vec<u8>;
+    let mut _19: !;
+    let mut _20: types::delta::DeltaError;
+    let mut _21: usize;
+    let mut _22: &std::vec::Vec<bool>;
+    let mut _23: usize;
+    let mut _24: &std::vec::Vec<u8>;
+    let mut _25: types::delta::Delta;
+    let mut _26: types::delta::DeltaID;
+    let mut _27: types::page::PageID;
+    let mut _28: types::epoch::Epoch;
+    let mut _29: std::vec::Vec<bool>;
+    let mut _30: std::vec::Vec<u8>;
+    let mut _31: u64;
+    let mut _32: types::delta::Source;
+    let mut _33: bool;
+    let mut _34: bool;
+    scope 1 {
+        debug changed => _7;
+    }
+
+    bb0: {
+        _34 = const false;
+        _33 = const false;
+        _34 = const true;
+        _33 = const true;
+        _12 = &_4;
+        _11 = <Vec<bool> as Deref>::deref(move _12) -> [return: bb1, unwind: bb16];
+    }
+
+    bb1: {
+        _10 = copy _11;
+        _9 = core::slice::<impl [bool]>::iter(move _10) -> [return: bb2, unwind: bb16];
+    }
+
+    bb2: {
+        _8 = <std::slice::Iter<'_, bool> as Iterator>::filter::<{closure@src/01_types/delta.rs:60:42: 60:47}>(move _9, const ZeroSized: {closure@src/01_types/delta.rs:60:42: 60:47}) -> [return: bb3, unwind: bb16];
+    }
+
+    bb3: {
+        _7 = <Filter<std::slice::Iter<'_, bool>, {closure@src/01_types/delta.rs:60:42: 60:47}> as Iterator>::count(move _8) -> [return: bb4, unwind: bb16];
+    }
+
+    bb4: {
+        _16 = copy _7;
+        _18 = &_5;
+        _17 = Vec::<u8>::len(move _18) -> [return: bb5, unwind: bb16];
+    }
+
+    bb5: {
+        _15 = Ne(move _16, move _17);
+        switchInt(move _15) -> [0: bb9, otherwise: bb6];
+    }
+
+    bb6: {
+        _22 = &_4;
+        _21 = Vec::<bool>::len(move _22) -> [return: bb7, unwind: bb16];
+    }
+
+    bb7: {
+        _24 = &_5;
+        _23 = Vec::<u8>::len(move _24) -> [return: bb8, unwind: bb16];
+    }
+
+    bb8: {
+        _20 = DeltaError::SizeMismatch { mask_len: move _21, payload_len: move _23 };
+        _0 = Result::<Delta, DeltaError>::Err(move _20);
+        drop(_6) -> [return: bb11, unwind: bb19];
+    }
+
+    bb9: {
+        _26 = copy _1;
+        _27 = copy _2;
+        _28 = copy _3;
+        _34 = const false;
+        _29 = move _4;
+        _33 = const false;
+        _30 = move _5;
+        _31 = now_ns() -> [return: bb10, unwind: bb14];
+    }
+
+    bb10: {
+        _32 = move _6;
+        _25 = Delta { delta_id: move _26, page_id: move _27, epoch: move _28, mask: move _29, payload: move _30, is_sparse: const true, timestamp: move _31, source: move _32 };
+        _0 = Result::<Delta, DeltaError>::Ok(move _25);
+        goto -> bb13;
+    }
+
+    bb11: {
+        drop(_5) -> [return: bb12, unwind: bb21];
+    }
+
+    bb12: {
+        drop(_4) -> [return: bb13, unwind: bb17];
+    }
+
+    bb13: {
+        return;
+    }
+
+    bb14 (cleanup): {
+        drop(_30) -> [return: bb15, unwind terminate(cleanup)];
+    }
+
+    bb15 (cleanup): {
+        drop(_29) -> [return: bb16, unwind terminate(cleanup)];
+    }
+
+    bb16 (cleanup): {
+        drop(_6) -> [return: bb19, unwind terminate(cleanup)];
+    }
+
+    bb17 (cleanup): {
+        resume;
+    }
+
+    bb18 (cleanup): {
+        drop(_5) -> [return: bb21, unwind terminate(cleanup)];
+    }
+
+    bb19 (cleanup): {
+        switchInt(copy _33) -> [0: bb21, otherwise: bb18];
+    }
+
+    bb20 (cleanup): {
+        drop(_4) -> [return: bb17, unwind terminate(cleanup)];
+    }
+
+    bb21 (cleanup): {
+        switchInt(copy _34) -> [0: bb17, otherwise: bb20];
+    }
+}

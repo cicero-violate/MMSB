@@ -1,0 +1,1050 @@
+// MIR for `runtime::tlog::read_frame` after InstSimplify-after-simplifycfg
+
+fn read_frame(_1: &mut BufReader<File>) -> Result<Option<Delta>, std::io::Error> {
+    debug reader => _1;
+    let mut _0: std::result::Result<std::option::Option<types::delta::Delta>, std::io::Error>;
+    let mut _2: [u8; 8];
+    let _3: ();
+    let mut _4: std::result::Result<(), std::io::Error>;
+    let mut _5: &mut std::io::BufReader<std::fs::File>;
+    let mut _6: &mut [u8];
+    let mut _7: &mut [u8; 8];
+    let mut _8: &mut [u8; 8];
+    let mut _9: &std::result::Result<(), std::io::Error>;
+    let mut _10: isize;
+    let mut _13: bool;
+    let mut _14: &std::io::ErrorKind;
+    let _15: std::io::ErrorKind;
+    let mut _16: &std::io::Error;
+    let mut _17: &std::io::ErrorKind;
+    let _18: std::io::ErrorKind;
+    let mut _19: !;
+    let mut _20: std::option::Option<types::delta::Delta>;
+    let mut _22: !;
+    let mut _23: std::io::Error;
+    let _25: ();
+    let mut _26: std::ops::ControlFlow<std::result::Result<std::convert::Infallible, std::io::Error>>;
+    let mut _27: std::result::Result<(), std::io::Error>;
+    let mut _28: &mut std::io::BufReader<std::fs::File>;
+    let mut _29: &mut [u8];
+    let mut _30: &mut [u8; 8];
+    let mut _31: &mut [u8; 8];
+    let mut _32: isize;
+    let mut _34: !;
+    let mut _35: std::result::Result<std::convert::Infallible, std::io::Error>;
+    let _38: ();
+    let mut _39: std::ops::ControlFlow<std::result::Result<std::convert::Infallible, std::io::Error>>;
+    let mut _40: std::result::Result<(), std::io::Error>;
+    let mut _41: &mut std::io::BufReader<std::fs::File>;
+    let mut _42: &mut [u8];
+    let mut _43: &mut [u8; 4];
+    let mut _44: &mut [u8; 4];
+    let mut _45: isize;
+    let mut _47: !;
+    let mut _48: std::result::Result<std::convert::Infallible, std::io::Error>;
+    let _51: ();
+    let mut _52: std::ops::ControlFlow<std::result::Result<std::convert::Infallible, std::io::Error>>;
+    let mut _53: std::result::Result<(), std::io::Error>;
+    let mut _54: &mut std::io::BufReader<std::fs::File>;
+    let mut _55: &mut [u8];
+    let mut _56: &mut [u8; 4];
+    let mut _57: &mut [u8; 4];
+    let mut _58: isize;
+    let mut _60: !;
+    let mut _61: std::result::Result<std::convert::Infallible, std::io::Error>;
+    let mut _64: u32;
+    let mut _65: [u8; 4];
+    let mut _67: usize;
+    let _68: ();
+    let mut _69: std::ops::ControlFlow<std::result::Result<std::convert::Infallible, std::io::Error>>;
+    let mut _70: std::result::Result<(), std::io::Error>;
+    let mut _71: &mut std::io::BufReader<std::fs::File>;
+    let mut _72: &mut [u8];
+    let mut _73: &mut [u8];
+    let mut _74: &mut std::vec::Vec<u8>;
+    let mut _75: &mut std::vec::Vec<u8>;
+    let mut _76: isize;
+    let mut _78: !;
+    let mut _79: std::result::Result<std::convert::Infallible, std::io::Error>;
+    let mut _82: std::iter::Map<std::slice::Iter<'_, u8>, {closure@src/02_runtime/tlog.rs:170:36: 170:39}>;
+    let mut _83: std::slice::Iter<'_, u8>;
+    let mut _84: &[u8];
+    let _85: &[u8];
+    let mut _86: &std::vec::Vec<u8>;
+    let mut _87: {closure@src/02_runtime/tlog.rs:170:36: 170:39};
+    let _89: ();
+    let mut _90: std::ops::ControlFlow<std::result::Result<std::convert::Infallible, std::io::Error>>;
+    let mut _91: std::result::Result<(), std::io::Error>;
+    let mut _92: &mut std::io::BufReader<std::fs::File>;
+    let mut _93: &mut [u8];
+    let mut _94: &mut [u8; 4];
+    let mut _95: &mut [u8; 4];
+    let mut _96: isize;
+    let mut _98: !;
+    let mut _99: std::result::Result<std::convert::Infallible, std::io::Error>;
+    let mut _102: u32;
+    let mut _103: [u8; 4];
+    let mut _105: usize;
+    let _106: ();
+    let mut _107: std::ops::ControlFlow<std::result::Result<std::convert::Infallible, std::io::Error>>;
+    let mut _108: std::result::Result<(), std::io::Error>;
+    let mut _109: &mut std::io::BufReader<std::fs::File>;
+    let mut _110: &mut [u8];
+    let mut _111: &mut [u8];
+    let mut _112: &mut std::vec::Vec<u8>;
+    let mut _113: &mut std::vec::Vec<u8>;
+    let mut _114: isize;
+    let mut _116: !;
+    let mut _117: std::result::Result<std::convert::Infallible, std::io::Error>;
+    let _120: ();
+    let mut _121: std::ops::ControlFlow<std::result::Result<std::convert::Infallible, std::io::Error>>;
+    let mut _122: std::result::Result<(), std::io::Error>;
+    let mut _123: &mut std::io::BufReader<std::fs::File>;
+    let mut _124: &mut [u8];
+    let mut _125: &mut [u8; 1];
+    let mut _126: &mut [u8; 1];
+    let mut _127: isize;
+    let mut _129: !;
+    let mut _130: std::result::Result<std::convert::Infallible, std::io::Error>;
+    let _133: ();
+    let mut _134: std::ops::ControlFlow<std::result::Result<std::convert::Infallible, std::io::Error>>;
+    let mut _135: std::result::Result<(), std::io::Error>;
+    let mut _136: &mut std::io::BufReader<std::fs::File>;
+    let mut _137: &mut [u8];
+    let mut _138: &mut [u8; 8];
+    let mut _139: &mut [u8; 8];
+    let mut _140: isize;
+    let mut _142: !;
+    let mut _143: std::result::Result<std::convert::Infallible, std::io::Error>;
+    let _146: ();
+    let mut _147: std::ops::ControlFlow<std::result::Result<std::convert::Infallible, std::io::Error>>;
+    let mut _148: std::result::Result<(), std::io::Error>;
+    let mut _149: &mut std::io::BufReader<std::fs::File>;
+    let mut _150: &mut [u8];
+    let mut _151: &mut [u8; 4];
+    let mut _152: &mut [u8; 4];
+    let mut _153: isize;
+    let mut _155: !;
+    let mut _156: std::result::Result<std::convert::Infallible, std::io::Error>;
+    let mut _159: u32;
+    let mut _160: [u8; 4];
+    let mut _162: usize;
+    let _163: ();
+    let mut _164: std::ops::ControlFlow<std::result::Result<std::convert::Infallible, std::io::Error>>;
+    let mut _165: std::result::Result<(), std::io::Error>;
+    let mut _166: &mut std::io::BufReader<std::fs::File>;
+    let mut _167: &mut [u8];
+    let mut _168: &mut [u8];
+    let mut _169: &mut std::vec::Vec<u8>;
+    let mut _170: &mut std::vec::Vec<u8>;
+    let mut _171: isize;
+    let mut _173: !;
+    let mut _174: std::result::Result<std::convert::Infallible, std::io::Error>;
+    let mut _177: std::string::String;
+    let mut _178: &std::borrow::Cow<'_, str>;
+    let _179: std::borrow::Cow<'_, str>;
+    let mut _180: &[u8];
+    let _181: &[u8];
+    let mut _182: &std::vec::Vec<u8>;
+    let _183: &std::vec::Vec<u8>;
+    let mut _184: std::option::Option<types::delta::Delta>;
+    let mut _185: types::delta::Delta;
+    let mut _186: types::delta::DeltaID;
+    let mut _187: u64;
+    let mut _188: [u8; 8];
+    let mut _189: types::page::PageID;
+    let mut _190: u64;
+    let mut _191: [u8; 8];
+    let mut _192: types::epoch::Epoch;
+    let mut _193: u32;
+    let mut _194: [u8; 4];
+    let mut _195: std::vec::Vec<bool>;
+    let mut _196: std::vec::Vec<u8>;
+    let mut _197: bool;
+    let mut _198: u8;
+    let _199: usize;
+    let mut _200: bool;
+    let mut _201: u64;
+    let mut _202: [u8; 8];
+    let mut _203: types::delta::Source;
+    let mut _205: bool;
+    let mut _206: bool;
+    let mut _207: bool;
+    let mut _208: isize;
+    let mut _209: isize;
+    let mut _210: isize;
+    let mut _211: isize;
+    let mut _212: isize;
+    let mut _213: isize;
+    let mut _214: isize;
+    let mut _215: isize;
+    let mut _216: isize;
+    let mut _217: isize;
+    let mut _218: isize;
+    let mut _219: isize;
+    let mut _220: isize;
+    let mut _221: isize;
+    let mut _222: isize;
+    let mut _223: isize;
+    let mut _224: isize;
+    let mut _225: isize;
+    let mut _226: isize;
+    let mut _227: isize;
+    let mut _228: isize;
+    let mut _229: isize;
+    let mut _230: isize;
+    let mut _231: isize;
+    let mut _232: isize;
+    let mut _233: isize;
+    let mut _234: isize;
+    let mut _235: isize;
+    let mut _236: isize;
+    let mut _237: isize;
+    let mut _238: isize;
+    let mut _239: isize;
+    let mut _240: isize;
+    let mut _241: isize;
+    let mut _242: isize;
+    let mut _243: isize;
+    let mut _244: isize;
+    let mut _245: isize;
+    let mut _246: isize;
+    let mut _247: isize;
+    let mut _248: isize;
+    let mut _249: isize;
+    let mut _250: isize;
+    let mut _251: isize;
+    let mut _252: isize;
+    let mut _253: isize;
+    let mut _254: isize;
+    let mut _255: isize;
+    let mut _256: isize;
+    let mut _257: isize;
+    let mut _258: isize;
+    let mut _259: isize;
+    let mut _260: isize;
+    let mut _261: isize;
+    let mut _262: isize;
+    scope 1 {
+        debug delta_id => _2;
+        let _11: std::io::Error;
+        let _12: &std::io::Error;
+        let _21: std::io::Error;
+        let mut _24: [u8; 8];
+        let mut _204: &std::io::ErrorKind;
+        scope 2 {
+            debug err => _11;
+            debug err => _12;
+        }
+        scope 3 {
+            debug err => _21;
+        }
+        scope 4 {
+            debug page_id => _24;
+            let _33: std::result::Result<std::convert::Infallible, std::io::Error>;
+            let _36: ();
+            let mut _37: [u8; 4];
+            scope 5 {
+                debug residual => _33;
+                scope 6 {
+                }
+            }
+            scope 7 {
+                debug val => const ();
+                scope 8 {
+                }
+            }
+            scope 9 {
+                debug epoch => _37;
+                let _46: std::result::Result<std::convert::Infallible, std::io::Error>;
+                let _49: ();
+                let mut _50: [u8; 4];
+                scope 10 {
+                    debug residual => _46;
+                    scope 11 {
+                    }
+                }
+                scope 12 {
+                    debug val => const ();
+                    scope 13 {
+                    }
+                }
+                scope 14 {
+                    debug mask_len_bytes => _50;
+                    let _59: std::result::Result<std::convert::Infallible, std::io::Error>;
+                    let _62: ();
+                    let _63: usize;
+                    scope 15 {
+                        debug residual => _59;
+                        scope 16 {
+                        }
+                    }
+                    scope 17 {
+                        debug val => const ();
+                        scope 18 {
+                        }
+                    }
+                    scope 19 {
+                        debug mask_len => _63;
+                        let mut _66: std::vec::Vec<u8>;
+                        scope 20 {
+                            debug mask_raw => _66;
+                            let _77: std::result::Result<std::convert::Infallible, std::io::Error>;
+                            let _80: ();
+                            let _81: std::vec::Vec<bool>;
+                            scope 21 {
+                                debug residual => _77;
+                                scope 22 {
+                                }
+                            }
+                            scope 23 {
+                                debug val => const ();
+                                scope 24 {
+                                }
+                            }
+                            scope 25 {
+                                debug mask => _81;
+                                let mut _88: [u8; 4];
+                                scope 26 {
+                                    debug payload_len_bytes => _88;
+                                    let _97: std::result::Result<std::convert::Infallible, std::io::Error>;
+                                    let _100: ();
+                                    let _101: usize;
+                                    scope 27 {
+                                        debug residual => _97;
+                                        scope 28 {
+                                        }
+                                    }
+                                    scope 29 {
+                                        debug val => const ();
+                                        scope 30 {
+                                        }
+                                    }
+                                    scope 31 {
+                                        debug payload_len => _101;
+                                        let mut _104: std::vec::Vec<u8>;
+                                        scope 32 {
+                                            debug payload => _104;
+                                            let _115: std::result::Result<std::convert::Infallible, std::io::Error>;
+                                            let _118: ();
+                                            let mut _119: [u8; 1];
+                                            scope 33 {
+                                                debug residual => _115;
+                                                scope 34 {
+                                                }
+                                            }
+                                            scope 35 {
+                                                debug val => const ();
+                                                scope 36 {
+                                                }
+                                            }
+                                            scope 37 {
+                                                debug sparse_flag => _119;
+                                                let _128: std::result::Result<std::convert::Infallible, std::io::Error>;
+                                                let _131: ();
+                                                let mut _132: [u8; 8];
+                                                scope 38 {
+                                                    debug residual => _128;
+                                                    scope 39 {
+                                                    }
+                                                }
+                                                scope 40 {
+                                                    debug val => const ();
+                                                    scope 41 {
+                                                    }
+                                                }
+                                                scope 42 {
+                                                    debug timestamp_bytes => _132;
+                                                    let _141: std::result::Result<std::convert::Infallible, std::io::Error>;
+                                                    let _144: ();
+                                                    let mut _145: [u8; 4];
+                                                    scope 43 {
+                                                        debug residual => _141;
+                                                        scope 44 {
+                                                        }
+                                                    }
+                                                    scope 45 {
+                                                        debug val => const ();
+                                                        scope 46 {
+                                                        }
+                                                    }
+                                                    scope 47 {
+                                                        debug source_len_bytes => _145;
+                                                        let _154: std::result::Result<std::convert::Infallible, std::io::Error>;
+                                                        let _157: ();
+                                                        let _158: usize;
+                                                        scope 48 {
+                                                            debug residual => _154;
+                                                            scope 49 {
+                                                            }
+                                                        }
+                                                        scope 50 {
+                                                            debug val => const ();
+                                                            scope 51 {
+                                                            }
+                                                        }
+                                                        scope 52 {
+                                                            debug source_len => _158;
+                                                            let mut _161: std::vec::Vec<u8>;
+                                                            scope 53 {
+                                                                debug source_buf => _161;
+                                                                let _172: std::result::Result<std::convert::Infallible, std::io::Error>;
+                                                                let _175: ();
+                                                                let _176: types::delta::Source;
+                                                                scope 54 {
+                                                                    debug residual => _172;
+                                                                    scope 55 {
+                                                                    }
+                                                                }
+                                                                scope 56 {
+                                                                    debug val => const ();
+                                                                    scope 57 {
+                                                                    }
+                                                                }
+                                                                scope 58 {
+                                                                    debug source => _176;
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    bb0: {
+        _206 = const false;
+        _205 = const false;
+        _207 = const false;
+        _2 = [const 0_u8; 8];
+        _5 = copy _1;
+        _8 = &mut _2;
+        _7 = copy _8;
+        _6 = move _7 as &mut [u8] (PointerCoercion(Unsize, Implicit));
+        _207 = const true;
+        _4 = <BufReader<File> as std::io::Read>::read_exact(move _5, move _6) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        _10 = discriminant(_4);
+        switchInt(move _10) -> [0: bb4, 1: bb3, otherwise: bb2];
+    }
+
+    bb2: {
+        unreachable;
+    }
+
+    bb3: {
+        _12 = &((_4 as Err).0: std::io::Error);
+        _16 = copy _12;
+        _15 = std::io::Error::kind(move _16) -> [return: bb5, unwind: bb112];
+    }
+
+    bb4: {
+        _208 = discriminant(_4);
+        _207 = const false;
+        _24 = [const 0_u8; 8];
+        _28 = copy _1;
+        _31 = &mut _24;
+        _30 = copy _31;
+        _29 = move _30 as &mut [u8] (PointerCoercion(Unsize, Implicit));
+        _27 = <BufReader<File> as std::io::Read>::read_exact(move _28, move _29) -> [return: bb9, unwind continue];
+    }
+
+    bb5: {
+        _14 = &_15;
+        _204 = const runtime::tlog::read_frame::promoted[0];
+        _17 = copy _204;
+        _13 = <ErrorKind as PartialEq>::eq(move _14, move _17) -> [return: bb6, unwind: bb112];
+    }
+
+    bb6: {
+        switchInt(move _13) -> [0: bb8, otherwise: bb7];
+    }
+
+    bb7: {
+        _207 = const false;
+        _11 = move ((_4 as Err).0: std::io::Error);
+        _20 = Option::<Delta>::None;
+        _0 = Result::<Option<Delta>, std::io::Error>::Ok(move _20);
+        drop(_11) -> [return: bb95, unwind: bb112];
+    }
+
+    bb8: {
+        _207 = const false;
+        _21 = move ((_4 as Err).0: std::io::Error);
+        _23 = move _21;
+        _0 = Result::<Option<Delta>, std::io::Error>::Err(move _23);
+        goto -> bb95;
+    }
+
+    bb9: {
+        _26 = <Result<(), std::io::Error> as Try>::branch(move _27) -> [return: bb10, unwind: bb94];
+    }
+
+    bb10: {
+        _32 = discriminant(_26);
+        switchInt(move _32) -> [0: bb11, 1: bb12, otherwise: bb2];
+    }
+
+    bb11: {
+        _210 = discriminant(_26);
+        _37 = [const 0_u8; 4];
+        _41 = copy _1;
+        _44 = &mut _37;
+        _43 = copy _44;
+        _42 = move _43 as &mut [u8] (PointerCoercion(Unsize, Implicit));
+        _40 = <BufReader<File> as std::io::Read>::read_exact(move _41, move _42) -> [return: bb14, unwind continue];
+    }
+
+    bb12: {
+        _33 = move ((_26 as Break).0: std::result::Result<std::convert::Infallible, std::io::Error>);
+        _35 = move _33;
+        _0 = <Result<Option<Delta>, std::io::Error> as FromResidual<Result<Infallible, std::io::Error>>>::from_residual(move _35) -> [return: bb13, unwind: bb109];
+    }
+
+    bb13: {
+        _248 = discriminant(_26);
+        goto -> bb87;
+    }
+
+    bb14: {
+        _39 = <Result<(), std::io::Error> as Try>::branch(move _40) -> [return: bb15, unwind: bb94];
+    }
+
+    bb15: {
+        _45 = discriminant(_39);
+        switchInt(move _45) -> [0: bb16, 1: bb17, otherwise: bb2];
+    }
+
+    bb16: {
+        _212 = discriminant(_39);
+        _50 = [const 0_u8; 4];
+        _54 = copy _1;
+        _57 = &mut _50;
+        _56 = copy _57;
+        _55 = move _56 as &mut [u8] (PointerCoercion(Unsize, Implicit));
+        _53 = <BufReader<File> as std::io::Read>::read_exact(move _54, move _55) -> [return: bb19, unwind continue];
+    }
+
+    bb17: {
+        _46 = move ((_39 as Break).0: std::result::Result<std::convert::Infallible, std::io::Error>);
+        _48 = move _46;
+        _0 = <Result<Option<Delta>, std::io::Error> as FromResidual<Result<Infallible, std::io::Error>>>::from_residual(move _48) -> [return: bb18, unwind: bb108];
+    }
+
+    bb18: {
+        _246 = discriminant(_39);
+        goto -> bb87;
+    }
+
+    bb19: {
+        _52 = <Result<(), std::io::Error> as Try>::branch(move _53) -> [return: bb20, unwind: bb94];
+    }
+
+    bb20: {
+        _58 = discriminant(_52);
+        switchInt(move _58) -> [0: bb21, 1: bb22, otherwise: bb2];
+    }
+
+    bb21: {
+        _214 = discriminant(_52);
+        _65 = copy _50;
+        _64 = core::num::<impl u32>::from_le_bytes(move _65) -> [return: bb24, unwind continue];
+    }
+
+    bb22: {
+        _59 = move ((_52 as Break).0: std::result::Result<std::convert::Infallible, std::io::Error>);
+        _61 = move _59;
+        _0 = <Result<Option<Delta>, std::io::Error> as FromResidual<Result<Infallible, std::io::Error>>>::from_residual(move _61) -> [return: bb23, unwind: bb107];
+    }
+
+    bb23: {
+        _244 = discriminant(_52);
+        goto -> bb87;
+    }
+
+    bb24: {
+        _63 = move _64 as usize (IntToInt);
+        _67 = copy _63;
+        _66 = from_elem::<u8>(const 0_u8, move _67) -> [return: bb25, unwind continue];
+    }
+
+    bb25: {
+        _71 = copy _1;
+        _75 = &mut _66;
+        _74 = copy _75;
+        _73 = <Vec<u8> as DerefMut>::deref_mut(move _74) -> [return: bb26, unwind: bb93];
+    }
+
+    bb26: {
+        _72 = copy _73;
+        _70 = <BufReader<File> as std::io::Read>::read_exact(move _71, move _72) -> [return: bb27, unwind: bb93];
+    }
+
+    bb27: {
+        _69 = <Result<(), std::io::Error> as Try>::branch(move _70) -> [return: bb28, unwind: bb93];
+    }
+
+    bb28: {
+        _76 = discriminant(_69);
+        switchInt(move _76) -> [0: bb29, 1: bb30, otherwise: bb2];
+    }
+
+    bb29: {
+        _216 = discriminant(_69);
+        _86 = &_66;
+        _85 = <Vec<u8> as Deref>::deref(move _86) -> [return: bb32, unwind: bb93];
+    }
+
+    bb30: {
+        _77 = move ((_69 as Break).0: std::result::Result<std::convert::Infallible, std::io::Error>);
+        _79 = move _77;
+        _0 = <Result<Option<Delta>, std::io::Error> as FromResidual<Result<Infallible, std::io::Error>>>::from_residual(move _79) -> [return: bb31, unwind: bb106];
+    }
+
+    bb31: {
+        _242 = discriminant(_69);
+        goto -> bb86;
+    }
+
+    bb32: {
+        _84 = copy _85;
+        _83 = core::slice::<impl [u8]>::iter(move _84) -> [return: bb33, unwind: bb93];
+    }
+
+    bb33: {
+        _82 = <std::slice::Iter<'_, u8> as Iterator>::map::<bool, {closure@src/02_runtime/tlog.rs:170:36: 170:39}>(move _83, const ZeroSized: {closure@src/02_runtime/tlog.rs:170:36: 170:39}) -> [return: bb34, unwind: bb93];
+    }
+
+    bb34: {
+        _81 = <Map<std::slice::Iter<'_, u8>, {closure@src/02_runtime/tlog.rs:170:36: 170:39}> as Iterator>::collect::<Vec<bool>>(move _82) -> [return: bb35, unwind: bb93];
+    }
+
+    bb35: {
+        _206 = const true;
+        _88 = [const 0_u8; 4];
+        _92 = copy _1;
+        _95 = &mut _88;
+        _94 = copy _95;
+        _93 = move _94 as &mut [u8] (PointerCoercion(Unsize, Implicit));
+        _91 = <BufReader<File> as std::io::Read>::read_exact(move _92, move _93) -> [return: bb36, unwind: bb105];
+    }
+
+    bb36: {
+        _90 = <Result<(), std::io::Error> as Try>::branch(move _91) -> [return: bb37, unwind: bb105];
+    }
+
+    bb37: {
+        _96 = discriminant(_90);
+        switchInt(move _96) -> [0: bb38, 1: bb39, otherwise: bb2];
+    }
+
+    bb38: {
+        _218 = discriminant(_90);
+        _103 = copy _88;
+        _102 = core::num::<impl u32>::from_le_bytes(move _103) -> [return: bb41, unwind: bb105];
+    }
+
+    bb39: {
+        _97 = move ((_90 as Break).0: std::result::Result<std::convert::Infallible, std::io::Error>);
+        _99 = move _97;
+        _0 = <Result<Option<Delta>, std::io::Error> as FromResidual<Result<Infallible, std::io::Error>>>::from_residual(move _99) -> [return: bb40, unwind: bb103];
+    }
+
+    bb40: {
+        _240 = discriminant(_90);
+        goto -> bb84;
+    }
+
+    bb41: {
+        _101 = move _102 as usize (IntToInt);
+        _105 = copy _101;
+        _104 = from_elem::<u8>(const 0_u8, move _105) -> [return: bb42, unwind: bb105];
+    }
+
+    bb42: {
+        _205 = const true;
+        _109 = copy _1;
+        _113 = &mut _104;
+        _112 = copy _113;
+        _111 = <Vec<u8> as DerefMut>::deref_mut(move _112) -> [return: bb43, unwind: bb102];
+    }
+
+    bb43: {
+        _110 = copy _111;
+        _108 = <BufReader<File> as std::io::Read>::read_exact(move _109, move _110) -> [return: bb44, unwind: bb102];
+    }
+
+    bb44: {
+        _107 = <Result<(), std::io::Error> as Try>::branch(move _108) -> [return: bb45, unwind: bb102];
+    }
+
+    bb45: {
+        _114 = discriminant(_107);
+        switchInt(move _114) -> [0: bb46, 1: bb47, otherwise: bb2];
+    }
+
+    bb46: {
+        _220 = discriminant(_107);
+        _119 = [const 0_u8];
+        _123 = copy _1;
+        _126 = &mut _119;
+        _125 = copy _126;
+        _124 = move _125 as &mut [u8] (PointerCoercion(Unsize, Implicit));
+        _122 = <BufReader<File> as std::io::Read>::read_exact(move _123, move _124) -> [return: bb49, unwind: bb102];
+    }
+
+    bb47: {
+        _115 = move ((_107 as Break).0: std::result::Result<std::convert::Infallible, std::io::Error>);
+        _117 = move _115;
+        _0 = <Result<Option<Delta>, std::io::Error> as FromResidual<Result<Infallible, std::io::Error>>>::from_residual(move _117) -> [return: bb48, unwind: bb100];
+    }
+
+    bb48: {
+        _238 = discriminant(_107);
+        goto -> bb82;
+    }
+
+    bb49: {
+        _121 = <Result<(), std::io::Error> as Try>::branch(move _122) -> [return: bb50, unwind: bb102];
+    }
+
+    bb50: {
+        _127 = discriminant(_121);
+        switchInt(move _127) -> [0: bb51, 1: bb52, otherwise: bb2];
+    }
+
+    bb51: {
+        _222 = discriminant(_121);
+        _132 = [const 0_u8; 8];
+        _136 = copy _1;
+        _139 = &mut _132;
+        _138 = copy _139;
+        _137 = move _138 as &mut [u8] (PointerCoercion(Unsize, Implicit));
+        _135 = <BufReader<File> as std::io::Read>::read_exact(move _136, move _137) -> [return: bb54, unwind: bb102];
+    }
+
+    bb52: {
+        _128 = move ((_121 as Break).0: std::result::Result<std::convert::Infallible, std::io::Error>);
+        _130 = move _128;
+        _0 = <Result<Option<Delta>, std::io::Error> as FromResidual<Result<Infallible, std::io::Error>>>::from_residual(move _130) -> [return: bb53, unwind: bb99];
+    }
+
+    bb53: {
+        _236 = discriminant(_121);
+        goto -> bb82;
+    }
+
+    bb54: {
+        _134 = <Result<(), std::io::Error> as Try>::branch(move _135) -> [return: bb55, unwind: bb102];
+    }
+
+    bb55: {
+        _140 = discriminant(_134);
+        switchInt(move _140) -> [0: bb56, 1: bb57, otherwise: bb2];
+    }
+
+    bb56: {
+        _224 = discriminant(_134);
+        _145 = [const 0_u8; 4];
+        _149 = copy _1;
+        _152 = &mut _145;
+        _151 = copy _152;
+        _150 = move _151 as &mut [u8] (PointerCoercion(Unsize, Implicit));
+        _148 = <BufReader<File> as std::io::Read>::read_exact(move _149, move _150) -> [return: bb59, unwind: bb102];
+    }
+
+    bb57: {
+        _141 = move ((_134 as Break).0: std::result::Result<std::convert::Infallible, std::io::Error>);
+        _143 = move _141;
+        _0 = <Result<Option<Delta>, std::io::Error> as FromResidual<Result<Infallible, std::io::Error>>>::from_residual(move _143) -> [return: bb58, unwind: bb98];
+    }
+
+    bb58: {
+        _234 = discriminant(_134);
+        goto -> bb82;
+    }
+
+    bb59: {
+        _147 = <Result<(), std::io::Error> as Try>::branch(move _148) -> [return: bb60, unwind: bb102];
+    }
+
+    bb60: {
+        _153 = discriminant(_147);
+        switchInt(move _153) -> [0: bb61, 1: bb62, otherwise: bb2];
+    }
+
+    bb61: {
+        _226 = discriminant(_147);
+        _160 = copy _145;
+        _159 = core::num::<impl u32>::from_le_bytes(move _160) -> [return: bb64, unwind: bb102];
+    }
+
+    bb62: {
+        _154 = move ((_147 as Break).0: std::result::Result<std::convert::Infallible, std::io::Error>);
+        _156 = move _154;
+        _0 = <Result<Option<Delta>, std::io::Error> as FromResidual<Result<Infallible, std::io::Error>>>::from_residual(move _156) -> [return: bb63, unwind: bb97];
+    }
+
+    bb63: {
+        _232 = discriminant(_147);
+        goto -> bb82;
+    }
+
+    bb64: {
+        _158 = move _159 as usize (IntToInt);
+        _162 = copy _158;
+        _161 = from_elem::<u8>(const 0_u8, move _162) -> [return: bb65, unwind: bb102];
+    }
+
+    bb65: {
+        _166 = copy _1;
+        _170 = &mut _161;
+        _169 = copy _170;
+        _168 = <Vec<u8> as DerefMut>::deref_mut(move _169) -> [return: bb66, unwind: bb92];
+    }
+
+    bb66: {
+        _167 = copy _168;
+        _165 = <BufReader<File> as std::io::Read>::read_exact(move _166, move _167) -> [return: bb67, unwind: bb92];
+    }
+
+    bb67: {
+        _164 = <Result<(), std::io::Error> as Try>::branch(move _165) -> [return: bb68, unwind: bb92];
+    }
+
+    bb68: {
+        _171 = discriminant(_164);
+        switchInt(move _171) -> [0: bb69, 1: bb70, otherwise: bb2];
+    }
+
+    bb69: {
+        _228 = discriminant(_164);
+        _183 = &_161;
+        _182 = copy _183;
+        _181 = <Vec<u8> as Deref>::deref(move _182) -> [return: bb72, unwind: bb92];
+    }
+
+    bb70: {
+        _172 = move ((_164 as Break).0: std::result::Result<std::convert::Infallible, std::io::Error>);
+        _174 = move _172;
+        _0 = <Result<Option<Delta>, std::io::Error> as FromResidual<Result<Infallible, std::io::Error>>>::from_residual(move _174) -> [return: bb71, unwind: bb96];
+    }
+
+    bb71: {
+        _230 = discriminant(_164);
+        drop(_161) -> [return: bb82, unwind: bb102];
+    }
+
+    bb72: {
+        _180 = copy _181;
+        _179 = String::from_utf8_lossy(move _180) -> [return: bb73, unwind: bb92];
+    }
+
+    bb73: {
+        _178 = &_179;
+        _177 = <Cow<'_, str> as ToString>::to_string(move _178) -> [return: bb74, unwind: bb91];
+    }
+
+    bb74: {
+        _176 = delta::Source(move _177);
+        drop(_179) -> [return: bb75, unwind: bb90];
+    }
+
+    bb75: {
+        _188 = copy _2;
+        _187 = core::num::<impl u64>::from_le_bytes(move _188) -> [return: bb76, unwind: bb90];
+    }
+
+    bb76: {
+        _186 = DeltaID(move _187);
+        _191 = copy _24;
+        _190 = core::num::<impl u64>::from_le_bytes(move _191) -> [return: bb77, unwind: bb90];
+    }
+
+    bb77: {
+        _189 = PageID(move _190);
+        _194 = copy _37;
+        _193 = core::num::<impl u32>::from_le_bytes(move _194) -> [return: bb78, unwind: bb90];
+    }
+
+    bb78: {
+        _192 = Epoch(move _193);
+        _206 = const false;
+        _195 = move _81;
+        _205 = const false;
+        _196 = move _104;
+        _199 = const 0_usize;
+        _200 = Lt(copy _199, const 1_usize);
+        assert(move _200, "index out of bounds: the length is {} but the index is {}", const 1_usize, copy _199) -> [success: bb79, unwind: bb88];
+    }
+
+    bb79: {
+        _198 = copy _119[_199];
+        _197 = Ne(move _198, const 0_u8);
+        _202 = copy _132;
+        _201 = core::num::<impl u64>::from_le_bytes(move _202) -> [return: bb80, unwind: bb88];
+    }
+
+    bb80: {
+        _203 = move _176;
+        _185 = Delta { delta_id: move _186, page_id: move _189, epoch: move _192, mask: move _195, payload: move _196, is_sparse: move _197, timestamp: move _201, source: move _203 };
+        _184 = Option::<Delta>::Some(move _185);
+        _0 = Result::<Option<Delta>, std::io::Error>::Ok(move _184);
+        drop(_161) -> [return: bb81, unwind: bb102];
+    }
+
+    bb81: {
+        _205 = const false;
+        _206 = const false;
+        drop(_66) -> [return: bb87, unwind: bb94];
+    }
+
+    bb82: {
+        drop(_104) -> [return: bb83, unwind: bb105];
+    }
+
+    bb83: {
+        _205 = const false;
+        goto -> bb84;
+    }
+
+    bb84: {
+        drop(_81) -> [return: bb85, unwind: bb93];
+    }
+
+    bb85: {
+        _206 = const false;
+        goto -> bb86;
+    }
+
+    bb86: {
+        drop(_66) -> [return: bb87, unwind: bb94];
+    }
+
+    bb87: {
+        return;
+    }
+
+    bb88 (cleanup): {
+        drop(_196) -> [return: bb89, unwind terminate(cleanup)];
+    }
+
+    bb89 (cleanup): {
+        drop(_195) -> [return: bb90, unwind terminate(cleanup)];
+    }
+
+    bb90 (cleanup): {
+        drop(_176) -> [return: bb92, unwind terminate(cleanup)];
+    }
+
+    bb91 (cleanup): {
+        drop(_179) -> [return: bb92, unwind terminate(cleanup)];
+    }
+
+    bb92 (cleanup): {
+        drop(_161) -> [return: bb102, unwind terminate(cleanup)];
+    }
+
+    bb93 (cleanup): {
+        drop(_66) -> [return: bb94, unwind terminate(cleanup)];
+    }
+
+    bb94 (cleanup): {
+        resume;
+    }
+
+    bb95: {
+        _250 = discriminant(_4);
+        _207 = const false;
+        goto -> bb87;
+    }
+
+    bb96 (cleanup): {
+        _252 = discriminant(_164);
+        goto -> bb92;
+    }
+
+    bb97 (cleanup): {
+        _253 = discriminant(_147);
+        goto -> bb102;
+    }
+
+    bb98 (cleanup): {
+        _254 = discriminant(_134);
+        goto -> bb102;
+    }
+
+    bb99 (cleanup): {
+        _255 = discriminant(_121);
+        goto -> bb102;
+    }
+
+    bb100 (cleanup): {
+        _256 = discriminant(_107);
+        goto -> bb102;
+    }
+
+    bb101 (cleanup): {
+        drop(_104) -> [return: bb105, unwind terminate(cleanup)];
+    }
+
+    bb102 (cleanup): {
+        switchInt(copy _205) -> [0: bb105, otherwise: bb101];
+    }
+
+    bb103 (cleanup): {
+        _257 = discriminant(_90);
+        goto -> bb105;
+    }
+
+    bb104 (cleanup): {
+        drop(_81) -> [return: bb93, unwind terminate(cleanup)];
+    }
+
+    bb105 (cleanup): {
+        switchInt(copy _206) -> [0: bb93, otherwise: bb104];
+    }
+
+    bb106 (cleanup): {
+        _258 = discriminant(_69);
+        goto -> bb93;
+    }
+
+    bb107 (cleanup): {
+        _259 = discriminant(_52);
+        goto -> bb94;
+    }
+
+    bb108 (cleanup): {
+        _260 = discriminant(_39);
+        goto -> bb94;
+    }
+
+    bb109 (cleanup): {
+        _261 = discriminant(_26);
+        goto -> bb94;
+    }
+
+    bb110 (cleanup): {
+        switchInt(copy _207) -> [0: bb94, otherwise: bb111];
+    }
+
+    bb111 (cleanup): {
+        drop(((_4 as Err).0: std::io::Error)) -> [return: bb94, unwind terminate(cleanup)];
+    }
+
+    bb112 (cleanup): {
+        _262 = discriminant(_4);
+        switchInt(move _262) -> [1: bb110, otherwise: bb94];
+    }
+}

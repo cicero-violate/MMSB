@@ -1,0 +1,37 @@
+// MIR for `ffi::mmsb_delta_free` after InstSimplify-after-simplifycfg
+
+fn mmsb_delta_free(_1: DeltaHandle) -> () {
+    debug handle => _1;
+    let mut _0: ();
+    let mut _2: bool;
+    let mut _3: *mut types::delta::Delta;
+    let _4: ();
+    let mut _5: std::boxed::Box<types::delta::Delta>;
+    let mut _6: *mut types::delta::Delta;
+
+    bb0: {
+        _3 = copy (_1.0: *mut types::delta::Delta);
+        _2 = std::ptr::mut_ptr::<impl *mut Delta>::is_null(move _3) -> [return: bb1, unwind terminate(abi)];
+    }
+
+    bb1: {
+        switchInt(move _2) -> [0: bb2, otherwise: bb4];
+    }
+
+    bb2: {
+        _6 = copy (_1.0: *mut types::delta::Delta);
+        _5 = Box::<Delta>::from_raw(move _6) -> [return: bb3, unwind terminate(abi)];
+    }
+
+    bb3: {
+        _4 = std::mem::drop::<Box<Delta>>(move _5) -> [return: bb4, unwind: bb5];
+    }
+
+    bb4: {
+        return;
+    }
+
+    bb5 (cleanup): {
+        terminate(abi);
+    }
+}

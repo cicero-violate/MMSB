@@ -1,0 +1,13 @@
+// MIR for `ffi::<impl at src/ffi.rs:71:10: 71:15>::clone` before InstSimplify-after-simplifycfg
+
+fn ffi::<impl at src/ffi.rs:71:10: 71:15>::clone(_1: &TLogReaderHandle) -> TLogReaderHandle {
+    debug self => _1;
+    let mut _0: ffi::TLogReaderHandle;
+    scope 1 {
+    }
+
+    bb0: {
+        _0 = copy (*_1);
+        return;
+    }
+}

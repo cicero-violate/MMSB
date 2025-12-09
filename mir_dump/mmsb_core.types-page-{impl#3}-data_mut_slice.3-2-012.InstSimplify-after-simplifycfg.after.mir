@@ -1,0 +1,24 @@
+// MIR for `types::page::<impl at src/01_types/page.rs:98:1: 98:10>::data_mut_slice` after InstSimplify-after-simplifycfg
+
+fn page::<impl at src/01_types/page.rs:98:1: 98:10>::data_mut_slice(_1: &mut Page) -> &mut [u8] {
+    debug self => _1;
+    let mut _0: &mut [u8];
+    let mut _2: &mut [u8];
+    let mut _3: &mut [u8];
+    let mut _4: &mut [u8];
+    let mut _5: *mut u8;
+    let mut _6: usize;
+
+    bb0: {
+        _5 = copy ((*_1).3: *mut u8);
+        _6 = copy ((*_1).5: usize);
+        _4 = std::slice::from_raw_parts_mut::<'_, u8>(move _5, move _6) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        _3 = copy _4;
+        _2 = copy _3;
+        _0 = copy _2;
+        return;
+    }
+}

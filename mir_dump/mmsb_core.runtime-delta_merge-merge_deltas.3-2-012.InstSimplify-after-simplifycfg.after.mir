@@ -1,0 +1,19 @@
+// MIR for `runtime::delta_merge::merge_deltas` after InstSimplify-after-simplifycfg
+
+fn merge_deltas(_1: &Delta, _2: &Delta) -> Result<Delta, DeltaError> {
+    debug first => _1;
+    debug second => _2;
+    let mut _0: std::result::Result<types::delta::Delta, types::delta::DeltaError>;
+    let mut _3: &types::delta::Delta;
+    let mut _4: &types::delta::Delta;
+
+    bb0: {
+        _3 = copy _1;
+        _4 = copy _2;
+        _0 = Delta::merge(move _3, move _4) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        return;
+    }
+}

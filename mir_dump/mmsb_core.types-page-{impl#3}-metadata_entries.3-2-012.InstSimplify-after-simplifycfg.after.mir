@@ -1,0 +1,16 @@
+// MIR for `types::page::<impl at src/01_types/page.rs:98:1: 98:10>::metadata_entries` after InstSimplify-after-simplifycfg
+
+fn page::<impl at src/01_types/page.rs:98:1: 98:10>::metadata_entries(_1: &Page) -> Vec<(String, Vec<u8>)> {
+    debug self => _1;
+    let mut _0: std::vec::Vec<(std::string::String, std::vec::Vec<u8>)>;
+    let mut _2: &types::page::Metadata;
+
+    bb0: {
+        _2 = &((*_1).7: types::page::Metadata);
+        _0 = page::Metadata::clone_store(move _2) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        return;
+    }
+}

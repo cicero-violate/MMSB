@@ -1,0 +1,29 @@
+// MIR for `runtime::allocator_stats::<impl at src/02_runtime/allocator_stats.rs:9:1: 9:20>::snapshot` before InstSimplify-after-simplifycfg
+
+fn allocator_stats::<impl at src/02_runtime/allocator_stats.rs:9:1: 9:20>::snapshot(_1: &AllocatorStats) -> (u64, u64) {
+    debug self => _1;
+    let mut _0: (u64, u64);
+    let mut _2: u64;
+    let mut _3: &std::sync::atomic::AtomicU64;
+    let mut _4: std::sync::atomic::Ordering;
+    let mut _5: u64;
+    let mut _6: &std::sync::atomic::AtomicU64;
+    let mut _7: std::sync::atomic::Ordering;
+
+    bb0: {
+        _3 = &((*_1).0: std::sync::atomic::AtomicU64);
+        _4 = std::sync::atomic::Ordering::Relaxed;
+        _2 = AtomicU64::load(move _3, move _4) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        _6 = &((*_1).1: std::sync::atomic::AtomicU64);
+        _7 = std::sync::atomic::Ordering::Relaxed;
+        _5 = AtomicU64::load(move _6, move _7) -> [return: bb2, unwind continue];
+    }
+
+    bb2: {
+        _0 = (move _2, move _5);
+        return;
+    }
+}

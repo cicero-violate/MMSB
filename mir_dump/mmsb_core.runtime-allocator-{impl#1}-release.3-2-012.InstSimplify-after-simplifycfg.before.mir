@@ -1,0 +1,186 @@
+// MIR for `runtime::allocator::<impl at src/02_runtime/allocator.rs:53:1: 53:19>::release` before InstSimplify-after-simplifycfg
+
+fn allocator::<impl at src/02_runtime/allocator.rs:53:1: 53:19>::release(_1: &PageAllocator, _2: PageID) -> () {
+    debug self => _1;
+    debug page_id => _2;
+    let mut _0: ();
+    let mut _3: std::option::Option<std::boxed::Box<types::page::Page>>;
+    let mut _4: &mut std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>;
+    let mut _5: &mut std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>;
+    let mut _6: &mut parking_lot::lock_api::MutexGuard<'_, parking_lot::RawMutex, std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>>;
+    let mut _7: parking_lot::lock_api::MutexGuard<'_, parking_lot::RawMutex, std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>>;
+    let mut _8: &parking_lot::lock_api::Mutex<parking_lot::RawMutex, std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>>;
+    let mut _9: &types::page::PageID;
+    let _10: &types::page::PageID;
+    let mut _11: isize;
+    let _13: ();
+    let _14: ();
+    let mut _15: std::fmt::Arguments<'_>;
+    let mut _17: &u64;
+    let mut _19: core::fmt::rt::Argument<'_>;
+    let mut _20: &u64;
+    let mut _21: &[&str; 2];
+    let _22: &[&str; 2];
+    let _23: [&str; 2];
+    let mut _24: &[core::fmt::rt::Argument<'_>; 1];
+    let _25: &[core::fmt::rt::Argument<'_>; 1];
+    let _26: ();
+    let mut _27: std::boxed::Box<types::page::Page>;
+    let _28: ();
+    let _29: ();
+    let mut _30: std::fmt::Arguments<'_>;
+    let _31: (&u64,);
+    let mut _32: &u64;
+    let mut _34: core::fmt::rt::Argument<'_>;
+    let mut _35: &u64;
+    let mut _36: &[&str; 2];
+    let _37: &[&str; 2];
+    let _38: [&str; 2];
+    let mut _39: &[core::fmt::rt::Argument<'_>; 1];
+    let _40: &[core::fmt::rt::Argument<'_>; 1];
+    let mut _43: &u64;
+    let mut _44: &u64;
+    let mut _45: bool;
+    let mut _46: bool;
+    let mut _47: isize;
+    let mut _48: isize;
+    let mut _49: isize;
+    scope 1 {
+        debug boxed_page => _12;
+        let _12: std::boxed::Box<types::page::Page>;
+        let _16: (&u64,);
+        scope 2 {
+            debug args => _16;
+            let _18: [core::fmt::rt::Argument<'_>; 1];
+            scope 3 {
+                debug args => _18;
+                let mut _42: &[&str; 2];
+            }
+        }
+    }
+    scope 4 {
+        debug args => _31;
+        let _33: [core::fmt::rt::Argument<'_>; 1];
+        scope 5 {
+            debug args => _33;
+            let mut _41: &[&str; 2];
+        }
+    }
+
+    bb0: {
+        _46 = const false;
+        _45 = const false;
+        _8 = &((*_1).1: parking_lot::lock_api::Mutex<parking_lot::RawMutex, std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>>);
+        _7 = parking_lot::lock_api::Mutex::<parking_lot::RawMutex, HashMap<PageID, Box<Page>>>::lock(move _8) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        _6 = &mut _7;
+        _5 = <parking_lot::lock_api::MutexGuard<'_, parking_lot::RawMutex, HashMap<PageID, Box<Page>>> as DerefMut>::deref_mut(move _6) -> [return: bb2, unwind: bb13];
+    }
+
+    bb2: {
+        _4 = copy _5;
+        _10 = &_2;
+        _9 = copy _10;
+        _3 = HashMap::<PageID, Box<Page>>::remove::<PageID>(move _4, move _9) -> [return: bb3, unwind: bb13];
+    }
+
+    bb3: {
+        _45 = const true;
+        _11 = discriminant(_3);
+        switchInt(move _11) -> [1: bb4, 0: bb9, otherwise: bb19];
+    }
+
+    bb4: {
+        _46 = const true;
+        _12 = move ((_3 as Some).0: std::boxed::Box<types::page::Page>);
+        _17 = &(_2.0: u64);
+        _16 = (move _17,);
+        _43 = copy (_16.0: &u64);
+        _20 = copy _43;
+        _19 = core::fmt::rt::Argument::<'_>::new_display::<u64>(move _20) -> [return: bb5, unwind: bb17];
+    }
+
+    bb5: {
+        _18 = [move _19];
+        _42 = const runtime::allocator::PageAllocator::release::promoted[1];
+        _22 = copy _42;
+        _21 = copy _22;
+        _25 = &_18;
+        _24 = copy _25;
+        _15 = core::fmt::rt::<impl Arguments<'_>>::new_v1::<2, 1>(move _21, move _24) -> [return: bb6, unwind: bb17];
+    }
+
+    bb6: {
+        _14 = _print(move _15) -> [return: bb7, unwind: bb17];
+    }
+
+    bb7: {
+        _46 = const false;
+        _27 = move _12;
+        _26 = std::mem::forget::<Box<Page>>(move _27) -> [return: bb8, unwind: bb17];
+    }
+
+    bb8: {
+        _46 = const false;
+        goto -> bb15;
+    }
+
+    bb9: {
+        _32 = &(_2.0: u64);
+        _31 = (move _32,);
+        _44 = copy (_31.0: &u64);
+        _35 = copy _44;
+        _34 = core::fmt::rt::Argument::<'_>::new_display::<u64>(move _35) -> [return: bb10, unwind: bb18];
+    }
+
+    bb10: {
+        _33 = [move _34];
+        _41 = const runtime::allocator::PageAllocator::release::promoted[0];
+        _37 = copy _41;
+        _36 = copy _37;
+        _40 = &_33;
+        _39 = copy _40;
+        _30 = core::fmt::rt::<impl Arguments<'_>>::new_v1::<2, 1>(move _36, move _39) -> [return: bb11, unwind: bb18];
+    }
+
+    bb11: {
+        _29 = _print(move _30) -> [return: bb15, unwind: bb18];
+    }
+
+    bb12: {
+        _45 = const false;
+        return;
+    }
+
+    bb13 (cleanup): {
+        drop(_7) -> [return: bb14, unwind terminate(cleanup)];
+    }
+
+    bb14 (cleanup): {
+        resume;
+    }
+
+    bb15: {
+        _47 = discriminant(_3);
+        drop(_7) -> [return: bb12, unwind: bb14];
+    }
+
+    bb16 (cleanup): {
+        drop(_12) -> [return: bb18, unwind terminate(cleanup)];
+    }
+
+    bb17 (cleanup): {
+        switchInt(copy _46) -> [0: bb18, otherwise: bb16];
+    }
+
+    bb18 (cleanup): {
+        _49 = discriminant(_3);
+        goto -> bb13;
+    }
+
+    bb19: {
+        unreachable;
+    }
+}

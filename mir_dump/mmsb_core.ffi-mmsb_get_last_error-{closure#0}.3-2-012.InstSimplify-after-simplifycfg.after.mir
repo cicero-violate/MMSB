@@ -1,0 +1,55 @@
+// MIR for `ffi::mmsb_get_last_error::{closure#0}` after InstSimplify-after-simplifycfg
+
+fn mmsb_get_last_error::{closure#0}(_1: {closure@src/ffi.rs:116:25: 116:31}, _2: &RefCell<MMSBErrorCode>) -> MMSBErrorCode {
+    debug cell => _2;
+    let mut _0: ffi::MMSBErrorCode;
+    let mut _3: std::cell::RefMut<'_, ffi::MMSBErrorCode>;
+    let mut _4: &std::cell::RefCell<ffi::MMSBErrorCode>;
+    let mut _6: &ffi::MMSBErrorCode;
+    let mut _7: &std::cell::RefMut<'_, ffi::MMSBErrorCode>;
+    let mut _8: ffi::MMSBErrorCode;
+    let mut _9: &mut ffi::MMSBErrorCode;
+    let mut _10: &mut std::cell::RefMut<'_, ffi::MMSBErrorCode>;
+    scope 1 {
+        debug guard => _3;
+        let _5: ffi::MMSBErrorCode;
+        scope 2 {
+            debug code => _5;
+        }
+    }
+
+    bb0: {
+        _4 = copy _2;
+        _3 = RefCell::<MMSBErrorCode>::borrow_mut(move _4) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        _7 = &_3;
+        _6 = <RefMut<'_, MMSBErrorCode> as Deref>::deref(move _7) -> [return: bb2, unwind: bb5];
+    }
+
+    bb2: {
+        _5 = copy (*_6);
+        _8 = MMSBErrorCode::Ok;
+        _10 = &mut _3;
+        _9 = <RefMut<'_, MMSBErrorCode> as DerefMut>::deref_mut(move _10) -> [return: bb3, unwind: bb5];
+    }
+
+    bb3: {
+        (*_9) = move _8;
+        _0 = copy _5;
+        drop(_3) -> [return: bb4, unwind: bb6];
+    }
+
+    bb4: {
+        return;
+    }
+
+    bb5 (cleanup): {
+        drop(_3) -> [return: bb6, unwind terminate(cleanup)];
+    }
+
+    bb6 (cleanup): {
+        resume;
+    }
+}

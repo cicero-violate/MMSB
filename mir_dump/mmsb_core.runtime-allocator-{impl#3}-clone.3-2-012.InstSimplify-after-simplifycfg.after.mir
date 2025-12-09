@@ -1,0 +1,20 @@
+// MIR for `runtime::allocator::<impl at src/02_runtime/allocator.rs:14:17: 14:22>::clone` after InstSimplify-after-simplifycfg
+
+fn allocator::<impl at src/02_runtime/allocator.rs:14:17: 14:22>::clone(_1: &PageAllocatorConfig) -> PageAllocatorConfig {
+    debug self => _1;
+    let mut _0: runtime::allocator::PageAllocatorConfig;
+    let mut _2: types::page::PageLocation;
+    let mut _3: &types::page::PageLocation;
+    let _4: &types::page::PageLocation;
+
+    bb0: {
+        _4 = &((*_1).0: types::page::PageLocation);
+        _3 = copy _4;
+        _2 = <PageLocation as Clone>::clone(move _3) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        _0 = PageAllocatorConfig { default_location: move _2 };
+        return;
+    }
+}

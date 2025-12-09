@@ -1,0 +1,11 @@
+// MIR for `types::page::<impl at src/01_types/page.rs:98:1: 98:10>::location` after InstSimplify-after-simplifycfg
+
+fn page::<impl at src/01_types/page.rs:98:1: 98:10>::location(_1: &Page) -> PageLocation {
+    debug self => _1;
+    let mut _0: types::page::PageLocation;
+
+    bb0: {
+        _0 = copy ((*_1).6: types::page::PageLocation);
+        return;
+    }
+}

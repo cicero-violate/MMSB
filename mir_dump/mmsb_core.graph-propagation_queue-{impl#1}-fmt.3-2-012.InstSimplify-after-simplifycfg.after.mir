@@ -1,0 +1,41 @@
+// MIR for `graph::propagation_queue::<impl at src/05_graph/propagation_queue.rs:5:10: 5:15>::fmt` after InstSimplify-after-simplifycfg
+
+fn propagation_queue::<impl at src/05_graph/propagation_queue.rs:5:10: 5:15>::fmt(_1: &PropagationQueue, _2: &mut Formatter<'_>) -> Result<(), std::fmt::Error> {
+    debug self => _1;
+    debug f => _2;
+    let mut _0: std::result::Result<(), std::fmt::Error>;
+    let mut _3: &mut std::fmt::Formatter<'_>;
+    let mut _4: &str;
+    let _5: &str;
+    let mut _6: &str;
+    let _7: &str;
+    let mut _8: &dyn std::fmt::Debug;
+    let mut _9: &&parking_lot::lock_api::Mutex<parking_lot::RawMutex, std::collections::VecDeque<graph::propagation_command_buffer::PropagationCommand>>;
+    let _10: &&parking_lot::lock_api::Mutex<parking_lot::RawMutex, std::collections::VecDeque<graph::propagation_command_buffer::PropagationCommand>>;
+    let _11: &parking_lot::lock_api::Mutex<parking_lot::RawMutex, std::collections::VecDeque<graph::propagation_command_buffer::PropagationCommand>>;
+
+    bb0: {
+        _3 = copy _2;
+        _5 = const "PropagationQueue";
+        _4 = copy _5;
+        _7 = const "queue";
+        _6 = copy _7;
+        _11 = &((*_1).0: parking_lot::lock_api::Mutex<parking_lot::RawMutex, std::collections::VecDeque<graph::propagation_command_buffer::PropagationCommand>>);
+        _10 = &_11;
+        _9 = copy _10;
+        _8 = move _9 as &dyn std::fmt::Debug (PointerCoercion(Unsize, Implicit));
+        _0 = Formatter::<'_>::debug_struct_field1_finish(move _3, move _4, move _6, move _8) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        return;
+    }
+}
+
+alloc441 (size: 5, align: 1) {
+    71 75 65 75 65                                  │ queue
+}
+
+alloc440 (size: 16, align: 1) {
+    50 72 6f 70 61 67 61 74 69 6f 6e 51 75 65 75 65 │ PropagationQueue
+}

@@ -1,0 +1,11 @@
+// MIR for `graph::edge_types::<impl at src/05_graph/edge_types.rs:2:17: 2:22>::clone` after InstSimplify-after-simplifycfg
+
+fn edge_types::<impl at src/05_graph/edge_types.rs:2:17: 2:22>::clone(_1: &EdgeType) -> EdgeType {
+    debug self => _1;
+    let mut _0: graph::edge_types::EdgeType;
+
+    bb0: {
+        _0 = copy (*_1);
+        return;
+    }
+}

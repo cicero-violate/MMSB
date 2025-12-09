@@ -1,0 +1,15 @@
+// MIR for `ffi::<impl at src/ffi.rs:125:10: 125:15>::clone` after InstSimplify-after-simplifycfg
+
+fn ffi::<impl at src/ffi.rs:125:10: 125:15>::clone(_1: &TLogSummary) -> TLogSummary {
+    debug self => _1;
+    let mut _0: ffi::TLogSummary;
+    scope 1 {
+        scope 2 {
+        }
+    }
+
+    bb0: {
+        _0 = copy (*_1);
+        return;
+    }
+}

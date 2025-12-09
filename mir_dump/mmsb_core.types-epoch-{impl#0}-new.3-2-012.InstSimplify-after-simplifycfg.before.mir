@@ -1,0 +1,13 @@
+// MIR for `types::epoch::<impl at src/01_types/epoch.rs:8:1: 8:11>::new` before InstSimplify-after-simplifycfg
+
+fn epoch::<impl at src/01_types/epoch.rs:8:1: 8:11>::new(_1: u32) -> Epoch {
+    debug value => _1;
+    let mut _0: types::epoch::Epoch;
+    let mut _2: u32;
+
+    bb0: {
+        _2 = copy _1;
+        _0 = Epoch(move _2);
+        return;
+    }
+}

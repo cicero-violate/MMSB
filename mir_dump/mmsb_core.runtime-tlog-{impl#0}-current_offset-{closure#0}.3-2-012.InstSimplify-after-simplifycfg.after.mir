@@ -1,0 +1,16 @@
+// MIR for `runtime::tlog::<impl at src/02_runtime/tlog.rs:30:1: 30:20>::current_offset::{closure#0}` after InstSimplify-after-simplifycfg
+
+fn tlog::<impl at src/02_runtime/tlog.rs:30:1: 30:20>::current_offset::{closure#0}(_1: {closure@src/02_runtime/tlog.rs:75:45: 75:51}, _2: std::fs::Metadata) -> u64 {
+    debug meta => _2;
+    let mut _0: u64;
+    let mut _3: &std::fs::Metadata;
+
+    bb0: {
+        _3 = &_2;
+        _0 = std::fs::Metadata::len(move _3) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        return;
+    }
+}

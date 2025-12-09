@@ -1,0 +1,15 @@
+// MIR for `ffi::<impl at src/ffi.rs:34:1: 34:17>::null` after InstSimplify-after-simplifycfg
+
+fn ffi::<impl at src/ffi.rs:34:1: 34:17>::null() -> DeltaHandle {
+    let mut _0: ffi::DeltaHandle;
+    let mut _1: *mut types::delta::Delta;
+
+    bb0: {
+        _1 = null_mut::<Delta>() -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        _0 = DeltaHandle { ptr: move _1 };
+        return;
+    }
+}

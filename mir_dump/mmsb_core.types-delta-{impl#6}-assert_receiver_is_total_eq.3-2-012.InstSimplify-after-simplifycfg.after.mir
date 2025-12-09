@@ -1,0 +1,12 @@
+// MIR for `types::delta::<impl at src/01_types/delta.rs:6:41: 6:43>::assert_receiver_is_total_eq` after InstSimplify-after-simplifycfg
+
+fn delta::<impl at src/01_types/delta.rs:6:41: 6:43>::assert_receiver_is_total_eq(_1: &DeltaID) -> () {
+    debug self => _1;
+    let mut _0: ();
+    scope 1 {
+    }
+
+    bb0: {
+        return;
+    }
+}

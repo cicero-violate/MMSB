@@ -1,0 +1,282 @@
+// MIR for `types::page::<impl at src/01_types/page.rs:98:1: 98:10>::metadata_blob` after InstSimplify-after-simplifycfg
+
+fn page::<impl at src/01_types/page.rs:98:1: 98:10>::metadata_blob(_1: &Page) -> Vec<u8> {
+    debug self => _1;
+    let mut _0: std::vec::Vec<u8>;
+    let _2: std::vec::Vec<(std::string::String, std::vec::Vec<u8>)>;
+    let mut _3: &types::page::Metadata;
+    let _4: ();
+    let mut _5: bool;
+    let mut _6: &std::vec::Vec<(std::string::String, std::vec::Vec<u8>)>;
+    let mut _7: !;
+    let _9: ();
+    let mut _10: &mut std::vec::Vec<u8>;
+    let mut _11: &[u8];
+    let mut _12: &[u8; 4];
+    let _13: &[u8; 4];
+    let _14: [u8; 4];
+    let mut _15: u32;
+    let mut _16: usize;
+    let mut _17: &std::vec::Vec<(std::string::String, std::vec::Vec<u8>)>;
+    let _18: ();
+    let mut _19: std::vec::IntoIter<(std::string::String, std::vec::Vec<u8>)>;
+    let mut _20: std::vec::Vec<(std::string::String, std::vec::Vec<u8>)>;
+    let mut _22: ();
+    let _23: ();
+    let mut _24: std::option::Option<(std::string::String, std::vec::Vec<u8>)>;
+    let mut _25: &mut std::vec::IntoIter<(std::string::String, std::vec::Vec<u8>)>;
+    let mut _26: &mut std::vec::IntoIter<(std::string::String, std::vec::Vec<u8>)>;
+    let mut _27: isize;
+    let mut _28: !;
+    let mut _32: &std::string::String;
+    let _33: ();
+    let mut _34: &mut std::vec::Vec<u8>;
+    let mut _35: &[u8];
+    let mut _36: &[u8; 4];
+    let _37: &[u8; 4];
+    let _38: [u8; 4];
+    let mut _39: u32;
+    let mut _40: usize;
+    let mut _41: &[u8];
+    let _42: ();
+    let mut _43: &mut std::vec::Vec<u8>;
+    let mut _44: &[u8];
+    let _45: ();
+    let mut _46: &mut std::vec::Vec<u8>;
+    let mut _47: &[u8];
+    let mut _48: &[u8; 4];
+    let _49: &[u8; 4];
+    let _50: [u8; 4];
+    let mut _51: u32;
+    let mut _52: usize;
+    let mut _53: &std::vec::Vec<u8>;
+    let _54: ();
+    let mut _55: &mut std::vec::Vec<u8>;
+    let mut _56: &[u8];
+    let _57: &[u8];
+    let mut _58: &std::vec::Vec<u8>;
+    let _59: &std::vec::Vec<u8>;
+    let mut _60: bool;
+    let mut _61: isize;
+    let mut _62: isize;
+    let mut _63: isize;
+    let mut _64: isize;
+    let mut _65: isize;
+    scope 1 {
+        debug entries => _2;
+        let mut _8: std::vec::Vec<u8>;
+        scope 2 {
+            debug blob => _8;
+            let mut _21: std::vec::IntoIter<(std::string::String, std::vec::Vec<u8>)>;
+            scope 3 {
+                debug iter => _21;
+                let _29: std::string::String;
+                let _30: std::vec::Vec<u8>;
+                scope 4 {
+                    debug key => _29;
+                    debug value => _30;
+                    let _31: &[u8];
+                    scope 5 {
+                        debug key_bytes => _31;
+                    }
+                }
+            }
+        }
+    }
+
+    bb0: {
+        _60 = const false;
+        _3 = &((*_1).7: types::page::Metadata);
+        _60 = const true;
+        _2 = page::Metadata::clone_store(move _3) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        _6 = &_2;
+        _5 = Vec::<(String, Vec<u8>)>::is_empty(move _6) -> [return: bb2, unwind: bb37];
+    }
+
+    bb2: {
+        switchInt(move _5) -> [0: bb4, otherwise: bb3];
+    }
+
+    bb3: {
+        _0 = Vec::<u8>::new() -> [return: bb27, unwind: bb37];
+    }
+
+    bb4: {
+        _8 = Vec::<u8>::with_capacity(const 64_usize) -> [return: bb5, unwind: bb37];
+    }
+
+    bb5: {
+        _10 = &mut _8;
+        _17 = &_2;
+        _16 = Vec::<(String, Vec<u8>)>::len(move _17) -> [return: bb6, unwind: bb33];
+    }
+
+    bb6: {
+        _15 = move _16 as u32 (IntToInt);
+        _14 = core::num::<impl u32>::to_le_bytes(move _15) -> [return: bb7, unwind: bb33];
+    }
+
+    bb7: {
+        _13 = &_14;
+        _12 = copy _13;
+        _11 = move _12 as &[u8] (PointerCoercion(Unsize, Implicit));
+        _9 = Vec::<u8>::extend_from_slice(move _10, move _11) -> [return: bb8, unwind: bb33];
+    }
+
+    bb8: {
+        _60 = const false;
+        _20 = move _2;
+        _19 = <Vec<(String, Vec<u8>)> as IntoIterator>::into_iter(move _20) -> [return: bb9, unwind: bb33];
+    }
+
+    bb9: {
+        _21 = move _19;
+        goto -> bb10;
+    }
+
+    bb10: {
+        _26 = &mut _21;
+        _25 = copy _26;
+        _24 = <std::vec::IntoIter<(String, Vec<u8>)> as Iterator>::next(move _25) -> [return: bb11, unwind: bb32];
+    }
+
+    bb11: {
+        _27 = discriminant(_24);
+        switchInt(move _27) -> [0: bb14, 1: bb13, otherwise: bb12];
+    }
+
+    bb12: {
+        unreachable;
+    }
+
+    bb13: {
+        _29 = move (((_24 as Some).0: (std::string::String, std::vec::Vec<u8>)).0: std::string::String);
+        _30 = move (((_24 as Some).0: (std::string::String, std::vec::Vec<u8>)).1: std::vec::Vec<u8>);
+        _32 = &_29;
+        _31 = String::as_bytes(move _32) -> [return: bb15, unwind: bb30];
+    }
+
+    bb14: {
+        _61 = discriminant(_24);
+        drop(_21) -> [return: bb26, unwind: bb33];
+    }
+
+    bb15: {
+        _34 = &mut _8;
+        _41 = copy _31;
+        _40 = PtrMetadata(move _41);
+        _39 = move _40 as u32 (IntToInt);
+        _38 = core::num::<impl u32>::to_le_bytes(move _39) -> [return: bb16, unwind: bb30];
+    }
+
+    bb16: {
+        _37 = &_38;
+        _36 = copy _37;
+        _35 = move _36 as &[u8] (PointerCoercion(Unsize, Implicit));
+        _33 = Vec::<u8>::extend_from_slice(move _34, move _35) -> [return: bb17, unwind: bb30];
+    }
+
+    bb17: {
+        _43 = &mut _8;
+        _44 = copy _31;
+        _42 = Vec::<u8>::extend_from_slice(move _43, move _44) -> [return: bb18, unwind: bb30];
+    }
+
+    bb18: {
+        _46 = &mut _8;
+        _53 = &_30;
+        _52 = Vec::<u8>::len(move _53) -> [return: bb19, unwind: bb30];
+    }
+
+    bb19: {
+        _51 = move _52 as u32 (IntToInt);
+        _50 = core::num::<impl u32>::to_le_bytes(move _51) -> [return: bb20, unwind: bb30];
+    }
+
+    bb20: {
+        _49 = &_50;
+        _48 = copy _49;
+        _47 = move _48 as &[u8] (PointerCoercion(Unsize, Implicit));
+        _45 = Vec::<u8>::extend_from_slice(move _46, move _47) -> [return: bb21, unwind: bb30];
+    }
+
+    bb21: {
+        _55 = &mut _8;
+        _59 = &_30;
+        _58 = copy _59;
+        _57 = <Vec<u8> as Deref>::deref(move _58) -> [return: bb22, unwind: bb30];
+    }
+
+    bb22: {
+        _56 = copy _57;
+        _54 = Vec::<u8>::extend_from_slice(move _55, move _56) -> [return: bb23, unwind: bb30];
+    }
+
+    bb23: {
+        drop(_30) -> [return: bb24, unwind: bb31];
+    }
+
+    bb24: {
+        drop(_29) -> [return: bb25, unwind: bb35];
+    }
+
+    bb25: {
+        _63 = discriminant(_24);
+        goto -> bb10;
+    }
+
+    bb26: {
+        _0 = move _8;
+        _60 = const false;
+        goto -> bb29;
+    }
+
+    bb27: {
+        drop(_2) -> [return: bb28, unwind: bb34];
+    }
+
+    bb28: {
+        _60 = const false;
+        goto -> bb29;
+    }
+
+    bb29: {
+        return;
+    }
+
+    bb30 (cleanup): {
+        drop(_30) -> [return: bb31, unwind terminate(cleanup)];
+    }
+
+    bb31 (cleanup): {
+        drop(_29) -> [return: bb35, unwind terminate(cleanup)];
+    }
+
+    bb32 (cleanup): {
+        drop(_21) -> [return: bb33, unwind terminate(cleanup)];
+    }
+
+    bb33 (cleanup): {
+        drop(_8) -> [return: bb37, unwind terminate(cleanup)];
+    }
+
+    bb34 (cleanup): {
+        resume;
+    }
+
+    bb35 (cleanup): {
+        _65 = discriminant(_24);
+        goto -> bb32;
+    }
+
+    bb36 (cleanup): {
+        drop(_2) -> [return: bb34, unwind terminate(cleanup)];
+    }
+
+    bb37 (cleanup): {
+        switchInt(copy _60) -> [0: bb34, otherwise: bb36];
+    }
+}

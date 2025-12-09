@@ -1,0 +1,10 @@
+// MIR for `runtime::tlog::<impl at src/02_runtime/tlog.rs:102:1: 102:35>::drop` after InstSimplify-after-simplifycfg
+
+fn tlog::<impl at src/02_runtime/tlog.rs:102:1: 102:35>::drop(_1: &mut TransactionLogReader) -> () {
+    debug self => _1;
+    let mut _0: ();
+
+    bb0: {
+        return;
+    }
+}

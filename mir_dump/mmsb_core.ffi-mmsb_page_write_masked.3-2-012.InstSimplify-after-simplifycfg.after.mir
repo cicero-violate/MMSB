@@ -1,0 +1,268 @@
+// MIR for `ffi::mmsb_page_write_masked` after InstSimplify-after-simplifycfg
+
+fn mmsb_page_write_masked(_1: PageHandle, _2: *const u8, _3: usize, _4: *const u8, _5: usize, _6: u8, _7: EpochABI) -> i32 {
+    debug handle => _1;
+    debug mask_ptr => _2;
+    debug mask_len => _3;
+    debug payload_ptr => _4;
+    debug payload_len => _5;
+    debug is_sparse => _6;
+    debug epoch => _7;
+    let mut _0: i32;
+    let _8: ();
+    let mut _9: bool;
+    let mut _10: *mut types::page::Page;
+    let mut _11: !;
+    let _12: ();
+    let mut _13: ffi::MMSBErrorCode;
+    let _14: std::vec::Vec<bool>;
+    let mut _15: *const u8;
+    let mut _16: usize;
+    let mut _18: *const u8;
+    let mut _19: usize;
+    let mut _21: types::delta::DeltaID;
+    let mut _22: types::page::PageID;
+    let mut _23: types::epoch::Epoch;
+    let mut _24: ffi::EpochABI;
+    let mut _25: std::vec::Vec<bool>;
+    let mut _26: std::vec::Vec<u8>;
+    let mut _27: bool;
+    let mut _28: u8;
+    let mut _29: types::delta::Source;
+    let mut _30: std::string::String;
+    let mut _31: &str;
+    let _32: &str;
+    let mut _34: &mut types::page::Page;
+    let mut _35: std::result::Result<(), types::page::PageError>;
+    let mut _36: &mut types::page::Page;
+    let mut _37: &types::delta::Delta;
+    let _38: &types::delta::Delta;
+    let mut _39: isize;
+    let _40: ();
+    let mut _41: ffi::MMSBErrorCode;
+    let mut _42: *mut types::page::Page;
+    let mut _43: *mut types::page::Page;
+    let mut _44: bool;
+    let mut _45: bool;
+    scope 1 {
+        debug mask => _14;
+        let _17: std::vec::Vec<u8>;
+        scope 2 {
+            debug payload => _17;
+            let _20: types::delta::Delta;
+            let mut _52: *const ();
+            let mut _53: usize;
+            let mut _54: usize;
+            let mut _55: usize;
+            let mut _56: usize;
+            let mut _57: bool;
+            let mut _58: *const ();
+            let mut _59: usize;
+            let mut _60: usize;
+            let mut _61: bool;
+            let mut _62: bool;
+            let mut _63: bool;
+            let mut _64: bool;
+            scope 3 {
+                debug delta => _20;
+                let _33: &mut types::page::Page;
+                let mut _46: *const ();
+                let mut _47: usize;
+                let mut _48: usize;
+                let mut _49: usize;
+                let mut _50: usize;
+                let mut _51: bool;
+                let mut _65: *const ();
+                let mut _66: usize;
+                let mut _67: bool;
+                let mut _68: bool;
+                let mut _69: bool;
+                scope 4 {
+                    debug page => _33;
+                }
+            }
+        }
+    }
+
+    bb0: {
+        _45 = const false;
+        _44 = const false;
+        _10 = copy (_1.0: *mut types::page::Page);
+        _9 = std::ptr::mut_ptr::<impl *mut Page>::is_null(move _10) -> [return: bb1, unwind terminate(abi)];
+    }
+
+    bb1: {
+        switchInt(move _9) -> [0: bb4, otherwise: bb2];
+    }
+
+    bb2: {
+        _13 = MMSBErrorCode::InvalidHandle;
+        _12 = set_last_error(move _13) -> [return: bb3, unwind terminate(abi)];
+    }
+
+    bb3: {
+        _0 = const -1_i32;
+        goto -> bb16;
+    }
+
+    bb4: {
+        _15 = copy _2;
+        _16 = copy _3;
+        _45 = const true;
+        _14 = mask_from_bytes(move _15, move _16) -> [return: bb5, unwind terminate(abi)];
+    }
+
+    bb5: {
+        _18 = copy _4;
+        _19 = copy _5;
+        _17 = vec_from_ptr(move _18, move _19) -> [return: bb6, unwind: bb24];
+    }
+
+    bb6: {
+        _44 = const true;
+        _21 = DeltaID(const 0_u64);
+        _42 = copy (_1.0: *mut types::page::Page);
+        _52 = copy _42 as *const () (PtrToPtr);
+        _53 = copy _52 as usize (Transmute);
+        _54 = AlignOf(types::page::Page);
+        _55 = Sub(copy _54, const 1_usize);
+        _56 = BitAnd(copy _53, copy _55);
+        _57 = Eq(copy _56, const 0_usize);
+        assert(copy _57, "misaligned pointer dereference: address must be a multiple of {} but is {}", copy _54, copy _53) -> [success: bb26, unwind unreachable];
+    }
+
+    bb7: {
+        _45 = const false;
+        _25 = move _14;
+        _44 = const false;
+        _26 = move _17;
+        _28 = copy _6;
+        _27 = Ne(move _28, const 0_u8);
+        _32 = const "page_write_masked";
+        _31 = copy _32;
+        _30 = <&str as Into<String>>::into(move _31) -> [return: bb8, unwind: bb18];
+    }
+
+    bb8: {
+        _29 = delta::Source(move _30);
+        _20 = Delta { delta_id: move _21, page_id: move _22, epoch: move _23, mask: move _25, payload: move _26, is_sparse: move _27, timestamp: const 0_u64, source: move _29 };
+        _43 = copy (_1.0: *mut types::page::Page);
+        _46 = copy _43 as *const () (PtrToPtr);
+        _47 = copy _46 as usize (Transmute);
+        _48 = AlignOf(types::page::Page);
+        _49 = Sub(copy _48, const 1_usize);
+        _50 = BitAnd(copy _47, copy _49);
+        _51 = Eq(copy _50, const 0_usize);
+        assert(copy _51, "misaligned pointer dereference: address must be a multiple of {} but is {}", copy _48, copy _47) -> [success: bb25, unwind unreachable];
+    }
+
+    bb9: {
+        _39 = discriminant(_35);
+        switchInt(move _39) -> [0: bb12, 1: bb11, otherwise: bb10];
+    }
+
+    bb10: {
+        unreachable;
+    }
+
+    bb11: {
+        _41 = MMSBErrorCode::AllocError;
+        _40 = set_last_error(move _41) -> [return: bb13, unwind: bb17];
+    }
+
+    bb12: {
+        _0 = const 0_i32;
+        goto -> bb14;
+    }
+
+    bb13: {
+        _0 = const -1_i32;
+        goto -> bb14;
+    }
+
+    bb14: {
+        drop(_20) -> [return: bb15, unwind: bb22];
+    }
+
+    bb15: {
+        _44 = const false;
+        _45 = const false;
+        goto -> bb16;
+    }
+
+    bb16: {
+        return;
+    }
+
+    bb17 (cleanup): {
+        drop(_20) -> [return: bb22, unwind terminate(cleanup)];
+    }
+
+    bb18 (cleanup): {
+        drop(_26) -> [return: bb19, unwind terminate(cleanup)];
+    }
+
+    bb19 (cleanup): {
+        drop(_25) -> [return: bb22, unwind terminate(cleanup)];
+    }
+
+    bb20 (cleanup): {
+        terminate(abi);
+    }
+
+    bb21 (cleanup): {
+        drop(_17) -> [return: bb24, unwind terminate(cleanup)];
+    }
+
+    bb22 (cleanup): {
+        switchInt(copy _44) -> [0: bb24, otherwise: bb21];
+    }
+
+    bb23 (cleanup): {
+        drop(_14) -> [return: bb20, unwind terminate(cleanup)];
+    }
+
+    bb24 (cleanup): {
+        switchInt(copy _45) -> [0: bb20, otherwise: bb23];
+    }
+
+    bb25: {
+        _65 = copy _43 as *const () (PtrToPtr);
+        _66 = copy _65 as usize (Transmute);
+        _67 = Eq(copy _66, const 0_usize);
+        _68 = BitAnd(copy _67, const true);
+        _69 = Not(copy _68);
+        assert(copy _69, "null pointer dereference occurred") -> [success: bb28, unwind unreachable];
+    }
+
+    bb26: {
+        _58 = copy _42 as *const () (PtrToPtr);
+        _59 = copy _58 as usize (Transmute);
+        _60 = SizeOf(types::page::Page);
+        _61 = Ne(copy _60, const 0_usize);
+        _62 = Eq(copy _59, const 0_usize);
+        _63 = BitAnd(copy _62, copy _61);
+        _64 = Not(copy _63);
+        assert(copy _64, "null pointer dereference occurred") -> [success: bb27, unwind unreachable];
+    }
+
+    bb27: {
+        _22 = copy ((*_42).1: types::page::PageID);
+        _24 = copy _7;
+        _23 = <EpochABI as Into<Epoch>>::into(move _24) -> [return: bb7, unwind: bb22];
+    }
+
+    bb28: {
+        _34 = &mut (*_43);
+        _33 = copy _34;
+        _36 = copy _33;
+        _38 = &_20;
+        _37 = copy _38;
+        _35 = Page::apply_delta(move _36, move _37) -> [return: bb9, unwind: bb17];
+    }
+}
+
+alloc490 (size: 17, align: 1) {
+    0x00 │ 70 61 67 65 5f 77 72 69 74 65 5f 6d 61 73 6b 65 │ page_write_maske
+    0x10 │ 64                                              │ d
+}

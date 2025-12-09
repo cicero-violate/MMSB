@@ -1,0 +1,42 @@
+// MIR for `runtime::allocator::<impl at src/02_runtime/allocator.rs:53:1: 53:19>::len` after InstSimplify-after-simplifycfg
+
+fn allocator::<impl at src/02_runtime/allocator.rs:53:1: 53:19>::len(_1: &PageAllocator) -> usize {
+    debug self => _1;
+    let mut _0: usize;
+    let mut _2: &std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>;
+    let _3: &std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>;
+    let mut _4: &parking_lot::lock_api::MutexGuard<'_, parking_lot::RawMutex, std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>>;
+    let _5: parking_lot::lock_api::MutexGuard<'_, parking_lot::RawMutex, std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>>;
+    let mut _6: &parking_lot::lock_api::Mutex<parking_lot::RawMutex, std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>>;
+
+    bb0: {
+        _6 = &((*_1).1: parking_lot::lock_api::Mutex<parking_lot::RawMutex, std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>>);
+        _5 = parking_lot::lock_api::Mutex::<parking_lot::RawMutex, HashMap<PageID, Box<Page>>>::lock(move _6) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        _4 = &_5;
+        _3 = <parking_lot::lock_api::MutexGuard<'_, parking_lot::RawMutex, HashMap<PageID, Box<Page>>> as Deref>::deref(move _4) -> [return: bb2, unwind: bb5];
+    }
+
+    bb2: {
+        _2 = copy _3;
+        _0 = HashMap::<PageID, Box<Page>>::len(move _2) -> [return: bb3, unwind: bb5];
+    }
+
+    bb3: {
+        drop(_5) -> [return: bb4, unwind: bb6];
+    }
+
+    bb4: {
+        return;
+    }
+
+    bb5 (cleanup): {
+        drop(_5) -> [return: bb6, unwind terminate(cleanup)];
+    }
+
+    bb6 (cleanup): {
+        resume;
+    }
+}

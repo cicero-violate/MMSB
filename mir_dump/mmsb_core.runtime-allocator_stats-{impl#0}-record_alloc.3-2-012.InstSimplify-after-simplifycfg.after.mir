@@ -1,0 +1,19 @@
+// MIR for `runtime::allocator_stats::<impl at src/02_runtime/allocator_stats.rs:9:1: 9:20>::record_alloc` after InstSimplify-after-simplifycfg
+
+fn allocator_stats::<impl at src/02_runtime/allocator_stats.rs:9:1: 9:20>::record_alloc(_1: &AllocatorStats) -> () {
+    debug self => _1;
+    let mut _0: ();
+    let _2: u64;
+    let mut _3: &std::sync::atomic::AtomicU64;
+    let mut _4: std::sync::atomic::Ordering;
+
+    bb0: {
+        _3 = &((*_1).0: std::sync::atomic::AtomicU64);
+        _4 = std::sync::atomic::Ordering::Relaxed;
+        _2 = AtomicU64::fetch_add(move _3, const 1_u64, move _4) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        return;
+    }
+}

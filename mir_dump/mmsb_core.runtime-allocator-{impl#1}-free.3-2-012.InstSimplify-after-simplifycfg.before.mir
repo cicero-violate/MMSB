@@ -1,0 +1,111 @@
+// MIR for `runtime::allocator::<impl at src/02_runtime/allocator.rs:53:1: 53:19>::free` before InstSimplify-after-simplifycfg
+
+fn allocator::<impl at src/02_runtime/allocator.rs:53:1: 53:19>::free(_1: &PageAllocator, _2: PageID) -> () {
+    debug self => _1;
+    debug page_id => _2;
+    let mut _0: ();
+    let mut _3: std::option::Option<std::boxed::Box<types::page::Page>>;
+    let mut _4: &mut std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>;
+    let mut _5: &mut std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>;
+    let mut _6: &mut parking_lot::lock_api::MutexGuard<'_, parking_lot::RawMutex, std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>>;
+    let mut _7: parking_lot::lock_api::MutexGuard<'_, parking_lot::RawMutex, std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>>;
+    let mut _8: &parking_lot::lock_api::Mutex<parking_lot::RawMutex, std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>>;
+    let mut _9: &types::page::PageID;
+    let _10: &types::page::PageID;
+    let mut _11: isize;
+    let _12: ();
+    let _13: ();
+    let mut _14: std::fmt::Arguments<'_>;
+    let mut _16: &u64;
+    let mut _18: core::fmt::rt::Argument<'_>;
+    let mut _19: &u64;
+    let mut _20: &[&str; 2];
+    let _21: &[&str; 2];
+    let _22: [&str; 2];
+    let mut _23: &[core::fmt::rt::Argument<'_>; 1];
+    let _24: &[core::fmt::rt::Argument<'_>; 1];
+    let mut _26: &u64;
+    scope 1 {
+        let _15: (&u64,);
+        scope 2 {
+            debug args => _15;
+            let _17: [core::fmt::rt::Argument<'_>; 1];
+            scope 3 {
+                debug args => _17;
+                let mut _25: &[&str; 2];
+            }
+        }
+    }
+
+    bb0: {
+        _8 = &((*_1).1: parking_lot::lock_api::Mutex<parking_lot::RawMutex, std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>>);
+        _7 = parking_lot::lock_api::Mutex::<parking_lot::RawMutex, HashMap<PageID, Box<Page>>>::lock(move _8) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        _6 = &mut _7;
+        _5 = <parking_lot::lock_api::MutexGuard<'_, parking_lot::RawMutex, HashMap<PageID, Box<Page>>> as DerefMut>::deref_mut(move _6) -> [return: bb2, unwind: bb11];
+    }
+
+    bb2: {
+        _4 = copy _5;
+        _10 = &_2;
+        _9 = copy _10;
+        _3 = HashMap::<PageID, Box<Page>>::remove::<PageID>(move _4, move _9) -> [return: bb3, unwind: bb11];
+    }
+
+    bb3: {
+        _11 = discriminant(_3);
+        switchInt(move _11) -> [1: bb4, 0: bb7, otherwise: bb13];
+    }
+
+    bb4: {
+        _16 = &(_2.0: u64);
+        _15 = (move _16,);
+        _26 = copy (_15.0: &u64);
+        _19 = copy _26;
+        _18 = core::fmt::rt::Argument::<'_>::new_display::<u64>(move _19) -> [return: bb5, unwind: bb10];
+    }
+
+    bb5: {
+        _17 = [move _18];
+        _25 = const runtime::allocator::PageAllocator::free::promoted[0];
+        _21 = copy _25;
+        _20 = copy _21;
+        _24 = &_17;
+        _23 = copy _24;
+        _14 = core::fmt::rt::<impl Arguments<'_>>::new_v1::<2, 1>(move _20, move _23) -> [return: bb6, unwind: bb10];
+    }
+
+    bb6: {
+        _13 = _print(move _14) -> [return: bb7, unwind: bb10];
+    }
+
+    bb7: {
+        drop(_3) -> [return: bb8, unwind: bb11];
+    }
+
+    bb8: {
+        drop(_7) -> [return: bb9, unwind: bb12];
+    }
+
+    bb9: {
+        return;
+    }
+
+    bb10 (cleanup): {
+        drop(_3) -> [return: bb11, unwind terminate(cleanup)];
+    }
+
+    bb11 (cleanup): {
+        drop(_7) -> [return: bb12, unwind terminate(cleanup)];
+    }
+
+    bb12 (cleanup): {
+        resume;
+    }
+
+    bb13: {
+        unreachable;
+    }
+}

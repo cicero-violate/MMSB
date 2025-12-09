@@ -1,0 +1,1001 @@
+// MIR for `runtime::allocator::<impl at src/02_runtime/allocator.rs:53:1: 53:19>::restore_from_snapshot` before InstSimplify-after-simplifycfg
+
+fn allocator::<impl at src/02_runtime/allocator.rs:53:1: 53:19>::restore_from_snapshot(_1: &PageAllocator, _2: Vec<PageSnapshotData>) -> Result<(), PageError> {
+    debug self => _1;
+    debug snapshots => _2;
+    let mut _0: std::result::Result<(), types::page::PageError>;
+    let _3: ();
+    let _4: ();
+    let mut _5: std::fmt::Arguments<'_>;
+    let mut _6: &[&str; 1];
+    let _7: &[&str; 1];
+    let _8: [&str; 1];
+    let _9: ();
+    let _10: ();
+    let mut _11: std::fmt::Arguments<'_>;
+    let _12: (&usize,);
+    let mut _13: &usize;
+    let _14: usize;
+    let mut _15: &std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>;
+    let _16: &std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>;
+    let mut _17: &parking_lot::lock_api::MutexGuard<'_, parking_lot::RawMutex, std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>>;
+    let _18: parking_lot::lock_api::MutexGuard<'_, parking_lot::RawMutex, std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>>;
+    let mut _19: &parking_lot::lock_api::Mutex<parking_lot::RawMutex, std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>>;
+    let mut _21: core::fmt::rt::Argument<'_>;
+    let mut _22: &usize;
+    let mut _23: &[&str; 2];
+    let _24: &[&str; 2];
+    let _25: [&str; 2];
+    let mut _26: &[core::fmt::rt::Argument<'_>; 1];
+    let _27: &[core::fmt::rt::Argument<'_>; 1];
+    let mut _28: parking_lot::lock_api::MutexGuard<'_, parking_lot::RawMutex, std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>>;
+    let mut _29: &parking_lot::lock_api::Mutex<parking_lot::RawMutex, std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>>;
+    let _30: ();
+    let mut _31: &mut std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>;
+    let mut _32: &mut std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>;
+    let mut _33: &mut parking_lot::lock_api::MutexGuard<'_, parking_lot::RawMutex, std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>>;
+    let _34: ();
+    let mut _35: std::iter::Enumerate<std::slice::Iter<'_, runtime::allocator::PageSnapshotData>>;
+    let mut _36: std::iter::Enumerate<std::slice::Iter<'_, runtime::allocator::PageSnapshotData>>;
+    let mut _37: std::slice::Iter<'_, runtime::allocator::PageSnapshotData>;
+    let mut _38: &[runtime::allocator::PageSnapshotData];
+    let _39: &[runtime::allocator::PageSnapshotData];
+    let mut _40: &std::vec::Vec<runtime::allocator::PageSnapshotData>;
+    let mut _42: ();
+    let _43: ();
+    let mut _44: std::option::Option<(usize, &runtime::allocator::PageSnapshotData)>;
+    let mut _45: &mut std::iter::Enumerate<std::slice::Iter<'_, runtime::allocator::PageSnapshotData>>;
+    let mut _46: &mut std::iter::Enumerate<std::slice::Iter<'_, runtime::allocator::PageSnapshotData>>;
+    let mut _47: isize;
+    let mut _48: !;
+    let _51: ();
+    let _52: ();
+    let mut _53: std::fmt::Arguments<'_>;
+    let mut _55: &types::page::PageID;
+    let mut _56: &usize;
+    let mut _57: &u32;
+    let mut _58: &types::page::PageLocation;
+    let mut _59: &usize;
+    let mut _61: core::fmt::rt::Argument<'_>;
+    let mut _62: &usize;
+    let mut _63: core::fmt::rt::Argument<'_>;
+    let mut _64: &types::page::PageID;
+    let mut _65: core::fmt::rt::Argument<'_>;
+    let mut _66: &usize;
+    let mut _67: core::fmt::rt::Argument<'_>;
+    let mut _68: &u32;
+    let mut _69: core::fmt::rt::Argument<'_>;
+    let mut _70: &types::page::PageLocation;
+    let mut _71: &[&str; 6];
+    let _72: &[&str; 6];
+    let _73: [&str; 6];
+    let mut _74: &[core::fmt::rt::Argument<'_>; 5];
+    let _75: &[core::fmt::rt::Argument<'_>; 5];
+    let mut _77: std::result::Result<types::page::Page, types::page::PageError>;
+    let mut _78: types::page::PageID;
+    let mut _79: usize;
+    let mut _80: types::page::PageLocation;
+    let mut _81: isize;
+    let mut _83: types::page::Page;
+    let mut _85: !;
+    let _86: ();
+    let _87: ();
+    let mut _88: std::fmt::Arguments<'_>;
+    let mut _90: &types::page::PageError;
+    let mut _92: core::fmt::rt::Argument<'_>;
+    let mut _93: &types::page::PageError;
+    let mut _94: &[&str; 2];
+    let _95: &[&str; 2];
+    let _96: [&str; 2];
+    let mut _97: &[core::fmt::rt::Argument<'_>; 1];
+    let _98: &[core::fmt::rt::Argument<'_>; 1];
+    let mut _99: types::page::PageError;
+    let _100: ();
+    let mut _101: &types::page::Page;
+    let mut _102: types::epoch::Epoch;
+    let mut _103: u32;
+    let _104: ();
+    let _105: ();
+    let mut _106: std::fmt::Arguments<'_>;
+    let mut _108: &u32;
+    let mut _110: core::fmt::rt::Argument<'_>;
+    let mut _111: &u32;
+    let mut _112: &[&str; 2];
+    let _113: &[&str; 2];
+    let _114: [&str; 2];
+    let mut _115: &[core::fmt::rt::Argument<'_>; 1];
+    let _116: &[core::fmt::rt::Argument<'_>; 1];
+    let mut _118: &mut types::page::Page;
+    let _119: ();
+    let mut _120: bool;
+    let mut _121: usize;
+    let mut _122: &[u8];
+    let mut _123: usize;
+    let mut _124: &std::vec::Vec<u8>;
+    let mut _125: !;
+    let _126: ();
+    let _127: ();
+    let mut _128: std::fmt::Arguments<'_>;
+    let mut _130: &usize;
+    let _131: usize;
+    let mut _132: &[u8];
+    let mut _133: &usize;
+    let _134: usize;
+    let mut _135: &std::vec::Vec<u8>;
+    let mut _137: core::fmt::rt::Argument<'_>;
+    let mut _138: &usize;
+    let mut _139: core::fmt::rt::Argument<'_>;
+    let mut _140: &usize;
+    let mut _141: &[&str; 3];
+    let _142: &[&str; 3];
+    let _143: [&str; 3];
+    let mut _144: &[core::fmt::rt::Argument<'_>; 2];
+    let _145: &[core::fmt::rt::Argument<'_>; 2];
+    let mut _146: types::page::PageError;
+    let _147: ();
+    let mut _148: &mut [u8];
+    let mut _149: &[u8];
+    let _150: &[u8];
+    let mut _151: &std::vec::Vec<u8>;
+    let _152: &std::vec::Vec<u8>;
+    let _153: ();
+    let _154: ();
+    let mut _155: std::fmt::Arguments<'_>;
+    let mut _157: &usize;
+    let _158: usize;
+    let mut _159: &std::vec::Vec<u8>;
+    let mut _161: core::fmt::rt::Argument<'_>;
+    let mut _162: &usize;
+    let mut _163: &[&str; 2];
+    let _164: &[&str; 2];
+    let _165: [&str; 2];
+    let mut _166: &[core::fmt::rt::Argument<'_>; 1];
+    let _167: &[core::fmt::rt::Argument<'_>; 1];
+    let _168: ();
+    let _169: ();
+    let mut _170: std::fmt::Arguments<'_>;
+    let mut _172: &usize;
+    let _173: usize;
+    let mut _174: &std::vec::Vec<u8>;
+    let mut _176: core::fmt::rt::Argument<'_>;
+    let mut _177: &usize;
+    let mut _178: &[&str; 2];
+    let _179: &[&str; 2];
+    let _180: [&str; 2];
+    let mut _181: &[core::fmt::rt::Argument<'_>; 1];
+    let _182: &[core::fmt::rt::Argument<'_>; 1];
+    let _183: ();
+    let mut _184: std::result::Result<(), types::page::PageError>;
+    let mut _185: &mut types::page::Page;
+    let mut _186: &[u8];
+    let _187: &[u8];
+    let mut _188: &std::vec::Vec<u8>;
+    let _189: &std::vec::Vec<u8>;
+    let mut _190: isize;
+    let mut _192: !;
+    let _193: ();
+    let _194: ();
+    let mut _195: std::fmt::Arguments<'_>;
+    let mut _197: &types::page::PageError;
+    let mut _199: core::fmt::rt::Argument<'_>;
+    let mut _200: &types::page::PageError;
+    let mut _201: &[&str; 2];
+    let _202: &[&str; 2];
+    let _203: [&str; 2];
+    let mut _204: &[core::fmt::rt::Argument<'_>; 1];
+    let _205: &[core::fmt::rt::Argument<'_>; 1];
+    let mut _206: types::page::PageError;
+    let _207: ();
+    let _208: ();
+    let mut _209: std::fmt::Arguments<'_>;
+    let mut _210: &[&str; 1];
+    let _211: &[&str; 1];
+    let _212: [&str; 1];
+    let _213: std::option::Option<std::boxed::Box<types::page::Page>>;
+    let mut _214: &mut std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>;
+    let mut _215: &mut std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>;
+    let mut _216: &mut parking_lot::lock_api::MutexGuard<'_, parking_lot::RawMutex, std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>>;
+    let mut _217: types::page::PageID;
+    let mut _218: std::boxed::Box<types::page::Page>;
+    let _219: ();
+    let _220: ();
+    let mut _221: std::fmt::Arguments<'_>;
+    let mut _222: &[&str; 1];
+    let _223: &[&str; 1];
+    let _224: [&str; 1];
+    let _225: ();
+    let _226: ();
+    let mut _227: std::fmt::Arguments<'_>;
+    let mut _229: &usize;
+    let _230: usize;
+    let mut _231: &std::vec::Vec<runtime::allocator::PageSnapshotData>;
+    let mut _233: core::fmt::rt::Argument<'_>;
+    let mut _234: &usize;
+    let mut _235: &[&str; 2];
+    let _236: &[&str; 2];
+    let _237: [&str; 2];
+    let mut _238: &[core::fmt::rt::Argument<'_>; 1];
+    let _239: &[core::fmt::rt::Argument<'_>; 1];
+    let mut _240: ();
+    let mut _252: &[&str; 1];
+    let mut _253: &usize;
+    let mut _254: &usize;
+    let mut _255: &types::page::PageID;
+    let mut _256: &usize;
+    let mut _257: &u32;
+    let mut _258: &types::page::PageLocation;
+    let mut _259: &types::page::PageError;
+    let mut _260: &u32;
+    let mut _261: &usize;
+    let mut _262: &usize;
+    let mut _263: &usize;
+    let mut _264: &usize;
+    let mut _265: &types::page::PageError;
+    let mut _266: &usize;
+    let mut _267: bool;
+    let mut _268: bool;
+    let mut _269: bool;
+    let mut _270: isize;
+    let mut _271: isize;
+    let mut _272: isize;
+    let mut _273: isize;
+    let mut _274: isize;
+    let mut _275: *const types::page::Page;
+    let mut _276: *const types::page::Page;
+    let mut _277: *const types::page::Page;
+    scope 1 {
+        debug args => _12;
+        let _20: [core::fmt::rt::Argument<'_>; 1];
+        scope 2 {
+            debug args => _20;
+            let mut _251: &[&str; 2];
+        }
+    }
+    scope 3 {
+        debug pages => _28;
+        let mut _41: std::iter::Enumerate<std::slice::Iter<'_, runtime::allocator::PageSnapshotData>>;
+        let _228: (&usize,);
+        scope 4 {
+            debug iter => _41;
+            let _49: usize;
+            let _50: &runtime::allocator::PageSnapshotData;
+            scope 5 {
+                debug i => _49;
+                debug snapshot => _50;
+                let _54: (&types::page::PageID, &usize, &u32, &types::page::PageLocation, &usize);
+                let mut _76: std::boxed::Box<types::page::Page>;
+                let _82: types::page::Page;
+                let _84: types::page::PageError;
+                scope 6 {
+                    debug args => _54;
+                    let _60: [core::fmt::rt::Argument<'_>; 5];
+                    scope 7 {
+                        debug args => _60;
+                        let mut _249: &[&str; 6];
+                    }
+                }
+                scope 8 {
+                    debug page => _76;
+                    let _107: (&u32,);
+                    let _117: &mut [u8];
+                    let mut _284: *const ();
+                    let mut _285: usize;
+                    let mut _286: usize;
+                    let mut _287: usize;
+                    let mut _288: usize;
+                    let mut _289: bool;
+                    let mut _290: *const ();
+                    let mut _291: usize;
+                    let mut _292: usize;
+                    let mut _293: usize;
+                    let mut _294: usize;
+                    let mut _295: bool;
+                    let mut _296: *const ();
+                    let mut _297: usize;
+                    let mut _298: bool;
+                    let mut _299: bool;
+                    let mut _300: bool;
+                    let mut _301: *const ();
+                    let mut _302: usize;
+                    let mut _303: bool;
+                    let mut _304: bool;
+                    let mut _305: bool;
+                    scope 13 {
+                        debug args => _107;
+                        let _109: [core::fmt::rt::Argument<'_>; 1];
+                        scope 14 {
+                            debug args => _109;
+                            let mut _248: &[&str; 2];
+                        }
+                    }
+                    scope 15 {
+                        debug dst => _117;
+                        let _129: (&usize, &usize);
+                        let _156: (&usize,);
+                        let _171: (&usize,);
+                        let mut _243: &[&str; 1];
+                        let mut _244: &[&str; 1];
+                        scope 16 {
+                            debug args => _129;
+                            let _136: [core::fmt::rt::Argument<'_>; 2];
+                            scope 17 {
+                                debug args => _136;
+                                let mut _242: &[&str; 3];
+                            }
+                        }
+                        scope 18 {
+                            debug args => _156;
+                            let _160: [core::fmt::rt::Argument<'_>; 1];
+                            scope 19 {
+                                debug args => _160;
+                                let mut _247: &[&str; 2];
+                            }
+                        }
+                        scope 20 {
+                            debug args => _171;
+                            let _175: [core::fmt::rt::Argument<'_>; 1];
+                            scope 21 {
+                                debug args => _175;
+                                let mut _246: &[&str; 2];
+                            }
+                        }
+                        scope 22 {
+                            debug e => _191;
+                            let _191: types::page::PageError;
+                            let _196: (&types::page::PageError,);
+                            let mut _278: *const ();
+                            let mut _279: usize;
+                            let mut _280: usize;
+                            let mut _281: usize;
+                            let mut _282: usize;
+                            let mut _283: bool;
+                            let mut _306: *const ();
+                            let mut _307: usize;
+                            let mut _308: bool;
+                            let mut _309: bool;
+                            let mut _310: bool;
+                            scope 23 {
+                                debug args => _196;
+                                let _198: [core::fmt::rt::Argument<'_>; 1];
+                                scope 24 {
+                                    debug args => _198;
+                                    let mut _245: &[&str; 2];
+                                }
+                            }
+                        }
+                    }
+                }
+                scope 9 {
+                    debug p => _82;
+                }
+                scope 10 {
+                    debug e => _84;
+                    let _89: (&types::page::PageError,);
+                    scope 11 {
+                        debug args => _89;
+                        let _91: [core::fmt::rt::Argument<'_>; 1];
+                        scope 12 {
+                            debug args => _91;
+                            let mut _241: &[&str; 2];
+                        }
+                    }
+                }
+            }
+        }
+        scope 25 {
+            debug args => _228;
+            let _232: [core::fmt::rt::Argument<'_>; 1];
+            scope 26 {
+                debug args => _232;
+                let mut _250: &[&str; 2];
+            }
+        }
+    }
+
+    bb0: {
+        _267 = const false;
+        _269 = const false;
+        _268 = const false;
+        _252 = const runtime::allocator::PageAllocator::restore_from_snapshot::promoted[11];
+        _7 = copy _252;
+        _6 = copy _7;
+        _5 = core::fmt::rt::<impl Arguments<'_>>::new_const::<1>(move _6) -> [return: bb1, unwind: bb84];
+    }
+
+    bb1: {
+        _4 = _eprint(move _5) -> [return: bb2, unwind: bb84];
+    }
+
+    bb2: {
+        _19 = &((*_1).1: parking_lot::lock_api::Mutex<parking_lot::RawMutex, std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>>);
+        _18 = parking_lot::lock_api::Mutex::<parking_lot::RawMutex, HashMap<PageID, Box<Page>>>::lock(move _19) -> [return: bb3, unwind: bb84];
+    }
+
+    bb3: {
+        _17 = &_18;
+        _16 = <parking_lot::lock_api::MutexGuard<'_, parking_lot::RawMutex, HashMap<PageID, Box<Page>>> as Deref>::deref(move _17) -> [return: bb4, unwind: bb83];
+    }
+
+    bb4: {
+        _15 = copy _16;
+        _14 = HashMap::<PageID, Box<Page>>::len(move _15) -> [return: bb5, unwind: bb83];
+    }
+
+    bb5: {
+        _13 = &_14;
+        _12 = (move _13,);
+        _253 = copy (_12.0: &usize);
+        _22 = copy _253;
+        _21 = core::fmt::rt::Argument::<'_>::new_display::<usize>(move _22) -> [return: bb6, unwind: bb83];
+    }
+
+    bb6: {
+        _20 = [move _21];
+        _251 = const runtime::allocator::PageAllocator::restore_from_snapshot::promoted[10];
+        _24 = copy _251;
+        _23 = copy _24;
+        _27 = &_20;
+        _26 = copy _27;
+        _11 = core::fmt::rt::<impl Arguments<'_>>::new_v1::<2, 1>(move _23, move _26) -> [return: bb7, unwind: bb83];
+    }
+
+    bb7: {
+        _10 = _eprint(move _11) -> [return: bb8, unwind: bb83];
+    }
+
+    bb8: {
+        drop(_18) -> [return: bb9, unwind: bb84];
+    }
+
+    bb9: {
+        _29 = &((*_1).1: parking_lot::lock_api::Mutex<parking_lot::RawMutex, std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>>);
+        _28 = parking_lot::lock_api::Mutex::<parking_lot::RawMutex, HashMap<PageID, Box<Page>>>::lock(move _29) -> [return: bb10, unwind: bb84];
+    }
+
+    bb10: {
+        _33 = &mut _28;
+        _32 = <parking_lot::lock_api::MutexGuard<'_, parking_lot::RawMutex, HashMap<PageID, Box<Page>>> as DerefMut>::deref_mut(move _33) -> [return: bb11, unwind: bb82];
+    }
+
+    bb11: {
+        _31 = copy _32;
+        _30 = HashMap::<PageID, Box<Page>>::clear(move _31) -> [return: bb12, unwind: bb82];
+    }
+
+    bb12: {
+        _40 = &_2;
+        _39 = <Vec<PageSnapshotData> as Deref>::deref(move _40) -> [return: bb13, unwind: bb82];
+    }
+
+    bb13: {
+        _38 = copy _39;
+        _37 = core::slice::<impl [PageSnapshotData]>::iter(move _38) -> [return: bb14, unwind: bb82];
+    }
+
+    bb14: {
+        _36 = <std::slice::Iter<'_, PageSnapshotData> as Iterator>::enumerate(move _37) -> [return: bb15, unwind: bb82];
+    }
+
+    bb15: {
+        _35 = <Enumerate<std::slice::Iter<'_, PageSnapshotData>> as IntoIterator>::into_iter(move _36) -> [return: bb16, unwind: bb82];
+    }
+
+    bb16: {
+        _41 = move _35;
+        goto -> bb17;
+    }
+
+    bb17: {
+        _46 = &mut _41;
+        _45 = copy _46;
+        _44 = <Enumerate<std::slice::Iter<'_, PageSnapshotData>> as Iterator>::next(move _45) -> [return: bb18, unwind: bb82];
+    }
+
+    bb18: {
+        _47 = discriminant(_44);
+        switchInt(move _47) -> [0: bb21, 1: bb20, otherwise: bb19];
+    }
+
+    bb19: {
+        unreachable;
+    }
+
+    bb20: {
+        _49 = copy (((_44 as Some).0: (usize, &runtime::allocator::PageSnapshotData)).0: usize);
+        _50 = copy (((_44 as Some).0: (usize, &runtime::allocator::PageSnapshotData)).1: &runtime::allocator::PageSnapshotData);
+        _55 = &((*_50).0: types::page::PageID);
+        _56 = &((*_50).1: usize);
+        _57 = &((*_50).3: u32);
+        _58 = &((*_50).2: types::page::PageLocation);
+        _59 = &_49;
+        _54 = (move _55, move _56, move _57, move _58, move _59);
+        _254 = copy (_54.4: &usize);
+        _62 = copy _254;
+        _61 = core::fmt::rt::Argument::<'_>::new_display::<usize>(move _62) -> [return: bb22, unwind: bb82];
+    }
+
+    bb21: {
+        _231 = &_2;
+        _230 = Vec::<PageSnapshotData>::len(move _231) -> [return: bb73, unwind: bb82];
+    }
+
+    bb22: {
+        _255 = copy (_54.0: &types::page::PageID);
+        _64 = copy _255;
+        _63 = core::fmt::rt::Argument::<'_>::new_debug::<PageID>(move _64) -> [return: bb23, unwind: bb82];
+    }
+
+    bb23: {
+        _256 = copy (_54.1: &usize);
+        _66 = copy _256;
+        _65 = core::fmt::rt::Argument::<'_>::new_display::<usize>(move _66) -> [return: bb24, unwind: bb82];
+    }
+
+    bb24: {
+        _257 = copy (_54.2: &u32);
+        _68 = copy _257;
+        _67 = core::fmt::rt::Argument::<'_>::new_display::<u32>(move _68) -> [return: bb25, unwind: bb82];
+    }
+
+    bb25: {
+        _258 = copy (_54.3: &types::page::PageLocation);
+        _70 = copy _258;
+        _69 = core::fmt::rt::Argument::<'_>::new_debug::<PageLocation>(move _70) -> [return: bb26, unwind: bb82];
+    }
+
+    bb26: {
+        _60 = [move _61, move _63, move _65, move _67, move _69];
+        _249 = const runtime::allocator::PageAllocator::restore_from_snapshot::promoted[8];
+        _72 = copy _249;
+        _71 = copy _72;
+        _75 = &_60;
+        _74 = copy _75;
+        _53 = core::fmt::rt::<impl Arguments<'_>>::new_v1::<6, 5>(move _71, move _74) -> [return: bb27, unwind: bb82];
+    }
+
+    bb27: {
+        _52 = _eprint(move _53) -> [return: bb28, unwind: bb82];
+    }
+
+    bb28: {
+        _78 = copy ((*_50).0: types::page::PageID);
+        _79 = copy ((*_50).1: usize);
+        _80 = copy ((*_50).2: types::page::PageLocation);
+        _77 = Page::new(move _78, move _79, move _80) -> [return: bb29, unwind: bb82];
+    }
+
+    bb29: {
+        _268 = const true;
+        _269 = const true;
+        _81 = discriminant(_77);
+        switchInt(move _81) -> [0: bb31, 1: bb30, otherwise: bb19];
+    }
+
+    bb30: {
+        _84 = move ((_77 as Err).0: types::page::PageError);
+        _90 = &_84;
+        _89 = (move _90,);
+        _259 = copy (_89.0: &types::page::PageError);
+        _93 = copy _259;
+        _92 = core::fmt::rt::Argument::<'_>::new_display::<PageError>(move _93) -> [return: bb33, unwind: bb88];
+    }
+
+    bb31: {
+        _82 = move ((_77 as Ok).0: types::page::Page);
+        _83 = move _82;
+        _76 = Box::<Page>::new(move _83) -> [return: bb32, unwind: bb88];
+    }
+
+    bb32: {
+        _267 = const true;
+        _270 = discriminant(_77);
+        _268 = const false;
+        _269 = const false;
+        _275 = copy ((_76.0: std::ptr::Unique<types::page::Page>).0: std::ptr::NonNull<types::page::Page>) as *const types::page::Page (Transmute);
+        _290 = copy _275 as *const () (PtrToPtr);
+        _291 = copy _290 as usize (Transmute);
+        _292 = AlignOf(types::page::Page);
+        _293 = Sub(copy _292, const 1_usize);
+        _294 = BitAnd(copy _291, copy _293);
+        _295 = Eq(copy _294, const 0_usize);
+        assert(copy _295, "misaligned pointer dereference: address must be a multiple of {} but is {}", copy _292, copy _291) -> [success: bb91, unwind unreachable];
+    }
+
+    bb33: {
+        _91 = [move _92];
+        _241 = const runtime::allocator::PageAllocator::restore_from_snapshot::promoted[0];
+        _95 = copy _241;
+        _94 = copy _95;
+        _98 = &_91;
+        _97 = copy _98;
+        _88 = core::fmt::rt::<impl Arguments<'_>>::new_v1::<2, 1>(move _94, move _97) -> [return: bb34, unwind: bb88];
+    }
+
+    bb34: {
+        _87 = _eprint(move _88) -> [return: bb35, unwind: bb88];
+    }
+
+    bb35: {
+        _99 = move _84;
+        _0 = Result::<(), PageError>::Err(move _99);
+        _272 = discriminant(_77);
+        _268 = const false;
+        _269 = const false;
+        goto -> bb79;
+    }
+
+    bb36: {
+        _108 = &((*_50).3: u32);
+        _107 = (move _108,);
+        _260 = copy (_107.0: &u32);
+        _111 = copy _260;
+        _110 = core::fmt::rt::Argument::<'_>::new_display::<u32>(move _111) -> [return: bb37, unwind: bb87];
+    }
+
+    bb37: {
+        _109 = [move _110];
+        _248 = const runtime::allocator::PageAllocator::restore_from_snapshot::promoted[7];
+        _113 = copy _248;
+        _112 = copy _113;
+        _116 = &_109;
+        _115 = copy _116;
+        _106 = core::fmt::rt::<impl Arguments<'_>>::new_v1::<2, 1>(move _112, move _115) -> [return: bb38, unwind: bb87];
+    }
+
+    bb38: {
+        _105 = _eprint(move _106) -> [return: bb39, unwind: bb87];
+    }
+
+    bb39: {
+        _276 = copy ((_76.0: std::ptr::Unique<types::page::Page>).0: std::ptr::NonNull<types::page::Page>) as *const types::page::Page (Transmute);
+        _284 = copy _276 as *const () (PtrToPtr);
+        _285 = copy _284 as usize (Transmute);
+        _286 = AlignOf(types::page::Page);
+        _287 = Sub(copy _286, const 1_usize);
+        _288 = BitAnd(copy _285, copy _287);
+        _289 = Eq(copy _288, const 0_usize);
+        assert(copy _289, "misaligned pointer dereference: address must be a multiple of {} but is {}", copy _286, copy _285) -> [success: bb90, unwind unreachable];
+    }
+
+    bb40: {
+        _122 = &(*_117);
+        _121 = PtrMetadata(move _122);
+        _124 = &((*_50).5: std::vec::Vec<u8>);
+        _123 = Vec::<u8>::len(move _124) -> [return: bb41, unwind: bb87];
+    }
+
+    bb41: {
+        _120 = Ne(move _121, move _123);
+        switchInt(move _120) -> [0: bb48, otherwise: bb42];
+    }
+
+    bb42: {
+        _132 = &(*_117);
+        _131 = PtrMetadata(move _132);
+        _130 = &_131;
+        _135 = &((*_50).5: std::vec::Vec<u8>);
+        _134 = Vec::<u8>::len(move _135) -> [return: bb43, unwind: bb87];
+    }
+
+    bb43: {
+        _133 = &_134;
+        _129 = (move _130, move _133);
+        _261 = copy (_129.0: &usize);
+        _138 = copy _261;
+        _137 = core::fmt::rt::Argument::<'_>::new_display::<usize>(move _138) -> [return: bb44, unwind: bb87];
+    }
+
+    bb44: {
+        _262 = copy (_129.1: &usize);
+        _140 = copy _262;
+        _139 = core::fmt::rt::Argument::<'_>::new_display::<usize>(move _140) -> [return: bb45, unwind: bb87];
+    }
+
+    bb45: {
+        _136 = [move _137, move _139];
+        _242 = const runtime::allocator::PageAllocator::restore_from_snapshot::promoted[1];
+        _142 = copy _242;
+        _141 = copy _142;
+        _145 = &_136;
+        _144 = copy _145;
+        _128 = core::fmt::rt::<impl Arguments<'_>>::new_v1::<3, 2>(move _141, move _144) -> [return: bb46, unwind: bb87];
+    }
+
+    bb46: {
+        _127 = _eprint(move _128) -> [return: bb47, unwind: bb87];
+    }
+
+    bb47: {
+        _146 = PageError::MetadataDecode(const "data size mismatch in snapshot");
+        _0 = Result::<(), PageError>::Err(move _146);
+        goto -> bb78;
+    }
+
+    bb48: {
+        _148 = copy _117;
+        _152 = &((*_50).5: std::vec::Vec<u8>);
+        _151 = copy _152;
+        _150 = <Vec<u8> as Deref>::deref(move _151) -> [return: bb49, unwind: bb87];
+    }
+
+    bb49: {
+        _149 = copy _150;
+        _147 = core::slice::<impl [u8]>::copy_from_slice(move _148, move _149) -> [return: bb50, unwind: bb87];
+    }
+
+    bb50: {
+        _159 = &((*_50).5: std::vec::Vec<u8>);
+        _158 = Vec::<u8>::len(move _159) -> [return: bb51, unwind: bb87];
+    }
+
+    bb51: {
+        _157 = &_158;
+        _156 = (move _157,);
+        _263 = copy (_156.0: &usize);
+        _162 = copy _263;
+        _161 = core::fmt::rt::Argument::<'_>::new_display::<usize>(move _162) -> [return: bb52, unwind: bb87];
+    }
+
+    bb52: {
+        _160 = [move _161];
+        _247 = const runtime::allocator::PageAllocator::restore_from_snapshot::promoted[6];
+        _164 = copy _247;
+        _163 = copy _164;
+        _167 = &_160;
+        _166 = copy _167;
+        _155 = core::fmt::rt::<impl Arguments<'_>>::new_v1::<2, 1>(move _163, move _166) -> [return: bb53, unwind: bb87];
+    }
+
+    bb53: {
+        _154 = _eprint(move _155) -> [return: bb54, unwind: bb87];
+    }
+
+    bb54: {
+        _174 = &((*_50).4: std::vec::Vec<u8>);
+        _173 = Vec::<u8>::len(move _174) -> [return: bb55, unwind: bb87];
+    }
+
+    bb55: {
+        _172 = &_173;
+        _171 = (move _172,);
+        _264 = copy (_171.0: &usize);
+        _177 = copy _264;
+        _176 = core::fmt::rt::Argument::<'_>::new_display::<usize>(move _177) -> [return: bb56, unwind: bb87];
+    }
+
+    bb56: {
+        _175 = [move _176];
+        _246 = const runtime::allocator::PageAllocator::restore_from_snapshot::promoted[5];
+        _179 = copy _246;
+        _178 = copy _179;
+        _182 = &_175;
+        _181 = copy _182;
+        _170 = core::fmt::rt::<impl Arguments<'_>>::new_v1::<2, 1>(move _178, move _181) -> [return: bb57, unwind: bb87];
+    }
+
+    bb57: {
+        _169 = _eprint(move _170) -> [return: bb58, unwind: bb87];
+    }
+
+    bb58: {
+        _277 = copy ((_76.0: std::ptr::Unique<types::page::Page>).0: std::ptr::NonNull<types::page::Page>) as *const types::page::Page (Transmute);
+        _278 = copy _277 as *const () (PtrToPtr);
+        _279 = copy _278 as usize (Transmute);
+        _280 = AlignOf(types::page::Page);
+        _281 = Sub(copy _280, const 1_usize);
+        _282 = BitAnd(copy _279, copy _281);
+        _283 = Eq(copy _282, const 0_usize);
+        assert(copy _283, "misaligned pointer dereference: address must be a multiple of {} but is {}", copy _280, copy _279) -> [success: bb89, unwind unreachable];
+    }
+
+    bb59: {
+        _186 = copy _187;
+        _184 = Page::set_metadata_blob(move _185, move _186) -> [return: bb60, unwind: bb87];
+    }
+
+    bb60: {
+        _190 = discriminant(_184);
+        switchInt(move _190) -> [1: bb61, 0: bb65, otherwise: bb19];
+    }
+
+    bb61: {
+        _191 = move ((_184 as Err).0: types::page::PageError);
+        _197 = &_191;
+        _196 = (move _197,);
+        _265 = copy (_196.0: &types::page::PageError);
+        _200 = copy _265;
+        _199 = core::fmt::rt::Argument::<'_>::new_display::<PageError>(move _200) -> [return: bb62, unwind: bb87];
+    }
+
+    bb62: {
+        _198 = [move _199];
+        _245 = const runtime::allocator::PageAllocator::restore_from_snapshot::promoted[4];
+        _202 = copy _245;
+        _201 = copy _202;
+        _205 = &_198;
+        _204 = copy _205;
+        _195 = core::fmt::rt::<impl Arguments<'_>>::new_v1::<2, 1>(move _201, move _204) -> [return: bb63, unwind: bb87];
+    }
+
+    bb63: {
+        _194 = _eprint(move _195) -> [return: bb64, unwind: bb87];
+    }
+
+    bb64: {
+        _206 = move _191;
+        _0 = Result::<(), PageError>::Err(move _206);
+        goto -> bb78;
+    }
+
+    bb65: {
+        _244 = const runtime::allocator::PageAllocator::restore_from_snapshot::promoted[3];
+        _211 = copy _244;
+        _210 = copy _211;
+        _209 = core::fmt::rt::<impl Arguments<'_>>::new_const::<1>(move _210) -> [return: bb66, unwind: bb87];
+    }
+
+    bb66: {
+        _208 = _eprint(move _209) -> [return: bb67, unwind: bb87];
+    }
+
+    bb67: {
+        _216 = &mut _28;
+        _215 = <parking_lot::lock_api::MutexGuard<'_, parking_lot::RawMutex, HashMap<PageID, Box<Page>>> as DerefMut>::deref_mut(move _216) -> [return: bb68, unwind: bb87];
+    }
+
+    bb68: {
+        _214 = copy _215;
+        _217 = copy ((*_50).0: types::page::PageID);
+        _267 = const false;
+        _218 = move _76;
+        _213 = HashMap::<PageID, Box<Page>>::insert(move _214, move _217, move _218) -> [return: bb69, unwind: bb87];
+    }
+
+    bb69: {
+        drop(_213) -> [return: bb70, unwind: bb87];
+    }
+
+    bb70: {
+        _243 = const runtime::allocator::PageAllocator::restore_from_snapshot::promoted[2];
+        _223 = copy _243;
+        _222 = copy _223;
+        _221 = core::fmt::rt::<impl Arguments<'_>>::new_const::<1>(move _222) -> [return: bb71, unwind: bb87];
+    }
+
+    bb71: {
+        _220 = _eprint(move _221) -> [return: bb72, unwind: bb87];
+    }
+
+    bb72: {
+        _267 = const false;
+        goto -> bb17;
+    }
+
+    bb73: {
+        _229 = &_230;
+        _228 = (move _229,);
+        _266 = copy (_228.0: &usize);
+        _234 = copy _266;
+        _233 = core::fmt::rt::Argument::<'_>::new_display::<usize>(move _234) -> [return: bb74, unwind: bb82];
+    }
+
+    bb74: {
+        _232 = [move _233];
+        _250 = const runtime::allocator::PageAllocator::restore_from_snapshot::promoted[9];
+        _236 = copy _250;
+        _235 = copy _236;
+        _239 = &_232;
+        _238 = copy _239;
+        _227 = core::fmt::rt::<impl Arguments<'_>>::new_v1::<2, 1>(move _235, move _238) -> [return: bb75, unwind: bb82];
+    }
+
+    bb75: {
+        _226 = _eprint(move _227) -> [return: bb76, unwind: bb82];
+    }
+
+    bb76: {
+        _0 = Result::<(), PageError>::Ok(const ());
+        drop(_28) -> [return: bb77, unwind: bb84];
+    }
+
+    bb77: {
+        drop(_2) -> [return: bb81, unwind: bb85];
+    }
+
+    bb78: {
+        drop(_76) -> [return: bb79, unwind: bb82];
+    }
+
+    bb79: {
+        _267 = const false;
+        drop(_28) -> [return: bb80, unwind: bb84];
+    }
+
+    bb80: {
+        drop(_2) -> [return: bb81, unwind: bb85];
+    }
+
+    bb81: {
+        return;
+    }
+
+    bb82 (cleanup): {
+        drop(_28) -> [return: bb84, unwind terminate(cleanup)];
+    }
+
+    bb83 (cleanup): {
+        drop(_18) -> [return: bb84, unwind terminate(cleanup)];
+    }
+
+    bb84 (cleanup): {
+        drop(_2) -> [return: bb85, unwind terminate(cleanup)];
+    }
+
+    bb85 (cleanup): {
+        resume;
+    }
+
+    bb86 (cleanup): {
+        drop(_76) -> [return: bb82, unwind terminate(cleanup)];
+    }
+
+    bb87 (cleanup): {
+        switchInt(copy _267) -> [0: bb82, otherwise: bb86];
+    }
+
+    bb88 (cleanup): {
+        _274 = discriminant(_77);
+        goto -> bb82;
+    }
+
+    bb89: {
+        _306 = copy _277 as *const () (PtrToPtr);
+        _307 = copy _306 as usize (Transmute);
+        _308 = Eq(copy _307, const 0_usize);
+        _309 = BitAnd(copy _308, const true);
+        _310 = Not(copy _309);
+        assert(copy _310, "null pointer dereference occurred") -> [success: bb94, unwind unreachable];
+    }
+
+    bb90: {
+        _301 = copy _276 as *const () (PtrToPtr);
+        _302 = copy _301 as usize (Transmute);
+        _303 = Eq(copy _302, const 0_usize);
+        _304 = BitAnd(copy _303, const true);
+        _305 = Not(copy _304);
+        assert(copy _305, "null pointer dereference occurred") -> [success: bb93, unwind unreachable];
+    }
+
+    bb91: {
+        _296 = copy _275 as *const () (PtrToPtr);
+        _297 = copy _296 as usize (Transmute);
+        _298 = Eq(copy _297, const 0_usize);
+        _299 = BitAnd(copy _298, const true);
+        _300 = Not(copy _299);
+        assert(copy _300, "null pointer dereference occurred") -> [success: bb92, unwind unreachable];
+    }
+
+    bb92: {
+        _101 = &(*_275);
+        _103 = copy ((*_50).3: u32);
+        _102 = Epoch(move _103);
+        _100 = Page::set_epoch(move _101, move _102) -> [return: bb36, unwind: bb87];
+    }
+
+    bb93: {
+        _118 = &mut (*_276);
+        _117 = Page::data_mut_slice(move _118) -> [return: bb40, unwind: bb87];
+    }
+
+    bb94: {
+        _185 = &mut (*_277);
+        _189 = &((*_50).4: std::vec::Vec<u8>);
+        _188 = copy _189;
+        _187 = <Vec<u8> as Deref>::deref(move _188) -> [return: bb59, unwind: bb87];
+    }
+}
+
+alloc349 (size: 30, align: 1) {
+    0x00 │ 64 61 74 61 20 73 69 7a 65 20 6d 69 73 6d 61 74 │ data size mismat
+    0x10 │ 63 68 20 69 6e 20 73 6e 61 70 73 68 6f 74       │ ch in snapshot
+}

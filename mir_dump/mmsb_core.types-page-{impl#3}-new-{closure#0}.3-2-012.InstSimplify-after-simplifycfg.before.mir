@@ -1,0 +1,10 @@
+// MIR for `types::page::<impl at src/01_types/page.rs:98:1: 98:10>::new::{closure#0}` before InstSimplify-after-simplifycfg
+
+fn page::<impl at src/01_types/page.rs:98:1: 98:10>::new::{closure#0}(_1: {closure@src/01_types/page.rs:129:26: 129:29}, _2: LayoutError) -> PageError {
+    let mut _0: types::page::PageError;
+
+    bb0: {
+        _0 = PageError::AllocError(const 1_i32);
+        return;
+    }
+}

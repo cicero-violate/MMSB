@@ -1,0 +1,83 @@
+// MIR for `runtime::checkpoint::load_checkpoint::{closure#0}` after InstSimplify-after-simplifycfg
+
+fn load_checkpoint::{closure#0}(_1: {closure@src/02_runtime/checkpoint.rs:102:69: 102:72}, _2: PageError) -> std::io::Error {
+    debug location_tag => (*(_1.0: &i32));
+    debug id => (*(_1.1: &types::page::PageID));
+    let mut _0: std::io::Error;
+    let mut _3: std::io::ErrorKind;
+    let mut _4: std::string::String;
+    let mut _5: std::string::String;
+    let mut _6: std::fmt::Arguments<'_>;
+    let _7: (&i32, &types::page::PageID);
+    let mut _8: &i32;
+    let mut _9: &types::page::PageID;
+    let mut _11: core::fmt::rt::Argument<'_>;
+    let mut _12: &i32;
+    let mut _13: core::fmt::rt::Argument<'_>;
+    let mut _14: &types::page::PageID;
+    let mut _15: &[&str; 2];
+    let _16: &[&str; 2];
+    let _17: [&str; 2];
+    let mut _18: &[core::fmt::rt::Argument<'_>; 2];
+    let _19: &[core::fmt::rt::Argument<'_>; 2];
+    let mut _21: &i32;
+    let mut _22: &types::page::PageID;
+    let mut _23: &i32;
+    let mut _24: &types::page::PageID;
+    scope 1 {
+        debug args => _7;
+        let _10: [core::fmt::rt::Argument<'_>; 2];
+        scope 2 {
+            debug args => _10;
+            let mut _20: &[&str; 2];
+        }
+    }
+
+    bb0: {
+        _3 = InvalidData;
+        _21 = copy (_1.0: &i32);
+        _8 = copy _21;
+        _22 = copy (_1.1: &types::page::PageID);
+        _9 = copy _22;
+        _7 = (move _8, move _9);
+        _23 = copy (_7.0: &i32);
+        _12 = copy _23;
+        _11 = core::fmt::rt::Argument::<'_>::new_display::<i32>(move _12) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        _24 = copy (_7.1: &types::page::PageID);
+        _14 = copy _24;
+        _13 = core::fmt::rt::Argument::<'_>::new_debug::<PageID>(move _14) -> [return: bb2, unwind continue];
+    }
+
+    bb2: {
+        _10 = [move _11, move _13];
+        _20 = const runtime::checkpoint::load_checkpoint::<impl AsRef<Path>>::{closure#0}::promoted[0];
+        _16 = copy _20;
+        _15 = copy _16;
+        _19 = &_10;
+        _18 = copy _19;
+        _6 = core::fmt::rt::<impl Arguments<'_>>::new_v1::<2, 2>(move _15, move _18) -> [return: bb3, unwind continue];
+    }
+
+    bb3: {
+        _5 = format(move _6) -> [return: bb4, unwind continue];
+    }
+
+    bb4: {
+        _4 = must_use::<String>(move _5) -> [return: bb5, unwind: bb7];
+    }
+
+    bb5: {
+        _0 = std::io::Error::new::<String>(move _3, move _4) -> [return: bb6, unwind: bb7];
+    }
+
+    bb6: {
+        return;
+    }
+
+    bb7 (cleanup): {
+        resume;
+    }
+}

@@ -1,0 +1,50 @@
+// MIR for `runtime::allocator::<impl at src/02_runtime/allocator.rs:34:17: 34:22>::clone` before InstSimplify-after-simplifycfg
+
+fn allocator::<impl at src/02_runtime/allocator.rs:34:17: 34:22>::clone(_1: &PageInfo) -> PageInfo {
+    debug self => _1;
+    let mut _0: runtime::allocator::PageInfo;
+    let mut _2: types::page::PageID;
+    let mut _3: &types::page::PageID;
+    let _4: &types::page::PageID;
+    let mut _5: usize;
+    let mut _6: &usize;
+    let _7: &usize;
+    let mut _8: types::page::PageLocation;
+    let mut _9: &types::page::PageLocation;
+    let _10: &types::page::PageLocation;
+    let mut _11: u32;
+    let mut _12: &u32;
+    let _13: &u32;
+    let mut _14: std::vec::Vec<u8>;
+    let mut _15: &std::vec::Vec<u8>;
+    let _16: &std::vec::Vec<u8>;
+
+    bb0: {
+        _4 = &((*_1).0: types::page::PageID);
+        _3 = copy _4;
+        _2 = <PageID as Clone>::clone(move _3) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        _7 = &((*_1).1: usize);
+        _6 = copy _7;
+        _5 = copy (*_6);
+        _10 = &((*_1).2: types::page::PageLocation);
+        _9 = copy _10;
+        _8 = <PageLocation as Clone>::clone(move _9) -> [return: bb2, unwind continue];
+    }
+
+    bb2: {
+        _13 = &((*_1).3: u32);
+        _12 = copy _13;
+        _11 = copy (*_12);
+        _16 = &((*_1).4: std::vec::Vec<u8>);
+        _15 = copy _16;
+        _14 = <Vec<u8> as Clone>::clone(move _15) -> [return: bb3, unwind continue];
+    }
+
+    bb3: {
+        _0 = PageInfo { page_id: move _2, size: move _5, location: move _8, epoch: move _11, metadata: move _14 };
+        return;
+    }
+}

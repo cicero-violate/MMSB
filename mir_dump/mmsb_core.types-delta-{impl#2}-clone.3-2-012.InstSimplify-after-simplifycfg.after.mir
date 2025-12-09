@@ -1,0 +1,13 @@
+// MIR for `types::delta::<impl at src/01_types/delta.rs:6:17: 6:22>::clone` after InstSimplify-after-simplifycfg
+
+fn delta::<impl at src/01_types/delta.rs:6:17: 6:22>::clone(_1: &DeltaID) -> DeltaID {
+    debug self => _1;
+    let mut _0: types::delta::DeltaID;
+    scope 1 {
+    }
+
+    bb0: {
+        _0 = copy (*_1);
+        return;
+    }
+}

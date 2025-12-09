@@ -1,0 +1,20 @@
+// MIR for `ffi::TLS_LAST_ERROR::{constant#0}::{closure#1}` before InstSimplify-after-simplifycfg
+
+fn TLS_LAST_ERROR::{constant#0}::{closure#1}(_1: &{closure@/home/cicero-arch-omen/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/std/src/sys/thread_local/native/mod.rs:100:21: 100:47}, _2: Option<&mut Option<RefCell<MMSBErrorCode>>>) -> *const RefCell<MMSBErrorCode> {
+    debug __rust_std_internal_init => _2;
+    let mut _0: *const std::cell::RefCell<ffi::MMSBErrorCode>;
+    let mut _3: &std::thread::local_impl::LazyStorage<std::cell::RefCell<ffi::MMSBErrorCode>, !>;
+    let _4: &std::thread::local_impl::LazyStorage<std::cell::RefCell<ffi::MMSBErrorCode>, !>;
+    let mut _5: std::option::Option<&mut std::option::Option<std::cell::RefCell<ffi::MMSBErrorCode>>>;
+
+    bb0: {
+        _4 = &/*tls*/ TLS_LAST_ERROR::{constant#0}::{closure#1}::__RUST_STD_INTERNAL_VAL;
+        _3 = copy _4;
+        _5 = move _2;
+        _0 = LazyStorage::<RefCell<MMSBErrorCode>, !>::get_or_init::<fn() -> RefCell<MMSBErrorCode> {TLS_LAST_ERROR::__rust_std_internal_init_fn}>(move _3, move _5, TLS_LAST_ERROR::__rust_std_internal_init_fn) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        return;
+    }
+}

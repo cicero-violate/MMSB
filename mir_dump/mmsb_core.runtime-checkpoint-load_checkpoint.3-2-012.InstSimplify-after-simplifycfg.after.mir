@@ -1,0 +1,1898 @@
+// MIR for `runtime::checkpoint::load_checkpoint` after InstSimplify-after-simplifycfg
+
+fn load_checkpoint(_1: &PageAllocator, _2: &TransactionLog, _3: impl AsRef<Path>) -> Result<(), std::io::Error> {
+    debug allocator => _1;
+    debug _tlog => _2;
+    debug path => _3;
+    let mut _0: std::result::Result<(), std::io::Error>;
+    let _4: ();
+    let _5: ();
+    let mut _6: std::fmt::Arguments<'_>;
+    let _7: (&std::path::Display<'_>,);
+    let mut _8: &std::path::Display<'_>;
+    let _9: std::path::Display<'_>;
+    let mut _10: &std::path::Path;
+    let _11: &std::path::Path;
+    let mut _12: &impl AsRef<Path>;
+    let mut _14: core::fmt::rt::Argument<'_>;
+    let mut _15: &std::path::Display<'_>;
+    let mut _16: &[&str; 2];
+    let _17: &[&str; 2];
+    let _18: [&str; 2];
+    let mut _19: &[core::fmt::rt::Argument<'_>; 1];
+    let _20: &[core::fmt::rt::Argument<'_>; 1];
+    let mut _21: std::io::BufReader<std::fs::File>;
+    let mut _22: std::fs::File;
+    let mut _23: std::ops::ControlFlow<std::result::Result<std::convert::Infallible, std::io::Error>, std::fs::File>;
+    let mut _24: std::result::Result<std::fs::File, std::io::Error>;
+    let mut _25: impl AsRef<Path>;
+    let mut _26: isize;
+    let _27: std::result::Result<std::convert::Infallible, std::io::Error>;
+    let mut _28: !;
+    let mut _29: std::result::Result<std::convert::Infallible, std::io::Error>;
+    let _30: std::fs::File;
+    let _32: ();
+    let mut _33: std::ops::ControlFlow<std::result::Result<std::convert::Infallible, std::io::Error>>;
+    let mut _34: std::result::Result<(), std::io::Error>;
+    let mut _35: &mut std::io::BufReader<std::fs::File>;
+    let mut _36: &mut [u8];
+    let mut _37: &mut [u8; 8];
+    let mut _38: &mut [u8; 8];
+    let mut _39: isize;
+    let mut _41: !;
+    let mut _42: std::result::Result<std::convert::Infallible, std::io::Error>;
+    let _44: ();
+    let mut _45: bool;
+    let mut _46: &&[u8; 8];
+    let _47: &[u8; 8];
+    let mut _48: &&[u8];
+    let _49: &[u8];
+    let mut _50: !;
+    let mut _51: std::io::Error;
+    let mut _52: std::io::ErrorKind;
+    let mut _53: std::string::String;
+    let mut _54: std::string::String;
+    let mut _55: std::fmt::Arguments<'_>;
+    let mut _57: &&[u8];
+    let _58: &[u8];
+    let mut _59: &[u8; 8];
+    let mut _61: core::fmt::rt::Argument<'_>;
+    let mut _62: &&[u8];
+    let mut _63: core::fmt::rt::Argument<'_>;
+    let mut _64: &[u8; 8];
+    let mut _65: &[&str; 2];
+    let _66: &[&str; 2];
+    let _67: [&str; 2];
+    let mut _68: &[core::fmt::rt::Argument<'_>; 2];
+    let _69: &[core::fmt::rt::Argument<'_>; 2];
+    let _70: ();
+    let _71: ();
+    let mut _72: std::fmt::Arguments<'_>;
+    let mut _73: &[&str; 1];
+    let _74: &[&str; 1];
+    let _75: [&str; 1];
+    let _77: ();
+    let mut _78: std::ops::ControlFlow<std::result::Result<std::convert::Infallible, std::io::Error>>;
+    let mut _79: std::result::Result<(), std::io::Error>;
+    let mut _80: &mut std::io::BufReader<std::fs::File>;
+    let mut _81: &mut [u8];
+    let mut _82: &mut [u8; 4];
+    let mut _83: &mut [u8; 4];
+    let mut _84: isize;
+    let mut _86: !;
+    let mut _87: std::result::Result<std::convert::Infallible, std::io::Error>;
+    let mut _90: [u8; 4];
+    let _91: ();
+    let mut _92: bool;
+    let mut _93: u32;
+    let mut _94: !;
+    let mut _95: std::io::Error;
+    let mut _96: std::io::ErrorKind;
+    let mut _97: std::string::String;
+    let mut _98: std::string::String;
+    let mut _99: std::fmt::Arguments<'_>;
+    let mut _101: &u32;
+    let mut _102: &u32;
+    let _103: u32;
+    let mut _105: core::fmt::rt::Argument<'_>;
+    let mut _106: &u32;
+    let mut _107: core::fmt::rt::Argument<'_>;
+    let mut _108: &u32;
+    let mut _109: &[&str; 2];
+    let _110: &[&str; 2];
+    let _111: [&str; 2];
+    let mut _112: &[core::fmt::rt::Argument<'_>; 2];
+    let _113: &[core::fmt::rt::Argument<'_>; 2];
+    let _114: ();
+    let _115: ();
+    let mut _116: std::fmt::Arguments<'_>;
+    let mut _118: &u32;
+    let mut _120: core::fmt::rt::Argument<'_>;
+    let mut _121: &u32;
+    let mut _122: &[&str; 2];
+    let _123: &[&str; 2];
+    let _124: [&str; 2];
+    let mut _125: &[core::fmt::rt::Argument<'_>; 1];
+    let _126: &[core::fmt::rt::Argument<'_>; 1];
+    let _128: ();
+    let mut _129: std::ops::ControlFlow<std::result::Result<std::convert::Infallible, std::io::Error>>;
+    let mut _130: std::result::Result<(), std::io::Error>;
+    let mut _131: &mut std::io::BufReader<std::fs::File>;
+    let mut _132: &mut [u8];
+    let mut _133: &mut [u8; 4];
+    let mut _134: &mut [u8; 4];
+    let mut _135: isize;
+    let mut _137: !;
+    let mut _138: std::result::Result<std::convert::Infallible, std::io::Error>;
+    let mut _141: u32;
+    let mut _142: [u8; 4];
+    let _143: ();
+    let _144: ();
+    let mut _145: std::fmt::Arguments<'_>;
+    let mut _147: &usize;
+    let mut _149: core::fmt::rt::Argument<'_>;
+    let mut _150: &usize;
+    let mut _151: &[&str; 2];
+    let _152: &[&str; 2];
+    let _153: [&str; 2];
+    let mut _154: &[core::fmt::rt::Argument<'_>; 1];
+    let _155: &[core::fmt::rt::Argument<'_>; 1];
+    let _157: ();
+    let mut _158: std::ops::ControlFlow<std::result::Result<std::convert::Infallible, std::io::Error>>;
+    let mut _159: std::result::Result<(), std::io::Error>;
+    let mut _160: &mut std::io::BufReader<std::fs::File>;
+    let mut _161: &mut [u8];
+    let mut _162: &mut [u8; 8];
+    let mut _163: &mut [u8; 8];
+    let mut _164: isize;
+    let mut _166: !;
+    let mut _167: std::result::Result<std::convert::Infallible, std::io::Error>;
+    let _169: ();
+    let _170: ();
+    let mut _171: std::fmt::Arguments<'_>;
+    let mut _172: &[&str; 1];
+    let _173: &[&str; 1];
+    let _174: [&str; 1];
+    let mut _176: usize;
+    let _177: ();
+    let mut _178: std::ops::Range<usize>;
+    let mut _179: std::ops::Range<usize>;
+    let mut _180: usize;
+    let mut _182: ();
+    let _183: ();
+    let mut _184: std::option::Option<usize>;
+    let mut _185: &mut std::ops::Range<usize>;
+    let mut _186: &mut std::ops::Range<usize>;
+    let mut _187: isize;
+    let mut _188: !;
+    let _191: ();
+    let mut _192: std::ops::ControlFlow<std::result::Result<std::convert::Infallible, std::io::Error>>;
+    let mut _193: std::result::Result<(), std::io::Error>;
+    let mut _194: &mut std::io::BufReader<std::fs::File>;
+    let mut _195: &mut [u8];
+    let mut _196: &mut [u8; 8];
+    let mut _197: &mut [u8; 8];
+    let mut _198: isize;
+    let mut _200: !;
+    let mut _201: std::result::Result<std::convert::Infallible, std::io::Error>;
+    let mut _204: u64;
+    let mut _205: [u8; 8];
+    let _207: ();
+    let mut _208: std::ops::ControlFlow<std::result::Result<std::convert::Infallible, std::io::Error>>;
+    let mut _209: std::result::Result<(), std::io::Error>;
+    let mut _210: &mut std::io::BufReader<std::fs::File>;
+    let mut _211: &mut [u8];
+    let mut _212: &mut [u8; 8];
+    let mut _213: &mut [u8; 8];
+    let mut _214: isize;
+    let mut _216: !;
+    let mut _217: std::result::Result<std::convert::Infallible, std::io::Error>;
+    let mut _220: u64;
+    let mut _221: [u8; 8];
+    let _223: ();
+    let mut _224: std::ops::ControlFlow<std::result::Result<std::convert::Infallible, std::io::Error>>;
+    let mut _225: std::result::Result<(), std::io::Error>;
+    let mut _226: &mut std::io::BufReader<std::fs::File>;
+    let mut _227: &mut [u8];
+    let mut _228: &mut [u8; 4];
+    let mut _229: &mut [u8; 4];
+    let mut _230: isize;
+    let mut _232: !;
+    let mut _233: std::result::Result<std::convert::Infallible, std::io::Error>;
+    let mut _236: [u8; 4];
+    let _238: ();
+    let mut _239: std::ops::ControlFlow<std::result::Result<std::convert::Infallible, std::io::Error>>;
+    let mut _240: std::result::Result<(), std::io::Error>;
+    let mut _241: &mut std::io::BufReader<std::fs::File>;
+    let mut _242: &mut [u8];
+    let mut _243: &mut [u8; 4];
+    let mut _244: &mut [u8; 4];
+    let mut _245: isize;
+    let mut _247: !;
+    let mut _248: std::result::Result<std::convert::Infallible, std::io::Error>;
+    let mut _251: [u8; 4];
+    let mut _253: std::ops::ControlFlow<std::result::Result<std::convert::Infallible, std::io::Error>, types::page::PageLocation>;
+    let mut _254: std::result::Result<types::page::PageLocation, std::io::Error>;
+    let mut _255: std::result::Result<types::page::PageLocation, types::page::PageError>;
+    let mut _256: i32;
+    let mut _257: {closure@src/02_runtime/checkpoint.rs:102:69: 102:72};
+    let mut _258: &i32;
+    let mut _259: &types::page::PageID;
+    let mut _260: isize;
+    let mut _262: !;
+    let mut _263: std::result::Result<std::convert::Infallible, std::io::Error>;
+    let _266: ();
+    let mut _267: std::ops::ControlFlow<std::result::Result<std::convert::Infallible, std::io::Error>>;
+    let mut _268: std::result::Result<(), std::io::Error>;
+    let mut _269: &mut std::io::BufReader<std::fs::File>;
+    let mut _270: &mut [u8];
+    let mut _271: &mut [u8; 4];
+    let mut _272: &mut [u8; 4];
+    let mut _273: isize;
+    let mut _275: !;
+    let mut _276: std::result::Result<std::convert::Infallible, std::io::Error>;
+    let mut _279: u32;
+    let mut _280: [u8; 4];
+    let mut _282: usize;
+    let _283: ();
+    let mut _284: std::ops::ControlFlow<std::result::Result<std::convert::Infallible, std::io::Error>>;
+    let mut _285: std::result::Result<(), std::io::Error>;
+    let mut _286: &mut std::io::BufReader<std::fs::File>;
+    let mut _287: &mut [u8];
+    let mut _288: &mut [u8];
+    let mut _289: &mut std::vec::Vec<u8>;
+    let mut _290: &mut std::vec::Vec<u8>;
+    let mut _291: isize;
+    let mut _293: !;
+    let mut _294: std::result::Result<std::convert::Infallible, std::io::Error>;
+    let _297: ();
+    let mut _298: std::ops::ControlFlow<std::result::Result<std::convert::Infallible, std::io::Error>>;
+    let mut _299: std::result::Result<(), std::io::Error>;
+    let mut _300: &mut std::io::BufReader<std::fs::File>;
+    let mut _301: &mut [u8];
+    let mut _302: &mut [u8; 4];
+    let mut _303: &mut [u8; 4];
+    let mut _304: isize;
+    let mut _306: !;
+    let mut _307: std::result::Result<std::convert::Infallible, std::io::Error>;
+    let mut _310: u32;
+    let mut _311: [u8; 4];
+    let mut _313: usize;
+    let _314: ();
+    let mut _315: std::ops::ControlFlow<std::result::Result<std::convert::Infallible, std::io::Error>>;
+    let mut _316: std::result::Result<(), std::io::Error>;
+    let mut _317: &mut std::io::BufReader<std::fs::File>;
+    let mut _318: &mut [u8];
+    let mut _319: &mut [u8];
+    let mut _320: &mut std::vec::Vec<u8>;
+    let mut _321: &mut std::vec::Vec<u8>;
+    let mut _322: isize;
+    let mut _324: !;
+    let mut _325: std::result::Result<std::convert::Infallible, std::io::Error>;
+    let _327: ();
+    let _328: ();
+    let mut _329: std::fmt::Arguments<'_>;
+    let mut _331: &usize;
+    let mut _332: &types::page::PageID;
+    let mut _333: &usize;
+    let mut _334: &u32;
+    let mut _335: &types::page::PageLocation;
+    let mut _336: &usize;
+    let mut _338: core::fmt::rt::Argument<'_>;
+    let mut _339: &usize;
+    let mut _340: core::fmt::rt::Argument<'_>;
+    let mut _341: &types::page::PageID;
+    let mut _342: core::fmt::rt::Argument<'_>;
+    let mut _343: &usize;
+    let mut _344: core::fmt::rt::Argument<'_>;
+    let mut _345: &u32;
+    let mut _346: core::fmt::rt::Argument<'_>;
+    let mut _347: &types::page::PageLocation;
+    let mut _348: core::fmt::rt::Argument<'_>;
+    let mut _349: &usize;
+    let mut _350: &[&str; 7];
+    let _351: &[&str; 7];
+    let _352: [&str; 7];
+    let mut _353: &[core::fmt::rt::Argument<'_>; 6];
+    let _354: &[core::fmt::rt::Argument<'_>; 6];
+    let _355: ();
+    let mut _356: &mut std::vec::Vec<runtime::allocator::PageSnapshotData>;
+    let mut _357: runtime::allocator::PageSnapshotData;
+    let mut _358: types::page::PageID;
+    let mut _359: usize;
+    let mut _360: u32;
+    let mut _361: types::page::PageLocation;
+    let mut _362: std::vec::Vec<u8>;
+    let mut _363: std::vec::Vec<u8>;
+    let _364: ();
+    let _365: ();
+    let mut _366: std::fmt::Arguments<'_>;
+    let mut _368: &usize;
+    let _369: usize;
+    let mut _370: &std::vec::Vec<runtime::allocator::PageSnapshotData>;
+    let mut _372: core::fmt::rt::Argument<'_>;
+    let mut _373: &usize;
+    let mut _374: &[&str; 2];
+    let _375: &[&str; 2];
+    let _376: [&str; 2];
+    let mut _377: &[core::fmt::rt::Argument<'_>; 1];
+    let _378: &[core::fmt::rt::Argument<'_>; 1];
+    let mut _379: std::result::Result<(), types::page::PageError>;
+    let mut _380: &runtime::allocator::PageAllocator;
+    let mut _381: std::vec::Vec<runtime::allocator::PageSnapshotData>;
+    let mut _382: isize;
+    let _383: ();
+    let _384: ();
+    let mut _385: std::fmt::Arguments<'_>;
+    let mut _386: &[&str; 1];
+    let _387: &[&str; 1];
+    let _388: [&str; 1];
+    let mut _389: ();
+    let _391: ();
+    let _392: ();
+    let mut _393: std::fmt::Arguments<'_>;
+    let mut _395: &types::page::PageError;
+    let mut _397: core::fmt::rt::Argument<'_>;
+    let mut _398: &types::page::PageError;
+    let mut _399: &[&str; 2];
+    let _400: &[&str; 2];
+    let _401: [&str; 2];
+    let mut _402: &[core::fmt::rt::Argument<'_>; 1];
+    let _403: &[core::fmt::rt::Argument<'_>; 1];
+    let _404: ();
+    let _405: ();
+    let mut _406: std::fmt::Arguments<'_>;
+    let mut _407: &[&str; 1];
+    let _408: &[&str; 1];
+    let _409: [&str; 1];
+    let mut _410: std::io::Error;
+    let mut _411: std::io::ErrorKind;
+    let mut _412: std::string::String;
+    let mut _413: std::string::String;
+    let mut _414: std::fmt::Arguments<'_>;
+    let mut _416: &types::page::PageError;
+    let mut _418: core::fmt::rt::Argument<'_>;
+    let mut _419: &types::page::PageError;
+    let mut _420: &[&str; 1];
+    let _421: &[&str; 1];
+    let _422: [&str; 1];
+    let mut _423: &[core::fmt::rt::Argument<'_>; 1];
+    let _424: &[core::fmt::rt::Argument<'_>; 1];
+    let mut _441: &std::path::Display<'_>;
+    let mut _442: &&[u8];
+    let mut _443: &[u8; 8];
+    let mut _444: &u32;
+    let mut _445: &u32;
+    let mut _446: &u32;
+    let mut _447: &usize;
+    let mut _448: &usize;
+    let mut _449: &types::page::PageID;
+    let mut _450: &usize;
+    let mut _451: &u32;
+    let mut _452: &types::page::PageLocation;
+    let mut _453: &usize;
+    let mut _454: &usize;
+    let mut _455: &types::page::PageError;
+    let mut _456: &types::page::PageError;
+    let mut _457: bool;
+    let mut _458: bool;
+    let mut _459: bool;
+    let mut _460: bool;
+    let mut _461: bool;
+    let mut _462: bool;
+    let mut _463: isize;
+    let mut _464: isize;
+    let mut _465: isize;
+    let mut _466: isize;
+    let mut _467: isize;
+    let mut _468: isize;
+    let mut _469: isize;
+    let mut _470: isize;
+    let mut _471: isize;
+    let mut _472: isize;
+    let mut _473: isize;
+    let mut _474: isize;
+    let mut _475: isize;
+    let mut _476: isize;
+    let mut _477: isize;
+    let mut _478: isize;
+    let mut _479: isize;
+    let mut _480: isize;
+    let mut _481: isize;
+    let mut _482: isize;
+    let mut _483: isize;
+    let mut _484: isize;
+    let mut _485: isize;
+    let mut _486: isize;
+    let mut _487: isize;
+    let mut _488: isize;
+    let mut _489: isize;
+    let mut _490: isize;
+    let mut _491: isize;
+    let mut _492: isize;
+    let mut _493: isize;
+    let mut _494: isize;
+    let mut _495: isize;
+    let mut _496: isize;
+    let mut _497: isize;
+    let mut _498: isize;
+    let mut _499: isize;
+    let mut _500: isize;
+    let mut _501: isize;
+    let mut _502: isize;
+    let mut _503: isize;
+    let mut _504: isize;
+    let mut _505: isize;
+    let mut _506: isize;
+    let mut _507: isize;
+    let mut _508: isize;
+    let mut _509: isize;
+    let mut _510: isize;
+    let mut _511: isize;
+    let mut _512: isize;
+    let mut _513: isize;
+    let mut _514: isize;
+    let mut _515: isize;
+    let mut _516: isize;
+    let mut _517: isize;
+    let mut _518: isize;
+    let mut _519: isize;
+    let mut _520: isize;
+    let mut _521: isize;
+    let mut _522: isize;
+    let mut _523: isize;
+    let mut _524: isize;
+    let mut _525: isize;
+    let mut _526: isize;
+    let mut _527: isize;
+    let mut _528: isize;
+    let mut _529: isize;
+    let mut _530: isize;
+    let mut _531: isize;
+    let mut _532: isize;
+    scope 1 {
+        debug args => _7;
+        let _13: [core::fmt::rt::Argument<'_>; 1];
+        scope 2 {
+            debug args => _13;
+            let mut _440: &[&str; 2];
+        }
+    }
+    scope 3 {
+        debug reader => _21;
+        let mut _31: [u8; 8];
+        scope 8 {
+            debug magic => _31;
+            let _40: std::result::Result<std::convert::Infallible, std::io::Error>;
+            let _43: ();
+            let _56: (&&[u8], &[u8; 8]);
+            let mut _76: [u8; 4];
+            let mut _426: &&[u8];
+            let mut _438: &[&str; 1];
+            let mut _439: &&[u8];
+            scope 9 {
+                debug residual => _40;
+                scope 10 {
+                }
+            }
+            scope 11 {
+                debug val => const ();
+                scope 12 {
+                }
+            }
+            scope 13 {
+                debug args => _56;
+                let _60: [core::fmt::rt::Argument<'_>; 2];
+                scope 14 {
+                    debug args => _60;
+                    let mut _425: &[&str; 2];
+                }
+            }
+            scope 15 {
+                debug version_bytes => _76;
+                let _85: std::result::Result<std::convert::Infallible, std::io::Error>;
+                let _88: ();
+                let _89: u32;
+                scope 16 {
+                    debug residual => _85;
+                    scope 17 {
+                    }
+                }
+                scope 18 {
+                    debug val => const ();
+                    scope 19 {
+                    }
+                }
+                scope 20 {
+                    debug version => _89;
+                    let _100: (&u32, &u32);
+                    let _117: (&u32,);
+                    let mut _127: [u8; 4];
+                    let mut _428: &u32;
+                    scope 21 {
+                        debug args => _100;
+                        let _104: [core::fmt::rt::Argument<'_>; 2];
+                        scope 22 {
+                            debug args => _104;
+                            let mut _427: &[&str; 2];
+                        }
+                    }
+                    scope 23 {
+                        debug args => _117;
+                        let _119: [core::fmt::rt::Argument<'_>; 1];
+                        scope 24 {
+                            debug args => _119;
+                            let mut _437: &[&str; 2];
+                        }
+                    }
+                    scope 25 {
+                        debug page_count_bytes => _127;
+                        let _136: std::result::Result<std::convert::Infallible, std::io::Error>;
+                        let _139: ();
+                        let _140: usize;
+                        scope 26 {
+                            debug residual => _136;
+                            scope 27 {
+                            }
+                        }
+                        scope 28 {
+                            debug val => const ();
+                            scope 29 {
+                            }
+                        }
+                        scope 30 {
+                            debug page_count => _140;
+                            let _146: (&usize,);
+                            let mut _156: [u8; 8];
+                            scope 31 {
+                                debug args => _146;
+                                let _148: [core::fmt::rt::Argument<'_>; 1];
+                                scope 32 {
+                                    debug args => _148;
+                                    let mut _436: &[&str; 2];
+                                }
+                            }
+                            scope 33 {
+                                debug log_offset_bytes => _156;
+                                let _165: std::result::Result<std::convert::Infallible, std::io::Error>;
+                                let _168: ();
+                                let mut _175: std::vec::Vec<runtime::allocator::PageSnapshotData>;
+                                let mut _435: &[&str; 1];
+                                scope 34 {
+                                    debug residual => _165;
+                                    scope 35 {
+                                    }
+                                }
+                                scope 36 {
+                                    debug val => const ();
+                                    scope 37 {
+                                    }
+                                }
+                                scope 38 {
+                                    debug snapshots => _175;
+                                    let mut _181: std::ops::Range<usize>;
+                                    let _367: (&usize,);
+                                    let _390: types::page::PageError;
+                                    let mut _433: &[&str; 1];
+                                    scope 39 {
+                                        debug iter => _181;
+                                        let _189: usize;
+                                        scope 40 {
+                                            debug i => _189;
+                                            let mut _190: [u8; 8];
+                                            scope 41 {
+                                                debug id_bytes => _190;
+                                                let _199: std::result::Result<std::convert::Infallible, std::io::Error>;
+                                                let _202: ();
+                                                let _203: types::page::PageID;
+                                                scope 42 {
+                                                    debug residual => _199;
+                                                    scope 43 {
+                                                    }
+                                                }
+                                                scope 44 {
+                                                    debug val => const ();
+                                                    scope 45 {
+                                                    }
+                                                }
+                                                scope 46 {
+                                                    debug id => _203;
+                                                    let mut _206: [u8; 8];
+                                                    scope 47 {
+                                                        debug size_bytes => _206;
+                                                        let _215: std::result::Result<std::convert::Infallible, std::io::Error>;
+                                                        let _218: ();
+                                                        let _219: usize;
+                                                        scope 48 {
+                                                            debug residual => _215;
+                                                            scope 49 {
+                                                            }
+                                                        }
+                                                        scope 50 {
+                                                            debug val => const ();
+                                                            scope 51 {
+                                                            }
+                                                        }
+                                                        scope 52 {
+                                                            debug size => _219;
+                                                            let mut _222: [u8; 4];
+                                                            scope 53 {
+                                                                debug epoch_bytes => _222;
+                                                                let _231: std::result::Result<std::convert::Infallible, std::io::Error>;
+                                                                let _234: ();
+                                                                let _235: u32;
+                                                                scope 54 {
+                                                                    debug residual => _231;
+                                                                    scope 55 {
+                                                                    }
+                                                                }
+                                                                scope 56 {
+                                                                    debug val => const ();
+                                                                    scope 57 {
+                                                                    }
+                                                                }
+                                                                scope 58 {
+                                                                    debug epoch => _235;
+                                                                    let mut _237: [u8; 4];
+                                                                    scope 59 {
+                                                                        debug loc_bytes => _237;
+                                                                        let _246: std::result::Result<std::convert::Infallible, std::io::Error>;
+                                                                        let _249: ();
+                                                                        let _250: i32;
+                                                                        scope 60 {
+                                                                            debug residual => _246;
+                                                                            scope 61 {
+                                                                            }
+                                                                        }
+                                                                        scope 62 {
+                                                                            debug val => const ();
+                                                                            scope 63 {
+                                                                            }
+                                                                        }
+                                                                        scope 64 {
+                                                                            debug location_tag => _250;
+                                                                            let _252: types::page::PageLocation;
+                                                                            let _261: std::result::Result<std::convert::Infallible, std::io::Error>;
+                                                                            let _264: types::page::PageLocation;
+                                                                            scope 65 {
+                                                                                debug location => _252;
+                                                                                let mut _265: [u8; 4];
+                                                                                scope 70 {
+                                                                                    debug metadata_len_bytes => _265;
+                                                                                    let _274: std::result::Result<std::convert::Infallible, std::io::Error>;
+                                                                                    let _277: ();
+                                                                                    let _278: usize;
+                                                                                    scope 71 {
+                                                                                        debug residual => _274;
+                                                                                        scope 72 {
+                                                                                        }
+                                                                                    }
+                                                                                    scope 73 {
+                                                                                        debug val => const ();
+                                                                                        scope 74 {
+                                                                                        }
+                                                                                    }
+                                                                                    scope 75 {
+                                                                                        debug metadata_len => _278;
+                                                                                        let mut _281: std::vec::Vec<u8>;
+                                                                                        scope 76 {
+                                                                                            debug metadata_blob => _281;
+                                                                                            let _292: std::result::Result<std::convert::Infallible, std::io::Error>;
+                                                                                            let _295: ();
+                                                                                            let mut _296: [u8; 4];
+                                                                                            scope 77 {
+                                                                                                debug residual => _292;
+                                                                                                scope 78 {
+                                                                                                }
+                                                                                            }
+                                                                                            scope 79 {
+                                                                                                debug val => const ();
+                                                                                                scope 80 {
+                                                                                                }
+                                                                                            }
+                                                                                            scope 81 {
+                                                                                                debug data_len_bytes => _296;
+                                                                                                let _305: std::result::Result<std::convert::Infallible, std::io::Error>;
+                                                                                                let _308: ();
+                                                                                                let _309: usize;
+                                                                                                scope 82 {
+                                                                                                    debug residual => _305;
+                                                                                                    scope 83 {
+                                                                                                    }
+                                                                                                }
+                                                                                                scope 84 {
+                                                                                                    debug val => const ();
+                                                                                                    scope 85 {
+                                                                                                    }
+                                                                                                }
+                                                                                                scope 86 {
+                                                                                                    debug data_len => _309;
+                                                                                                    let mut _312: std::vec::Vec<u8>;
+                                                                                                    scope 87 {
+                                                                                                        debug data => _312;
+                                                                                                        let _323: std::result::Result<std::convert::Infallible, std::io::Error>;
+                                                                                                        let _326: ();
+                                                                                                        let _330: (&usize, &types::page::PageID, &usize, &u32, &types::page::PageLocation, &usize);
+                                                                                                        scope 88 {
+                                                                                                            debug residual => _323;
+                                                                                                            scope 89 {
+                                                                                                            }
+                                                                                                        }
+                                                                                                        scope 90 {
+                                                                                                            debug val => const ();
+                                                                                                            scope 91 {
+                                                                                                            }
+                                                                                                        }
+                                                                                                        scope 92 {
+                                                                                                            debug args => _330;
+                                                                                                            let _337: [core::fmt::rt::Argument<'_>; 6];
+                                                                                                            scope 93 {
+                                                                                                                debug args => _337;
+                                                                                                                let mut _429: &[&str; 7];
+                                                                                                            }
+                                                                                                        }
+                                                                                                    }
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                            scope 66 {
+                                                                                debug residual => _261;
+                                                                                scope 67 {
+                                                                                }
+                                                                            }
+                                                                            scope 68 {
+                                                                                debug val => _264;
+                                                                                scope 69 {
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    scope 94 {
+                                        debug args => _367;
+                                        let _371: [core::fmt::rt::Argument<'_>; 1];
+                                        scope 95 {
+                                            debug args => _371;
+                                            let mut _434: &[&str; 2];
+                                        }
+                                    }
+                                    scope 96 {
+                                        debug e => _390;
+                                        let _394: (&types::page::PageError,);
+                                        let _415: (&types::page::PageError,);
+                                        let mut _431: &[&str; 1];
+                                        scope 97 {
+                                            debug args => _394;
+                                            let _396: [core::fmt::rt::Argument<'_>; 1];
+                                            scope 98 {
+                                                debug args => _396;
+                                                let mut _432: &[&str; 2];
+                                            }
+                                        }
+                                        scope 99 {
+                                            debug args => _415;
+                                            let _417: [core::fmt::rt::Argument<'_>; 1];
+                                            scope 100 {
+                                                debug args => _417;
+                                                let mut _430: &[&str; 1];
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    scope 4 {
+        debug residual => _27;
+        scope 5 {
+        }
+    }
+    scope 6 {
+        debug val => _30;
+        scope 7 {
+        }
+    }
+
+    bb0: {
+        _462 = const false;
+        _459 = const false;
+        _458 = const false;
+        _457 = const false;
+        _461 = const false;
+        _460 = const false;
+        _462 = const true;
+        _12 = &_3;
+        _11 = <impl AsRef<Path> as AsRef<Path>>::as_ref(move _12) -> [return: bb1, unwind: bb183];
+    }
+
+    bb1: {
+        _10 = copy _11;
+        _9 = Path::display(move _10) -> [return: bb2, unwind: bb183];
+    }
+
+    bb2: {
+        _8 = &_9;
+        _7 = (move _8,);
+        _441 = copy (_7.0: &std::path::Display<'_>);
+        _15 = copy _441;
+        _14 = core::fmt::rt::Argument::<'_>::new_display::<std::path::Display<'_>>(move _15) -> [return: bb3, unwind: bb183];
+    }
+
+    bb3: {
+        _13 = [move _14];
+        _440 = const runtime::checkpoint::load_checkpoint::<impl AsRef<Path>>::promoted[15];
+        _17 = copy _440;
+        _16 = copy _17;
+        _20 = &_13;
+        _19 = copy _20;
+        _6 = core::fmt::rt::<impl Arguments<'_>>::new_v1::<2, 1>(move _16, move _19) -> [return: bb4, unwind: bb183];
+    }
+
+    bb4: {
+        _5 = _eprint(move _6) -> [return: bb5, unwind: bb183];
+    }
+
+    bb5: {
+        _462 = const false;
+        _25 = move _3;
+        _24 = File::open::<impl AsRef<Path>>(move _25) -> [return: bb6, unwind: bb183];
+    }
+
+    bb6: {
+        _23 = <Result<File, std::io::Error> as Try>::branch(move _24) -> [return: bb7, unwind: bb183];
+    }
+
+    bb7: {
+        _460 = const true;
+        _461 = const true;
+        _26 = discriminant(_23);
+        switchInt(move _26) -> [0: bb9, 1: bb10, otherwise: bb8];
+    }
+
+    bb8: {
+        unreachable;
+    }
+
+    bb9: {
+        _30 = move ((_23 as Continue).0: std::fs::File);
+        _22 = move _30;
+        _21 = BufReader::<File>::new(move _22) -> [return: bb12, unwind: bb181];
+    }
+
+    bb10: {
+        _27 = move ((_23 as Break).0: std::result::Result<std::convert::Infallible, std::io::Error>);
+        _29 = move _27;
+        _0 = <Result<(), std::io::Error> as FromResidual<Result<Infallible, std::io::Error>>>::from_residual(move _29) -> [return: bb11, unwind: bb181];
+    }
+
+    bb11: {
+        _517 = discriminant(_23);
+        _460 = const false;
+        _461 = const false;
+        goto -> bb159;
+    }
+
+    bb12: {
+        _463 = discriminant(_23);
+        _460 = const false;
+        _461 = const false;
+        _31 = [const 0_u8; 8];
+        _35 = &mut _21;
+        _38 = &mut _31;
+        _37 = copy _38;
+        _36 = move _37 as &mut [u8] (PointerCoercion(Unsize, Implicit));
+        _34 = <BufReader<File> as std::io::Read>::read_exact(move _35, move _36) -> [return: bb13, unwind: bb160];
+    }
+
+    bb13: {
+        _33 = <Result<(), std::io::Error> as Try>::branch(move _34) -> [return: bb14, unwind: bb160];
+    }
+
+    bb14: {
+        _39 = discriminant(_33);
+        switchInt(move _39) -> [0: bb15, 1: bb16, otherwise: bb8];
+    }
+
+    bb15: {
+        _465 = discriminant(_33);
+        _47 = &_31;
+        _46 = &_47;
+        _439 = const runtime::checkpoint::load_checkpoint::<impl AsRef<Path>>::promoted[14];
+        _48 = copy _439;
+        _45 = <&[u8; 8] as PartialEq<&[u8]>>::ne(move _46, move _48) -> [return: bb18, unwind: bb160];
+    }
+
+    bb16: {
+        _40 = move ((_33 as Break).0: std::result::Result<std::convert::Infallible, std::io::Error>);
+        _42 = move _40;
+        _0 = <Result<(), std::io::Error> as FromResidual<Result<Infallible, std::io::Error>>>::from_residual(move _42) -> [return: bb17, unwind: bb180];
+    }
+
+    bb17: {
+        _515 = discriminant(_33);
+        goto -> bb158;
+    }
+
+    bb18: {
+        switchInt(move _45) -> [0: bb26, otherwise: bb19];
+    }
+
+    bb19: {
+        _52 = InvalidData;
+        _426 = const runtime::checkpoint::load_checkpoint::<impl AsRef<Path>>::promoted[1];
+        _57 = copy _426;
+        _59 = &_31;
+        _56 = (move _57, move _59);
+        _442 = copy (_56.0: &&[u8]);
+        _62 = copy _442;
+        _61 = core::fmt::rt::Argument::<'_>::new_debug::<&[u8]>(move _62) -> [return: bb20, unwind: bb160];
+    }
+
+    bb20: {
+        _443 = copy (_56.1: &[u8; 8]);
+        _64 = copy _443;
+        _63 = core::fmt::rt::Argument::<'_>::new_debug::<[u8; 8]>(move _64) -> [return: bb21, unwind: bb160];
+    }
+
+    bb21: {
+        _60 = [move _61, move _63];
+        _425 = const runtime::checkpoint::load_checkpoint::<impl AsRef<Path>>::promoted[0];
+        _66 = copy _425;
+        _65 = copy _66;
+        _69 = &_60;
+        _68 = copy _69;
+        _55 = core::fmt::rt::<impl Arguments<'_>>::new_v1::<2, 2>(move _65, move _68) -> [return: bb22, unwind: bb160];
+    }
+
+    bb22: {
+        _54 = format(move _55) -> [return: bb23, unwind: bb160];
+    }
+
+    bb23: {
+        _53 = must_use::<String>(move _54) -> [return: bb24, unwind: bb160];
+    }
+
+    bb24: {
+        _51 = std::io::Error::new::<String>(move _52, move _53) -> [return: bb25, unwind: bb160];
+    }
+
+    bb25: {
+        _0 = Result::<(), std::io::Error>::Err(move _51);
+        goto -> bb158;
+    }
+
+    bb26: {
+        _438 = const runtime::checkpoint::load_checkpoint::<impl AsRef<Path>>::promoted[13];
+        _74 = copy _438;
+        _73 = copy _74;
+        _72 = core::fmt::rt::<impl Arguments<'_>>::new_const::<1>(move _73) -> [return: bb27, unwind: bb160];
+    }
+
+    bb27: {
+        _71 = _eprint(move _72) -> [return: bb28, unwind: bb160];
+    }
+
+    bb28: {
+        _76 = [const 0_u8; 4];
+        _80 = &mut _21;
+        _83 = &mut _76;
+        _82 = copy _83;
+        _81 = move _82 as &mut [u8] (PointerCoercion(Unsize, Implicit));
+        _79 = <BufReader<File> as std::io::Read>::read_exact(move _80, move _81) -> [return: bb29, unwind: bb160];
+    }
+
+    bb29: {
+        _78 = <Result<(), std::io::Error> as Try>::branch(move _79) -> [return: bb30, unwind: bb160];
+    }
+
+    bb30: {
+        _84 = discriminant(_78);
+        switchInt(move _84) -> [0: bb31, 1: bb32, otherwise: bb8];
+    }
+
+    bb31: {
+        _467 = discriminant(_78);
+        _90 = copy _76;
+        _89 = core::num::<impl u32>::from_le_bytes(move _90) -> [return: bb34, unwind: bb160];
+    }
+
+    bb32: {
+        _85 = move ((_78 as Break).0: std::result::Result<std::convert::Infallible, std::io::Error>);
+        _87 = move _85;
+        _0 = <Result<(), std::io::Error> as FromResidual<Result<Infallible, std::io::Error>>>::from_residual(move _87) -> [return: bb33, unwind: bb179];
+    }
+
+    bb33: {
+        _513 = discriminant(_78);
+        goto -> bb158;
+    }
+
+    bb34: {
+        _93 = copy _89;
+        _92 = Ne(move _93, const runtime::checkpoint::SNAPSHOT_VERSION);
+        switchInt(move _92) -> [0: bb42, otherwise: bb35];
+    }
+
+    bb35: {
+        _96 = InvalidData;
+        _101 = &_89;
+        _428 = const runtime::checkpoint::load_checkpoint::<impl AsRef<Path>>::promoted[3];
+        _102 = copy _428;
+        _100 = (move _101, move _102);
+        _444 = copy (_100.0: &u32);
+        _106 = copy _444;
+        _105 = core::fmt::rt::Argument::<'_>::new_display::<u32>(move _106) -> [return: bb36, unwind: bb160];
+    }
+
+    bb36: {
+        _445 = copy (_100.1: &u32);
+        _108 = copy _445;
+        _107 = core::fmt::rt::Argument::<'_>::new_display::<u32>(move _108) -> [return: bb37, unwind: bb160];
+    }
+
+    bb37: {
+        _104 = [move _105, move _107];
+        _427 = const runtime::checkpoint::load_checkpoint::<impl AsRef<Path>>::promoted[2];
+        _110 = copy _427;
+        _109 = copy _110;
+        _113 = &_104;
+        _112 = copy _113;
+        _99 = core::fmt::rt::<impl Arguments<'_>>::new_v1::<2, 2>(move _109, move _112) -> [return: bb38, unwind: bb160];
+    }
+
+    bb38: {
+        _98 = format(move _99) -> [return: bb39, unwind: bb160];
+    }
+
+    bb39: {
+        _97 = must_use::<String>(move _98) -> [return: bb40, unwind: bb160];
+    }
+
+    bb40: {
+        _95 = std::io::Error::new::<String>(move _96, move _97) -> [return: bb41, unwind: bb160];
+    }
+
+    bb41: {
+        _0 = Result::<(), std::io::Error>::Err(move _95);
+        goto -> bb158;
+    }
+
+    bb42: {
+        _118 = &_89;
+        _117 = (move _118,);
+        _446 = copy (_117.0: &u32);
+        _121 = copy _446;
+        _120 = core::fmt::rt::Argument::<'_>::new_display::<u32>(move _121) -> [return: bb43, unwind: bb160];
+    }
+
+    bb43: {
+        _119 = [move _120];
+        _437 = const runtime::checkpoint::load_checkpoint::<impl AsRef<Path>>::promoted[12];
+        _123 = copy _437;
+        _122 = copy _123;
+        _126 = &_119;
+        _125 = copy _126;
+        _116 = core::fmt::rt::<impl Arguments<'_>>::new_v1::<2, 1>(move _122, move _125) -> [return: bb44, unwind: bb160];
+    }
+
+    bb44: {
+        _115 = _eprint(move _116) -> [return: bb45, unwind: bb160];
+    }
+
+    bb45: {
+        _127 = [const 0_u8; 4];
+        _131 = &mut _21;
+        _134 = &mut _127;
+        _133 = copy _134;
+        _132 = move _133 as &mut [u8] (PointerCoercion(Unsize, Implicit));
+        _130 = <BufReader<File> as std::io::Read>::read_exact(move _131, move _132) -> [return: bb46, unwind: bb160];
+    }
+
+    bb46: {
+        _129 = <Result<(), std::io::Error> as Try>::branch(move _130) -> [return: bb47, unwind: bb160];
+    }
+
+    bb47: {
+        _135 = discriminant(_129);
+        switchInt(move _135) -> [0: bb48, 1: bb49, otherwise: bb8];
+    }
+
+    bb48: {
+        _469 = discriminant(_129);
+        _142 = copy _127;
+        _141 = core::num::<impl u32>::from_le_bytes(move _142) -> [return: bb51, unwind: bb160];
+    }
+
+    bb49: {
+        _136 = move ((_129 as Break).0: std::result::Result<std::convert::Infallible, std::io::Error>);
+        _138 = move _136;
+        _0 = <Result<(), std::io::Error> as FromResidual<Result<Infallible, std::io::Error>>>::from_residual(move _138) -> [return: bb50, unwind: bb178];
+    }
+
+    bb50: {
+        _511 = discriminant(_129);
+        goto -> bb158;
+    }
+
+    bb51: {
+        _140 = move _141 as usize (IntToInt);
+        _147 = &_140;
+        _146 = (move _147,);
+        _447 = copy (_146.0: &usize);
+        _150 = copy _447;
+        _149 = core::fmt::rt::Argument::<'_>::new_display::<usize>(move _150) -> [return: bb52, unwind: bb160];
+    }
+
+    bb52: {
+        _148 = [move _149];
+        _436 = const runtime::checkpoint::load_checkpoint::<impl AsRef<Path>>::promoted[11];
+        _152 = copy _436;
+        _151 = copy _152;
+        _155 = &_148;
+        _154 = copy _155;
+        _145 = core::fmt::rt::<impl Arguments<'_>>::new_v1::<2, 1>(move _151, move _154) -> [return: bb53, unwind: bb160];
+    }
+
+    bb53: {
+        _144 = _eprint(move _145) -> [return: bb54, unwind: bb160];
+    }
+
+    bb54: {
+        _156 = [const 0_u8; 8];
+        _160 = &mut _21;
+        _163 = &mut _156;
+        _162 = copy _163;
+        _161 = move _162 as &mut [u8] (PointerCoercion(Unsize, Implicit));
+        _159 = <BufReader<File> as std::io::Read>::read_exact(move _160, move _161) -> [return: bb55, unwind: bb160];
+    }
+
+    bb55: {
+        _158 = <Result<(), std::io::Error> as Try>::branch(move _159) -> [return: bb56, unwind: bb160];
+    }
+
+    bb56: {
+        _164 = discriminant(_158);
+        switchInt(move _164) -> [0: bb57, 1: bb58, otherwise: bb8];
+    }
+
+    bb57: {
+        _471 = discriminant(_158);
+        _435 = const runtime::checkpoint::load_checkpoint::<impl AsRef<Path>>::promoted[10];
+        _173 = copy _435;
+        _172 = copy _173;
+        _171 = core::fmt::rt::<impl Arguments<'_>>::new_const::<1>(move _172) -> [return: bb60, unwind: bb160];
+    }
+
+    bb58: {
+        _165 = move ((_158 as Break).0: std::result::Result<std::convert::Infallible, std::io::Error>);
+        _167 = move _165;
+        _0 = <Result<(), std::io::Error> as FromResidual<Result<Infallible, std::io::Error>>>::from_residual(move _167) -> [return: bb59, unwind: bb177];
+    }
+
+    bb59: {
+        _509 = discriminant(_158);
+        goto -> bb158;
+    }
+
+    bb60: {
+        _170 = _eprint(move _171) -> [return: bb61, unwind: bb160];
+    }
+
+    bb61: {
+        _176 = copy _140;
+        _175 = Vec::<PageSnapshotData>::with_capacity(move _176) -> [return: bb62, unwind: bb160];
+    }
+
+    bb62: {
+        _459 = const true;
+        _180 = copy _140;
+        _179 = std::ops::Range::<usize> { start: const 0_usize, end: move _180 };
+        _178 = <std::ops::Range<usize> as IntoIterator>::into_iter(move _179) -> [return: bb63, unwind: bb176];
+    }
+
+    bb63: {
+        _181 = move _178;
+        goto -> bb64;
+    }
+
+    bb64: {
+        _186 = &mut _181;
+        _185 = copy _186;
+        _184 = <std::ops::Range<usize> as Iterator>::next(move _185) -> [return: bb65, unwind: bb176];
+    }
+
+    bb65: {
+        _187 = discriminant(_184);
+        switchInt(move _187) -> [0: bb67, 1: bb66, otherwise: bb8];
+    }
+
+    bb66: {
+        _189 = copy ((_184 as Some).0: usize);
+        _190 = [const 0_u8; 8];
+        _194 = &mut _21;
+        _197 = &mut _190;
+        _196 = copy _197;
+        _195 = move _196 as &mut [u8] (PointerCoercion(Unsize, Implicit));
+        _193 = <BufReader<File> as std::io::Read>::read_exact(move _194, move _195) -> [return: bb68, unwind: bb176];
+    }
+
+    bb67: {
+        _370 = &_175;
+        _369 = Vec::<PageSnapshotData>::len(move _370) -> [return: bb133, unwind: bb176];
+    }
+
+    bb68: {
+        _192 = <Result<(), std::io::Error> as Try>::branch(move _193) -> [return: bb69, unwind: bb176];
+    }
+
+    bb69: {
+        _198 = discriminant(_192);
+        switchInt(move _198) -> [0: bb70, 1: bb71, otherwise: bb8];
+    }
+
+    bb70: {
+        _473 = discriminant(_192);
+        _205 = copy _190;
+        _204 = core::num::<impl u64>::from_le_bytes(move _205) -> [return: bb73, unwind: bb176];
+    }
+
+    bb71: {
+        _199 = move ((_192 as Break).0: std::result::Result<std::convert::Infallible, std::io::Error>);
+        _201 = move _199;
+        _0 = <Result<(), std::io::Error> as FromResidual<Result<Infallible, std::io::Error>>>::from_residual(move _201) -> [return: bb72, unwind: bb174];
+    }
+
+    bb72: {
+        _507 = discriminant(_192);
+        goto -> bb156;
+    }
+
+    bb73: {
+        _203 = PageID(move _204);
+        _206 = [const 0_u8; 8];
+        _210 = &mut _21;
+        _213 = &mut _206;
+        _212 = copy _213;
+        _211 = move _212 as &mut [u8] (PointerCoercion(Unsize, Implicit));
+        _209 = <BufReader<File> as std::io::Read>::read_exact(move _210, move _211) -> [return: bb74, unwind: bb176];
+    }
+
+    bb74: {
+        _208 = <Result<(), std::io::Error> as Try>::branch(move _209) -> [return: bb75, unwind: bb176];
+    }
+
+    bb75: {
+        _214 = discriminant(_208);
+        switchInt(move _214) -> [0: bb76, 1: bb77, otherwise: bb8];
+    }
+
+    bb76: {
+        _475 = discriminant(_208);
+        _221 = copy _206;
+        _220 = core::num::<impl u64>::from_le_bytes(move _221) -> [return: bb79, unwind: bb176];
+    }
+
+    bb77: {
+        _215 = move ((_208 as Break).0: std::result::Result<std::convert::Infallible, std::io::Error>);
+        _217 = move _215;
+        _0 = <Result<(), std::io::Error> as FromResidual<Result<Infallible, std::io::Error>>>::from_residual(move _217) -> [return: bb78, unwind: bb173];
+    }
+
+    bb78: {
+        _505 = discriminant(_208);
+        goto -> bb156;
+    }
+
+    bb79: {
+        _219 = move _220 as usize (IntToInt);
+        _222 = [const 0_u8; 4];
+        _226 = &mut _21;
+        _229 = &mut _222;
+        _228 = copy _229;
+        _227 = move _228 as &mut [u8] (PointerCoercion(Unsize, Implicit));
+        _225 = <BufReader<File> as std::io::Read>::read_exact(move _226, move _227) -> [return: bb80, unwind: bb176];
+    }
+
+    bb80: {
+        _224 = <Result<(), std::io::Error> as Try>::branch(move _225) -> [return: bb81, unwind: bb176];
+    }
+
+    bb81: {
+        _230 = discriminant(_224);
+        switchInt(move _230) -> [0: bb82, 1: bb83, otherwise: bb8];
+    }
+
+    bb82: {
+        _477 = discriminant(_224);
+        _236 = copy _222;
+        _235 = core::num::<impl u32>::from_le_bytes(move _236) -> [return: bb85, unwind: bb176];
+    }
+
+    bb83: {
+        _231 = move ((_224 as Break).0: std::result::Result<std::convert::Infallible, std::io::Error>);
+        _233 = move _231;
+        _0 = <Result<(), std::io::Error> as FromResidual<Result<Infallible, std::io::Error>>>::from_residual(move _233) -> [return: bb84, unwind: bb172];
+    }
+
+    bb84: {
+        _503 = discriminant(_224);
+        goto -> bb156;
+    }
+
+    bb85: {
+        _237 = [const 0_u8; 4];
+        _241 = &mut _21;
+        _244 = &mut _237;
+        _243 = copy _244;
+        _242 = move _243 as &mut [u8] (PointerCoercion(Unsize, Implicit));
+        _240 = <BufReader<File> as std::io::Read>::read_exact(move _241, move _242) -> [return: bb86, unwind: bb176];
+    }
+
+    bb86: {
+        _239 = <Result<(), std::io::Error> as Try>::branch(move _240) -> [return: bb87, unwind: bb176];
+    }
+
+    bb87: {
+        _245 = discriminant(_239);
+        switchInt(move _245) -> [0: bb88, 1: bb89, otherwise: bb8];
+    }
+
+    bb88: {
+        _479 = discriminant(_239);
+        _251 = copy _237;
+        _250 = core::num::<impl i32>::from_le_bytes(move _251) -> [return: bb91, unwind: bb176];
+    }
+
+    bb89: {
+        _246 = move ((_239 as Break).0: std::result::Result<std::convert::Infallible, std::io::Error>);
+        _248 = move _246;
+        _0 = <Result<(), std::io::Error> as FromResidual<Result<Infallible, std::io::Error>>>::from_residual(move _248) -> [return: bb90, unwind: bb171];
+    }
+
+    bb90: {
+        _501 = discriminant(_239);
+        goto -> bb156;
+    }
+
+    bb91: {
+        _256 = copy _250;
+        _255 = PageLocation::from_tag(move _256) -> [return: bb92, unwind: bb176];
+    }
+
+    bb92: {
+        _258 = &_250;
+        _259 = &_203;
+        _257 = {closure@src/02_runtime/checkpoint.rs:102:69: 102:72} { location_tag: move _258, id: move _259 };
+        _254 = Result::<PageLocation, PageError>::map_err::<std::io::Error, {closure@src/02_runtime/checkpoint.rs:102:69: 102:72}>(move _255, move _257) -> [return: bb93, unwind: bb176];
+    }
+
+    bb93: {
+        _253 = <Result<PageLocation, std::io::Error> as Try>::branch(move _254) -> [return: bb94, unwind: bb176];
+    }
+
+    bb94: {
+        _260 = discriminant(_253);
+        switchInt(move _260) -> [0: bb95, 1: bb96, otherwise: bb8];
+    }
+
+    bb95: {
+        _264 = copy ((_253 as Continue).0: types::page::PageLocation);
+        _252 = copy _264;
+        _481 = discriminant(_253);
+        _265 = [const 0_u8; 4];
+        _269 = &mut _21;
+        _272 = &mut _265;
+        _271 = copy _272;
+        _270 = move _271 as &mut [u8] (PointerCoercion(Unsize, Implicit));
+        _268 = <BufReader<File> as std::io::Read>::read_exact(move _269, move _270) -> [return: bb98, unwind: bb176];
+    }
+
+    bb96: {
+        _261 = move ((_253 as Break).0: std::result::Result<std::convert::Infallible, std::io::Error>);
+        _263 = move _261;
+        _0 = <Result<(), std::io::Error> as FromResidual<Result<Infallible, std::io::Error>>>::from_residual(move _263) -> [return: bb97, unwind: bb170];
+    }
+
+    bb97: {
+        _499 = discriminant(_253);
+        goto -> bb156;
+    }
+
+    bb98: {
+        _267 = <Result<(), std::io::Error> as Try>::branch(move _268) -> [return: bb99, unwind: bb176];
+    }
+
+    bb99: {
+        _273 = discriminant(_267);
+        switchInt(move _273) -> [0: bb100, 1: bb101, otherwise: bb8];
+    }
+
+    bb100: {
+        _483 = discriminant(_267);
+        _280 = copy _265;
+        _279 = core::num::<impl u32>::from_le_bytes(move _280) -> [return: bb103, unwind: bb176];
+    }
+
+    bb101: {
+        _274 = move ((_267 as Break).0: std::result::Result<std::convert::Infallible, std::io::Error>);
+        _276 = move _274;
+        _0 = <Result<(), std::io::Error> as FromResidual<Result<Infallible, std::io::Error>>>::from_residual(move _276) -> [return: bb102, unwind: bb169];
+    }
+
+    bb102: {
+        _497 = discriminant(_267);
+        goto -> bb156;
+    }
+
+    bb103: {
+        _278 = move _279 as usize (IntToInt);
+        _282 = copy _278;
+        _281 = from_elem::<u8>(const 0_u8, move _282) -> [return: bb104, unwind: bb176];
+    }
+
+    bb104: {
+        _458 = const true;
+        _286 = &mut _21;
+        _290 = &mut _281;
+        _289 = copy _290;
+        _288 = <Vec<u8> as DerefMut>::deref_mut(move _289) -> [return: bb105, unwind: bb168];
+    }
+
+    bb105: {
+        _287 = copy _288;
+        _285 = <BufReader<File> as std::io::Read>::read_exact(move _286, move _287) -> [return: bb106, unwind: bb168];
+    }
+
+    bb106: {
+        _284 = <Result<(), std::io::Error> as Try>::branch(move _285) -> [return: bb107, unwind: bb168];
+    }
+
+    bb107: {
+        _291 = discriminant(_284);
+        switchInt(move _291) -> [0: bb108, 1: bb109, otherwise: bb8];
+    }
+
+    bb108: {
+        _485 = discriminant(_284);
+        _296 = [const 0_u8; 4];
+        _300 = &mut _21;
+        _303 = &mut _296;
+        _302 = copy _303;
+        _301 = move _302 as &mut [u8] (PointerCoercion(Unsize, Implicit));
+        _299 = <BufReader<File> as std::io::Read>::read_exact(move _300, move _301) -> [return: bb111, unwind: bb168];
+    }
+
+    bb109: {
+        _292 = move ((_284 as Break).0: std::result::Result<std::convert::Infallible, std::io::Error>);
+        _294 = move _292;
+        _0 = <Result<(), std::io::Error> as FromResidual<Result<Infallible, std::io::Error>>>::from_residual(move _294) -> [return: bb110, unwind: bb166];
+    }
+
+    bb110: {
+        _495 = discriminant(_284);
+        goto -> bb154;
+    }
+
+    bb111: {
+        _298 = <Result<(), std::io::Error> as Try>::branch(move _299) -> [return: bb112, unwind: bb168];
+    }
+
+    bb112: {
+        _304 = discriminant(_298);
+        switchInt(move _304) -> [0: bb113, 1: bb114, otherwise: bb8];
+    }
+
+    bb113: {
+        _487 = discriminant(_298);
+        _311 = copy _296;
+        _310 = core::num::<impl u32>::from_le_bytes(move _311) -> [return: bb116, unwind: bb168];
+    }
+
+    bb114: {
+        _305 = move ((_298 as Break).0: std::result::Result<std::convert::Infallible, std::io::Error>);
+        _307 = move _305;
+        _0 = <Result<(), std::io::Error> as FromResidual<Result<Infallible, std::io::Error>>>::from_residual(move _307) -> [return: bb115, unwind: bb165];
+    }
+
+    bb115: {
+        _493 = discriminant(_298);
+        goto -> bb154;
+    }
+
+    bb116: {
+        _309 = move _310 as usize (IntToInt);
+        _313 = copy _309;
+        _312 = from_elem::<u8>(const 0_u8, move _313) -> [return: bb117, unwind: bb168];
+    }
+
+    bb117: {
+        _457 = const true;
+        _317 = &mut _21;
+        _321 = &mut _312;
+        _320 = copy _321;
+        _319 = <Vec<u8> as DerefMut>::deref_mut(move _320) -> [return: bb118, unwind: bb164];
+    }
+
+    bb118: {
+        _318 = copy _319;
+        _316 = <BufReader<File> as std::io::Read>::read_exact(move _317, move _318) -> [return: bb119, unwind: bb164];
+    }
+
+    bb119: {
+        _315 = <Result<(), std::io::Error> as Try>::branch(move _316) -> [return: bb120, unwind: bb164];
+    }
+
+    bb120: {
+        _322 = discriminant(_315);
+        switchInt(move _322) -> [0: bb121, 1: bb122, otherwise: bb8];
+    }
+
+    bb121: {
+        _489 = discriminant(_315);
+        _331 = &_189;
+        _332 = &_203;
+        _333 = &_219;
+        _334 = &_235;
+        _335 = &_252;
+        _336 = &_309;
+        _330 = (move _331, move _332, move _333, move _334, move _335, move _336);
+        _448 = copy (_330.0: &usize);
+        _339 = copy _448;
+        _338 = core::fmt::rt::Argument::<'_>::new_display::<usize>(move _339) -> [return: bb124, unwind: bb164];
+    }
+
+    bb122: {
+        _323 = move ((_315 as Break).0: std::result::Result<std::convert::Infallible, std::io::Error>);
+        _325 = move _323;
+        _0 = <Result<(), std::io::Error> as FromResidual<Result<Infallible, std::io::Error>>>::from_residual(move _325) -> [return: bb123, unwind: bb162];
+    }
+
+    bb123: {
+        _491 = discriminant(_315);
+        drop(_312) -> [return: bb153, unwind: bb168];
+    }
+
+    bb124: {
+        _449 = copy (_330.1: &types::page::PageID);
+        _341 = copy _449;
+        _340 = core::fmt::rt::Argument::<'_>::new_debug::<PageID>(move _341) -> [return: bb125, unwind: bb164];
+    }
+
+    bb125: {
+        _450 = copy (_330.2: &usize);
+        _343 = copy _450;
+        _342 = core::fmt::rt::Argument::<'_>::new_display::<usize>(move _343) -> [return: bb126, unwind: bb164];
+    }
+
+    bb126: {
+        _451 = copy (_330.3: &u32);
+        _345 = copy _451;
+        _344 = core::fmt::rt::Argument::<'_>::new_display::<u32>(move _345) -> [return: bb127, unwind: bb164];
+    }
+
+    bb127: {
+        _452 = copy (_330.4: &types::page::PageLocation);
+        _347 = copy _452;
+        _346 = core::fmt::rt::Argument::<'_>::new_debug::<PageLocation>(move _347) -> [return: bb128, unwind: bb164];
+    }
+
+    bb128: {
+        _453 = copy (_330.5: &usize);
+        _349 = copy _453;
+        _348 = core::fmt::rt::Argument::<'_>::new_display::<usize>(move _349) -> [return: bb129, unwind: bb164];
+    }
+
+    bb129: {
+        _337 = [move _338, move _340, move _342, move _344, move _346, move _348];
+        _429 = const runtime::checkpoint::load_checkpoint::<impl AsRef<Path>>::promoted[4];
+        _351 = copy _429;
+        _350 = copy _351;
+        _354 = &_337;
+        _353 = copy _354;
+        _329 = core::fmt::rt::<impl Arguments<'_>>::new_v1::<7, 6>(move _350, move _353) -> [return: bb130, unwind: bb164];
+    }
+
+    bb130: {
+        _328 = _eprint(move _329) -> [return: bb131, unwind: bb164];
+    }
+
+    bb131: {
+        _356 = &mut _175;
+        _358 = copy _203;
+        _359 = copy _219;
+        _360 = copy _235;
+        _361 = copy _252;
+        _458 = const false;
+        _362 = move _281;
+        _457 = const false;
+        _363 = move _312;
+        _357 = PageSnapshotData { page_id: move _358, size: move _359, location: move _361, epoch: move _360, metadata_blob: move _362, data: move _363 };
+        _355 = Vec::<PageSnapshotData>::push(move _356, move _357) -> [return: bb132, unwind: bb164];
+    }
+
+    bb132: {
+        _457 = const false;
+        _458 = const false;
+        goto -> bb64;
+    }
+
+    bb133: {
+        _368 = &_369;
+        _367 = (move _368,);
+        _454 = copy (_367.0: &usize);
+        _373 = copy _454;
+        _372 = core::fmt::rt::Argument::<'_>::new_display::<usize>(move _373) -> [return: bb134, unwind: bb176];
+    }
+
+    bb134: {
+        _371 = [move _372];
+        _434 = const runtime::checkpoint::load_checkpoint::<impl AsRef<Path>>::promoted[9];
+        _375 = copy _434;
+        _374 = copy _375;
+        _378 = &_371;
+        _377 = copy _378;
+        _366 = core::fmt::rt::<impl Arguments<'_>>::new_v1::<2, 1>(move _374, move _377) -> [return: bb135, unwind: bb176];
+    }
+
+    bb135: {
+        _365 = _eprint(move _366) -> [return: bb136, unwind: bb176];
+    }
+
+    bb136: {
+        _380 = copy _1;
+        _459 = const false;
+        _381 = move _175;
+        _379 = PageAllocator::restore_from_snapshot(move _380, move _381) -> [return: bb137, unwind: bb176];
+    }
+
+    bb137: {
+        _382 = discriminant(_379);
+        switchInt(move _382) -> [0: bb139, 1: bb138, otherwise: bb8];
+    }
+
+    bb138: {
+        _390 = move ((_379 as Err).0: types::page::PageError);
+        _395 = &_390;
+        _394 = (move _395,);
+        _455 = copy (_394.0: &types::page::PageError);
+        _398 = copy _455;
+        _397 = core::fmt::rt::Argument::<'_>::new_display::<PageError>(move _398) -> [return: bb142, unwind: bb176];
+    }
+
+    bb139: {
+        _433 = const runtime::checkpoint::load_checkpoint::<impl AsRef<Path>>::promoted[8];
+        _387 = copy _433;
+        _386 = copy _387;
+        _385 = core::fmt::rt::<impl Arguments<'_>>::new_const::<1>(move _386) -> [return: bb140, unwind: bb176];
+    }
+
+    bb140: {
+        _384 = _eprint(move _385) -> [return: bb141, unwind: bb176];
+    }
+
+    bb141: {
+        _0 = Result::<(), std::io::Error>::Ok(const ());
+        goto -> bb152;
+    }
+
+    bb142: {
+        _396 = [move _397];
+        _432 = const runtime::checkpoint::load_checkpoint::<impl AsRef<Path>>::promoted[7];
+        _400 = copy _432;
+        _399 = copy _400;
+        _403 = &_396;
+        _402 = copy _403;
+        _393 = core::fmt::rt::<impl Arguments<'_>>::new_v1::<2, 1>(move _399, move _402) -> [return: bb143, unwind: bb176];
+    }
+
+    bb143: {
+        _392 = _eprint(move _393) -> [return: bb144, unwind: bb176];
+    }
+
+    bb144: {
+        _431 = const runtime::checkpoint::load_checkpoint::<impl AsRef<Path>>::promoted[6];
+        _408 = copy _431;
+        _407 = copy _408;
+        _406 = core::fmt::rt::<impl Arguments<'_>>::new_const::<1>(move _407) -> [return: bb145, unwind: bb176];
+    }
+
+    bb145: {
+        _405 = _eprint(move _406) -> [return: bb146, unwind: bb176];
+    }
+
+    bb146: {
+        _411 = Other;
+        _416 = &_390;
+        _415 = (move _416,);
+        _456 = copy (_415.0: &types::page::PageError);
+        _419 = copy _456;
+        _418 = core::fmt::rt::Argument::<'_>::new_display::<PageError>(move _419) -> [return: bb147, unwind: bb176];
+    }
+
+    bb147: {
+        _417 = [move _418];
+        _430 = const runtime::checkpoint::load_checkpoint::<impl AsRef<Path>>::promoted[5];
+        _421 = copy _430;
+        _420 = copy _421;
+        _424 = &_417;
+        _423 = copy _424;
+        _414 = core::fmt::rt::<impl Arguments<'_>>::new_v1::<1, 1>(move _420, move _423) -> [return: bb148, unwind: bb176];
+    }
+
+    bb148: {
+        _413 = format(move _414) -> [return: bb149, unwind: bb176];
+    }
+
+    bb149: {
+        _412 = must_use::<String>(move _413) -> [return: bb150, unwind: bb176];
+    }
+
+    bb150: {
+        _410 = std::io::Error::new::<String>(move _411, move _412) -> [return: bb151, unwind: bb176];
+    }
+
+    bb151: {
+        _0 = Result::<(), std::io::Error>::Err(move _410);
+        goto -> bb152;
+    }
+
+    bb152: {
+        _459 = const false;
+        drop(_21) -> [return: bb159, unwind: bb183];
+    }
+
+    bb153: {
+        _457 = const false;
+        goto -> bb154;
+    }
+
+    bb154: {
+        drop(_281) -> [return: bb155, unwind: bb176];
+    }
+
+    bb155: {
+        _458 = const false;
+        goto -> bb156;
+    }
+
+    bb156: {
+        drop(_175) -> [return: bb157, unwind: bb160];
+    }
+
+    bb157: {
+        _459 = const false;
+        goto -> bb158;
+    }
+
+    bb158: {
+        drop(_21) -> [return: bb159, unwind: bb183];
+    }
+
+    bb159: {
+        return;
+    }
+
+    bb160 (cleanup): {
+        drop(_21) -> [return: bb183, unwind terminate(cleanup)];
+    }
+
+    bb161 (cleanup): {
+        resume;
+    }
+
+    bb162 (cleanup): {
+        _519 = discriminant(_315);
+        goto -> bb164;
+    }
+
+    bb163 (cleanup): {
+        drop(_312) -> [return: bb168, unwind terminate(cleanup)];
+    }
+
+    bb164 (cleanup): {
+        switchInt(copy _457) -> [0: bb168, otherwise: bb163];
+    }
+
+    bb165 (cleanup): {
+        _520 = discriminant(_298);
+        goto -> bb168;
+    }
+
+    bb166 (cleanup): {
+        _521 = discriminant(_284);
+        goto -> bb168;
+    }
+
+    bb167 (cleanup): {
+        drop(_281) -> [return: bb176, unwind terminate(cleanup)];
+    }
+
+    bb168 (cleanup): {
+        switchInt(copy _458) -> [0: bb176, otherwise: bb167];
+    }
+
+    bb169 (cleanup): {
+        _522 = discriminant(_267);
+        goto -> bb176;
+    }
+
+    bb170 (cleanup): {
+        _523 = discriminant(_253);
+        goto -> bb176;
+    }
+
+    bb171 (cleanup): {
+        _524 = discriminant(_239);
+        goto -> bb176;
+    }
+
+    bb172 (cleanup): {
+        _525 = discriminant(_224);
+        goto -> bb176;
+    }
+
+    bb173 (cleanup): {
+        _526 = discriminant(_208);
+        goto -> bb176;
+    }
+
+    bb174 (cleanup): {
+        _527 = discriminant(_192);
+        goto -> bb176;
+    }
+
+    bb175 (cleanup): {
+        drop(_175) -> [return: bb160, unwind terminate(cleanup)];
+    }
+
+    bb176 (cleanup): {
+        switchInt(copy _459) -> [0: bb160, otherwise: bb175];
+    }
+
+    bb177 (cleanup): {
+        _528 = discriminant(_158);
+        goto -> bb160;
+    }
+
+    bb178 (cleanup): {
+        _529 = discriminant(_129);
+        goto -> bb160;
+    }
+
+    bb179 (cleanup): {
+        _530 = discriminant(_78);
+        goto -> bb160;
+    }
+
+    bb180 (cleanup): {
+        _531 = discriminant(_33);
+        goto -> bb160;
+    }
+
+    bb181 (cleanup): {
+        _532 = discriminant(_23);
+        goto -> bb183;
+    }
+
+    bb182 (cleanup): {
+        drop(_3) -> [return: bb161, unwind terminate(cleanup)];
+    }
+
+    bb183 (cleanup): {
+        switchInt(copy _462) -> [0: bb161, otherwise: bb182];
+    }
+}

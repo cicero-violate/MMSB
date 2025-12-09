@@ -1,0 +1,49 @@
+// MIR for `types::page::<impl at src/01_types/page.rs:60:1: 60:14>::clone_store` before InstSimplify-after-simplifycfg
+
+fn page::<impl at src/01_types/page.rs:60:1: 60:14>::clone_store(_1: &page::Metadata) -> Vec<(String, Vec<u8>)> {
+    debug self => _1;
+    let mut _0: std::vec::Vec<(std::string::String, std::vec::Vec<u8>)>;
+    let mut _2: &std::vec::Vec<(std::string::String, std::vec::Vec<u8>)>;
+    let _3: &std::vec::Vec<(std::string::String, std::vec::Vec<u8>)>;
+    let mut _4: &parking_lot::lock_api::RwLockReadGuard<'_, parking_lot::RawRwLock, std::vec::Vec<(std::string::String, std::vec::Vec<u8>)>>;
+    let _5: parking_lot::lock_api::RwLockReadGuard<'_, parking_lot::RawRwLock, std::vec::Vec<(std::string::String, std::vec::Vec<u8>)>>;
+    let mut _6: &parking_lot::lock_api::RwLock<parking_lot::RawRwLock, std::vec::Vec<(std::string::String, std::vec::Vec<u8>)>>;
+    let _7: &parking_lot::lock_api::RwLock<parking_lot::RawRwLock, std::vec::Vec<(std::string::String, std::vec::Vec<u8>)>>;
+    let mut _8: &std::sync::Arc<parking_lot::lock_api::RwLock<parking_lot::RawRwLock, std::vec::Vec<(std::string::String, std::vec::Vec<u8>)>>>;
+
+    bb0: {
+        _8 = &((*_1).0: std::sync::Arc<parking_lot::lock_api::RwLock<parking_lot::RawRwLock, std::vec::Vec<(std::string::String, std::vec::Vec<u8>)>>>);
+        _7 = <Arc<parking_lot::lock_api::RwLock<parking_lot::RawRwLock, Vec<(String, Vec<u8>)>>> as Deref>::deref(move _8) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        _6 = copy _7;
+        _5 = parking_lot::lock_api::RwLock::<parking_lot::RawRwLock, Vec<(String, Vec<u8>)>>::read(move _6) -> [return: bb2, unwind continue];
+    }
+
+    bb2: {
+        _4 = &_5;
+        _3 = <parking_lot::lock_api::RwLockReadGuard<'_, parking_lot::RawRwLock, Vec<(String, Vec<u8>)>> as Deref>::deref(move _4) -> [return: bb3, unwind: bb6];
+    }
+
+    bb3: {
+        _2 = copy _3;
+        _0 = <Vec<(String, Vec<u8>)> as Clone>::clone(move _2) -> [return: bb4, unwind: bb6];
+    }
+
+    bb4: {
+        drop(_5) -> [return: bb5, unwind: bb7];
+    }
+
+    bb5: {
+        return;
+    }
+
+    bb6 (cleanup): {
+        drop(_5) -> [return: bb7, unwind terminate(cleanup)];
+    }
+
+    bb7 (cleanup): {
+        resume;
+    }
+}

@@ -1,0 +1,50 @@
+// MIR for `graph::shadow_graph::<impl at src/05_graph/shadow_graph.rs:6:24: 6:33>::eq` after InstSimplify-after-simplifycfg
+
+fn shadow_graph::<impl at src/05_graph/shadow_graph.rs:6:24: 6:33>::eq(_1: &Edge, _2: &Edge) -> bool {
+    debug self => _1;
+    debug other => _2;
+    let mut _0: bool;
+    let mut _3: bool;
+    let mut _4: &types::page::PageID;
+    let mut _5: &types::page::PageID;
+    let mut _6: bool;
+    let mut _7: &types::page::PageID;
+    let mut _8: &types::page::PageID;
+    let mut _9: &graph::edge_types::EdgeType;
+    let mut _10: &graph::edge_types::EdgeType;
+
+    bb0: {
+        _4 = &((*_1).0: types::page::PageID);
+        _5 = &((*_2).0: types::page::PageID);
+        _3 = <PageID as PartialEq>::eq(move _4, move _5) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        switchInt(move _3) -> [0: bb5, otherwise: bb2];
+    }
+
+    bb2: {
+        _7 = &((*_1).1: types::page::PageID);
+        _8 = &((*_2).1: types::page::PageID);
+        _6 = <PageID as PartialEq>::eq(move _7, move _8) -> [return: bb3, unwind continue];
+    }
+
+    bb3: {
+        switchInt(move _6) -> [0: bb5, otherwise: bb4];
+    }
+
+    bb4: {
+        _9 = &((*_1).2: graph::edge_types::EdgeType);
+        _10 = &((*_2).2: graph::edge_types::EdgeType);
+        _0 = <EdgeType as PartialEq>::eq(move _9, move _10) -> [return: bb6, unwind continue];
+    }
+
+    bb5: {
+        _0 = const false;
+        goto -> bb6;
+    }
+
+    bb6: {
+        return;
+    }
+}

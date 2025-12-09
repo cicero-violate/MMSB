@@ -1,0 +1,19 @@
+// MIR for `types::delta::<impl at src/01_types/delta.rs:24:1: 24:11>::apply_to` before InstSimplify-after-simplifycfg
+
+fn delta::<impl at src/01_types/delta.rs:24:1: 24:11>::apply_to(_1: &Delta, _2: &mut Page) -> Result<(), PageError> {
+    debug self => _1;
+    debug page => _2;
+    let mut _0: std::result::Result<(), types::page::PageError>;
+    let mut _3: &mut types::page::Page;
+    let mut _4: &types::delta::Delta;
+
+    bb0: {
+        _3 = copy _2;
+        _4 = copy _1;
+        _0 = Page::apply_delta(move _3, move _4) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        return;
+    }
+}

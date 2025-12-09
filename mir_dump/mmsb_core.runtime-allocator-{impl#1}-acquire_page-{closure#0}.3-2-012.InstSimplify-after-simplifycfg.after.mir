@@ -1,0 +1,49 @@
+// MIR for `runtime::allocator::<impl at src/02_runtime/allocator.rs:53:1: 53:19>::acquire_page::{closure#0}` after InstSimplify-after-simplifycfg
+
+fn allocator::<impl at src/02_runtime/allocator.rs:53:1: 53:19>::acquire_page::{closure#0}(_1: {closure@src/02_runtime/allocator.rs:94:45: 94:48}, _2: &Box<Page>) -> *mut Page {
+    debug b => _2;
+    let mut _0: *mut types::page::Page;
+    let mut _3: *const types::page::Page;
+    let _4: &types::page::Page;
+    let mut _5: std::boxed::Box<types::page::Page>;
+    let mut _6: *const types::page::Page;
+    let mut _7: *const ();
+    let mut _8: usize;
+    let mut _9: usize;
+    let mut _10: usize;
+    let mut _11: usize;
+    let mut _12: bool;
+    let mut _13: *const ();
+    let mut _14: usize;
+    let mut _15: bool;
+    let mut _16: bool;
+    let mut _17: bool;
+
+    bb0: {
+        _5 = copy (*_2);
+        _6 = copy ((_5.0: std::ptr::Unique<types::page::Page>).0: std::ptr::NonNull<types::page::Page>) as *const types::page::Page (Transmute);
+        _7 = copy _6 as *const () (PtrToPtr);
+        _8 = copy _7 as usize (Transmute);
+        _9 = AlignOf(types::page::Page);
+        _10 = Sub(copy _9, const 1_usize);
+        _11 = BitAnd(copy _8, copy _10);
+        _12 = Eq(copy _11, const 0_usize);
+        assert(copy _12, "misaligned pointer dereference: address must be a multiple of {} but is {}", copy _9, copy _8) -> [success: bb1, unwind unreachable];
+    }
+
+    bb1: {
+        _13 = copy _6 as *const () (PtrToPtr);
+        _14 = copy _13 as usize (Transmute);
+        _15 = Eq(copy _14, const 0_usize);
+        _16 = BitAnd(copy _15, const true);
+        _17 = Not(copy _16);
+        assert(copy _17, "null pointer dereference occurred") -> [success: bb2, unwind unreachable];
+    }
+
+    bb2: {
+        _4 = &(*_6);
+        _3 = &raw const (*_4);
+        _0 = move _3 as *mut types::page::Page (PtrToPtr);
+        return;
+    }
+}

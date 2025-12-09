@@ -1,0 +1,18 @@
+// MIR for `device::host_device_sync::<impl at src/03_device/host_device_sync.rs:8:1: 8:20>::drain` before InstSimplify-after-simplifycfg
+
+fn host_device_sync::<impl at src/03_device/host_device_sync.rs:8:1: 8:20>::drain(_1: &mut HostDeviceSync) -> Vec<PageID> {
+    debug self => _1;
+    let mut _0: std::vec::Vec<types::page::PageID>;
+    let mut _2: &mut std::vec::Vec<types::page::PageID>;
+    let mut _3: &mut std::vec::Vec<types::page::PageID>;
+
+    bb0: {
+        _3 = &mut ((*_1).0: std::vec::Vec<types::page::PageID>);
+        _2 = copy _3;
+        _0 = std::mem::take::<Vec<PageID>>(move _2) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        return;
+    }
+}

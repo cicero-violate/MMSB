@@ -1,0 +1,69 @@
+// MIR for `graph::shadow_graph::<impl at src/05_graph/shadow_graph.rs:18:1: 18:21>::add_edge` before InstSimplify-after-simplifycfg
+
+fn shadow_graph::<impl at src/05_graph/shadow_graph.rs:18:1: 18:21>::add_edge(_1: &ShadowPageGraph, _2: PageID, _3: PageID, _4: EdgeType) -> () {
+    debug self => _1;
+    debug from => _2;
+    debug to => _3;
+    debug edge_type => _4;
+    let mut _0: ();
+    let mut _5: parking_lot::lock_api::RwLockWriteGuard<'_, parking_lot::RawRwLock, std::collections::HashMap<types::page::PageID, std::vec::Vec<(types::page::PageID, graph::edge_types::EdgeType)>>>;
+    let mut _6: &parking_lot::lock_api::RwLock<parking_lot::RawRwLock, std::collections::HashMap<types::page::PageID, std::vec::Vec<(types::page::PageID, graph::edge_types::EdgeType)>>>;
+    let _7: ();
+    let mut _8: &mut std::vec::Vec<(types::page::PageID, graph::edge_types::EdgeType)>;
+    let mut _9: &mut std::vec::Vec<(types::page::PageID, graph::edge_types::EdgeType)>;
+    let mut _10: std::collections::hash_map::Entry<'_, types::page::PageID, std::vec::Vec<(types::page::PageID, graph::edge_types::EdgeType)>>;
+    let mut _11: &mut std::collections::HashMap<types::page::PageID, std::vec::Vec<(types::page::PageID, graph::edge_types::EdgeType)>>;
+    let mut _12: &mut std::collections::HashMap<types::page::PageID, std::vec::Vec<(types::page::PageID, graph::edge_types::EdgeType)>>;
+    let mut _13: &mut parking_lot::lock_api::RwLockWriteGuard<'_, parking_lot::RawRwLock, std::collections::HashMap<types::page::PageID, std::vec::Vec<(types::page::PageID, graph::edge_types::EdgeType)>>>;
+    let mut _14: types::page::PageID;
+    let mut _15: (types::page::PageID, graph::edge_types::EdgeType);
+    let mut _16: types::page::PageID;
+    let mut _17: graph::edge_types::EdgeType;
+    scope 1 {
+        debug guard => _5;
+    }
+
+    bb0: {
+        _6 = &((*_1).0: parking_lot::lock_api::RwLock<parking_lot::RawRwLock, std::collections::HashMap<types::page::PageID, std::vec::Vec<(types::page::PageID, graph::edge_types::EdgeType)>>>);
+        _5 = parking_lot::lock_api::RwLock::<parking_lot::RawRwLock, HashMap<PageID, Vec<(PageID, EdgeType)>>>::write(move _6) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        _13 = &mut _5;
+        _12 = <parking_lot::lock_api::RwLockWriteGuard<'_, parking_lot::RawRwLock, HashMap<PageID, Vec<(PageID, EdgeType)>>> as DerefMut>::deref_mut(move _13) -> [return: bb2, unwind: bb7];
+    }
+
+    bb2: {
+        _11 = copy _12;
+        _14 = copy _2;
+        _10 = HashMap::<PageID, Vec<(PageID, EdgeType)>>::entry(move _11, move _14) -> [return: bb3, unwind: bb7];
+    }
+
+    bb3: {
+        _9 = std::collections::hash_map::Entry::<'_, PageID, Vec<(PageID, EdgeType)>>::or_default(move _10) -> [return: bb4, unwind: bb7];
+    }
+
+    bb4: {
+        _8 = copy _9;
+        _16 = copy _3;
+        _17 = copy _4;
+        _15 = (move _16, move _17);
+        _7 = Vec::<(PageID, EdgeType)>::push(move _8, move _15) -> [return: bb5, unwind: bb7];
+    }
+
+    bb5: {
+        drop(_5) -> [return: bb6, unwind: bb8];
+    }
+
+    bb6: {
+        return;
+    }
+
+    bb7 (cleanup): {
+        drop(_5) -> [return: bb8, unwind terminate(cleanup)];
+    }
+
+    bb8 (cleanup): {
+        resume;
+    }
+}

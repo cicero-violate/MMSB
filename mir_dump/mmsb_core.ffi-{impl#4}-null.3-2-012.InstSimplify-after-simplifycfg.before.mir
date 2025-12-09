@@ -1,0 +1,15 @@
+// MIR for `ffi::<impl at src/ffi.rs:76:1: 76:22>::null` before InstSimplify-after-simplifycfg
+
+fn ffi::<impl at src/ffi.rs:76:1: 76:22>::null() -> TLogReaderHandle {
+    let mut _0: ffi::TLogReaderHandle;
+    let mut _1: *mut runtime::tlog::TransactionLogReader;
+
+    bb0: {
+        _1 = null_mut::<TransactionLogReader>() -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        _0 = TLogReaderHandle { ptr: move _1 };
+        return;
+    }
+}

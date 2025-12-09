@@ -1,0 +1,70 @@
+// MIR for `graph::propagation_command_buffer::<impl at src/05_graph/propagation_command_buffer.rs:4:10: 4:15>::fmt` after InstSimplify-after-simplifycfg
+
+fn propagation_command_buffer::<impl at src/05_graph/propagation_command_buffer.rs:4:10: 4:15>::fmt(_1: &PropagationCommand, _2: &mut Formatter<'_>) -> Result<(), std::fmt::Error> {
+    debug self => _1;
+    debug f => _2;
+    let mut _0: std::result::Result<(), std::fmt::Error>;
+    let mut _3: &mut std::fmt::Formatter<'_>;
+    let mut _4: &str;
+    let _5: &str;
+    let mut _6: &str;
+    let _7: &str;
+    let mut _8: &dyn std::fmt::Debug;
+    let mut _9: &types::page::PageID;
+    let _10: &types::page::PageID;
+    let mut _11: &str;
+    let _12: &str;
+    let mut _13: &dyn std::fmt::Debug;
+    let mut _14: &std::sync::Arc<types::page::Page>;
+    let _15: &std::sync::Arc<types::page::Page>;
+    let mut _16: &str;
+    let _17: &str;
+    let mut _18: &dyn std::fmt::Debug;
+    let mut _19: &&std::vec::Vec<std::sync::Arc<types::page::Page>>;
+    let _20: &&std::vec::Vec<std::sync::Arc<types::page::Page>>;
+    let _21: &std::vec::Vec<std::sync::Arc<types::page::Page>>;
+
+    bb0: {
+        _3 = copy _2;
+        _5 = const "PropagationCommand";
+        _4 = copy _5;
+        _7 = const "page_id";
+        _6 = copy _7;
+        _10 = &((*_1).0: types::page::PageID);
+        _9 = copy _10;
+        _8 = move _9 as &dyn std::fmt::Debug (PointerCoercion(Unsize, Implicit));
+        _12 = const "page";
+        _11 = copy _12;
+        _15 = &((*_1).1: std::sync::Arc<types::page::Page>);
+        _14 = copy _15;
+        _13 = move _14 as &dyn std::fmt::Debug (PointerCoercion(Unsize, Implicit));
+        _17 = const "dependencies";
+        _16 = copy _17;
+        _21 = &((*_1).2: std::vec::Vec<std::sync::Arc<types::page::Page>>);
+        _20 = &_21;
+        _19 = copy _20;
+        _18 = move _19 as &dyn std::fmt::Debug (PointerCoercion(Unsize, Implicit));
+        _0 = Formatter::<'_>::debug_struct_field3_finish(move _3, move _4, move _6, move _8, move _11, move _13, move _16, move _18) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        return;
+    }
+}
+
+alloc439 (size: 12, align: 1) {
+    64 65 70 65 6e 64 65 6e 63 69 65 73             │ dependencies
+}
+
+alloc438 (size: 4, align: 1) {
+    70 61 67 65                                     │ page
+}
+
+alloc437 (size: 18, align: 1) {
+    0x00 │ 50 72 6f 70 61 67 61 74 69 6f 6e 43 6f 6d 6d 61 │ PropagationComma
+    0x10 │ 6e 64                                           │ nd
+}
+
+alloc96 (size: 7, align: 1) {
+    70 61 67 65 5f 69 64                            │ page_id
+}

@@ -1,0 +1,20 @@
+// MIR for `types::page::<impl at src/01_types/page.rs:98:1: 98:10>::set_epoch` after InstSimplify-after-simplifycfg
+
+fn page::<impl at src/01_types/page.rs:98:1: 98:10>::set_epoch(_1: &Page, _2: Epoch) -> () {
+    debug self => _1;
+    debug epoch => _2;
+    let mut _0: ();
+    let _3: ();
+    let mut _4: &types::epoch::EpochCell;
+    let mut _5: types::epoch::Epoch;
+
+    bb0: {
+        _4 = &((*_1).2: types::epoch::EpochCell);
+        _5 = copy _2;
+        _3 = EpochCell::store(move _4, move _5) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        return;
+    }
+}

@@ -1,0 +1,578 @@
+// MIR for `ffi::mmsb_checkpoint_load` before InstSimplify-after-simplifycfg
+
+fn mmsb_checkpoint_load(_1: AllocatorHandle, _2: TLogHandle, _3: *const i8) -> i32 {
+    debug allocator => _1;
+    debug log => _2;
+    debug path => _3;
+    let mut _0: i32;
+    let _4: ();
+    let _5: ();
+    let mut _6: std::fmt::Arguments<'_>;
+    let mut _7: &[&str; 1];
+    let _8: &[&str; 1];
+    let _9: [&str; 1];
+    let _10: ();
+    let _11: ();
+    let mut _12: std::fmt::Arguments<'_>;
+    let _13: (&*mut runtime::allocator::PageAllocator,);
+    let mut _14: &*mut runtime::allocator::PageAllocator;
+    let mut _16: core::fmt::rt::Argument<'_>;
+    let mut _17: &*mut runtime::allocator::PageAllocator;
+    let mut _18: &[&str; 2];
+    let _19: &[&str; 2];
+    let _20: [&str; 2];
+    let mut _21: &[core::fmt::rt::Argument<'_>; 1];
+    let _22: &[core::fmt::rt::Argument<'_>; 1];
+    let _23: ();
+    let _24: ();
+    let mut _25: std::fmt::Arguments<'_>;
+    let _26: (&*mut runtime::tlog::TransactionLog,);
+    let mut _27: &*mut runtime::tlog::TransactionLog;
+    let mut _29: core::fmt::rt::Argument<'_>;
+    let mut _30: &*mut runtime::tlog::TransactionLog;
+    let mut _31: &[&str; 2];
+    let _32: &[&str; 2];
+    let _33: [&str; 2];
+    let mut _34: &[core::fmt::rt::Argument<'_>; 1];
+    let _35: &[core::fmt::rt::Argument<'_>; 1];
+    let _36: &str;
+    let mut _37: bool;
+    let mut _38: *const i8;
+    let _39: &str;
+    let mut _40: std::result::Result<&str, std::str::Utf8Error>;
+    let mut _41: &std::ffi::CStr;
+    let _42: &std::ffi::CStr;
+    let mut _43: *const i8;
+    let mut _44: isize;
+    let _45: &str;
+    let _46: &str;
+    let _47: ();
+    let _48: ();
+    let mut _49: std::fmt::Arguments<'_>;
+    let mut _51: &&str;
+    let mut _53: core::fmt::rt::Argument<'_>;
+    let mut _54: &&str;
+    let mut _55: &[&str; 2];
+    let _56: &[&str; 2];
+    let _57: [&str; 2];
+    let mut _58: &[core::fmt::rt::Argument<'_>; 1];
+    let _59: &[core::fmt::rt::Argument<'_>; 1];
+    let _60: ();
+    let mut _61: bool;
+    let mut _62: *mut runtime::allocator::PageAllocator;
+    let mut _63: bool;
+    let mut _64: *mut runtime::tlog::TransactionLog;
+    let mut _65: bool;
+    let mut _66: *const i8;
+    let mut _67: !;
+    let _68: ();
+    let _69: ();
+    let mut _70: std::fmt::Arguments<'_>;
+    let mut _71: &[&str; 1];
+    let _72: &[&str; 1];
+    let _73: [&str; 1];
+    let _74: ();
+    let mut _75: ffi::MMSBErrorCode;
+    let mut _79: std::result::Result<&str, std::str::Utf8Error>;
+    let mut _80: &std::ffi::CStr;
+    let _81: &std::ffi::CStr;
+    let mut _82: *const i8;
+    let mut _83: isize;
+    let mut _85: &str;
+    let mut _86: !;
+    let _87: ();
+    let mut _88: ffi::MMSBErrorCode;
+    let _89: ();
+    let _90: ();
+    let mut _91: std::fmt::Arguments<'_>;
+    let mut _92: &[&str; 1];
+    let _93: &[&str; 1];
+    let _94: [&str; 1];
+    let mut _95: std::result::Result<(), std::io::Error>;
+    let mut _96: &runtime::allocator::PageAllocator;
+    let mut _97: &runtime::tlog::TransactionLog;
+    let mut _98: std::string::String;
+    let mut _99: isize;
+    let _100: ();
+    let _101: ();
+    let mut _102: std::fmt::Arguments<'_>;
+    let mut _103: &[&str; 1];
+    let _104: &[&str; 1];
+    let _105: [&str; 1];
+    let _107: ();
+    let _108: ();
+    let mut _109: std::fmt::Arguments<'_>;
+    let mut _111: &std::io::Error;
+    let mut _113: core::fmt::rt::Argument<'_>;
+    let mut _114: &std::io::Error;
+    let mut _115: &[&str; 2];
+    let _116: &[&str; 2];
+    let _117: [&str; 2];
+    let mut _118: &[core::fmt::rt::Argument<'_>; 1];
+    let _119: &[core::fmt::rt::Argument<'_>; 1];
+    let _120: ();
+    let mut _121: ffi::MMSBErrorCode;
+    let mut _129: &[&str; 1];
+    let mut _130: &*mut runtime::allocator::PageAllocator;
+    let mut _131: &*mut runtime::tlog::TransactionLog;
+    let mut _132: &&str;
+    let mut _133: *mut runtime::allocator::PageAllocator;
+    let mut _134: *mut runtime::tlog::TransactionLog;
+    let mut _135: &std::io::Error;
+    let mut _136: bool;
+    let mut _137: bool;
+    let mut _138: isize;
+    let mut _139: isize;
+    let mut _140: isize;
+    scope 1 {
+        debug args => _13;
+        let _15: [core::fmt::rt::Argument<'_>; 1];
+        scope 2 {
+            debug args => _15;
+            let mut _128: &[&str; 2];
+        }
+    }
+    scope 3 {
+        debug args => _26;
+        let _28: [core::fmt::rt::Argument<'_>; 1];
+        scope 4 {
+            debug args => _28;
+            let mut _127: &[&str; 2];
+        }
+    }
+    scope 5 {
+        debug path_str_display => _36;
+        let _50: (&&str,);
+        let _76: &runtime::allocator::PageAllocator;
+        let mut _122: &[&str; 1];
+        let mut _147: *const ();
+        let mut _148: usize;
+        let mut _149: usize;
+        let mut _150: usize;
+        let mut _151: usize;
+        let mut _152: bool;
+        let mut _153: *const ();
+        let mut _154: usize;
+        let mut _155: bool;
+        let mut _156: bool;
+        let mut _157: bool;
+        scope 7 {
+            debug args => _50;
+            let _52: [core::fmt::rt::Argument<'_>; 1];
+            scope 8 {
+                debug args => _52;
+                let mut _126: &[&str; 2];
+            }
+        }
+        scope 9 {
+            debug allocator_ref => _76;
+            let _77: &runtime::tlog::TransactionLog;
+            let mut _141: *const ();
+            let mut _142: usize;
+            let mut _143: usize;
+            let mut _144: usize;
+            let mut _145: usize;
+            let mut _146: bool;
+            let mut _158: *const ();
+            let mut _159: usize;
+            let mut _160: bool;
+            let mut _161: bool;
+            let mut _162: bool;
+            scope 10 {
+                debug log_ref => _77;
+                let _78: std::string::String;
+                let _84: &str;
+                scope 11 {
+                    debug path_str => _78;
+                    let _106: std::io::Error;
+                    let mut _124: &[&str; 1];
+                    let mut _125: &[&str; 1];
+                    scope 13 {
+                        debug e => _106;
+                        let _110: (&std::io::Error,);
+                        scope 14 {
+                            debug args => _110;
+                            let _112: [core::fmt::rt::Argument<'_>; 1];
+                            scope 15 {
+                                debug args => _112;
+                                let mut _123: &[&str; 2];
+                            }
+                        }
+                    }
+                }
+                scope 12 {
+                    debug s => _84;
+                }
+            }
+        }
+    }
+    scope 6 {
+        debug s => _45;
+    }
+
+    bb0: {
+        _137 = const false;
+        _136 = const false;
+        _129 = const ffi::mmsb_checkpoint_load::promoted[7];
+        _8 = copy _129;
+        _7 = copy _8;
+        _6 = core::fmt::rt::<impl Arguments<'_>>::new_const::<1>(move _7) -> [return: bb1, unwind terminate(abi)];
+    }
+
+    bb1: {
+        _5 = _eprint(move _6) -> [return: bb2, unwind terminate(abi)];
+    }
+
+    bb2: {
+        _14 = &(_1.0: *mut runtime::allocator::PageAllocator);
+        _13 = (move _14,);
+        _130 = copy (_13.0: &*mut runtime::allocator::PageAllocator);
+        _17 = copy _130;
+        _16 = core::fmt::rt::Argument::<'_>::new_pointer::<*mut PageAllocator>(move _17) -> [return: bb3, unwind terminate(abi)];
+    }
+
+    bb3: {
+        _15 = [move _16];
+        _128 = const ffi::mmsb_checkpoint_load::promoted[6];
+        _19 = copy _128;
+        _18 = copy _19;
+        _22 = &_15;
+        _21 = copy _22;
+        _12 = core::fmt::rt::<impl Arguments<'_>>::new_v1::<2, 1>(move _18, move _21) -> [return: bb4, unwind terminate(abi)];
+    }
+
+    bb4: {
+        _11 = _eprint(move _12) -> [return: bb5, unwind terminate(abi)];
+    }
+
+    bb5: {
+        _27 = &(_2.0: *mut runtime::tlog::TransactionLog);
+        _26 = (move _27,);
+        _131 = copy (_26.0: &*mut runtime::tlog::TransactionLog);
+        _30 = copy _131;
+        _29 = core::fmt::rt::Argument::<'_>::new_pointer::<*mut TransactionLog>(move _30) -> [return: bb6, unwind terminate(abi)];
+    }
+
+    bb6: {
+        _28 = [move _29];
+        _127 = const ffi::mmsb_checkpoint_load::promoted[5];
+        _32 = copy _127;
+        _31 = copy _32;
+        _35 = &_28;
+        _34 = copy _35;
+        _25 = core::fmt::rt::<impl Arguments<'_>>::new_v1::<2, 1>(move _31, move _34) -> [return: bb7, unwind terminate(abi)];
+    }
+
+    bb7: {
+        _24 = _eprint(move _25) -> [return: bb8, unwind terminate(abi)];
+    }
+
+    bb8: {
+        _38 = copy _3;
+        _37 = std::ptr::const_ptr::<impl *const i8>::is_null(move _38) -> [return: bb9, unwind terminate(abi)];
+    }
+
+    bb9: {
+        switchInt(move _37) -> [0: bb11, otherwise: bb10];
+    }
+
+    bb10: {
+        _36 = const "<null>";
+        goto -> bb18;
+    }
+
+    bb11: {
+        _43 = copy _3;
+        _42 = CStr::from_ptr::<'_>(move _43) -> [return: bb12, unwind terminate(abi)];
+    }
+
+    bb12: {
+        _41 = copy _42;
+        _40 = CStr::to_str(move _41) -> [return: bb13, unwind terminate(abi)];
+    }
+
+    bb13: {
+        _44 = discriminant(_40);
+        switchInt(move _44) -> [0: bb16, 1: bb15, otherwise: bb14];
+    }
+
+    bb14: {
+        unreachable;
+    }
+
+    bb15: {
+        _46 = const "<invalid utf-8>";
+        _39 = copy _46;
+        goto -> bb17;
+    }
+
+    bb16: {
+        _45 = copy ((_40 as Ok).0: &str);
+        _39 = copy _45;
+        goto -> bb17;
+    }
+
+    bb17: {
+        _36 = copy _39;
+        goto -> bb18;
+    }
+
+    bb18: {
+        _51 = &_36;
+        _50 = (move _51,);
+        _132 = copy (_50.0: &&str);
+        _54 = copy _132;
+        _53 = core::fmt::rt::Argument::<'_>::new_display::<&str>(move _54) -> [return: bb19, unwind terminate(abi)];
+    }
+
+    bb19: {
+        _52 = [move _53];
+        _126 = const ffi::mmsb_checkpoint_load::promoted[4];
+        _56 = copy _126;
+        _55 = copy _56;
+        _59 = &_52;
+        _58 = copy _59;
+        _49 = core::fmt::rt::<impl Arguments<'_>>::new_v1::<2, 1>(move _55, move _58) -> [return: bb20, unwind terminate(abi)];
+    }
+
+    bb20: {
+        _48 = _eprint(move _49) -> [return: bb21, unwind terminate(abi)];
+    }
+
+    bb21: {
+        _62 = copy (_1.0: *mut runtime::allocator::PageAllocator);
+        _61 = std::ptr::mut_ptr::<impl *mut PageAllocator>::is_null(move _62) -> [return: bb22, unwind terminate(abi)];
+    }
+
+    bb22: {
+        switchInt(move _61) -> [0: bb23, otherwise: bb27];
+    }
+
+    bb23: {
+        _64 = copy (_2.0: *mut runtime::tlog::TransactionLog);
+        _63 = std::ptr::mut_ptr::<impl *mut TransactionLog>::is_null(move _64) -> [return: bb24, unwind terminate(abi)];
+    }
+
+    bb24: {
+        switchInt(move _63) -> [0: bb25, otherwise: bb27];
+    }
+
+    bb25: {
+        _66 = copy _3;
+        _65 = std::ptr::const_ptr::<impl *const i8>::is_null(move _66) -> [return: bb26, unwind terminate(abi)];
+    }
+
+    bb26: {
+        switchInt(move _65) -> [0: bb31, otherwise: bb27];
+    }
+
+    bb27: {
+        _122 = const ffi::mmsb_checkpoint_load::promoted[0];
+        _72 = copy _122;
+        _71 = copy _72;
+        _70 = core::fmt::rt::<impl Arguments<'_>>::new_const::<1>(move _71) -> [return: bb28, unwind terminate(abi)];
+    }
+
+    bb28: {
+        _69 = _eprint(move _70) -> [return: bb29, unwind terminate(abi)];
+    }
+
+    bb29: {
+        _75 = MMSBErrorCode::InvalidHandle;
+        _74 = set_last_error(move _75) -> [return: bb30, unwind terminate(abi)];
+    }
+
+    bb30: {
+        _0 = const -1_i32;
+        goto -> bb50;
+    }
+
+    bb31: {
+        _133 = copy (_1.0: *mut runtime::allocator::PageAllocator);
+        _147 = copy _133 as *const () (PtrToPtr);
+        _148 = copy _147 as usize (Transmute);
+        _149 = AlignOf(runtime::allocator::PageAllocator);
+        _150 = Sub(copy _149, const 1_usize);
+        _151 = BitAnd(copy _148, copy _150);
+        _152 = Eq(copy _151, const 0_usize);
+        assert(copy _152, "misaligned pointer dereference: address must be a multiple of {} but is {}", copy _149, copy _148) -> [success: bb57, unwind unreachable];
+    }
+
+    bb32: {
+        _80 = copy _81;
+        _79 = CStr::to_str(move _80) -> [return: bb33, unwind terminate(abi)];
+    }
+
+    bb33: {
+        _83 = discriminant(_79);
+        switchInt(move _83) -> [0: bb35, 1: bb34, otherwise: bb14];
+    }
+
+    bb34: {
+        _88 = MMSBErrorCode::IOError;
+        _87 = set_last_error(move _88) -> [return: bb37, unwind terminate(abi)];
+    }
+
+    bb35: {
+        _84 = copy ((_79 as Ok).0: &str);
+        _85 = copy _84;
+        _137 = const true;
+        _78 = <str as ToOwned>::to_owned(move _85) -> [return: bb36, unwind terminate(abi)];
+    }
+
+    bb36: {
+        _125 = const ffi::mmsb_checkpoint_load::promoted[3];
+        _93 = copy _125;
+        _92 = copy _93;
+        _91 = core::fmt::rt::<impl Arguments<'_>>::new_const::<1>(move _92) -> [return: bb38, unwind: bb55];
+    }
+
+    bb37: {
+        _0 = const -1_i32;
+        _137 = const false;
+        goto -> bb50;
+    }
+
+    bb38: {
+        _90 = _eprint(move _91) -> [return: bb39, unwind: bb55];
+    }
+
+    bb39: {
+        _96 = copy _76;
+        _97 = copy _77;
+        _137 = const false;
+        _98 = move _78;
+        _95 = load_checkpoint::<String>(move _96, move _97, move _98) -> [return: bb40, unwind: bb55];
+    }
+
+    bb40: {
+        _136 = const true;
+        _99 = discriminant(_95);
+        switchInt(move _99) -> [0: bb42, 1: bb41, otherwise: bb14];
+    }
+
+    bb41: {
+        _106 = move ((_95 as Err).0: std::io::Error);
+        _111 = &_106;
+        _110 = (move _111,);
+        _135 = copy (_110.0: &std::io::Error);
+        _114 = copy _135;
+        _113 = core::fmt::rt::Argument::<'_>::new_debug::<std::io::Error>(move _114) -> [return: bb45, unwind: bb51];
+    }
+
+    bb42: {
+        _124 = const ffi::mmsb_checkpoint_load::promoted[2];
+        _104 = copy _124;
+        _103 = copy _104;
+        _102 = core::fmt::rt::<impl Arguments<'_>>::new_const::<1>(move _103) -> [return: bb43, unwind: bb53];
+    }
+
+    bb43: {
+        _101 = _eprint(move _102) -> [return: bb44, unwind: bb53];
+    }
+
+    bb44: {
+        _0 = const 0_i32;
+        goto -> bb49;
+    }
+
+    bb45: {
+        _112 = [move _113];
+        _123 = const ffi::mmsb_checkpoint_load::promoted[1];
+        _116 = copy _123;
+        _115 = copy _116;
+        _119 = &_112;
+        _118 = copy _119;
+        _109 = core::fmt::rt::<impl Arguments<'_>>::new_v1::<2, 1>(move _115, move _118) -> [return: bb46, unwind: bb51];
+    }
+
+    bb46: {
+        _108 = _eprint(move _109) -> [return: bb47, unwind: bb51];
+    }
+
+    bb47: {
+        _121 = MMSBErrorCode::SnapshotError;
+        _120 = set_last_error(move _121) -> [return: bb48, unwind: bb51];
+    }
+
+    bb48: {
+        _0 = const -1_i32;
+        drop(_106) -> [return: bb49, unwind: bb53];
+    }
+
+    bb49: {
+        _137 = const false;
+        _138 = discriminant(_95);
+        _136 = const false;
+        goto -> bb50;
+    }
+
+    bb50: {
+        return;
+    }
+
+    bb51 (cleanup): {
+        drop(_106) -> [return: bb53, unwind terminate(cleanup)];
+    }
+
+    bb52 (cleanup): {
+        terminate(abi);
+    }
+
+    bb53 (cleanup): {
+        _140 = discriminant(_95);
+        goto -> bb52;
+    }
+
+    bb54 (cleanup): {
+        drop(_78) -> [return: bb52, unwind terminate(cleanup)];
+    }
+
+    bb55 (cleanup): {
+        switchInt(copy _137) -> [0: bb52, otherwise: bb54];
+    }
+
+    bb56: {
+        _158 = copy _134 as *const () (PtrToPtr);
+        _159 = copy _158 as usize (Transmute);
+        _160 = Eq(copy _159, const 0_usize);
+        _161 = BitAnd(copy _160, const true);
+        _162 = Not(copy _161);
+        assert(copy _162, "null pointer dereference occurred") -> [success: bb59, unwind unreachable];
+    }
+
+    bb57: {
+        _153 = copy _133 as *const () (PtrToPtr);
+        _154 = copy _153 as usize (Transmute);
+        _155 = Eq(copy _154, const 0_usize);
+        _156 = BitAnd(copy _155, const true);
+        _157 = Not(copy _156);
+        assert(copy _157, "null pointer dereference occurred") -> [success: bb58, unwind unreachable];
+    }
+
+    bb58: {
+        _76 = &(*_133);
+        _134 = copy (_2.0: *mut runtime::tlog::TransactionLog);
+        _141 = copy _134 as *const () (PtrToPtr);
+        _142 = copy _141 as usize (Transmute);
+        _143 = AlignOf(runtime::tlog::TransactionLog);
+        _144 = Sub(copy _143, const 1_usize);
+        _145 = BitAnd(copy _142, copy _144);
+        _146 = Eq(copy _145, const 0_usize);
+        assert(copy _146, "misaligned pointer dereference: address must be a multiple of {} but is {}", copy _143, copy _142) -> [success: bb56, unwind unreachable];
+    }
+
+    bb59: {
+        _77 = &(*_134);
+        _82 = copy _3;
+        _81 = CStr::from_ptr::<'_>(move _82) -> [return: bb32, unwind terminate(abi)];
+    }
+}
+
+alloc496 (size: 15, align: 1) {
+    3c 69 6e 76 61 6c 69 64 20 75 74 66 2d 38 3e    │ <invalid utf-8>
+}
+
+alloc495 (size: 6, align: 1) {
+    3c 6e 75 6c 6c 3e                               │ <null>
+}

@@ -1,0 +1,15 @@
+// MIR for `device::device_registry::<impl at src/03_device/device_registry.rs:6:17: 6:24>::default` before InstSimplify-after-simplifycfg
+
+fn device_registry::<impl at src/03_device/device_registry.rs:6:17: 6:24>::default() -> DeviceBufferRegistry {
+    let mut _0: device::device_registry::DeviceBufferRegistry;
+    let mut _1: parking_lot::lock_api::RwLock<parking_lot::RawRwLock, std::collections::HashMap<types::page::PageID, std::sync::Arc<types::page::Page>>>;
+
+    bb0: {
+        _1 = <parking_lot::lock_api::RwLock<parking_lot::RawRwLock, HashMap<PageID, Arc<Page>>> as Default>::default() -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        _0 = DeviceBufferRegistry { map: move _1 };
+        return;
+    }
+}

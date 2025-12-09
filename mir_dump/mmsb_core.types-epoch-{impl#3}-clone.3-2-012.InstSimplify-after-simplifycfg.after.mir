@@ -1,0 +1,13 @@
+// MIR for `types::epoch::<impl at src/01_types/epoch.rs:5:17: 5:22>::clone` after InstSimplify-after-simplifycfg
+
+fn epoch::<impl at src/01_types/epoch.rs:5:17: 5:22>::clone(_1: &Epoch) -> Epoch {
+    debug self => _1;
+    let mut _0: types::epoch::Epoch;
+    scope 1 {
+    }
+
+    bb0: {
+        _0 = copy (*_1);
+        return;
+    }
+}

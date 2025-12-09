@@ -1,0 +1,20 @@
+// MIR for `runtime::allocator_stats::<impl at src/02_runtime/allocator_stats.rs:3:17: 3:24>::default` after InstSimplify-after-simplifycfg
+
+fn allocator_stats::<impl at src/02_runtime/allocator_stats.rs:3:17: 3:24>::default() -> AllocatorStats {
+    let mut _0: runtime::allocator_stats::AllocatorStats;
+    let mut _1: std::sync::atomic::AtomicU64;
+    let mut _2: std::sync::atomic::AtomicU64;
+
+    bb0: {
+        _1 = <AtomicU64 as Default>::default() -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        _2 = <AtomicU64 as Default>::default() -> [return: bb2, unwind continue];
+    }
+
+    bb2: {
+        _0 = AllocatorStats { allocations: move _1, frees: move _2 };
+        return;
+    }
+}

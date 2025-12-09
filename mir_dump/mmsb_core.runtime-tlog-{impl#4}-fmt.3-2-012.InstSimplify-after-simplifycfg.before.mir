@@ -1,0 +1,42 @@
+// MIR for `runtime::tlog::<impl at src/02_runtime/tlog.rs:18:10: 18:15>::fmt` before InstSimplify-after-simplifycfg
+
+fn tlog::<impl at src/02_runtime/tlog.rs:18:10: 18:15>::fmt(_1: &TransactionLogReader, _2: &mut Formatter<'_>) -> Result<(), std::fmt::Error> {
+    debug self => _1;
+    debug f => _2;
+    let mut _0: std::result::Result<(), std::fmt::Error>;
+    let mut _3: &mut std::fmt::Formatter<'_>;
+    let mut _4: &str;
+    let _5: &str;
+    let mut _6: &str;
+    let _7: &str;
+    let mut _8: &dyn std::fmt::Debug;
+    let mut _9: &&std::io::BufReader<std::fs::File>;
+    let _10: &&std::io::BufReader<std::fs::File>;
+    let _11: &std::io::BufReader<std::fs::File>;
+
+    bb0: {
+        _3 = copy _2;
+        _5 = const "TransactionLogReader";
+        _4 = copy _5;
+        _7 = const "reader";
+        _6 = copy _7;
+        _11 = &((*_1).0: std::io::BufReader<std::fs::File>);
+        _10 = &_11;
+        _9 = copy _10;
+        _8 = move _9 as &dyn std::fmt::Debug (PointerCoercion(Unsize, Implicit));
+        _0 = Formatter::<'_>::debug_struct_field1_finish(move _3, move _4, move _6, move _8) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        return;
+    }
+}
+
+alloc413 (size: 6, align: 1) {
+    72 65 61 64 65 72                               │ reader
+}
+
+alloc412 (size: 20, align: 1) {
+    0x00 │ 54 72 61 6e 73 61 63 74 69 6f 6e 4c 6f 67 52 65 │ TransactionLogRe
+    0x10 │ 61 64 65 72                                     │ ader
+}

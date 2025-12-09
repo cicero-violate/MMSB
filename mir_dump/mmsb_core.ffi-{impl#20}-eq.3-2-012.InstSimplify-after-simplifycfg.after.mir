@@ -1,0 +1,30 @@
+// MIR for `ffi::<impl at src/ffi.rs:85:30: 85:39>::eq` after InstSimplify-after-simplifycfg
+
+fn ffi::<impl at src/ffi.rs:85:30: 85:39>::eq(_1: &MMSBErrorCode, _2: &MMSBErrorCode) -> bool {
+    debug self => _1;
+    debug other => _2;
+    let mut _0: bool;
+    let _3: isize;
+    let mut _4: &ffi::MMSBErrorCode;
+    let mut _6: &ffi::MMSBErrorCode;
+    let mut _7: isize;
+    let mut _8: isize;
+    scope 1 {
+        debug __self_discr => _3;
+        let _5: isize;
+        scope 2 {
+            debug __arg1_discr => _5;
+        }
+    }
+
+    bb0: {
+        _4 = copy _1;
+        _3 = discriminant((*_4));
+        _6 = copy _2;
+        _5 = discriminant((*_6));
+        _7 = copy _3;
+        _8 = copy _5;
+        _0 = Eq(move _7, move _8);
+        return;
+    }
+}

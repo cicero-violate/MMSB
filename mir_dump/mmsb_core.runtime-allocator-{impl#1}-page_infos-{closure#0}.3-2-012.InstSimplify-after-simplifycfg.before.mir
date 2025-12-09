@@ -1,0 +1,217 @@
+// MIR for `runtime::allocator::<impl at src/02_runtime/allocator.rs:53:1: 53:19>::page_infos::{closure#0}` before InstSimplify-after-simplifycfg
+
+fn allocator::<impl at src/02_runtime/allocator.rs:53:1: 53:19>::page_infos::{closure#0}(_1: &mut {closure@src/02_runtime/allocator.rs:105:18: 105:24}, _2: &Box<Page>) -> PageInfo {
+    debug page => _2;
+    let mut _0: runtime::allocator::PageInfo;
+    let mut _3: types::page::PageID;
+    let mut _4: usize;
+    let mut _5: &types::page::Page;
+    let mut _6: types::page::PageLocation;
+    let mut _7: &types::page::Page;
+    let mut _8: u32;
+    let mut _9: types::epoch::Epoch;
+    let mut _10: &types::page::Page;
+    let mut _11: std::vec::Vec<u8>;
+    let mut _12: &types::page::Page;
+    let mut _13: std::boxed::Box<types::page::Page>;
+    let mut _14: std::boxed::Box<types::page::Page>;
+    let mut _15: std::boxed::Box<types::page::Page>;
+    let mut _16: std::boxed::Box<types::page::Page>;
+    let mut _17: std::boxed::Box<types::page::Page>;
+    let mut _18: *const types::page::Page;
+    let mut _19: *const types::page::Page;
+    let mut _20: *const types::page::Page;
+    let mut _21: *const types::page::Page;
+    let mut _22: *const types::page::Page;
+    let mut _23: *const ();
+    let mut _24: usize;
+    let mut _25: usize;
+    let mut _26: usize;
+    let mut _27: usize;
+    let mut _28: bool;
+    let mut _29: *const ();
+    let mut _30: usize;
+    let mut _31: usize;
+    let mut _32: usize;
+    let mut _33: usize;
+    let mut _34: bool;
+    let mut _35: *const ();
+    let mut _36: usize;
+    let mut _37: usize;
+    let mut _38: usize;
+    let mut _39: usize;
+    let mut _40: bool;
+    let mut _41: *const ();
+    let mut _42: usize;
+    let mut _43: usize;
+    let mut _44: usize;
+    let mut _45: usize;
+    let mut _46: bool;
+    let mut _47: *const ();
+    let mut _48: usize;
+    let mut _49: usize;
+    let mut _50: usize;
+    let mut _51: usize;
+    let mut _52: bool;
+    let mut _53: *const ();
+    let mut _54: usize;
+    let mut _55: usize;
+    let mut _56: bool;
+    let mut _57: bool;
+    let mut _58: bool;
+    let mut _59: bool;
+    let mut _60: *const ();
+    let mut _61: usize;
+    let mut _62: bool;
+    let mut _63: bool;
+    let mut _64: bool;
+    let mut _65: *const ();
+    let mut _66: usize;
+    let mut _67: bool;
+    let mut _68: bool;
+    let mut _69: bool;
+    let mut _70: *const ();
+    let mut _71: usize;
+    let mut _72: bool;
+    let mut _73: bool;
+    let mut _74: bool;
+    let mut _75: *const ();
+    let mut _76: usize;
+    let mut _77: bool;
+    let mut _78: bool;
+    let mut _79: bool;
+
+    bb0: {
+        _13 = copy (*_2);
+        _18 = copy ((_13.0: std::ptr::Unique<types::page::Page>).0: std::ptr::NonNull<types::page::Page>) as *const types::page::Page (Transmute);
+        _47 = copy _18 as *const () (PtrToPtr);
+        _48 = copy _47 as usize (Transmute);
+        _49 = AlignOf(types::page::Page);
+        _50 = Sub(copy _49, const 1_usize);
+        _51 = BitAnd(copy _48, copy _50);
+        _52 = Eq(copy _51, const 0_usize);
+        assert(copy _52, "misaligned pointer dereference: address must be a multiple of {} but is {}", copy _49, copy _48) -> [success: bb9, unwind unreachable];
+    }
+
+    bb1: {
+        _15 = copy (*_2);
+        _20 = copy ((_15.0: std::ptr::Unique<types::page::Page>).0: std::ptr::NonNull<types::page::Page>) as *const types::page::Page (Transmute);
+        _35 = copy _20 as *const () (PtrToPtr);
+        _36 = copy _35 as usize (Transmute);
+        _37 = AlignOf(types::page::Page);
+        _38 = Sub(copy _37, const 1_usize);
+        _39 = BitAnd(copy _36, copy _38);
+        _40 = Eq(copy _39, const 0_usize);
+        assert(copy _40, "misaligned pointer dereference: address must be a multiple of {} but is {}", copy _37, copy _36) -> [success: bb7, unwind unreachable];
+    }
+
+    bb2: {
+        _16 = copy (*_2);
+        _21 = copy ((_16.0: std::ptr::Unique<types::page::Page>).0: std::ptr::NonNull<types::page::Page>) as *const types::page::Page (Transmute);
+        _29 = copy _21 as *const () (PtrToPtr);
+        _30 = copy _29 as usize (Transmute);
+        _31 = AlignOf(types::page::Page);
+        _32 = Sub(copy _31, const 1_usize);
+        _33 = BitAnd(copy _30, copy _32);
+        _34 = Eq(copy _33, const 0_usize);
+        assert(copy _34, "misaligned pointer dereference: address must be a multiple of {} but is {}", copy _31, copy _30) -> [success: bb6, unwind unreachable];
+    }
+
+    bb3: {
+        _8 = copy (_9.0: u32);
+        _17 = copy (*_2);
+        _22 = copy ((_17.0: std::ptr::Unique<types::page::Page>).0: std::ptr::NonNull<types::page::Page>) as *const types::page::Page (Transmute);
+        _23 = copy _22 as *const () (PtrToPtr);
+        _24 = copy _23 as usize (Transmute);
+        _25 = AlignOf(types::page::Page);
+        _26 = Sub(copy _25, const 1_usize);
+        _27 = BitAnd(copy _24, copy _26);
+        _28 = Eq(copy _27, const 0_usize);
+        assert(copy _28, "misaligned pointer dereference: address must be a multiple of {} but is {}", copy _25, copy _24) -> [success: bb5, unwind unreachable];
+    }
+
+    bb4: {
+        _0 = PageInfo { page_id: move _3, size: move _4, location: move _6, epoch: move _8, metadata: move _11 };
+        return;
+    }
+
+    bb5: {
+        _75 = copy _22 as *const () (PtrToPtr);
+        _76 = copy _75 as usize (Transmute);
+        _77 = Eq(copy _76, const 0_usize);
+        _78 = BitAnd(copy _77, const true);
+        _79 = Not(copy _78);
+        assert(copy _79, "null pointer dereference occurred") -> [success: bb14, unwind unreachable];
+    }
+
+    bb6: {
+        _70 = copy _21 as *const () (PtrToPtr);
+        _71 = copy _70 as usize (Transmute);
+        _72 = Eq(copy _71, const 0_usize);
+        _73 = BitAnd(copy _72, const true);
+        _74 = Not(copy _73);
+        assert(copy _74, "null pointer dereference occurred") -> [success: bb13, unwind unreachable];
+    }
+
+    bb7: {
+        _65 = copy _20 as *const () (PtrToPtr);
+        _66 = copy _65 as usize (Transmute);
+        _67 = Eq(copy _66, const 0_usize);
+        _68 = BitAnd(copy _67, const true);
+        _69 = Not(copy _68);
+        assert(copy _69, "null pointer dereference occurred") -> [success: bb12, unwind unreachable];
+    }
+
+    bb8: {
+        _60 = copy _19 as *const () (PtrToPtr);
+        _61 = copy _60 as usize (Transmute);
+        _62 = Eq(copy _61, const 0_usize);
+        _63 = BitAnd(copy _62, const true);
+        _64 = Not(copy _63);
+        assert(copy _64, "null pointer dereference occurred") -> [success: bb11, unwind unreachable];
+    }
+
+    bb9: {
+        _53 = copy _18 as *const () (PtrToPtr);
+        _54 = copy _53 as usize (Transmute);
+        _55 = SizeOf(types::page::Page);
+        _56 = Ne(copy _55, const 0_usize);
+        _57 = Eq(copy _54, const 0_usize);
+        _58 = BitAnd(copy _57, copy _56);
+        _59 = Not(copy _58);
+        assert(copy _59, "null pointer dereference occurred") -> [success: bb10, unwind unreachable];
+    }
+
+    bb10: {
+        _3 = copy ((*_18).1: types::page::PageID);
+        _14 = copy (*_2);
+        _19 = copy ((_14.0: std::ptr::Unique<types::page::Page>).0: std::ptr::NonNull<types::page::Page>) as *const types::page::Page (Transmute);
+        _41 = copy _19 as *const () (PtrToPtr);
+        _42 = copy _41 as usize (Transmute);
+        _43 = AlignOf(types::page::Page);
+        _44 = Sub(copy _43, const 1_usize);
+        _45 = BitAnd(copy _42, copy _44);
+        _46 = Eq(copy _45, const 0_usize);
+        assert(copy _46, "misaligned pointer dereference: address must be a multiple of {} but is {}", copy _43, copy _42) -> [success: bb8, unwind unreachable];
+    }
+
+    bb11: {
+        _5 = &(*_19);
+        _4 = Page::size(move _5) -> [return: bb1, unwind continue];
+    }
+
+    bb12: {
+        _7 = &(*_20);
+        _6 = Page::location(move _7) -> [return: bb2, unwind continue];
+    }
+
+    bb13: {
+        _10 = &(*_21);
+        _9 = Page::epoch(move _10) -> [return: bb3, unwind continue];
+    }
+
+    bb14: {
+        _12 = &(*_22);
+        _11 = Page::metadata_blob(move _12) -> [return: bb4, unwind continue];
+    }
+}

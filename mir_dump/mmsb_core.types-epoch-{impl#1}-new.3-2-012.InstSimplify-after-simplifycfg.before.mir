@@ -1,0 +1,18 @@
+// MIR for `types::epoch::<impl at src/01_types/epoch.rs:20:1: 20:15>::new` before InstSimplify-after-simplifycfg
+
+fn epoch::<impl at src/01_types/epoch.rs:20:1: 20:15>::new(_1: u32) -> EpochCell {
+    debug value => _1;
+    let mut _0: types::epoch::EpochCell;
+    let mut _2: std::sync::atomic::AtomicU32;
+    let mut _3: u32;
+
+    bb0: {
+        _3 = copy _1;
+        _2 = AtomicU32::new(move _3) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        _0 = EpochCell { inner: move _2 };
+        return;
+    }
+}

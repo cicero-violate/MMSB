@@ -1,0 +1,24 @@
+// MIR for `graph::propagation_engine::<impl at src/05_graph/propagation_engine.rs:24:1: 24:23>::enqueue` after InstSimplify-after-simplifycfg
+
+fn propagation_engine::<impl at src/05_graph/propagation_engine.rs:24:1: 24:23>::enqueue(_1: &PropagationEngine, _2: PropagationCommand) -> () {
+    debug self => _1;
+    debug command => _2;
+    let mut _0: ();
+    let _3: ();
+    let mut _4: &graph::propagation_queue::PropagationQueue;
+    let mut _5: graph::propagation_command_buffer::PropagationCommand;
+
+    bb0: {
+        _4 = &((*_1).1: graph::propagation_queue::PropagationQueue);
+        _5 = move _2;
+        _3 = PropagationQueue::push(move _4, move _5) -> [return: bb1, unwind: bb2];
+    }
+
+    bb1: {
+        return;
+    }
+
+    bb2 (cleanup): {
+        resume;
+    }
+}

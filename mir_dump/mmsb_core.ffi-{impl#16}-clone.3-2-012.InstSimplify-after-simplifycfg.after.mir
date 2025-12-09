@@ -1,0 +1,11 @@
+// MIR for `ffi::<impl at src/ffi.rs:85:10: 85:15>::clone` after InstSimplify-after-simplifycfg
+
+fn ffi::<impl at src/ffi.rs:85:10: 85:15>::clone(_1: &MMSBErrorCode) -> MMSBErrorCode {
+    debug self => _1;
+    let mut _0: ffi::MMSBErrorCode;
+
+    bb0: {
+        _0 = copy (*_1);
+        return;
+    }
+}

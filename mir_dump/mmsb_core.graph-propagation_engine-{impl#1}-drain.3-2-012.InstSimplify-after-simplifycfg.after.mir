@@ -1,0 +1,146 @@
+// MIR for `graph::propagation_engine::<impl at src/05_graph/propagation_engine.rs:24:1: 24:23>::drain` after InstSimplify-after-simplifycfg
+
+fn propagation_engine::<impl at src/05_graph/propagation_engine.rs:24:1: 24:23>::drain(_1: &PropagationEngine) -> () {
+    debug self => _1;
+    let mut _0: ();
+    let mut _2: ();
+    let mut _3: std::option::Option<graph::propagation_command_buffer::PropagationCommand>;
+    let mut _4: &graph::propagation_queue::PropagationQueue;
+    let mut _5: isize;
+    let mut _7: std::option::Option<&std::sync::Arc<dyn for<'a, 'b> std::ops::Fn(&'a types::page::Page, &'b [std::sync::Arc<types::page::Page>]) + std::marker::Send + std::marker::Sync>>;
+    let mut _8: &std::collections::HashMap<types::page::PageID, std::sync::Arc<dyn for<'a, 'b> std::ops::Fn(&'a types::page::Page, &'b [std::sync::Arc<types::page::Page>]) + std::marker::Send + std::marker::Sync>>;
+    let _9: &std::collections::HashMap<types::page::PageID, std::sync::Arc<dyn for<'a, 'b> std::ops::Fn(&'a types::page::Page, &'b [std::sync::Arc<types::page::Page>]) + std::marker::Send + std::marker::Sync>>;
+    let mut _10: &parking_lot::lock_api::RwLockReadGuard<'_, parking_lot::RawRwLock, std::collections::HashMap<types::page::PageID, std::sync::Arc<dyn for<'a, 'b> std::ops::Fn(&'a types::page::Page, &'b [std::sync::Arc<types::page::Page>]) + std::marker::Send + std::marker::Sync>>>;
+    let _11: parking_lot::lock_api::RwLockReadGuard<'_, parking_lot::RawRwLock, std::collections::HashMap<types::page::PageID, std::sync::Arc<dyn for<'a, 'b> std::ops::Fn(&'a types::page::Page, &'b [std::sync::Arc<types::page::Page>]) + std::marker::Send + std::marker::Sync>>>;
+    let mut _12: &parking_lot::lock_api::RwLock<parking_lot::RawRwLock, std::collections::HashMap<types::page::PageID, std::sync::Arc<dyn for<'a, 'b> std::ops::Fn(&'a types::page::Page, &'b [std::sync::Arc<types::page::Page>]) + std::marker::Send + std::marker::Sync>>>;
+    let mut _13: &types::page::PageID;
+    let _14: &types::page::PageID;
+    let mut _15: isize;
+    let _17: ();
+    let mut _18: &dyn for<'a, 'b> std::ops::Fn(&'a types::page::Page, &'b [std::sync::Arc<types::page::Page>]) + std::marker::Send + std::marker::Sync;
+    let _19: &dyn for<'a, 'b> std::ops::Fn(&'a types::page::Page, &'b [std::sync::Arc<types::page::Page>]) + std::marker::Send + std::marker::Sync;
+    let mut _20: &std::sync::Arc<dyn for<'a, 'b> std::ops::Fn(&'a types::page::Page, &'b [std::sync::Arc<types::page::Page>]) + std::marker::Send + std::marker::Sync>;
+    let mut _21: (&types::page::Page, &[std::sync::Arc<types::page::Page>]);
+    let mut _22: &types::page::Page;
+    let _23: &types::page::Page;
+    let mut _24: &std::sync::Arc<types::page::Page>;
+    let _25: &std::sync::Arc<types::page::Page>;
+    let mut _26: &[std::sync::Arc<types::page::Page>];
+    let _27: &[std::sync::Arc<types::page::Page>];
+    let mut _28: &std::vec::Vec<std::sync::Arc<types::page::Page>>;
+    let _29: &std::vec::Vec<std::sync::Arc<types::page::Page>>;
+    let mut _30: !;
+    let _31: ();
+    let mut _32: !;
+    let mut _33: isize;
+    let mut _34: isize;
+    let mut _35: isize;
+    let mut _36: isize;
+    let mut _37: isize;
+    scope 1 {
+        debug command => _6;
+        let _6: graph::propagation_command_buffer::PropagationCommand;
+        scope 2 {
+            debug cb => _16;
+            let _16: &std::sync::Arc<dyn for<'a, 'b> std::ops::Fn(&'a types::page::Page, &'b [std::sync::Arc<types::page::Page>]) + std::marker::Send + std::marker::Sync>;
+        }
+    }
+
+    bb0: {
+        goto -> bb1;
+    }
+
+    bb1: {
+        _4 = &((*_1).1: graph::propagation_queue::PropagationQueue);
+        _3 = PropagationQueue::pop(move _4) -> [return: bb2, unwind continue];
+    }
+
+    bb2: {
+        _5 = discriminant(_3);
+        switchInt(move _5) -> [1: bb3, 0: bb13, otherwise: bb18];
+    }
+
+    bb3: {
+        _6 = move ((_3 as Some).0: graph::propagation_command_buffer::PropagationCommand);
+        _12 = &((*_1).0: parking_lot::lock_api::RwLock<parking_lot::RawRwLock, std::collections::HashMap<types::page::PageID, std::sync::Arc<dyn for<'a, 'b> std::ops::Fn(&'a types::page::Page, &'b [std::sync::Arc<types::page::Page>]) + std::marker::Send + std::marker::Sync>>>);
+        _11 = parking_lot::lock_api::RwLock::<parking_lot::RawRwLock, HashMap<PageID, Arc<dyn for<'a, 'b> Fn(&'a Page, &'b [Arc<Page>]) + Send + Sync>>>::read(move _12) -> [return: bb4, unwind: bb16];
+    }
+
+    bb4: {
+        _10 = &_11;
+        _9 = <parking_lot::lock_api::RwLockReadGuard<'_, parking_lot::RawRwLock, HashMap<PageID, Arc<dyn for<'a, 'b> Fn(&'a Page, &'b [Arc<Page>]) + Send + Sync>>> as Deref>::deref(move _10) -> [return: bb5, unwind: bb15];
+    }
+
+    bb5: {
+        _8 = copy _9;
+        _14 = &(_6.0: types::page::PageID);
+        _13 = copy _14;
+        _7 = HashMap::<PageID, Arc<dyn for<'a, 'b> Fn(&'a Page, &'b [Arc<Page>]) + Send + Sync>>::get::<PageID>(move _8, move _13) -> [return: bb6, unwind: bb15];
+    }
+
+    bb6: {
+        _15 = discriminant(_7);
+        switchInt(move _15) -> [1: bb7, 0: bb11, otherwise: bb18];
+    }
+
+    bb7: {
+        _16 = copy ((_7 as Some).0: &std::sync::Arc<dyn for<'a, 'b> std::ops::Fn(&'a types::page::Page, &'b [std::sync::Arc<types::page::Page>]) + std::marker::Send + std::marker::Sync>);
+        _20 = copy _16;
+        _19 = <Arc<dyn for<'a, 'b> Fn(&'a Page, &'b [Arc<Page>]) + Send + Sync> as Deref>::deref(move _20) -> [return: bb8, unwind: bb15];
+    }
+
+    bb8: {
+        _18 = copy _19;
+        _25 = &(_6.1: std::sync::Arc<types::page::Page>);
+        _24 = copy _25;
+        _23 = <Arc<Page> as Deref>::deref(move _24) -> [return: bb9, unwind: bb15];
+    }
+
+    bb9: {
+        _22 = copy _23;
+        _29 = &(_6.2: std::vec::Vec<std::sync::Arc<types::page::Page>>);
+        _28 = copy _29;
+        _27 = <Vec<Arc<Page>> as Deref>::deref(move _28) -> [return: bb10, unwind: bb15];
+    }
+
+    bb10: {
+        _26 = copy _27;
+        _21 = (move _22, move _26);
+        _17 = <dyn for<'a, 'b> Fn(&'a Page, &'b [Arc<Page>]) + Send + Sync as Fn<(&Page, &[Arc<Page>])>>::call(move _18, move _21) -> [return: bb11, unwind: bb15];
+    }
+
+    bb11: {
+        drop(_11) -> [return: bb12, unwind: bb16];
+    }
+
+    bb12: {
+        drop(_6) -> [return: bb14, unwind: bb17];
+    }
+
+    bb13: {
+        _33 = discriminant(_3);
+        return;
+    }
+
+    bb14: {
+        _35 = discriminant(_3);
+        goto -> bb1;
+    }
+
+    bb15 (cleanup): {
+        drop(_11) -> [return: bb16, unwind terminate(cleanup)];
+    }
+
+    bb16 (cleanup): {
+        drop(_6) -> [return: bb17, unwind terminate(cleanup)];
+    }
+
+    bb17 (cleanup): {
+        _37 = discriminant(_3);
+        resume;
+    }
+
+    bb18: {
+        unreachable;
+    }
+}

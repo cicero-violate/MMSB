@@ -1,0 +1,33 @@
+// MIR for `types::delta::<impl at src/01_types/delta.rs:6:10: 6:15>::fmt` after InstSimplify-after-simplifycfg
+
+fn delta::<impl at src/01_types/delta.rs:6:10: 6:15>::fmt(_1: &DeltaID, _2: &mut Formatter<'_>) -> Result<(), std::fmt::Error> {
+    debug self => _1;
+    debug f => _2;
+    let mut _0: std::result::Result<(), std::fmt::Error>;
+    let mut _3: &mut std::fmt::Formatter<'_>;
+    let mut _4: &str;
+    let _5: &str;
+    let mut _6: &dyn std::fmt::Debug;
+    let mut _7: &&u64;
+    let _8: &&u64;
+    let _9: &u64;
+
+    bb0: {
+        _3 = copy _2;
+        _5 = const "DeltaID";
+        _4 = copy _5;
+        _9 = &((*_1).0: u64);
+        _8 = &_9;
+        _7 = copy _8;
+        _6 = move _7 as &dyn std::fmt::Debug (PointerCoercion(Unsize, Implicit));
+        _0 = Formatter::<'_>::debug_tuple_field1_finish(move _3, move _4, move _6) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        return;
+    }
+}
+
+alloc93 (size: 7, align: 1) {
+    44 65 6c 74 61 49 44                            │ DeltaID
+}

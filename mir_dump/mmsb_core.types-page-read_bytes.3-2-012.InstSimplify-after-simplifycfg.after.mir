@@ -1,0 +1,105 @@
+// MIR for `types::page::read_bytes` after InstSimplify-after-simplifycfg
+
+fn read_bytes(_1: &[u8], _2: &mut usize, _3: usize) -> Result<Vec<u8>, PageError> {
+    debug blob => _1;
+    debug cursor => _2;
+    debug len => _3;
+    let mut _0: std::result::Result<std::vec::Vec<u8>, types::page::PageError>;
+    let _4: ();
+    let mut _5: bool;
+    let mut _6: usize;
+    let mut _7: usize;
+    let mut _8: usize;
+    let mut _9: (usize, bool);
+    let mut _10: usize;
+    let mut _11: &[u8];
+    let mut _12: !;
+    let mut _13: types::page::PageError;
+    let _14: std::vec::Vec<u8>;
+    let mut _15: &[u8];
+    let _16: &[u8];
+    let mut _17: &[u8];
+    let mut _18: std::ops::Range<usize>;
+    let mut _19: usize;
+    let mut _20: usize;
+    let mut _21: usize;
+    let mut _22: usize;
+    let mut _23: (usize, bool);
+    let mut _24: usize;
+    let mut _25: (usize, bool);
+    let mut _26: std::vec::Vec<u8>;
+    scope 1 {
+        debug bytes => _14;
+    }
+
+    bb0: {
+        _7 = copy (*_2);
+        _8 = copy _3;
+        _9 = AddWithOverflow(copy _7, copy _8);
+        assert(!move (_9.1: bool), "attempt to compute `{} + {}`, which would overflow", move _7, move _8) -> [success: bb1, unwind continue];
+    }
+
+    bb1: {
+        _6 = move (_9.0: usize);
+        _11 = copy _1;
+        _10 = PtrMetadata(move _11);
+        _5 = Gt(move _6, move _10);
+        switchInt(move _5) -> [0: bb3, otherwise: bb2];
+    }
+
+    bb2: {
+        _13 = PageError::MetadataDecode(const "metadata truncated");
+        _0 = Result::<Vec<u8>, PageError>::Err(move _13);
+        goto -> bb8;
+    }
+
+    bb3: {
+        _17 = copy _1;
+        _19 = copy (*_2);
+        _21 = copy (*_2);
+        _22 = copy _3;
+        _23 = AddWithOverflow(copy _21, copy _22);
+        assert(!move (_23.1: bool), "attempt to compute `{} + {}`, which would overflow", move _21, move _22) -> [success: bb4, unwind continue];
+    }
+
+    bb4: {
+        _20 = move (_23.0: usize);
+        _18 = std::ops::Range::<usize> { start: move _19, end: move _20 };
+        _16 = <[u8] as Index<std::ops::Range<usize>>>::index(move _17, move _18) -> [return: bb5, unwind continue];
+    }
+
+    bb5: {
+        _15 = copy _16;
+        _14 = std::slice::<impl [u8]>::to_vec(move _15) -> [return: bb6, unwind continue];
+    }
+
+    bb6: {
+        _24 = copy _3;
+        _25 = AddWithOverflow(copy (*_2), copy _24);
+        assert(!move (_25.1: bool), "attempt to compute `{} + {}`, which would overflow", copy (*_2), move _24) -> [success: bb7, unwind: bb9];
+    }
+
+    bb7: {
+        (*_2) = move (_25.0: usize);
+        _26 = move _14;
+        _0 = Result::<Vec<u8>, PageError>::Ok(move _26);
+        goto -> bb8;
+    }
+
+    bb8: {
+        return;
+    }
+
+    bb9 (cleanup): {
+        drop(_14) -> [return: bb10, unwind terminate(cleanup)];
+    }
+
+    bb10 (cleanup): {
+        resume;
+    }
+}
+
+alloc309 (size: 18, align: 1) {
+    0x00 │ 6d 65 74 61 64 61 74 61 20 74 72 75 6e 63 61 74 │ metadata truncat
+    0x10 │ 65 64                                           │ ed
+}

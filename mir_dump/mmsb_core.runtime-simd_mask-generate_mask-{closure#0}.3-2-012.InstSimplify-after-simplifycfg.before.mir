@@ -1,0 +1,25 @@
+// MIR for `runtime::simd_mask::generate_mask::{closure#0}` before InstSimplify-after-simplifycfg
+
+fn generate_mask::{closure#0}(_1: &mut {closure@src/02_runtime/simd_mask.rs:4:36: 4:44}, _2: (&u8, &u8)) -> bool {
+    let mut _0: bool;
+    let _3: &u8;
+    let _4: &u8;
+    let mut _5: &&u8;
+    let mut _6: &&u8;
+    scope 1 {
+        debug a => _3;
+        debug b => _4;
+    }
+
+    bb0: {
+        _3 = copy (_2.0: &u8);
+        _4 = copy (_2.1: &u8);
+        _5 = &_3;
+        _6 = &_4;
+        _0 = <&u8 as PartialEq>::ne(move _5, move _6) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        return;
+    }
+}

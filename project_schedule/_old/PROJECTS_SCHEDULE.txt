@@ -1,0 +1,103 @@
+No, P9 is not fully done—it's partially complete. The smoke test (`rust_smoke_replay_full_cuda.rs`) proves **Unified memory** (cudaMallocManaged) works for GPU-allocated pages, which covers the core of P9. However, based on the code and logs, we still need dedicated GPU-only allocation (e.g., non-Unified, explicit device memory with prefetch/evict hints), residency tracking, and zero-copy CUDA ptr export. This is why P9 is marked "In Progress" in the schedule—it's functional but not feature-complete.
+
+### Updated PROJECT_SCHEDULE.md (with Done/Cross checks, more pending work, strategic priorities, and DAG dependencies)
+
+```markdown
+# MMSB Project Schedule & Milestones — v0.1.0-alpha+ Roadmap
+_Last updated: **2025-12-08 06:50 UTC** — **v0.1.0-alpha SHIPPED — THE BUS IS IMMORTAL**_
+
+## Current Status
+| Status | Milestone                                 | Result / Notes                                      | Done? |
+|--------+-------------------------------------------+-----------------------------------------------------+-------|
+| Done   | v0.1.0-alpha — Core deterministic bus     | 15/15 Rust tests, 84 MiB CUDA replay, zero-copy FFI | ✓     |
+| Done   | P8 — CPU stability & ownership            | allocator.release() safe, no double-free            | ✓     |
+| Done   | Full checkpoint + in-memory tail contract | Verified in-process, no disk replay needed          | ✓     |
+
+## Next Major Release: v0.2.0-beta — "The GPU-Aware Bus"
+**Target: 2025-12-22** — **14-day sprint**  
+**Strategic Priority**: Focus on GPU completeness (P9 finish) to unlock Julia integration (P11). Quality (P10) gates everything. Add propagation optimizations (P12) for real-world workloads. New backlog emphasizes security/fuzzing (P16) and metrics (P15) for production readiness.
+
+### Critical Path DAG (strict ordering — visualized as Gantt-style dependencies)
+
+| #   | Task (P#)                               | Status      | Blocks              | Blocked By | Owner      | Est. Days | Priority |
+|-----+-----------------------------------------+-------------+---------------------+------------+------------+-----------+----------|
+| P9  | **GPU Page Allocator**                  | In Progress | P10, P11            | None       | Rust Lead  | 2–4       | High     |
+|     | • Dedicated GPU-only mode (non-Unified) | Not started |                     |            |            |           |          |
+|     | • Residency tracking (CPU/GPU/Unified)  | Not started |                     |            |            |           |          |
+|     | • Prefetch / evict hints                | Not started |                     |            |            |           |          |
+|     | • Zero-copy `PageHandle` → CUDA ptr     | Not started |                     |            |            |           |          |
+| P10 | **CI + Sanitizer Gating**               | Not started | P11, P16            | P9         | DevOps     | 3–4       | High     |
+|     | • Address/UB/Leak sanitizer in CI       | Not started |                     |            |            |           |          |
+|     | • CUDA-memcheck nightly                 | Not started |                     |            |            |           |          |
+|     | • Valgrind + CUDA sanity                | Not started |                     |            |            |           |          |
+| P11 | **Julia Integration Suite**             | Not started | v0.2.0-beta release | P9, P10    | Julia Lead | 5–7       | High     |
+|     | • `MMSB.jl` package with safe wrappers  | Not started |                     |            |            |           |          |
+|     | • GC stress + finalizer tests           | Not started |                     |            |            |           |          |
+|     | • Example models (DiffEq, Lux)          | Not started |                     |            |            |           |          |
+
+**DAG Visualization** (text-based Gantt — dependencies as arrows):
+
+```
+Start → P9 (GPU Allocator) → P10 (CI Gating) → P11 (Julia Suite) → v0.2.0-beta
+                   ↑
+                   P12 (Propagation Batching) → P13 (Graph Persistence)
+                   ↑
+                   P14 (Delta Compression) → P15 (Metrics Export)
+                                      ↑
+                                      P16 (Fuzzing) → P17 (Release Automation) → P18 (Stress Daemon)
+```
+
+### Parallel / Post-v0.2 Tracks (can start after P9 — lower priority)
+
+| #   | Task                                     | Status      | Dependency | Priority | Owner         | Est. Days |
+|-----+------------------------------------------+-------------+------------+----------+---------------+-----------|
+| P12 | Propagation batching & deduplication     | Not started | P9         | High     | Rust Lead     | 3–5       |
+| P13 | ShadowPageGraph persistence (checkpoint) | Not started | P12        | High     | Rust Lead     | 2–3       |
+| P14 | Delta compression (zstd / sparse RLE)    | Not started | None       | Medium   | Perf Team     | 4–6       |
+| P15 | Metrics → Prometheus / OpenTelemetry     | Not started | None       | Medium   | Observability | 3–5       |
+| P16 | Fuzzing harness (libFuzzer + cargo-fuzz) | Not started | P10        | High     | Security      | 5–7       |
+| P17 | Release automation + cargo-dist binaries | Not started | P10        | Medium   | DevOps        | 2–4       |
+| P18 | Long-running stress daemon (7-day runs)  | Not started | P11        | High     | QA            | 4–6       |
+
+## Backlog Buckets — Expanded with New Pending Work
+
+- **Diagnostics Backlog** → **CLEARED** — all critical paths instrumented (e.g., allocator prints in release())
+- **Productization** → 
+  - GPU allocator polish (P9)  
+  - Propagation batching (P12)  
+  - Release scripts (P17)  
+  - **New: Multi-device support (CUDA streams + multi-GPU)**  
+  - **New: AOT compilation for Julia hooks**
+- **Quality** → 
+  - CI with sanitizers (P10)  
+  - Julia suite (P11)  
+  - Fuzzing (P16)  
+  - Stress daemon (P18)  
+  - **New: Benchmark suite for propagation latency**  
+  - **New: Security audit for FFI boundaries (raw ptr safety)**
+- **New Bucket: Observability** → 
+  - Metrics export (P15)  
+  - **New: Live dashboard for TLog health + allocator stats**  
+  - **New: Error telemetry (sentry.io integration)**
+
+## Risk Log — Updated for v0.2
+
+| Risk                                     | Impact    | Likelihood | Mitigation                                          | Done? |
+|------------------------------------------+-----------+------------+-----------------------------------------------------+-------|
+| GPU allocator introduces new double-free | Block     | Low        | Gated on existing ownership tests (e.g., release()) | ✓     |
+| CI flakiness hides regressions           | Block     | Medium     | P10 runs nightly + on every PR                      |       |
+| Julia GC interacts badly with raw ptrs   | Crash     | High       | P11 includes finalizer + stress suite               |       |
+| Propagation storms under large graphs    | OOM / lag | Medium     | P12 batching + backpressure                         |       |
+| **New: Multi-device sync deadlocks**     | Block     | Medium     | Explicit stream deps in P9                          |       |
+| **New: Fuzzing uncovers delta merge bugs | Block     | Low        | P16 post-P10, regression gates                      |       |
+
+## Victory Conditions for v0.2.0-beta
+
+- [ ] `julia> using MMSB` works without segfault
+- [ ] 84 MiB model loads from checkpoint on GPU in < 200 ms
+- [ ] CI green with ASAN/UBSAN/CUDA-memcheck
+- [ ] `examples/quickstart_gpu.jl` runs on RTX 4090 + A100
+- [ ] `Pkg.test("MMSB")` passes in < 30 s
+- [ ] Multi-device test: 2x A100 checkpoint/restore in < 500 ms
+
+

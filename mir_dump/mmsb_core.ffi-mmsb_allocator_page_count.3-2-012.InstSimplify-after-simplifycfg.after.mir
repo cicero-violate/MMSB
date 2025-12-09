@@ -1,0 +1,78 @@
+// MIR for `ffi::mmsb_allocator_page_count` after InstSimplify-after-simplifycfg
+
+fn mmsb_allocator_page_count(_1: AllocatorHandle) -> usize {
+    debug handle => _1;
+    let mut _0: usize;
+    let _2: ();
+    let mut _3: bool;
+    let mut _4: *mut runtime::allocator::PageAllocator;
+    let mut _5: !;
+    let _6: ();
+    let mut _7: ffi::MMSBErrorCode;
+    let _8: &runtime::allocator::PageAllocator;
+    let mut _9: &runtime::allocator::PageAllocator;
+    let mut _10: *mut runtime::allocator::PageAllocator;
+    let mut _11: *const ();
+    let mut _12: usize;
+    let mut _13: usize;
+    let mut _14: usize;
+    let mut _15: usize;
+    let mut _16: bool;
+    let mut _17: *const ();
+    let mut _18: usize;
+    let mut _19: bool;
+    let mut _20: bool;
+    let mut _21: bool;
+    scope 1 {
+        debug allocator => _8;
+    }
+
+    bb0: {
+        _4 = copy (_1.0: *mut runtime::allocator::PageAllocator);
+        _3 = std::ptr::mut_ptr::<impl *mut PageAllocator>::is_null(move _4) -> [return: bb1, unwind terminate(abi)];
+    }
+
+    bb1: {
+        switchInt(move _3) -> [0: bb4, otherwise: bb2];
+    }
+
+    bb2: {
+        _7 = MMSBErrorCode::InvalidHandle;
+        _6 = set_last_error(move _7) -> [return: bb3, unwind terminate(abi)];
+    }
+
+    bb3: {
+        _0 = const 0_usize;
+        goto -> bb5;
+    }
+
+    bb4: {
+        _10 = copy (_1.0: *mut runtime::allocator::PageAllocator);
+        _11 = copy _10 as *const () (PtrToPtr);
+        _12 = copy _11 as usize (Transmute);
+        _13 = AlignOf(runtime::allocator::PageAllocator);
+        _14 = Sub(copy _13, const 1_usize);
+        _15 = BitAnd(copy _12, copy _14);
+        _16 = Eq(copy _15, const 0_usize);
+        assert(copy _16, "misaligned pointer dereference: address must be a multiple of {} but is {}", copy _13, copy _12) -> [success: bb6, unwind unreachable];
+    }
+
+    bb5: {
+        return;
+    }
+
+    bb6: {
+        _17 = copy _10 as *const () (PtrToPtr);
+        _18 = copy _17 as usize (Transmute);
+        _19 = Eq(copy _18, const 0_usize);
+        _20 = BitAnd(copy _19, const true);
+        _21 = Not(copy _20);
+        assert(copy _21, "null pointer dereference occurred") -> [success: bb7, unwind unreachable];
+    }
+
+    bb7: {
+        _8 = &(*_10);
+        _9 = copy _8;
+        _0 = PageAllocator::len(move _9) -> [return: bb5, unwind terminate(abi)];
+    }
+}

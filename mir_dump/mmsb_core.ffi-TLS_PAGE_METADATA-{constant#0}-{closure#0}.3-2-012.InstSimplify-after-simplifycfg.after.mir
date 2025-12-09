@@ -1,0 +1,20 @@
+// MIR for `ffi::TLS_PAGE_METADATA::{constant#0}::{closure#0}` after InstSimplify-after-simplifycfg
+
+fn TLS_PAGE_METADATA::{constant#0}::{closure#0}(_1: &{closure@/home/cicero-arch-omen/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/std/src/sys/thread_local/native/mod.rs:92:21: 92:47}, _2: Option<&mut Option<RefCell<Vec<Vec<u8>>>>>) -> *const RefCell<Vec<Vec<u8>>> {
+    debug __rust_std_internal_init => _2;
+    let mut _0: *const std::cell::RefCell<std::vec::Vec<std::vec::Vec<u8>>>;
+    let mut _3: &std::thread::local_impl::LazyStorage<std::cell::RefCell<std::vec::Vec<std::vec::Vec<u8>>>, ()>;
+    let _4: &std::thread::local_impl::LazyStorage<std::cell::RefCell<std::vec::Vec<std::vec::Vec<u8>>>, ()>;
+    let mut _5: std::option::Option<&mut std::option::Option<std::cell::RefCell<std::vec::Vec<std::vec::Vec<u8>>>>>;
+
+    bb0: {
+        _4 = &/*tls*/ TLS_PAGE_METADATA::{constant#0}::{closure#0}::__RUST_STD_INTERNAL_VAL;
+        _3 = copy _4;
+        _5 = move _2;
+        _0 = LazyStorage::<RefCell<Vec<Vec<u8>>>, ()>::get_or_init::<fn() -> RefCell<Vec<Vec<u8>>> {TLS_PAGE_METADATA::__rust_std_internal_init_fn}>(move _3, move _5, TLS_PAGE_METADATA::__rust_std_internal_init_fn) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        return;
+    }
+}

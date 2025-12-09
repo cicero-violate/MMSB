@@ -1,0 +1,61 @@
+// MIR for `types::page::<impl at src/01_types/page.rs:25:10: 25:15>::fmt` after InstSimplify-after-simplifycfg
+
+fn page::<impl at src/01_types/page.rs:25:10: 25:15>::fmt(_1: &PageLocation, _2: &mut Formatter<'_>) -> Result<(), std::fmt::Error> {
+    debug self => _1;
+    debug f => _2;
+    let mut _0: std::result::Result<(), std::fmt::Error>;
+    let mut _3: &mut std::fmt::Formatter<'_>;
+    let mut _4: &str;
+    let mut _5: i32;
+    let _6: &str;
+    let _7: &str;
+    let _8: &str;
+
+    bb0: {
+        _3 = copy _2;
+        _5 = discriminant((*_1));
+        switchInt(move _5) -> [0: bb4, 1: bb3, 2: bb2, otherwise: bb1];
+    }
+
+    bb1: {
+        unreachable;
+    }
+
+    bb2: {
+        _8 = const "Unified";
+        _4 = copy _8;
+        goto -> bb5;
+    }
+
+    bb3: {
+        _7 = const "Gpu";
+        _4 = copy _7;
+        goto -> bb5;
+    }
+
+    bb4: {
+        _6 = const "Cpu";
+        _4 = copy _6;
+        goto -> bb5;
+    }
+
+    bb5: {
+        _0 = Formatter::<'_>::write_str(move _3, move _4) -> [return: bb6, unwind continue];
+    }
+
+    bb6: {
+        return;
+    }
+}
+
+alloc143 (size: 7, align: 1) {
+    55 6e 69 66 69 65 64                            │ Unified
+}
+
+alloc142 (size: 3, align: 1) {
+    47 70 75                                        │ Gpu
+}
+
+alloc141 (size: 3, align: 1) {
+    43 70 75                                        │ Cpu
+}

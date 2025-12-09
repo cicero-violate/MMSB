@@ -1,0 +1,41 @@
+// MIR for `types::page::<impl at src/01_types/page.rs:55:10: 55:15>::fmt` after InstSimplify-after-simplifycfg
+
+fn page::<impl at src/01_types/page.rs:55:10: 55:15>::fmt(_1: &page::Metadata, _2: &mut Formatter<'_>) -> Result<(), std::fmt::Error> {
+    debug self => _1;
+    debug f => _2;
+    let mut _0: std::result::Result<(), std::fmt::Error>;
+    let mut _3: &mut std::fmt::Formatter<'_>;
+    let mut _4: &str;
+    let _5: &str;
+    let mut _6: &str;
+    let _7: &str;
+    let mut _8: &dyn std::fmt::Debug;
+    let mut _9: &&std::sync::Arc<parking_lot::lock_api::RwLock<parking_lot::RawRwLock, std::vec::Vec<(std::string::String, std::vec::Vec<u8>)>>>;
+    let _10: &&std::sync::Arc<parking_lot::lock_api::RwLock<parking_lot::RawRwLock, std::vec::Vec<(std::string::String, std::vec::Vec<u8>)>>>;
+    let _11: &std::sync::Arc<parking_lot::lock_api::RwLock<parking_lot::RawRwLock, std::vec::Vec<(std::string::String, std::vec::Vec<u8>)>>>;
+
+    bb0: {
+        _3 = copy _2;
+        _5 = const "Metadata";
+        _4 = copy _5;
+        _7 = const "store";
+        _6 = copy _7;
+        _11 = &((*_1).0: std::sync::Arc<parking_lot::lock_api::RwLock<parking_lot::RawRwLock, std::vec::Vec<(std::string::String, std::vec::Vec<u8>)>>>);
+        _10 = &_11;
+        _9 = copy _10;
+        _8 = move _9 as &dyn std::fmt::Debug (PointerCoercion(Unsize, Implicit));
+        _0 = Formatter::<'_>::debug_struct_field1_finish(move _3, move _4, move _6, move _8) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        return;
+    }
+}
+
+alloc149 (size: 5, align: 1) {
+    73 74 6f 72 65                                  │ store
+}
+
+alloc148 (size: 8, align: 1) {
+    4d 65 74 61 64 61 74 61                         │ Metadata
+}

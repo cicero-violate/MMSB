@@ -1,0 +1,51 @@
+// MIR for `runtime::tlog::<impl at src/02_runtime/tlog.rs:30:1: 30:20>::drain` before InstSimplify-after-simplifycfg
+
+fn tlog::<impl at src/02_runtime/tlog.rs:30:1: 30:20>::drain(_1: &TransactionLog) -> Vec<Delta> {
+    debug self => _1;
+    let mut _0: std::vec::Vec<types::delta::Delta>;
+    let mut _2: parking_lot::lock_api::RwLockWriteGuard<'_, parking_lot::RawRwLock, std::collections::VecDeque<types::delta::Delta>>;
+    let mut _3: &parking_lot::lock_api::RwLock<parking_lot::RawRwLock, std::collections::VecDeque<types::delta::Delta>>;
+    let mut _4: std::collections::vec_deque::Drain<'_, types::delta::Delta>;
+    let mut _5: &mut std::collections::VecDeque<types::delta::Delta>;
+    let mut _6: &mut std::collections::VecDeque<types::delta::Delta>;
+    let mut _7: &mut parking_lot::lock_api::RwLockWriteGuard<'_, parking_lot::RawRwLock, std::collections::VecDeque<types::delta::Delta>>;
+    let mut _8: std::ops::RangeFull;
+    scope 1 {
+        debug guard => _2;
+    }
+
+    bb0: {
+        _3 = &((*_1).0: parking_lot::lock_api::RwLock<parking_lot::RawRwLock, std::collections::VecDeque<types::delta::Delta>>);
+        _2 = parking_lot::lock_api::RwLock::<parking_lot::RawRwLock, VecDeque<Delta>>::write(move _3) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        _7 = &mut _2;
+        _6 = <parking_lot::lock_api::RwLockWriteGuard<'_, parking_lot::RawRwLock, VecDeque<Delta>> as DerefMut>::deref_mut(move _7) -> [return: bb2, unwind: bb6];
+    }
+
+    bb2: {
+        _5 = copy _6;
+        _4 = VecDeque::<Delta>::drain::<RangeFull>(move _5, const RangeFull) -> [return: bb3, unwind: bb6];
+    }
+
+    bb3: {
+        _0 = <std::collections::vec_deque::Drain<'_, Delta> as Iterator>::collect::<Vec<Delta>>(move _4) -> [return: bb4, unwind: bb6];
+    }
+
+    bb4: {
+        drop(_2) -> [return: bb5, unwind: bb7];
+    }
+
+    bb5: {
+        return;
+    }
+
+    bb6 (cleanup): {
+        drop(_2) -> [return: bb7, unwind terminate(cleanup)];
+    }
+
+    bb7 (cleanup): {
+        resume;
+    }
+}

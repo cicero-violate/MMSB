@@ -1,0 +1,15 @@
+// MIR for `graph::propagation_queue::<impl at src/05_graph/propagation_queue.rs:5:17: 5:24>::default` after InstSimplify-after-simplifycfg
+
+fn propagation_queue::<impl at src/05_graph/propagation_queue.rs:5:17: 5:24>::default() -> PropagationQueue {
+    let mut _0: graph::propagation_queue::PropagationQueue;
+    let mut _1: parking_lot::lock_api::Mutex<parking_lot::RawMutex, std::collections::VecDeque<graph::propagation_command_buffer::PropagationCommand>>;
+
+    bb0: {
+        _1 = <parking_lot::lock_api::Mutex<parking_lot::RawMutex, VecDeque<PropagationCommand>> as Default>::default() -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        _0 = PropagationQueue { queue: move _1 };
+        return;
+    }
+}

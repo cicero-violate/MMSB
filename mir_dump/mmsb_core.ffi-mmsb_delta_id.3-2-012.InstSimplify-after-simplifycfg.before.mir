@@ -1,0 +1,76 @@
+// MIR for `ffi::mmsb_delta_id` before InstSimplify-after-simplifycfg
+
+fn mmsb_delta_id(_1: DeltaHandle) -> u64 {
+    debug handle => _1;
+    let mut _0: u64;
+    let _2: ();
+    let mut _3: bool;
+    let mut _4: *mut types::delta::Delta;
+    let mut _5: !;
+    let _6: ();
+    let mut _7: ffi::MMSBErrorCode;
+    let mut _8: *mut types::delta::Delta;
+    let mut _9: *const ();
+    let mut _10: usize;
+    let mut _11: usize;
+    let mut _12: usize;
+    let mut _13: usize;
+    let mut _14: bool;
+    let mut _15: *const ();
+    let mut _16: usize;
+    let mut _17: usize;
+    let mut _18: bool;
+    let mut _19: bool;
+    let mut _20: bool;
+    let mut _21: bool;
+
+    bb0: {
+        _4 = copy (_1.0: *mut types::delta::Delta);
+        _3 = std::ptr::mut_ptr::<impl *mut Delta>::is_null(move _4) -> [return: bb1, unwind terminate(abi)];
+    }
+
+    bb1: {
+        switchInt(move _3) -> [0: bb4, otherwise: bb2];
+    }
+
+    bb2: {
+        _7 = MMSBErrorCode::InvalidHandle;
+        _6 = set_last_error(move _7) -> [return: bb3, unwind terminate(abi)];
+    }
+
+    bb3: {
+        _0 = const 0_u64;
+        goto -> bb5;
+    }
+
+    bb4: {
+        _8 = copy (_1.0: *mut types::delta::Delta);
+        _9 = copy _8 as *const () (PtrToPtr);
+        _10 = copy _9 as usize (Transmute);
+        _11 = AlignOf(types::delta::Delta);
+        _12 = Sub(copy _11, const 1_usize);
+        _13 = BitAnd(copy _10, copy _12);
+        _14 = Eq(copy _13, const 0_usize);
+        assert(copy _14, "misaligned pointer dereference: address must be a multiple of {} but is {}", copy _11, copy _10) -> [success: bb6, unwind unreachable];
+    }
+
+    bb5: {
+        return;
+    }
+
+    bb6: {
+        _15 = copy _8 as *const () (PtrToPtr);
+        _16 = copy _15 as usize (Transmute);
+        _17 = SizeOf(types::delta::Delta);
+        _18 = Ne(copy _17, const 0_usize);
+        _19 = Eq(copy _16, const 0_usize);
+        _20 = BitAnd(copy _19, copy _18);
+        _21 = Not(copy _20);
+        assert(copy _21, "null pointer dereference occurred") -> [success: bb7, unwind unreachable];
+    }
+
+    bb7: {
+        _0 = copy (((*_8).0: types::delta::DeltaID).0: u64);
+        goto -> bb5;
+    }
+}

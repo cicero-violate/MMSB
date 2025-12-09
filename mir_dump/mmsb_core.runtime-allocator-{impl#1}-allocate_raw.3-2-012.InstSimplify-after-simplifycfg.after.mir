@@ -1,0 +1,291 @@
+// MIR for `runtime::allocator::<impl at src/02_runtime/allocator.rs:53:1: 53:19>::allocate_raw` after InstSimplify-after-simplifycfg
+
+fn allocator::<impl at src/02_runtime/allocator.rs:53:1: 53:19>::allocate_raw(_1: &PageAllocator, _2: PageID, _3: usize, _4: Option<PageLocation>) -> Result<*mut Page, PageError> {
+    debug self => _1;
+    debug page_id_hint => _2;
+    debug size => _3;
+    debug location => _4;
+    let mut _0: std::result::Result<*mut types::page::Page, types::page::PageError>;
+    let _5: types::page::PageLocation;
+    let mut _6: std::option::Option<types::page::PageLocation>;
+    let mut _7: types::page::PageLocation;
+    let _8: ();
+    let mut _9: bool;
+    let mut _10: &std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>;
+    let _11: &std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>;
+    let mut _12: &parking_lot::lock_api::MutexGuard<'_, parking_lot::RawMutex, std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>>;
+    let _13: parking_lot::lock_api::MutexGuard<'_, parking_lot::RawMutex, std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>>;
+    let mut _14: &parking_lot::lock_api::Mutex<parking_lot::RawMutex, std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>>;
+    let mut _15: &types::page::PageID;
+    let _16: &types::page::PageID;
+    let mut _17: !;
+    let mut _18: types::page::PageError;
+    let mut _19: types::page::PageID;
+    let mut _21: types::page::Page;
+    let mut _22: std::ops::ControlFlow<std::result::Result<std::convert::Infallible, types::page::PageError>, types::page::Page>;
+    let mut _23: std::result::Result<types::page::Page, types::page::PageError>;
+    let mut _24: types::page::PageID;
+    let mut _25: usize;
+    let mut _26: types::page::PageLocation;
+    let mut _27: isize;
+    let mut _29: !;
+    let mut _30: std::result::Result<std::convert::Infallible, types::page::PageError>;
+    let mut _33: std::boxed::Box<types::page::Page>;
+    let _34: ();
+    let _35: ();
+    let mut _36: std::fmt::Arguments<'_>;
+    let mut _38: &u64;
+    let mut _39: &*mut types::page::Page;
+    let mut _41: core::fmt::rt::Argument<'_>;
+    let mut _42: &u64;
+    let mut _43: core::fmt::rt::Argument<'_>;
+    let mut _44: &*mut types::page::Page;
+    let mut _45: &[&str; 3];
+    let _46: &[&str; 3];
+    let _47: [&str; 3];
+    let mut _48: &[core::fmt::rt::Argument<'_>; 2];
+    let _49: &[core::fmt::rt::Argument<'_>; 2];
+    let _50: std::option::Option<std::boxed::Box<types::page::Page>>;
+    let mut _51: &mut std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>;
+    let mut _52: &mut std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>;
+    let mut _53: &mut parking_lot::lock_api::MutexGuard<'_, parking_lot::RawMutex, std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>>;
+    let mut _54: parking_lot::lock_api::MutexGuard<'_, parking_lot::RawMutex, std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>>;
+    let mut _55: &parking_lot::lock_api::Mutex<parking_lot::RawMutex, std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>>;
+    let mut _56: types::page::PageID;
+    let mut _57: std::boxed::Box<types::page::Page>;
+    let mut _58: *mut types::page::Page;
+    let mut _59: *mut types::page::Page;
+    let mut _61: &u64;
+    let mut _62: &*mut types::page::Page;
+    let mut _63: bool;
+    let mut _64: bool;
+    let mut _65: bool;
+    let mut _66: isize;
+    let mut _67: isize;
+    let mut _68: isize;
+    let mut _69: isize;
+    let mut _70: isize;
+    scope 1 {
+        debug loc => _5;
+        let _20: std::boxed::Box<types::page::Page>;
+        let _28: std::result::Result<std::convert::Infallible, types::page::PageError>;
+        let _31: types::page::Page;
+        scope 2 {
+            debug page => _20;
+            let _32: *mut types::page::Page;
+            scope 7 {
+                debug ptr => _32;
+                let _37: (&u64, &*mut types::page::Page);
+                scope 8 {
+                    debug args => _37;
+                    let _40: [core::fmt::rt::Argument<'_>; 2];
+                    scope 9 {
+                        debug args => _40;
+                        let mut _60: &[&str; 3];
+                    }
+                }
+            }
+        }
+        scope 3 {
+            debug residual => _28;
+            scope 4 {
+            }
+        }
+        scope 5 {
+            debug val => _31;
+            scope 6 {
+            }
+        }
+    }
+
+    bb0: {
+        _63 = const false;
+        _65 = const false;
+        _64 = const false;
+        _6 = copy _4;
+        _7 = copy (((*_1).0: runtime::allocator::PageAllocatorConfig).0: types::page::PageLocation);
+        _5 = Option::<PageLocation>::unwrap_or(move _6, move _7) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        _14 = &((*_1).1: parking_lot::lock_api::Mutex<parking_lot::RawMutex, std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>>);
+        _13 = parking_lot::lock_api::Mutex::<parking_lot::RawMutex, HashMap<PageID, Box<Page>>>::lock(move _14) -> [return: bb2, unwind continue];
+    }
+
+    bb2: {
+        _12 = &_13;
+        _11 = <parking_lot::lock_api::MutexGuard<'_, parking_lot::RawMutex, HashMap<PageID, Box<Page>>> as Deref>::deref(move _12) -> [return: bb3, unwind: bb29];
+    }
+
+    bb3: {
+        _10 = copy _11;
+        _16 = &_2;
+        _15 = copy _16;
+        _9 = HashMap::<PageID, Box<Page>>::contains_key::<PageID>(move _10, move _15) -> [return: bb4, unwind: bb29];
+    }
+
+    bb4: {
+        switchInt(move _9) -> [0: bb7, otherwise: bb5];
+    }
+
+    bb5: {
+        drop(_13) -> [return: bb6, unwind: bb30];
+    }
+
+    bb6: {
+        _19 = copy _2;
+        _18 = PageError::AlreadyExists(move _19);
+        _0 = Result::<*mut Page, PageError>::Err(move _18);
+        goto -> bb27;
+    }
+
+    bb7: {
+        drop(_13) -> [return: bb8, unwind: bb30];
+    }
+
+    bb8: {
+        _24 = copy _2;
+        _25 = copy _3;
+        _26 = copy _5;
+        _23 = Page::new(move _24, move _25, move _26) -> [return: bb9, unwind continue];
+    }
+
+    bb9: {
+        _22 = <Result<Page, PageError> as Try>::branch(move _23) -> [return: bb10, unwind: bb30];
+    }
+
+    bb10: {
+        _64 = const true;
+        _65 = const true;
+        _27 = discriminant(_22);
+        switchInt(move _27) -> [0: bb12, 1: bb13, otherwise: bb11];
+    }
+
+    bb11: {
+        unreachable;
+    }
+
+    bb12: {
+        _31 = move ((_22 as Continue).0: types::page::Page);
+        _21 = move _31;
+        _20 = Box::<Page>::new(move _21) -> [return: bb15, unwind: bb33];
+    }
+
+    bb13: {
+        _28 = move ((_22 as Break).0: std::result::Result<std::convert::Infallible, types::page::PageError>);
+        _30 = move _28;
+        _0 = <Result<*mut Page, PageError> as FromResidual<Result<Infallible, PageError>>>::from_residual(move _30) -> [return: bb14, unwind: bb33];
+    }
+
+    bb14: {
+        _66 = discriminant(_22);
+        _64 = const false;
+        _65 = const false;
+        _63 = const false;
+        goto -> bb27;
+    }
+
+    bb15: {
+        _63 = const true;
+        _68 = discriminant(_22);
+        _64 = const false;
+        _65 = const false;
+        _63 = const false;
+        _33 = move _20;
+        _32 = Box::<Page>::into_raw(move _33) -> [return: bb16, unwind: bb32];
+    }
+
+    bb16: {
+        _38 = &(_2.0: u64);
+        _39 = &_32;
+        _37 = (move _38, move _39);
+        _61 = copy (_37.0: &u64);
+        _42 = copy _61;
+        _41 = core::fmt::rt::Argument::<'_>::new_display::<u64>(move _42) -> [return: bb17, unwind: bb32];
+    }
+
+    bb17: {
+        _62 = copy (_37.1: &*mut types::page::Page);
+        _44 = copy _62;
+        _43 = core::fmt::rt::Argument::<'_>::new_pointer::<*mut Page>(move _44) -> [return: bb18, unwind: bb32];
+    }
+
+    bb18: {
+        _40 = [move _41, move _43];
+        _60 = const runtime::allocator::PageAllocator::allocate_raw::promoted[0];
+        _46 = copy _60;
+        _45 = copy _46;
+        _49 = &_40;
+        _48 = copy _49;
+        _36 = core::fmt::rt::<impl Arguments<'_>>::new_v1::<3, 2>(move _45, move _48) -> [return: bb19, unwind: bb32];
+    }
+
+    bb19: {
+        _35 = _print(move _36) -> [return: bb20, unwind: bb32];
+    }
+
+    bb20: {
+        _55 = &((*_1).1: parking_lot::lock_api::Mutex<parking_lot::RawMutex, std::collections::HashMap<types::page::PageID, std::boxed::Box<types::page::Page>>>);
+        _54 = parking_lot::lock_api::Mutex::<parking_lot::RawMutex, HashMap<PageID, Box<Page>>>::lock(move _55) -> [return: bb21, unwind: bb32];
+    }
+
+    bb21: {
+        _53 = &mut _54;
+        _52 = <parking_lot::lock_api::MutexGuard<'_, parking_lot::RawMutex, HashMap<PageID, Box<Page>>> as DerefMut>::deref_mut(move _53) -> [return: bb22, unwind: bb28];
+    }
+
+    bb22: {
+        _51 = copy _52;
+        _56 = copy _2;
+        _58 = copy _32;
+        _57 = Box::<Page>::from_raw(move _58) -> [return: bb23, unwind: bb28];
+    }
+
+    bb23: {
+        _50 = HashMap::<PageID, Box<Page>>::insert(move _51, move _56, move _57) -> [return: bb24, unwind: bb28];
+    }
+
+    bb24: {
+        drop(_50) -> [return: bb25, unwind: bb28];
+    }
+
+    bb25: {
+        drop(_54) -> [return: bb26, unwind: bb32];
+    }
+
+    bb26: {
+        _59 = copy _32;
+        _0 = Result::<*mut Page, PageError>::Ok(move _59);
+        _63 = const false;
+        goto -> bb27;
+    }
+
+    bb27: {
+        return;
+    }
+
+    bb28 (cleanup): {
+        drop(_54) -> [return: bb32, unwind terminate(cleanup)];
+    }
+
+    bb29 (cleanup): {
+        drop(_13) -> [return: bb30, unwind terminate(cleanup)];
+    }
+
+    bb30 (cleanup): {
+        resume;
+    }
+
+    bb31 (cleanup): {
+        drop(_20) -> [return: bb30, unwind terminate(cleanup)];
+    }
+
+    bb32 (cleanup): {
+        switchInt(copy _63) -> [0: bb30, otherwise: bb31];
+    }
+
+    bb33 (cleanup): {
+        _70 = discriminant(_22);
+        goto -> bb30;
+    }
+}

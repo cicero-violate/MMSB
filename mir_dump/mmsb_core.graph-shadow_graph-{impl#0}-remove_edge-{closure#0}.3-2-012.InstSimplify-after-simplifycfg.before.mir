@@ -1,0 +1,27 @@
+// MIR for `graph::shadow_graph::<impl at src/05_graph/shadow_graph.rs:18:1: 18:21>::remove_edge::{closure#0}` before InstSimplify-after-simplifycfg
+
+fn shadow_graph::<impl at src/05_graph/shadow_graph.rs:18:1: 18:21>::remove_edge::{closure#0}(_1: &mut {closure@src/05_graph/shadow_graph.rs:26:26: 26:39}, _2: &(PageID, EdgeType)) -> bool {
+    debug to => (*((*_1).0: &types::page::PageID));
+    let mut _0: bool;
+    let _3: &types::page::PageID;
+    let mut _4: &&types::page::PageID;
+    let mut _5: &&types::page::PageID;
+    let _6: &types::page::PageID;
+    let mut _7: &types::page::PageID;
+    scope 1 {
+        debug target => _3;
+    }
+
+    bb0: {
+        _3 = &((*_2).0: types::page::PageID);
+        _4 = &_3;
+        _7 = copy ((*_1).0: &types::page::PageID);
+        _6 = copy _7;
+        _5 = &_6;
+        _0 = <&PageID as PartialEq>::ne(move _4, move _5) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        return;
+    }
+}

@@ -1,0 +1,13 @@
+// MIR for `ffi::<impl at src/ffi.rs:29:10: 29:15>::clone` after InstSimplify-after-simplifycfg
+
+fn ffi::<impl at src/ffi.rs:29:10: 29:15>::clone(_1: &DeltaHandle) -> DeltaHandle {
+    debug self => _1;
+    let mut _0: ffi::DeltaHandle;
+    scope 1 {
+    }
+
+    bb0: {
+        _0 = copy (*_1);
+        return;
+    }
+}

@@ -1,0 +1,21 @@
+// MIR for `types::delta::<impl at src/01_types/delta.rs:6:45: 6:49>::hash` before InstSimplify-after-simplifycfg
+
+fn delta::<impl at src/01_types/delta.rs:6:45: 6:49>::hash(_1: &DeltaID, _2: &mut __H) -> () {
+    debug self => _1;
+    debug state => _2;
+    let mut _0: ();
+    let mut _3: &u64;
+    let _4: &u64;
+    let mut _5: &mut __H;
+
+    bb0: {
+        _4 = &((*_1).0: u64);
+        _3 = copy _4;
+        _5 = copy _2;
+        _0 = <u64 as Hash>::hash::<__H>(move _3, move _5) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        return;
+    }
+}

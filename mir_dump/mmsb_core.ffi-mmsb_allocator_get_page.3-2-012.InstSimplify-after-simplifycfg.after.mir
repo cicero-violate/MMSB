@@ -1,0 +1,116 @@
+// MIR for `ffi::mmsb_allocator_get_page` after InstSimplify-after-simplifycfg
+
+fn mmsb_allocator_get_page(_1: AllocatorHandle, _2: u64) -> PageHandle {
+    debug handle => _1;
+    debug page_id => _2;
+    let mut _0: ffi::PageHandle;
+    let _3: ();
+    let mut _4: bool;
+    let mut _5: *mut runtime::allocator::PageAllocator;
+    let mut _6: !;
+    let _7: ();
+    let mut _8: ffi::MMSBErrorCode;
+    let _9: &runtime::allocator::PageAllocator;
+    let mut _10: std::option::Option<*mut types::page::Page>;
+    let mut _11: &runtime::allocator::PageAllocator;
+    let mut _12: types::page::PageID;
+    let mut _13: u64;
+    let mut _14: isize;
+    let mut _16: *mut types::page::Page;
+    let _17: ();
+    let mut _18: ffi::MMSBErrorCode;
+    let mut _19: *mut runtime::allocator::PageAllocator;
+    let mut _20: *const ();
+    let mut _21: usize;
+    let mut _22: usize;
+    let mut _23: usize;
+    let mut _24: usize;
+    let mut _25: bool;
+    let mut _26: *const ();
+    let mut _27: usize;
+    let mut _28: bool;
+    let mut _29: bool;
+    let mut _30: bool;
+    scope 1 {
+        debug allocator => _9;
+        let _15: *mut types::page::Page;
+        scope 2 {
+            debug ptr => _15;
+        }
+    }
+
+    bb0: {
+        _5 = copy (_1.0: *mut runtime::allocator::PageAllocator);
+        _4 = std::ptr::mut_ptr::<impl *mut PageAllocator>::is_null(move _5) -> [return: bb1, unwind terminate(abi)];
+    }
+
+    bb1: {
+        switchInt(move _4) -> [0: bb4, otherwise: bb2];
+    }
+
+    bb2: {
+        _8 = MMSBErrorCode::InvalidHandle;
+        _7 = set_last_error(move _8) -> [return: bb3, unwind terminate(abi)];
+    }
+
+    bb3: {
+        _0 = PageHandle::null() -> [return: bb10, unwind terminate(abi)];
+    }
+
+    bb4: {
+        _19 = copy (_1.0: *mut runtime::allocator::PageAllocator);
+        _20 = copy _19 as *const () (PtrToPtr);
+        _21 = copy _20 as usize (Transmute);
+        _22 = AlignOf(runtime::allocator::PageAllocator);
+        _23 = Sub(copy _22, const 1_usize);
+        _24 = BitAnd(copy _21, copy _23);
+        _25 = Eq(copy _24, const 0_usize);
+        assert(copy _25, "misaligned pointer dereference: address must be a multiple of {} but is {}", copy _22, copy _21) -> [success: bb11, unwind unreachable];
+    }
+
+    bb5: {
+        _14 = discriminant(_10);
+        switchInt(move _14) -> [0: bb7, 1: bb8, otherwise: bb6];
+    }
+
+    bb6: {
+        unreachable;
+    }
+
+    bb7: {
+        _18 = MMSBErrorCode::InvalidHandle;
+        _17 = set_last_error(move _18) -> [return: bb9, unwind terminate(abi)];
+    }
+
+    bb8: {
+        _15 = copy ((_10 as Some).0: *mut types::page::Page);
+        _16 = copy _15;
+        _0 = PageHandle { ptr: move _16 };
+        goto -> bb10;
+    }
+
+    bb9: {
+        _0 = PageHandle::null() -> [return: bb10, unwind terminate(abi)];
+    }
+
+    bb10: {
+        return;
+    }
+
+    bb11: {
+        _26 = copy _19 as *const () (PtrToPtr);
+        _27 = copy _26 as usize (Transmute);
+        _28 = Eq(copy _27, const 0_usize);
+        _29 = BitAnd(copy _28, const true);
+        _30 = Not(copy _29);
+        assert(copy _30, "null pointer dereference occurred") -> [success: bb12, unwind unreachable];
+    }
+
+    bb12: {
+        _9 = &(*_19);
+        _11 = copy _9;
+        _13 = copy _2;
+        _12 = PageID(move _13);
+        _10 = PageAllocator::acquire_page(move _11, move _12) -> [return: bb5, unwind terminate(abi)];
+    }
+}

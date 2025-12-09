@@ -1,0 +1,243 @@
+// MIR for `graph::shadow_graph::<impl at src/05_graph/shadow_graph.rs:18:1: 18:21>::descendants` before InstSimplify-after-simplifycfg
+
+fn shadow_graph::<impl at src/05_graph/shadow_graph.rs:18:1: 18:21>::descendants(_1: &ShadowPageGraph, _2: PageID) -> HashSet<PageID> {
+    debug self => _1;
+    debug root => _2;
+    let mut _0: std::collections::HashSet<types::page::PageID>;
+    let _3: parking_lot::lock_api::RwLockReadGuard<'_, parking_lot::RawRwLock, std::collections::HashMap<types::page::PageID, std::vec::Vec<(types::page::PageID, graph::edge_types::EdgeType)>>>;
+    let mut _4: &parking_lot::lock_api::RwLock<parking_lot::RawRwLock, std::collections::HashMap<types::page::PageID, std::vec::Vec<(types::page::PageID, graph::edge_types::EdgeType)>>>;
+    let mut _7: std::boxed::Box<[types::page::PageID]>;
+    let mut _8: std::boxed::Box<[types::page::PageID; 1]>;
+    let mut _9: usize;
+    let mut _10: usize;
+    let mut _11: *mut u8;
+    let mut _12: std::boxed::Box<[types::page::PageID; 1]>;
+    let mut _13: types::page::PageID;
+    let _14: ();
+    let mut _15: ();
+    let mut _16: std::option::Option<types::page::PageID>;
+    let mut _17: &mut std::vec::Vec<types::page::PageID>;
+    let mut _18: isize;
+    let mut _20: bool;
+    let mut _21: &mut std::collections::HashSet<types::page::PageID>;
+    let mut _22: types::page::PageID;
+    let mut _23: std::option::Option<&std::vec::Vec<(types::page::PageID, graph::edge_types::EdgeType)>>;
+    let mut _24: &std::collections::HashMap<types::page::PageID, std::vec::Vec<(types::page::PageID, graph::edge_types::EdgeType)>>;
+    let _25: &std::collections::HashMap<types::page::PageID, std::vec::Vec<(types::page::PageID, graph::edge_types::EdgeType)>>;
+    let mut _26: &parking_lot::lock_api::RwLockReadGuard<'_, parking_lot::RawRwLock, std::collections::HashMap<types::page::PageID, std::vec::Vec<(types::page::PageID, graph::edge_types::EdgeType)>>>;
+    let mut _27: &types::page::PageID;
+    let _28: &types::page::PageID;
+    let mut _29: isize;
+    let mut _31: std::slice::Iter<'_, (types::page::PageID, graph::edge_types::EdgeType)>;
+    let mut _32: &std::vec::Vec<(types::page::PageID, graph::edge_types::EdgeType)>;
+    let _34: ();
+    let mut _35: std::option::Option<&(types::page::PageID, graph::edge_types::EdgeType)>;
+    let mut _36: &mut std::slice::Iter<'_, (types::page::PageID, graph::edge_types::EdgeType)>;
+    let mut _37: &mut std::slice::Iter<'_, (types::page::PageID, graph::edge_types::EdgeType)>;
+    let mut _38: isize;
+    let mut _39: !;
+    let _41: ();
+    let mut _42: &mut std::vec::Vec<types::page::PageID>;
+    let mut _43: types::page::PageID;
+    let mut _44: !;
+    let _45: ();
+    let mut _46: !;
+    let mut _47: &(types::page::PageID, graph::edge_types::EdgeType);
+    let mut _48: bool;
+    let mut _49: *const [types::page::PageID; 1];
+    scope 1 {
+        debug graph => _3;
+        let mut _5: std::collections::HashSet<types::page::PageID>;
+        scope 2 {
+            debug seen => _5;
+            let mut _6: std::vec::Vec<types::page::PageID>;
+            let mut _50: *const ();
+            let mut _51: usize;
+            let mut _52: usize;
+            let mut _53: usize;
+            let mut _54: usize;
+            let mut _55: bool;
+            let mut _56: *const ();
+            let mut _57: usize;
+            let mut _58: usize;
+            let mut _59: bool;
+            let mut _60: bool;
+            let mut _61: bool;
+            let mut _62: bool;
+            scope 3 {
+                debug stack => _6;
+                scope 4 {
+                    debug node => _19;
+                    let _19: types::page::PageID;
+                    scope 5 {
+                        debug children => _30;
+                        let _30: &std::vec::Vec<(types::page::PageID, graph::edge_types::EdgeType)>;
+                        let mut _33: std::slice::Iter<'_, (types::page::PageID, graph::edge_types::EdgeType)>;
+                        scope 6 {
+                            debug iter => _33;
+                            let _40: &types::page::PageID;
+                            scope 7 {
+                                debug child => _40;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    bb0: {
+        _48 = const false;
+        _4 = &((*_1).0: parking_lot::lock_api::RwLock<parking_lot::RawRwLock, std::collections::HashMap<types::page::PageID, std::vec::Vec<(types::page::PageID, graph::edge_types::EdgeType)>>>);
+        _3 = parking_lot::lock_api::RwLock::<parking_lot::RawRwLock, HashMap<PageID, Vec<(PageID, EdgeType)>>>::read(move _4) -> [return: bb1, unwind continue];
+    }
+
+    bb1: {
+        _5 = HashSet::<PageID>::new() -> [return: bb2, unwind: bb21];
+    }
+
+    bb2: {
+        _48 = const true;
+        _9 = SizeOf([types::page::PageID; 1]);
+        _10 = AlignOf([types::page::PageID; 1]);
+        _11 = alloc::alloc::exchange_malloc(move _9, move _10) -> [return: bb3, unwind: bb24];
+    }
+
+    bb3: {
+        _12 = ShallowInitBox(move _11, [types::page::PageID; 1]);
+        _13 = copy _2;
+        _49 = copy ((_12.0: std::ptr::Unique<[types::page::PageID; 1]>).0: std::ptr::NonNull<[types::page::PageID; 1]>) as *const [types::page::PageID; 1] (Transmute);
+        _50 = copy _49 as *const () (PtrToPtr);
+        _51 = copy _50 as usize (Transmute);
+        _52 = AlignOf([types::page::PageID; 1]);
+        _53 = Sub(copy _52, const 1_usize);
+        _54 = BitAnd(copy _51, copy _53);
+        _55 = Eq(copy _54, const 0_usize);
+        assert(copy _55, "misaligned pointer dereference: address must be a multiple of {} but is {}", copy _52, copy _51) -> [success: bb25, unwind unreachable];
+    }
+
+    bb4: {
+        _17 = &mut _6;
+        _16 = Vec::<PageID>::pop(move _17) -> [return: bb5, unwind: bb20];
+    }
+
+    bb5: {
+        _18 = discriminant(_16);
+        switchInt(move _18) -> [1: bb6, 0: bb17, otherwise: bb15];
+    }
+
+    bb6: {
+        _19 = copy ((_16 as Some).0: types::page::PageID);
+        _21 = &mut _5;
+        _22 = copy _19;
+        _20 = HashSet::<PageID>::insert(move _21, move _22) -> [return: bb7, unwind: bb20];
+    }
+
+    bb7: {
+        switchInt(move _20) -> [0: bb4, otherwise: bb8];
+    }
+
+    bb8: {
+        _26 = &_3;
+        _25 = <parking_lot::lock_api::RwLockReadGuard<'_, parking_lot::RawRwLock, HashMap<PageID, Vec<(PageID, EdgeType)>>> as Deref>::deref(move _26) -> [return: bb9, unwind: bb20];
+    }
+
+    bb9: {
+        _24 = copy _25;
+        _28 = &_19;
+        _27 = copy _28;
+        _23 = HashMap::<PageID, Vec<(PageID, EdgeType)>>::get::<PageID>(move _24, move _27) -> [return: bb10, unwind: bb20];
+    }
+
+    bb10: {
+        _29 = discriminant(_23);
+        switchInt(move _29) -> [1: bb11, 0: bb4, otherwise: bb15];
+    }
+
+    bb11: {
+        _30 = copy ((_23 as Some).0: &std::vec::Vec<(types::page::PageID, graph::edge_types::EdgeType)>);
+        _32 = copy _30;
+        _31 = <&Vec<(PageID, EdgeType)> as IntoIterator>::into_iter(move _32) -> [return: bb12, unwind: bb20];
+    }
+
+    bb12: {
+        _33 = move _31;
+        goto -> bb13;
+    }
+
+    bb13: {
+        _37 = &mut _33;
+        _36 = copy _37;
+        _35 = <std::slice::Iter<'_, (PageID, EdgeType)> as Iterator>::next(move _36) -> [return: bb14, unwind: bb20];
+    }
+
+    bb14: {
+        _38 = discriminant(_35);
+        switchInt(move _38) -> [0: bb4, 1: bb16, otherwise: bb15];
+    }
+
+    bb15: {
+        unreachable;
+    }
+
+    bb16: {
+        _47 = copy ((_35 as Some).0: &(types::page::PageID, graph::edge_types::EdgeType));
+        _40 = &((*_47).0: types::page::PageID);
+        _42 = &mut _6;
+        _43 = copy (*_40);
+        _41 = Vec::<PageID>::push(move _42, move _43) -> [return: bb13, unwind: bb20];
+    }
+
+    bb17: {
+        _48 = const false;
+        _0 = move _5;
+        drop(_6) -> [return: bb18, unwind: bb24];
+    }
+
+    bb18: {
+        _48 = const false;
+        drop(_3) -> [return: bb19, unwind: bb22];
+    }
+
+    bb19: {
+        return;
+    }
+
+    bb20 (cleanup): {
+        drop(_6) -> [return: bb24, unwind terminate(cleanup)];
+    }
+
+    bb21 (cleanup): {
+        drop(_3) -> [return: bb22, unwind terminate(cleanup)];
+    }
+
+    bb22 (cleanup): {
+        resume;
+    }
+
+    bb23 (cleanup): {
+        drop(_5) -> [return: bb21, unwind terminate(cleanup)];
+    }
+
+    bb24 (cleanup): {
+        switchInt(copy _48) -> [0: bb21, otherwise: bb23];
+    }
+
+    bb25: {
+        _56 = copy _49 as *const () (PtrToPtr);
+        _57 = copy _56 as usize (Transmute);
+        _58 = SizeOf([types::page::PageID; 1]);
+        _59 = Ne(copy _58, const 0_usize);
+        _60 = Eq(copy _57, const 0_usize);
+        _61 = BitAnd(copy _60, copy _59);
+        _62 = Not(copy _61);
+        assert(copy _62, "null pointer dereference occurred") -> [success: bb26, unwind unreachable];
+    }
+
+    bb26: {
+        (*_49) = [move _13];
+        _8 = move _12;
+        _7 = move _8 as std::boxed::Box<[types::page::PageID]> (PointerCoercion(Unsize, Implicit));
+        _6 = std::slice::<impl [PageID]>::into_vec::<std::alloc::Global>(move _7) -> [return: bb4, unwind: bb24];
+    }
+}

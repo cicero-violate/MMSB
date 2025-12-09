@@ -1,0 +1,161 @@
+// MIR for `types::delta::<impl at src/01_types/delta.rs:24:1: 24:11>::to_dense` before InstSimplify-after-simplifycfg
+
+fn delta::<impl at src/01_types/delta.rs:24:1: 24:11>::to_dense(_1: &Delta) -> Vec<u8> {
+    debug self => _1;
+    let mut _0: std::vec::Vec<u8>;
+    let _2: ();
+    let mut _3: bool;
+    let mut _4: !;
+    let mut _5: &std::vec::Vec<u8>;
+    let mut _6: std::vec::Vec<u8>;
+    let mut _7: usize;
+    let mut _8: &std::vec::Vec<bool>;
+    let _10: ();
+    let mut _11: std::iter::Enumerate<std::slice::Iter<'_, bool>>;
+    let mut _12: std::iter::Enumerate<std::slice::Iter<'_, bool>>;
+    let mut _13: std::slice::Iter<'_, bool>;
+    let mut _14: &[bool];
+    let _15: &[bool];
+    let mut _16: &std::vec::Vec<bool>;
+    let mut _18: ();
+    let _19: ();
+    let mut _20: std::option::Option<(usize, &bool)>;
+    let mut _21: &mut std::iter::Enumerate<std::slice::Iter<'_, bool>>;
+    let mut _22: &mut std::iter::Enumerate<std::slice::Iter<'_, bool>>;
+    let mut _23: isize;
+    let mut _24: !;
+    let mut _27: bool;
+    let mut _28: u8;
+    let mut _29: &u8;
+    let mut _30: &std::vec::Vec<u8>;
+    let mut _31: usize;
+    let mut _32: &mut u8;
+    let mut _33: &mut std::vec::Vec<u8>;
+    let mut _34: usize;
+    let mut _35: (usize, bool);
+    let mut _36: &bool;
+    scope 1 {
+        debug dense => _6;
+        let mut _9: usize;
+        scope 2 {
+            debug payload_idx => _9;
+            let mut _17: std::iter::Enumerate<std::slice::Iter<'_, bool>>;
+            scope 3 {
+                debug iter => _17;
+                let _25: usize;
+                let _26: bool;
+                scope 4 {
+                    debug idx => _25;
+                    debug flag => _26;
+                }
+            }
+        }
+    }
+
+    bb0: {
+        _3 = copy ((*_1).5: bool);
+        switchInt(move _3) -> [0: bb1, otherwise: bb2];
+    }
+
+    bb1: {
+        _5 = &((*_1).4: std::vec::Vec<u8>);
+        _0 = <Vec<u8> as Clone>::clone(move _5) -> [return: bb18, unwind continue];
+    }
+
+    bb2: {
+        _8 = &((*_1).3: std::vec::Vec<bool>);
+        _7 = Vec::<bool>::len(move _8) -> [return: bb3, unwind continue];
+    }
+
+    bb3: {
+        _6 = from_elem::<u8>(const 0_u8, move _7) -> [return: bb4, unwind continue];
+    }
+
+    bb4: {
+        _9 = const 0_usize;
+        _16 = &((*_1).3: std::vec::Vec<bool>);
+        _15 = <Vec<bool> as Deref>::deref(move _16) -> [return: bb5, unwind: bb19];
+    }
+
+    bb5: {
+        _14 = copy _15;
+        _13 = core::slice::<impl [bool]>::iter(move _14) -> [return: bb6, unwind: bb19];
+    }
+
+    bb6: {
+        _12 = <std::slice::Iter<'_, bool> as Iterator>::enumerate(move _13) -> [return: bb7, unwind: bb19];
+    }
+
+    bb7: {
+        _11 = <Enumerate<std::slice::Iter<'_, bool>> as IntoIterator>::into_iter(move _12) -> [return: bb8, unwind: bb19];
+    }
+
+    bb8: {
+        _17 = move _11;
+        goto -> bb9;
+    }
+
+    bb9: {
+        _22 = &mut _17;
+        _21 = copy _22;
+        _20 = <Enumerate<std::slice::Iter<'_, bool>> as Iterator>::next(move _21) -> [return: bb10, unwind: bb19];
+    }
+
+    bb10: {
+        _23 = discriminant(_20);
+        switchInt(move _23) -> [0: bb13, 1: bb12, otherwise: bb11];
+    }
+
+    bb11: {
+        unreachable;
+    }
+
+    bb12: {
+        _25 = copy (((_20 as Some).0: (usize, &bool)).0: usize);
+        _36 = copy (((_20 as Some).0: (usize, &bool)).1: &bool);
+        _26 = copy (*_36);
+        _27 = copy _26;
+        switchInt(move _27) -> [0: bb9, otherwise: bb14];
+    }
+
+    bb13: {
+        _0 = move _6;
+        goto -> bb18;
+    }
+
+    bb14: {
+        _30 = &((*_1).4: std::vec::Vec<u8>);
+        _31 = copy _9;
+        _29 = <Vec<u8> as Index<usize>>::index(move _30, move _31) -> [return: bb15, unwind: bb19];
+    }
+
+    bb15: {
+        _28 = copy (*_29);
+        _33 = &mut _6;
+        _34 = copy _25;
+        _32 = <Vec<u8> as IndexMut<usize>>::index_mut(move _33, move _34) -> [return: bb16, unwind: bb19];
+    }
+
+    bb16: {
+        (*_32) = move _28;
+        _35 = AddWithOverflow(copy _9, const 1_usize);
+        assert(!move (_35.1: bool), "attempt to compute `{} + {}`, which would overflow", copy _9, const 1_usize) -> [success: bb17, unwind: bb19];
+    }
+
+    bb17: {
+        _9 = move (_35.0: usize);
+        goto -> bb9;
+    }
+
+    bb18: {
+        return;
+    }
+
+    bb19 (cleanup): {
+        drop(_6) -> [return: bb20, unwind terminate(cleanup)];
+    }
+
+    bb20 (cleanup): {
+        resume;
+    }
+}

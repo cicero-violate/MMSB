@@ -1,0 +1,11 @@
+// MIR for `types::page::<impl at src/01_types/page.rs:98:1: 98:10>::size` after InstSimplify-after-simplifycfg
+
+fn page::<impl at src/01_types/page.rs:98:1: 98:10>::size(_1: &Page) -> usize {
+    debug self => _1;
+    let mut _0: usize;
+
+    bb0: {
+        _0 = copy ((*_1).5: usize);
+        return;
+    }
+}
