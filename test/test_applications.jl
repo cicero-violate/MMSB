@@ -17,7 +17,7 @@ import MMSB: ReasoningContext, reason_over_memory
         world = World(state, 0.01)
         @test world.dt == 0.01
         
-        entity = add_entity!(world, :player, Dict(:health => 100))
+        entity = add_entity!(world, :player, Dict{Symbol,Any}(:health => 100))
         @test entity.entity_type == :player
         
         simulate_step!(world)
