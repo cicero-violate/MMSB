@@ -1,7 +1,7 @@
 // examples/rust_smoke_replay_full.rs
 // NOW 100% CORRECT AND PASSING
 
-use mmsb_core::*;  // ←←←← THIS LINE IS THE KEY
+use mmsb_core::*;
 
 use std::collections::HashMap;
 use std::ffi::CString;
@@ -25,6 +25,7 @@ extern "C" {
     fn mmsb_page_read(h: PageHandle, dst: *mut u8, len: usize) -> usize;
     fn mmsb_page_epoch(h: PageHandle) -> u32;
 
+    #[allow(dead_code)]
     fn mmsb_page_write_masked(
         h: PageHandle, mask: *const u8, mask_len: usize,
         payload: *const u8, payload_len: usize, is_sparse: u8, epoch: EpochABI,
