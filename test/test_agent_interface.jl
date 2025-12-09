@@ -1,4 +1,7 @@
 using Test
+using MMSB: MMSBState, MMSBConfig, create_page, emit_event
+using MMSB: subscribe_to_events, unsubscribe, PAGE_CREATED, PAGE_MODIFIED
+using MMSB: AbstractAgent, observe, AgentAction
 using MMSB.CheckpointAPI
 using MMSB.EventSubscription
 using MMSB.AgentProtocol

@@ -1,4 +1,5 @@
 using Test
+using MMSB: MMSBState, MMSBConfig, observe, AgentAction
 using MMSB.AgentTypes
 using MMSB.RLAgents
 using MMSB.SymbolicAgents

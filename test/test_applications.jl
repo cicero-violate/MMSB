@@ -1,4 +1,5 @@
 using Test
+using MMSB: MMSBState, MMSBConfig, create_page, allocate_page_id!
 using MMSB.LLMTools
 using MMSB.WorldSimulation
 using MMSB.MultiAgentSystem
