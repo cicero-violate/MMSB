@@ -14,7 +14,7 @@ using ..MMSBStateTypes: MMSBState
 
 struct HybridAgent <: AbstractAgent
     symbolic::SymbolicAgent
-    rl::RLAgent{Any}
+    rl::Any  # RLAgent with flexible type parameter
     mix_ratio::Float64  # 0.0 = pure symbolic, 1.0 = pure RL
 end
 

@@ -24,7 +24,7 @@ end
 function observe(agent::RLAgent, state::MMSBState)
     return (
         n_pages = length(state.pages),
-        graph_size = length(state.graph.nodes),
+        graph_size = length(state.graph.deps),
         step = agent.agent_state.step_count
     )
 end

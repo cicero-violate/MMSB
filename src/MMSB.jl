@@ -169,6 +169,7 @@ using .PlanningAgents
 using .HybridAgents
 export RLAgent, SymbolicAgent, PlanningAgent, HybridAgent
 export AgentState, AgentMemory
+export push_memory!
 
 # Layer 12 exports
 using .LLMTools
