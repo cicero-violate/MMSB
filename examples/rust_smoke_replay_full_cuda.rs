@@ -5,7 +5,6 @@
 
 use mmsb_core::*;
 
-
 use std::collections::HashMap;
 use std::ffi::CString;
 use std::fs;
