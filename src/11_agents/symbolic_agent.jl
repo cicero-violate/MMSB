@@ -5,7 +5,8 @@ module SymbolicAgents
 
 export SymbolicAgent, infer_rules!, apply_rule
 
-using ..AgentProtocol: AbstractAgent, observe, AgentAction
+using ..AgentProtocol: AbstractAgent, AgentAction
+import ..AgentProtocol: observe
 using ..AgentTypes: AgentState
 using ..MMSBStateTypes: MMSBState
 using ..ReasoningEngine: structural_inference, constraint_propagation

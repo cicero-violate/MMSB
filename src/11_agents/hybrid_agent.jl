@@ -5,7 +5,8 @@ module HybridAgents
 
 export HybridAgent, symbolic_step!, neural_step!
 
-using ..AgentProtocol: AbstractAgent, observe, AgentAction
+using ..AgentProtocol: AbstractAgent, AgentAction
+import ..AgentProtocol: observe
 using ..AgentTypes: AgentState
 using ..SymbolicAgents: SymbolicAgent, apply_rule
 using ..RLAgents: RLAgent, train_step!

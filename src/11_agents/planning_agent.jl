@@ -5,7 +5,8 @@ module PlanningAgents
 
 export PlanningAgent, generate_plan, execute_plan_step
 
-using ..AgentProtocol: AbstractAgent, observe, AgentAction
+using ..AgentProtocol: AbstractAgent, AgentAction
+import ..AgentProtocol: observe
 using ..AgentTypes: AgentState
 using ..MMSBStateTypes: MMSBState
 using ..PlanningEngine: search_plan, rollout_simulation

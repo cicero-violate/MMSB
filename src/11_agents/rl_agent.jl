@@ -5,7 +5,8 @@ module RLAgents
 
 export RLAgent, train_step!, compute_reward
 
-using ..AgentProtocol: AbstractAgent, observe, act!, AgentAction
+using ..AgentProtocol: AbstractAgent, AgentAction
+import ..AgentProtocol: observe
 using ..AgentTypes: AgentState, AgentMemory, push_memory!
 using ..MMSBStateTypes: MMSBState
 
