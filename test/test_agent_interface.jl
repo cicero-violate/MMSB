@@ -6,18 +6,20 @@ import MMSB: PAGE_CREATED, PAGE_MODIFIED, DELTA_APPLIED
 import MMSB: AbstractAgent, observe, plan, AgentAction
 
 @testset "Layer 10: Agent Interface" begin
-    @testset "Checkpoint API" skip=true begin
+    @testset "Checkpoint API" begin
         config = MMSBConfig(tlog_path=tempname() * ".tlog")
         state = MMSBState(config)
         
         # Test checkpoint creation
-        ckpt_id = create_checkpoint(state, "test_checkpoint")
-        @test !isempty(ckpt_id)
-        @test startswith(ckpt_id, "ckpt_")
+        ckpt_path = create_checkpoint(state, "test")
+        @test !isempty(ckpt_path)
+        @test endswith(ckpt_path, ".ckpt")
         
-        # Test checkpoint listing
-        checkpoints = list_checkpoints(state)
-        @test isa(checkpoints, Vector{String})
+        # Test checkpoint exists
+        @test isfile(ckpt_path)
+        
+        # Cleanup
+        rm(ckpt_path, force=true)
     end
     
     @testset "Event Subscription" begin

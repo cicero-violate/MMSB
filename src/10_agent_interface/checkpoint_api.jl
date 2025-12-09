@@ -6,22 +6,16 @@ module CheckpointAPI
 export create_checkpoint, restore_checkpoint, list_checkpoints
 
 using ..MMSBStateTypes: MMSBState
-using ..FFIWrapper: LIBMMSB
+using ..TLog: checkpoint_log!, load_checkpoint!
 
 function create_checkpoint(state::MMSBState, name::String)::String
-    checkpoint_id = "ckpt_$(time_ns())_$(name)"
-    result = ccall((:rust_checkpoint_create, LIBMMSB),
-                  Int32, (Ptr{Cvoid}, Ptr{UInt8}, Csize_t),
-                  state.tlog_handle.ptr, pointer(checkpoint_id), sizeof(checkpoint_id))
-    result == 0 || error("Checkpoint creation failed: $result")
-    return checkpoint_id
+    path = "checkpoint_$(time_ns())_$(name).ckpt"
+    checkpoint_log!(state, path)
+    return path
 end
 
-function restore_checkpoint(state::MMSBState, checkpoint_id::String)
-    result = ccall((:rust_checkpoint_restore, LIBMMSB),
-                  Int32, (Ptr{Cvoid}, Ptr{UInt8}, Csize_t),
-                  state.tlog_handle.ptr, pointer(checkpoint_id), sizeof(checkpoint_id))
-    result == 0 || error("Checkpoint restore failed: $result")
+function restore_checkpoint(state::MMSBState, path::String)
+    load_checkpoint!(state, path)
 end
 
 function list_checkpoints(state::MMSBState)::Vector{String}
