@@ -84,7 +84,7 @@ PHASE3-TEST ── L10-INTERFACE ── L10-PROTOCOL ── L10-TEST
 
 ## Phase 1 Status Update (2025-12-09)
 
-**PHASE 1 COMPLETE** ✓
+**PHASE 1 COMPLETE** ✓ (Updated 2025-12-09)
 
 All P0 tasks for Layers 0-4 verified complete:
 - Layer 0 (Physical): 8/8 tasks ✓
@@ -95,8 +95,15 @@ All P0 tasks for Layers 0-4 verified complete:
 - Integration: 4/4 tasks ✓
 
 Total: 48/48 P0 tasks complete
-Build: `cargo check` PASS
-Blocker: Test execution requires CUDA runtime (environment dependency only)
+Build: `cargo build --release` PASS
+Tests: `julia --project=. -e 'using Pkg; Pkg.test()'` PASS (all core tests passing)
+
+**Key Fixes Completed:**
+- ✓ Per-state allocator architecture (eliminated global singleton)
+- ✓ Julia-Rust FFI error propagation (Rust → RustFFIError → SerializationError)
+- ✓ Test isolation (unique tlog paths per state)
+- ✓ Statistics dependency added to Project.toml
+- ✓ Error handling (InvalidDeltaError properly thrown)
 
 **Phase 2 Layer 5 is now UNBLOCKED**
 
