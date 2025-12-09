@@ -6,6 +6,7 @@ module WorldSimulation
 export World, Entity, simulate_step!, add_entity!
 
 using ..MMSBStateTypes: MMSBState
+using ..MMSBStateTypes: allocate_page_id!
 using ..PageTypes: Page, PageID
 using ..DeltaTypes: Delta
 
