@@ -37,7 +37,7 @@ import MMSB: MMSBContext, ReasoningContext, reason_over_memory
         
         # World simulation
         world = World(state, 0.1)
-        entity = add_entity!(world, :agent, Dict(:goal => "test"))
+        entity = add_entity!(world, :agent, Dict{Symbol,Any}(:goal => "test"))
         @test entity.entity_type == :agent
         
         # Multi-agent coordination
