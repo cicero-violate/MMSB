@@ -1,9 +1,10 @@
 using Test
-using MMSB: MMSBState, MMSBConfig, create_page, emit_event
-using MMSB: RLAgent, SymbolicAgent, PlanningAgent, HybridAgent
-using MMSB: subscribe_to_events, unsubscribe, PAGE_CREATED
-using MMSB: observe, World, add_entity!, AgentCoordinator, register_agent!
-using MMSB: MMSBContext, ReasoningContext, reason_over_memory
+using MMSB
+import MMSB: MMSBState, MMSBConfig, create_page, emit_event
+import MMSB: RLAgent, SymbolicAgent, PlanningAgent, HybridAgent
+import MMSB: subscribe_to_events, unsubscribe, PAGE_CREATED, create_checkpoint
+import MMSB: observe, World, add_entity!, AgentCoordinator, register_agent!
+import MMSB: MMSBContext, ReasoningContext, reason_over_memory
 
 @testset "Phase 4 Integration: Agents + Applications" begin
     config = MMSBConfig(tlog_path=tempname() * ".tlog")

@@ -1,10 +1,8 @@
 using Test
-using MMSB: MMSBState, MMSBConfig, observe, AgentAction
-using MMSB.AgentTypes
-using MMSB.RLAgents
-using MMSB.SymbolicAgents
-using MMSB.PlanningAgents
-using MMSB.HybridAgents
+using MMSB
+import MMSB: MMSBState, MMSBConfig, observe, AgentAction
+import MMSB: RLAgent, SymbolicAgent, PlanningAgent, HybridAgent
+import MMSB: AgentState, AgentMemory, push_memory!, execute_plan_step
 
 @testset "Layer 11: External Agents" begin
     config = MMSBConfig(tlog_path=tempname() * ".tlog")

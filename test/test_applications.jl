@@ -1,10 +1,9 @@
 using Test
-using MMSB: MMSBState, MMSBConfig, create_page, allocate_page_id!
-using MMSB.LLMTools
-using MMSB.WorldSimulation
-using MMSB.MultiAgentSystem
-using MMSB.FinancialModeling
-using MMSB.MemoryDrivenReasoning
+using MMSB
+import MMSB: MMSBState, MMSBConfig, create_page, allocate_page_id!
+import MMSB: MMSBContext, World, add_entity!, simulate_step!
+import MMSB: AgentCoordinator, register_agent!, Portfolio, compute_value
+import MMSB: ReasoningContext, reason_over_memory
 
 @testset "Layer 12: Applications" begin
     config = MMSBConfig(tlog_path=tempname() * ".tlog")
