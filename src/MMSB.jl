@@ -128,6 +128,7 @@ using .API: mmsb_start, mmsb_stop, create_page, update_page, query_page, @mmsb
 using .Monitoring: get_stats, print_stats, reset_stats!, track_delta_latency!, track_propagation_latency!
 
 export MMSBState, Page, Delta, ShadowPageGraph
+export MMSBConfig
 export create_page, delete_page, apply_delta
 export add_dependency, remove_dependency
 export enable_instrumentation, disable_instrumentation
@@ -154,6 +155,8 @@ using .EventSubscription
 using .AgentProtocol
 export create_checkpoint, restore_checkpoint, list_checkpoints
 export subscribe_to_events, unsubscribe, EventType, @event
+export PAGE_CREATED, PAGE_MODIFIED, DELTA_APPLIED, GRAPH_UPDATED, CHECKPOINT_CREATED
+export emit_event
 export AbstractAgent, observe, act!, plan, AgentAction
 
 # Layer 11 exports
