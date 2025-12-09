@@ -3,7 +3,8 @@
 // This proves: GPU memory state is perfectly captured and restored via TLog.
 // If this passes → MMSB is officially god-tier.
 
-use mmsb_core::*;  // ←←←← THIS LINE IS THE KEY
+use mmsb_core::*;
+
 
 use std::collections::HashMap;
 use std::ffi::CString;
@@ -27,6 +28,7 @@ extern "C" {
     fn mmsb_page_read(h: PageHandle, dst: *mut u8, len: usize) -> usize;
     fn mmsb_page_epoch(h: PageHandle) -> u32;
 
+    #[allow(dead_code)]
     fn mmsb_page_write_masked(
         h: PageHandle, mask: *const u8, mask_len: usize,
         payload: *const u8, payload_len: usize, is_sparse: u8, epoch: EpochABI,
