@@ -102,26 +102,26 @@ include("10_agent_interface/CompilerHooks.jl")
 include("10_agent_interface/InstrumentationManager.jl")
 
 # Layer 10: Agent Interface (moved instrumentation here)
-include("10_agent_interface/checkpoint_api.jl")
-include("10_agent_interface/event_subscription.jl")
-include("10_agent_interface/AgentProtocol.jl")
-using .AgentProtocol
+# include("10_agent_interface/checkpoint_api.jl")
+# include("10_agent_interface/event_subscription.jl")
+# include("10_agent_interface/AgentProtocol.jl")
+# using .AgentProtocol
 
-# Layer 11: External Agents
-include("11_agents/AgentTypes.jl")
-include("11_agents/rl_agent.jl")
-include("11_agents/symbolic_agent.jl")
-include("11_agents/enzyme_integration.jl")
-include("11_agents/lux_models.jl")
-include("11_agents/planning_agent.jl")
-include("11_agents/hybrid_agent.jl")
+# # Layer 11: External Agents
+# include("11_agents/AgentTypes.jl")
+# include("11_agents/rl_agent.jl")
+# include("11_agents/symbolic_agent.jl")
+# include("11_agents/enzyme_integration.jl")
+# include("11_agents/lux_models.jl")
+# include("11_agents/planning_agent.jl")
+# include("11_agents/hybrid_agent.jl")
 
-# Layer 12: Applications
-include("12_applications/llm_tools.jl")
-include("12_applications/world_simulation.jl")
-include("12_applications/multi_agent_system.jl")
-include("12_applications/financial_modeling.jl")
-include("12_applications/memory_driven_reasoning.jl")
+# # Layer 12: Applications
+# include("12_applications/llm_tools.jl")
+# include("12_applications/world_simulation.jl")
+# include("12_applications/multi_agent_system.jl")
+# include("12_applications/financial_modeling.jl")
+# include("12_applications/memory_driven_reasoning.jl")
 
 
 # Public API
@@ -150,29 +150,29 @@ using .RolloutSimulation
 export State, Action, Goal, Plan, SearchNode
 export Strategy, RolloutResult, DecisionGraph, PlanningState
 
-# Layer 10 exports
-using .CheckpointAPI
-using .EventSubscription
-using .AgentProtocol
-export create_checkpoint, restore_checkpoint, list_checkpoints
-export subscribe_to_events, unsubscribe, EventType, @event
-export AbstractAgent, observe, act!, plan, AgentAction
+# # Layer 10 exports
+# using .CheckpointAPI
+# using .EventSubscription
+# using .AgentProtocol
+# export create_checkpoint, restore_checkpoint, list_checkpoints
+# export subscribe_to_events, unsubscribe, EventType, @event
+# export AbstractAgent, observe, act!, plan, AgentAction
 
-# Layer 11 exports
-using .AgentTypes
-using .RLAgents
-using .SymbolicAgents
-using .PlanningAgents
-using .HybridAgents
-export RLAgent, SymbolicAgent, PlanningAgent, HybridAgent
-export AgentState, AgentMemory
+# # Layer 11 exports
+# using .AgentTypes
+# using .RLAgents
+# using .SymbolicAgents
+# using .PlanningAgents
+# using .HybridAgents
+# export RLAgent, SymbolicAgent, PlanningAgent, HybridAgent
+# export AgentState, AgentMemory
 
-# Layer 12 exports
-using .LLMTools
-using .WorldSimulation
-using .MultiAgentSystem
-using .FinancialModeling
-using .MemoryDrivenReasoning
-export MMSBContext, World, AgentCoordinator, Portfolio, ReasoningContext
+# # Layer 12 exports
+# using .LLMTools
+# using .WorldSimulation
+# using .MultiAgentSystem
+# using .FinancialModeling
+# using .MemoryDrivenReasoning
+# export MMSBContext, World, AgentCoordinator, Portfolio, ReasoningContext
 
 end # module MMSB
