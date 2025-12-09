@@ -142,11 +142,11 @@ export replay_from_log, checkpoint_state
 export mmsb_start, mmsb_stop, update_page, query_page, @mmsb
 export get_stats, print_stats, reset_stats!
 
-# Layer 8 exports
-using .ReasoningTypes
-using .ReasoningEngine
-export Constraint, Dependency, Pattern, Rule, Inference
-export ReasoningState, InferenceResult
+# # Layer 8 exports
+# using .ReasoningTypes
+# using .ReasoningEngine
+# export Constraint, Dependency, Pattern, Rule, Inference
+# export ReasoningState, InferenceResult
 
 # # Layer 9 exports
 # using .PlanningTypes
