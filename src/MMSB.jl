@@ -144,12 +144,12 @@ using .ReasoningEngine
 export Constraint, Dependency, Pattern, Rule, Inference
 export ReasoningState, InferenceResult
 
-# Layer 9 exports
-using .PlanningTypes
-using .PlanningEngine
-using .RolloutSimulation
-export State, Action, Goal, Plan, SearchNode
-export Strategy, RolloutResult, DecisionGraph, PlanningState
+# # Layer 9 exports
+# using .PlanningTypes
+# using .PlanningEngine
+# using .RolloutSimulation
+# export State, Action, Goal, Plan, SearchNode
+# export Strategy, RolloutResult, DecisionGraph, PlanningState
 
 # # Layer 10 exports
 # using .CheckpointAPI
