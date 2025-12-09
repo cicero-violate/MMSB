@@ -25,3 +25,7 @@ echo "--------------------------------------------------"
 echo "Running cargo test"
 RUST_BACKTRACE=full RUSTFLAGS="-A warnings" cargo test 
 echo "--------------------------------------------------"
+
+echo "Running Julia tests.."
+julia --startup-file=no --project=. -e "using Pkg; Pkg.test();"
+echo "--------------------------------------------------"
