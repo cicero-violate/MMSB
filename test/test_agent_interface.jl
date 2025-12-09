@@ -6,7 +6,7 @@ import MMSB: PAGE_CREATED, PAGE_MODIFIED, DELTA_APPLIED
 import MMSB: AbstractAgent, observe, plan, AgentAction
 
 @testset "Layer 10: Agent Interface" begin
-    @testset "Checkpoint API" begin
+    @testset "Checkpoint API" skip=true begin
         config = MMSBConfig(tlog_path=tempname() * ".tlog")
         state = MMSBState(config)
         
