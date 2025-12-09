@@ -16,20 +16,20 @@ using ..GraphTypes: ShadowPageGraph
     CHECKPOINT_CREATED
 end
 
-mutable struct EventSubscription
+mutable struct Subscription
     id::UInt64
     event_types::Set{EventType}
     callback::Function
     active::Bool
 end
 
-const SUBSCRIPTIONS = Dict{UInt64, EventSubscription}()
+const SUBSCRIPTIONS = Dict{UInt64, Subscription}()
 const NEXT_SUB_ID = Ref{UInt64}(1)
 
 function subscribe_to_events(types::Vector{EventType}, callback::Function)::UInt64
     id = NEXT_SUB_ID[]
     NEXT_SUB_ID[] += 1
-    SUBSCRIPTIONS[id] = EventSubscription(id, Set(types), callback, true)
+    SUBSCRIPTIONS[id] = Subscription(id, Set(types), callback, true)
     return id
 end
 

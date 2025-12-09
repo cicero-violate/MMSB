@@ -10,7 +10,8 @@ module GraphRewriting
 
 export rewrite_dag!, compute_edge_cost
 
-using ..MMSB: DAGNode, DAGEdge
+using ..GraphTypes: ShadowPageGraph
+using ..PageTypes: PageID
 
 """
     EdgeRewrite
