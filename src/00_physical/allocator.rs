@@ -198,8 +198,6 @@ mod tests {
 
     #[test]
     fn test_unified_page() {
-        // ←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←
-        // THIS IS THE NEW TEST — PASTE IT HERE
         let config = PageAllocatorConfig {
             default_location: PageLocation::Unified,
         };
