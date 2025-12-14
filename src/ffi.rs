@@ -250,6 +250,7 @@ pub extern "C" fn mmsb_page_write_masked(
         is_sparse: is_sparse != 0,
         timestamp: 0,
         source: Source("page_write_masked".into()),
+        intent_metadata: None,
     };
     let page = unsafe { &mut *handle.ptr };
     match page.apply_delta(&delta) {
@@ -333,6 +334,7 @@ pub extern "C" fn mmsb_delta_new(
         is_sparse: is_sparse != 0,
         timestamp: 0,
         source: Source(source),
+        intent_metadata: None,
     };
     let boxed = Box::new(delta);
     DeltaHandle {

@@ -69,10 +69,12 @@ include("06_utility/CostAggregation.jl")
 
 # # Layer 7: Intention Engine
 include("07_intention/IntentionTypes.jl")
+include("07_intention/UpsertPlan.jl")
 include("07_intention/intention_engine.jl")
 include("07_intention/goal_emergence.jl")
 include("07_intention/structural_preferences.jl")
 include("07_intention/attractor_states.jl")
+include("07_intention/intent_lowering.jl")
 
 # # Layer 8: Reasoning Engine
 include("08_reasoning/ReasoningTypes.jl")

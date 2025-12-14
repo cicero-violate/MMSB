@@ -19,6 +19,7 @@ pub struct Delta {
     pub is_sparse: bool,
     pub timestamp: u64,
     pub source: Source,
+    pub intent_metadata: Option<String>,
 }
 
 impl Delta {
@@ -46,6 +47,7 @@ impl Delta {
             is_sparse: false,
             timestamp: now_ns(),
             source,
+            intent_metadata: None,
         })
     }
 
@@ -74,6 +76,7 @@ impl Delta {
             is_sparse: true,
             timestamp: now_ns(),
             source,
+            intent_metadata: None,
         })
     }
 
@@ -112,6 +115,7 @@ impl Delta {
             is_sparse: false,
             timestamp: other.timestamp.max(self.timestamp),
             source: other.source.clone(),
+            intent_metadata: other.intent_metadata.clone().or_else(|| self.intent_metadata.clone()),
         })
     }
 
@@ -132,6 +136,22 @@ impl Delta {
     }
 
     pub fn apply_to(&self, page: &mut Page) -> Result<(), PageError> {
+        if let Err(err) = super::delta_validation::validate_delta(self) {
+            return Err(match err {
+                DeltaError::SizeMismatch { mask_len, payload_len } => PageError::MaskSizeMismatch {
+                    expected: mask_len,
+                    found: payload_len,
+                },
+                DeltaError::PageIDMismatch { expected, found } => PageError::PageIDMismatch {
+                    expected,
+                    found,
+                },
+                DeltaError::MaskSizeMismatch { expected, found } => PageError::MaskSizeMismatch {
+                    expected,
+                    found,
+                },
+            });
+        }
         page.apply_delta(self)
     }
 }

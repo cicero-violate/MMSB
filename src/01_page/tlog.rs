@@ -6,7 +6,7 @@ use std::io::{BufReader, BufWriter, Read, Seek, SeekFrom, Write};
 use std::path::{Path, PathBuf};
 
 const MAGIC: &[u8] = b"MMSBLOG1";
-const VERSION: u32 = 1;
+const VERSION: u32 = 2;
 
 #[derive(Debug)]
 pub struct TransactionLog {
@@ -18,6 +18,7 @@ pub struct TransactionLog {
 #[derive(Debug)]
 pub struct TransactionLogReader {
     reader: BufReader<File>,
+    version: u32,
 }
 
 #[derive(Debug, Default, Clone, Copy)]
@@ -88,12 +89,12 @@ impl TransactionLogReader {
     pub fn open(path: impl AsRef<Path>) -> std::io::Result<Self> {
         let file = File::open(path)?;
         let mut reader = BufReader::new(file);
-        validate_header(&mut reader)?;
-        Ok(Self { reader })
+        let version = validate_header(&mut reader)?;
+        Ok(Self { reader, version })
     }
 
     pub fn next(&mut self) -> std::io::Result<Option<Delta>> {
-        read_frame(&mut self.reader)
+        read_frame(&mut self.reader, self.version)
     }
 
     pub fn free(self) {}
@@ -115,12 +116,17 @@ pub fn summary(path: impl AsRef<Path>) -> std::io::Result<LogSummary> {
         return Ok(LogSummary::default());
     }
     let mut reader = BufReader::new(file);
-    validate_header(&mut reader)?;
+    let version = validate_header(&mut reader)?;
 
     let mut summary = LogSummary::default();
-    while let Ok(Some(delta)) = read_frame(&mut reader) {
+    while let Ok(Some(delta)) = read_frame(&mut reader, version) {
         summary.total_deltas += 1;
-        summary.total_bytes += delta.mask.len() as u64 + delta.payload.len() as u64 + 32;
+        let metadata_bytes = delta
+            .intent_metadata
+            .as_ref()
+            .map(|m| m.as_bytes().len() as u64)
+            .unwrap_or(0);
+        summary.total_bytes += delta.mask.len() as u64 + delta.payload.len() as u64 + 32 + metadata_bytes;
         summary.last_epoch = summary.last_epoch.max(delta.epoch.0);
     }
     Ok(summary)
@@ -146,10 +152,19 @@ fn serialize_frame(writer: &mut BufWriter<File>, delta: &Delta) -> std::io::Resu
     let source_bytes = delta.source.0.as_bytes();
     writer.write_all(&(source_bytes.len() as u32).to_le_bytes())?;
     writer.write_all(source_bytes)?;
+    let metadata_len = delta
+        .intent_metadata
+        .as_ref()
+        .map(|s| s.as_bytes().len() as u32)
+        .unwrap_or(0);
+    writer.write_all(&metadata_len.to_le_bytes())?;
+    if let Some(metadata) = &delta.intent_metadata {
+        writer.write_all(metadata.as_bytes())?;
+    }
     Ok(())
 }
 
-fn read_frame(reader: &mut BufReader<File>) -> std::io::Result<Option<Delta>> {
+fn read_frame(reader: &mut BufReader<File>, version: u32) -> std::io::Result<Option<Delta>> {
     let mut delta_id = [0u8; 8];
     match reader.read_exact(&mut delta_id) {
         Ok(()) => {}
@@ -187,6 +202,23 @@ fn read_frame(reader: &mut BufReader<File>) -> std::io::Result<Option<Delta>> {
     reader.read_exact(&mut source_buf)?;
     let source = Source(String::from_utf8_lossy(&source_buf).to_string());
 
+    let intent_metadata = if version >= 2 {
+        let mut metadata_len_bytes = [0u8; 4];
+        if reader.read_exact(&mut metadata_len_bytes).is_err() {
+            return Ok(None);
+        }
+        let metadata_len = u32::from_le_bytes(metadata_len_bytes) as usize;
+        if metadata_len == 0 {
+            None
+        } else {
+            let mut metadata_buf = vec![0u8; metadata_len];
+            reader.read_exact(&mut metadata_buf)?;
+            Some(String::from_utf8_lossy(&metadata_buf).to_string())
+        }
+    } else {
+        None
+    };
+
     Ok(Some(Delta {
         delta_id: DeltaID(u64::from_le_bytes(delta_id)),
         page_id: PageID(u64::from_le_bytes(page_id)),
@@ -196,10 +228,11 @@ fn read_frame(reader: &mut BufReader<File>) -> std::io::Result<Option<Delta>> {
         is_sparse: sparse_flag[0] != 0,
         timestamp: u64::from_le_bytes(timestamp_bytes),
         source,
+        intent_metadata,
     }))
 }
 
-fn validate_header(reader: &mut BufReader<File>) -> std::io::Result<()> {
+fn validate_header(reader: &mut BufReader<File>) -> std::io::Result<u32> {
     reader.seek(SeekFrom::Start(0))?;
     let mut magic = [0u8; 8];
     reader.read_exact(&mut magic)?;
@@ -212,11 +245,11 @@ fn validate_header(reader: &mut BufReader<File>) -> std::io::Result<()> {
     let mut version_bytes = [0u8; 4];
     reader.read_exact(&mut version_bytes)?;
     let version = u32::from_le_bytes(version_bytes);
-    if version != VERSION {
+    if version < 1 || version > VERSION {
         return Err(std::io::Error::new(
             std::io::ErrorKind::InvalidData,
             "unsupported transaction log version",
         ));
     }
-    Ok(())
+    Ok(version)
 }

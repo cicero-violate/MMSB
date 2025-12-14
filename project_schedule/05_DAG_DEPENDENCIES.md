@@ -51,55 +51,55 @@
 
 | Gap ID | Component                   | Severity  | Layer | Status |
 |--------+-----------------------------+-----------+-------+--------|
-| G5.1   | UpsertPlan structure        | 🔴 HIGH   | L7    | ☐      |
-| G5.2   | Intent lowering pipeline    | 🔴 HIGH   | L7→L1 | ☐      |
-| G5.3   | Intent metadata in TLog     | 🟡 MEDIUM | L1    | ☐      |
-| G5.4   | Delta validation separation | 🟡 MEDIUM | L1    | ☐      |
+| G5.1   | UpsertPlan structure        | 🔴 HIGH   | L7    | ✓      |
+| G5.2   | Intent lowering pipeline    | 🔴 HIGH   | L7→L1 | ✓      |
+| G5.3   | Intent metadata in TLog     | 🟡 MEDIUM | L1    | ✓      |
+| G5.4   | Delta validation separation | 🟡 MEDIUM | L1    | ✓      |
 | G5.5   | QMU API clarification       | 🟢 LOW    | Root  | ☐      |
 
 ### Task Breakdown
 
 #### L7.G1: Define UpsertPlan Structure ⭐⭐
-- [ ] Create `src/07_intention/UpsertPlan.jl`
-- [ ] Define Query, Predicate, DeltaSpec, Metadata fields
-- [ ] Add constructor and validation logic
-- [ ] Write unit tests
+- [x] Create `src/07_intention/UpsertPlan.jl`
+- [x] Define Query, Predicate, DeltaSpec, Metadata fields
+- [x] Add constructor and validation logic
+- [x] Write unit tests
 - **Difficulty**: ⭐⭐ (Simple struct definition)
 - **Effort**: 8 hours
 - **Dependencies**: None
 
 #### L1.G1: Extend TLog Metadata Schema ⭐⭐⭐
-- [ ] Add intent_metadata field to TLog entry
-- [ ] Update serialization/deserialization
-- [ ] Maintain backward compatibility
-- [ ] Update TLog tests
+- [x] Add intent_metadata field to TLog entry
+- [x] Update serialization/deserialization
+- [x] Maintain backward compatibility
+- [x] Update TLog tests
 - **Difficulty**: ⭐⭐⭐ (Format change + compatibility)
 - **Effort**: 16 hours
 - **Dependencies**: None
 
 #### L7.G2: Implement Intent Lowering ⭐⭐⭐
-- [ ] Create `src/07_intention/intent_lowering.jl`
-- [ ] Implement `lower_intent_to_deltaspec()`
-- [ ] Add type conversion helpers
-- [ ] Integration tests
+- [x] Create `src/07_intention/intent_lowering.jl`
+- [x] Implement `lower_intent_to_deltaspec()`
+- [x] Add type conversion helpers
+- [x] Integration tests
 - **Difficulty**: ⭐⭐⭐ (Logic + FFI boundary)
 - **Effort**: 24 hours
 - **Dependencies**: L7.G1, L1.G1
 
 #### L1.G2: Delta Validation Separation ⭐⭐
-- [ ] Create `src/01_page/delta_validation.rs`
-- [ ] Extract validation from `Delta::apply_to()`
-- [ ] Add `validate_delta()` public API
-- [ ] Update delta application to call validator
+- [x] Create `src/01_page/delta_validation.rs`
+- [x] Extract validation from `Delta::apply_to()`
+- [x] Add `validate_delta()` public API
+- [x] Update delta application to call validator
 - **Difficulty**: ⭐⭐ (Refactoring existing code)
 - **Effort**: 12 hours
 - **Dependencies**: None
 
 #### FFI.G1: Lowering Bridge ⭐⭐⭐⭐
-- [ ] Add FFI functions for delta validation
-- [ ] Julia → Rust deltaspec transfer
-- [ ] Error handling across boundary
-- [ ] Performance testing
+- [x] Add FFI functions for delta validation
+- [x] Julia → Rust deltaspec transfer
+- [x] Error handling across boundary
+- [x] Performance testing
 - **Difficulty**: ⭐⭐⭐⭐ (Complex FFI + marshalling)
 - **Effort**: 32 hours
 - **Dependencies**: L7.G2, L1.G2

@@ -16,7 +16,7 @@ pub fn read_log(path: impl AsRef<Path>) -> std::io::Result<Vec<Delta>> {
     }
     let mut version_bytes = [0u8; 4];
     reader.read_exact(&mut version_bytes)?;
-    let _version = u32::from_le_bytes(version_bytes);
+    let version = u32::from_le_bytes(version_bytes);
 
     let mut deltas = Vec::new();
     loop {
@@ -57,6 +57,23 @@ pub fn read_log(path: impl AsRef<Path>) -> std::io::Result<Vec<Delta>> {
         reader.read_exact(&mut source_buf)?;
         let source = Source(String::from_utf8_lossy(&source_buf).to_string());
 
+        let intent_metadata = if version >= 2 {
+            let mut metadata_len_bytes = [0u8; 4];
+            if reader.read_exact(&mut metadata_len_bytes).is_err() {
+                break;
+            }
+            let metadata_len = u32::from_le_bytes(metadata_len_bytes) as usize;
+            if metadata_len == 0 {
+                None
+            } else {
+                let mut metadata_buf = vec![0u8; metadata_len];
+                reader.read_exact(&mut metadata_buf)?;
+                Some(String::from_utf8_lossy(&metadata_buf).to_string())
+            }
+        } else {
+            None
+        };
+
         deltas.push(Delta {
             delta_id: DeltaID(u64::from_le_bytes(delta_id)),
             page_id: PageID(u64::from_le_bytes(page_id)),
@@ -66,6 +83,7 @@ pub fn read_log(path: impl AsRef<Path>) -> std::io::Result<Vec<Delta>> {
             is_sparse,
             timestamp,
             source,
+            intent_metadata,
         });
     }
 

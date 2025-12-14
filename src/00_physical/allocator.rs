@@ -235,6 +235,7 @@ mod tests {
             is_sparse: false,
             timestamp: 0,
             source: Source("test".into()),
+            intent_metadata: None,
         }).unwrap();
 
         // Snapshot
