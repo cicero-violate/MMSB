@@ -13,20 +13,20 @@
 
 | Date | Task                        |    ID | Hours | Status | Notes                                 |
 |------+-----------------------------+-------+-------+--------+---------------------------------------|
-| -    | Design UpsertPlan structure | 5.1.1 |     2 | ☐      | Query, Predicate, DeltaSpec, Metadata |
-| -    | Create UpsertPlan.jl file   | 5.1.2 |     3 | ☐      | In src/07_intention/                  |
-| -    | Add validation logic        | 5.1.3 |     2 | ☐      | Ensure well-formed plans              |
-| -    | Write unit tests            | 5.1.4 |     1 | ☐      | Test all fields + validation          |
+| -    | Design UpsertPlan structure | 5.1.1 |     2 | ✓      | Query, Predicate, DeltaSpec, Metadata |
+| -    | Create UpsertPlan.jl file   | 5.1.2 |     3 | ✓      | In src/07_intention/                  |
+| -    | Add validation logic        | 5.1.3 |     2 | ✓      | Ensure well-formed plans              |
+| -    | Write unit tests            | 5.1.4 |     1 | ✓      | Test all fields + validation          |
 
 ### L1.G1: TLog Metadata Schema Extension
 
 | Date | Task                          |    ID | Hours | Status | Notes                              |
 |------+-------------------------------+-------+-------+--------+------------------------------------|
-| -    | Design intent metadata schema | 5.2.1 |     4 | ☐      | JSON-compatible, versioned         |
-| -    | Update TLog entry struct      | 5.2.2 |     4 | ☐      | Add optional intent_metadata field |
-| -    | Update serialization          | 5.2.3 |     4 | ☐      | Backward-compatible format         |
-| -    | Update deserialization        | 5.2.4 |     3 | ☐      | Handle old + new formats           |
-| -    | Update TLog tests             | 5.2.5 |     1 | ☐      | Test with/without intent           |
+| -    | Design intent metadata schema | 5.2.1 |     4 | ✓      | JSON-compatible, versioned         |
+| -    | Update TLog entry struct      | 5.2.2 |     4 | ✓      | Add optional intent_metadata field |
+| -    | Update serialization          | 5.2.3 |     4 | ✓      | Backward-compatible format         |
+| -    | Update deserialization        | 5.2.4 |     3 | ✓      | Handle old + new formats           |
+| -    | Update TLog tests             | 5.2.5 |     1 | ✓      | Test with/without intent           |
 
 **Week 21 Total**: 24 hours
 **Week 21 Deliverables**: UpsertPlan struct + extended TLog
@@ -39,20 +39,20 @@
 
 | Date | Task                                  |    ID | Hours | Status | Notes                        |
 |------+---------------------------------------+-------+-------+--------+------------------------------|
-| -    | Create intent_lowering.jl             | 5.3.1 |     2 | ☐      | In src/07_intention/         |
-| -    | Implement lower_intent_to_deltaspec() | 5.3.2 |    12 | ☐      | Core lowering logic          |
-| -    | Add type conversion helpers           | 5.3.3 |     6 | ☐      | Julia types → Rust FFI       |
-| -    | Write lowering tests                  | 5.3.4 |     4 | ☐      | Test various intent patterns |
+| -    | Create intent_lowering.jl             | 5.3.1 |     2 | ✓      | In src/07_intention/         |
+| -    | Implement lower_intent_to_deltaspec() | 5.3.2 |    12 | ✓      | Core lowering logic          |
+| -    | Add type conversion helpers           | 5.3.3 |     6 | ✓      | Julia types → Rust FFI       |
+| -    | Write lowering tests                  | 5.3.4 |     4 | ✓      | Test various intent patterns |
 
 ### L1.G2: Delta Validation Separation
 
 | Date | Task                               |    ID | Hours | Status | Notes                       |
 |------+------------------------------------+-------+-------+--------+-----------------------------|
-| -    | Create delta_validation.rs         | 5.4.1 |     2 | ☐      | In src/01_page/             |
-| -    | Extract validation from apply_to() | 5.4.2 |     4 | ☐      | Separate concerns           |
-| -    | Add public validate_delta() API    | 5.4.3 |     3 | ☐      | Returns Result<(), Error>   |
-| -    | Update Delta::apply_to()           | 5.4.4 |     2 | ☐      | Call validator first        |
-| -    | Write validation tests             | 5.4.5 |     1 | ☐      | Test valid + invalid deltas |
+| -    | Create delta_validation.rs         | 5.4.1 |     2 | ✓      | In src/01_page/             |
+| -    | Extract validation from apply_to() | 5.4.2 |     4 | ✓      | Separate concerns           |
+| -    | Add public validate_delta() API    | 5.4.3 |     3 | ✓      | Returns Result<(), Error>   |
+| -    | Update Delta::apply_to()           | 5.4.4 |     2 | ✓      | Call validator first        |
+| -    | Write validation tests             | 5.4.5 |     1 | ✓      | Test valid + invalid deltas |
 
 **Week 22 Total**: 36 hours
 **Week 22 Deliverables**: Intent lowering + delta validation
@@ -65,12 +65,12 @@
 
 | Date | Task                          |    ID | Hours | Status | Notes                       |
 |------+-------------------------------+-------+-------+--------+-----------------------------|
-| -    | Design FFI deltaspec format   | 5.5.1 |     4 | ☐      | C-compatible structs        |
-| -    | Add Rust FFI validation entry | 5.5.2 |     8 | ☐      | Accept deltaspec from Julia |
-| -    | Add Julia FFI wrappers        | 5.5.3 |     8 | ☐      | Call Rust validation        |
-| -    | Implement error marshalling   | 5.5.4 |     6 | ☐      | Errors across FFI boundary  |
-| -    | Memory safety checks          | 5.5.5 |     4 | ☐      | No leaks, proper ownership  |
-| -    | Performance testing           | 5.5.6 |     2 | ☐      | Benchmark FFI overhead      |
+| -    | Design FFI deltaspec format   | 5.5.1 |     4 | ✓      | C-compatible structs        |
+| -    | Add Rust FFI validation entry | 5.5.2 |     8 | ✓      | Accept deltaspec from Julia |
+| -    | Add Julia FFI wrappers        | 5.5.3 |     8 | ✓      | Call Rust validation        |
+| -    | Implement error marshalling   | 5.5.4 |     6 | ✓      | Errors across FFI boundary  |
+| -    | Memory safety checks          | 5.5.5 |     4 | ✓      | No leaks, proper ownership  |
+| -    | Performance testing           | 5.5.6 |     2 | ✓      | Benchmark FFI overhead      |
 
 **Week 23 Total**: 32 hours
 **Week 23 Deliverables**: Complete Julia ↔ Rust lowering bridge

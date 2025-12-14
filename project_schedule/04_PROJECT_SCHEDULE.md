@@ -195,6 +195,8 @@ Implement missing architectural components required by CLAUDE.md specification t
 | 25 | Replay Verification | Intent metadata replay validation | Week 24 |
 | 26 | QMU API Refinement | Document Query/Mutate/Upsert clearly | Week 24 |
 
+**Status (through Week 23):** UpsertPlan structure, TLog metadata schema, intent lowering, delta validation, and the Julia ↔ Rust lowering bridge are complete.
+
 **Phase 5 Exit Criteria:**
 - ✓ UpsertPlan structure defined and tested
 - ✓ Intent lowering pipeline functional
