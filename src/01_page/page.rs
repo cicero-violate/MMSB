@@ -2,7 +2,8 @@
 // FULLY INSTRUMENTED + MEMORY-SAFE + DEEP CLONE — DECEMBER 8 2025
 // 355+ lines — complete and final
 
-use super::delta::Delta;
+use super::delta::{Delta, DeltaError};
+use super::delta_validation;
 use super::epoch::{Epoch, EpochCell};
 use parking_lot::RwLock;
 use std::convert::TryInto;
@@ -232,6 +233,22 @@ impl Page {
     }
 
     pub fn apply_delta(&mut self, delta: &Delta) -> Result<(), PageError> {
+        if let Err(err) = delta_validation::validate_delta(delta) {
+            return Err(match err {
+                DeltaError::SizeMismatch { mask_len, payload_len } => PageError::MaskSizeMismatch {
+                    expected: mask_len,
+                    found: payload_len,
+                },
+                DeltaError::PageIDMismatch { expected, found } => PageError::PageIDMismatch {
+                    expected,
+                    found,
+                },
+                DeltaError::MaskSizeMismatch { expected, found } => PageError::MaskSizeMismatch {
+                    expected,
+                    found,
+                },
+            });
+        }
         if delta.page_id != self.id {
             return Err(PageError::PageIDMismatch {
                 expected: self.id,

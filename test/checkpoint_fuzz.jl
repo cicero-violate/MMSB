@@ -2,8 +2,13 @@ using Test
 using .MMSB
 using .MMSB.PageTypes: read_page
 
+function _checkpoint_fuzz_state(path_prefix::String=tempname())
+    config = MMSB.MMSBStateTypes.MMSBConfig(tlog_path=path_prefix)
+    MMSB.MMSBStateTypes.MMSBState(config)
+end
+
 @testset "Fuzz: checkpoint/load/replay cycles" begin
-    state = MMSB.MMSBStateTypes.MMSBState()
+    state = _checkpoint_fuzz_state()
 
     # Create a few pages
     pages = PageID[]
@@ -20,7 +25,7 @@ using .MMSB.PageTypes: read_page
         mask = falses(128)
         mask[rand(1:128, rand(1:32))] .= true
         payload = rand(UInt8,128)
-        d = MMSB.DeltaRouter.create_delta(state, pid, collect(mask), payload, :ckpt_fuzz)
+        d = MMSB.DeltaRouter.create_delta(state, pid, collect(mask), payload; source=:ckpt_fuzz)
         push!(deltas, d)
         MMSB.DeltaRouter.route_delta!(state,d)
         if i % 30 == 0
@@ -38,7 +43,7 @@ using .MMSB.PageTypes: read_page
     GC.gc()
 
     # Load checkpoint into a fresh state and replay
-    new_state = MMSB.MMSBStateTypes.MMSBState()
+    new_state = _checkpoint_fuzz_state()
     GC.gc()
     MMSB.TLog.load_checkpoint!(new_state, path)
     GC.gc()
@@ -51,4 +56,3 @@ using .MMSB.PageTypes: read_page
         @test length(read_page(pg)) == 128
     end
 end
-

@@ -713,7 +713,7 @@ version = "1.15.3"
     oneAPI = "8f75cd03-7ff8-4ecb-9b8f-daf728133b1b"
 
 [[deps.MMSB]]
-deps = ["CUDA", "Logging", "Lux", "Serialization", "Statistics"]
+deps = ["CUDA", "Logging", "Lux", "Optimisers", "Serialization", "Statistics"]
 path = "."
 uuid = "8e464427-1522-4382-b3ea-4966b903a233"
 version = "0.1.0-alpha"

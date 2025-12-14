@@ -218,7 +218,7 @@ function recompute_page!(state::MMSBState, page_id::PageID)
         page.metadata[:stale] = false
         return
     end
-    delta = create_delta(state, page_id, mask, new_data, :propagation)
+    delta = create_delta(state, page_id, mask, new_data; source=:propagation)
     route_delta!(state, delta)
     page.metadata[:stale] = false
 end

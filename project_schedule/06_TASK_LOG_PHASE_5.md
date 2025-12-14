@@ -83,12 +83,12 @@
 
 | Date | Task                         |    ID | Hours | Status | Notes                          |
 |------+------------------------------+-------+-------+--------+--------------------------------|
-| -    | Create test suite skeleton   | 5.6.1 |     2 | ☐      | In test/ directory             |
-| -    | Test intent → upsert → delta | 5.6.2 |     8 | ☐      | Full pipeline                  |
-| -    | Test QMU separation          | 5.6.3 |     6 | ☐      | Query, Mutate, Upsert distinct |
-| -    | Test TLog persistence        | 5.6.4 |     4 | ☐      | Intent metadata saved          |
-| -    | Test validation rejection    | 5.6.5 |     2 | ☐      | Invalid deltas blocked         |
-| -    | Performance benchmarks       | 5.6.6 |     2 | ☐      | Measure overhead               |
+| -    | Create test suite skeleton   | 5.6.1 |     2 | ✓      | `test/test_week24_25_integration.jl` |
+| -    | Test intent → upsert → delta | 5.6.2 |     8 | ✓      | Full pipeline + metadata checks |
+| -    | Test QMU separation          | 5.6.3 |     6 | ✓      | Query/Mutate/Upsert assertions |
+| -    | Test TLog persistence        | 5.6.4 |     4 | ✓      | Metadata stored + replayed     |
+| -    | Test validation rejection    | 5.6.5 |     2 | ✓      | Invalid deltas blocked         |
+| -    | Performance benchmarks       | 5.6.6 |     2 | ✓      | Benchmark helper + assertions  |
 
 **Week 24 Total**: 24 hours
 **Week 24 Deliverables**: Passing end-to-end test suite
@@ -101,11 +101,11 @@
 
 | Date | Task                          |    ID | Hours | Status | Notes                            |
 |------+-------------------------------+-------+-------+--------+----------------------------------|
-| -    | Test basic replay with intent | 5.7.1 |     4 | ☐      | Reconstruct intent history       |
-| -    | Test intent filtering         | 5.7.2 |     4 | ☐      | Replay specific intents          |
-| -    | Test intent causality         | 5.7.3 |     4 | ☐      | Intent → delta linkage preserved |
-| -    | Test checkpoint + intent      | 5.7.4 |     3 | ☐      | Intent in checkpoint metadata    |
-| -    | Write replay documentation    | 5.7.5 |     1 | ☐      | How to use intent replay         |
+| -    | Test basic replay with intent | 5.7.1 |     4 | ✓      | Deterministic replay + metadata |
+| -    | Test intent filtering         | 5.7.2 |     4 | ✓      | Predicate filters by intent_id  |
+| -    | Test intent causality         | 5.7.3 |     4 | ✓      | Metadata links delta IDs        |
+| -    | Test checkpoint + intent      | 5.7.4 |     3 | ✓      | Metadata survives checkpoint    |
+| -    | Write replay documentation    | 5.7.5 |     1 | ✓      | `docs/intent_replay.md`         |
 
 **Week 25 Total**: 16 hours
 **Week 25 Deliverables**: Intent replay fully verified

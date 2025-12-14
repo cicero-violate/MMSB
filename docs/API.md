@@ -48,7 +48,7 @@ state = mmsb_start(; enable_gpu=true, enable_instrumentation=false,
 | ---                                                 | ---                                                                                                                                                     |
 | `update_page(state, page_id, bytes; source=:api)`   | Builds a `Delta`, records it in the TLog, patches the page with masked writes, and triggers propagation. Payload length must match page size.           |
 | `route_delta!(state, delta; propagate=true)`        | Lower-level entry for custom delta composition. Set `propagate=false` when batching multiple deltas so you can trigger a single propagation wave later. |
-| `create_delta(state, page_id, mask, bytes, source)` | Utility for building sparse/dense deltas before routing.                                                                                                |
+| `create_delta(state, page_id, mask, bytes; source=:router, intent_metadata=nothing)` | Utility for building sparse/dense deltas before routing. Pass `intent_metadata` as a `Dict` or JSON string to persist alongside the delta. |
 | `batch_route_deltas!(state, deltas)`                | Routes many deltas (skipping per-delta propagation) and then calls `propagate_change!` once with the unique changed pages.                              |
 
 ### Errors

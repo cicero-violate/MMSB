@@ -349,6 +349,37 @@ function rust_delta_payload(handle::RustDeltaHandle)::Vector{UInt8}
     buf[1:Int(copied)]
 end
 
+function rust_delta_set_intent_metadata!(handle::RustDeltaHandle, metadata::Union{Nothing,AbstractString})
+    ensure_rust_artifacts()
+    if metadata === nothing
+        ccall((:mmsb_delta_set_intent_metadata, LIBMMSB), Cint,
+              (RustDeltaHandle, Ptr{UInt8}, Csize_t), handle, Ptr{UInt8}(C_NULL), 0)
+        _check_rust_error("rust_delta_set_intent_metadata!")
+        return nothing
+    end
+    bytes = Vector{UInt8}(codeunits(String(metadata)))
+    GC.@preserve bytes begin
+        ccall((:mmsb_delta_set_intent_metadata, LIBMMSB), Cint,
+              (RustDeltaHandle, Ptr{UInt8}, Csize_t), handle, pointer(bytes), length(bytes))
+    end
+    _check_rust_error("rust_delta_set_intent_metadata!")
+    nothing
+end
+
+function rust_delta_intent_metadata(handle::RustDeltaHandle)::Union{Nothing,String}
+    ensure_rust_artifacts()
+    len = ccall((:mmsb_delta_intent_metadata_len, LIBMMSB), Csize_t, (RustDeltaHandle,), handle)
+    _check_rust_error("rust_delta_intent_metadata_len")
+    len == 0 && return nothing
+    buffer = Vector{UInt8}(undef, len)
+    GC.@preserve buffer begin
+        copied = ccall((:mmsb_delta_copy_intent_metadata, LIBMMSB), Csize_t,
+                       (RustDeltaHandle, Ptr{UInt8}, Csize_t), handle, pointer(buffer), len)
+    end
+    _check_rust_error("rust_delta_copy_intent_metadata")
+    String(buffer[1:Int(copied)])
+end
+
 function rust_checkpoint_write!(allocator::RustAllocatorHandle, log::RustTLogHandle, path::AbstractString)
     ensure_rust_artifacts()
     ccall((:mmsb_checkpoint_write, LIBMMSB), Cint,

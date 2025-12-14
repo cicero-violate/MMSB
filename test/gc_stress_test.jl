@@ -3,9 +3,14 @@ using Base.Threads
 using .MMSB
 using .MMSB.PageTypes: read_page
 
+function _gc_test_state()
+    config = MMSB.MMSBStateTypes.MMSBConfig(tlog_path=tempname())
+    MMSB.MMSBStateTypes.MMSBState(config)
+end
+
 @testset "GC Stress Tests" begin
     @testset "Replay under GC pressure" begin
-        state = MMSB.MMSBStateTypes.MMSBState()
+        state = _gc_test_state()
         page = MMSB.PageAllocator.create_cpu_page!(state, 1024)
 
         # Create many deltas to stress GC while exercising FFI and replay
@@ -13,7 +18,7 @@ using .MMSB.PageTypes: read_page
             mask = falses(1024)
             mask[rand(1:1024, 100)] .= true
             data = rand(UInt8, 1024)
-            delta = MMSB.DeltaRouter.create_delta(state, page.id, collect(mask), data, :stress)
+            delta = MMSB.DeltaRouter.create_delta(state, page.id, collect(mask), data; source=:stress)
             MMSB.DeltaRouter.route_delta!(state, delta)
 
             # Force GC periodically to try to surface lifetime bugs
@@ -32,7 +37,7 @@ using .MMSB.PageTypes: read_page
     end
 
     @testset "Concurrent page creation and GC" begin
-        state = MMSB.MMSBStateTypes.MMSBState()
+        state = _gc_test_state()
 
         Threads.@threads for _ in 1:100
             page = MMSB.PageAllocator.create_cpu_page!(state, 64)

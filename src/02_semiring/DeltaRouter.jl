@@ -9,7 +9,7 @@ module DeltaRouter
 
 using Base: time_ns
 using ..PageTypes: Page, PageID
-using ..DeltaTypes: Delta
+using ..DeltaTypes: Delta, set_intent_metadata!
 using ..MMSBStateTypes: MMSBState, allocate_delta_id!, get_page
 using ..ErrorTypes: InvalidDeltaError
 using ..GraphTypes: get_children
@@ -44,9 +44,10 @@ end
 """
 Construct a new delta with allocated ID.
 """
-function create_delta(state::MMSBState, page_id::PageID, 
-                      mask::AbstractVector{Bool}, data::AbstractVector{UInt8}, 
-                      source::Symbol=:router)::Delta
+function create_delta(state::MMSBState, page_id::PageID,
+                      mask::AbstractVector{Bool}, data::AbstractVector{UInt8};
+                      source::Symbol=:router,
+                      intent_metadata::Union{Nothing,AbstractString,Dict{Symbol,Any}}=nothing)::Delta
     page = get_page(state, page_id)
     page === nothing && throw(PageNotFoundError(UInt64(page_id), "create_delta"))
     mask_bytes = Vector{UInt8}(undef, length(mask))
@@ -59,7 +60,9 @@ function create_delta(state::MMSBState, page_id::PageID,
     epoch = GC.@preserve page begin
         UInt32(FFIWrapper.rust_page_epoch(page.handle) + 1)
     end
-    return Delta(delta_id, page_id, epoch, mask_bytes, data_vec, source)
+    delta = Delta(delta_id, page_id, epoch, mask_bytes, data_vec, source)
+    intent_metadata === nothing || set_intent_metadata!(delta, intent_metadata)
+    return delta
 end
 
 """

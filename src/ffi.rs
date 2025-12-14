@@ -486,6 +486,74 @@ pub extern "C" fn mmsb_delta_copy_payload(handle: DeltaHandle, dst: *mut u8, len
 }
 
 #[no_mangle]
+pub extern "C" fn mmsb_delta_set_intent_metadata(
+    handle: DeltaHandle,
+    metadata_ptr: *const u8,
+    metadata_len: usize,
+) -> i32 {
+    if handle.ptr.is_null() {
+        set_last_error(MMSBErrorCode::InvalidHandle);
+        return -1;
+    }
+    if metadata_ptr.is_null() || metadata_len == 0 {
+        unsafe {
+            (*handle.ptr).intent_metadata = None;
+        }
+        return 0;
+    }
+    let bytes = unsafe { std::slice::from_raw_parts(metadata_ptr, metadata_len) };
+    match std::str::from_utf8(bytes) {
+        Ok(value) => {
+            unsafe {
+                (*handle.ptr).intent_metadata = Some(value.to_string());
+            }
+            0
+        }
+        Err(_) => {
+            set_last_error(MMSBErrorCode::InvalidHandle);
+            -1
+        }
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn mmsb_delta_intent_metadata_len(handle: DeltaHandle) -> usize {
+    if handle.ptr.is_null() {
+        set_last_error(MMSBErrorCode::InvalidHandle);
+        return 0;
+    }
+    unsafe {
+        (*handle.ptr)
+            .intent_metadata
+            .as_ref()
+            .map(|value| value.len())
+            .unwrap_or(0)
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn mmsb_delta_copy_intent_metadata(
+    handle: DeltaHandle,
+    dst: *mut u8,
+    len: usize,
+) -> usize {
+    if handle.ptr.is_null() || dst.is_null() {
+        set_last_error(MMSBErrorCode::InvalidHandle);
+        return 0;
+    }
+    let metadata = unsafe { &(*handle.ptr).intent_metadata };
+    let Some(value) = metadata else {
+        return 0;
+    };
+    let bytes = value.as_bytes();
+    let copy_len = min(bytes.len(), len);
+    unsafe {
+        std::ptr::copy_nonoverlapping(bytes.as_ptr(), dst, copy_len);
+    }
+    copy_len
+}
+
+#[no_mangle]
 pub extern "C" fn mmsb_tlog_new(path: *const c_char) -> TLogHandle {
     if path.is_null() {
         set_last_error(MMSBErrorCode::InvalidHandle);

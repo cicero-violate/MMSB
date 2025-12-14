@@ -2,8 +2,13 @@ using Test
 using .MMSB
 using .MMSB.PageTypes: read_page
 
+function _propagation_fuzz_state()
+    config = MMSB.MMSBStateTypes.MMSBConfig(tlog_path=tempname())
+    MMSB.MMSBStateTypes.MMSBState(config)
+end
+
 @testset "Fuzz: propagation under random workloads" begin
-    state = MMSB.MMSBStateTypes.MMSBState()
+    state = _propagation_fuzz_state()
 
     # Create a small parent/child graph
     parent = MMSB.PageAllocator.create_cpu_page!(state, 128)
@@ -22,7 +27,7 @@ using .MMSB.PageTypes: read_page
         mask = falses(128)
         mask[rand(1:128, rand(1:32))] .= true
         payload = rand(UInt8, 128)
-        delta = MMSB.DeltaRouter.create_delta(state, parent.id, collect(mask), payload, :prop_fuzz)
+        delta = MMSB.DeltaRouter.create_delta(state, parent.id, collect(mask), payload; source=:prop_fuzz)
         MMSB.DeltaRouter.route_delta!(state, delta)
         
         # Propagate changes
@@ -38,4 +43,3 @@ using .MMSB.PageTypes: read_page
     @test length(read_page(child1)) == 128
     @test length(read_page(child2)) == 128
 end
-

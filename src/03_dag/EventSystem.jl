@@ -212,7 +212,7 @@ function log_event_to_page!(state::MMSBState, page_id::PageID,
         mask[i] = true
     end
     delta_mod = _delta_router_module()
-    delta = delta_mod.create_delta(state, page_id, mask, current, :event_log)
+    delta = delta_mod.create_delta(state, page_id, mask, current; source=:event_log)
     delta_mod.route_delta!(state, delta; propagate=false)
     page.metadata[:event_log_entries] = get(page.metadata, :event_log_entries, 0) + 1
 end

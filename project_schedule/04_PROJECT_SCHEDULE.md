@@ -206,6 +206,37 @@ Implement missing architectural components required by CLAUDE.md specification t
 - ✓ QMU boundaries explicitly documented
 - ✓ All CLAUDE.md non-negotiable rules verified
 
+### Week 24: Integration Testing
+
+#### INT.G1: End-to-End Integration
+
+| Date | Task                         |    ID | Hours | Status | Notes                          |
+|------+------------------------------+-------+-------+--------+--------------------------------|
+| -    | Create test suite skeleton   | 5.6.1 |     2 | ☐      | In test/ directory             |
+| -    | Test intent → upsert → delta | 5.6.2 |     8 | ☐      | Full pipeline                  |
+| -    | Test QMU separation          | 5.6.3 |     6 | ☐      | Query, Mutate, Upsert distinct |
+| -    | Test TLog persistence        | 5.6.4 |     4 | ☐      | Intent metadata saved          |
+| -    | Test validation rejection    | 5.6.5 |     2 | ☐      | Invalid deltas blocked         |
+| -    | Performance benchmarks       | 5.6.6 |     2 | ☐      | Measure overhead               |
+
+**Week 24 Total**: 24 hours  
+**Week 24 Deliverables**: Passing end-to-end test suite
+
+### Week 25: Replay Verification
+
+#### INT.G2: Replay with Intent Metadata
+
+| Date | Task                          |    ID | Hours | Status | Notes                            |
+|------+-------------------------------+-------+-------+--------+----------------------------------|
+| -    | Test basic replay with intent | 5.7.1 |     4 | ☐      | Reconstruct intent history       |
+| -    | Test intent filtering         | 5.7.2 |     4 | ☐      | Replay specific intents          |
+| -    | Test intent causality         | 5.7.3 |     4 | ☐      | Intent → delta linkage preserved |
+| -    | Test checkpoint + intent      | 5.7.4 |     3 | ☐      | Intent in checkpoint metadata    |
+| -    | Write replay documentation    | 5.7.5 |     1 | ☐      | How to use intent replay         |
+
+**Week 25 Total**: 16 hours  
+**Week 25 Deliverables**: Intent replay fully verified
+
 ---
 
 ## Deliverables Summary

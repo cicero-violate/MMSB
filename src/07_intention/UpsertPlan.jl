@@ -1,8 +1,3 @@
-"""
-    UpsertPlan
-
-Structured intent representation for conditional upserts.
-"""
 module UpsertPlan
 
 export DeltaSpec, UpsertPlan, validate_plan

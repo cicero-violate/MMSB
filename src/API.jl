@@ -100,7 +100,7 @@ function update_page(state::MMSBState, page_id::PageID, bytes::AbstractVector{UI
         changed |= diff
     end
     changed || return page
-    delta = create_delta(state, page_id, mask, data_vec, source)
+    delta = create_delta(state, page_id, mask, data_vec; source=source)
     route_delta!(state, delta)
     return page
 end

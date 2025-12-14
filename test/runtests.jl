@@ -19,7 +19,7 @@ end
     page = MMSB.PageAllocator.create_cpu_page!(state, 16)
     mask = falses(16); mask[1:6] .= true
     data = UInt8.(1:16)
-    delta = MMSB.DeltaRouter.create_delta(state, page.id, collect(mask), data, :test)
+    delta = MMSB.DeltaRouter.create_delta(state, page.id, collect(mask), data; source=:test)
     MMSB.DeltaRouter.route_delta!(state, delta)
 
     replayed = MMSB.ReplayEngine.replay_to_epoch(state, delta.epoch)
@@ -87,7 +87,7 @@ end
         page = MMSB.PageAllocator.create_gpu_page!(state, 8)
         mask = falses(8); mask[1:5] .= true
         data = UInt8.(21:28)
-        delta = MMSB.DeltaRouter.create_delta(state, page.id, collect(mask), data, :gpu_test)
+        delta = MMSB.DeltaRouter.create_delta(state, page.id, collect(mask), data; source=:gpu_test)
         MMSB.DeltaRouter.route_delta!(state, delta)
         CUDA.synchronize()
         host = read_page(page)
@@ -107,7 +107,7 @@ end
 
     mask = falses(8); mask[1:3] .= true
     data = UInt8.(11:18)
-    delta = MMSB.DeltaRouter.create_delta(state, parent.id, collect(mask), data, :test)
+    delta = MMSB.DeltaRouter.create_delta(state, parent.id, collect(mask), data; source=:test)
     MMSB.DeltaRouter.route_delta!(state, delta)
 
     @test read_page(child)[1:3] == data[1:3]
@@ -134,8 +134,8 @@ end
     mask = trues(4)
     payload_a = fill(UInt8(0x01), 4)
     payload_b = fill(UInt8(0x02), 4)
-    delta_a = MMSB.DeltaRouter.create_delta(state, parent_a.id, mask, payload_a, :batch)
-    delta_b = MMSB.DeltaRouter.create_delta(state, parent_b.id, mask, payload_b, :batch)
+    delta_a = MMSB.DeltaRouter.create_delta(state, parent_a.id, mask, payload_a; source=:batch)
+    delta_b = MMSB.DeltaRouter.create_delta(state, parent_b.id, mask, payload_b; source=:batch)
     MMSB.DeltaRouter.batch_route_deltas!(state, [delta_a, delta_b])
 
     @test hits[] == 1
@@ -154,7 +154,7 @@ end
     page = MMSB.PageAllocator.create_cpu_page!(state, 4)
     bad_mask = falses(2)
     bad_data = UInt8.(1:4)
-    @test_throws MMSB.ErrorTypes.InvalidDeltaError MMSB.DeltaRouter.create_delta(state, page.id, bad_mask, bad_data, :test)
+    @test_throws MMSB.ErrorTypes.InvalidDeltaError MMSB.DeltaRouter.create_delta(state, page.id, bad_mask, bad_data; source=:test)
 
     mktemp() do path, io
         close(io)
@@ -221,9 +221,10 @@ include(joinpath(@__DIR__, "gc_stress_test.jl"))
 include(joinpath(@__DIR__, "fuzz_replay.jl"))
 include(joinpath(@__DIR__, "propagation_fuzz.jl"))
 include(joinpath(@__DIR__, "checkpoint_fuzz.jl"))
+include(joinpath(@__DIR__, "test_week24_25_integration.jl"))
 
 # Phase 4 tests
-include(joinpath(@__DIR__, "test_agent_interface.jl"))
-include(joinpath(@__DIR__, "test_agents.jl"))
-include(joinpath(@__DIR__, "test_applications.jl"))
+include(joinpath(@__DIR__, "test_layer10_agent_interface.jl"))
+include(joinpath(@__DIR__, "test_layer11_agents.jl"))
+include(joinpath(@__DIR__, "test_layer12_applications.jl"))
 include(joinpath(@__DIR__, "test_phase4_integration.jl"))
