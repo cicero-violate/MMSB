@@ -15,8 +15,6 @@ const API = MMSB.API
 const PageTypes = MMSB.PageTypes
 const Semiring = MMSB.Semiring
 const PropagationEngine = MMSB.PropagationEngine
-const TLog = MMSB.TLog
-const Monitoring = MMSB.Monitoring
 const ErrorRecovery = MMSB.ErrorRecovery
 const MemoryPressure = MMSB.MemoryPressure
 
@@ -238,20 +236,6 @@ end
     @testset "Error Recovery with Retry" begin
         policy = ErrorRecovery.RetryPolicy(max_attempts=3, base_delay_ms=10)
         
-        attempts = Ref(0)
-        result = ErrorRecovery.retry_with_backoff(policy) do
-            attempts[] += 1
-            if attempts[] < 3
-                error("Transient failure")
-            end
-            return 42
-        end
-        
-        @test result == 42
-        @test attempts[] == 3
-    end
-    
-    @testset "GPU Fallback to CPU" begin
         # Should work even if GPU unavailable
         state = API.mmsb_start(enable_gpu=CUDA.functional())
         

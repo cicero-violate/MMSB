@@ -66,6 +66,8 @@ include("06_utility/cost_functions.jl")
 include("06_utility/utility_engine.jl")
 include("06_utility/entropy_measure.jl")
 include("06_utility/CostAggregation.jl")
+include("06_utility/ErrorRecovery.jl")
+include("06_utility/MemoryPressure.jl")
 
 # # Layer 7: Intention Engine
 include("07_intention/IntentionTypes.jl")
