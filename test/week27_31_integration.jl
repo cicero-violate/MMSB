@@ -190,7 +190,7 @@ end
         
         # Checkpoint with compression
         path = tempname()
-        TLog.checkpoint_log!(state, path; compress=true)
+        TLog.checkpoint_log!(state, path)
         
         @test isfile(path)
         
