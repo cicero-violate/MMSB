@@ -17,6 +17,7 @@ using ..EventSystem: emit_event!, PAGE_INVALIDATED, PAGE_STALE,
 using ..DeltaRouter: create_delta, route_delta!
 using ..ErrorTypes: PageNotFoundError, InvalidDeltaError
 using ..Monitoring: track_propagation_latency!
+using ..DeltaTypes: Delta as DeltaType
 
 export propagate_change!, schedule_propagation!, execute_propagation!
 export PropagationMode, IMMEDIATE, DEFERRED, BATCH
@@ -103,21 +104,21 @@ function replay_cuda_graph(state::MMSBState, stream::Ptr{Cvoid})
 end
 
 """
-    batch_route_deltas!(state::MMSBState, deltas::Vector{Delta})
+    batch_route_deltas!(state::MMSBState, deltas::Vector{DeltaType})
 
 Route multiple deltas in a single batch operation to amortize synchronization overhead.
 """
-function batch_route_deltas!(state::MMSBState, deltas::Vector{Delta})
+function batch_route_deltas!(state::MMSBState, deltas::Vector{DeltaType})
     if isempty(deltas)
         return
     end
     
     # Group deltas by target page
-    delta_groups = Dict{PageID, Vector{Delta}}()
+    delta_groups = Dict{PageID, Vector{DeltaType}}()
     for delta in deltas
         page_id = delta.page_id
         if !haskey(delta_groups, page_id)
-            delta_groups[page_id] = Delta[]
+            delta_groups[page_id] = DeltaType[]
         end
         push!(delta_groups[page_id], delta)
     end
