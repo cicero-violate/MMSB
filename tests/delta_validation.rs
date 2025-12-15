@@ -1,4 +1,4 @@
-use mmsb::page::{validate_delta, Delta, DeltaID, Epoch, PageID, Source};
+use mmsb_core::page::{validate_delta, Delta, DeltaID, Epoch, PageID, Source};
 
 fn dense_delta(payload: Vec<u8>, mask: Vec<bool>) -> Delta {
     Delta {

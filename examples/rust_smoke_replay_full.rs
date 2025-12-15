@@ -117,7 +117,7 @@ fn main() {
         }
 
         // Sparse write on page 1001
-        let sparse_mask = [0b00001101u8, 0b10101010u8];
+        let sparse_mask = [0b00001101u8, 0b00101010u8];
         let sparse_payload = [0xAAu8, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF];
         let delta = create_and_append_delta(
             tlog, handles[&1001], 1001,

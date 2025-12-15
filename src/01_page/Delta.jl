@@ -186,6 +186,36 @@ function _escape_metadata_string(str::AbstractString)
     String(take!(io))
 end
 
+"""
+    merge_deltas_simd!(data_a, mask_a, data_b, mask_b, out_data, out_mask)
+
+SIMD-optimized delta merge using AVX2/AVX-512 when available.
+"""
+function merge_deltas_simd!(
+    data_a::Vector{UInt8}, mask_a::Vector{Bool},
+    data_b::Vector{UInt8}, mask_b::Vector{Bool},
+    out_data::Vector{UInt8}, out_mask::Vector{Bool}
+)
+    len = min(length(data_a), length(data_b))
+    
+    if ccall((:cpu_has_avx2, LIBMMSB), Bool, ())
+        ccall((:merge_dense_simd_ffi, LIBMMSB), Cvoid,
+              (Ptr{UInt8}, Ptr{Bool}, Ptr{UInt8}, Ptr{Bool},
+               Ptr{UInt8}, Ptr{Bool}, Csize_t),
+              data_a, mask_a, data_b, mask_b, out_data, out_mask, len)
+    else
+        @inbounds for i in 1:len
+            if mask_b[i]
+                out_data[i] = data_b[i]
+                out_mask[i] = true
+            else
+                out_data[i] = data_a[i]
+                out_mask[i] = mask_a[i]
+            end
+        end
+    end
+end
+
 mutable struct _MetadataParser
     data::String
     idx::Int

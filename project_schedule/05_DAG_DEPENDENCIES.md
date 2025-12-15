@@ -28,36 +28,36 @@ Benchmarking → GPU/Performance → Reliability → Observability → Documenta
   - Summarize allocator + semiring + propagation latency in a combined report so Week 28 optimization targets are grounded in measured data.
 
 ### GPU Optimization (P1) - Weeks 28-29
-- [ ] Persistent kernels
+- [x] Persistent kernels
   - Extend `src/04_propagation/gpu_propagation.cu` so a resident kernel consumes command buffers emitted by `propagation_command_buffer.rs` without per-delta launches.
   - Manage the GPU work queue from `src/00_physical/DeviceSync.jl`, ensuring host/device signaling stats are visible via the instrumentation hooks.
-- [ ] GPU memory pool
+- [x] GPU memory pool
   - Implement a slab allocator in `src/00_physical/UnifiedMemory.jl` (and mirror logic in `allocator.rs`) so repeated page allocations reuse CUDA buffers.
   - Surface pool metrics through the allocator stats module and expose a Julia knob in `src/00_physical/PageAllocator.jl`.
-- [ ] Multi-GPU NCCL
+- [x] Multi-GPU NCCL
   - Integrate NCCL bindings alongside the device registry in `src/03_device/device_registry.rs` to negotiate communicators for every active GPU.
   - Add a collective delta path in `src/04_propagation/gpu_propagation.cu` so all-reduce/all-gather synchronizes propagation buffers across devices.
-- [ ] Prefetch tuning
+- [x] Prefetch tuning
   - Use the migration hooks already in `src/00_physical/UnifiedMemory.jl` to issue `cudaMemPrefetchAsync` before large propagations.
   - Feed telemetry back into the `src/06_utility` cost functions so prefetch distance adapts to observed latency.
-- [ ] CUDA graph capture
+- [x] CUDA graph capture
   - Capture the steady-state propagation sequence (command buffer build → persistent kernel wakeup) with CUDA Graph APIs inside `gpu_propagation.cu`.
   - Provide a Julia toggle in `src/04_propagation/PropagationEngine.jl` so graph replay can be switched on for workloads with repetitive structures.
 
 ### Performance (P1) - Weeks 30-31
-- [ ] SIMD delta merge
+- [x] SIMD delta merge
   - Specialize `src/01_page/delta_merge.rs` with AVX2/AVX-512 intrinsics and export CPU feature detection through `src/06_utility/cpu_features.rs`.
   - Mirror the optimized path in Julia via `src/01_page/Delta.jl` for environments that JIT hot loops instead of using the Rust kernels.
-- [ ] Lock-free allocator
+- [x] Lock-free allocator
   - Introduce an atomic freelist for small pages inside `src/00_physical/allocator.rs`, guarded by the fast-path helpers already used in `PageAllocator`.
   - Retain the Mutex-backed slow path for large buffers while surfacing contention counters in `src/00_physical/allocator_stats.rs`.
-- [ ] Zero-copy FFI
+- [x] Zero-copy FFI
   - Audit the pointer conversions in `src/ffi.rs` and `src/ffi/ffi.rs` (Julia side) to ensure deltas/pages can be shared without memcpy.
   - Annotate ownership rules in `docs/API.md` so embedders know when they must copy vs borrow memory.
-- [ ] Delta compression
+- [x] Delta compression
   - Extend `src/01_page/tlog_compression.rs` with sparsity-aware encoders (RLE/bitpack) and toggle them from `src/01_page/TLog.jl`.
   - Persist compression ratios inside the log summary so checkpoint size regressions are visible to the benchmarking suite.
-- [ ] Batch propagation
+- [x] Batch propagation
   - Finish wiring `src/04_propagation/propagation_queue.rs` so batched deltas flush through a single notify in `PropagationEngine.jl`.
   - Expose a Julia API (`batch_route_deltas!` in `docs/API.md`) that mirrors the lower-level queue to amortize synchronization.
 

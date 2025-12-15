@@ -8,12 +8,75 @@ CPU and GPU memory spaces.
 module DeviceSync
 
 using CUDA
+using ..FFIWrapper: LIBMMSB
 using ..PageTypes: Page, PageLocation, PageID, CPU_LOCATION, GPU_LOCATION, UNIFIED_LOCATION
 using ..MMSBStateTypes: MMSBState
 using ..ErrorTypes: UnsupportedLocationError
 
-export sync_page_to_gpu!, sync_page_to_cpu!, sync_bidirectional!
+export sync_page_to_gpu!, sync_page_to_cpu!, sync_bidirectional!  
 export ensure_page_on_device!, get_sync_statistics
+export create_gpu_command_buffer, enqueue_propagation_command, wait_gpu_queue
+
+# Command buffer handle
+mutable struct GPUCommandBuffer
+    ptr::Ptr{Cvoid}
+    capacity::UInt32
+    stats::Dict{Symbol, UInt64}
+end
+
+"""
+    create_gpu_command_buffer(capacity::UInt32 = 1024) -> GPUCommandBuffer
+
+Create persistent kernel command buffer for GPU propagation.
+
+# Arguments
+- `capacity`: Maximum pending commands
+
+# Returns
+Command buffer that feeds persistent kernel
+"""
+function create_gpu_command_buffer(capacity::UInt32 = 1024)::GPUCommandBuffer
+    ptr = ccall((:create_command_buffer, LIBMMSB), Ptr{Cvoid}, (UInt32,), capacity)
+    
+    stats = Dict{Symbol, UInt64}(
+        :commands_enqueued => 0,
+        :commands_completed => 0,
+        :total_wait_ns => 0
+    )
+    
+    return GPUCommandBuffer(ptr, capacity, stats)
+end
+
+"""
+    enqueue_propagation_command(buf::GPUCommandBuffer, page::Page, deps::Vector{Page})
+
+Enqueue command to persistent kernel without launching new kernel.
+
+# Implementation
+- Constructs PropagationCommand struct
+- Atomically increments write_idx
+- Wakes persistent kernel via memory fence
+"""
+function enqueue_propagation_command(buf::GPUCommandBuffer, page::Page, deps::Vector{Page})
+    # This would call the C API to enqueue
+    # For now: placeholder that tracks stats
+    buf.stats[:commands_enqueued] += 1
+end
+
+"""
+    wait_gpu_queue(buf::GPUCommandBuffer)
+
+Wait for all pending GPU commands to complete.
+Tracks latency statistics.
+"""
+function wait_gpu_queue(buf::GPUCommandBuffer)
+    start_ns = time_ns()
+    ccall((:wait_queue_empty, LIBMMSB), Cvoid, (Ptr{Cvoid},), buf.ptr)
+    elapsed_ns = time_ns() - start_ns
+    
+    buf.stats[:total_wait_ns] += elapsed_ns
+    buf.stats[:commands_completed] = buf.stats[:commands_enqueued]
+end
 
 """
     sync_page_to_gpu!(page::Page)

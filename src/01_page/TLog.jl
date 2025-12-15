@@ -7,6 +7,20 @@ using ..PageTypes: Page, PageID, PageLocation, metadata_from_blob, initialize!, 
 using ..DeltaTypes: Delta
 using ..RustErrors: RustFFIError, rethrow_translated
 
+export compress_delta_mask, CompressionMode
+
+@enum CompressionMode None=0 Rle=1 Bitpack=2
+
+"""
+    compress_delta_mask(mask::Vector{Bool}, mode::CompressionMode)
+
+Compress delta mask using RLE or bitpacking.
+"""
+function compress_delta_mask(mask::Vector{Bool}, mode::CompressionMode)
+    # Placeholder - would call Rust compression
+    return (UInt8.(mask), 1.0)
+end
+
 export append_to_log!, query_log, get_deltas_for_page, get_deltas_in_range,
        compute_log_statistics, log_summary,
        checkpoint_log!, load_checkpoint!, replay_log

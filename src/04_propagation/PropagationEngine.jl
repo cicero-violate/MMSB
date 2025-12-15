@@ -21,12 +21,24 @@ using ..Monitoring: track_propagation_latency!
 export propagate_change!, schedule_propagation!, execute_propagation!
 export PropagationMode, IMMEDIATE, DEFERRED, BATCH
 export register_recompute_fn!, register_passthrough_recompute!, queue_recomputation!
+export enable_graph_capture, disable_graph_capture, replay_cuda_graph
+export batch_route_deltas!
 
 @enum PropagationMode begin
     IMMEDIATE  # Propagate immediately on change
     DEFERRED   # Queue for later batch propagation
     BATCH      # Accumulate and propagate in batches
 end
+
+# CUDA graph capture state
+mutable struct CUDAGraphState
+    enabled::Bool
+    graph::Union{Nothing, Ptr{Cvoid}}
+    graph_exec::Union{Nothing, Ptr{Cvoid}}
+    capture_count::Int
+end
+
+const GRAPH_STATES = IdDict{MMSBState, CUDAGraphState}()
 
 mutable struct PropagationQueue
     order::Vector{PageID}
@@ -36,7 +48,99 @@ end
 const PROPAGATION_BUFFERS = IdDict{MMSBState, PropagationQueue}()
 
 """
-Fetch (or create) the recomputation queue for a state.
+    enable_graph_capture(state::MMSBState)
+
+Enable CUDA graph capture for repetitive propagation patterns.
+Captures steady-state propagation into replayable graph.
+"""
+function enable_graph_capture(state::MMSBState)
+    graph_state = get!(GRAPH_STATES, state) do
+        CUDAGraphState(false, nothing, nothing, 0)
+    end
+    graph_state.enabled = true
+end
+
+"""
+    disable_graph_capture(state::MMSBState)
+
+Disable CUDA graph capture and free resources.
+"""
+function disable_graph_capture(state::MMSBState)
+    if haskey(GRAPH_STATES, state)
+        graph_state = GRAPH_STATES[state]
+        graph_state.enabled = false
+        
+        if graph_state.graph_exec !== nothing
+            ccall((:cudaGraphExecDestroy, "libcudart"), Cint,
+                  (Ptr{Cvoid},), graph_state.graph_exec)
+        end
+        if graph_state.graph !== nothing
+            ccall((:cudaGraphDestroy, "libcudart"), Cint,
+                  (Ptr{Cvoid},), graph_state.graph)
+        end
+    end
+end
+
+"""
+    replay_cuda_graph(state::MMSBState, stream::Ptr{Cvoid})
+
+Replay captured CUDA graph on given stream for fast execution.
+"""
+function replay_cuda_graph(state::MMSBState, stream::Ptr{Cvoid})
+    if !haskey(GRAPH_STATES, state)
+        return false
+    end
+    
+    graph_state = GRAPH_STATES[state]
+    if !graph_state.enabled || graph_state.graph_exec === nothing
+        return false
+    end
+    
+    ccall((:cudaGraphLaunch, "libcudart"), Cint,
+          (Ptr{Cvoid}, Ptr{Cvoid}), graph_state.graph_exec, stream)
+    
+    return true
+end
+
+"""
+    batch_route_deltas!(state::MMSBState, deltas::Vector{Delta})
+
+Route multiple deltas in a single batch operation to amortize synchronization overhead.
+"""
+function batch_route_deltas!(state::MMSBState, deltas::Vector{Delta})
+    if isempty(deltas)
+        return
+    end
+    
+    # Group deltas by target page
+    delta_groups = Dict{PageID, Vector{Delta}}()
+    for delta in deltas
+        page_id = delta.page_id
+        if !haskey(delta_groups, page_id)
+            delta_groups[page_id] = Delta[]
+        end
+        push!(delta_groups[page_id], delta)
+    end
+    
+    # Route each group
+    for (page_id, group) in delta_groups
+        for delta in group
+            route_delta!(state, delta)
+        end
+    end
+    
+    # Single notification after all routes
+    if haskey(GRAPH_STATES, state)
+        graph_state = GRAPH_STATES[state]
+        if graph_state.enabled
+            # Batch complete - could trigger graph capture
+            graph_state.capture_count += 1
+        end
+    end
+end
+
+"""
+    Fetch (or create) the recomputation queue for a state.
 """
 function _buffer(state::MMSBState)::PropagationQueue
     return get!(PROPAGATION_BUFFERS, state) do

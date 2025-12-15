@@ -12,6 +12,7 @@ use std::sync::Arc;
 use std::fmt;
 use thiserror::Error;
 use std::sync::atomic::{AtomicU64, Ordering};
+use std::ptr;
 
 extern "C" {
     fn cudaMallocManaged(ptr: *mut *mut c_void, size: usize, flags: u32) -> i32;
@@ -94,6 +95,7 @@ pub struct Page {
     capacity: usize,
     location: PageLocation,
     metadata: Metadata,
+    unified_cuda_backing: bool,
 }
 
 impl Page {
@@ -106,37 +108,34 @@ impl Page {
         println!("[PAGE {:>4}] NEW     id={:>6} size={:>7} loc={:?}", debug_id, id.0, size, location);
 
         // Use real cudaMallocManaged when Unified, fall back to Vec otherwise
-        let data_ptr = if location == PageLocation::Unified {
+        let (data_ptr, unified_cuda_backing) = if location == PageLocation::Unified {
             #[cfg(feature = "cuda")]
             {
-                let mut ptr: *mut c_void = std::ptr::null_mut();
+                let mut ptr: *mut c_void = ptr::null_mut();
                 let ret = unsafe { cudaMallocManaged(&mut ptr as *mut *mut c_void, size, 1) };
-                if ret != 0 {
-                    eprintln!("cudaMallocManaged failed with error code: {}", ret);
-                    return Err(PageError::AllocError(ret));
+                if ret != 0 || ptr.is_null() {
+                    eprintln!(
+                        "cudaMallocManaged failed (code {}), falling back to host allocation for unified page {}",
+                        ret,
+                        id.0
+                    );
+                    (allocate_zeroed(size, 1)?, false)
+                } else {
+                    (ptr as *mut u8, true)
                 }
-                ptr as *mut u8
             }
             #[cfg(not(feature = "cuda"))]
             {
                 // Fallback when --no-default-features or CUDA not available
-                let layout = std::alloc::Layout::array::<u8>(size)
-                    .map_err(|_| PageError::AllocError(1))?;
-                unsafe { std::alloc::alloc_zeroed(layout) }
+                (allocate_zeroed(size, 1)?, false)
             }
         } else {
             // CPU / GPU (non-unified) → always use regular allocator
-            let layout = std::alloc::Layout::array::<u8>(size)
-                .map_err(|_| PageError::AllocError(1))?;
-            unsafe { std::alloc::alloc_zeroed(layout) }
+            (allocate_zeroed(size, 1)?, false)
         };
 
         let mask_size = (size + 7) / 8;
-        let mask_ptr = {
-            let layout = std::alloc::Layout::array::<u8>(mask_size)
-                .map_err(|_| PageError::AllocError(2))?;
-            unsafe { std::alloc::alloc_zeroed(layout) }
-        };
+        let mask_ptr = allocate_zeroed(mask_size, 2)?;
 
         Ok(Self {
             debug_id,
@@ -147,6 +146,7 @@ impl Page {
             capacity: size,
             location,
             metadata: Metadata::new(),
+            unified_cuda_backing,
         })
     }
 
@@ -305,6 +305,7 @@ impl Clone for Page {
             capacity: self.capacity,
             location: self.location,
             metadata: self.metadata.clone(),
+            unified_cuda_backing: false,
         }
     }
 }
@@ -317,15 +318,10 @@ impl Drop for Page {
         let mask_layout = std::alloc::Layout::array::<u8>(mask_size).unwrap();
         unsafe { std::alloc::dealloc(self.mask, mask_layout) };
 
-        if self.location == PageLocation::Unified {
+        if self.location == PageLocation::Unified && self.unified_cuda_backing {
             #[cfg(feature = "cuda")]
             unsafe {
                 let _ = cudaFree(self.data as *mut c_void);
-            }
-            #[cfg(not(feature = "cuda"))]
-            unsafe {
-                let layout = std::alloc::Layout::array::<u8>(self.capacity).unwrap();
-                std::alloc::dealloc(self.data, layout);
             }
         } else {
             unsafe {
@@ -375,4 +371,14 @@ fn read_bytes(blob: &[u8], cursor: &mut usize, len: usize) -> Result<Vec<u8>, Pa
     let bytes = blob[*cursor..*cursor + len].to_vec();
     *cursor += len;
     Ok(bytes)
+}
+
+fn allocate_zeroed(size: usize, err_code: i32) -> Result<*mut u8, PageError> {
+    let layout = std::alloc::Layout::array::<u8>(size)
+        .map_err(|_| PageError::AllocError(err_code))?;
+    let ptr = unsafe { std::alloc::alloc_zeroed(layout) };
+    if ptr.is_null() {
+        return Err(PageError::AllocError(err_code));
+    }
+    Ok(ptr)
 }

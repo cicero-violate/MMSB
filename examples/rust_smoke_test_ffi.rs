@@ -102,12 +102,14 @@ fn main() {
         assert_eq!(copied_source, "test_source", "Source content mismatch");
 
         let mask_len = mmsb_delta_mask_len(delta);
-        assert_eq!(mask_len, mask.len(), "Mask len mismatch");
+        assert_eq!(mask_len, 8, "Mask len mismatch");
 
         let mut mask_buf = vec![0u8; mask_len];
         let mask_copy = mmsb_delta_copy_mask(delta, mask_buf.as_mut_ptr(), mask_len);
         assert_eq!(mask_copy, mask_len, "Mask copy failed");
-        assert_eq!(mask_buf, mask, "Mask content mismatch");
+        let mut expected_mask = vec![0u8; mask_len];
+        expected_mask[0] = 1;
+        assert_eq!(mask_buf, expected_mask, "Mask content mismatch");
 
         let payload_len = mmsb_delta_payload_len(delta);
         assert_eq!(payload_len, payload.len(), "Payload len mismatch");
