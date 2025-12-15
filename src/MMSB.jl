@@ -1,4 +1,4 @@
-# src/MMSB.jl
+# src/MMSB.jl - main file
 """
 MMSB - Memory-Mapped State Bus
 """
