@@ -6,7 +6,7 @@ use std::io::{BufReader, BufWriter, Read, Write};
 use std::path::Path;
 
 const SNAPSHOT_MAGIC: &[u8] = b"MMSBSNAP";
-const SNAPSHOT_VERSION: u32 = 1;
+const SNAPSHOT_VERSION: u32 = 2;
 
 pub fn write_checkpoint(
     allocator: &PageAllocator,

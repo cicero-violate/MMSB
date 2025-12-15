@@ -93,6 +93,30 @@ pub enum MMSBErrorCode {
     SnapshotError = 3,
     CorruptLog = 4,
     InvalidHandle = 5,
+    GPUError = 6,
+    CompressionError = 7,
+    ChecksumMismatch = 8,
+    TransactionConflict = 9,
+    MemoryPressure = 10,
+    NetworkError = 11,
+}
+
+impl MMSBErrorCode {
+    pub fn is_retryable(&self) -> bool {
+        matches!(self, 
+            MMSBErrorCode::IOError | 
+            MMSBErrorCode::NetworkError |
+            MMSBErrorCode::MemoryPressure
+        )
+    }
+    
+    pub fn is_fatal(&self) -> bool {
+        matches!(self,
+            MMSBErrorCode::CorruptLog |
+            MMSBErrorCode::ChecksumMismatch |
+            MMSBErrorCode::InvalidHandle
+        )
+    }
 }
 
 thread_local! {
@@ -112,6 +136,16 @@ fn log_error_code(err: &std::io::Error) -> MMSBErrorCode {
     } else {
         MMSBErrorCode::IOError
     }
+}
+
+#[no_mangle]
+pub extern "C" fn mmsb_error_is_retryable(code: MMSBErrorCode) -> bool {
+    code.is_retryable()
+}
+
+#[no_mangle]
+pub extern "C" fn mmsb_error_is_fatal(code: MMSBErrorCode) -> bool {
+    code.is_fatal()
 }
 
 #[no_mangle]

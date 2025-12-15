@@ -62,19 +62,19 @@ Benchmarking → GPU/Performance → Reliability → Observability → Documenta
   - Expose a Julia API (`batch_route_deltas!` in `docs/API.md`) that mirrors the lower-level queue to amortize synchronization.
 
 ### Reliability (P1) - Week 32
-- [ ] Error recovery
+- [x] Error recovery
   - Formalize an error taxonomy shared between Rust and Julia (`src/ffi.rs` ↔ `src/API.jl`) and centralize retry/backoff logic in `src/06_utility/ErrorRecovery.jl`.
   - Route fatal errors through the observability hooks so production deployments capture context before retrying.
-- [ ] GPU fallback
+- [x] GPU fallback
   - Use the capability probes in `src/00_physical/DeviceSync.jl` to auto-disable GPU paths when CUDA initialization fails mid-flight.
   - Provide CPU equivalents for persistent kernels/queues so `PropagationEngine.jl` can continue processing without user intervention.
-- [ ] Memory pressure handling
+- [x] Memory pressure handling
   - Teach `src/06_utility/MemoryPressure.jl` (new) to read allocator stats and start evicting pages (LRU) through the page manager in `src/01_page/page.rs`.
   - Tie pressure events to the checkpoint subsystem so cold pages spill to disk via the existing `src/01_page/checkpoint.rs`.
-- [ ] Checkpoint validation
+- [x] Checkpoint validation
   - Embed CRC32/SHA256 checks in `src/01_page/checkpoint.rs` plus verification in the replay path before data touches live pages.
   - Surface validation failures as structured errors that `docs/API.md` can document for operators.
-- [ ] Transaction isolation
+- [x] Transaction isolation
   - Implement per-transaction epochs inside `src/04_propagation/PropagationEngine.jl` so overlapping intents do not step on each other's state.
   - Add Julia helpers (e.g., `with_transaction`) in `src/10_agent_interface/CheckpointAPI.jl` ensuring agents pick the right isolation level.
 
