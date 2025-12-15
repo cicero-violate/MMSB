@@ -1,4 +1,6 @@
 /// Core semiring trait used by the propagation engine.
+use crate::semiring::semiring_types::Semiring;
+
 pub trait Semiring: Send + Sync {
     type Element: Clone + PartialEq + Send + Sync;
 
