@@ -33,3 +33,7 @@ echo "--------------------------------------------------"
 echo "Running Julia tests.."
 julia --startup-file=no --project=. benchmark/benchmarks.jl
 echo "--------------------------------------------------"
+
+echo "Running Julia tests.."
+julia --startup-file=no --project=. test/week27_31_integration.jl
+echo "--------------------------------------------------"
