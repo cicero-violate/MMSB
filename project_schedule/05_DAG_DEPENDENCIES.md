@@ -1,190 +1,57 @@
-# MMSB Development Status
+# Phase 6 DAG & Dependencies
 
-## Current State (2025-12-09)
+**Status**: Phases 1-5 Complete ✓
 
-**ALL PHASES COMPLETE** ✓
-
-### Phase 1: Core Infrastructure ✓
-- Layer 0 (Physical): 8/8 ✓
-- Layer 1 (Page): 10/10 ✓
-- Layer 2 (Semiring): 10/10 ✓
-- Layer 3 (DAG): 8/8 ✓
-- Layer 4 (Propagation): 8/8 ✓
-
-### Phase 2: Self-Optimization ✓
-- Layer 5 (Adaptive): 10/10 ✓
-- Layer 6 (Utility): 9/9 ✓
-- Layer 7 (Intention): 8/8 ✓
-
-### Phase 3: Cognition ✓
-- Layer 8 (Reasoning): 11/11 ✓
-- Layer 9 (Planning): 13/13 ✓
-
-### Phase 4: Agents + Applications ✓
-- Layer 10 (Interface): 7/7 ✓
-- Layer 11 (Agents): 9/9 ✓
-- Layer 12 (Applications): 6/6 ✓
-
-**Total: All P0 tasks complete**
-- Build: `cargo build --release` PASS
-- Tests: `julia --project=. test/runtests.jl` PASS
-- All 13 layers operational
-
-## Remaining Work
-
-### Documentation (P1)
-- [ ] Layer 0-4 documentation
-- [ ] Layer 5-7 documentation
-- [ ] Layer 8-9 documentation
-- [ ] Complete API documentation
-
----
-
-## Phase 5: CLAUDE.md Architectural Compliance
-
-### Critical Gaps Identified (P0)
-
-**Analysis Date**: 2025-12-14
-**Status**: Architecture 95% compliant, 5 critical gaps identified
-
-#### Gap Analysis Summary
-
-| Gap ID | Component                   | Severity  | Layer | Status |
-|--------+-----------------------------+-----------+-------+--------|
-| G5.1   | UpsertPlan structure        | 🔴 HIGH   | L7    | ✓      |
-| G5.2   | Intent lowering pipeline    | 🔴 HIGH   | L7→L1 | ✓      |
-| G5.3   | Intent metadata in TLog     | 🟡 MEDIUM | L1    | ✓      |
-| G5.4   | Delta validation separation | 🟡 MEDIUM | L1    | ✓      |
-| G5.5   | QMU API clarification       | 🟢 LOW    | Root  | ☐      |
-
-### Task Breakdown
-
-#### L7.G1: Define UpsertPlan Structure ⭐⭐
-- [x] Create `src/07_intention/UpsertPlan.jl`
-- [x] Define Query, Predicate, DeltaSpec, Metadata fields
-- [x] Add constructor and validation logic
-- [x] Write unit tests
-- **Difficulty**: ⭐⭐ (Simple struct definition)
-- **Effort**: 8 hours
-- **Dependencies**: None
-
-#### L1.G1: Extend TLog Metadata Schema ⭐⭐⭐
-- [x] Add intent_metadata field to TLog entry
-- [x] Update serialization/deserialization
-- [x] Maintain backward compatibility
-- [x] Update TLog tests
-- **Difficulty**: ⭐⭐⭐ (Format change + compatibility)
-- **Effort**: 16 hours
-- **Dependencies**: None
-
-#### L7.G2: Implement Intent Lowering ⭐⭐⭐
-- [x] Create `src/07_intention/intent_lowering.jl`
-- [x] Implement `lower_intent_to_deltaspec()`
-- [x] Add type conversion helpers
-- [x] Integration tests
-- **Difficulty**: ⭐⭐⭐ (Logic + FFI boundary)
-- **Effort**: 24 hours
-- **Dependencies**: L7.G1, L1.G1
-
-#### L1.G2: Delta Validation Separation ⭐⭐
-- [x] Create `src/01_page/delta_validation.rs`
-- [x] Extract validation from `Delta::apply_to()`
-- [x] Add `validate_delta()` public API
-- [x] Update delta application to call validator
-- **Difficulty**: ⭐⭐ (Refactoring existing code)
-- **Effort**: 12 hours
-- **Dependencies**: None
-
-#### FFI.G1: Lowering Bridge ⭐⭐⭐⭐
-- [x] Add FFI functions for delta validation
-- [x] Julia → Rust deltaspec transfer
-- [x] Error handling across boundary
-- [x] Performance testing
-- **Difficulty**: ⭐⭐⭐⭐ (Complex FFI + marshalling)
-- **Effort**: 32 hours
-- **Dependencies**: L7.G2, L1.G2
-
-#### INT.G1: End-to-End Integration ⭐⭐⭐⭐
-- [ ] Create intent → execution test suite
-- [ ] Test all QMU pathways
-- [ ] Verify TLog intent persistence
-- [ ] Performance benchmarks
-- **Difficulty**: ⭐⭐⭐⭐ (Full system test)
-- **Effort**: 24 hours
-- **Dependencies**: FFI.G1
-
-#### INT.G2: Replay Verification ⭐⭐⭐
-- [ ] Test replay with intent metadata
-- [ ] Verify intent reconstruction
-- [ ] Test partial replay with intent filtering
-- **Difficulty**: ⭐⭐⭐ (Replay + metadata)
-- **Effort**: 16 hours
-- **Dependencies**: INT.G1
-
-#### DOC.G1: QMU API Documentation ⭐
-- [ ] Document Query operations (read-only)
-- [ ] Document Mutate operations (delta application)
-- [ ] Document Upsert operations (conditional writes)
-- [ ] Add API examples
-- **Difficulty**: ⭐ (Documentation only)
-- **Effort**: 8 hours
-- **Dependencies**: INT.G1
-
-### Dependency Graph (DAG)
+## DAG Structure
 
 ```
-[L7.G1: UpsertPlan]          [L1.G1: TLog Schema]     [L1.G2: Validation]
-       |                            |                          |
-       +------------+---------------+                          |
-                    ↓                                          |
-              [L7.G2: Lowering]                                |
-                    |                                          |
-                    +-------------------+----------------------+
-                                        ↓
-                              [FFI.G1: Bridge]
-                                        ↓
-                              [INT.G1: Integration]
-                                        ↓
-                        +---------------+---------------+
-                        ↓                               ↓
-              [INT.G2: Replay]                [DOC.G1: QMU Docs]
+Benchmarking → GPU/Performance → Reliability → Observability → Documentation → Examples
 ```
 
-### Phase 5 Timeline
+## Tasks
 
-| Week | Tasks | Hours | Deliverables |
-|------|-------|-------|--------------|
-| 21 | L7.G1, L1.G1 | 24 | UpsertPlan + TLog schema |
-| 22 | L7.G2, L1.G2 | 36 | Lowering + validation |
-| 23 | FFI.G1 | 32 | FFI bridge complete |
-| 24 | INT.G1 | 24 | End-to-end tests passing |
-| 25 | INT.G2 | 16 | Replay verification |
-| 26 | DOC.G1 | 8 | QMU documentation |
+### Benchmarking (P1) - Week 27
+- [ ] Allocator performance
+- [ ] Semiring operations
+- [ ] Graph traversal
+- [ ] Propagation performance
+- [ ] Full system benchmarks
 
-**Total Effort**: 140 hours (3.5 weeks @ 40 hrs/week)
+### GPU Optimization (P1) - Weeks 28-29
+- [ ] Persistent kernels
+- [ ] GPU memory pool
+- [ ] Multi-GPU NCCL
+- [ ] Prefetch tuning
+- [ ] CUDA graph capture
 
-### Success Metrics
+### Performance (P1) - Weeks 30-31
+- [ ] SIMD delta merge
+- [ ] Lock-free allocator
+- [ ] Zero-copy FFI
+- [ ] Delta compression
+- [ ] Batch propagation
 
-- ✓ UpsertPlan defined with all required fields
-- ✓ Intent lowering produces valid delta specs
-- ✓ TLog persists and replays intent metadata
-- ✓ Delta validation prevents invalid operations
-- ✓ All 10 CLAUDE.md non-negotiable rules verified
-- ✓ QMU boundaries documented and tested
+### Reliability (P1) - Week 32
+- [ ] Error recovery
+- [ ] GPU fallback
+- [ ] Memory pressure handling
+- [ ] Checkpoint validation
+- [ ] Transaction isolation
 
-### Benchmarking (P1)
-- [ ] L0.9: Allocator performance
-- [ ] L2.11: Semiring operations
-- [ ] L3.9: Graph traversal
-- [ ] L4.9: Propagation performance
-- [ ] L5.10: Cache hit improvement
-- [ ] L6.9: Utility computation validation
-- [ ] L7.8: Attractor convergence validation
-- [ ] L8.11: Inference validation
-- [ ] L9.13: MCTS performance
-- [ ] P4.2: Full system performance benchmarks
+### Observability (P1) - Week 33
+- [ ] Prometheus exporter
+- [ ] Regression test CI
+- [ ] Flamegraph integration
+- [ ] Memory heatmaps
+- [ ] Trace visualization
 
-### Optimization (P2)
-- [ ] L4.10: Fast-path detection optimization
-- [ ] L12.7: Example applications
-- [ ] P4.4: Polish and optimization
+### Documentation (P1) - Weeks 34-35
+- [ ] Layer 0-4 API docs
+- [ ] Layer 5-7 API docs
+- [ ] Layer 8-9 API docs
+- [ ] Complete API reference
+
+### Examples (P2) - Week 36
+- [ ] Compiler IR example
+- [ ] Game AI example
+- [ ] Finance example

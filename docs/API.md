@@ -1,5 +1,7 @@
 # MMSB API Reference
 
+> Need Query / Mutate / Upsert semantics? See `docs/QMU_API.md` for the dedicated guide and intent → delta architecture diagram.
+
 All functions operate on declarative deltas and page-aligned state. Every entry respects the MMSB semiring constraint `state × delta → state′` (idempotent, replayable, pure). Julia snippets assume `using MMSB`.
 
 ## Configuration

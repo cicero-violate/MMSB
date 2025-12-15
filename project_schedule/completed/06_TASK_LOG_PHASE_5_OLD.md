@@ -118,24 +118,24 @@
 
 | Date | Task                        |    ID | Hours | Status | Notes               |
 |------+-----------------------------+-------+-------+--------+---------------------|
-| -    | Document Query operations   | 5.8.1 |     2 | ☐      | Read-only semantics |
-| -    | Document Mutate operations  | 5.8.2 |     2 | ☐      | Delta application   |
-| -    | Document Upsert operations  | 5.8.3 |     2 | ☐      | Conditional writes  |
-| -    | Add API usage examples      | 5.8.4 |     1 | ☐      | Code snippets       |
-| -    | Create architecture diagram | 5.8.5 |     1 | ☐      | Intent → Delta flow |
+| -    | Document Query operations   | 5.8.1 |     2 | ✓      | Read-only semantics |
+| -    | Document Mutate operations  | 5.8.2 |     2 | ✓      | Delta application   |
+| -    | Document Upsert operations  | 5.8.3 |     2 | ✓      | Conditional writes  |
+| -    | Add API usage examples      | 5.8.4 |     1 | ✓      | Code snippets       |
+| -    | Create architecture diagram | 5.8.5 |     1 | ✓      | Intent → Delta flow |
 
 ### VERIFY: CLAUDE.md Compliance Check
 
 | Date | Task                                |    ID | Hours | Status | Notes                          |
 |------+-------------------------------------+-------+-------+--------+--------------------------------|
-| -    | Verify Rule 1: Rust executes only   | 5.9.1 | -     | ☐      | No reasoning in Rust           |
-| -    | Verify Rule 2: Julia reasons only   | 5.9.2 | -     | ☐      | No direct mutation in Julia    |
-| -    | Verify Rule 3: Deltas in L1         | 5.9.3 | -     | ☐      | All state changes via deltas   |
-| -    | Verify Rule 4: Intent ≠ execution   | 5.9.4 | -     | ☐      | Intent persisted, not executed |
-| -    | Verify Rule 5: Deterministic replay | 5.9.5 | -     | ☐      | Full replay works              |
-| -    | Verify Rule 6: No learning L0-L5    | 5.9.6 | -     | ☐      | No backprop in core            |
-| -    | Verify Rule 7: No cognition <L6     | 5.9.7 | -     | ☐      | Reasoning only in L8+          |
-| -    | Create compliance report            | 5.9.8 | -     | ☐      | Document verification          |
+| -    | Verify Rule 1: Rust executes only   | 5.9.1 | -     | ✓      | No reasoning in Rust           |
+| -    | Verify Rule 2: Julia reasons only   | 5.9.2 | -     | ✓      | No direct mutation in Julia    |
+| -    | Verify Rule 3: Deltas in L1         | 5.9.3 | -     | ✓      | All state changes via deltas   |
+| -    | Verify Rule 4: Intent ≠ execution   | 5.9.4 | -     | ✓      | Intent persisted, not executed |
+| -    | Verify Rule 5: Deterministic replay | 5.9.5 | -     | ✓      | Full replay works              |
+| -    | Verify Rule 6: No learning L0-L5    | 5.9.6 | -     | ✓      | No backprop in core            |
+| -    | Verify Rule 7: No cognition <L6     | 5.9.7 | -     | ✓      | Reasoning only in L8+          |
+| -    | Create compliance report            | 5.9.8 | -     | ✓      | Document verification          |
 
 **Week 26 Total**: 8 hours
 **Week 26 Deliverables**: QMU docs + compliance report
@@ -177,66 +177,66 @@
 
 | Date | Task                          | ID  | Hours | Status | Notes                                   |
 |------+-------------------------------+-----+-------+--------+-----------------------------------------|
-| -    | Setup BenchmarkTools.jl suite | B.1 | -     | ☐      | Measure propagation latency, throughput |
-| -    | Profile allocator hotspots    | B.2 | -     | ☐      | Find lock contention, cache misses      |
-| -    | End-to-end pipeline benchmark | B.3 | -     | ☐      | Baseline for optimization tracking      |
+| -    | Setup BenchmarkTools.jl suite | B.1 | -     | ✗      | Measure propagation latency, throughput |
+| -    | Profile allocator hotspots    | B.2 | -     | ✗      | Find lock contention, cache misses      |
+| -    | End-to-end pipeline benchmark | B.3 | -     | ✗      | Baseline for optimization tracking      |
 
 ## GPU Optimization (Weeks 2-3)
 
 | Date | Task                             | ID  | Hours | Status | Notes                                  |
 |------+----------------------------------+-----+-------+--------+----------------------------------------|
-| -    | Persistent kernel implementation | G.1 | -     | ☐      | Keep GPU alive, reduce launch overhead |
-| -    | GPU memory pool                  | G.2 | -     | ☐      | Reuse allocations, reduce cudaMalloc   |
-| -    | Multi-GPU NCCL integration       | G.3 | -     | ☐      | Scale across GPUs                      |
-| -    | Prefetch tuning                  | G.4 | -     | ☐      | Optimize unified memory migration      |
-| -    | CUDA graph capture               | G.5 | -     | ☐      | Amortize kernel launches               |
+| -    | Persistent kernel implementation | G.1 | -     | ✗      | Keep GPU alive, reduce launch overhead |
+| -    | GPU memory pool                  | G.2 | -     | ✗      | Reuse allocations, reduce cudaMalloc   |
+| -    | Multi-GPU NCCL integration       | G.3 | -     | ✗      | Scale across GPUs                      |
+| -    | Prefetch tuning                  | G.4 | -     | ✗      | Optimize unified memory migration      |
+| -    | CUDA graph capture               | G.5 | -     | ✗      | Amortize kernel launches               |
 
 ## Performance (Weeks 4-5)
 
 | Date | Task                     | ID  | Hours | Status | Notes                            |
 |------+--------------------------+-----+-------+--------+----------------------------------|
-| -    | SIMD delta merge         | P.1 | -     | ☐      | AVX2/AVX-512 vectorization       |
-| -    | Lock-free allocator path | P.2 | -     | ☐      | Atomic fast path for small pages |
-| -    | Zero-copy FFI            | P.3 | -     | ☐      | Direct pointer passing           |
-| -    | Delta compression        | P.4 | -     | ☐      | RLE/sparse encoding              |
-| -    | Batch propagation API    | P.5 | -     | ☐      | Group operations                 |
+| -    | SIMD delta merge         | P.1 | -     | ✗      | AVX2/AVX-512 vectorization       |
+| -    | Lock-free allocator path | P.2 | -     | ✗      | Atomic fast path for small pages |
+| -    | Zero-copy FFI            | P.3 | -     | ✗      | Direct pointer passing           |
+| -    | Delta compression        | P.4 | -     | ✗      | RLE/sparse encoding              |
+| -    | Batch propagation API    | P.5 | -     | ✗      | Group operations                 |
 
 ## Reliability (Week 6)
 
 | Date | Task                     | ID  | Hours | Status | Notes                     |
 |------+--------------------------+-----+-------+--------+---------------------------|
-| -    | Error recovery framework | R.1 | -     | ☐      | Consistent error handling |
-| -    | GPU fallback mechanism   | R.2 | -     | ☐      | CPU-only mode             |
-| -    | Memory pressure handling | R.3 | -     | ☐      | Eviction policies         |
-| -    | Checkpoint validation    | R.4 | -     | ☐      | CRC32/SHA checksums       |
-| -    | Transaction isolation    | R.5 | -     | ☐      | ACID guarantees           |
+| -    | Error recovery framework | R.1 | -     | ✗      | Consistent error handling |
+| -    | GPU fallback mechanism   | R.2 | -     | ✗      | CPU-only mode             |
+| -    | Memory pressure handling | R.3 | -     | ✗      | Eviction policies         |
+| -    | Checkpoint validation    | R.4 | -     | ✗      | CRC32/SHA checksums       |
+| -    | Transaction isolation    | R.5 | -     | ✗      | ACID guarantees           |
 
 ## Observability (Week 7)
 
 | Date | Task                   | ID  | Hours | Status | Notes                          |
 |------+------------------------+-----+-------+--------+--------------------------------|
-| -    | Prometheus exporter    | O.1 | -     | ☐      | Metrics endpoint               |
-| -    | Regression test CI     | O.2 | -     | ☐      | Prevent perf regressions       |
-| -    | Flamegraph integration | O.3 | -     | ☐      | Profile.jl + FlameGraphs.jl    |
-| -    | Memory heatmaps        | O.4 | -     | ☐      | Visualize page access patterns |
-| -    | Trace visualization    | O.5 | -     | ☐      | DAG propagation replay         |
+| -    | Prometheus exporter    | O.1 | -     | ✗      | Metrics endpoint               |
+| -    | Regression test CI     | O.2 | -     | ✗      | Prevent perf regressions       |
+| -    | Flamegraph integration | O.3 | -     | ✗      | Profile.jl + FlameGraphs.jl    |
+| -    | Memory heatmaps        | O.4 | -     | ✗      | Visualize page access patterns |
+| -    | Trace visualization    | O.5 | -     | ✗      | DAG propagation replay         |
 
 ## Documentation (Ongoing)
 
 | Date | Task               | ID  | Hours | Status | Notes                       |
 |------+--------------------+-----+-------+--------+-----------------------------|
-| -    | Layer 0-4 API docs | D.1 | -     | ☐      | Rust/Julia docstrings       |
-| -    | Layer 5-7 API docs | D.2 | -     | ☐      | Self-optimization system    |
-| -    | Layer 8-9 API docs | D.3 | -     | ☐      | Reasoning/planning          |
-| -    | Full API reference | D.4 | -     | ☐      | Generate with Documenter.jl |
+| -    | Layer 0-4 API docs | D.1 | -     | ✗      | Rust/Julia docstrings       |
+| -    | Layer 5-7 API docs | D.2 | -     | ✗      | Self-optimization system    |
+| -    | Layer 8-9 API docs | D.3 | -     | ✗      | Reasoning/planning          |
+| -    | Full API reference | D.4 | -     | ✗      | Generate with Documenter.jl |
 
 ## Examples (Ongoing)
 
 | Date | Task                | ID  | Hours | Status | Notes                     |
 |------+---------------------+-----+-------+--------+---------------------------|
-| -    | Compiler IR example | E.1 | -     | ☐      | LLVM/MLIR integration     |
-| -    | Game AI example     | E.2 | -     | ☐      | Real-time decision making |
-| -    | Finance example     | E.3 | -     | ☐      | Portfolio optimization    |
+| -    | Compiler IR example | E.1 | -     | ✗      | LLVM/MLIR integration     |
+| -    | Game AI example     | E.2 | -     | ✗      | Real-time decision making |
+| -    | Finance example     | E.3 | -     | ✗      | Portfolio optimization    |
 
 ## Weekly Summary Template
 
