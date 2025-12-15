@@ -41,22 +41,63 @@
 - fn `insert` @ src/00_physical/device_registry.rs:12
 - fn `remove` @ src/00_physical/device_registry.rs:16
 - fn `len` @ src/00_physical/device_registry.rs:20
+- fn `cudaMalloc` @ src/00_physical/gpu_memory_pool.rs:6
+- fn `cudaFree` @ src/00_physical/gpu_memory_pool.rs:7
+- struct `GPUMemoryPool` @ src/00_physical/gpu_memory_pool.rs:27
+- struct `PoolStats` @ src/00_physical/gpu_memory_pool.rs:33
+- impl `GPUMemoryPool` @ src/00_physical/gpu_memory_pool.rs:42
+- fn `new` @ src/00_physical/gpu_memory_pool.rs:43
+- fn `select_slab_size` @ src/00_physical/gpu_memory_pool.rs:59
+- fn `allocate` @ src/00_physical/gpu_memory_pool.rs:66
+- fn `deallocate` @ src/00_physical/gpu_memory_pool.rs:97
+- fn `get_stats` @ src/00_physical/gpu_memory_pool.rs:111
+- fn `clear` @ src/00_physical/gpu_memory_pool.rs:115
+- impl `Drop` @ src/00_physical/gpu_memory_pool.rs:128
+- fn `drop` @ src/00_physical/gpu_memory_pool.rs:129
 - struct `HostDeviceSync` @ src/00_physical/host_device_sync.rs:4
 - impl `HostDeviceSync` @ src/00_physical/host_device_sync.rs:8
 - fn `enqueue` @ src/00_physical/host_device_sync.rs:9
 - fn `drain` @ src/00_physical/host_device_sync.rs:13
+- struct `LockFreeAllocator` @ src/00_physical/lockfree_allocator.rs:13
+- impl `LockFreeAllocator` @ src/00_physical/lockfree_allocator.rs:20
+- fn `new` @ src/00_physical/lockfree_allocator.rs:21
+- fn `try_allocate_small` @ src/00_physical/lockfree_allocator.rs:30
+- fn `deallocate_small` @ src/00_physical/lockfree_allocator.rs:66
+- fn `get_stats` @ src/00_physical/lockfree_allocator.rs:100
+- fn `clear` @ src/00_physical/lockfree_allocator.rs:108
+- impl `Drop` @ src/00_physical/lockfree_allocator.rs:123
+- fn `drop` @ src/00_physical/lockfree_allocator.rs:124
+- fn `ncclGetUniqueId` @ src/00_physical/nccl_integration.rs:32
+- fn `ncclCommInitRank` @ src/00_physical/nccl_integration.rs:33
+- fn `ncclCommDestroy` @ src/00_physical/nccl_integration.rs:34
+- fn `ncclAllReduce` @ src/00_physical/nccl_integration.rs:35
+- fn `ncclAllGather` @ src/00_physical/nccl_integration.rs:44
+- struct `NCCLCommunicator` @ src/00_physical/nccl_integration.rs:55
+- struct `NCCLContext` @ src/00_physical/nccl_integration.rs:62
+- impl `NCCLContext` @ src/00_physical/nccl_integration.rs:67
+- fn `new` @ src/00_physical/nccl_integration.rs:68
+- fn `init_communicator` @ src/00_physical/nccl_integration.rs:82
+- fn `all_reduce` @ src/00_physical/nccl_integration.rs:102
+- fn `all_gather` @ src/00_physical/nccl_integration.rs:122
+- impl `Drop` @ src/00_physical/nccl_integration.rs:142
+- fn `drop` @ src/00_physical/nccl_integration.rs:143
 
 ### Julia
 
-- fn `sync_page_to_gpu` @ src/00_physical/DeviceSync.jl:36
-- fn `sync_page_to_cpu` @ src/00_physical/DeviceSync.jl:67
-- fn `sync_bidirectional` @ src/00_physical/DeviceSync.jl:101
-- fn `ensure_page_on_device` @ src/00_physical/DeviceSync.jl:131
-- fn `async_sync_page_to_gpu` @ src/00_physical/DeviceSync.jl:159
-- fn `batch_sync_to_gpu` @ src/00_physical/DeviceSync.jl:190
-- fn `batch_sync_to_cpu` @ src/00_physical/DeviceSync.jl:217
-- fn `get_sync_statistics` @ src/00_physical/DeviceSync.jl:246
-- fn `prefetch_pages_to_gpu` @ src/00_physical/DeviceSync.jl:288
+- struct `CPUPropagationQueue` @ src/00_physical/DeviceFallback.jl:6
+- struct `GPUCommandBuffer` @ src/00_physical/DeviceSync.jl:21
+- fn `create_gpu_command_buffer` @ src/00_physical/DeviceSync.jl:38
+- fn `enqueue_propagation_command` @ src/00_physical/DeviceSync.jl:60
+- fn `wait_gpu_queue` @ src/00_physical/DeviceSync.jl:72
+- fn `sync_page_to_gpu` @ src/00_physical/DeviceSync.jl:99
+- fn `sync_page_to_cpu` @ src/00_physical/DeviceSync.jl:130
+- fn `sync_bidirectional` @ src/00_physical/DeviceSync.jl:164
+- fn `ensure_page_on_device` @ src/00_physical/DeviceSync.jl:194
+- fn `async_sync_page_to_gpu` @ src/00_physical/DeviceSync.jl:222
+- fn `batch_sync_to_gpu` @ src/00_physical/DeviceSync.jl:253
+- fn `batch_sync_to_cpu` @ src/00_physical/DeviceSync.jl:280
+- fn `get_sync_statistics` @ src/00_physical/DeviceSync.jl:309
+- fn `prefetch_pages_to_gpu` @ src/00_physical/DeviceSync.jl:351
 - fn `delta_merge_kernel` @ src/00_physical/GPUKernels.jl:33
 - fn `launch_delta_merge` @ src/00_physical/GPUKernels.jl:62
 - fn `page_copy_kernel` @ src/00_physical/GPUKernels.jl:83
@@ -74,14 +115,20 @@
 - fn `resize_page` @ src/00_physical/PageAllocator.jl:86
 - fn `allocate_page_arrays` @ src/00_physical/PageAllocator.jl:99
 - fn `clone_page` @ src/00_physical/PageAllocator.jl:106
-- fn `is_unified_memory_available` @ src/00_physical/UnifiedMemory.jl:28
-- fn `create_unified_page` @ src/00_physical/UnifiedMemory.jl:57
-- fn `prefetch_unified_to_gpu` @ src/00_physical/UnifiedMemory.jl:75
-- fn `prefetch_unified_to_cpu` @ src/00_physical/UnifiedMemory.jl:93
-- fn `set_preferred_location` @ src/00_physical/UnifiedMemory.jl:115
-- fn `convert_to_unified` @ src/00_physical/UnifiedMemory.jl:139
-- fn `enable_read_mostly_hint` @ src/00_physical/UnifiedMemory.jl:168
-- fn `disable_read_mostly_hint` @ src/00_physical/UnifiedMemory.jl:182
+- struct `GPUMemoryPool` @ src/00_physical/UnifiedMemory.jl:22
+- fn `GPUMemoryPool` @ src/00_physical/UnifiedMemory.jl:39
+- fn `allocate_from_pool` @ src/00_physical/UnifiedMemory.jl:54
+- fn `deallocate_to_pool` @ src/00_physical/UnifiedMemory.jl:66
+- fn `get_pool_stats` @ src/00_physical/UnifiedMemory.jl:76
+- fn `is_unified_memory_available` @ src/00_physical/UnifiedMemory.jl:99
+- fn `create_unified_page` @ src/00_physical/UnifiedMemory.jl:128
+- fn `prefetch_unified_to_gpu` @ src/00_physical/UnifiedMemory.jl:146
+- fn `prefetch_unified_to_cpu` @ src/00_physical/UnifiedMemory.jl:168
+- fn `adaptive_prefetch_distance` @ src/00_physical/UnifiedMemory.jl:194
+- fn `set_preferred_location` @ src/00_physical/UnifiedMemory.jl:225
+- fn `convert_to_unified` @ src/00_physical/UnifiedMemory.jl:249
+- fn `enable_read_mostly_hint` @ src/00_physical/UnifiedMemory.jl:278
+- fn `disable_read_mostly_hint` @ src/00_physical/UnifiedMemory.jl:292
 
 ## 01_page
 
@@ -99,7 +146,8 @@
 - fn `to_dense` @ src/01_page/delta.rs:122
 - fn `apply_to` @ src/01_page/delta.rs:138
 - fn `now_ns` @ src/01_page/delta.rs:171
-- fn `merge_deltas` @ src/01_page/delta_merge.rs:3
+- fn `merge_deltas` @ src/01_page/delta_merge.rs:7
+- fn `merge_dense_simd` @ src/01_page/delta_merge.rs:124
 - fn `validate_delta` @ src/01_page/delta_validation.rs:4
 - struct `Epoch` @ src/01_page/epoch.rs:6
 - impl `Epoch` @ src/01_page/epoch.rs:8
@@ -167,7 +215,13 @@
 - fn `serialize_frame` @ src/01_page/tlog.rs:135
 - fn `read_frame` @ src/01_page/tlog.rs:167
 - fn `validate_header` @ src/01_page/tlog.rs:235
-- fn `compact` @ src/01_page/tlog_compression.rs:3
+- fn `encode_rle` @ src/01_page/tlog_compression.rs:4
+- fn `decode_rle` @ src/01_page/tlog_compression.rs:26
+- fn `bitpack_mask` @ src/01_page/tlog_compression.rs:43
+- fn `bitunpack_mask` @ src/01_page/tlog_compression.rs:55
+- struct `CompressionStats` @ src/01_page/tlog_compression.rs:72
+- fn `compress_delta_mask` @ src/01_page/tlog_compression.rs:78
+- fn `compact` @ src/01_page/tlog_compression.rs:96
 - fn `apply_log` @ src/01_page/tlog_replay.rs:3
 - fn `read_log` @ src/01_page/tlog_serialization.rs:6
 
@@ -186,16 +240,17 @@
 - fn `_encode_metadata_value` @ src/01_page/Delta.jl:136
 - fn `_encode_metadata_dict` @ src/01_page/Delta.jl:160
 - fn `_escape_metadata_string` @ src/01_page/Delta.jl:169
-- struct `_MetadataParser` @ src/01_page/Delta.jl:189
-- fn `_decode_metadata` @ src/01_page/Delta.jl:194
-- fn `_parse_metadata_value` @ src/01_page/Delta.jl:201
-- fn `_parse_metadata_object` @ src/01_page/Delta.jl:224
-- fn `_parse_metadata_array` @ src/01_page/Delta.jl:249
-- fn `_parse_metadata_string` @ src/01_page/Delta.jl:270
-- fn `_parse_metadata_number` @ src/01_page/Delta.jl:299
-- fn `_skip_ws` @ src/01_page/Delta.jl:318
-- fn `_consume` @ src/01_page/Delta.jl:324
-- fn `_peek` @ src/01_page/Delta.jl:330
+- fn `merge_deltas_simd` @ src/01_page/Delta.jl:194
+- struct `_MetadataParser` @ src/01_page/Delta.jl:219
+- fn `_decode_metadata` @ src/01_page/Delta.jl:224
+- fn `_parse_metadata_value` @ src/01_page/Delta.jl:231
+- fn `_parse_metadata_object` @ src/01_page/Delta.jl:254
+- fn `_parse_metadata_array` @ src/01_page/Delta.jl:279
+- fn `_parse_metadata_string` @ src/01_page/Delta.jl:300
+- fn `_parse_metadata_number` @ src/01_page/Delta.jl:329
+- fn `_skip_ws` @ src/01_page/Delta.jl:348
+- fn `_consume` @ src/01_page/Delta.jl:354
+- fn `_peek` @ src/01_page/Delta.jl:360
 - struct `Page` @ src/01_page/Page.jl:17
 - fn `Page` @ src/01_page/Page.jl:27
 - fn `initialize` @ src/01_page/Page.jl:46
@@ -216,17 +271,18 @@
 - fn `verify_state_consistency` @ src/01_page/ReplayEngine.jl:115
 - fn `replay_with_predicate` @ src/01_page/ReplayEngine.jl:129
 - fn `incremental_replay` @ src/01_page/ReplayEngine.jl:137
-- fn `_with_rust_errors` @ src/01_page/TLog.jl:14
-- fn `append_to_log` @ src/01_page/TLog.jl:25
-- fn `log_summary` @ src/01_page/TLog.jl:34
-- fn `_iterate_log` @ src/01_page/TLog.jl:42
-- fn `query_log` @ src/01_page/TLog.jl:52
-- fn `get_deltas_in_range` @ src/01_page/TLog.jl:83
-- fn `compute_log_statistics` @ src/01_page/TLog.jl:91
-- fn `replay_log` @ src/01_page/TLog.jl:100
-- fn `checkpoint_log` @ src/01_page/TLog.jl:106
-- fn `load_checkpoint` @ src/01_page/TLog.jl:114
-- fn `_refresh_pages` @ src/01_page/TLog.jl:123
+- fn `compress_delta_mask` @ src/01_page/TLog.jl:19
+- fn `_with_rust_errors` @ src/01_page/TLog.jl:28
+- fn `append_to_log` @ src/01_page/TLog.jl:39
+- fn `log_summary` @ src/01_page/TLog.jl:48
+- fn `_iterate_log` @ src/01_page/TLog.jl:56
+- fn `query_log` @ src/01_page/TLog.jl:66
+- fn `get_deltas_in_range` @ src/01_page/TLog.jl:97
+- fn `compute_log_statistics` @ src/01_page/TLog.jl:105
+- fn `replay_log` @ src/01_page/TLog.jl:114
+- fn `checkpoint_log` @ src/01_page/TLog.jl:120
+- fn `load_checkpoint` @ src/01_page/TLog.jl:128
+- fn `_refresh_pages` @ src/01_page/TLog.jl:137
 
 ## 01_types
 
@@ -279,9 +335,16 @@
 - fn `batch_route_deltas` @ src/02_semiring/DeltaRouter.jl:71
 - fn `propagate_change` @ src/02_semiring/DeltaRouter.jl:89
 - fn `propagate_change` @ src/02_semiring/DeltaRouter.jl:94
-- struct `SemiringOps` @ src/02_semiring/Semiring.jl:5
-- fn `tropical_semiring` @ src/02_semiring/Semiring.jl:12
-- fn `boolean_semiring` @ src/02_semiring/Semiring.jl:21
+- struct `SemiringOps` @ src/02_semiring/Semiring.jl:9
+- fn `tropical_semiring` @ src/02_semiring/Semiring.jl:16
+- fn `boolean_semiring` @ src/02_semiring/Semiring.jl:25
+- fn `_bool_buf` @ src/02_semiring/Semiring.jl:36
+- fn `tropical_fold_add` @ src/02_semiring/Semiring.jl:49
+- fn `tropical_fold_mul` @ src/02_semiring/Semiring.jl:57
+- fn `tropical_accumulate` @ src/02_semiring/Semiring.jl:65
+- fn `boolean_fold_add` @ src/02_semiring/Semiring.jl:72
+- fn `boolean_fold_mul` @ src/02_semiring/Semiring.jl:80
+- fn `boolean_accumulate` @ src/02_semiring/Semiring.jl:88
 - struct `SemiringConfigOptions` @ src/02_semiring/SemiringConfig.jl:5
 - fn `build_semiring` @ src/02_semiring/SemiringConfig.jl:9
 
@@ -351,34 +414,45 @@
 - fn `enqueue` @ src/04_propagation/propagation_engine.rs:29
 - fn `drain` @ src/04_propagation/propagation_engine.rs:33
 - fn `passthrough` @ src/04_propagation/propagation_fastpath.rs:4
-- struct `PropagationQueue` @ src/04_propagation/propagation_queue.rs:6
-- impl `PropagationQueue` @ src/04_propagation/propagation_queue.rs:10
-- fn `push` @ src/04_propagation/propagation_queue.rs:11
-- fn `pop` @ src/04_propagation/propagation_queue.rs:15
+- struct `PropagationQueue` @ src/04_propagation/propagation_queue.rs:8
+- impl `PropagationQueue` @ src/04_propagation/propagation_queue.rs:13
+- fn `new` @ src/04_propagation/propagation_queue.rs:14
+- fn `push` @ src/04_propagation/propagation_queue.rs:21
+- fn `pop` @ src/04_propagation/propagation_queue.rs:26
+- fn `push_batch` @ src/04_propagation/propagation_queue.rs:34
+- fn `drain_batch` @ src/04_propagation/propagation_queue.rs:40
+- fn `is_empty` @ src/04_propagation/propagation_queue.rs:48
+- fn `len` @ src/04_propagation/propagation_queue.rs:52
 - fn `enqueue_sparse` @ src/04_propagation/sparse_message_passing.rs:5
 
 ### Julia
 
-- struct `PropagationQueue` @ src/04_propagation/PropagationEngine.jl:31
-- fn `_buffer` @ src/04_propagation/PropagationEngine.jl:41
-- fn `register_recompute_fn` @ src/04_propagation/PropagationEngine.jl:53
-- fn `register_passthrough_recompute` @ src/04_propagation/PropagationEngine.jl:66
-- fn `queue_recomputation` @ src/04_propagation/PropagationEngine.jl:80
-- fn `propagate_change` @ src/04_propagation/PropagationEngine.jl:93
-- fn `propagate_change` @ src/04_propagation/PropagationEngine.jl:98
-- fn `_aggregate_children` @ src/04_propagation/PropagationEngine.jl:108
-- fn `_execute_command_buffer` @ src/04_propagation/PropagationEngine.jl:121
-- fn `_apply_edges` @ src/04_propagation/PropagationEngine.jl:129
-- fn `_handle_data_dependency` @ src/04_propagation/PropagationEngine.jl:142
-- fn `_collect_descendants` @ src/04_propagation/PropagationEngine.jl:155
-- fn `schedule_propagation` @ src/04_propagation/PropagationEngine.jl:175
-- fn `execute_propagation` @ src/04_propagation/PropagationEngine.jl:191
-- fn `recompute_page` @ src/04_propagation/PropagationEngine.jl:205
-- fn `mark_page_stale` @ src/04_propagation/PropagationEngine.jl:229
-- fn `schedule_gpu_sync` @ src/04_propagation/PropagationEngine.jl:240
-- fn `invalidate_compilation` @ src/04_propagation/PropagationEngine.jl:250
-- fn `topological_order_subset` @ src/04_propagation/PropagationEngine.jl:263
+- struct `CUDAGraphState` @ src/04_propagation/PropagationEngine.jl:34
+- struct `PropagationQueue` @ src/04_propagation/PropagationEngine.jl:43
+- fn `enable_graph_capture` @ src/04_propagation/PropagationEngine.jl:56
+- fn `disable_graph_capture` @ src/04_propagation/PropagationEngine.jl:68
+- fn `replay_cuda_graph` @ src/04_propagation/PropagationEngine.jl:89
+- fn `batch_route_deltas` @ src/04_propagation/PropagationEngine.jl:110
+- fn `_buffer` @ src/04_propagation/PropagationEngine.jl:145
+- fn `register_recompute_fn` @ src/04_propagation/PropagationEngine.jl:157
+- fn `register_passthrough_recompute` @ src/04_propagation/PropagationEngine.jl:170
+- fn `queue_recomputation` @ src/04_propagation/PropagationEngine.jl:184
+- fn `propagate_change` @ src/04_propagation/PropagationEngine.jl:197
+- fn `propagate_change` @ src/04_propagation/PropagationEngine.jl:202
+- fn `_aggregate_children` @ src/04_propagation/PropagationEngine.jl:212
+- fn `_execute_command_buffer` @ src/04_propagation/PropagationEngine.jl:225
+- fn `_apply_edges` @ src/04_propagation/PropagationEngine.jl:233
+- fn `_handle_data_dependency` @ src/04_propagation/PropagationEngine.jl:246
+- fn `_collect_descendants` @ src/04_propagation/PropagationEngine.jl:259
+- fn `schedule_propagation` @ src/04_propagation/PropagationEngine.jl:279
+- fn `execute_propagation` @ src/04_propagation/PropagationEngine.jl:295
+- fn `recompute_page` @ src/04_propagation/PropagationEngine.jl:309
+- fn `mark_page_stale` @ src/04_propagation/PropagationEngine.jl:333
+- fn `schedule_gpu_sync` @ src/04_propagation/PropagationEngine.jl:344
+- fn `invalidate_compilation` @ src/04_propagation/PropagationEngine.jl:354
+- fn `topological_order_subset` @ src/04_propagation/PropagationEngine.jl:367
 - fn `schedule` @ src/04_propagation/PropagationScheduler.jl:8
+- struct `Transaction` @ src/04_propagation/TransactionIsolation.jl:5
 
 ## 05_adaptive
 
@@ -432,6 +506,10 @@
 
 ### Rust
 
+- struct `CpuFeatures` @ src/06_utility/cpu_features.rs:4
+- impl `CpuFeatures` @ src/06_utility/cpu_features.rs:13
+- fn `detect` @ src/06_utility/cpu_features.rs:14
+- fn `get` @ src/06_utility/cpu_features.rs:36
 - struct `Telemetry` @ src/06_utility/telemetry.rs:10
 - struct `TelemetrySnapshot` @ src/06_utility/telemetry.rs:29
 - impl `Telemetry` @ src/06_utility/telemetry.rs:39
@@ -457,6 +535,10 @@
 - struct `WeightedCost` @ src/06_utility/CostAggregation.jl:16
 - fn `aggregate_costs` @ src/06_utility/CostAggregation.jl:27
 - fn `normalize_costs` @ src/06_utility/CostAggregation.jl:37
+- struct `RetryPolicy` @ src/06_utility/ErrorRecovery.jl:5
+- fn `retry_with_backoff` @ src/06_utility/ErrorRecovery.jl:15
+- struct `LRUTracker` @ src/06_utility/MemoryPressure.jl:5
+- fn `evict_lru_pages` @ src/06_utility/MemoryPressure.jl:13
 - struct `MMSBStats` @ src/06_utility/Monitoring.jl:17
 - fn `track_delta_latency` @ src/06_utility/Monitoring.jl:40
 - fn `track_propagation_latency` @ src/06_utility/Monitoring.jl:45
@@ -720,31 +802,37 @@
 ### Rust
 
 - fn `main` @ build.rs:1
-- struct `PageHandle` @ src/ffi.rs:15
-- impl `PageHandle` @ src/ffi.rs:19
-- fn `null` @ src/ffi.rs:20
-- struct `DeltaHandle` @ src/ffi.rs:29
-- impl `DeltaHandle` @ src/ffi.rs:33
-- fn `null` @ src/ffi.rs:34
-- struct `AllocatorHandle` @ src/ffi.rs:43
-- impl `AllocatorHandle` @ src/ffi.rs:47
-- fn `null` @ src/ffi.rs:48
-- struct `TLogHandle` @ src/ffi.rs:57
-- impl `TLogHandle` @ src/ffi.rs:61
-- fn `null` @ src/ffi.rs:62
-- struct `TLogReaderHandle` @ src/ffi.rs:71
-- impl `TLogReaderHandle` @ src/ffi.rs:75
-- fn `null` @ src/ffi.rs:76
-- fn `set_last_error` @ src/ffi.rs:99
-- fn `log_error_code` @ src/ffi.rs:105
-- struct `TLogSummary` @ src/ffi.rs:125
-- struct `PageInfoABI` @ src/ffi.rs:133
-- struct `EpochABI` @ src/ffi.rs:144
-- impl `From` @ src/ffi.rs:148
-- fn `from` @ src/ffi.rs:149
-- fn `convert_location` @ src/ffi.rs:154
-- fn `mask_from_bytes` @ src/ffi.rs:158
-- fn `vec_from_ptr` @ src/ffi.rs:185
+- struct `PageHandle` @ src/ffi.rs:19
+- impl `PageHandle` @ src/ffi.rs:23
+- fn `null` @ src/ffi.rs:24
+- struct `DeltaHandle` @ src/ffi.rs:33
+- impl `DeltaHandle` @ src/ffi.rs:37
+- fn `null` @ src/ffi.rs:38
+- struct `AllocatorHandle` @ src/ffi.rs:47
+- impl `AllocatorHandle` @ src/ffi.rs:51
+- fn `null` @ src/ffi.rs:52
+- struct `TLogHandle` @ src/ffi.rs:61
+- impl `TLogHandle` @ src/ffi.rs:65
+- fn `null` @ src/ffi.rs:66
+- struct `TLogReaderHandle` @ src/ffi.rs:75
+- impl `TLogReaderHandle` @ src/ffi.rs:79
+- fn `null` @ src/ffi.rs:80
+- impl `MMSBErrorCode` @ src/ffi.rs:104
+- fn `is_retryable` @ src/ffi.rs:105
+- fn `is_fatal` @ src/ffi.rs:113
+- fn `set_last_error` @ src/ffi.rs:127
+- fn `log_error_code` @ src/ffi.rs:133
+- struct `TLogSummary` @ src/ffi.rs:163
+- struct `PageInfoABI` @ src/ffi.rs:171
+- struct `EpochABI` @ src/ffi.rs:182
+- impl `From` @ src/ffi.rs:186
+- fn `from` @ src/ffi.rs:187
+- fn `convert_location` @ src/ffi.rs:192
+- struct `SemiringPairF64` @ src/ffi.rs:198
+- struct `SemiringPairBool` @ src/ffi.rs:205
+- fn `mask_from_bytes` @ src/ffi.rs:210
+- fn `vec_from_ptr` @ src/ffi.rs:237
+- fn `slice_from_ptr` @ src/ffi.rs:244
 - fn `dense_delta` @ tests/delta_validation.rs:3
 - fn `validates_dense_lengths` @ tests/delta_validation.rs:18
 - fn `rejects_mismatched_dense_lengths` @ tests/delta_validation.rs:24
@@ -761,20 +849,26 @@
 
 ### Julia
 
-- fn `_start_state` @ benchmark/benchmarks.jl:37
-- fn `_stop_state` @ benchmark/benchmarks.jl:41
-- fn `_page` @ benchmark/benchmarks.jl:47
-- fn `_populate_pages` @ benchmark/benchmarks.jl:51
-- fn `_seed_pages` @ benchmark/benchmarks.jl:55
-- fn `_replay_sequence` @ benchmark/benchmarks.jl:62
-- fn `_stress_updates` @ benchmark/benchmarks.jl:68
-- fn `_link_chain` @ benchmark/benchmarks.jl:75
-- fn `_checkpoint` @ benchmark/benchmarks.jl:83
-- fn `_trial_to_dict` @ benchmark/benchmarks.jl:251
-- fn `_select_suite` @ benchmark/benchmarks.jl:262
-- fn `_to_mutable` @ benchmark/benchmarks.jl:274
-- fn `run_benchmarks` @ benchmark/benchmarks.jl:284
-- fn `compare_with_baseline` @ benchmark/benchmarks.jl:319
+- fn `_start_state` @ benchmark/benchmarks.jl:43
+- fn `_stop_state` @ benchmark/benchmarks.jl:47
+- fn `_page` @ benchmark/benchmarks.jl:53
+- fn `_populate_pages` @ benchmark/benchmarks.jl:57
+- fn `_seed_pages` @ benchmark/benchmarks.jl:61
+- fn `_replay_sequence` @ benchmark/benchmarks.jl:68
+- fn `_stress_updates` @ benchmark/benchmarks.jl:74
+- fn `_link_chain` @ benchmark/benchmarks.jl:81
+- fn `_checkpoint` @ benchmark/benchmarks.jl:89
+- fn `_measure_ns` @ benchmark/benchmarks.jl:95
+- fn `_graph_fixture` @ benchmark/benchmarks.jl:101
+- fn `_graph_bfs` @ benchmark/benchmarks.jl:117
+- fn `_build_batch_deltas` @ benchmark/benchmarks.jl:131
+- fn `_full_system_benchmark` @ benchmark/benchmarks.jl:141
+- fn `_trial_to_dict` @ benchmark/benchmarks.jl:412
+- fn `_select_suite` @ benchmark/benchmarks.jl:423
+- fn `_collect_instrumentation_report` @ benchmark/benchmarks.jl:435
+- fn `_to_mutable` @ benchmark/benchmarks.jl:472
+- fn `run_benchmarks` @ benchmark/benchmarks.jl:482
+- fn `compare_with_baseline` @ benchmark/benchmarks.jl:518
 - fn `_format_time` @ benchmark/helpers.jl:6
 - fn `_format_bytes` @ benchmark/helpers.jl:18
 - fn `analyze_results` @ benchmark/helpers.jl:30
@@ -795,42 +889,50 @@
 - struct `RustEpoch` @ src/ffi/FFIWrapper.jl:39
 - struct `RustTLogSummary` @ src/ffi/FFIWrapper.jl:43
 - struct `RustPageInfo` @ src/ffi/FFIWrapper.jl:49
-- fn `ensure_rust_artifacts` @ src/ffi/FFIWrapper.jl:60
-- fn `rust_page_read` @ src/ffi/FFIWrapper.jl:66
-- fn `rust_page_epoch` @ src/ffi/FFIWrapper.jl:87
-- fn `rust_page_metadata_blob` @ src/ffi/FFIWrapper.jl:94
-- fn `rust_page_metadata_import` @ src/ffi/FFIWrapper.jl:108
-- fn `rust_page_write_masked` @ src/ffi/FFIWrapper.jl:118
-- fn `rust_delta_new` @ src/ffi/FFIWrapper.jl:130
-- fn `rust_delta_free` @ src/ffi/FFIWrapper.jl:143
-- fn `rust_delta_apply` @ src/ffi/FFIWrapper.jl:150
-- fn `rust_allocator_new` @ src/ffi/FFIWrapper.jl:161
-- fn `rust_allocator_free` @ src/ffi/FFIWrapper.jl:168
-- fn `rust_allocator_allocate` @ src/ffi/FFIWrapper.jl:175
-- fn `rust_allocator_release` @ src/ffi/FFIWrapper.jl:192
-- fn `rust_allocator_get_page` @ src/ffi/FFIWrapper.jl:204
-- fn `rust_tlog_new` @ src/ffi/FFIWrapper.jl:216
-- fn `rust_tlog_free` @ src/ffi/FFIWrapper.jl:223
-- fn `rust_tlog_append` @ src/ffi/FFIWrapper.jl:230
-- fn `rust_tlog_reader_new` @ src/ffi/FFIWrapper.jl:237
-- fn `rust_tlog_reader_free` @ src/ffi/FFIWrapper.jl:244
-- fn `rust_tlog_reader_next` @ src/ffi/FFIWrapper.jl:251
-- fn `rust_tlog_summary` @ src/ffi/FFIWrapper.jl:258
-- fn `rust_delta_id` @ src/ffi/FFIWrapper.jl:273
-- fn `rust_delta_page_id` @ src/ffi/FFIWrapper.jl:280
-- fn `rust_delta_epoch` @ src/ffi/FFIWrapper.jl:287
-- fn `rust_delta_is_sparse` @ src/ffi/FFIWrapper.jl:294
-- fn `rust_delta_timestamp` @ src/ffi/FFIWrapper.jl:301
-- fn `rust_delta_source` @ src/ffi/FFIWrapper.jl:308
-- fn `rust_delta_mask` @ src/ffi/FFIWrapper.jl:324
-- fn `rust_delta_payload` @ src/ffi/FFIWrapper.jl:338
-- fn `rust_delta_set_intent_metadata` @ src/ffi/FFIWrapper.jl:352
-- fn `rust_delta_intent_metadata` @ src/ffi/FFIWrapper.jl:369
-- fn `rust_checkpoint_write` @ src/ffi/FFIWrapper.jl:383
-- fn `rust_checkpoint_load` @ src/ffi/FFIWrapper.jl:392
-- fn `rust_allocator_page_infos` @ src/ffi/FFIWrapper.jl:401
-- fn `rust_allocator_acquire_page` @ src/ffi/FFIWrapper.jl:416
-- fn `rust_get_last_error` @ src/ffi/FFIWrapper.jl:424
+- struct `RustSemiringPairF64` @ src/ffi/FFIWrapper.jl:58
+- struct `RustSemiringPairBool` @ src/ffi/FFIWrapper.jl:63
+- fn `ensure_rust_artifacts` @ src/ffi/FFIWrapper.jl:70
+- fn `rust_page_read` @ src/ffi/FFIWrapper.jl:76
+- fn `rust_page_epoch` @ src/ffi/FFIWrapper.jl:97
+- fn `rust_page_metadata_blob` @ src/ffi/FFIWrapper.jl:104
+- fn `rust_page_metadata_import` @ src/ffi/FFIWrapper.jl:118
+- fn `rust_page_write_masked` @ src/ffi/FFIWrapper.jl:128
+- fn `rust_delta_new` @ src/ffi/FFIWrapper.jl:140
+- fn `rust_delta_free` @ src/ffi/FFIWrapper.jl:153
+- fn `rust_delta_apply` @ src/ffi/FFIWrapper.jl:160
+- fn `rust_allocator_new` @ src/ffi/FFIWrapper.jl:171
+- fn `rust_allocator_free` @ src/ffi/FFIWrapper.jl:178
+- fn `rust_allocator_allocate` @ src/ffi/FFIWrapper.jl:185
+- fn `rust_allocator_release` @ src/ffi/FFIWrapper.jl:202
+- fn `rust_allocator_get_page` @ src/ffi/FFIWrapper.jl:214
+- fn `rust_tlog_new` @ src/ffi/FFIWrapper.jl:226
+- fn `rust_tlog_free` @ src/ffi/FFIWrapper.jl:233
+- fn `rust_tlog_append` @ src/ffi/FFIWrapper.jl:240
+- fn `rust_tlog_reader_new` @ src/ffi/FFIWrapper.jl:247
+- fn `rust_tlog_reader_free` @ src/ffi/FFIWrapper.jl:254
+- fn `rust_tlog_reader_next` @ src/ffi/FFIWrapper.jl:261
+- fn `rust_tlog_summary` @ src/ffi/FFIWrapper.jl:268
+- fn `rust_delta_id` @ src/ffi/FFIWrapper.jl:283
+- fn `rust_delta_page_id` @ src/ffi/FFIWrapper.jl:290
+- fn `rust_delta_epoch` @ src/ffi/FFIWrapper.jl:297
+- fn `rust_delta_is_sparse` @ src/ffi/FFIWrapper.jl:304
+- fn `rust_delta_timestamp` @ src/ffi/FFIWrapper.jl:311
+- fn `rust_delta_source` @ src/ffi/FFIWrapper.jl:318
+- fn `rust_delta_mask` @ src/ffi/FFIWrapper.jl:334
+- fn `rust_delta_payload` @ src/ffi/FFIWrapper.jl:348
+- fn `rust_delta_set_intent_metadata` @ src/ffi/FFIWrapper.jl:362
+- fn `rust_delta_intent_metadata` @ src/ffi/FFIWrapper.jl:379
+- fn `rust_checkpoint_write` @ src/ffi/FFIWrapper.jl:393
+- fn `rust_checkpoint_load` @ src/ffi/FFIWrapper.jl:402
+- fn `rust_allocator_page_infos` @ src/ffi/FFIWrapper.jl:411
+- fn `rust_allocator_acquire_page` @ src/ffi/FFIWrapper.jl:426
+- fn `rust_get_last_error` @ src/ffi/FFIWrapper.jl:434
+- fn `rust_semiring_tropical_fold_add` @ src/ffi/FFIWrapper.jl:439
+- fn `rust_semiring_tropical_fold_mul` @ src/ffi/FFIWrapper.jl:450
+- fn `rust_semiring_tropical_accumulate` @ src/ffi/FFIWrapper.jl:461
+- fn `rust_semiring_boolean_fold_add` @ src/ffi/FFIWrapper.jl:469
+- fn `rust_semiring_boolean_fold_mul` @ src/ffi/FFIWrapper.jl:480
+- fn `rust_semiring_boolean_accumulate` @ src/ffi/FFIWrapper.jl:491
 - struct `RustFFIError` @ src/ffi/RustErrors.jl:26
 - fn `Base` @ src/ffi/RustErrors.jl:31
 - fn `check_rust_error` @ src/ffi/RustErrors.jl:36
@@ -839,13 +941,13 @@
 
 ## Summary Statistics
 
-Total elements: 730
-Rust elements: 248
-Julia elements: 482
+Total elements: 832
+Rust elements: 306
+Julia elements: 526
 
 By type:
-- julia_fn: 404
-- julia_struct: 78
-- rust_fn: 170
-- rust_impl: 36
-- rust_struct: 42
+- julia_fn: 439
+- julia_struct: 87
+- rust_fn: 211
+- rust_impl: 44
+- rust_struct: 51
