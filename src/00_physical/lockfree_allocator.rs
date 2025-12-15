@@ -1,4 +1,4 @@
-use crate::page::{Page, PageError, PageID, PageLocation};
+use crate::page::{Page, PageID, PageLocation};
 use std::sync::atomic::{AtomicPtr, AtomicU64, Ordering};
 use std::ptr;
 
@@ -27,7 +27,7 @@ impl LockFreeAllocator {
         }
     }
     
-    pub fn try_allocate_small(&self, page_id: PageID, size: usize, location: PageLocation) 
+    pub fn try_allocate_small(&self, _page_id: PageID, size: usize, _location: PageLocation) 
         -> Option<*mut Page> 
     {
         if size > SMALL_PAGE_THRESHOLD {

@@ -65,7 +65,7 @@ pub struct NCCLContext {
 }
 
 impl NCCLContext {
-    pub fn new(num_gpus: i32) -> Result<Self, i32> {
+    pub fn new(_num_gpus: i32) -> Result<Self, i32> {
         let mut unique_id = [0u8; 128];
         let result = unsafe { ncclGetUniqueId(&mut unique_id) };
         
