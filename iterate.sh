@@ -29,3 +29,7 @@ echo "--------------------------------------------------"
 echo "Running Julia tests.."
 julia --startup-file=no --project=. -e "using Pkg; Pkg.test();"
 echo "--------------------------------------------------"
+
+echo "Running Julia tests.."
+julia --startup-file=no --project=. benchmark/benchmarks.jl
+echo "--------------------------------------------------"
