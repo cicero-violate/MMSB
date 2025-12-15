@@ -328,11 +328,6 @@ end
             idx = rand(1:length(pages))
             API.update_page(state, pages[idx].id, rand(UInt8, 2048))
         end
-        
-        @test true  # System remains stable
-        
-        API.mmsb_stop(state)
-    end
 end
 
 end # module
