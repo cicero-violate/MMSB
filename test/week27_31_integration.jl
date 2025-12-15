@@ -196,7 +196,7 @@ end
         
         # Load and verify
         state2 = API.mmsb_start(enable_gpu=false)
-        TLog.replay_log!(state2, path)
+        TLog.replay_log(state2, path)
         
         rm(path)
         API.mmsb_stop(state)
@@ -276,7 +276,7 @@ end
         
         # Replay and validate
         state2 = API.mmsb_start(enable_gpu=false)
-        TLog.replay_log!(state2, path; validate=true)
+        TLog.replay_log(state2, path; validate=true)
         
         rm(path)
         API.mmsb_stop(state)
@@ -335,7 +335,7 @@ end
         
         # Replay
         state2 = API.mmsb_start(enable_gpu=false)
-        TLog.replay_log!(state2, ckpt_path)
+        TLog.replay_log(state2, ckpt_path)
         
         @test length(state2.pages) > 0
         
