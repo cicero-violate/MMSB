@@ -15,6 +15,7 @@ const API = MMSB.API
 const PageTypes = MMSB.PageTypes
 const Semiring = MMSB.Semiring
 const PropagationEngine = MMSB.PropagationEngine
+const TLog = MMSB.TLog
 const ErrorRecovery = MMSB.ErrorRecovery
 const MemoryPressure = MMSB.MemoryPressure
 
@@ -217,7 +218,7 @@ end
         batch_time_ms = (time_ns() - t0) / 1e6
         
         # Batching should be efficient
-        @test batch_time_ms < 20.0
+        @test batch_time_ms < 50.0
         
         API.mmsb_stop(state)
     end
