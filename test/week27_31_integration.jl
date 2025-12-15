@@ -141,6 +141,7 @@ end
     else
         @warn "CUDA not available, skipping GPU tests"
     end
+    end
 end
 
 @testset "Week 30-31: Performance Enhancements" begin
