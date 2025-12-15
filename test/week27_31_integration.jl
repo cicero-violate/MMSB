@@ -37,7 +37,6 @@ const MemoryPressure = MMSB.MemoryPressure
     end
     
     @testset "Semiring Operation Throughput" begin
-        # Tropical semiring
         tropical = Semiring.TropicalSemiring(Float64)
         values = rand(1000) .* 100.0
         @test true  # Semiring tests work
