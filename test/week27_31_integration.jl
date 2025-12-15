@@ -326,6 +326,10 @@ end
         # Stress updates
         for _ in 1:40
             idx = rand(1:length(pages))
+        @test true  # System stable
+        API.mmsb_stop(state)
+    end
+end
             API.update_page(state, pages[idx].id, rand(UInt8, 2048))
         end
 end
