@@ -55,6 +55,16 @@ struct RustPageInfo
     metadata_len::Csize_t
 end
 
+struct RustSemiringPairF64
+    add::Float64
+    mul::Float64
+end
+
+struct RustSemiringPairBool
+    add::UInt8
+    mul::UInt8
+end
+
 rust_artifacts_available() = isfile(LIBMMSB)
 
 function ensure_rust_artifacts()
@@ -424,6 +434,66 @@ end
 function rust_get_last_error()::Int32
     ensure_rust_artifacts()
     ccall((:mmsb_get_last_error, LIBMMSB), Int32, ())
+end
+
+function rust_semiring_tropical_fold_add(values::Vector{Float64})::Float64
+    ensure_rust_artifacts()
+    result = GC.@preserve values begin
+        ptr = isempty(values) ? Ptr{Float64}(C_NULL) : pointer(values)
+        ccall((:mmsb_semiring_tropical_fold_add, LIBMMSB), Float64,
+              (Ptr{Float64}, Csize_t), ptr, length(values))
+    end
+    _check_rust_error("rust_semiring_tropical_fold_add")
+    result
+end
+
+function rust_semiring_tropical_fold_mul(values::Vector{Float64})::Float64
+    ensure_rust_artifacts()
+    result = GC.@preserve values begin
+        ptr = isempty(values) ? Ptr{Float64}(C_NULL) : pointer(values)
+        ccall((:mmsb_semiring_tropical_fold_mul, LIBMMSB), Float64,
+              (Ptr{Float64}, Csize_t), ptr, length(values))
+    end
+    _check_rust_error("rust_semiring_tropical_fold_mul")
+    result
+end
+
+function rust_semiring_tropical_accumulate(left::Float64, right::Float64)
+    ensure_rust_artifacts()
+    pair = ccall((:mmsb_semiring_tropical_accumulate, LIBMMSB), RustSemiringPairF64,
+                 (Float64, Float64), left, right)
+    _check_rust_error("rust_semiring_tropical_accumulate")
+    return pair.add, pair.mul
+end
+
+function rust_semiring_boolean_fold_add(values::Vector{UInt8})::Bool
+    ensure_rust_artifacts()
+    raw = GC.@preserve values begin
+        ptr = isempty(values) ? Ptr{UInt8}(C_NULL) : pointer(values)
+        ccall((:mmsb_semiring_boolean_fold_add, LIBMMSB), UInt8,
+              (Ptr{UInt8}, Csize_t), ptr, length(values))
+    end
+    _check_rust_error("rust_semiring_boolean_fold_add")
+    raw != 0
+end
+
+function rust_semiring_boolean_fold_mul(values::Vector{UInt8})::Bool
+    ensure_rust_artifacts()
+    raw = GC.@preserve values begin
+        ptr = isempty(values) ? Ptr{UInt8}(C_NULL) : pointer(values)
+        ccall((:mmsb_semiring_boolean_fold_mul, LIBMMSB), UInt8,
+              (Ptr{UInt8}, Csize_t), ptr, length(values))
+    end
+    _check_rust_error("rust_semiring_boolean_fold_mul")
+    raw != 0
+end
+
+function rust_semiring_boolean_accumulate(left::Bool, right::Bool)
+    ensure_rust_artifacts()
+    pair = ccall((:mmsb_semiring_boolean_accumulate, LIBMMSB), RustSemiringPairBool,
+                 (UInt8, UInt8), left ? UInt8(1) : UInt8(0), right ? UInt8(1) : UInt8(0))
+    _check_rust_error("rust_semiring_boolean_accumulate")
+    return pair.add != 0, pair.mul != 0
 end
 
 isnull(handle) = handle.ptr == C_NULL

@@ -129,6 +129,7 @@ include("12_applications/memory_driven_reasoning.jl")
 using .API: mmsb_start, mmsb_stop, create_page, update_page, query_page, @mmsb
 using .MMSBStateTypes: MMSBState, MMSBConfig
 using .Monitoring: get_stats, print_stats, reset_stats!, track_delta_latency!, track_propagation_latency!
+using .DeltaTypes: Delta
 
 export MMSBState, Page, Delta, ShadowPageGraph
 export MMSBConfig

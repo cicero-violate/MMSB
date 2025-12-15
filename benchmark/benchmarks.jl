@@ -6,6 +6,7 @@ using Random
 using Statistics
 using Dates: now
 using JSON3
+using Base: time_ns
 
 include(joinpath(@__DIR__, "..", "src", "MMSB.jl"))
 using .MMSB
@@ -15,6 +16,11 @@ const PropagationEngine = MMSB.PropagationEngine
 const TLog = MMSB.TLog
 const ReplayEngine = MMSB.ReplayEngine
 const API = MMSB.API
+const Semiring = MMSB.Semiring
+const Monitoring = MMSB.Monitoring
+const DeltaRouter = MMSB.DeltaRouter
+const PageTypes = MMSB.PageTypes
+const Delta = MMSB.Delta
 
 const SUITE = BenchmarkGroup()
 const BENCH_CONFIG = (
@@ -84,6 +90,76 @@ function _checkpoint(state)
     path = tempname()
     TLog.checkpoint_log!(state, path)
     return path
+end
+
+function _measure_ns(f::Function)
+    start = time_ns()
+    f()
+    return time_ns() - start
+end
+
+function _graph_fixture(node_count::Int, fanout::Int)
+    graph = GraphTypes.ShadowPageGraph()
+    nodes = [PageTypes.PageID(idx) for idx in 1:node_count]
+    for idx in 1:node_count
+        if idx == node_count
+            continue
+        end
+        limit = min(node_count, idx + fanout)
+        for child_idx in (idx+1):limit
+            GraphTypes.add_dependency!(graph, nodes[idx], nodes[child_idx], GraphTypes.DATA_DEPENDENCY)
+        end
+    end
+    roots = nodes[1:min(node_count, fanout)]
+    return graph, roots
+end
+
+function _graph_bfs(graph::GraphTypes.ShadowPageGraph, roots)::Int
+    visited = Set{PageTypes.PageID}()
+    queue = collect(roots)
+    while !isempty(queue)
+        node = popfirst!(queue)
+        node ∈ visited && continue
+        push!(visited, node)
+        for (child, _) in GraphTypes.get_children(graph, node)
+            push!(queue, child)
+        end
+    end
+    return length(visited)
+end
+
+function _build_batch_deltas(state, page_id::PageTypes.PageID, batch_size::Int)
+    deltas = Delta[]
+    for _ in 1:batch_size
+        payload = rand(UInt8, BENCH_CONFIG.small_page)
+        mask = fill(true, BENCH_CONFIG.small_page)
+        push!(deltas, DeltaRouter.create_delta(state, page_id, mask, payload; source=:bench))
+    end
+    return deltas
+end
+
+function _full_system_benchmark!()
+    state = _start_state(; enable_gpu=false)
+    tmp = nothing
+    restored = nothing
+    try
+        pages = _populate_pages!(state, 24, BENCH_CONFIG.small_page)
+        for idx in 2:length(pages)
+            GraphTypes.add_dependency!(state.graph, pages[idx-1].id, pages[idx].id, GraphTypes.DATA_DEPENDENCY)
+            PropagationEngine.register_passthrough_recompute!(state, pages[idx].id, pages[idx-1].id)
+        end
+        for _ in 1:BENCH_CONFIG.replay_epochs
+            API.update_page(state, pages[1].id, rand(UInt8, BENCH_CONFIG.small_page))
+        end
+        tmp = _checkpoint(state)
+        restored = MMSB.MMSBStateTypes.MMSBState()
+        TLog.load_checkpoint!(restored, tmp)
+        ReplayEngine.replay_to_epoch(restored, UInt32(BENCH_CONFIG.replay_epochs))
+    finally
+        tmp !== nothing && isfile(tmp) && rm(tmp, force=true)
+        restored !== nothing && _stop_state!(restored)
+        _stop_state!(state)
+    end
 end
 
 SUITE["allocation"] = BenchmarkGroup()
@@ -164,6 +240,46 @@ if CUDA.functional()
     )
 end
 
+SUITE["semiring"] = BenchmarkGroup()
+
+SUITE["semiring"]["tropical_fold_add"] = @benchmarkable begin
+    Semiring.tropical_fold_add(values)
+end setup=(
+    values = rand(Float64, BENCH_CONFIG.small_page);
+)
+
+SUITE["semiring"]["tropical_fold_mul"] = @benchmarkable begin
+    Semiring.tropical_fold_mul(values)
+end setup=(
+    values = rand(Float64, BENCH_CONFIG.small_page);
+)
+
+SUITE["semiring"]["tropical_accumulate"] = @benchmarkable begin
+    Semiring.tropical_accumulate(left, right)
+end setup=(
+    left = rand();
+    right = rand();
+)
+
+SUITE["semiring"]["boolean_fold_add"] = @benchmarkable begin
+    Semiring.boolean_fold_add(values)
+end setup=(
+    values = rand(Bool, BENCH_CONFIG.small_page);
+)
+
+SUITE["semiring"]["boolean_fold_mul"] = @benchmarkable begin
+    Semiring.boolean_fold_mul(values)
+end setup=(
+    values = rand(Bool, BENCH_CONFIG.small_page);
+)
+
+SUITE["semiring"]["boolean_accumulate"] = @benchmarkable begin
+    Semiring.boolean_accumulate(left, right)
+end setup=(
+    left = rand(Bool);
+    right = rand(Bool);
+)
+
 SUITE["propagation"] = BenchmarkGroup()
 
 SUITE["propagation"]["single_hop"] = @benchmarkable begin
@@ -190,6 +306,45 @@ end setup=(
     data = rand(UInt8, BENCH_CONFIG.small_page);
 ) teardown=(
     _stop_state!(state);
+)
+
+SUITE["propagation"]["batch_32x4"] = @benchmarkable begin
+    DeltaRouter.batch_route_deltas!(state, deltas)
+end setup=(
+    state = _start_state(; enable_gpu=false);
+    pages = _populate_pages!(state, 32, BENCH_CONFIG.small_page);
+    _link_chain!(state, pages);
+    deltas = _build_batch_deltas(state, pages[1].id, 4);
+) teardown=(
+    _stop_state!(state);
+)
+
+SUITE["propagation"]["batch_128x2"] = @benchmarkable begin
+    DeltaRouter.batch_route_deltas!(state, deltas)
+end setup=(
+    state = _start_state(; enable_gpu=false);
+    pages = _populate_pages!(state, 128, BENCH_CONFIG.small_page);
+    _link_chain!(state, pages);
+    deltas = _build_batch_deltas(state, pages[1].id, 2);
+) teardown=(
+    _stop_state!(state);
+)
+
+SUITE["graph"] = BenchmarkGroup()
+
+SUITE["graph"]["topological_sort_1024"] = @benchmarkable begin
+    GraphTypes.topological_sort(graph)
+end setup=(
+    fixture = _graph_fixture(1024, 4);
+    graph = fixture[1];
+)
+
+SUITE["graph"]["bfs_1024"] = @benchmarkable begin
+    _graph_bfs(graph, roots)
+end setup=(
+    fixture = _graph_fixture(1024, 4);
+    graph = fixture[1];
+    roots = fixture[2];
 )
 
 SUITE["persistence"] = BenchmarkGroup()
@@ -248,6 +403,12 @@ SUITE["stress"]["typical_workload"] = @benchmarkable begin
     isfile(tmp) && rm(tmp, force=true)
 end
 
+SUITE["system"] = BenchmarkGroup()
+
+SUITE["system"]["full_pipeline"] = @benchmarkable begin
+    _full_system_benchmark!()
+end
+
 function _trial_to_dict(trial)
     return Dict(
         "median_ns" => median(trial).time,
@@ -269,6 +430,43 @@ function _select_suite(categories::Vector{String})
         end
     end
     return group
+end
+
+function _collect_instrumentation_report()
+    state = _start_state(; enable_gpu=false)
+    report = Dict{String,Any}()
+    try
+        Monitoring.reset_stats!(state)
+        alloc_ns = _measure_ns(() -> begin
+            _page(state, BENCH_CONFIG.small_page)
+        end)
+        semiring_tropical_ns = _measure_ns(() -> begin
+            Semiring.tropical_fold_add(rand(Float64, BENCH_CONFIG.small_page))
+        end)
+        semiring_boolean_ns = _measure_ns(() -> begin
+            Semiring.boolean_fold_add(rand(Bool, BENCH_CONFIG.small_page))
+        end)
+        parent = _page(state, BENCH_CONFIG.small_page)
+        child = _page(state, BENCH_CONFIG.small_page)
+        GraphTypes.add_dependency!(state.graph, parent.id, child.id, GraphTypes.DATA_DEPENDENCY)
+        PropagationEngine.register_passthrough_recompute!(state, child.id, parent.id)
+        payload = rand(UInt8, BENCH_CONFIG.small_page)
+        prop_ns = _measure_ns(() -> begin
+            API.update_page(state, parent.id, payload)
+        end)
+        stats = Monitoring.get_stats(state)
+        report["allocation_ns"] = alloc_ns
+        report["propagation_ns"] = prop_ns
+        report["delta_avg_ns"] = stats.delta_apply_avg_ns
+        report["propagation_avg_ns"] = stats.propagation_avg_ns
+        report["total_pages"] = stats.total_pages
+        report["total_deltas"] = stats.total_deltas
+        report["semiring_tropical_add_ns"] = semiring_tropical_ns
+        report["semiring_boolean_add_ns"] = semiring_boolean_ns
+    finally
+        _stop_state!(state)
+    end
+    return report
 end
 
 function _to_mutable(value)
@@ -308,6 +506,7 @@ function run_benchmarks(; save_results::Bool=true, params::BenchmarkTools.Parame
             end
             serialized["benchmarks"][cat_key] = cat_dict
         end
+        serialized["instrumentation"] = _collect_instrumentation_report()
         open(results_path, "w") do io
             JSON3.pretty(io, serialized)
         end

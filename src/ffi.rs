@@ -2,12 +2,16 @@ use crate::page::checkpoint;
 use crate::page::tlog::{TransactionLog, TransactionLogReader};
 use crate::page::{Delta, DeltaID, Epoch, Page, PageError, PageID, PageLocation, Source};
 use crate::physical::allocator::{PageAllocator, PageAllocatorConfig};
+use crate::semiring::{
+    accumulate, fold_add, fold_mul, BooleanSemiring, Semiring, TropicalSemiring,
+};
 use std::cell::RefCell;
 use std::cmp::min;
 use std::ffi::CStr;
 use std::io::ErrorKind;
 use std::os::raw::c_char;
 use std::ptr;
+use std::slice;
 use std::thread_local;
 
 #[repr(C)]
@@ -155,14 +159,45 @@ fn convert_location(tag: i32) -> Result<PageLocation, PageError> {
     PageLocation::from_tag(tag)
 }
 
-fn mask_from_bytes(ptr: *const u8, len: usize) -> Vec<bool> {
+#[repr(C)]
+#[derive(Clone, Copy, Debug, Default)]
+pub struct SemiringPairF64 {
+    pub add: f64,
+    pub mul: f64,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Debug, Default)]
+pub struct SemiringPairBool {
+    pub add: u8,
+    pub mul: u8,
+}
+
+fn mask_from_bytes(ptr: *const u8, len: usize, payload_len: usize, is_sparse: bool) -> Vec<bool> {
     if ptr.is_null() || len == 0 {
         return Vec::new();
     }
-    unsafe { std::slice::from_raw_parts(ptr, len) }
-        .iter()
-        .map(|v| *v != 0)
-        .collect()
+    let bytes = unsafe { std::slice::from_raw_parts(ptr, len) };
+
+    // Legacy callers sometimes passed one byte per entry (length == payload_len).
+    // Treat input as packed only when it clearly encodes bitfields:
+    //  - sparse deltas always pack bits so `mask` counts entries.
+    //  - dense payloads produced via `(size + 7) / 8` satisfy `len * 8 == payload_len`.
+    let treat_as_packed = is_sparse || (!is_sparse && len.saturating_mul(8) == payload_len);
+    if !treat_as_packed {
+        return bytes.iter().map(|v| *v != 0).collect();
+    }
+
+    let mut mask = Vec::with_capacity(len.saturating_mul(8));
+    for byte in bytes {
+        for bit in 0..8 {
+            mask.push(byte & (1 << bit) != 0);
+        }
+    }
+    if !is_sparse && payload_len > 0 && mask.len() > payload_len {
+        mask.truncate(payload_len);
+    }
+    mask
 }
 
 fn vec_from_ptr(ptr: *const u8, len: usize) -> Vec<u8> {
@@ -170,6 +205,14 @@ fn vec_from_ptr(ptr: *const u8, len: usize) -> Vec<u8> {
         return Vec::new();
     }
     unsafe { std::slice::from_raw_parts(ptr, len) }.to_vec()
+}
+
+fn slice_from_ptr<'a, T>(ptr: *const T, len: usize) -> &'a [T] {
+    if ptr.is_null() || len == 0 {
+        &[]
+    } else {
+        unsafe { slice::from_raw_parts(ptr, len) }
+    }
 }
 
 #[no_mangle]
@@ -239,7 +282,8 @@ pub extern "C" fn mmsb_page_write_masked(
         set_last_error(MMSBErrorCode::InvalidHandle);
         return -1;
     }
-    let mask = mask_from_bytes(mask_ptr, mask_len);
+    let sparse = is_sparse != 0;
+    let mask = mask_from_bytes(mask_ptr, mask_len, payload_len, sparse);
     let payload = vec_from_ptr(payload_ptr, payload_len);
     let delta = Delta {
         delta_id: DeltaID(0),
@@ -247,7 +291,7 @@ pub extern "C" fn mmsb_page_write_masked(
         epoch: epoch.into(),
         mask,
         payload,
-        is_sparse: is_sparse != 0,
+        is_sparse: sparse,
         timestamp: 0,
         source: Source("page_write_masked".into()),
         intent_metadata: None,
@@ -316,7 +360,8 @@ pub extern "C" fn mmsb_delta_new(
     is_sparse: u8,
     source_ptr: *const c_char,
 ) -> DeltaHandle {
-    let mask = mask_from_bytes(mask_ptr, mask_len);
+    let sparse = is_sparse != 0;
+    let mask = mask_from_bytes(mask_ptr, mask_len, payload_len, sparse);
     let payload = vec_from_ptr(payload_ptr, payload_len);
     let source = if source_ptr.is_null() {
         "ffi_delta_new".to_string()
@@ -331,7 +376,7 @@ pub extern "C" fn mmsb_delta_new(
         epoch: epoch.into(),
         mask,
         payload,
-        is_sparse: is_sparse != 0,
+        is_sparse: sparse,
         timestamp: 0,
         source: Source(source),
         intent_metadata: None,
@@ -933,4 +978,65 @@ pub extern "C" fn mmsb_allocator_list_pages(
         }
     });
     count
+}
+
+#[no_mangle]
+pub extern "C" fn mmsb_semiring_tropical_fold_add(values: *const f64, len: usize) -> f64 {
+    let semiring = TropicalSemiring;
+    if len == 0 {
+        return semiring.zero();
+    }
+    let slice = slice_from_ptr(values, len);
+    fold_add(&semiring, slice.iter().copied())
+}
+
+#[no_mangle]
+pub extern "C" fn mmsb_semiring_tropical_fold_mul(values: *const f64, len: usize) -> f64 {
+    let semiring = TropicalSemiring;
+    if len == 0 {
+        return semiring.one();
+    }
+    let slice = slice_from_ptr(values, len);
+    fold_mul(&semiring, slice.iter().copied())
+}
+
+#[no_mangle]
+pub extern "C" fn mmsb_semiring_tropical_accumulate(left: f64, right: f64) -> SemiringPairF64 {
+    let semiring = TropicalSemiring;
+    let (add, mul) = accumulate(&semiring, &left, &right);
+    SemiringPairF64 { add, mul }
+}
+
+#[no_mangle]
+pub extern "C" fn mmsb_semiring_boolean_fold_add(values: *const u8, len: usize) -> u8 {
+    let semiring = BooleanSemiring;
+    if len == 0 {
+        return semiring.zero() as u8;
+    }
+    let slice = slice_from_ptr(values, len);
+    let iter = slice.iter().map(|v| *v != 0);
+    let result = fold_add(&semiring, iter);
+    result as u8
+}
+
+#[no_mangle]
+pub extern "C" fn mmsb_semiring_boolean_fold_mul(values: *const u8, len: usize) -> u8 {
+    let semiring = BooleanSemiring;
+    if len == 0 {
+        return semiring.one() as u8;
+    }
+    let slice = slice_from_ptr(values, len);
+    let iter = slice.iter().map(|v| *v != 0);
+    let result = fold_mul(&semiring, iter);
+    result as u8
+}
+
+#[no_mangle]
+pub extern "C" fn mmsb_semiring_boolean_accumulate(left: u8, right: u8) -> SemiringPairBool {
+    let semiring = BooleanSemiring;
+    let (add, mul) = accumulate(&semiring, &(left != 0), &(right != 0));
+    SemiringPairBool {
+        add: add as u8,
+        mul: mul as u8,
+    }
 }

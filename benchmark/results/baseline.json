@@ -1,130 +1,234 @@
 {
     "julia_version": "1.12.1",
     "cuda_available": true,
-    "timestamp": "2025-12-04T15:44:41.021",
+    "instrumentation": {
+        "total_pages": 3,
+        "delta_avg_ns": 43076,
+        "semiring_boolean_add_ns": 4818,
+        "propagation_avg_ns": 500367,
+        "propagation_ns": 907290,
+        "total_deltas": 790,
+        "semiring_tropical_add_ns": 8584,
+        "allocation_ns": 39495
+    },
+    "timestamp": "2025-12-14T20:22:20.771",
     "benchmarks": {
         "allocation": {
             "gpu_1mb": {
-                "median_ns": 93048,
-                "max_ns": 93048,
-                "allocs": 72,
-                "mean_ns": 93048,
-                "min_ns": 93048,
-                "memory_bytes": 2688
+                "median_ns": 264712,
+                "max_ns": 264712,
+                "allocs": 33,
+                "mean_ns": 264712,
+                "min_ns": 264712,
+                "memory_bytes": 3312
             },
             "cpu_1kb": {
-                "median_ns": 2956,
-                "max_ns": 2956,
-                "allocs": 26,
-                "mean_ns": 2956,
-                "min_ns": 2956,
-                "memory_bytes": 2608
+                "median_ns": 82794,
+                "max_ns": 82794,
+                "allocs": 33,
+                "mean_ns": 82794,
+                "min_ns": 82794,
+                "memory_bytes": 3312
             },
             "cpu_1mb": {
-                "median_ns": 13644,
-                "max_ns": 13644,
-                "allocs": 28,
-                "mean_ns": 13644,
-                "min_ns": 13644,
-                "memory_bytes": 296352
+                "median_ns": 236183,
+                "max_ns": 236183,
+                "allocs": 33,
+                "mean_ns": 236183,
+                "min_ns": 236183,
+                "memory_bytes": 3312
             },
             "gpu_1kb": {
-                "median_ns": 24015,
-                "max_ns": 24015,
-                "allocs": 72,
-                "mean_ns": 24015,
-                "min_ns": 24015,
-                "memory_bytes": 2688
+                "median_ns": 62372,
+                "max_ns": 62372,
+                "allocs": 33,
+                "mean_ns": 62372,
+                "min_ns": 62372,
+                "memory_bytes": 3312
             }
         },
         "replay": {
             "100_epochs": {
-                "median_ns": 27762,
-                "max_ns": 27762,
-                "allocs": 40,
-                "mean_ns": 27762,
-                "min_ns": 27762,
-                "memory_bytes": 4192
+                "median_ns": 3145426,
+                "max_ns": 3145426,
+                "allocs": 2242,
+                "mean_ns": 3145426,
+                "min_ns": 3145426,
+                "memory_bytes": 483936
             }
         },
         "propagation": {
             "single_hop": {
-                "median_ns": 302336,
-                "max_ns": 302336,
-                "allocs": 1254,
-                "mean_ns": 302336,
-                "min_ns": 302336,
-                "memory_bytes": 89264
+                "median_ns": 911668,
+                "max_ns": 911668,
+                "allocs": 1796,
+                "mean_ns": 911668,
+                "min_ns": 911668,
+                "memory_bytes": 102256
             },
             "chain_10": {
-                "median_ns": 2424129,
-                "max_ns": 2424129,
-                "allocs": 7209,
-                "mean_ns": 2424129,
-                "min_ns": 2424129,
-                "memory_bytes": 506976
+                "median_ns": 5036697,
+                "max_ns": 5036697,
+                "allocs": 12021,
+                "mean_ns": 5036697,
+                "min_ns": 5036697,
+                "memory_bytes": 608400
+            },
+            "batch_32x4": {
+                "median_ns": 15767333,
+                "max_ns": 15767333,
+                "allocs": 41595,
+                "mean_ns": 15767333,
+                "min_ns": 15767333,
+                "memory_bytes": 2080064
+            },
+            "batch_128x2": {
+                "median_ns": 61609811,
+                "max_ns": 61609811,
+                "allocs": 163315,
+                "mean_ns": 61609811,
+                "min_ns": 61609811,
+                "memory_bytes": 8094768
             }
         },
         "persistence": {
             "checkpoint_100pages": {
-                "median_ns": 339466,
-                "max_ns": 339466,
-                "allocs": 1330,
-                "mean_ns": 339466,
-                "min_ns": 339466,
-                "memory_bytes": 343552
+                "median_ns": 108108,
+                "max_ns": 108108,
+                "allocs": 3,
+                "mean_ns": 108108,
+                "min_ns": 108108,
+                "memory_bytes": 448
             },
             "restore_100pages": {
-                "median_ns": 830937,
-                "max_ns": 830937,
-                "allocs": 10293,
-                "mean_ns": 830937,
-                "min_ns": 830937,
-                "memory_bytes": 503232
+                "median_ns": 1404108,
+                "max_ns": 1404108,
+                "allocs": 151,
+                "mean_ns": 1404108,
+                "min_ns": 1404108,
+                "memory_bytes": 17680
             }
         },
         "stress": {
             "typical_workload": {
-                "median_ns": 7562107,
-                "max_ns": 7562107,
-                "allocs": 24548,
-                "mean_ns": 7562107,
-                "min_ns": 7562107,
-                "memory_bytes": 2182656
+                "median_ns": 10806401,
+                "max_ns": 10806401,
+                "allocs": 23428,
+                "mean_ns": 10806401,
+                "min_ns": 10806401,
+                "memory_bytes": 1776064
+            }
+        },
+        "semiring": {
+            "tropical_fold_add": {
+                "median_ns": 5799,
+                "max_ns": 5799,
+                "allocs": 5,
+                "mean_ns": 5799,
+                "min_ns": 5799,
+                "memory_bytes": 8648
+            },
+            "tropical_fold_mul": {
+                "median_ns": 6508,
+                "max_ns": 6508,
+                "allocs": 5,
+                "mean_ns": 6508,
+                "min_ns": 6508,
+                "memory_bytes": 8648
+            },
+            "tropical_accumulate": {
+                "median_ns": 4551,
+                "max_ns": 4551,
+                "allocs": 2,
+                "mean_ns": 4551,
+                "min_ns": 4551,
+                "memory_bytes": 384
+            },
+            "boolean_fold_add": {
+                "median_ns": 4647,
+                "max_ns": 4647,
+                "allocs": 4,
+                "mean_ns": 4647,
+                "min_ns": 4647,
+                "memory_bytes": 1504
+            },
+            "boolean_fold_mul": {
+                "median_ns": 4565,
+                "max_ns": 4565,
+                "allocs": 4,
+                "mean_ns": 4565,
+                "min_ns": 4565,
+                "memory_bytes": 1504
+            },
+            "boolean_accumulate": {
+                "median_ns": 4157,
+                "max_ns": 4157,
+                "allocs": 2,
+                "mean_ns": 4157,
+                "min_ns": 4157,
+                "memory_bytes": 384
+            }
+        },
+        "graph": {
+            "topological_sort_1024": {
+                "median_ns": 297957,
+                "max_ns": 297957,
+                "allocs": 41,
+                "mean_ns": 297957,
+                "min_ns": 297957,
+                "memory_bytes": 110048
+            },
+            "bfs_1024": {
+                "median_ns": 167797,
+                "max_ns": 167797,
+                "allocs": 2071,
+                "mean_ns": 167797,
+                "min_ns": 167797,
+                "memory_bytes": 181440
             }
         },
         "delta": {
             "gpu_sparse": {
-                "median_ns": 2637256,
-                "max_ns": 2637256,
-                "allocs": 643,
-                "mean_ns": 2637256,
-                "min_ns": 2637256,
-                "memory_bytes": 2195296
+                "median_ns": 2130866,
+                "max_ns": 2130866,
+                "allocs": 525,
+                "mean_ns": 2130866,
+                "min_ns": 2130866,
+                "memory_bytes": 1866696
             },
             "cpu_dense": {
-                "median_ns": 111642,
-                "max_ns": 111642,
-                "allocs": 510,
-                "mean_ns": 111642,
-                "min_ns": 111642,
-                "memory_bytes": 37408
+                "median_ns": 376551,
+                "max_ns": 376551,
+                "allocs": 518,
+                "mean_ns": 376551,
+                "min_ns": 376551,
+                "memory_bytes": 39024
             },
             "cpu_sparse": {
-                "median_ns": 111318,
-                "max_ns": 111318,
-                "allocs": 511,
-                "mean_ns": 111318,
-                "min_ns": 111318,
-                "memory_bytes": 36656
+                "median_ns": 436787,
+                "max_ns": 436787,
+                "allocs": 518,
+                "mean_ns": 436787,
+                "min_ns": 436787,
+                "memory_bytes": 39024
             },
             "gpu_dense": {
-                "median_ns": 2287321,
-                "max_ns": 2287321,
-                "allocs": 652,
-                "mean_ns": 2287321,
-                "min_ns": 2287321,
-                "memory_bytes": 2457320
+                "median_ns": 3358175,
+                "max_ns": 3358175,
+                "allocs": 525,
+                "mean_ns": 3358175,
+                "min_ns": 3358175,
+                "memory_bytes": 1866696
+            }
+        },
+        "system": {
+            "full_pipeline": {
+                "median_ns": 116112093,
+                "max_ns": 116112093,
+                "allocs": 190278,
+                "mean_ns": 116112093,
+                "min_ns": 116112093,
+                "memory_bytes": 20422752
             }
         }
     }
