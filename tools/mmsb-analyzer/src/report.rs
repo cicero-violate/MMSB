@@ -83,7 +83,7 @@ impl ReportGenerator {
         }
     }
     
-fn generate_call_graph_report(&self, result: &AnalysisResult, cf_analyzer: &ControlFlowAnalyzer) -> Result<()> {
+    fn generate_call_graph_report(&self, result: &AnalysisResult, cf_analyzer: &ControlFlowAnalyzer) -> Result<()> {
         let path = Path::new(&self.output_dir).join("call_graph.md");
         let mut content = String::from("# Call Graph Analysis\n\n");
         content.push_str("This shows **interprocedural call graph** - which functions call which.\n\n");
