@@ -42,63 +42,30 @@ impl ReportGenerator {
     }
     
     fn generate_structure_report(&self, result: &AnalysisResult) -> Result<()> {
-        let path = Path::new(&self.output_dir).join("structure.md");
-        let mut content = String::from("# MMSB Code Structure Analysis\n\n");
-        content.push_str(&format!("Generated: {}\n\n", chrono::Local::now().format("%Y-%m-%d %H:%M:%S")));
-        
-        // Group by layer
-        let mut layers: HashMap<String, Vec<&CodeElement>> = HashMap::new();
+        // Group by file path
+        let mut files: HashMap<String, Vec<&CodeElement>> = HashMap::new();
         for elem in &result.elements {
-            layers.entry(elem.layer.clone()).or_insert_with(Vec::new).push(elem);
+            let compressed = compress_path(&elem.file_path);
+            files.entry(compressed).or_insert_with(Vec::new).push(elem);
         }
-        
-        let mut sorted_layers: Vec<_> = layers.keys().collect();
-        sorted_layers.sort();
-        
+
+        // Then group files by layer for organization
+        let mut layer_groups: HashMap<String, Vec<&String>> = HashMap::new();
+        for file in files.keys() {
+            let layer = self.extract_layer_from_path(file);
+            layer_groups.entry(layer).or_insert_with(Vec::new).push(file);
+        }
+
+        // Output: Layer → File → Elements (no repeated paths)
         for layer in sorted_layers {
             content.push_str(&format!("\n## Layer: {}\n\n", layer));
-            
-            let elements = &layers[layer];
-            
-            // Group by language
-            let rust_elems: Vec<_> = elements.iter().filter(|e| matches!(e.language, Language::Rust)).collect();
-            let julia_elems: Vec<_> = elements.iter().filter(|e| matches!(e.language, Language::Julia)).collect();
-            
-            if !rust_elems.is_empty() {
-                content.push_str("### Rust\n\n");
-                self.write_elements(&mut content, rust_elems);
-            }
-            
-            if !julia_elems.is_empty() {
-                content.push_str("\n### Julia\n\n");
-                self.write_elements(&mut content, julia_elems);
+            for file_path in layer_files {
+                content.push_str(&format!("### {}\n\n", file_path));
+                for elem in sorted_elements {
+                    content.push_str(&format!("- [{}] {}{}\n", type, vis, name));
+                }
             }
         }
-        
-        // Summary statistics
-        content.push_str("\n## Summary Statistics\n\n");
-        content.push_str(&format!("- Total elements: {}\n", result.elements.len()));
-        content.push_str(&format!("- Rust elements: {}\n", 
-            result.elements.iter().filter(|e| matches!(e.language, Language::Rust)).count()));
-        content.push_str(&format!("- Julia elements: {}\n",
-            result.elements.iter().filter(|e| matches!(e.language, Language::Julia)).count()));
-        
-        // By type
-        let mut type_counts: HashMap<String, usize> = HashMap::new();
-        for elem in &result.elements {
-            let key = format!("{:?}_{:?}", elem.language, elem.element_type);
-            *type_counts.entry(key).or_insert(0) += 1;
-        }
-        
-        content.push_str("\n### By Type:\n\n");
-        let mut sorted_types: Vec<_> = type_counts.iter().collect();
-        sorted_types.sort_by_key(|(k, _)| k.as_str());
-        for (type_name, count) in sorted_types {
-            content.push_str(&format!("- {}: {}\n", type_name, count));
-        }
-        
-        fs::write(path, content)?;
-        Ok(())
     }
     
     fn write_elements(&self, content: &mut String, elements: Vec<&&CodeElement>) {
