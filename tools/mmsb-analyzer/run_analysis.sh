@@ -15,7 +15,7 @@ echo "Running analysis on MMSB project..."
 cargo run -- \
     --root "$PROJECT_ROOT" \
     --output "$PROJECT_ROOT/docs/analysis" \
-    --julia-script "$SCRIPT_DIR/src/julia/analyzer.jl" \
+    --julia-script "$SCRIPT_DIR/src/analyzer.jl" \
     "$@"
 
 echo ""
