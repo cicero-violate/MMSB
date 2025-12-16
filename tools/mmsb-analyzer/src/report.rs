@@ -83,9 +83,11 @@ impl ReportGenerator {
         }
     }
     
-    fn generate_control_flow_report(&self, result: &AnalysisResult, cf_analyzer: &ControlFlowAnalyzer) -> Result<()> {
-        let path = Path::new(&self.output_dir).join("control_flow.md");
-        let mut content = String::from("# Control Flow Analysis\n\n");
+fn generate_call_graph_report(&self, result: &AnalysisResult, cf_analyzer: &ControlFlowAnalyzer) -> Result<()> {
+        let path = Path::new(&self.output_dir).join("call_graph.md");
+        let mut content = String::from("# Call Graph Analysis\n\n");
+        content.push_str("This shows **interprocedural call graph** - which functions call which.\n\n");
+        content.push_str("> **Note:** NOT a control flow graph (CFG). CFG shows intraprocedural branches/loops within functions.\n\n");
         
         let stats = cf_analyzer.get_statistics();
         
