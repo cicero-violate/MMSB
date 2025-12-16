@@ -3,7 +3,7 @@
 use crate::types::*;
 use anyhow::{Context, Result};
 use std::path::Path;
-use std::process::Command;
+use std::process::{Command, Stdio};
 
 pub struct JuliaAnalyzer {
     script_path: String,
@@ -20,19 +20,27 @@ impl JuliaAnalyzer {
     
     pub fn analyze_file(&self, file_path: &Path) -> Result<AnalysisResult> {
         let output = Command::new("julia")
+            .arg("--startup-file=no")
             .arg(&self.script_path)
             .arg(file_path)
+            .stderr(Stdio::null())
             .output()
             .with_context(|| format!("Failed to execute Julia analyzer on {:?}", file_path))?;
         
         if !output.status.success() {
-            let stderr = String::from_utf8_lossy(&output.stderr);
-            anyhow::bail!("Julia analyzer failed: {}", stderr);
+            anyhow::bail!("Julia analyzer failed with status: {}", output.status);
         }
         
         let stdout = String::from_utf8_lossy(&output.stdout);
+        
+        // Clean output - remove any non-JSON lines
+        let json_line = stdout.lines()
+            .find(|line| line.trim_start().starts_with('[') || line.trim_start().starts_with('{'))
+            .unwrap_or("");
+        
         let julia_elements: Vec<JuliaElement> = serde_json::from_str(&stdout)
-            .with_context(|| format!("Failed to parse Julia analyzer output: {}", stdout))?;
+            .or_else(|_| serde_json::from_str(json_line))
+            .with_context(|| format!("Failed to parse Julia analyzer output. Raw output: {}", stdout))?;
         
         let mut result = AnalysisResult::new();
         let layer = self.extract_layer(file_path);

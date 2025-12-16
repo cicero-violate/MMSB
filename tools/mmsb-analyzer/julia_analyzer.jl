@@ -1,4 +1,7 @@
 #!/usr/bin/env julia
+# Suppress startup messages
+ENV["JULIA_STARTUP_FILE"] = "no"
+
 """
 Julia Structure Analyzer
 Called by Rust analyzer to extract Julia AST information
