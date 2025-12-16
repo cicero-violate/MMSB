@@ -6,10 +6,10 @@ This document shows the **interprocedural call graph** - which functions call wh
 
 ## Call Graph Statistics
 
-- Total functions: 592
-- Total function calls: 754
+- Total functions: 591
+- Total function calls: 705
 - Maximum call depth: 9
-- Leaf functions (no outgoing calls): 303
+- Leaf functions (no outgoing calls): 295
 
 ## Call Graph Visualization
 
@@ -143,7 +143,6 @@ graph TD
     MMSB_src_API_jl___resolve_location["MMSB/src/API.jl::_resolve_location"]
     MMSB_src_API_jl__create_page["MMSB/src/API.jl::create_page"]
     MMSB_src_API_jl__update_page["MMSB/src/API.jl::update_page"]
-    MMSB_src_API_jl__length["MMSB/src/API.jl::length"]
     MMSB_src_API_jl__query_page["MMSB/src/API.jl::query_page"]
     MMSB_benchmark_benchmarks_jl___start_state["MMSB/benchmark/benchmarks.jl::_start_state"]
     MMSB_benchmark_benchmarks_jl___stop_state_["MMSB/benchmark/benchmarks.jl::_stop_state!"]
@@ -705,12 +704,26 @@ graph TD
     MMSB_src_03_dag_cycle_detection_rs__has_cycle --> MMSB_src_03_dag_cycle_detection_rs__dfs
     MMSB_src_03_dag_cycle_detection_rs__has_cycle --> MMSB_src_03_dag_cycle_detection_rs__dfs
     MMSB_src_03_dag_cycle_detection_rs__dfs --> MMSB_src_03_dag_cycle_detection_rs__dfs
+    MMSB_src_API_jl__mmsb_start --> MMSB_src_01_types_MMSBState_jl__MMSBConfig
+    MMSB_src_API_jl__mmsb_start --> MMSB_src_01_types_MMSBState_jl__MMSBState
+    MMSB_src_API_jl__mmsb_start --> MMSB_src_01_types_MMSBState_jl__MMSBState
+    MMSB_src_API_jl__mmsb_stop --> MMSB_src_01_page_TLog_jl__checkpoint_log_
+    MMSB_src_API_jl__create_page --> MMSB_src_API_jl___resolve_location
+    MMSB_src_API_jl__update_page --> MMSB_benchmark_benchmarks_jl___page
+    MMSB_src_API_jl__update_page --> MMSB_src_01_types_MMSBState_jl__get_page
+    MMSB_src_API_jl__update_page --> MMSB_src_02_semiring_DeltaRouter_jl__length
+    MMSB_src_API_jl__update_page --> MMSB_tests_mmsb_tests_rs__read_page
+    MMSB_src_API_jl__update_page --> MMSB_benchmark_benchmarks_jl___page
+    MMSB_src_API_jl__update_page --> MMSB_src_01_page_Page_jl__read_page
     MMSB_src_API_jl__query_page --> MMSB_benchmark_benchmarks_jl___page
     MMSB_src_API_jl__query_page --> MMSB_src_01_types_MMSBState_jl__get_page
     MMSB_src_API_jl__query_page --> MMSB_tests_mmsb_tests_rs__read_page
     MMSB_src_API_jl__query_page --> MMSB_benchmark_benchmarks_jl___page
     MMSB_src_API_jl__query_page --> MMSB_src_01_page_Page_jl__read_page
+    MMSB_benchmark_benchmarks_jl___start_state --> MMSB_src_API_jl__mmsb_start
     MMSB_benchmark_benchmarks_jl___stop_state_ --> MMSB_src_API_jl__mmsb_stop
+    MMSB_benchmark_benchmarks_jl___page --> MMSB_src_API_jl__create_page
+    MMSB_benchmark_benchmarks_jl___page --> MMSB_benchmark_benchmarks_jl___page
     MMSB_benchmark_benchmarks_jl___populate_pages_ --> MMSB_src_API_jl__create_page
     MMSB_benchmark_benchmarks_jl___populate_pages_ --> MMSB_benchmark_benchmarks_jl___page
     MMSB_benchmark_benchmarks_jl___seed_pages_ --> MMSB_src_API_jl__update_page
@@ -720,33 +733,19 @@ graph TD
     MMSB_benchmark_benchmarks_jl___replay_sequence_ --> MMSB_benchmark_benchmarks_jl___page
     MMSB_benchmark_benchmarks_jl___stress_updates_ --> MMSB_src_API_jl__update_page
     MMSB_benchmark_benchmarks_jl___stress_updates_ --> MMSB_benchmark_benchmarks_jl___page
-    MMSB_benchmark_benchmarks_jl___stress_updates_ --> MMSB_src_API_jl__length
     MMSB_benchmark_benchmarks_jl___stress_updates_ --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_benchmark_benchmarks_jl___link_chain_ --> MMSB_src_03_dag_ShadowPageGraph_jl__add_dependency_
     MMSB_benchmark_benchmarks_jl___link_chain_ --> MMSB_src_04_propagation_PropagationEngine_jl__register_passthrough_recompute_
-    MMSB_benchmark_benchmarks_jl___link_chain_ --> MMSB_src_API_jl__length
     MMSB_benchmark_benchmarks_jl___link_chain_ --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_benchmark_benchmarks_jl___checkpoint --> MMSB_src_01_page_TLog_jl__checkpoint_log_
     MMSB_benchmark_benchmarks_jl___graph_fixture --> MMSB_src_03_dag_ShadowPageGraph_jl__ShadowPageGraph
-    MMSB_benchmark_benchmarks_jl___graph_fixture --> MMSB_src_03_dag_ShadowPageGraph_jl__add_dependency_
     MMSB_benchmark_benchmarks_jl___graph_bfs --> MMSB_src_03_dag_DependencyGraph_jl__get_children
     MMSB_benchmark_benchmarks_jl___graph_bfs --> MMSB_src_03_dag_ShadowPageGraph_jl__get_children
-    MMSB_benchmark_benchmarks_jl___graph_bfs --> MMSB_src_API_jl__length
-    MMSB_benchmark_benchmarks_jl___graph_bfs --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_benchmark_benchmarks_jl___build_batch_deltas --> MMSB_src_02_semiring_DeltaRouter_jl__create_delta
-    MMSB_benchmark_benchmarks_jl___full_system_benchmark_ --> MMSB_src_API_jl__update_page
-    MMSB_benchmark_benchmarks_jl___full_system_benchmark_ --> MMSB_benchmark_benchmarks_jl___page
     MMSB_benchmark_benchmarks_jl___full_system_benchmark_ --> MMSB_src_03_dag_ShadowPageGraph_jl__add_dependency_
-    MMSB_benchmark_benchmarks_jl___full_system_benchmark_ --> MMSB_src_01_types_MMSBState_jl__MMSBState
-    MMSB_benchmark_benchmarks_jl___full_system_benchmark_ --> MMSB_src_01_types_MMSBState_jl__MMSBState
     MMSB_benchmark_benchmarks_jl___full_system_benchmark_ --> MMSB_src_04_propagation_PropagationEngine_jl__register_passthrough_recompute_
-    MMSB_benchmark_benchmarks_jl___full_system_benchmark_ --> MMSB_src_01_page_ReplayEngine_jl__replay_to_epoch
-    MMSB_benchmark_benchmarks_jl___full_system_benchmark_ --> MMSB_src_01_page_TLog_jl__load_checkpoint_
-    MMSB_benchmark_benchmarks_jl___full_system_benchmark_ --> MMSB_benchmark_benchmarks_jl___checkpoint
     MMSB_benchmark_benchmarks_jl___full_system_benchmark_ --> MMSB_benchmark_benchmarks_jl___populate_pages_
     MMSB_benchmark_benchmarks_jl___full_system_benchmark_ --> MMSB_benchmark_benchmarks_jl___start_state
-    MMSB_benchmark_benchmarks_jl___full_system_benchmark_ --> MMSB_benchmark_benchmarks_jl___stop_state_
-    MMSB_benchmark_benchmarks_jl___full_system_benchmark_ --> MMSB_src_API_jl__length
     MMSB_benchmark_benchmarks_jl___full_system_benchmark_ --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_benchmark_benchmarks_jl___collect_instrumentation_report --> MMSB_src_API_jl__update_page
     MMSB_benchmark_benchmarks_jl___collect_instrumentation_report --> MMSB_benchmark_benchmarks_jl___page
@@ -763,12 +762,13 @@ graph TD
     MMSB_benchmark_benchmarks_jl___collect_instrumentation_report --> MMSB_benchmark_benchmarks_jl___start_state
     MMSB_benchmark_benchmarks_jl___collect_instrumentation_report --> MMSB_benchmark_benchmarks_jl___stop_state_
     MMSB_benchmark_benchmarks_jl___to_mutable --> MMSB_benchmark_benchmarks_jl___to_mutable
+    MMSB_benchmark_benchmarks_jl__run_benchmarks --> MMSB_benchmark_benchmarks_jl___select_suite
+    MMSB_benchmark_benchmarks_jl__run_benchmarks --> MMSB_benchmark_benchmarks_jl___to_mutable
     MMSB_benchmark_helpers_jl__analyze_results --> MMSB_benchmark_helpers_jl___format_bytes
     MMSB_benchmark_helpers_jl__analyze_results --> MMSB_benchmark_helpers_jl___format_time
     MMSB_benchmark_helpers_jl__check_performance_targets --> MMSB_benchmark_helpers_jl___format_time
     MMSB_src_ffi_FFIWrapper_jl__ensure_rust_artifacts --> MMSB_src_ffi_FFIWrapper_jl__rust_artifacts_available
     MMSB_src_ffi_FFIWrapper_jl__rust_page_read_ --> MMSB_src_ffi_FFIWrapper_jl__ensure_rust_artifacts
-    MMSB_src_ffi_FFIWrapper_jl__rust_page_read_ --> MMSB_src_API_jl__length
     MMSB_src_ffi_FFIWrapper_jl__rust_page_read_ --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_ffi_FFIWrapper_jl__rust_page_epoch --> MMSB_src_ffi_FFIWrapper_jl___check_rust_error
     MMSB_src_ffi_FFIWrapper_jl__rust_page_epoch --> MMSB_src_ffi_RustErrors_jl__check_rust_error
@@ -777,7 +777,6 @@ graph TD
     MMSB_src_ffi_FFIWrapper_jl__rust_page_metadata_blob --> MMSB_src_ffi_RustErrors_jl__check_rust_error
     MMSB_src_ffi_FFIWrapper_jl__rust_page_metadata_blob --> MMSB_src_ffi_FFIWrapper_jl__ensure_rust_artifacts
     MMSB_src_ffi_FFIWrapper_jl__rust_page_metadata_import_ --> MMSB_src_ffi_FFIWrapper_jl__ensure_rust_artifacts
-    MMSB_src_ffi_FFIWrapper_jl__rust_page_metadata_import_ --> MMSB_src_API_jl__length
     MMSB_src_ffi_FFIWrapper_jl__rust_page_metadata_import_ --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_ffi_FFIWrapper_jl__rust_delta_free_ --> MMSB_src_ffi_FFIWrapper_jl___check_rust_error
     MMSB_src_ffi_FFIWrapper_jl__rust_delta_free_ --> MMSB_src_ffi_RustErrors_jl__check_rust_error
@@ -845,7 +844,6 @@ graph TD
     MMSB_src_ffi_FFIWrapper_jl__rust_delta_set_intent_metadata_ --> MMSB_src_ffi_FFIWrapper_jl___check_rust_error
     MMSB_src_ffi_FFIWrapper_jl__rust_delta_set_intent_metadata_ --> MMSB_src_ffi_RustErrors_jl__check_rust_error
     MMSB_src_ffi_FFIWrapper_jl__rust_delta_set_intent_metadata_ --> MMSB_src_ffi_FFIWrapper_jl__ensure_rust_artifacts
-    MMSB_src_ffi_FFIWrapper_jl__rust_delta_set_intent_metadata_ --> MMSB_src_API_jl__length
     MMSB_src_ffi_FFIWrapper_jl__rust_delta_set_intent_metadata_ --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_ffi_FFIWrapper_jl__rust_delta_intent_metadata --> MMSB_src_ffi_FFIWrapper_jl___check_rust_error
     MMSB_src_ffi_FFIWrapper_jl__rust_delta_intent_metadata --> MMSB_src_ffi_RustErrors_jl__check_rust_error
@@ -864,19 +862,15 @@ graph TD
     MMSB_src_ffi_FFIWrapper_jl__rust_allocator_acquire_page --> MMSB_src_ffi_FFIWrapper_jl__ensure_rust_artifacts
     MMSB_src_ffi_FFIWrapper_jl__rust_get_last_error --> MMSB_src_ffi_FFIWrapper_jl__ensure_rust_artifacts
     MMSB_src_ffi_FFIWrapper_jl__rust_semiring_tropical_fold_add --> MMSB_src_ffi_FFIWrapper_jl__ensure_rust_artifacts
-    MMSB_src_ffi_FFIWrapper_jl__rust_semiring_tropical_fold_add --> MMSB_src_API_jl__length
     MMSB_src_ffi_FFIWrapper_jl__rust_semiring_tropical_fold_add --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_ffi_FFIWrapper_jl__rust_semiring_tropical_fold_mul --> MMSB_src_ffi_FFIWrapper_jl__ensure_rust_artifacts
-    MMSB_src_ffi_FFIWrapper_jl__rust_semiring_tropical_fold_mul --> MMSB_src_API_jl__length
     MMSB_src_ffi_FFIWrapper_jl__rust_semiring_tropical_fold_mul --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_ffi_FFIWrapper_jl__rust_semiring_tropical_accumulate --> MMSB_src_ffi_FFIWrapper_jl___check_rust_error
     MMSB_src_ffi_FFIWrapper_jl__rust_semiring_tropical_accumulate --> MMSB_src_ffi_RustErrors_jl__check_rust_error
     MMSB_src_ffi_FFIWrapper_jl__rust_semiring_tropical_accumulate --> MMSB_src_ffi_FFIWrapper_jl__ensure_rust_artifacts
     MMSB_src_ffi_FFIWrapper_jl__rust_semiring_boolean_fold_add --> MMSB_src_ffi_FFIWrapper_jl__ensure_rust_artifacts
-    MMSB_src_ffi_FFIWrapper_jl__rust_semiring_boolean_fold_add --> MMSB_src_API_jl__length
     MMSB_src_ffi_FFIWrapper_jl__rust_semiring_boolean_fold_add --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_ffi_FFIWrapper_jl__rust_semiring_boolean_fold_mul --> MMSB_src_ffi_FFIWrapper_jl__ensure_rust_artifacts
-    MMSB_src_ffi_FFIWrapper_jl__rust_semiring_boolean_fold_mul --> MMSB_src_API_jl__length
     MMSB_src_ffi_FFIWrapper_jl__rust_semiring_boolean_fold_mul --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_ffi_FFIWrapper_jl__rust_semiring_boolean_accumulate --> MMSB_src_ffi_FFIWrapper_jl___check_rust_error
     MMSB_src_ffi_FFIWrapper_jl__rust_semiring_boolean_accumulate --> MMSB_src_ffi_RustErrors_jl__check_rust_error
@@ -891,28 +885,21 @@ graph TD
     MMSB_src_00_physical_DeviceSync_jl__prefetch_pages_to_gpu_ --> MMSB_src_00_physical_DeviceSync_jl__batch_sync_to_gpu_
     MMSB_src_00_physical_DeviceSync_jl__prefetch_pages_to_gpu_ --> MMSB_benchmark_benchmarks_jl___page
     MMSB_src_00_physical_DeviceSync_jl__prefetch_pages_to_gpu_ --> MMSB_src_01_types_MMSBState_jl__get_page
-    MMSB_src_00_physical_GPUKernels_jl__delta_merge_kernel_ --> MMSB_src_API_jl__length
     MMSB_src_00_physical_GPUKernels_jl__delta_merge_kernel_ --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_00_physical_GPUKernels_jl__launch_delta_merge_ --> MMSB_src_00_physical_GPUKernels_jl__compute_optimal_kernel_config
     MMSB_src_00_physical_GPUKernels_jl__launch_delta_merge_ --> MMSB_src_00_physical_GPUKernels_jl__delta_merge_kernel_
-    MMSB_src_00_physical_GPUKernels_jl__launch_delta_merge_ --> MMSB_src_API_jl__length
     MMSB_src_00_physical_GPUKernels_jl__launch_delta_merge_ --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_00_physical_GPUKernels_jl__launch_page_copy_ --> MMSB_src_00_physical_GPUKernels_jl__compute_optimal_kernel_config
     MMSB_src_00_physical_GPUKernels_jl__launch_page_copy_ --> MMSB_src_00_physical_GPUKernels_jl__page_copy_kernel_
-    MMSB_src_00_physical_GPUKernels_jl__page_zero_kernel_ --> MMSB_src_API_jl__length
     MMSB_src_00_physical_GPUKernels_jl__page_zero_kernel_ --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_00_physical_GPUKernels_jl__launch_page_zero_ --> MMSB_src_00_physical_GPUKernels_jl__compute_optimal_kernel_config
-    MMSB_src_00_physical_GPUKernels_jl__launch_page_zero_ --> MMSB_src_API_jl__length
     MMSB_src_00_physical_GPUKernels_jl__launch_page_zero_ --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_00_physical_GPUKernels_jl__launch_page_zero_ --> MMSB_src_00_physical_GPUKernels_jl__page_zero_kernel_
-    MMSB_src_00_physical_GPUKernels_jl__page_compare_kernel_ --> MMSB_src_API_jl__length
     MMSB_src_00_physical_GPUKernels_jl__page_compare_kernel_ --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_00_physical_GPUKernels_jl__launch_page_compare_ --> MMSB_src_00_physical_GPUKernels_jl__compute_optimal_kernel_config
-    MMSB_src_00_physical_GPUKernels_jl__launch_page_compare_ --> MMSB_src_API_jl__length
     MMSB_src_00_physical_GPUKernels_jl__launch_page_compare_ --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_00_physical_GPUKernels_jl__launch_page_compare_ --> MMSB_src_00_physical_GPUKernels_jl__page_compare_kernel_
     MMSB_src_00_physical_GPUKernels_jl__launch_sparse_delta_apply_ --> MMSB_src_00_physical_GPUKernels_jl__compute_optimal_kernel_config
-    MMSB_src_00_physical_GPUKernels_jl__launch_sparse_delta_apply_ --> MMSB_src_API_jl__length
     MMSB_src_00_physical_GPUKernels_jl__launch_sparse_delta_apply_ --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_00_physical_GPUKernels_jl__launch_sparse_delta_apply_ --> MMSB_src_00_physical_GPUKernels_jl__sparse_delta_apply_kernel_
     MMSB_src_00_physical_PageAllocator_jl__delete_page_ --> MMSB_src_03_dag_DependencyGraph_jl__get_children
@@ -936,7 +923,6 @@ graph TD
     MMSB_src_01_page_Delta_jl__Delta --> MMSB_src_ffi_FFIWrapper_jl__rust_delta_source
     MMSB_src_01_page_Delta_jl__Delta --> MMSB_src_ffi_FFIWrapper_jl__rust_delta_timestamp
     MMSB_src_01_page_Delta_jl__apply_delta_ --> MMSB_src_ffi_FFIWrapper_jl__rust_delta_apply_
-    MMSB_src_01_page_Delta_jl__dense_data --> MMSB_src_API_jl__length
     MMSB_src_01_page_Delta_jl__dense_data --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_01_page_Delta_jl__deserialize_delta --> MMSB_src_01_page_Delta_jl__Delta
     MMSB_src_01_page_Delta_jl__deserialize_delta --> MMSB_src_01_page_Delta_jl__Delta
@@ -950,7 +936,6 @@ graph TD
     MMSB_src_01_page_Delta_jl___encode_metadata_value --> MMSB_src_01_page_Delta_jl___escape_metadata_string
     MMSB_src_01_page_Delta_jl___encode_metadata_dict --> MMSB_src_01_page_Delta_jl___encode_metadata_value
     MMSB_src_01_page_Delta_jl___encode_metadata_dict --> MMSB_src_01_page_Delta_jl___escape_metadata_string
-    MMSB_src_01_page_Delta_jl__merge_deltas_simd_ --> MMSB_src_API_jl__length
     MMSB_src_01_page_Delta_jl__merge_deltas_simd_ --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_01_page_Delta_jl___decode_metadata --> MMSB_src_01_page_Delta_jl___parse_metadata_value
     MMSB_src_01_page_Delta_jl___parse_metadata_value --> MMSB_src_01_page_Delta_jl___parse_metadata_array
@@ -975,7 +960,6 @@ graph TD
     MMSB_src_01_page_Page_jl___apply_metadata_ --> MMSB_src_01_page_Delta_jl___encode_metadata_dict
     MMSB_src_01_page_Page_jl___apply_metadata_ --> MMSB_src_01_page_Page_jl___encode_metadata_dict
     MMSB_src_01_page_Page_jl___encode_metadata_dict --> MMSB_src_01_page_Page_jl___coerce_metadata_value
-    MMSB_src_01_page_Page_jl___encode_metadata_dict --> MMSB_src_API_jl__length
     MMSB_src_01_page_Page_jl___encode_metadata_dict --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_01_page_Page_jl__metadata_from_blob --> MMSB_src_01_page_Page_jl___decode_metadata_blob
     MMSB_src_01_page_ReplayEngine_jl___blank_state_like --> MMSB_src_ffi_FFIWrapper_jl__rust_allocator_allocate
@@ -1033,7 +1017,6 @@ graph TD
     MMSB_src_01_page_TLog_jl___iterate_log --> MMSB_src_ffi_FFIWrapper_jl__rust_tlog_reader_free_
     MMSB_src_01_page_TLog_jl___iterate_log --> MMSB_src_ffi_FFIWrapper_jl__rust_tlog_reader_new
     MMSB_src_01_page_TLog_jl__get_deltas_for_page --> MMSB_src_01_page_TLog_jl__query_log
-    MMSB_src_01_page_TLog_jl__get_deltas_in_range --> MMSB_src_API_jl__length
     MMSB_src_01_page_TLog_jl__get_deltas_in_range --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_01_page_TLog_jl__get_deltas_in_range --> MMSB_src_01_page_TLog_jl__query_log
     MMSB_src_01_page_TLog_jl__compute_log_statistics --> MMSB_src_01_page_tlog_rs__summary
@@ -1058,7 +1041,6 @@ graph TD
     MMSB_src_01_types_MMSBState_jl__MMSBState --> MMSB_src_01_types_MMSBState_jl__MMSBConfig
     MMSB_src_01_types_MMSBState_jl__MMSBState --> MMSB_src_01_types_MMSBState_jl__MMSBState
     MMSB_src_01_types_MMSBState_jl__MMSBState --> MMSB_src_01_types_MMSBState_jl__MMSBState
-    MMSB_src_02_semiring_DeltaRouter_jl__length --> MMSB_src_API_jl__length
     MMSB_src_02_semiring_DeltaRouter_jl__length --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_02_semiring_DeltaRouter_jl__batch_route_deltas_ --> MMSB_benchmark_benchmarks_jl___page
     MMSB_src_02_semiring_DeltaRouter_jl__batch_route_deltas_ --> MMSB_src_01_types_MMSBState_jl__get_page
@@ -1075,7 +1057,6 @@ graph TD
     MMSB_src_02_semiring_DeltaRouter_jl__propagate_change_ --> MMSB_src_02_semiring_DeltaRouter_jl__propagate_change_
     MMSB_src_02_semiring_DeltaRouter_jl__propagate_change_ --> MMSB_src_04_propagation_PropagationEngine_jl__propagate_change_
     MMSB_src_02_semiring_DeltaRouter_jl__propagate_change_ --> MMSB_src_04_propagation_PropagationEngine_jl__propagate_change_
-    MMSB_src_02_semiring_Semiring_jl___bool_buf --> MMSB_src_API_jl__length
     MMSB_src_02_semiring_Semiring_jl___bool_buf --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_02_semiring_Semiring_jl__tropical_fold_add --> MMSB_src_02_semiring_semiring_ops_rs__fold_add
     MMSB_src_02_semiring_Semiring_jl__tropical_fold_add --> MMSB_src_ffi_FFIWrapper_jl__rust_semiring_tropical_fold_add
@@ -1109,19 +1090,16 @@ graph TD
     MMSB_src_03_dag_DependencyGraph_jl__dfs_cycle_detect --> MMSB_src_03_dag_ShadowPageGraph_jl__get_children
     MMSB_src_03_dag_DependencyGraph_jl__topological_order --> MMSB_src_03_dag_DependencyGraph_jl__get_children
     MMSB_src_03_dag_DependencyGraph_jl__topological_order --> MMSB_src_03_dag_ShadowPageGraph_jl__get_children
-    MMSB_src_03_dag_DependencyGraph_jl__topological_order --> MMSB_src_API_jl__length
     MMSB_src_03_dag_DependencyGraph_jl__topological_order --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_03_dag_DependencyGraph_jl__reverse_postorder --> MMSB_src_03_dag_DependencyGraph_jl__get_children
     MMSB_src_03_dag_DependencyGraph_jl__reverse_postorder --> MMSB_src_03_dag_ShadowPageGraph_jl__get_children
     MMSB_src_03_dag_DependencyGraph_jl__compute_closure --> MMSB_src_03_dag_DependencyGraph_jl__find_descendants
-    MMSB_src_03_dag_EventSystem_jl__get_subscription_count --> MMSB_src_API_jl__length
     MMSB_src_03_dag_EventSystem_jl__get_subscription_count --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_03_dag_EventSystem_jl__create_logging_subscriber --> MMSB_src_03_dag_EventSystem_jl__log_event_to_page_
     MMSB_src_03_dag_EventSystem_jl__create_logging_subscriber --> MMSB_src_03_dag_EventSystem_jl__subscribe_
     MMSB_src_03_dag_EventSystem_jl__log_event_to_page_ --> MMSB_src_03_dag_EventSystem_jl___serialize_event
     MMSB_src_03_dag_EventSystem_jl__log_event_to_page_ --> MMSB_benchmark_benchmarks_jl___page
     MMSB_src_03_dag_EventSystem_jl__log_event_to_page_ --> MMSB_src_01_types_MMSBState_jl__get_page
-    MMSB_src_03_dag_EventSystem_jl__log_event_to_page_ --> MMSB_src_API_jl__length
     MMSB_src_03_dag_EventSystem_jl__log_event_to_page_ --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_03_dag_EventSystem_jl__log_event_to_page_ --> MMSB_tests_mmsb_tests_rs__read_page
     MMSB_src_03_dag_EventSystem_jl__log_event_to_page_ --> MMSB_benchmark_benchmarks_jl___page
@@ -1137,7 +1115,6 @@ graph TD
     MMSB_src_03_dag_ShadowPageGraph_jl__has_cycle --> MMSB_src_03_dag_ShadowPageGraph_jl___dfs_has_cycle
     MMSB_src_03_dag_ShadowPageGraph_jl__has_cycle --> MMSB_src_03_dag_ShadowPageGraph_jl__has_cycle
     MMSB_src_03_dag_ShadowPageGraph_jl__topological_sort --> MMSB_src_03_dag_ShadowPageGraph_jl___all_vertices
-    MMSB_src_03_dag_ShadowPageGraph_jl__topological_sort --> MMSB_src_API_jl__length
     MMSB_src_03_dag_ShadowPageGraph_jl__topological_sort --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_04_propagation_PropagationEngine_jl__batch_route_deltas_ --> MMSB_src_02_semiring_DeltaRouter_jl__route_delta_
     MMSB_src_04_propagation_PropagationEngine_jl__register_recompute_fn_ --> MMSB_benchmark_benchmarks_jl___page
@@ -1162,7 +1139,6 @@ graph TD
     MMSB_src_04_propagation_PropagationEngine_jl__execute_propagation_ --> MMSB_src_04_propagation_PropagationEngine_jl__recompute_page_
     MMSB_src_04_propagation_PropagationEngine_jl__recompute_page_ --> MMSB_benchmark_benchmarks_jl___page
     MMSB_src_04_propagation_PropagationEngine_jl__recompute_page_ --> MMSB_src_01_types_MMSBState_jl__get_page
-    MMSB_src_04_propagation_PropagationEngine_jl__recompute_page_ --> MMSB_src_API_jl__length
     MMSB_src_04_propagation_PropagationEngine_jl__recompute_page_ --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_04_propagation_PropagationEngine_jl__recompute_page_ --> MMSB_tests_mmsb_tests_rs__read_page
     MMSB_src_04_propagation_PropagationEngine_jl__recompute_page_ --> MMSB_benchmark_benchmarks_jl___page
@@ -1187,12 +1163,10 @@ graph TD
     MMSB_src_05_adaptive_EntropyReduction_jl__reduce_entropy_ --> MMSB_src_06_utility_entropy_measure_jl__compute_entropy
     MMSB_src_05_adaptive_GraphRewriting_jl__rewrite_dag_ --> MMSB_src_05_adaptive_GraphRewriting_jl__can_reorder
     MMSB_src_05_adaptive_GraphRewriting_jl__rewrite_dag_ --> MMSB_src_05_adaptive_GraphRewriting_jl__compute_edge_cost
-    MMSB_src_05_adaptive_GraphRewriting_jl__rewrite_dag_ --> MMSB_src_API_jl__length
     MMSB_src_05_adaptive_GraphRewriting_jl__rewrite_dag_ --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_06_utility_MemoryPressure_jl__LRUTracker --> MMSB_src_06_utility_MemoryPressure_jl__LRUTracker
     MMSB_src_06_utility_MemoryPressure_jl__record_access --> MMSB_src_06_utility_MemoryPressure_jl__LRUTracker
     MMSB_src_06_utility_MemoryPressure_jl__evict_lru_pages --> MMSB_src_06_utility_MemoryPressure_jl__LRUTracker
-    MMSB_src_06_utility_MemoryPressure_jl__evict_lru_pages --> MMSB_src_API_jl__length
     MMSB_src_06_utility_MemoryPressure_jl__evict_lru_pages --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_06_utility_Monitoring_jl__compute_graph_depth --> MMSB_src_06_utility_Monitoring_jl___dfs_depth
     MMSB_src_06_utility_Monitoring_jl___dfs_depth --> MMSB_src_06_utility_Monitoring_jl___dfs_depth
@@ -1200,7 +1174,6 @@ graph TD
     MMSB_src_06_utility_Monitoring_jl__get_stats --> MMSB_src_ffi_FFIWrapper_jl__rust_tlog_summary
     MMSB_src_06_utility_Monitoring_jl__get_stats --> MMSB_src_01_page_TLog_jl__log_summary
     MMSB_src_06_utility_Monitoring_jl__get_stats --> MMSB_src_06_utility_Monitoring_jl__compute_graph_depth
-    MMSB_src_06_utility_Monitoring_jl__get_stats --> MMSB_src_API_jl__length
     MMSB_src_06_utility_Monitoring_jl__get_stats --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_06_utility_Monitoring_jl__print_stats --> MMSB_src_06_utility_Monitoring_jl__get_stats
     MMSB_src_06_utility_cost_functions_jl__from_telemetry --> MMSB_src_06_utility_cost_functions_jl__compute_cache_cost
@@ -1208,24 +1181,18 @@ graph TD
     MMSB_src_06_utility_cost_functions_jl__from_telemetry --> MMSB_src_06_utility_cost_functions_jl__compute_memory_cost
     MMSB_src_06_utility_entropy_measure_jl__PageDistribution --> MMSB_src_06_utility_entropy_measure_jl__PageDistribution
     MMSB_src_06_utility_utility_engine_jl__update_utility_ --> MMSB_src_06_utility_utility_engine_jl__compute_utility
-    MMSB_src_06_utility_utility_engine_jl__update_utility_ --> MMSB_src_API_jl__length
     MMSB_src_06_utility_utility_engine_jl__update_utility_ --> MMSB_src_02_semiring_DeltaRouter_jl__length
-    MMSB_src_06_utility_utility_engine_jl__utility_trend --> MMSB_src_API_jl__length
     MMSB_src_06_utility_utility_engine_jl__utility_trend --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_07_intention_IntentionTypes_jl__IntentionState --> MMSB_src_07_intention_IntentionTypes_jl__IntentionState
-    MMSB_src_07_intention_UpsertPlan_jl__validate_plan --> MMSB_src_API_jl__length
     MMSB_src_07_intention_UpsertPlan_jl__validate_plan --> MMSB_src_02_semiring_DeltaRouter_jl__length
-    MMSB_src_07_intention_attractor_states_jl__compute_gradient --> MMSB_src_API_jl__length
     MMSB_src_07_intention_attractor_states_jl__compute_gradient --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_07_intention_attractor_states_jl__evolve_state --> MMSB_src_07_intention_attractor_states_jl__compute_gradient
     MMSB_src_07_intention_attractor_states_jl__evolve_state --> MMSB_src_09_planning_optimization_planning_jl__compute_gradient
-    MMSB_src_07_intention_goal_emergence_jl__utility_gradient --> MMSB_src_API_jl__length
     MMSB_src_07_intention_goal_emergence_jl__utility_gradient --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_07_intention_goal_emergence_jl__detect_goals --> MMSB_src_07_intention_goal_emergence_jl__utility_gradient
     MMSB_src_07_intention_intent_lowering_jl__lower_intent_to_deltaspec --> MMSB_src_07_intention_intent_lowering_jl__mask_to_bytes
     MMSB_src_07_intention_intent_lowering_jl__lower_intent_to_deltaspec --> MMSB_src_07_intention_UpsertPlan_jl__validate_plan
     MMSB_src_07_intention_intention_engine_jl__form_intention --> MMSB_src_06_utility_utility_engine_jl__utility_trend
-    MMSB_src_07_intention_intention_engine_jl__evaluate_intention --> MMSB_src_API_jl__length
     MMSB_src_07_intention_intention_engine_jl__evaluate_intention --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_07_intention_intention_engine_jl__select_best_intention --> MMSB_src_07_intention_intention_engine_jl__evaluate_intention
     MMSB_src_07_intention_structural_preferences_jl__apply_preferences --> MMSB_src_07_intention_structural_preferences_jl__evaluate_preference
@@ -1236,18 +1203,13 @@ graph TD
     MMSB_src_08_reasoning_dependency_inference_jl__compute_dependency_strength --> MMSB_src_08_reasoning_dependency_inference_jl__count_paths
     MMSB_src_08_reasoning_dependency_inference_jl__count_paths --> MMSB_src_08_reasoning_dependency_inference_jl__count_paths
     MMSB_src_08_reasoning_dependency_inference_jl__analyze_flow --> MMSB_src_08_reasoning_dependency_inference_jl__compute_critical_path
-    MMSB_src_08_reasoning_logic_engine_jl__induce --> MMSB_src_API_jl__length
     MMSB_src_08_reasoning_logic_engine_jl__induce --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_08_reasoning_pattern_formation_jl__extract_subgraphs --> MMSB_src_08_reasoning_pattern_formation_jl__grow_subgraph
-    MMSB_src_08_reasoning_pattern_formation_jl__extract_subgraphs --> MMSB_src_API_jl__length
     MMSB_src_08_reasoning_pattern_formation_jl__extract_subgraphs --> MMSB_src_02_semiring_DeltaRouter_jl__length
-    MMSB_src_08_reasoning_pattern_formation_jl__grow_subgraph --> MMSB_src_API_jl__length
     MMSB_src_08_reasoning_pattern_formation_jl__grow_subgraph --> MMSB_src_02_semiring_DeltaRouter_jl__length
-    MMSB_src_08_reasoning_pattern_formation_jl__extract_subgraph_signature --> MMSB_src_API_jl__length
     MMSB_src_08_reasoning_pattern_formation_jl__extract_subgraph_signature --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_08_reasoning_pattern_formation_jl__match_pattern --> MMSB_src_08_reasoning_pattern_formation_jl__extract_subgraph_signature
     MMSB_src_08_reasoning_pattern_formation_jl__match_pattern --> MMSB_src_08_reasoning_pattern_formation_jl__grow_subgraph
-    MMSB_src_08_reasoning_pattern_formation_jl__match_pattern --> MMSB_src_API_jl__length
     MMSB_src_08_reasoning_pattern_formation_jl__match_pattern --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_08_reasoning_reasoning_engine_jl__initialize_reasoning --> MMSB_src_08_reasoning_dependency_inference_jl__infer_dependencies
     MMSB_src_08_reasoning_reasoning_engine_jl__initialize_reasoning --> MMSB_src_08_reasoning_pattern_formation_jl__find_patterns
@@ -1258,18 +1220,14 @@ graph TD
     MMSB_src_08_reasoning_reasoning_engine_jl__reason_over_dag --> MMSB_src_08_reasoning_rule_evaluation_jl__evaluate_rules
     MMSB_src_08_reasoning_reasoning_engine_jl__reason_over_dag --> MMSB_src_08_reasoning_structural_inference_jl__derive_constraints
     MMSB_src_08_reasoning_reasoning_engine_jl__perform_inference --> MMSB_src_08_reasoning_logic_engine_jl__deduce
-    MMSB_src_08_reasoning_rule_evaluation_jl__create_default_rules --> MMSB_src_API_jl__length
     MMSB_src_08_reasoning_rule_evaluation_jl__create_default_rules --> MMSB_src_02_semiring_DeltaRouter_jl__length
-    MMSB_src_08_reasoning_structural_inference_jl__infer_from_structure --> MMSB_src_API_jl__length
     MMSB_src_08_reasoning_structural_inference_jl__infer_from_structure --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_08_reasoning_structural_inference_jl__derive_constraints --> MMSB_src_08_reasoning_structural_inference_jl__infer_from_structure
-    MMSB_src_08_reasoning_structural_inference_jl__check_consistency --> MMSB_src_API_jl__length
     MMSB_src_08_reasoning_structural_inference_jl__check_consistency --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_09_planning_PlanningTypes_jl__PlanningState --> MMSB_src_09_planning_PlanningTypes_jl__PlanningState
     MMSB_src_09_planning_decision_graphs_jl__build_decision_graph --> MMSB_src_09_planning_decision_graphs_jl__expand_graph_
     MMSB_src_09_planning_decision_graphs_jl__expand_graph_ --> MMSB_src_09_planning_decision_graphs_jl__apply_action_simple
     MMSB_src_09_planning_decision_graphs_jl__expand_graph_ --> MMSB_src_09_planning_decision_graphs_jl__expand_graph_
-    MMSB_src_09_planning_decision_graphs_jl__find_optimal_path --> MMSB_src_API_jl__length
     MMSB_src_09_planning_decision_graphs_jl__find_optimal_path --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_09_planning_goal_decomposition_jl__order_subgoals --> MMSB_src_09_planning_goal_decomposition_jl__score_subgoal
     MMSB_src_09_planning_goal_decomposition_jl__score_subgoal --> MMSB_src_09_planning_goal_decomposition_jl__estimate_achievability
@@ -1279,10 +1237,8 @@ graph TD
     MMSB_src_09_planning_optimization_planning_jl__optimize_plan --> MMSB_src_09_planning_optimization_planning_jl__norm
     MMSB_src_09_planning_optimization_planning_jl__optimize_plan --> MMSB_src_09_planning_optimization_planning_jl__reconstruct_plan
     MMSB_src_09_planning_optimization_planning_jl__optimize_plan --> MMSB_src_09_planning_search_algorithms_jl__reconstruct_plan
-    MMSB_src_09_planning_optimization_planning_jl__compute_gradient --> MMSB_src_API_jl__length
     MMSB_src_09_planning_optimization_planning_jl__compute_gradient --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_09_planning_optimization_planning_jl__compute_sequence_gradient --> MMSB_src_09_planning_optimization_planning_jl__evaluate_action_sequence
-    MMSB_src_09_planning_optimization_planning_jl__prepare_for_enzyme --> MMSB_src_API_jl__length
     MMSB_src_09_planning_optimization_planning_jl__prepare_for_enzyme --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_09_planning_planning_engine_jl__create_plan --> MMSB_src_09_planning_optimization_planning_jl__optimize_plan
     MMSB_src_09_planning_planning_engine_jl__create_plan --> MMSB_src_09_planning_strategy_generation_jl__generate_strategies
@@ -1291,7 +1247,6 @@ graph TD
     MMSB_src_09_planning_planning_engine_jl__execute_planning --> MMSB_src_09_planning_rollout_simulation_jl__simulate_plan
     MMSB_src_09_planning_planning_engine_jl__execute_planning --> MMSB_src_09_planning_search_algorithms_jl__mcts_search
     MMSB_src_09_planning_planning_engine_jl__execute_planning --> MMSB_src_09_planning_planning_engine_jl__create_plan
-    MMSB_src_09_planning_planning_engine_jl__execute_planning --> MMSB_src_API_jl__length
     MMSB_src_09_planning_planning_engine_jl__execute_planning --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_09_planning_planning_engine_jl__replan --> MMSB_src_09_planning_rollout_simulation_jl__simulate_plan
     MMSB_src_09_planning_planning_engine_jl__replan --> MMSB_src_09_planning_search_algorithms_jl__astar_search
@@ -1300,7 +1255,6 @@ graph TD
     MMSB_src_09_planning_rl_planning_jl__evaluate_policy --> MMSB_src_09_planning_rl_planning_jl__immediate_reward
     MMSB_src_09_planning_rollout_simulation_jl__simulate_plan --> MMSB_src_09_planning_search_algorithms_jl__apply_action
     MMSB_src_09_planning_rollout_simulation_jl__simulate_plan --> MMSB_src_09_planning_search_algorithms_jl__can_apply
-    MMSB_src_09_planning_rollout_simulation_jl__evaluate_outcome --> MMSB_src_API_jl__length
     MMSB_src_09_planning_rollout_simulation_jl__evaluate_outcome --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_09_planning_search_algorithms_jl__MCTSNode --> MMSB_src_09_planning_search_algorithms_jl__MCTSNode
     MMSB_src_09_planning_search_algorithms_jl__select_node --> MMSB_src_09_planning_search_algorithms_jl__best_uct_child
@@ -1321,7 +1275,6 @@ graph TD
     MMSB_src_10_agent_interface_CompilerHooks_jl__Core_Compiler_typeinf --> MMSB_src_10_agent_interface_CompilerHooks_jl__log_inference_result_
     MMSB_src_10_agent_interface_CompilerHooks_jl__Core_Compiler_typeinf --> MMSB_src_10_agent_interface_CompilerHooks_jl__log_inference_start_
     MMSB_src_10_agent_interface_CompilerHooks_jl__create_inference_pages_ --> MMSB_src_00_physical_PageAllocator_jl__create_page_
-    MMSB_src_10_agent_interface_CompilerHooks_jl__create_inference_pages_ --> MMSB_src_API_jl__length
     MMSB_src_10_agent_interface_CompilerHooks_jl__create_inference_pages_ --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_10_agent_interface_InstrumentationManager_jl__enable_instrumentation_ --> MMSB_src_10_agent_interface_BaseHook_jl__enable_base_hooks_
     MMSB_src_10_agent_interface_InstrumentationManager_jl__enable_instrumentation_ --> MMSB_src_10_agent_interface_CompilerHooks_jl__enable_compiler_hooks_
@@ -1333,9 +1286,7 @@ graph TD
     MMSB_src_10_agent_interface_InstrumentationManager_jl__configure_instrumentation_ --> MMSB_src_10_agent_interface_InstrumentationManager_jl__enable_instrumentation_
     MMSB_src_10_agent_interface_checkpoint_api_jl__create_checkpoint --> MMSB_src_01_page_TLog_jl__checkpoint_log_
     MMSB_src_10_agent_interface_checkpoint_api_jl__restore_checkpoint --> MMSB_src_01_page_TLog_jl__load_checkpoint_
-    MMSB_src_11_agents_AgentTypes_jl__push_memory_ --> MMSB_src_API_jl__length
     MMSB_src_11_agents_AgentTypes_jl__push_memory_ --> MMSB_src_02_semiring_DeltaRouter_jl__length
-    MMSB_src_11_agents_enzyme_integration_jl__autodiff_loss --> MMSB_src_API_jl__length
     MMSB_src_11_agents_enzyme_integration_jl__autodiff_loss --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_11_agents_hybrid_agent_jl__observe --> MMSB_src_10_agent_interface_AgentProtocol_jl__observe
     MMSB_src_11_agents_hybrid_agent_jl__observe --> MMSB_src_11_agents_hybrid_agent_jl__observe
@@ -1345,7 +1296,6 @@ graph TD
     MMSB_src_11_agents_hybrid_agent_jl__symbolic_step_ --> MMSB_src_08_reasoning_rule_evaluation_jl__apply_rule
     MMSB_src_11_agents_hybrid_agent_jl__symbolic_step_ --> MMSB_src_11_agents_symbolic_agent_jl__apply_rule
     MMSB_src_11_agents_hybrid_agent_jl__neural_step_ --> MMSB_src_11_agents_rl_agent_jl__train_step_
-    MMSB_src_11_agents_rl_agent_jl__observe --> MMSB_src_API_jl__length
     MMSB_src_11_agents_rl_agent_jl__observe --> MMSB_src_02_semiring_DeltaRouter_jl__length
     MMSB_src_11_agents_rl_agent_jl__train_step_ --> MMSB_src_11_agents_rl_agent_jl__compute_reward
     MMSB_src_11_agents_rl_agent_jl__train_step_ --> MMSB_src_10_agent_interface_AgentProtocol_jl__observe
