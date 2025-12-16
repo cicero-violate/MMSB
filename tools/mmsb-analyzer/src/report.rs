@@ -105,6 +105,13 @@ impl ReportGenerator {
     }
     
     fn generate_module_dependencies(&self, result: &AnalysisResult) -> Result<()> {
+        if result.modules.is_empty() {
+            content.push_str("*Module dependency tracking being implemented.*\n\n");
+            content.push_str("Will show:\n- Import relationships\n- Public exports\n- Module hierarchy\n");
+            fs::write(path, content)?;
+            return Ok(());
+        }
+
         let path = Path::new(&self.output_dir).join("module_dependencies.md");
         let mut content = String::from("# Module Dependencies\n\n");
         
