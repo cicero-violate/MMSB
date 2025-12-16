@@ -195,6 +195,7 @@ function main()
     end
     
     filepath = ARGS[1]
+    println(stderr, "[Julia analyzer] Processing $filepath")
     elements = analyze_julia_file(filepath)
     
     # Convert to JSON for Rust consumption

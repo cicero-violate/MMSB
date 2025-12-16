@@ -44,7 +44,7 @@ cargo run --release
 cargo run --release -- \
   --root ../../ \
   --output ../../docs/analysis \
-  --julia-script ./julia_analyzer.jl
+  --julia-script ./src/julia/analyzer.jl
 ```
 
 ### Verbose Output
@@ -53,15 +53,23 @@ cargo run --release -- \
 cargo run --release -- --verbose
 ```
 
+### Julia Analyzer Script
+
+The Julia helpers now live under `tools/mmsb-analyzer/src/julia/`. The CLI defaults to
+`--julia-script ./src/julia/analyzer.jl`. When the Julia runtime is unavailable (e.g. in
+restricted environments), the analyzer automatically falls back to an internal parser so the
+reports continue to include Julia modules, structs, and functions.
+
 ## Generated Reports
 
-All reports are saved to `docs/analysis/`:
+All reports now live under `docs/analysis/` with one directory per category. Each directory exposes an `index.md` summary plus additional numbered files so `ls` already shows the intended reading order:
 
-1. **structure.md** - Code structure grouped per file
-2. **call_graph.md & cfg.md** - Call graph statistics + per-function CFGs
-3. **module_dependencies.md** - Module import/export relationships
-4. **function_analysis.md** - Function signatures and call lists
-5. **layer_dependencies.md** - Layer ordering, cycles, violations, unresolved symbols
+1. **`structure/`** - `index.md` summarizes counts, while `0xx-*.md` files group source files by MMSB prefix (e.g. `src/00_physical`).
+2. **`call_graph/`** - `index.md` retains the call graph statistics and Mermaid diagram.
+3. **`cfg/`** - Directory contains per-prefix CFG breakdowns so each file stays manageable; `index.md` lists the generated chunks.
+4. **`module_dependencies/`** - `index.md` summarizes module stats, and numbered files split imports, exports, submodules, and the current violations placeholder.
+5. **`function_analysis/`** - Functions are bucketed alphabetically (`010-functions_A-F.md`, etc.) with per-layer/language details.
+6. **`layer_dependencies/`** - `index.md` holds the combined Rust/Julia layer graph summary.
 
 ## Integration
 

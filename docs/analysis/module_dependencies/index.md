@@ -1,0 +1,65 @@
+# Module Dependencies
+
+- Module files analyzed: 49
+- Unique imports captured: 130
+- Unique exports captured: 39
+- Submodule declarations captured: 53
+
+## Per-file Summary
+
+- `MMSB/src/00_physical/allocator.rs` → module `allocator` (layer 00_physical, 7 imports / 0 exports / 1 submodules)
+- `MMSB/src/00_physical/allocator_stats.rs` → module `allocator_stats` (layer 00_physical, 1 imports / 0 exports / 0 submodules)
+- `MMSB/src/00_physical/device.rs` → module `device` (layer 00_physical, 4 imports / 0 exports / 0 submodules)
+- `MMSB/src/00_physical/device_registry.rs` → module `device_registry` (layer 00_physical, 4 imports / 0 exports / 0 submodules)
+- `MMSB/src/00_physical/gpu_memory_pool.rs` → module `gpu_memory_pool` (layer 00_physical, 3 imports / 0 exports / 0 submodules)
+- `MMSB/src/00_physical/host_device_sync.rs` → module `host_device_sync` (layer 00_physical, 1 imports / 0 exports / 0 submodules)
+- `MMSB/src/00_physical/lockfree_allocator.rs` → module `lockfree_allocator` (layer 00_physical, 3 imports / 0 exports / 0 submodules)
+- `MMSB/src/00_physical/mod.rs` → module `mod` (layer 00_physical, 0 imports / 8 exports / 8 submodules)
+- `MMSB/src/00_physical/nccl_integration.rs` → module `nccl_integration` (layer 00_physical, 3 imports / 0 exports / 0 submodules)
+- `MMSB/src/01_page/checkpoint.rs` → module `checkpoint` (layer 01_page, 6 imports / 0 exports / 0 submodules)
+- `MMSB/src/01_page/delta.rs` → module `delta` (layer 01_page, 3 imports / 0 exports / 0 submodules)
+- `MMSB/src/01_page/delta_merge.rs` → module `delta_merge` (layer 01_page, 2 imports / 0 exports / 0 submodules)
+- `MMSB/src/01_page/delta_validation.rs` → module `delta_validation` (layer 01_page, 1 imports / 0 exports / 0 submodules)
+- `MMSB/src/01_page/epoch.rs` → module `epoch` (layer 01_page, 1 imports / 0 exports / 0 submodules)
+- `MMSB/src/01_page/mod.rs` → module `mod` (layer 01_page, 0 imports / 8 exports / 11 submodules)
+- `MMSB/src/01_page/page.rs` → module `page` (layer 01_page, 11 imports / 0 exports / 0 submodules)
+- `MMSB/src/01_page/tlog.rs` → module `tlog` (layer 01_page, 6 imports / 0 exports / 0 submodules)
+- `MMSB/src/01_page/tlog_compression.rs` → module `tlog_compression` (layer 01_page, 1 imports / 0 exports / 0 submodules)
+- `MMSB/src/01_page/tlog_replay.rs` → module `tlog_replay` (layer 01_page, 1 imports / 0 exports / 0 submodules)
+- `MMSB/src/01_page/tlog_serialization.rs` → module `tlog_serialization` (layer 01_page, 4 imports / 0 exports / 0 submodules)
+- `MMSB/src/01_types/mod.rs` → module `mod` (layer 01_types, 0 imports / 1 exports / 0 submodules)
+- `MMSB/src/02_semiring/mod.rs` → module `mod` (layer 02_semiring, 0 imports / 3 exports / 3 submodules)
+- `MMSB/src/02_semiring/semiring_ops.rs` → module `semiring_ops` (layer 02_semiring, 1 imports / 0 exports / 0 submodules)
+- `MMSB/src/02_semiring/standard_semirings.rs` → module `standard_semirings` (layer 02_semiring, 1 imports / 0 exports / 0 submodules)
+- `MMSB/src/03_dag/cycle_detection.rs` → module `cycle_detection` (layer 03_dag, 3 imports / 0 exports / 0 submodules)
+- `MMSB/src/03_dag/mod.rs` → module `mod` (layer 03_dag, 0 imports / 4 exports / 5 submodules)
+- `MMSB/src/03_dag/shadow_graph.rs` → module `shadow_graph` (layer 03_dag, 4 imports / 0 exports / 0 submodules)
+- `MMSB/src/03_dag/shadow_graph_mod.rs` → module `shadow_graph_mod` (layer 03_dag, 0 imports / 3 exports / 0 submodules)
+- `MMSB/src/03_dag/shadow_graph_traversal.rs` → module `shadow_graph_traversal` (layer 03_dag, 3 imports / 0 exports / 0 submodules)
+- `MMSB/src/03_device/mod.rs` → module `mod` (layer 03_device, 0 imports / 1 exports / 3 submodules)
+- `MMSB/src/04_propagation/mod.rs` → module `mod` (layer 04_propagation, 0 imports / 5 exports / 5 submodules)
+- `MMSB/src/04_propagation/propagation_command_buffer.rs` → module `propagation_command_buffer` (layer 04_propagation, 2 imports / 0 exports / 0 submodules)
+- `MMSB/src/04_propagation/propagation_engine.rs` → module `propagation_engine` (layer 04_propagation, 6 imports / 0 exports / 0 submodules)
+- `MMSB/src/04_propagation/propagation_fastpath.rs` → module `propagation_fastpath` (layer 04_propagation, 1 imports / 0 exports / 0 submodules)
+- `MMSB/src/04_propagation/propagation_queue.rs` → module `propagation_queue` (layer 04_propagation, 5 imports / 0 exports / 0 submodules)
+- `MMSB/src/04_propagation/sparse_message_passing.rs` → module `sparse_message_passing` (layer 04_propagation, 2 imports / 0 exports / 0 submodules)
+- `MMSB/src/05_adaptive/locality_optimizer.rs` → module `locality_optimizer` (layer 05_adaptive, 2 imports / 0 exports / 1 submodules)
+- `MMSB/src/05_adaptive/memory_layout.rs` → module `memory_layout` (layer 05_adaptive, 2 imports / 0 exports / 1 submodules)
+- `MMSB/src/05_adaptive/mod.rs` → module `mod` (layer 05_adaptive, 0 imports / 3 exports / 3 submodules)
+- `MMSB/src/05_adaptive/page_clustering.rs` → module `page_clustering` (layer 05_adaptive, 2 imports / 0 exports / 1 submodules)
+- `MMSB/src/06_utility/cpu_features.rs` → module `cpu_features` (layer 06_utility, 1 imports / 0 exports / 0 submodules)
+- `MMSB/src/06_utility/mod.rs` → module `mod` (layer 06_utility, 0 imports / 2 exports / 2 submodules)
+- `MMSB/src/06_utility/telemetry.rs` → module `telemetry` (layer 06_utility, 3 imports / 0 exports / 1 submodules)
+- `MMSB/src/ffi.rs` → module `ffi` (layer root, 13 imports / 0 exports / 0 submodules)
+- `MMSB/src/lib.rs` → module `lib` (layer root, 0 imports / 1 exports / 8 submodules)
+- `MMSB/tests/delta_validation.rs` → module `delta_validation` (layer root, 1 imports / 0 exports / 0 submodules)
+- `MMSB/tests/examples_basic.rs` → module `examples_basic` (layer root, 3 imports / 0 exports / 0 submodules)
+- `MMSB/tests/mmsb_tests.rs` → module `mmsb_tests` (layer root, 5 imports / 0 exports / 0 submodules)
+- `MMSB/tests/week27_31_integration.rs` → module `week27_31_integration` (layer root, 8 imports / 0 exports / 0 submodules)
+
+## Detailed Files
+
+- `010-imports.md` – expanded import lists
+- `020-exports.md` – export statements
+- `030-submodules.md` – nested module declarations
+- `040-violations.md` – placeholder for future per-module violations

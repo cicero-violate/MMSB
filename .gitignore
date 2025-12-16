@@ -6,6 +6,8 @@
 /Manifest.toml
 /.julia_artifacts/
 /.julia_depot/
+tools/mmsb-analyzer/.julia-home/
+tools/mmsb-analyzer/src/julia/.julia-depot/
 
 # Build artifacts
 *.so
