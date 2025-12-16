@@ -7,6 +7,20 @@ use std::collections::HashMap;
 use std::fs;
 use std::path::Path;
 
+/// Compress absolute paths to MMSB-relative format
+fn compress_path(path: &str) -> String {
+    if let Some(idx) = path.find("/MMSB/") {
+        return format!("MMSB{}", &path[idx + 5..]);
+    }
+    if path.starts_with("MMSB/") {
+        return path.to_string();
+    }
+    if let Some(idx) = path.rfind("/src/") {
+        return format!("MMSB/src{}", &path[idx + 4..]);
+    }
+    path.to_string()
+}
+
 pub struct ReportGenerator {
     output_dir: String,
 }
@@ -20,7 +34,7 @@ impl ReportGenerator {
         fs::create_dir_all(&self.output_dir)?;
         
         self.generate_structure_report(result)?;
-        self.generate_control_flow_report(result, cf_analyzer)?;
+        self.generate_call_graph_report(result, cf_analyzer)?;
         self.generate_module_dependencies(result)?;
         self.generate_function_analysis(result)?;
         
