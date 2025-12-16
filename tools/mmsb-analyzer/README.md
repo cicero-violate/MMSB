@@ -1,13 +1,16 @@
 # MMSB Analyzer
 
-Intelligence substrate analyzer for the MMSB project. Provides deep static analysis of Rust and Julia codebases.
+Intelligence substrate analyzer for the MMSB project. 
+It is designed to enforce the layered architecture: start from the true entry points (e.g. `src/MMSB.jl`) 
+and surface every file/module/function/symbol that reaches “up” into the wrong layer so those violations can be corrected during refactors.
 
 ## Features
 
 - **AST-based Rust parsing** using `syn` crate (not regex)
 - **Julia integration** via FFI to Julia's native parser
+- **Layer dependency enforcement** that models entry points and highlights cross-layer violations
 - **Control flow analysis** with call graph generation
-- **Module dependency tracking**
+- **Module dependency tracking** (imports, exports, submodules)
 - **Mermaid diagram generation** for visualization
 - **Multi-language support** (Rust + Julia)
 
@@ -54,10 +57,11 @@ cargo run --release -- --verbose
 
 All reports are saved to `docs/analysis/`:
 
-1. **structure.md** - Code structure by layer and language
-2. **control_flow.md** - Call graphs with Mermaid diagrams
+1. **structure.md** - Code structure grouped per file
+2. **call_graph.md & cfg.md** - Call graph statistics + per-function CFGs
 3. **module_dependencies.md** - Module import/export relationships
-4. **function_analysis.md** - Detailed function signatures and call lists
+4. **function_analysis.md** - Function signatures and call lists
+5. **layer_dependencies.md** - Layer ordering, cycles, violations, unresolved symbols
 
 ## Integration
 
@@ -103,10 +107,10 @@ fn main() {
 
 This tool generates a comprehensive map of the MMSB codebase:
 
-1. **Run the analyzer** before making changes to understand structure
-2. **Read generated reports** in `docs/analysis/` for context
-3. **Update reports** after significant changes
-4. **Use call graphs** to trace function dependencies
-5. **Check module deps** before adding imports
+1. **Run the analyzer** before changes to understand the current layer state.
+2. **Read the reports** (especially `layer_dependencies.md`) to see mis-layered symbols.
+3. **Fix violations** by moving the referenced code into its correct layer.
+4. **Use call graphs/CFGs** when reasoning about control flow impacts.
+5. **Regenerate reports** to ensure the layered architecture remains consistent.
 
 The reports are designed to be easily parsed by LLM-based agents for understanding project architecture.
