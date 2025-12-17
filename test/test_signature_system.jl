@@ -1,11 +1,10 @@
 # Test T1.1: Recompute Dependency Signature System
 
 using Test
-using MMSB
-using MMSB.API: create_page, update_page
 using MMSB.PageTypes: PageID
 using MMSB.PropagationEngine: RecomputeSignature, compute_signature, register_passthrough_recompute!, register_recompute_fn!
 using MMSB.MMSBStateTypes: get_page
+using MMSB.API: create_page, update_page
 
 @testset "T1.1: Signature System" begin
     @testset "Signature creation" begin
