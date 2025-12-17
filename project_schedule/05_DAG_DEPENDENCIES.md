@@ -42,7 +42,41 @@
 
 **Documentation**
 - [ ] Update `README.md` performance table once both targets met.
-- [ ] Add “Benchmark Capture” instructions describing how to refresh `benchmark/results/*.json`.
+- [ ] Add "Benchmark Capture" instructions describing how to refresh `benchmark/results/*.json`.
+
+---
+
+### P7-Investigate: Benchmark Analysis Findings (P1, new)
+**Owner:** Runtime/Julia
+**Based on:** benchmarks.jl results 2025-12-17
+
+**Critical Issues Identified:**
+1. **Propagation overhead: 176.5 μs vs 10 μs target (16.6× slower)**
+   - [ ] Profile `API.update_page()` → `PropagationEngine` path with perf/flamegraph
+   - [ ] Measure time spent in: delta creation, graph traversal, recompute registration
+   - [ ] Target: Isolate where 154 μs overhead originates (propagation - delta_cpu_sparse)
+
+2. **Allocation overhead: 12.2 μs vs 1 μs target (12× slower)**
+   - [ ] Audit `_start_state()` + `_page()` for 27 allocations (2.1 KB bookkeeping)
+   - [ ] Profile state initialization path separate from page allocation
+   - [ ] Consider lazy initialization or object pooling for frequent allocations
+
+3. **GPU counterproductive for small workloads:**
+   - [ ] gpu_sparse: 3.9 ms vs cpu_sparse: 22.4 μs (174× slower)
+   - [ ] Implement hybrid routing: CPU for <64 KB pages, GPU for ≥256 KB
+   - [ ] Profile memory transfer overhead (1.8 MB allocations per GPU operation)
+
+4. **Batch routing scales poorly:**
+   - [ ] batch_32x4: 125 μs/delta vs batch_128x2: 151 μs/delta
+   - [ ] Investigate `DeltaRouter.batch_route_deltas!` for sequential bottlenecks
+   - [ ] Check if dependency resolution prevents parallelism
+   - [ ] Target: Sub-linear scaling with batch size
+
+**Success Metrics:**
+- Propagation/single_hop < 50 μs (current: 176.5 μs)
+- Allocation/cpu_1kb < 5 μs (current: 12.2 μs)
+- GPU only used when demonstrably faster than CPU
+- Batch efficiency: <80 μs/delta for batch_32x4
 
 ---
 

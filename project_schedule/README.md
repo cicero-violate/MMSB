@@ -9,3 +9,6 @@ Phase 6 deliverables are finished. Per request, the canonical copies of the sche
 - `PROPOSAL.md`
 
 This folder now only holds stubs that point to the archived versions plus the active `06_TASK_LOG.md` for any future work.
+
+---
+**Note:** This README was last updated on 2025-12-17.

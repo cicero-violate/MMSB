@@ -22,8 +22,38 @@ using ..DeltaTypes: Delta as DeltaType
 export propagate_change!, schedule_propagation!, execute_propagation!
 export PropagationMode, IMMEDIATE, DEFERRED, BATCH
 export register_recompute_fn!, register_passthrough_recompute!, queue_recomputation!
+export RecomputeSignature, compute_signature
 export enable_graph_capture, disable_graph_capture, replay_cuda_graph
 export batch_route_deltas!
+
+"""
+    RecomputeSignature
+
+Captures dependency state for recompute cache validation.
+Stores parent IDs and their epochs at time of signature creation.
+"""
+struct RecomputeSignature
+    parent_ids::Vector{PageID}
+    parent_epochs::Vector{UInt32}
+end
+
+"""
+    compute_signature(state, page) -> RecomputeSignature
+
+Compute current signature for a page based on its declared dependencies.
+Returns signature with parent IDs and current epochs.
+"""
+function compute_signature(state::MMSBState, page)::RecomputeSignature
+    deps = get(page.metadata, :recompute_deps, PageID[])
+    epochs = map(deps) do parent_id
+        p = get_page(state, parent_id)
+        if p === nothing
+            return UInt32(0)
+        end
+        return get(p.metadata, :epoch_dirty, UInt32(0))
+    end
+    return RecomputeSignature(deps, epochs)
+end
 
 @enum PropagationMode begin
     IMMEDIATE  # Propagate immediately on change
@@ -175,6 +205,10 @@ function register_passthrough_recompute!(state::MMSBState, target_page_id::PageI
         source === nothing && throw(PageNotFoundError(UInt64(source_page_id), "register_passthrough_recompute!"))
         return Vector{UInt8}(transform(read_page(source)))
     end)
+    page = get_page(state, target_page_id)
+    if page !== nothing
+        page.metadata[:recompute_deps] = [source_page_id]
+    end
 end
 
 """
