@@ -46,7 +46,7 @@ function execute_transaction_sequence(state::MMSB.MMSBStateTypes.MMSBState, seed
     return Dict(
         "pages" => Dict(id => MMSB.API.query_page(state, id) for id in pages),
         "next_page_id" => state.next_page_id[],
-        "next_delta_id" => Threads.atomic_load(state.next_delta_id),
+        "next_delta_id" => state.next_delta_id[],
         "page_count" => length(state.pages),
     )
 end
@@ -121,7 +121,7 @@ end
         # Verify non-empty
         @test !isempty(state.pages)
         @test state.next_page_id[] > MMSB.PageTypes.PageID(1)
-        @test Threads.atomic_load(state.next_delta_id) > UInt64(1)
+        @test state.next_delta_id[] > UInt64(1)
         
         # Reset
         MMSB.StateManagement.reset_state!(state)
@@ -129,7 +129,7 @@ end
         # Verify complete reset
         @test isempty(state.pages)
         @test state.next_page_id[] == MMSB.PageTypes.PageID(1)
-        @test Threads.atomic_load(state.next_delta_id) == UInt64(1)
+        @test state.next_delta_id[] == UInt64(1)
         @test isempty(state.graph.deps)
     end
     
