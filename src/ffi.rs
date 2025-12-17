@@ -681,6 +681,16 @@ pub extern "C" fn mmsb_tlog_append(handle: TLogHandle, delta: DeltaHandle) -> i3
     }
 }
 
+#[no_mangle]
+pub extern "C" fn mmsb_tlog_clear_entries(handle: TLogHandle) {
+    if handle.ptr.is_null() {
+        set_last_error(MMSBErrorCode::InvalidHandle);
+        return;
+    }
+    let log = unsafe { &*handle.ptr };
+    log.clear_entries();
+}
+
 // src/ffi.rs — mmsb_checkpoint_write
 #[no_mangle]
 pub extern "C" fn mmsb_checkpoint_write(

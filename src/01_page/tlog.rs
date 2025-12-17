@@ -45,6 +45,12 @@ impl TransactionLog {
         })
     }
 
+    /// Clear in-memory entries without modifying the log file.
+    /// Used for state reset while preserving append-only log semantics.
+    pub fn clear_entries(&self) {
+        self.entries.write().clear();
+    }
+
     pub fn append(&self, delta: Delta) -> std::io::Result<()> {
         {
             self.entries.write().push_back(delta.clone());

@@ -251,6 +251,13 @@ function rust_tlog_append!(handle::RustTLogHandle, delta::RustDeltaHandle)
     nothing
 end
 
+function rust_tlog_clear_entries!(handle::RustTLogHandle)
+    ensure_rust_artifacts()
+    ccall((:mmsb_tlog_clear_entries, LIBMMSB), Cvoid, (RustTLogHandle,), handle)
+    _check_rust_error("rust_tlog_clear_entries!")
+    nothing
+end
+
 function rust_tlog_reader_new(path::AbstractString)
     ensure_rust_artifacts()
     handle = ccall((:mmsb_tlog_reader_new, LIBMMSB), RustTLogReaderHandle, (Cstring,), path)
