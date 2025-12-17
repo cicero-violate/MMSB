@@ -3,7 +3,7 @@
 using Test
 using MMSB.PageTypes: PageID
 using MMSB.PropagationEngine: RecomputeSignature, compute_signature, register_passthrough_recompute!, register_recompute_fn!
-using MMSB.MMSBStateTypes: get_page
+using MMSB.MMSBStateTypes: MMSBState, get_page
 using MMSB.API: create_page, update_page
 
 @testset "T1.1: Signature System" begin
