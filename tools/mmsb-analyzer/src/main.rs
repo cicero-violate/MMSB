@@ -31,7 +31,7 @@ struct Args {
     output: PathBuf,
 
     /// Path to Julia analyzer script
-    #[arg(short, long, default_value = "./src/julia/analyzer.jl")]
+    #[arg(short, long, default_value = "./src/analyzer.jl")]
     julia_script: PathBuf,
 
     /// Verbose output
@@ -65,8 +65,9 @@ fn main() -> Result<()> {
     let rust_analyzer = RustAnalyzer::new(root_path.to_string_lossy().to_string());
 
     let julia_analyzer = JuliaAnalyzer::new(
-        root_path.to_string_lossy().to_string(),
-        julia_script_path.to_string_lossy().to_string(),
+        root_path.clone(),
+        julia_script_path.clone(),
+        output_path.join("cfg/dots"),
     );
 
     let mut combined_result = AnalysisResult::new();
@@ -167,7 +168,8 @@ fn gather_julia_files(root: &Path) -> Vec<PathBuf> {
         .filter(|e| e.path().extension().map_or(false, |ext| ext == "jl"))
         .filter(|e| {
             !e.path().components().any(|c| {
-                c.as_os_str() == "test" || c.as_os_str() == "examples" || c.as_os_str() == "tools"
+                let name = c.as_os_str();
+                name == "test" || name == "examples" || name == "tools" || name == ".julia"
             })
         })
         .map(|entry| entry.into_path())

@@ -1,7 +1,7 @@
 //! Type definitions for code analysis
 
 use serde::{Deserialize, Serialize};
-use std::collections::{HashMap, HashSet};
+use std::collections::HashMap;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum Language {
@@ -59,12 +59,29 @@ pub struct CallGraphNode {
     pub called_by: Vec<String>,
 }
 
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct CfgNode {
+    pub id: usize,
+    pub label: String,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct FunctionCfg {
+    pub function: String,
+    pub file_path: String,
+    pub nodes: Vec<CfgNode>,
+    pub edges: Vec<(usize, usize)>,
+    pub branch_count: usize,
+    pub loop_count: usize,
+}
+
 #[derive(Debug)]
 pub struct AnalysisResult {
     pub elements: Vec<CodeElement>,
     pub modules: Vec<ModuleInfo>,
     pub call_graph: HashMap<String, CallGraphNode>,
     pub type_hierarchy: HashMap<String, Vec<String>>,
+    pub cfgs: Vec<FunctionCfg>,
 }
 
 impl AnalysisResult {
@@ -74,24 +91,29 @@ impl AnalysisResult {
             modules: Vec::new(),
             call_graph: HashMap::new(),
             type_hierarchy: HashMap::new(),
+            cfgs: Vec::new(),
         }
     }
-    
+
     pub fn add_element(&mut self, element: CodeElement) {
         self.elements.push(element);
     }
-    
-    pub fn add_module(&mut self, module: ModuleInfo) {
-        self.modules.push(module);
+
+    pub fn add_cfg(&mut self, cfg: FunctionCfg) {
+        self.cfgs.push(cfg);
     }
-    
+
     pub fn merge(&mut self, other: AnalysisResult) {
         self.elements.extend(other.elements);
         self.modules.extend(other.modules);
         self.call_graph.extend(other.call_graph);
         for (key, mut values) in other.type_hierarchy {
-            self.type_hierarchy.entry(key).or_insert_with(Vec::new).append(&mut values);
+            self.type_hierarchy
+                .entry(key)
+                .or_insert_with(Vec::new)
+                .append(&mut values);
         }
+        self.cfgs.extend(other.cfgs);
     }
 }
 
