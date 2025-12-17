@@ -10,111 +10,317 @@ include(joinpath(BASE_DIR, "03_build_model.jl"))
 using JSON
 using Printf
 
-function write_cfg_dot(fname::Symbol, cfg::ControlFlowGraph, dot_path::String)
+function write_combined_cfg_dot(file_path::String, dot_path::String, title::String)
+    """Generate one DOT file with all functions from a file, showing CFGs and inter-function calls"""
+    
+    all_code = read_all_code(file_path)
+    functions, scg = analyze_code(all_code)
+    
+    if isempty(functions)
+        return 0
+    end
+    
     open(dot_path, "w") do io
-        println(io, "digraph \"$(fname)\" {")
-        println(io, "    rankdir=TB;")
-        println(io, "    label=\"$(fname) (CC=$(length(cfg.edges) - length(cfg.nodes) + 2))\";")
-        println(io, "    labelloc=t;")
+        println(io, "digraph ProgramCFG {")
+        println(io, "  rankdir=TB;")
+        println(io, "  compound=true;")
+        println(io, "  newrank=true;")
+        println(io, "")
+        println(io, "  // Program metadata")
+        println(io, "  label=\"$(title) - $(length(functions)) functions\";")
+        println(io, "  labelloc=t;")
+        println(io, "  fontsize=16;")
         println(io, "")
         
-        # Write nodes
-        for node in cfg.nodes
-            shape = if node.type == CFG_ENTRY
-                "ellipse"
-            elseif node.type == CFG_EXIT
-                "doubleoctagon"
-            elseif node.type == CFG_BRANCH
-                "diamond"
-            elseif node.type == CFG_LOOP_HEADER
-                "box"
+        func_idx = 1
+        func_to_cluster = Dict{Symbol, Int}()
+        func_entry_nodes = Dict{Symbol, Int}()
+        func_exit_nodes = Dict{Symbol, Int}()
+        
+        # Generate CFG for each function in its own cluster
+        for (fname, expr) in sort(collect(functions), by=x->string(x[1]))
+            body = if expr.head == :function && length(expr.args) >= 2
+                expr.args[2]
+            elseif expr.head == :(=) && length(expr.args) == 2
+                expr.args[2]
             else
-                "box"
+                nothing
             end
             
-            fillcolor = if node.type == CFG_ENTRY
-                "lightgreen"
-            elseif node.type == CFG_EXIT
-                "lightcoral"
-            elseif node.type == CFG_BRANCH
-                "yellow"
-            elseif node.type == CFG_LOOP_HEADER
-                "orange"
-            else
-                "lightblue"
+            if body === nothing
+                continue
             end
             
-            style = if node.type in [CFG_ENTRY, CFG_EXIT]
-                "filled,bold"
-            elseif node.type == CFG_LOOP_HEADER
-                "filled,rounded"
-            else
-                "filled"
+            cfg = extract_cfg_from_ast(fname, body)
+            cc = length(cfg.edges) - length(cfg.nodes) + 2
+            func_to_cluster[fname] = func_idx
+            
+            println(io, "  subgraph cluster_$(func_idx) {")
+            println(io, "    label=\"$(fname) (CC=$(cc))\";")
+            println(io, "    style=filled;")
+            println(io, "    fillcolor=lightgray;")
+            println(io, "    color=black;")
+            println(io, "")
+            
+            # Track entry/exit for inter-function calls
+            func_entry_nodes[fname] = cfg.entry_id
+            func_exit_nodes[fname] = cfg.exit_id
+            
+            # Write nodes
+            for node in cfg.nodes
+                shape = if node.type == CFG_ENTRY
+                    "ellipse"
+                elseif node.type == CFG_EXIT
+                    "doubleoctagon"
+                elseif node.type == CFG_BRANCH
+                    "diamond"
+                elseif node.type == CFG_LOOP_HEADER
+                    "box"
+                else
+                    "box"
+                end
+                
+                fillcolor = if node.type == CFG_ENTRY
+                    "lightgreen"
+                elseif node.type == CFG_EXIT
+                    "lightcoral"
+                elseif node.type == CFG_BRANCH
+                    "yellow"
+                elseif node.type == CFG_LOOP_HEADER
+                    "orange"
+                else
+                    "lightblue"
+                end
+                
+                style = if node.type in [CFG_ENTRY, CFG_EXIT]
+                    "filled,bold"
+                elseif node.type == CFG_LOOP_HEADER
+                    "filled,rounded"
+                else
+                    "filled"
+                end
+                
+                label = node.label
+                if !isempty(node.instructions)
+                    lines_str = join(node.instructions, ",")
+                    label = "$(node.label) L$(lines_str)"
+                end
+                
+                println(io, "    f$(func_idx)_n$(node.id) [label=\"$(label)\", shape=$(shape), fillcolor=$(fillcolor), style=\"$(style)\"];")
             end
             
-            # Build label with line numbers if available
-            label = node.label
-            if !isempty(node.instructions)
-                lines_str = join(node.instructions, ",")
-                label = "$(node.label) L$(lines_str)"
+            println(io, "")
+            
+            # Write edges
+            for edge in cfg.edges
+                edge_attrs = ""
+                if edge.condition === :true
+                    edge_attrs = " [label=\"T\", color=\"darkgreen\"]"
+                elseif edge.condition === :false
+                    edge_attrs = " [label=\"F\", color=\"red\"]"
+                end
+                println(io, "    f$(func_idx)_n$(edge.source) -> f$(func_idx)_n$(edge.target)$(edge_attrs);")
             end
             
-            println(io, "    n$(node.id) [label=\"$(label)\", shape=$(shape), fillcolor=$(fillcolor), style=\"$(style)\"];")
+            println(io, "  }")
+            println(io, "")
+            func_idx += 1
         end
         
+        # Inter-function calls
+        println(io, "  // Inter-function calls")
+        println(io, "  edge [style=dashed, color=blue, penwidth=2];")
         println(io, "")
         
-        # Write edges
-        for edge in cfg.edges
-            edge_attrs = ""
-            if edge.condition === :true
-                edge_attrs = " [label=\"T\", color=\"darkgreen\"]"
-            elseif edge.condition === :false
-                edge_attrs = " [label=\"F\", color=\"red\"]"
+        for (caller, callee) in scg
+            if haskey(func_to_cluster, caller) && haskey(func_to_cluster, callee)
+                caller_cluster = func_to_cluster[caller]
+                callee_cluster = func_to_cluster[callee]
+                caller_exit = func_exit_nodes[caller]
+                callee_entry = func_entry_nodes[callee]
+                
+                println(io, "  f$(caller_cluster)_n$(caller_exit) -> f$(callee_cluster)_n$(callee_entry) [ltail=cluster_$(caller_cluster), lhead=cluster_$(callee_cluster), label=\"call\"];")
             end
-            println(io, "    n$(edge.source) -> n$(edge.target)$(edge_attrs);")
         end
         
         println(io, "}")
     end
+    
+    return length(functions)
 end
 
-function write_all_function_cfgs(file_path::String, dot_dir::String, title::String)
-    println(stderr, "[DEBUG] Generating CFG DOTs for $(title)")
-    all_code = read_all_code(file_path)
-    functions, scg = analyze_code(all_code)
+function write_layer_cfg_dot(layer_name::String, file_paths::Vector{String}, dot_path::String)
+    """Generate one DOT file combining all functions from all files in a layer"""
     
-    println(stderr, "[DEBUG]   Functions found: $(length(functions))")
+    all_functions = Dict{Symbol, Expr}()
+    all_scg = Vector{Tuple{Symbol, Symbol}}()
+    file_sources = Dict{Symbol, String}()
     
-    if isempty(functions)
-        println(stderr, "[DEBUG]   ⚠ No functions - skipping CFG generation")
-        return
-    end
-    
-    mkpath(dot_dir)
-    
-    # Generate CFG for each function
-    cfg_count = 0
-    for (fname, expr) in functions
-        # Extract CFG from function body
-        body = if expr.head == :function && length(expr.args) >= 2
-            expr.args[2]
-        elseif expr.head == :(=) && length(expr.args) == 2
-            expr.args[2]
-        else
-            nothing
+    # Collect all functions from all files in layer
+    for file_path in file_paths
+        all_code = read_all_code(file_path)
+        functions, scg = analyze_code(all_code)
+        
+        for (fname, expr) in functions
+            all_functions[fname] = expr
+            file_sources[fname] = basename(file_path)
         end
         
-        if body !== nothing
-            cfg = extract_cfg_from_ast(fname, body)
-            dot_path = joinpath(dot_dir, "$(fname)_cfg.dot")
-            write_cfg_dot(fname, cfg, dot_path)
-            cfg_count += 1
-            println(stderr, "[DEBUG]     ✓ $(fname): $(length(cfg.nodes)) nodes, $(length(cfg.edges)) edges")
-        end
+        append!(all_scg, scg)
     end
     
-    println(stderr, "[DEBUG]   Generated $(cfg_count) CFG DOT files in: $(dot_dir)")
+    if isempty(all_functions)
+        return 0
+    end
+    
+    # Write combined layer DOT
+    open(dot_path, "w") do io
+        println(io, "digraph LayerCFG {")
+        println(io, "  rankdir=TB;")
+        println(io, "  compound=true;")
+        println(io, "  newrank=true;")
+        println(io, "")
+        println(io, "  label=\"$(layer_name) - $(length(all_functions)) functions from $(length(file_paths)) files\";")
+        println(io, "  labelloc=t;")
+        println(io, "  fontsize=18;")
+        println(io, "")
+        
+        func_idx = 1
+        func_to_cluster = Dict{Symbol, Int}()
+        func_entry_nodes = Dict{Symbol, Int}()
+        func_exit_nodes = Dict{Symbol, Int}()
+        
+        for (fname, expr) in sort(collect(all_functions), by=x->string(x[1]))
+            body = if expr.head == :function && length(expr.args) >= 2
+                expr.args[2]
+            elseif expr.head == :(=) && length(expr.args) == 2
+                expr.args[2]
+            else
+                nothing
+            end
+            
+            if body === nothing
+                continue
+            end
+            
+            cfg = extract_cfg_from_ast(fname, body)
+            cc = length(cfg.edges) - length(cfg.nodes) + 2
+            func_to_cluster[fname] = func_idx
+            source_file = get(file_sources, fname, "unknown")
+            
+            println(io, "  subgraph cluster_$(func_idx) {")
+            println(io, "    label=\"$(fname) ($(source_file), CC=$(cc))\";")
+            println(io, "    style=filled;")
+            println(io, "    fillcolor=lightgray;")
+            println(io, "    color=black;")
+            println(io, "")
+            
+            func_entry_nodes[fname] = cfg.entry_id
+            func_exit_nodes[fname] = cfg.exit_id
+            
+            for node in cfg.nodes
+                shape = if node.type == CFG_ENTRY
+                    "ellipse"
+                elseif node.type == CFG_EXIT
+                    "doubleoctagon"
+                elseif node.type == CFG_BRANCH
+                    "diamond"
+                elseif node.type == CFG_LOOP_HEADER
+                    "box"
+                else
+                    "box"
+                end
+                
+                fillcolor = if node.type == CFG_ENTRY
+                    "lightgreen"
+                elseif node.type == CFG_EXIT
+                    "lightcoral"
+                elseif node.type == CFG_BRANCH
+                    "yellow"
+                elseif node.type == CFG_LOOP_HEADER
+                    "orange"
+                else
+                    "lightblue"
+                end
+                
+                style = if node.type in [CFG_ENTRY, CFG_EXIT]
+                    "filled,bold"
+                elseif node.type == CFG_LOOP_HEADER
+                    "filled,rounded"
+                else
+                    "filled"
+                end
+                
+                label = node.label
+                if !isempty(node.instructions)
+                    lines_str = join(node.instructions, ",")
+                    label = "$(node.label) L$(lines_str)"
+                end
+                
+                println(io, "    f$(func_idx)_n$(node.id) [label=\"$(label)\", shape=$(shape), fillcolor=$(fillcolor), style=\"$(style)\"];")
+            end
+            
+            println(io, "")
+            
+            for edge in cfg.edges
+                edge_attrs = ""
+                if edge.condition === :true
+                    edge_attrs = " [label=\"T\", color=\"darkgreen\"]"
+                elseif edge.condition === :false
+                    edge_attrs = " [label=\"F\", color=\"red\"]"
+                end
+                println(io, "    f$(func_idx)_n$(edge.source) -> f$(func_idx)_n$(edge.target)$(edge_attrs);")
+            end
+            
+            println(io, "  }")
+            println(io, "")
+            func_idx += 1
+        end
+        
+        println(io, "  // Inter-function calls")
+        println(io, "  edge [style=dashed, color=blue, penwidth=2];")
+        println(io, "")
+        
+        for (caller, callee) in unique(all_scg)
+            if haskey(func_to_cluster, caller) && haskey(func_to_cluster, callee)
+                caller_cluster = func_to_cluster[caller]
+                callee_cluster = func_to_cluster[callee]
+                caller_exit = func_exit_nodes[caller]
+                callee_entry = func_entry_nodes[callee]
+                
+                println(io, "  f$(caller_cluster)_n$(caller_exit) -> f$(callee_cluster)_n$(callee_entry) [ltail=cluster_$(caller_cluster), lhead=cluster_$(callee_cluster), label=\"call\"];")
+            end
+        end
+        
+        println(io, "}")
+    end
+    
+    return length(all_functions)
+end
+
+function detect_layer(file_path::String)
+    """Extract layer from path like src/00_physical/File.jl -> 00_physical"""
+    parts = splitpath(file_path)
+    for part in parts
+        if occursin(r"^\d+_", part)
+            return part
+        end
+    end
+    return "root"
+end
+
+function write_all_cfgs(file_path::String, dot_dir::String, title::String)
+    println(stderr, "[DEBUG] Generating CFG DOT for $(title)")
+    
+    # Per-file DOT
+    file_dot = joinpath(dot_dir, "file_cfg.dot")
+    func_count = write_combined_cfg_dot(file_path, file_dot, title)
+    
+    if func_count > 0
+        println(stderr, "[DEBUG]   ✓ Generated file CFG: $(func_count) functions")
+    else
+        println(stderr, "[DEBUG]   ⚠ No functions found")
+    end
 end
 
 function run_model(file_path::String, dot_dir::String)
@@ -132,14 +338,13 @@ function run_model(file_path::String, dot_dir::String)
         model = nothing
     end
     
-    write_all_function_cfgs(file_path, dot_dir, basename(file_path))
+    write_all_cfgs(file_path, dot_dir, basename(file_path))
     return model
 end
 
 function convert_functions_to_json(functions::Dict{Symbol, Expr}, scg::Vector{Tuple{Symbol, Symbol}}, file_path::String)
     elements = []
     
-    # Build call map from static call graph
     calls_by_func = Dict{Symbol, Vector{String}}()
     for (caller, callee) in scg
         if !haskey(calls_by_func, caller)
@@ -148,12 +353,10 @@ function convert_functions_to_json(functions::Dict{Symbol, Expr}, scg::Vector{Tu
         push!(calls_by_func[caller], string(callee))
     end
     
-    # Convert to unique sorted lists
     for (_, calls) in calls_by_func
         sort!(unique!(calls))
     end
     
-    # Create elements for each function
     for (fname, expr) in functions
         calls = get(calls_by_func, fname, String[])
         push!(elements, Dict(
@@ -177,14 +380,11 @@ function main()
     file_path = abspath(ARGS[1])
     dot_dir = abspath(ARGS[2])
     
-    # Parse with AST analyzer
     all_code = read_all_code(file_path)
     functions, scg = analyze_code(all_code)
     
-    # Generate CFG DOT files
     run_model(file_path, dot_dir)
     
-    # Convert to JSON for Rust
     elements = convert_functions_to_json(functions, scg, file_path)
     println(JSON.json(elements))
 end
