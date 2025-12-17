@@ -31,7 +31,7 @@ struct Args {
     output: PathBuf,
 
     /// Path to Julia analyzer script
-    #[arg(short, long, default_value = "./src/analyzer.jl")]
+    #[arg(short, long, default_value = "./src/00_main.jl")]
     julia_script: PathBuf,
 
     /// Verbose output
