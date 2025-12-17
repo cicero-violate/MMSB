@@ -231,10 +231,3 @@ include(joinpath(@__DIR__, "test_layer06_utility.jl"))
 include(joinpath(@__DIR__, "test_signature_system.jl"))
 include(joinpath(@__DIR__, "determinism_test.jl"))
 
-# include(joinpath(@__DIR__, "test_week24_25_integration.jl"))
-
-# Phase 4 tests
-# include(joinpath(@__DIR__, "test_layer10_agent_interface.jl"))
-# include(joinpath(@__DIR__, "test_layer11_agents.jl"))
-# include(joinpath(@__DIR__, "test_layer12_applications.jl"))
-# include(joinpath(@__DIR__, "test_phase4_integration.jl"))
