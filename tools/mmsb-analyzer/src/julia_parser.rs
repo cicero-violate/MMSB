@@ -44,6 +44,10 @@ impl JuliaAnalyzer {
         }
     }
 
+    pub fn generate_global_cfgs(&self) -> Result<()> {
+        self.ensure_global_cfgs()
+    }
+
     pub fn analyze_file(&self, file_path: &Path) -> Result<AnalysisResult> {
         println!("    [Julia] Analyzing {:?}", file_path);
 

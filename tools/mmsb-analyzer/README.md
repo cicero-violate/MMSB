@@ -53,6 +53,15 @@ cargo run --release -- \
 cargo run --release -- --verbose
 ```
 
+### Skip Per-File Julia Analysis
+
+If you only need Rust results plus the Julia layer/project CFGs, add `--skip-julia` to
+avoid per-file Julia parsing while still emitting the higher-level DOT exports:
+
+```bash
+cargo run --release -- --skip-julia
+```
+
 ### Julia Analyzer Script
 
 The Julia helpers now live alongside the Rust sources under `tools/mmsb-analyzer/src/`. The CLI defaults to

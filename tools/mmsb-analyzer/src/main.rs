@@ -100,21 +100,24 @@ fn main() -> Result<()> {
     println!("\nScanning Julia files (dependency-ordered)...");
     let mut julia_count = 0;
     let mut julia_layer_graph = LayerGraph::default();
+    let julia_files = gather_julia_files(&root_path);
+    let (ordered_julia_files, jl_graph) =
+        order_julia_files_by_dependency(&julia_files, &root_path)
+            .context("Failed to resolve Julia dependency order")?;
+    julia_layer_graph = jl_graph;
+
+    let julia_analyzer = JuliaAnalyzer::new(
+        root_path.clone(),
+        julia_script_path.clone(),
+        output_path.join("cfg/dots"),
+    );
+
     if args.skip_julia {
-        println!("  Skipping Julia analysis (--skip-julia)");
+        println!("  Per-file Julia analysis skipped (--skip-julia); generating layer/project CFGs only");
+        julia_analyzer
+            .generate_global_cfgs()
+            .context("Failed to generate Julia layer/project CFGs")?;
     } else {
-        let julia_analyzer = JuliaAnalyzer::new(
-            root_path.clone(),
-            julia_script_path.clone(),
-            output_path.join("cfg/dots"),
-        );
-
-        let julia_files = gather_julia_files(&root_path);
-        let (ordered_julia_files, jl_graph) =
-            order_julia_files_by_dependency(&julia_files, &root_path)
-                .context("Failed to resolve Julia dependency order")?;
-        julia_layer_graph = jl_graph;
-
         for path in ordered_julia_files {
             if args.verbose {
                 println!("  Analyzing: {:?}", path);
