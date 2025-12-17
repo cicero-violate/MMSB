@@ -5,8 +5,9 @@ Self-optimizing GPU-accelerated memory system with autonomous reasoning and plan
 ## Status
 
 **Phase 4 Complete** ✓ (2025-12-09)
-- All 13 layers operational
-- Full test suite passing
+- Core runtime layers (0-6) operational inside this repository
+- Cognitive/agent layers (7-12) now ship from [`../MMSB-top`](../MMSB-top)
+- Full test suite passing for the base runtime
 - Production ready
 
 ## Why MMSB
@@ -14,20 +15,14 @@ Self-optimizing GPU-accelerated memory system with autonomous reasoning and plan
 - **CPU/GPU coherence** — Unified API across CPU pages, CUDA buffers, and unified memory
 - **Declarative graph** — ShadowPageGraph captures dependencies; propagation is algebraic
 - **Self-optimization** — Adaptive memory layout, graph rewriting, entropy reduction
-- **Autonomous reasoning** — Structural inference, constraint propagation, goal emergence
-- **Planning & agents** — MCTS, RL integration, symbolic/hybrid agents
-- **Instrumentation** — Julia compiler hooks for SSA/IR provenance
+- **Autonomous reasoning** — Provided by [`MMSB-top`](../MMSB-top) (Layers 7-8: structural inference, goal emergence)
+- **Planning & agents** — Provided by [`MMSB-top`](../MMSB-top) (Layers 9-11: planners, RL, symbolic/hybrid agents)
+- **Instrumentation** — Compiler hooks and agent interface moved to [`MMSB-top`](../MMSB-top)
 - **Observability** — Built-in monitoring: allocator pressure, delta latency, propagation metrics
 
-## Architecture (6 Layers)
+## Architecture (Core Layers 0-6)
 
 ```
-Layer 12: Applications     → LLM Tools, World Simulation, Multi-Agent, Finance
-Layer 11: External Agents  → RL Agent, Symbolic Agent, Planning Agent, Hybrid
-Layer 10: Agent Interface  → Checkpoint API, Event Subscription, Agent Protocol
-Layer 9:  Planning Engine  → MCTS, Goal Decomposition, RL Planning, Enzyme Integration
-Layer 8:  Reasoning Engine → Structural Inference, Constraints, Logic, Patterns
-Layer 7:  Intention Engine → Goal Emergence, Preferences, Attractor States
 Layer 6:  Utility Engine   → Cost Functions, Telemetry, Entropy Measurement
 Layer 5:  Adaptive Memory  → Layout Optimization, Clustering, Graph Rewriting
 Layer 4:  Propagation      → CPU/GPU Message Passing, Sparse Propagation
@@ -36,6 +31,8 @@ Layer 2:  Semiring Algebra → Delta Router, Merge Operations, Tropical/Boolean
 Layer 1:  Page Layer       → Pages, Deltas, TLog, Checkpoint/Replay
 Layer 0:  Physical Memory  → Page Allocator, Unified Memory, GPU Kernels
 ```
+
+ 
 
 ## Quick Start
 
@@ -69,25 +66,21 @@ data = query_page(state, page.id)
 mmsb_stop(state, checkpoint_path="state.ckpt")
 ```
 
-### Advanced: Agents & Planning
+### Advanced: Cognitive Stack (via MMSB-top)
 ```julia
 using MMSB
+using MMSBTop
 
 state = mmsb_start()
 
-# Create hybrid agent (symbolic + RL)
-agent = HybridAgent(0.7)  # 70% RL, 30% symbolic
+# Hook Layer 6 utility into Layer 7 intention engine
+utility = MMSB.UtilityEngine.UtilityState()
+layout_stub = (placement = Dict{UInt64, Any}(), locality_score = 0.0)
+intention = MMSBTop.IntentionEngine.form_intention(utility, layout_stub, 1)
 
-# Observe state
-obs = observe(agent, state)
-
-# Plan actions
-actions = plan(agent, obs)
-
-# World simulation
-world = World(state, 0.01)  # dt=10ms
-entity = add_entity!(world, :robot, Dict(:x => 0.0, :y => 0.0))
-simulate_step!(world)
+# Use application helpers (Layer 12)
+ctx = MMSBTop.LLMTools.MMSBContext(state)
+response = MMSBTop.LLMTools.query_llm(ctx, "Summarize allocator health")
 ```
 
 ## Repository Map
@@ -102,12 +95,7 @@ simulate_step!(world)
 | `src/04_propagation/`     | CPU/GPU propagation engine                  |
 | `src/05_adaptive/`        | Layout optimization, graph rewriting        |
 | `src/06_utility/`         | Cost functions, monitoring, telemetry       |
-| `src/07_intention/`       | Goal emergence, attractor states            |
-| `src/08_reasoning/`       | Inference engine, constraints, logic        |
-| `src/09_planning/`        | MCTS, RL planning, Enzyme integration       |
-| `src/10_agent_interface/` | Checkpoint API, events, protocol            |
-| `src/11_agents/`          | RL/symbolic/planning/hybrid agents          |
-| `src/12_applications/`    | LLM tools, world sim, multi-agent, finance  |
+| `../MMSB-top/src/`        | Layers 7-12: Intention → Applications stack |
 | `test/`                   | Comprehensive test suite (Layers 0-12)      |
 | `examples/`               | Quickstart and tutorial demos               |
 | `benchmark/`              | Performance benchmarks and baselines        |
@@ -150,6 +138,7 @@ See `project_schedule/PHASE_5.md` for detailed DAG and task list.
 - `project_schedule/PHASE_5.md` — Production hardening roadmap
 - `project_schedule/TASK_LOG_PHASE_5.md` — Detailed task tracking
 - `project_schedule/completed/` — Archived phase documentation
+- [`../MMSB-top/README.md`](../MMSB-top/README.md) — Intention, reasoning, planning, agents, and application layers
 
 ## Requirements
 
