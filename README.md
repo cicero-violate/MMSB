@@ -2,13 +2,7 @@
 
 Self-optimizing GPU-accelerated memory system with autonomous reasoning and planning. MMSB is a deterministic, delta-driven shared-memory fabric that lets CPU, GPU, and compiler subsystems share page-aligned state under a single transaction log. Every operation follows the MMSB semiring law `state × delta → state′`, enabling deterministic replay and algebraic propagation.
 
-## Status
 
-**Phase 4 Complete** ✓ (2025-12-09)
-- Core runtime layers (0-6) operational inside this repository
-- Cognitive/agent layers (7-12) now ship from [`../MMSB-top`](../MMSB-top)
-- Full test suite passing for the base runtime
-- Production ready
 
 ## Why MMSB
 - **Deterministic replay** — Byte-level deltas, epochs, and transaction log (TLog) enable checkpoint/reconstruction
