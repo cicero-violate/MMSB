@@ -215,6 +215,44 @@ function write_call_graph_dot(model, dot_dir::String, title::String)
     println(stderr, "[DEBUG]   ✓ File written: $dot_path")
 end
 
+function write_dot_from_ast(file_path::String, dot_dir::String, title::String)
+    println(stderr, "[DEBUG] Generating DOT from AST for $(title)")
+    all_code = read_all_code(file_path)
+    functions, scg = analyze_code(all_code)
+    println(stderr, "[DEBUG]   Functions found: $(length(functions))")
+    println(stderr, "[DEBUG]   Call edges found: $(length(scg))")
+    if isempty(scg)
+        println(stderr, "[DEBUG]   ⚠ No call graph - skipping DOT file")
+        return
+    end
+    mkpath(dot_dir)
+    dot_path = joinpath(dot_dir, "call_graph.dot")
+    target_funcs = Set(Symbol.(keys(functions)))
+    all_nodes = Set{Symbol}()
+    foreach(f -> push!(all_nodes, f), target_funcs)
+    for (src, dst) in scg
+        push!(all_nodes, src)
+        push!(all_nodes, dst)
+    end
+    println(stderr, "[DEBUG]   Total nodes: $(length(all_nodes))")
+    println(stderr, "[DEBUG]   Writing to: $dot_path")
+    open(dot_path, "w") do io
+        title_escaped = replace(title, "\"" => "\\\"")
+        println(io, "digraph \"$(title_escaped)\" {")
+        println(io, "    rankdir=LR;")
+        for node in sort(collect(all_nodes))
+            label = replace(string(node), "\"" => "\\\"")
+            shape = node in target_funcs ? "box" : "ellipse"
+            println(io, "    \"$(label)\" [shape=$(shape)];")
+        end
+        for (src, dst) in scg
+            src_label = replace(string(src), "\"" => "\\\"")
+            dst_label = replace(string(dst), "\"" => "\\\"")
+            println(io, "    \"$(src_label)\" -> \"$(dst_label)\";")
+        end
+        println(io, "}")
+    end
+    println(stderr, "[DEBUG]   ✓ DOT file written successfully")
 function run_model(file_path::String, dot_dir::String)
     model = nothing
     try
@@ -273,42 +311,4 @@ end
 if abspath(PROGRAM_FILE) == @__FILE__
     main()
 end
-function write_dot_from_ast(file_path::String, dot_dir::String, title::String)
-    println(stderr, "[DEBUG] Generating DOT from AST for $(title)")
-    all_code = read_all_code(file_path)
-    functions, scg = analyze_code(all_code)
-    println(stderr, "[DEBUG]   Functions found: $(length(functions))")
-    println(stderr, "[DEBUG]   Call edges found: $(length(scg))")
-    if isempty(scg)
-        println(stderr, "[DEBUG]   ⚠ No call graph - skipping DOT file")
-        return
-    end
-    mkpath(dot_dir)
-    dot_path = joinpath(dot_dir, "call_graph.dot")
-    target_funcs = Set(Symbol.(keys(functions)))
-    all_nodes = Set{Symbol}()
-    foreach(f -> push!(all_nodes, f), target_funcs)
-    for (src, dst) in scg
-        push!(all_nodes, src)
-        push!(all_nodes, dst)
-    end
-    println(stderr, "[DEBUG]   Total nodes: $(length(all_nodes))")
-    println(stderr, "[DEBUG]   Writing to: $dot_path")
-    open(dot_path, "w") do io
-        title_escaped = replace(title, "\"" => "\\\"")
-        println(io, "digraph \"$(title_escaped)\" {")
-        println(io, "    rankdir=LR;")
-        for node in sort(collect(all_nodes))
-            label = replace(string(node), "\"" => "\\\"")
-            shape = node in target_funcs ? "box" : "ellipse"
-            println(io, "    \"$(label)\" [shape=$(shape)];")
-        end
-        for (src, dst) in scg
-            src_label = replace(string(src), "\"" => "\\\"")
-            dst_label = replace(string(dst), "\"" => "\\\"")
-            println(io, "    \"$(src_label)\" -> \"$(dst_label)\";")
-        end
-        println(io, "}")
-    end
-    println(stderr, "[DEBUG]   ✓ DOT file written successfully")
 end
