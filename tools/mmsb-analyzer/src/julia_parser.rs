@@ -4,6 +4,7 @@ use crate::types::*;
 use anyhow::{anyhow, Context, Result};
 use once_cell::sync::Lazy;
 use regex::Regex;
+use std::env;
 use std::fs;
 use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
@@ -15,29 +16,28 @@ static CALL_RE: Lazy<Regex> = Lazy::new(|| Regex::new(r"([A-Za-z_][A-Za-z0-9_!.]
 
 pub struct JuliaAnalyzer {
     script_path: PathBuf,
-    _root_path: String,
-    depot_path: PathBuf,
-    home_path: PathBuf,
+    root_path: PathBuf,
+    project_dir: PathBuf,
+    dot_root: PathBuf,
+    julia_bin: PathBuf,
     script_disabled: AtomicBool,
 }
 
 impl JuliaAnalyzer {
-    pub fn new(root_path: String, script_path: String) -> Self {
-        let script_path = PathBuf::from(script_path);
-        let base_dir = script_path
+    pub fn new(root_path: PathBuf, script_path: PathBuf, dot_root: PathBuf) -> Self {
+        let _base_dir = script_path
             .parent()
             .map(Path::to_path_buf)
             .unwrap_or_else(|| PathBuf::from("."));
-        let depot_path = base_dir.join(".julia-depot");
-        let home_path = base_dir.join(".julia-home");
-        let _ = fs::create_dir_all(&depot_path);
-        let _ = fs::create_dir_all(&home_path);
 
+        let julia_bin = resolve_julia_binary();
+        let project_dir = find_julia_project_dir(&script_path);
         Self {
-            _root_path: root_path,
+            root_path,
             script_path,
-            depot_path,
-            home_path,
+            project_dir,
+            dot_root,
+            julia_bin,
             script_disabled: AtomicBool::new(false),
         }
     }
@@ -61,23 +61,23 @@ impl JuliaAnalyzer {
     }
 
     fn run_script(&self, file_path: &Path) -> Result<AnalysisResult> {
-        let output = Command::new("julia")
+        let dot_dir = self.compute_dot_dir(file_path);
+        fs::create_dir_all(&dot_dir)?;
+        let output = Command::new(&self.julia_bin)
             .arg("--startup-file=no")
             .arg(&self.script_path)
             .arg(file_path)
-            .env("JULIA_DEPOT_PATH", &self.depot_path)
-            .env("HOME", &self.home_path)
-            .env("JULIAUP_NO_UPDATE", "1")
-            .stderr(Stdio::piped())
+            .arg(&dot_dir)
+            .env("JULIA_PROJECT", &self.project_dir)
+            .stderr(Stdio::inherit())
             .output()
             .with_context(|| format!("Failed to execute Julia analyzer on {:?}", file_path))?;
 
         if !output.status.success() {
-            let stderr = String::from_utf8_lossy(&output.stderr);
             return Err(anyhow!(
                 "Julia analyzer exited with {}: {}",
                 output.status,
-                stderr.trim()
+                "check stderr output above"
             ));
         }
 
@@ -347,6 +347,67 @@ impl JuliaAnalyzer {
         }
         "root".to_string()
     }
+
+    fn compute_dot_dir(&self, path: &Path) -> PathBuf {
+        let slug = slugify_relative(&self.root_path, path);
+        self.dot_root.join(slug)
+    }
+}
+
+fn slugify_relative(root: &Path, path: &Path) -> String {
+    let relative = path.strip_prefix(root).unwrap_or(path);
+    relative
+        .components()
+        .map(|c| c.as_os_str().to_string_lossy().replace('.', "_"))
+        .collect::<Vec<_>>()
+        .join("-")
+}
+
+fn resolve_julia_binary() -> PathBuf {
+    if let Ok(custom) = env::var("JULIA_BINARY") {
+        let candidate = PathBuf::from(custom);
+        if candidate.exists() {
+            return candidate;
+        }
+    }
+    if let Ok(home) = env::var("HOME") {
+        let juliaup_root = Path::new(&home).join(".julia/juliaup");
+        if let Ok(entries) = fs::read_dir(&juliaup_root) {
+            for entry in entries.flatten() {
+                let path = entry.path();
+                if !path.is_dir() {
+                    continue;
+                }
+                if let Some(name) = path.file_name().and_then(|n| n.to_str()) {
+                    if name.starts_with("julia-") {
+                        let candidate = path.join("bin/julia");
+                        if candidate.exists() {
+                            return candidate;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    let alt = PathBuf::from("/home/cicero-arch-omen/git/julia/usr/bin/julia");
+    if alt.exists() {
+        return alt;
+    }
+    PathBuf::from("julia")
+}
+
+fn find_julia_project_dir(script_path: &Path) -> PathBuf {
+    let mut current = script_path.parent();
+    while let Some(dir) = current {
+        if dir.join("Project.toml").exists() {
+            return dir.to_path_buf();
+        }
+        current = dir.parent();
+    }
+    script_path
+        .parent()
+        .unwrap_or_else(|| Path::new("."))
+        .to_path_buf()
 }
 
 fn parse_module_name(line: &str) -> Option<String> {
