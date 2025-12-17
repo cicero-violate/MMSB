@@ -161,9 +161,10 @@ end
         MMSB.StateManagement.return_to_pool!(state2)
     end
     
-    @testset "Concurrent pool access (thread safety)" skip=true begin
-        # Skipped: AllocError under concurrent thread access
-        @test true
+    if false  # Skip: AllocError under concurrent thread access (T3.5)
+        @testset "Concurrent pool access (thread safety)" begin
+            @test true
+        end
     end
     
     @testset "Reset performance benchmark" begin
