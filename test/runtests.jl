@@ -130,6 +130,8 @@ end
             page_b = MMSB.MMSBStateTypes.get_page(st, parent_b.id)
             return Vector{UInt8}(read_page(page_a) .+ read_page(page_b))
         end)
+    # Declare dependencies for signature system
+    child.metadata[:recompute_deps] = [parent_a.id, parent_b.id]
 
     mask = trues(4)
     payload_a = fill(UInt8(0x01), 4)
@@ -144,7 +146,8 @@ end
     MMSB.PropagationEngine.queue_recomputation!(state, child.id)
     MMSB.PropagationEngine.queue_recomputation!(state, child.id)
     MMSB.PropagationEngine.execute_propagation!(state)
-    @test hits[] == 2
+    # T1.2: Cache skips second recompute since epochs unchanged
+    @test hits[] == 1
 end
 
 @testset "Error handling" begin
