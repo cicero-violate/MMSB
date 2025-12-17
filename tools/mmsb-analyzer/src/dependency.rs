@@ -275,6 +275,13 @@ fn build_result(
 
     let mut ordered_files = files.to_vec();
     ordered_files.sort_by(|a, b| {
+        let mmsb_a = is_mmsb_main(a);
+        let mmsb_b = is_mmsb_main(b);
+        if mmsb_a && !mmsb_b {
+            return Ordering::Less;
+        } else if mmsb_b && !mmsb_a {
+            return Ordering::Greater;
+        }
         let entry_a = entry_files.contains(a);
         let entry_b = entry_files.contains(b);
         if entry_a && !entry_b {
@@ -666,4 +673,11 @@ fn julia_entry_paths(root: &Path) -> BTreeSet<PathBuf> {
     .map(|rel| root.join(rel))
     .filter(|p| p.exists())
     .collect()
+}
+
+fn is_mmsb_main(path: &Path) -> bool {
+    path.file_name()
+        .and_then(|n| n.to_str())
+        .map(|n| n == "MMSB.jl")
+        .unwrap_or(false)
 }
