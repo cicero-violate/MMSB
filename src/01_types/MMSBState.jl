@@ -164,7 +164,7 @@ function reset!(state::MMSBState)
         state.next_page_id[] = PageID(1)
         
         # 4. Reset delta ID counter (atomic)
-        Threads.atomic_store!(state.next_delta_id, UInt64(1))
+        state.next_delta_id[] = UInt64(1)
         
         # 5. Clear transaction log
         FFIWrapper.rust_tlog_clear!(state.tlog_handle)
