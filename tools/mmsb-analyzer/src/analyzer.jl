@@ -253,7 +253,6 @@ function write_dot_from_ast(file_path::String, dot_dir::String, title::String)
         println(io, "}")
     end
     println(stderr, "[DEBUG]   ✓ DOT file written successfully")
-    end
 end
 
 function run_model(file_path::String, dot_dir::String)
@@ -314,4 +313,4 @@ end
 if abspath(PROGRAM_FILE) == @__FILE__
     main()
 end
-end
+
