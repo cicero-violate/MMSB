@@ -3,7 +3,7 @@
 using Test
 using MMSB.PageTypes: PageID, read_page
 using MMSB.MMSBStateTypes: MMSBState, get_page, allocate_delta_id!
-using MMSB.PropagationEngine: register_passthrough_recompute!
+using MMSB.PropagationEngine: register_passthrough_recompute!, recompute_page!
 using MMSB.API: create_page, update_page
 
 """
@@ -92,7 +92,7 @@ end
             
             data = [0x01, 0x02, 0x03, zeros(UInt8, 1021)...]
             update_page(st, parent.id, collect(data))
-            MMSB.PropagationEngine.recompute_page!(st, child.id)
+            recompute_page!(st, child.id)
         end
         
         snap1 = canonical_snapshot(state1)
@@ -112,7 +112,7 @@ end
             
             register_passthrough_recompute!(state, child.id, parent.id)
             update_page(state, parent.id, ones(UInt8, 1024))
-            MMSB.PropagationEngine.recompute_page!(state, child.id)
+            recompute_page!(state, child.id)
             
             push!(runs, canonical_snapshot(state))
         end
