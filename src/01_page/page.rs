@@ -8,6 +8,7 @@ use crate::types::{Epoch, EpochCell, PageError, PageID, PageLocation, DeltaError
 use parking_lot::RwLock;
 use std::convert::TryInto;
 use std::ffi::c_void;
+use std::ptr;
 use std::sync::Arc;
 use std::sync::atomic::{AtomicU64, Ordering};
 
