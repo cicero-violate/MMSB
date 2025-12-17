@@ -73,6 +73,17 @@ impl PageAllocator {
         }
     }
 
+    /// Clear all allocated pages and reset ID counter.
+    /// Used for state reset without destroying the allocator.
+    pub fn clear(&self) {
+        let mut pages = self.pages.lock();
+        for (_, page) in pages.drain() {
+            // Drop page, freeing memory
+            drop(page);
+        }
+        self.next_id.store(1, std::sync::atomic::Ordering::SeqCst);
+    }
+
     pub fn allocate_raw(&self, page_id_hint: PageID, size: usize, location: Option<PageLocation>) -> Result<*mut Page, PageError> {
         let loc = location.unwrap_or(self.config.default_location);
         if self.pages.lock().contains_key(&page_id_hint) {

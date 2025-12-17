@@ -166,7 +166,10 @@ function reset!(state::MMSBState)
         # 4. Reset delta ID counter (atomic)
         state.next_delta_id[] = UInt64(1)
         
-        # 5. Clear TLog in-memory entries (file untouched)
+        # 5. Clear allocator (frees Rust-side memory)
+        FFIWrapper.rust_allocator_clear!(state.allocator_handle)
+        
+        # 6. Clear TLog in-memory entries (file untouched)
         FFIWrapper.rust_tlog_clear_entries!(state.tlog_handle)
     end
     return nothing

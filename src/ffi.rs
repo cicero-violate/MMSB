@@ -899,6 +899,17 @@ pub extern "C" fn mmsb_allocator_new() -> AllocatorHandle {
 }
 
 #[no_mangle]
+pub extern "C" fn mmsb_allocator_clear(handle: AllocatorHandle) {
+    if handle.ptr.is_null() {
+        set_last_error(MMSBErrorCode::InvalidHandle);
+        return;
+    }
+    ffi_debug!("Clearing allocator at {:p}", handle.ptr);
+    let alloc = unsafe { &*handle.ptr };
+    alloc.clear();
+}
+
+#[no_mangle]
 pub extern "C" fn mmsb_allocator_free(handle: AllocatorHandle) {
     if !handle.ptr.is_null() {
         ffi_debug!("Freeing allocator at {:p}", handle.ptr);

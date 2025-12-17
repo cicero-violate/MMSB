@@ -182,6 +182,13 @@ function rust_allocator_new()::RustAllocatorHandle
     handle
 end
 
+function rust_allocator_clear!(handle::RustAllocatorHandle)
+    ensure_rust_artifacts()
+    ccall((:mmsb_allocator_clear, LIBMMSB), Cvoid, (RustAllocatorHandle,), handle)
+    _check_rust_error("rust_allocator_clear!")
+    nothing
+end
+
 function rust_allocator_free!(handle::RustAllocatorHandle)
     ensure_rust_artifacts()
     ccall((:mmsb_allocator_free, LIBMMSB), Cvoid, (RustAllocatorHandle,), handle)
