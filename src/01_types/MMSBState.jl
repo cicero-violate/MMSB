@@ -146,8 +146,10 @@ Clears in order:
 2. shadow page graph
 3. next_page_id counter
 4. next_delta_id atomic counter
-5. transaction log via FFI
-6. propagation buffers (if present)
+5. propagation buffers (via StateManagement)
+
+Note: Transaction log is append-only and not cleared.
+Logical state reset is sufficient for deterministic replay.
 
 **Thread Safety**: Caller must ensure no concurrent operations.
 **Performance**: Target < 1μs for reset operation.
@@ -165,12 +167,6 @@ function reset!(state::MMSBState)
         
         # 4. Reset delta ID counter (atomic)
         state.next_delta_id[] = UInt64(1)
-        
-        # 5. Clear transaction log
-        FFIWrapper.rust_tlog_clear!(state.tlog_handle)
-        
-        # 6. Clear propagation buffers (deferred to avoid circular dependency)
-        # PropagationEngine will handle this via clear_propagation_buffers!
     end
     return nothing
 end

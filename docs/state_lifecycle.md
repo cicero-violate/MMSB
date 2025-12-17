@@ -42,9 +42,11 @@ Must clear in order:
 2. `graph::ShadowPageGraph` - replace with new empty graph
 3. `next_page_id[]` - reset to `PageID(1)`
 4. `next_delta_id` - atomic store to `UInt64(1)`
-5. `tlog_handle` - call `FFIWrapper.rust_tlog_clear!()`
-6. `PROPAGATION_BUFFERS[state]` - delete entry if exists
-7. Cached signatures in page metadata - cleared via page dict clear
+5. `PROPAGATION_BUFFERS[state]` - delete entry if exists
+6. Cached signatures in page metadata - cleared via page dict clear
+
+Note: Transaction log is append-only and not cleared during reset.
+The logical state reset ensures deterministic replay from checkpoints.
 
 ### State Pool
 - Pre-allocated pool of `MMSBState` objects
