@@ -22,3 +22,5 @@ include(joinpath(@__DIR__, "test_layer06_utility.jl"))
 
 include(joinpath(@__DIR__, "test_signature_system.jl"))
 include(joinpath(@__DIR__, "determinism_test.jl"))
+include(joinpath(@__DIR__, "state_pool_test.jl"))
+include(joinpath(@__DIR__, "state_pool_integration_test.jl"))

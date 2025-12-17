@@ -10,9 +10,6 @@ using ..MMSBStateTypes: MMSBState, MMSBConfig
 
 export reset_state!, get_pooled_state!, return_to_pool!
 
-# Forward declarations for circular dependency resolution
-function clear_propagation_buffers! end
-
 """
     reset_state!(state::MMSBState)
 
@@ -24,8 +21,12 @@ function reset_state!(state::MMSBState)
     MMSBStateTypes.reset!(state)
     
     # Clear propagation buffers if module is loaded
-    if isdefined(@__MODULE__, :clear_propagation_buffers!)
-        clear_propagation_buffers!(state)
+    # Access via parent module to avoid circular dependency
+    if isdefined(parentmodule(@__MODULE__), :PropagationEngine)
+        PE = parentmodule(@__MODULE__).PropagationEngine
+        if isdefined(PE, :clear_propagation_buffers!)
+            PE.clear_propagation_buffers!(state)
+        end
     end
     
     return nothing

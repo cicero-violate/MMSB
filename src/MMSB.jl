@@ -49,9 +49,6 @@ include("03_dag/GraphDSL.jl")
 include("04_propagation/PropagationEngine.jl")
 include("04_propagation/PropagationScheduler.jl")
 
-# Link circular dependency for state reset
-StateManagement.clear_propagation_buffers! = PropagationEngine.clear_propagation_buffers!
-
 # Layer 5: Adaptive Memory
 include("05_adaptive/AdaptiveLayout.jl")
 include("05_adaptive/GraphRewriting.jl")
