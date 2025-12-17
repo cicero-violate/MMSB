@@ -236,29 +236,9 @@ function run_model(file_path::String, dot_dir::String)
         model = nothing
     end
     
-    # Generate DOT file if model was built successfully
-    println(stderr, "[DEBUG] Model status for $(basename(file_path)): ", model === nothing ? "FAILED" : "SUCCESS")
-    
-    try
-        if model !== nothing
-            println(stderr, "[DEBUG] Attempting to write DOT file to: $dot_dir")
-            println(stderr, "[DEBUG] Model keys: ", keys(model))
-            println(stderr, "[DEBUG] Call graph size: ", length(get(model, "call_graph", [])))
-            println(stderr, "[DEBUG] Target functions: ", get(model, "target_functions", []))
-            write_call_graph_dot(model, dot_dir, basename(file_path))
-            println(stderr, "[DEBUG] ✓ DOT file written successfully")
-        else
-            println(stderr, "[DEBUG] ✗ Skipping DOT generation - model is nothing")
-        end
-    catch e
-        println(stderr, "[Julia analyzer] ✗ Failed to emit DOT for $(basename(file_path)): ", e)
-        println(stderr, "  Exception type: ", typeof(e))
-        println(stderr, "  Backtrace:")
-        for (exc, bt) in Base.catch_stack()
-            showerror(stderr, exc, bt)
-            println(stderr)
-        end
-    end
+    # Always try to generate DOT from AST, regardless of model success
+    # The AST analysis already extracted the call graph successfully
+    write_dot_from_ast(file_path, dot_dir, basename(file_path))
     
     return model
 end
@@ -293,4 +273,42 @@ end
 if abspath(PROGRAM_FILE) == @__FILE__
     main()
 end
-
+function write_dot_from_ast(file_path::String, dot_dir::String, title::String)
+    println(stderr, "[DEBUG] Generating DOT from AST for $(title)")
+    all_code = read_all_code(file_path)
+    functions, scg = analyze_code(all_code)
+    println(stderr, "[DEBUG]   Functions found: $(length(functions))")
+    println(stderr, "[DEBUG]   Call edges found: $(length(scg))")
+    if isempty(scg)
+        println(stderr, "[DEBUG]   ⚠ No call graph - skipping DOT file")
+        return
+    end
+    mkpath(dot_dir)
+    dot_path = joinpath(dot_dir, "call_graph.dot")
+    target_funcs = Set(Symbol.(keys(functions)))
+    all_nodes = Set{Symbol}()
+    foreach(f -> push!(all_nodes, f), target_funcs)
+    for (src, dst) in scg
+        push!(all_nodes, src)
+        push!(all_nodes, dst)
+    end
+    println(stderr, "[DEBUG]   Total nodes: $(length(all_nodes))")
+    println(stderr, "[DEBUG]   Writing to: $dot_path")
+    open(dot_path, "w") do io
+        title_escaped = replace(title, "\"" => "\\\"")
+        println(io, "digraph \"$(title_escaped)\" {")
+        println(io, "    rankdir=LR;")
+        for node in sort(collect(all_nodes))
+            label = replace(string(node), "\"" => "\\\"")
+            shape = node in target_funcs ? "box" : "ellipse"
+            println(io, "    \"$(label)\" [shape=$(shape)];")
+        end
+        for (src, dst) in scg
+            src_label = replace(string(src), "\"" => "\\\"")
+            dst_label = replace(string(dst), "\"" => "\\\"")
+            println(io, "    \"$(src_label)\" -> \"$(dst_label)\";")
+        end
+        println(io, "}")
+    end
+    println(stderr, "[DEBUG]   ✓ DOT file written successfully")
+end
