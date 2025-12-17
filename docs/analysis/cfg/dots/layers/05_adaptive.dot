@@ -1,0 +1,274 @@
+digraph LayerCFG {
+  rankdir=TB;
+  compound=true;
+  newrank=true;
+
+  label="05_adaptive - 11 functions from 4 files";
+  labelloc=t;
+  fontsize=18;
+
+  subgraph cluster_1 {
+    label="LayoutState (AdaptiveLayout.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f1_n571 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f1_n572 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f1_n573 [label="BB1 L32", shape=box, fillcolor=lightblue, style="filled"];
+
+    f1_n571 -> f1_n573;
+    f1_n573 -> f1_n572;
+  }
+
+  subgraph cluster_2 {
+    label="analyze_locality (LocalityAnalysis.jl, CC=4)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f2_n574 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f2_n575 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f2_n576 [label="BB1 L41,42,45,46", shape=box, fillcolor=lightblue, style="filled"];
+    f2_n577 [label="LOOP2 L48", shape=box, fillcolor=orange, style="filled,rounded"];
+    f2_n578 [label="BRANCH3 L49", shape=diamond, fillcolor=yellow, style="filled"];
+    f2_n579 [label="BB4 L50", shape=box, fillcolor=lightblue, style="filled"];
+    f2_n580 [label="BB5 L52", shape=box, fillcolor=lightblue, style="filled"];
+    f2_n581 [label="RETURN6 L55,58,59,63,66,67,68,71", shape=box, fillcolor=lightblue, style="filled"];
+
+    f2_n574 -> f2_n576;
+    f2_n576 -> f2_n577;
+    f2_n577 -> f2_n578 [label="T", color="darkgreen"];
+    f2_n578 -> f2_n577;
+    f2_n577 -> f2_n579 [label="F", color="red"];
+    f2_n578 -> f2_n579 [label="T", color="darkgreen"];
+    f2_n578 -> f2_n580 [label="F", color="red"];
+    f2_n579 -> f2_n580;
+    f2_n580 -> f2_n581;
+    f2_n581 -> f2_n575;
+  }
+
+  subgraph cluster_3 {
+    label="can_reorder (GraphRewriting.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f3_n582 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f3_n583 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f3_n584 [label="RETURN1 L75,76,78", shape=box, fillcolor=lightblue, style="filled"];
+
+    f3_n582 -> f3_n584;
+    f3_n584 -> f3_n583;
+  }
+
+  subgraph cluster_4 {
+    label="compute_edge_cost (GraphRewriting.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f4_n585 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f4_n586 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f4_n587 [label="RETURN1 L87", shape=box, fillcolor=lightblue, style="filled"];
+
+    f4_n585 -> f4_n587;
+    f4_n587 -> f4_n586;
+  }
+
+  subgraph cluster_5 {
+    label="compute_entropy (EntropyReduction.jl, CC=4)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f5_n588 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f5_n589 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f5_n590 [label="BB1 L22,24,25,27", shape=box, fillcolor=lightblue, style="filled"];
+    f5_n591 [label="LOOP2 L28", shape=box, fillcolor=orange, style="filled,rounded"];
+    f5_n592 [label="BRANCH3 L29", shape=diamond, fillcolor=yellow, style="filled"];
+    f5_n593 [label="BB4 L30,31", shape=box, fillcolor=lightblue, style="filled"];
+    f5_n594 [label="RETURN5 L35", shape=box, fillcolor=lightblue, style="filled"];
+
+    f5_n588 -> f5_n590;
+    f5_n590 -> f5_n591;
+    f5_n591 -> f5_n592 [label="T", color="darkgreen"];
+    f5_n592 -> f5_n591;
+    f5_n591 -> f5_n593 [label="F", color="red"];
+    f5_n592 -> f5_n593 [label="T", color="darkgreen"];
+    f5_n592 -> f5_n594 [label="F", color="red"];
+    f5_n593 -> f5_n594;
+    f5_n594 -> f5_n589;
+  }
+
+  subgraph cluster_6 {
+    label="compute_locality_score (AdaptiveLayout.jl, CC=4)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f6_n595 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f6_n596 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f6_n597 [label="BB1 L75", shape=box, fillcolor=lightblue, style="filled"];
+    f6_n598 [label="LOOP2 L76", shape=box, fillcolor=orange, style="filled,rounded"];
+    f6_n599 [label="BB3 L77,78", shape=box, fillcolor=lightblue, style="filled"];
+    f6_n600 [label="BRANCH4 L80", shape=diamond, fillcolor=yellow, style="filled"];
+    f6_n601 [label="BB5 L81,82", shape=box, fillcolor=lightblue, style="filled"];
+    f6_n602 [label="RETURN6 L85", shape=box, fillcolor=lightblue, style="filled"];
+
+    f6_n595 -> f6_n597;
+    f6_n597 -> f6_n598;
+    f6_n598 -> f6_n599 [label="T", color="darkgreen"];
+    f6_n599 -> f6_n598;
+    f6_n598 -> f6_n600 [label="F", color="red"];
+    f6_n599 -> f6_n600;
+    f6_n600 -> f6_n601 [label="T", color="darkgreen"];
+    f6_n600 -> f6_n602 [label="F", color="red"];
+    f6_n601 -> f6_n602;
+    f6_n602 -> f6_n596;
+  }
+
+  subgraph cluster_7 {
+    label="compute_reuse_distance (LocalityAnalysis.jl, CC=3)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f7_n603 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f7_n604 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f7_n605 [label="LOOP1 L80", shape=box, fillcolor=orange, style="filled,rounded"];
+    f7_n606 [label="BRANCH2 L81", shape=diamond, fillcolor=yellow, style="filled"];
+    f7_n607 [label="RETURN3 L82", shape=box, fillcolor=lightblue, style="filled"];
+    f7_n608 [label="RETURN4 L85", shape=box, fillcolor=lightblue, style="filled"];
+
+    f7_n603 -> f7_n605;
+    f7_n605 -> f7_n606 [label="T", color="darkgreen"];
+    f7_n606 -> f7_n605;
+    f7_n605 -> f7_n607 [label="F", color="red"];
+    f7_n606 -> f7_n607 [label="T", color="darkgreen"];
+    f7_n606 -> f7_n608 [label="F", color="red"];
+    f7_n608 -> f7_n604;
+  }
+
+  subgraph cluster_8 {
+    label="entropy_gradient (EntropyReduction.jl, CC=4)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f8_n609 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f8_n610 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f8_n611 [label="BB1 L66,67,69", shape=box, fillcolor=lightblue, style="filled"];
+    f8_n612 [label="LOOP2 L70", shape=box, fillcolor=orange, style="filled,rounded"];
+    f8_n613 [label="BRANCH3 L71", shape=diamond, fillcolor=yellow, style="filled"];
+    f8_n614 [label="BB4 L72,73", shape=box, fillcolor=lightblue, style="filled"];
+    f8_n615 [label="RETURN5 L77", shape=box, fillcolor=lightblue, style="filled"];
+
+    f8_n609 -> f8_n611;
+    f8_n611 -> f8_n612;
+    f8_n612 -> f8_n613 [label="T", color="darkgreen"];
+    f8_n613 -> f8_n612;
+    f8_n612 -> f8_n614 [label="F", color="red"];
+    f8_n613 -> f8_n614 [label="T", color="darkgreen"];
+    f8_n613 -> f8_n615 [label="F", color="red"];
+    f8_n614 -> f8_n615;
+    f8_n615 -> f8_n610;
+  }
+
+  subgraph cluster_9 {
+    label="optimize_layout! (AdaptiveLayout.jl, CC=5)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f9_n616 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f9_n617 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f9_n618 [label="BB1 L42,45,46,49", shape=box, fillcolor=lightblue, style="filled"];
+    f9_n619 [label="LOOP2 L50", shape=box, fillcolor=orange, style="filled,rounded"];
+    f9_n620 [label="BB3 L51,52", shape=box, fillcolor=lightblue, style="filled"];
+    f9_n621 [label="BB4 L55", shape=box, fillcolor=lightblue, style="filled"];
+    f9_n622 [label="LOOP5 L58", shape=box, fillcolor=orange, style="filled,rounded"];
+    f9_n623 [label="BB6 L59", shape=box, fillcolor=lightblue, style="filled"];
+    f9_n624 [label="RETURN7 L62,63,64,66", shape=box, fillcolor=lightblue, style="filled"];
+
+    f9_n616 -> f9_n618;
+    f9_n618 -> f9_n619;
+    f9_n619 -> f9_n620 [label="T", color="darkgreen"];
+    f9_n620 -> f9_n619;
+    f9_n619 -> f9_n621 [label="F", color="red"];
+    f9_n620 -> f9_n621;
+    f9_n621 -> f9_n622;
+    f9_n622 -> f9_n623 [label="T", color="darkgreen"];
+    f9_n623 -> f9_n622;
+    f9_n622 -> f9_n624 [label="F", color="red"];
+    f9_n623 -> f9_n624;
+    f9_n624 -> f9_n617;
+  }
+
+  subgraph cluster_10 {
+    label="reduce_entropy! (EntropyReduction.jl, CC=3)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f10_n625 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f10_n626 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f10_n627 [label="BB1 L47,50", shape=box, fillcolor=lightblue, style="filled"];
+    f10_n628 [label="LOOP2 L53", shape=box, fillcolor=orange, style="filled,rounded"];
+    f10_n629 [label="BB3 L54", shape=box, fillcolor=lightblue, style="filled"];
+    f10_n630 [label="RETURN4 L57", shape=box, fillcolor=lightblue, style="filled"];
+
+    f10_n625 -> f10_n627;
+    f10_n627 -> f10_n628;
+    f10_n628 -> f10_n629 [label="T", color="darkgreen"];
+    f10_n629 -> f10_n628;
+    f10_n628 -> f10_n630 [label="F", color="red"];
+    f10_n629 -> f10_n630;
+    f10_n630 -> f10_n626;
+  }
+
+  subgraph cluster_11 {
+    label="rewrite_dag! (GraphRewriting.jl, CC=7)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f11_n631 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f11_n632 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f11_n633 [label="BB1 L36,39", shape=box, fillcolor=lightblue, style="filled"];
+    f11_n634 [label="LOOP2 L41", shape=box, fillcolor=orange, style="filled,rounded"];
+    f11_n635 [label="BB3 L42", shape=box, fillcolor=lightblue, style="filled"];
+    f11_n636 [label="LOOP4 L43", shape=box, fillcolor=orange, style="filled,rounded"];
+    f11_n637 [label="BB5 L44", shape=box, fillcolor=lightblue, style="filled"];
+    f11_n638 [label="BRANCH6 L47", shape=diamond, fillcolor=yellow, style="filled"];
+    f11_n639 [label="BB7 L48,52", shape=box, fillcolor=lightblue, style="filled"];
+    f11_n640 [label="BRANCH8 L54", shape=diamond, fillcolor=yellow, style="filled"];
+    f11_n641 [label="BB9 L55", shape=box, fillcolor=lightblue, style="filled"];
+    f11_n642 [label="RETURN10 L65", shape=box, fillcolor=lightblue, style="filled"];
+
+    f11_n631 -> f11_n633;
+    f11_n633 -> f11_n634;
+    f11_n634 -> f11_n635 [label="T", color="darkgreen"];
+    f11_n635 -> f11_n634;
+    f11_n634 -> f11_n636 [label="F", color="red"];
+    f11_n635 -> f11_n636;
+    f11_n636 -> f11_n637 [label="T", color="darkgreen"];
+    f11_n637 -> f11_n636;
+    f11_n636 -> f11_n638 [label="F", color="red"];
+    f11_n637 -> f11_n638;
+    f11_n638 -> f11_n639 [label="T", color="darkgreen"];
+    f11_n638 -> f11_n640 [label="F", color="red"];
+    f11_n639 -> f11_n640;
+    f11_n640 -> f11_n641 [label="T", color="darkgreen"];
+    f11_n640 -> f11_n642 [label="F", color="red"];
+    f11_n641 -> f11_n642;
+    f11_n642 -> f11_n632;
+  }
+
+  // Inter-function calls
+  edge [style=dashed, color=blue, penwidth=2];
+
+  f1_n572 -> f1_n571 [ltail=cluster_1, lhead=cluster_1, label="call"];
+  f10_n626 -> f5_n588 [ltail=cluster_10, lhead=cluster_5, label="call"];
+  f11_n632 -> f3_n582 [ltail=cluster_11, lhead=cluster_3, label="call"];
+}

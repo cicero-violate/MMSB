@@ -1,0 +1,192 @@
+digraph LayerCFG {
+  rankdir=TB;
+  compound=true;
+  newrank=true;
+
+  label="11_agents - 12 functions from 7 files";
+  labelloc=t;
+  fontsize=18;
+
+  subgraph cluster_1 {
+    label="AgentMemory (AgentTypes.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f1_n1528 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f1_n1529 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f1_n1530 [label="BB1 L29", shape=box, fillcolor=lightblue, style="filled"];
+
+    f1_n1528 -> f1_n1530;
+    f1_n1530 -> f1_n1529;
+  }
+
+  subgraph cluster_2 {
+    label="HybridAgent (hybrid_agent.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f2_n1531 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f2_n1532 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f2_n1533 [label="BB1 L23", shape=box, fillcolor=lightblue, style="filled"];
+
+    f2_n1531 -> f2_n1533;
+    f2_n1533 -> f2_n1532;
+  }
+
+  subgraph cluster_3 {
+    label="PlanningAgent (planning_agent.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f3_n1534 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f3_n1535 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f3_n1536 [label="BB1 L23", shape=box, fillcolor=lightblue, style="filled"];
+
+    f3_n1534 -> f3_n1536;
+    f3_n1536 -> f3_n1535;
+  }
+
+  subgraph cluster_4 {
+    label="SymbolicAgent (symbolic_agent.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f4_n1537 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f4_n1538 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f4_n1539 [label="BB1 L27", shape=box, fillcolor=lightblue, style="filled"];
+
+    f4_n1537 -> f4_n1539;
+    f4_n1539 -> f4_n1538;
+  }
+
+  subgraph cluster_5 {
+    label="create_policy_network (lux_models.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f5_n1540 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f5_n1541 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f5_n1542 [label="RETURN1 L20,21", shape=box, fillcolor=lightblue, style="filled"];
+
+    f5_n1540 -> f5_n1542;
+    f5_n1542 -> f5_n1541;
+  }
+
+  subgraph cluster_6 {
+    label="create_value_network (lux_models.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f6_n1543 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f6_n1544 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f6_n1545 [label="RETURN1 L15,16", shape=box, fillcolor=lightblue, style="filled"];
+
+    f6_n1543 -> f6_n1545;
+    f6_n1545 -> f6_n1544;
+  }
+
+  subgraph cluster_7 {
+    label="gradient_descent_step! (enzyme_integration.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f7_n1546 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f7_n1547 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f7_n1548 [label="BB1 L17", shape=box, fillcolor=lightblue, style="filled"];
+
+    f7_n1546 -> f7_n1548;
+    f7_n1548 -> f7_n1547;
+  }
+
+  subgraph cluster_8 {
+    label="infer_rules! (symbolic_agent.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f8_n1549 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f8_n1550 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f8_n1551 [label="BB1 L36", shape=box, fillcolor=lightblue, style="filled"];
+
+    f8_n1549 -> f8_n1551;
+    f8_n1551 -> f8_n1550;
+  }
+
+  subgraph cluster_9 {
+    label="neural_step! (hybrid_agent.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f9_n1552 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f9_n1553 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f9_n1554 [label="BB1 L39", shape=box, fillcolor=lightblue, style="filled"];
+
+    f9_n1552 -> f9_n1554;
+    f9_n1554 -> f9_n1553;
+  }
+
+  subgraph cluster_10 {
+    label="observe (symbolic_agent.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f10_n1555 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f10_n1556 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f10_n1557 [label="RETURN1 L30,31", shape=box, fillcolor=lightblue, style="filled"];
+
+    f10_n1555 -> f10_n1557;
+    f10_n1557 -> f10_n1556;
+  }
+
+  subgraph cluster_11 {
+    label="push_memory! (AgentTypes.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f11_n1558 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f11_n1559 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f11_n1560 [label="BB1 L32,33,34", shape=box, fillcolor=lightblue, style="filled"];
+    f11_n1561 [label="BRANCH2 L36", shape=diamond, fillcolor=yellow, style="filled"];
+    f11_n1562 [label="BB3 L37,38,39", shape=box, fillcolor=lightblue, style="filled"];
+
+    f11_n1558 -> f11_n1560;
+    f11_n1560 -> f11_n1561;
+    f11_n1561 -> f11_n1562 [label="T", color="darkgreen"];
+    f11_n1562 -> f11_n1559;
+  }
+
+  subgraph cluster_12 {
+    label="train_step! (rl_agent.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f12_n1563 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f12_n1564 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f12_n1565 [label="BB1 L40,41,42,43", shape=box, fillcolor=lightblue, style="filled"];
+
+    f12_n1563 -> f12_n1565;
+    f12_n1565 -> f12_n1564;
+  }
+
+  // Inter-function calls
+  edge [style=dashed, color=blue, penwidth=2];
+
+  f1_n1529 -> f1_n1528 [ltail=cluster_1, lhead=cluster_1, label="call"];
+  f2_n1532 -> f2_n1531 [ltail=cluster_2, lhead=cluster_2, label="call"];
+  f2_n1532 -> f4_n1537 [ltail=cluster_2, lhead=cluster_4, label="call"];
+  f9_n1553 -> f12_n1563 [ltail=cluster_9, lhead=cluster_12, label="call"];
+  f3_n1535 -> f3_n1534 [ltail=cluster_3, lhead=cluster_3, label="call"];
+  f12_n1564 -> f11_n1558 [ltail=cluster_12, lhead=cluster_11, label="call"];
+  f4_n1538 -> f4_n1537 [ltail=cluster_4, lhead=cluster_4, label="call"];
+}

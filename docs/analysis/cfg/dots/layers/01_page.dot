@@ -1,0 +1,846 @@
+digraph LayerCFG {
+  rankdir=TB;
+  compound=true;
+  newrank=true;
+
+  label="01_page - 47 functions from 4 files";
+  labelloc=t;
+  fontsize=18;
+
+  subgraph cluster_1 {
+    label="Delta (Delta.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f1_n119 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f1_n120 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f1_n121 [label="BB1 L39,40,41,42,43,44,45,46,47,48,49,50,53", shape=box, fillcolor=lightblue, style="filled"];
+
+    f1_n119 -> f1_n121;
+    f1_n121 -> f1_n120;
+  }
+
+  subgraph cluster_2 {
+    label="Page (Page.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f2_n122 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f2_n123 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f2_n124 [label="BB1 L31,32,34,36,37", shape=box, fillcolor=lightblue, style="filled"];
+
+    f2_n122 -> f2_n124;
+    f2_n124 -> f2_n123;
+  }
+
+  subgraph cluster_3 {
+    label="_all_deltas (ReplayEngine.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f3_n125 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f3_n126 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f3_n127 [label="BB1 L57", shape=box, fillcolor=lightblue, style="filled"];
+
+    f3_n125 -> f3_n127;
+    f3_n127 -> f3_n126;
+  }
+
+  subgraph cluster_4 {
+    label="_apply_delta! (ReplayEngine.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f4_n128 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f4_n129 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f4_n130 [label="BB1 L51", shape=box, fillcolor=lightblue, style="filled"];
+
+    f4_n128 -> f4_n130;
+    f4_n130 -> f4_n129;
+  }
+
+  subgraph cluster_5 {
+    label="_apply_metadata! (Page.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f5_n131 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f5_n132 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f5_n133 [label="BB1 L76,77,78,79,80", shape=box, fillcolor=lightblue, style="filled"];
+
+    f5_n131 -> f5_n133;
+    f5_n133 -> f5_n132;
+  }
+
+  subgraph cluster_6 {
+    label="_coerce_metadata_value (Page.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f6_n134 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f6_n135 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f6_n136 [label="BB1 L99,100,101", shape=box, fillcolor=lightblue, style="filled"];
+
+    f6_n134 -> f6_n136;
+    f6_n136 -> f6_n135;
+  }
+
+  subgraph cluster_7 {
+    label="_consume (Delta.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f7_n137 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f7_n138 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f7_n139 [label="BB1 L357,358,359", shape=box, fillcolor=lightblue, style="filled"];
+
+    f7_n137 -> f7_n139;
+    f7_n139 -> f7_n138;
+  }
+
+  subgraph cluster_8 {
+    label="_decode_metadata (Delta.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f8_n140 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f8_n141 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f8_n142 [label="BB1 L227,228,229,230", shape=box, fillcolor=lightblue, style="filled"];
+
+    f8_n140 -> f8_n142;
+    f8_n142 -> f8_n141;
+  }
+
+  subgraph cluster_9 {
+    label="_decode_metadata_blob (Page.jl, CC=3)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f9_n143 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f9_n144 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f9_n145 [label="BB1 L105,106,107,108", shape=box, fillcolor=lightblue, style="filled"];
+    f9_n146 [label="LOOP2 L109", shape=box, fillcolor=orange, style="filled,rounded"];
+    f9_n147 [label="BB3 L110,111,112,113,114", shape=box, fillcolor=lightblue, style="filled"];
+    f9_n148 [label="BB4 L116", shape=box, fillcolor=lightblue, style="filled"];
+
+    f9_n143 -> f9_n145;
+    f9_n145 -> f9_n146;
+    f9_n146 -> f9_n147 [label="T", color="darkgreen"];
+    f9_n147 -> f9_n146;
+    f9_n146 -> f9_n148 [label="F", color="red"];
+    f9_n147 -> f9_n148;
+    f9_n148 -> f9_n144;
+  }
+
+  subgraph cluster_10 {
+    label="_encode_metadata_dict (Page.jl, CC=3)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f10_n149 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f10_n150 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f10_n151 [label="BB1 L84,85,86", shape=box, fillcolor=lightblue, style="filled"];
+    f10_n152 [label="LOOP2 L87", shape=box, fillcolor=orange, style="filled,rounded"];
+    f10_n153 [label="BB3 L88,89,90,91,92,93", shape=box, fillcolor=lightblue, style="filled"];
+    f10_n154 [label="BB4 L95", shape=box, fillcolor=lightblue, style="filled"];
+
+    f10_n149 -> f10_n151;
+    f10_n151 -> f10_n152;
+    f10_n152 -> f10_n153 [label="T", color="darkgreen"];
+    f10_n153 -> f10_n152;
+    f10_n152 -> f10_n154 [label="F", color="red"];
+    f10_n153 -> f10_n154;
+    f10_n154 -> f10_n150;
+  }
+
+  subgraph cluster_11 {
+    label="_encode_metadata_value (Delta.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f11_n155 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f11_n156 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f11_n157 [label="BRANCH1 L139", shape=diamond, fillcolor=yellow, style="filled"];
+    f11_n158 [label="RETURN2 L140", shape=box, fillcolor=lightblue, style="filled"];
+    f11_n159 [label="BB3 L139", shape=box, fillcolor=lightblue, style="filled"];
+
+    f11_n155 -> f11_n157;
+    f11_n157 -> f11_n158 [label="T", color="darkgreen"];
+    f11_n157 -> f11_n159 [label="F", color="red"];
+    f11_n159 -> f11_n156;
+  }
+
+  subgraph cluster_12 {
+    label="_escape_metadata_string (Delta.jl, CC=4)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f12_n160 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f12_n161 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f12_n162 [label="BB1 L172", shape=box, fillcolor=lightblue, style="filled"];
+    f12_n163 [label="LOOP2 L173", shape=box, fillcolor=orange, style="filled,rounded"];
+    f12_n164 [label="BRANCH3 L174", shape=diamond, fillcolor=yellow, style="filled"];
+    f12_n165 [label="BB4 L175", shape=box, fillcolor=lightblue, style="filled"];
+    f12_n166 [label="BB5 L174", shape=box, fillcolor=lightblue, style="filled"];
+    f12_n167 [label="BB6 L188", shape=box, fillcolor=lightblue, style="filled"];
+
+    f12_n160 -> f12_n162;
+    f12_n162 -> f12_n163;
+    f12_n163 -> f12_n164 [label="T", color="darkgreen"];
+    f12_n164 -> f12_n163;
+    f12_n163 -> f12_n165 [label="F", color="red"];
+    f12_n164 -> f12_n165 [label="T", color="darkgreen"];
+    f12_n164 -> f12_n166 [label="F", color="red"];
+    f12_n165 -> f12_n166;
+    f12_n166 -> f12_n167;
+    f12_n167 -> f12_n161;
+  }
+
+  subgraph cluster_13 {
+    label="_iterate_log (TLog.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f13_n168 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f13_n169 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f13_n170 [label="BB1 L59,60,61", shape=box, fillcolor=lightblue, style="filled"];
+
+    f13_n168 -> f13_n170;
+    f13_n170 -> f13_n169;
+  }
+
+  subgraph cluster_14 {
+    label="_parse_metadata_array (Delta.jl, CC=4)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f14_n171 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f14_n172 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f14_n173 [label="BB1 L282,283,284", shape=box, fillcolor=lightblue, style="filled"];
+    f14_n174 [label="BRANCH2 L285", shape=diamond, fillcolor=yellow, style="filled"];
+    f14_n175 [label="RETURN3 L286,287", shape=box, fillcolor=lightblue, style="filled"];
+    f14_n176 [label="LOOP4 L289", shape=box, fillcolor=orange, style="filled,rounded"];
+    f14_n177 [label="BB5 L290,291,292", shape=box, fillcolor=lightblue, style="filled"];
+    f14_n178 [label="BRANCH6 L293", shape=diamond, fillcolor=yellow, style="filled"];
+    f14_n179 [label="BB7 L294,295", shape=box, fillcolor=lightblue, style="filled"];
+    f14_n180 [label="BB8 L297", shape=box, fillcolor=lightblue, style="filled"];
+    f14_n181 [label="BB9 L299", shape=box, fillcolor=lightblue, style="filled"];
+
+    f14_n171 -> f14_n173;
+    f14_n173 -> f14_n174;
+    f14_n174 -> f14_n175 [label="T", color="darkgreen"];
+    f14_n174 -> f14_n176 [label="F", color="red"];
+    f14_n176 -> f14_n177 [label="T", color="darkgreen"];
+    f14_n177 -> f14_n176;
+    f14_n176 -> f14_n178 [label="F", color="red"];
+    f14_n177 -> f14_n178;
+    f14_n178 -> f14_n179 [label="T", color="darkgreen"];
+    f14_n178 -> f14_n180 [label="F", color="red"];
+    f14_n179 -> f14_n180;
+    f14_n180 -> f14_n181;
+    f14_n181 -> f14_n172;
+  }
+
+  subgraph cluster_15 {
+    label="_parse_metadata_number (Delta.jl, CC=4)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f15_n182 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f15_n183 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f15_n184 [label="BB1 L332", shape=box, fillcolor=lightblue, style="filled"];
+    f15_n185 [label="LOOP2 L333", shape=box, fillcolor=orange, style="filled,rounded"];
+    f15_n186 [label="BB3 L334", shape=box, fillcolor=lightblue, style="filled"];
+    f15_n187 [label="BRANCH4 L335", shape=diamond, fillcolor=yellow, style="filled"];
+    f15_n188 [label="BB5 L336", shape=box, fillcolor=lightblue, style="filled"];
+    f15_n189 [label="BB6 L338", shape=box, fillcolor=lightblue, style="filled"];
+    f15_n190 [label="BB7 L340", shape=box, fillcolor=lightblue, style="filled"];
+    f15_n191 [label="BRANCH8 L341", shape=diamond, fillcolor=yellow, style="filled"];
+    f15_n192 [label="RETURN9 L342", shape=box, fillcolor=lightblue, style="filled"];
+    f15_n193 [label="RETURN10 L344,345,346", shape=box, fillcolor=lightblue, style="filled"];
+
+    f15_n182 -> f15_n184;
+    f15_n184 -> f15_n185;
+    f15_n185 -> f15_n186 [label="T", color="darkgreen"];
+    f15_n186 -> f15_n185;
+    f15_n185 -> f15_n187 [label="F", color="red"];
+    f15_n186 -> f15_n187;
+    f15_n187 -> f15_n188 [label="T", color="darkgreen"];
+    f15_n187 -> f15_n189 [label="F", color="red"];
+    f15_n188 -> f15_n189;
+    f15_n189 -> f15_n190;
+    f15_n190 -> f15_n191;
+    f15_n191 -> f15_n192 [label="T", color="darkgreen"];
+    f15_n191 -> f15_n193 [label="F", color="red"];
+    f15_n193 -> f15_n183;
+  }
+
+  subgraph cluster_16 {
+    label="_parse_metadata_object (Delta.jl, CC=4)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f16_n194 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f16_n195 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f16_n196 [label="BB1 L257,258,259", shape=box, fillcolor=lightblue, style="filled"];
+    f16_n197 [label="BRANCH2 L260", shape=diamond, fillcolor=yellow, style="filled"];
+    f16_n198 [label="RETURN3 L261,262", shape=box, fillcolor=lightblue, style="filled"];
+    f16_n199 [label="LOOP4 L264", shape=box, fillcolor=orange, style="filled,rounded"];
+    f16_n200 [label="BB5 L265,266,267,268,269,270,271", shape=box, fillcolor=lightblue, style="filled"];
+    f16_n201 [label="BRANCH6 L272", shape=diamond, fillcolor=yellow, style="filled"];
+    f16_n202 [label="BB7 L273,274", shape=box, fillcolor=lightblue, style="filled"];
+    f16_n203 [label="BB8 L276", shape=box, fillcolor=lightblue, style="filled"];
+    f16_n204 [label="BB9 L278", shape=box, fillcolor=lightblue, style="filled"];
+
+    f16_n194 -> f16_n196;
+    f16_n196 -> f16_n197;
+    f16_n197 -> f16_n198 [label="T", color="darkgreen"];
+    f16_n197 -> f16_n199 [label="F", color="red"];
+    f16_n199 -> f16_n200 [label="T", color="darkgreen"];
+    f16_n200 -> f16_n199;
+    f16_n199 -> f16_n201 [label="F", color="red"];
+    f16_n200 -> f16_n201;
+    f16_n201 -> f16_n202 [label="T", color="darkgreen"];
+    f16_n201 -> f16_n203 [label="F", color="red"];
+    f16_n202 -> f16_n203;
+    f16_n203 -> f16_n204;
+    f16_n204 -> f16_n195;
+  }
+
+  subgraph cluster_17 {
+    label="_parse_metadata_string (Delta.jl, CC=4)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f17_n205 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f17_n206 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f17_n207 [label="BB1 L303,304", shape=box, fillcolor=lightblue, style="filled"];
+    f17_n208 [label="LOOP2 L305", shape=box, fillcolor=orange, style="filled,rounded"];
+    f17_n209 [label="BB3 L306,307", shape=box, fillcolor=lightblue, style="filled"];
+    f17_n210 [label="BRANCH4 L308", shape=diamond, fillcolor=yellow, style="filled"];
+    f17_n211 [label="BB5 L309", shape=box, fillcolor=lightblue, style="filled"];
+    f17_n212 [label="BB6 L308", shape=box, fillcolor=lightblue, style="filled"];
+    f17_n213 [label="BB7 L328", shape=box, fillcolor=lightblue, style="filled"];
+
+    f17_n205 -> f17_n207;
+    f17_n207 -> f17_n208;
+    f17_n208 -> f17_n209 [label="T", color="darkgreen"];
+    f17_n209 -> f17_n208;
+    f17_n208 -> f17_n210 [label="F", color="red"];
+    f17_n209 -> f17_n210;
+    f17_n210 -> f17_n211 [label="T", color="darkgreen"];
+    f17_n210 -> f17_n212 [label="F", color="red"];
+    f17_n211 -> f17_n212;
+    f17_n212 -> f17_n213;
+    f17_n213 -> f17_n206;
+  }
+
+  subgraph cluster_18 {
+    label="_parse_metadata_value (Delta.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f18_n214 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f18_n215 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f18_n216 [label="BB1 L234,235,236,237,238", shape=box, fillcolor=lightblue, style="filled"];
+    f18_n217 [label="BRANCH2 L239", shape=diamond, fillcolor=yellow, style="filled"];
+    f18_n218 [label="RETURN3 L240", shape=box, fillcolor=lightblue, style="filled"];
+    f18_n219 [label="BRANCH4 L242", shape=diamond, fillcolor=yellow, style="filled"];
+    f18_n220 [label="RETURN5 L243,244", shape=box, fillcolor=lightblue, style="filled"];
+    f18_n221 [label="BB6 L242", shape=box, fillcolor=lightblue, style="filled"];
+
+    f18_n214 -> f18_n216;
+    f18_n216 -> f18_n217;
+    f18_n217 -> f18_n218 [label="T", color="darkgreen"];
+    f18_n217 -> f18_n219 [label="F", color="red"];
+    f18_n219 -> f18_n220 [label="T", color="darkgreen"];
+    f18_n219 -> f18_n221 [label="F", color="red"];
+    f18_n221 -> f18_n215;
+  }
+
+  subgraph cluster_19 {
+    label="_peek (Delta.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f19_n222 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f19_n223 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f19_n224 [label="BB1 L363,364", shape=box, fillcolor=lightblue, style="filled"];
+
+    f19_n222 -> f19_n224;
+    f19_n224 -> f19_n223;
+  }
+
+  subgraph cluster_20 {
+    label="_refresh_pages! (TLog.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f20_n225 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f20_n226 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f20_n227 [label="BB1 L140,141", shape=box, fillcolor=lightblue, style="filled"];
+
+    f20_n225 -> f20_n227;
+    f20_n227 -> f20_n226;
+  }
+
+  subgraph cluster_21 {
+    label="_skip_ws (Delta.jl, CC=2)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f21_n228 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f21_n229 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f21_n230 [label="LOOP1 L351", shape=box, fillcolor=orange, style="filled,rounded"];
+    f21_n231 [label="BB2 L352", shape=box, fillcolor=lightblue, style="filled"];
+
+    f21_n228 -> f21_n230;
+    f21_n230 -> f21_n231 [label="T", color="darkgreen"];
+    f21_n231 -> f21_n230;
+    f21_n231 -> f21_n229;
+  }
+
+  subgraph cluster_22 {
+    label="_with_rust_errors (TLog.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f22_n232 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f22_n233 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f22_n234 [label="BB1 L31", shape=box, fillcolor=lightblue, style="filled"];
+
+    f22_n232 -> f22_n234;
+    f22_n234 -> f22_n233;
+  }
+
+  subgraph cluster_23 {
+    label="activate! (Page.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f23_n235 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f23_n236 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f23_n237 [label="BB1 L55,56,57", shape=box, fillcolor=lightblue, style="filled"];
+
+    f23_n235 -> f23_n237;
+    f23_n237 -> f23_n236;
+  }
+
+  subgraph cluster_24 {
+    label="append_to_log! (TLog.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f24_n238 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f24_n239 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f24_n240 [label="RETURN1 L42,47", shape=box, fillcolor=lightblue, style="filled"];
+
+    f24_n238 -> f24_n240;
+    f24_n240 -> f24_n239;
+  }
+
+  subgraph cluster_25 {
+    label="apply_delta! (Delta.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f25_n241 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f25_n242 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f25_n243 [label="BB1 L64", shape=box, fillcolor=lightblue, style="filled"];
+
+    f25_n241 -> f25_n243;
+    f25_n243 -> f25_n242;
+  }
+
+  subgraph cluster_26 {
+    label="checkpoint_log! (TLog.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f26_n244 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f26_n245 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f26_n246 [label="BB1 L123", shape=box, fillcolor=lightblue, style="filled"];
+
+    f26_n244 -> f26_n246;
+    f26_n246 -> f26_n245;
+  }
+
+  subgraph cluster_27 {
+    label="compress_delta_mask (TLog.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f27_n247 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f27_n248 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f27_n249 [label="RETURN1 L23", shape=box, fillcolor=lightblue, style="filled"];
+
+    f27_n247 -> f27_n249;
+    f27_n249 -> f27_n248;
+  }
+
+  subgraph cluster_28 {
+    label="compute_diff (ReplayEngine.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f28_n250 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f28_n251 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f28_n252 [label="BB1 L148", shape=box, fillcolor=lightblue, style="filled"];
+
+    f28_n250 -> f28_n252;
+    f28_n252 -> f28_n251;
+  }
+
+  subgraph cluster_29 {
+    label="compute_log_statistics (TLog.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f29_n253 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f29_n254 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f29_n255 [label="RETURN1 L108,109", shape=box, fillcolor=lightblue, style="filled"];
+
+    f29_n253 -> f29_n255;
+    f29_n255 -> f29_n254;
+  }
+
+  subgraph cluster_30 {
+    label="deactivate! (Page.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f30_n256 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f30_n257 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f30_n258 [label="BB1 L61,62,63", shape=box, fillcolor=lightblue, style="filled"];
+
+    f30_n256 -> f30_n258;
+    f30_n258 -> f30_n257;
+  }
+
+  subgraph cluster_31 {
+    label="get_deltas_for_page (TLog.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f31_n259 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f31_n260 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f31_n261 [label="BB1 L97", shape=box, fillcolor=lightblue, style="filled"];
+
+    f31_n259 -> f31_n261;
+    f31_n261 -> f31_n260;
+  }
+
+  subgraph cluster_32 {
+    label="get_deltas_in_range (TLog.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f32_n262 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f32_n263 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f32_n264 [label="BB1 L100,101,102,103,104", shape=box, fillcolor=lightblue, style="filled"];
+
+    f32_n262 -> f32_n264;
+    f32_n264 -> f32_n263;
+  }
+
+  subgraph cluster_33 {
+    label="incremental_replay! (ReplayEngine.jl, CC=3)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f33_n265 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f33_n266 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f33_n267 [label="LOOP1 L140", shape=box, fillcolor=orange, style="filled,rounded"];
+    f33_n268 [label="BB2 L141,142,143", shape=box, fillcolor=lightblue, style="filled"];
+    f33_n269 [label="BB3 L145", shape=box, fillcolor=lightblue, style="filled"];
+
+    f33_n265 -> f33_n267;
+    f33_n267 -> f33_n268 [label="T", color="darkgreen"];
+    f33_n268 -> f33_n267;
+    f33_n267 -> f33_n269 [label="F", color="red"];
+    f33_n268 -> f33_n269;
+    f33_n269 -> f33_n266;
+  }
+
+  subgraph cluster_34 {
+    label="initialize! (Page.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f34_n270 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f34_n271 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f34_n272 [label="BB1 L49,50,51", shape=box, fillcolor=lightblue, style="filled"];
+
+    f34_n270 -> f34_n272;
+    f34_n272 -> f34_n271;
+  }
+
+  subgraph cluster_35 {
+    label="intent_metadata (Delta.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f35_n273 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f35_n274 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f35_n275 [label="BB1 L133,134,135", shape=box, fillcolor=lightblue, style="filled"];
+
+    f35_n273 -> f35_n275;
+    f35_n275 -> f35_n274;
+  }
+
+  subgraph cluster_36 {
+    label="is_cpu_page (Page.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f36_n276 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f36_n277 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f36_n278 [label="BB1 L45", shape=box, fillcolor=lightblue, style="filled"];
+
+    f36_n276 -> f36_n278;
+    f36_n278 -> f36_n277;
+  }
+
+  subgraph cluster_37 {
+    label="is_gpu_page (Page.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f37_n279 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f37_n280 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f37_n281 [label="BB1 L44", shape=box, fillcolor=lightblue, style="filled"];
+
+    f37_n279 -> f37_n281;
+    f37_n281 -> f37_n280;
+  }
+
+  subgraph cluster_38 {
+    label="load_checkpoint! (TLog.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f38_n282 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f38_n283 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f38_n284 [label="BB1 L131,136", shape=box, fillcolor=lightblue, style="filled"];
+
+    f38_n282 -> f38_n284;
+    f38_n284 -> f38_n283;
+  }
+
+  subgraph cluster_39 {
+    label="log_summary (TLog.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f39_n285 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f39_n286 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f39_n287 [label="BB1 L51,54,55", shape=box, fillcolor=lightblue, style="filled"];
+
+    f39_n285 -> f39_n287;
+    f39_n287 -> f39_n286;
+  }
+
+  subgraph cluster_40 {
+    label="merge_deltas_simd! (Delta.jl, CC=2)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f40_n288 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f40_n289 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f40_n290 [label="BB1 L201", shape=box, fillcolor=lightblue, style="filled"];
+    f40_n291 [label="BRANCH2 L203", shape=diamond, fillcolor=yellow, style="filled"];
+    f40_n292 [label="BB3 L204", shape=box, fillcolor=lightblue, style="filled"];
+    f40_n293 [label="BB4 L209", shape=box, fillcolor=lightblue, style="filled"];
+
+    f40_n288 -> f40_n290;
+    f40_n290 -> f40_n291;
+    f40_n291 -> f40_n292 [label="T", color="darkgreen"];
+    f40_n291 -> f40_n293 [label="F", color="red"];
+    f40_n292 -> f40_n293;
+    f40_n293 -> f40_n289;
+  }
+
+  subgraph cluster_41 {
+    label="metadata_from_blob (Page.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f41_n294 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f41_n295 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f41_n296 [label="BB1 L119", shape=box, fillcolor=lightblue, style="filled"];
+
+    f41_n294 -> f41_n296;
+    f41_n296 -> f41_n295;
+  }
+
+  subgraph cluster_42 {
+    label="new_delta_handle (Delta.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f42_n297 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f42_n298 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f42_n299 [label="BB1 L60", shape=box, fillcolor=lightblue, style="filled"];
+
+    f42_n297 -> f42_n299;
+    f42_n299 -> f42_n298;
+  }
+
+  subgraph cluster_43 {
+    label="page_size_bytes (Page.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f43_n300 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f43_n301 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f43_n302 [label="BB1 L46", shape=box, fillcolor=lightblue, style="filled"];
+
+    f43_n300 -> f43_n302;
+    f43_n302 -> f43_n301;
+  }
+
+  subgraph cluster_44 {
+    label="query_log (TLog.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f44_n303 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f44_n304 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f44_n305 [label="BB1 L72,73", shape=box, fillcolor=lightblue, style="filled"];
+
+    f44_n303 -> f44_n305;
+    f44_n305 -> f44_n304;
+  }
+
+  subgraph cluster_45 {
+    label="replay_log (TLog.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f45_n306 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f45_n307 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f45_n308 [label="BB1 L118,119", shape=box, fillcolor=lightblue, style="filled"];
+
+    f45_n306 -> f45_n308;
+    f45_n308 -> f45_n307;
+  }
+
+  subgraph cluster_46 {
+    label="replay_with_predicate (ReplayEngine.jl, CC=3)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f46_n309 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f46_n310 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f46_n311 [label="BB1 L132", shape=box, fillcolor=lightblue, style="filled"];
+    f46_n312 [label="LOOP2 L133", shape=box, fillcolor=orange, style="filled,rounded"];
+    f46_n313 [label="BB3 L134", shape=box, fillcolor=lightblue, style="filled"];
+    f46_n314 [label="BB4 L136", shape=box, fillcolor=lightblue, style="filled"];
+
+    f46_n309 -> f46_n311;
+    f46_n311 -> f46_n312;
+    f46_n312 -> f46_n313 [label="T", color="darkgreen"];
+    f46_n313 -> f46_n312;
+    f46_n312 -> f46_n314 [label="F", color="red"];
+    f46_n313 -> f46_n314;
+    f46_n314 -> f46_n310;
+  }
+
+  subgraph cluster_47 {
+    label="set_intent_metadata! (Delta.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f47_n315 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f47_n316 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f47_n317 [label="BRANCH1 L113", shape=diamond, fillcolor=yellow, style="filled"];
+    f47_n318 [label="RETURN2 L114,115,116", shape=box, fillcolor=lightblue, style="filled"];
+    f47_n319 [label="BB3 L113", shape=box, fillcolor=lightblue, style="filled"];
+
+    f47_n315 -> f47_n317;
+    f47_n317 -> f47_n318 [label="T", color="darkgreen"];
+    f47_n317 -> f47_n319 [label="F", color="red"];
+    f47_n319 -> f47_n316;
+  }
+
+  // Inter-function calls
+  edge [style=dashed, color=blue, penwidth=2];
+
+  f35_n274 -> f8_n140 [ltail=cluster_35, lhead=cluster_8, label="call"];
+  f11_n156 -> f10_n149 [ltail=cluster_11, lhead=cluster_10, label="call"];
+  f11_n156 -> f11_n155 [ltail=cluster_11, lhead=cluster_11, label="call"];
+  f11_n156 -> f12_n160 [ltail=cluster_11, lhead=cluster_12, label="call"];
+  f10_n150 -> f11_n155 [ltail=cluster_10, lhead=cluster_11, label="call"];
+  f18_n215 -> f21_n228 [ltail=cluster_18, lhead=cluster_21, label="call"];
+  f18_n215 -> f16_n194 [ltail=cluster_18, lhead=cluster_16, label="call"];
+  f18_n215 -> f14_n171 [ltail=cluster_18, lhead=cluster_14, label="call"];
+  f18_n215 -> f17_n205 [ltail=cluster_18, lhead=cluster_17, label="call"];
+  f18_n215 -> f15_n182 [ltail=cluster_18, lhead=cluster_15, label="call"];
+  f16_n195 -> f7_n137 [ltail=cluster_16, lhead=cluster_7, label="call"];
+  f16_n195 -> f21_n228 [ltail=cluster_16, lhead=cluster_21, label="call"];
+  f16_n195 -> f19_n222 [ltail=cluster_16, lhead=cluster_19, label="call"];
+  f14_n172 -> f7_n137 [ltail=cluster_14, lhead=cluster_7, label="call"];
+  f14_n172 -> f21_n228 [ltail=cluster_14, lhead=cluster_21, label="call"];
+  f14_n172 -> f19_n222 [ltail=cluster_14, lhead=cluster_19, label="call"];
+  f14_n172 -> f18_n214 [ltail=cluster_14, lhead=cluster_18, label="call"];
+  f17_n206 -> f7_n137 [ltail=cluster_17, lhead=cluster_7, label="call"];
+  f2_n123 -> f5_n131 [ltail=cluster_2, lhead=cluster_5, label="call"];
+  f41_n295 -> f9_n143 [ltail=cluster_41, lhead=cluster_9, label="call"];
+  f33_n266 -> f4_n128 [ltail=cluster_33, lhead=cluster_4, label="call"];
+  f24_n239 -> f22_n232 [ltail=cluster_24, lhead=cluster_22, label="call"];
+  f44_n304 -> f13_n168 [ltail=cluster_44, lhead=cluster_13, label="call"];
+  f44_n304 -> f1_n119 [ltail=cluster_44, lhead=cluster_1, label="call"];
+  f31_n260 -> f44_n303 [ltail=cluster_31, lhead=cluster_44, label="call"];
+  f26_n245 -> f22_n232 [ltail=cluster_26, lhead=cluster_22, label="call"];
+  f38_n283 -> f22_n232 [ltail=cluster_38, lhead=cluster_22, label="call"];
+  f38_n283 -> f20_n225 [ltail=cluster_38, lhead=cluster_20, label="call"];
+  f20_n226 -> f34_n270 [ltail=cluster_20, lhead=cluster_34, label="call"];
+  f20_n226 -> f23_n235 [ltail=cluster_20, lhead=cluster_23, label="call"];
+}

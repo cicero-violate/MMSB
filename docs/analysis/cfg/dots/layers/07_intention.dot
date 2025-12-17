@@ -1,0 +1,271 @@
+digraph LayerCFG {
+  rankdir=TB;
+  compound=true;
+  newrank=true;
+
+  label="07_intention - 15 functions from 7 files";
+  labelloc=t;
+  fontsize=18;
+
+  subgraph cluster_1 {
+    label="IntentionState (IntentionTypes.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f1_n772 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f1_n773 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f1_n774 [label="BB1 L54", shape=box, fillcolor=lightblue, style="filled"];
+
+    f1_n772 -> f1_n774;
+    f1_n774 -> f1_n773;
+  }
+
+  subgraph cluster_2 {
+    label="apply_preferences (structural_preferences.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f2_n775 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f2_n776 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f2_n777 [label="BB1 L43", shape=box, fillcolor=lightblue, style="filled"];
+
+    f2_n775 -> f2_n777;
+    f2_n777 -> f2_n776;
+  }
+
+  subgraph cluster_3 {
+    label="compute_gradient (attractor_states.jl, CC=3)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f3_n778 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f3_n779 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f3_n780 [label="BB1 L28", shape=box, fillcolor=lightblue, style="filled"];
+    f3_n781 [label="LOOP2 L30", shape=box, fillcolor=orange, style="filled,rounded"];
+    f3_n782 [label="BB3 L31,32,35", shape=box, fillcolor=lightblue, style="filled"];
+    f3_n783 [label="RETURN4 L38", shape=box, fillcolor=lightblue, style="filled"];
+
+    f3_n778 -> f3_n780;
+    f3_n780 -> f3_n781;
+    f3_n781 -> f3_n782 [label="T", color="darkgreen"];
+    f3_n782 -> f3_n781;
+    f3_n781 -> f3_n783 [label="F", color="red"];
+    f3_n782 -> f3_n783;
+    f3_n783 -> f3_n779;
+  }
+
+  subgraph cluster_4 {
+    label="detect_goals (goal_emergence.jl, CC=3)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f4_n784 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f4_n785 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f4_n786 [label="BB1 L41", shape=box, fillcolor=lightblue, style="filled"];
+    f4_n787 [label="BRANCH2 L44", shape=diamond, fillcolor=yellow, style="filled"];
+    f4_n788 [label="BB3 L45", shape=box, fillcolor=lightblue, style="filled"];
+    f4_n789 [label="BB4 L55", shape=box, fillcolor=lightblue, style="filled"];
+    f4_n790 [label="BRANCH5 L56", shape=diamond, fillcolor=yellow, style="filled"];
+    f4_n791 [label="BB6 L57", shape=box, fillcolor=lightblue, style="filled"];
+    f4_n792 [label="RETURN7 L66", shape=box, fillcolor=lightblue, style="filled"];
+
+    f4_n784 -> f4_n786;
+    f4_n786 -> f4_n787;
+    f4_n787 -> f4_n788 [label="T", color="darkgreen"];
+    f4_n787 -> f4_n789 [label="F", color="red"];
+    f4_n788 -> f4_n789;
+    f4_n789 -> f4_n790;
+    f4_n790 -> f4_n791 [label="T", color="darkgreen"];
+    f4_n790 -> f4_n792 [label="F", color="red"];
+    f4_n791 -> f4_n792;
+    f4_n792 -> f4_n785;
+  }
+
+  subgraph cluster_5 {
+    label="evaluate_intention (intention_engine.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f5_n793 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f5_n794 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f5_n795 [label="RETURN1 L54,55,58,60", shape=box, fillcolor=lightblue, style="filled"];
+
+    f5_n793 -> f5_n795;
+    f5_n795 -> f5_n794;
+  }
+
+  subgraph cluster_6 {
+    label="evaluate_preference (structural_preferences.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f6_n796 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f6_n797 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f6_n798 [label="BB1 L29", shape=box, fillcolor=lightblue, style="filled"];
+
+    f6_n796 -> f6_n798;
+    f6_n798 -> f6_n797;
+  }
+
+  subgraph cluster_7 {
+    label="evolve_state (attractor_states.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f7_n799 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f7_n800 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f7_n801 [label="RETURN1 L47,48", shape=box, fillcolor=lightblue, style="filled"];
+
+    f7_n799 -> f7_n801;
+    f7_n801 -> f7_n800;
+  }
+
+  subgraph cluster_8 {
+    label="execute_upsert_plan! (intent_lowering.jl, CC=3)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f8_n802 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f8_n803 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f8_n804 [label="BB1 L33,34,35,36,37", shape=box, fillcolor=lightblue, style="filled"];
+    f8_n805 [label="BRANCH2 L38", shape=diamond, fillcolor=yellow, style="filled"];
+    f8_n806 [label="RETURN3 L39", shape=box, fillcolor=lightblue, style="filled"];
+    f8_n807 [label="BB4 L41", shape=box, fillcolor=lightblue, style="filled"];
+    f8_n808 [label="LOOP5 L42", shape=box, fillcolor=orange, style="filled,rounded"];
+    f8_n809 [label="BB6 L43", shape=box, fillcolor=lightblue, style="filled"];
+    f8_n810 [label="RETURN7 L45,47,48,49,50", shape=box, fillcolor=lightblue, style="filled"];
+
+    f8_n802 -> f8_n804;
+    f8_n804 -> f8_n805;
+    f8_n805 -> f8_n806 [label="T", color="darkgreen"];
+    f8_n805 -> f8_n807 [label="F", color="red"];
+    f8_n807 -> f8_n808;
+    f8_n808 -> f8_n809 [label="T", color="darkgreen"];
+    f8_n809 -> f8_n808;
+    f8_n808 -> f8_n810 [label="F", color="red"];
+    f8_n809 -> f8_n810;
+    f8_n810 -> f8_n803;
+  }
+
+  subgraph cluster_9 {
+    label="find_nearest_attractor (attractor_states.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f9_n811 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f9_n812 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f9_n813 [label="RETURN1 L57,58", shape=box, fillcolor=lightblue, style="filled"];
+
+    f9_n811 -> f9_n813;
+    f9_n813 -> f9_n812;
+  }
+
+  subgraph cluster_10 {
+    label="form_intention (intention_engine.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f10_n814 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f10_n815 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f10_n816 [label="BB1 L22,24,33,35,37", shape=box, fillcolor=lightblue, style="filled"];
+
+    f10_n814 -> f10_n816;
+    f10_n816 -> f10_n815;
+  }
+
+  subgraph cluster_11 {
+    label="lower_intent_to_deltaspec (intent_lowering.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f11_n817 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f11_n818 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f11_n819 [label="BB1 L24,25", shape=box, fillcolor=lightblue, style="filled"];
+
+    f11_n817 -> f11_n819;
+    f11_n819 -> f11_n818;
+  }
+
+  subgraph cluster_12 {
+    label="mask_to_bytes (intent_lowering.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f12_n820 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f12_n821 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f12_n822 [label="BB1 L20", shape=box, fillcolor=lightblue, style="filled"];
+
+    f12_n820 -> f12_n822;
+    f12_n822 -> f12_n821;
+  }
+
+  subgraph cluster_13 {
+    label="select_best_intention (intention_engine.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f13_n823 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f13_n824 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f13_n825 [label="RETURN1 L69,71,72,74", shape=box, fillcolor=lightblue, style="filled"];
+
+    f13_n823 -> f13_n825;
+    f13_n825 -> f13_n824;
+  }
+
+  subgraph cluster_14 {
+    label="utility_gradient (goal_emergence.jl, CC=2)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f14_n826 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f14_n827 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f14_n828 [label="BB1 L20,22,23,26,27,29,30", shape=box, fillcolor=lightblue, style="filled"];
+    f14_n829 [label="BRANCH2 L32", shape=diamond, fillcolor=yellow, style="filled"];
+    f14_n830 [label="BB3 L32", shape=box, fillcolor=lightblue, style="filled"];
+    f14_n831 [label="BB4 L32", shape=box, fillcolor=lightblue, style="filled"];
+
+    f14_n826 -> f14_n828;
+    f14_n828 -> f14_n829;
+    f14_n829 -> f14_n830 [label="T", color="darkgreen"];
+    f14_n829 -> f14_n831 [label="F", color="red"];
+    f14_n830 -> f14_n831;
+    f14_n831 -> f14_n827;
+  }
+
+  subgraph cluster_15 {
+    label="validate_plan (UpsertPlan.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f15_n832 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f15_n833 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f15_n834 [label="BB1 L21,22,24", shape=box, fillcolor=lightblue, style="filled"];
+
+    f15_n832 -> f15_n834;
+    f15_n834 -> f15_n833;
+  }
+
+  // Inter-function calls
+  edge [style=dashed, color=blue, penwidth=2];
+
+  f1_n773 -> f1_n772 [ltail=cluster_1, lhead=cluster_1, label="call"];
+  f11_n818 -> f15_n832 [ltail=cluster_11, lhead=cluster_15, label="call"];
+  f11_n818 -> f12_n820 [ltail=cluster_11, lhead=cluster_12, label="call"];
+  f8_n803 -> f15_n832 [ltail=cluster_8, lhead=cluster_15, label="call"];
+  f2_n776 -> f6_n796 [ltail=cluster_2, lhead=cluster_6, label="call"];
+}

@@ -1,0 +1,858 @@
+digraph LayerCFG {
+  rankdir=TB;
+  compound=true;
+  newrank=true;
+
+  label="08_reasoning - 29 functions from 8 files";
+  labelloc=t;
+  fontsize=18;
+
+  subgraph cluster_1 {
+    label="ReasoningState (ReasoningTypes.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f1_n835 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f1_n836 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f1_n837 [label="BB1 L95", shape=box, fillcolor=lightblue, style="filled"];
+
+    f1_n835 -> f1_n837;
+    f1_n837 -> f1_n836;
+  }
+
+  subgraph cluster_2 {
+    label="abduce (logic_engine.jl, CC=4)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f2_n838 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f2_n839 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f2_n840 [label="BB1 L46", shape=box, fillcolor=lightblue, style="filled"];
+    f2_n841 [label="LOOP2 L49", shape=box, fillcolor=orange, style="filled,rounded"];
+    f2_n842 [label="BRANCH3 L50", shape=diamond, fillcolor=yellow, style="filled"];
+    f2_n843 [label="BB4 L52,58", shape=box, fillcolor=lightblue, style="filled"];
+    f2_n844 [label="BB5 L62", shape=box, fillcolor=lightblue, style="filled"];
+
+    f2_n838 -> f2_n840;
+    f2_n840 -> f2_n841;
+    f2_n841 -> f2_n842 [label="T", color="darkgreen"];
+    f2_n842 -> f2_n841;
+    f2_n841 -> f2_n843 [label="F", color="red"];
+    f2_n842 -> f2_n843 [label="T", color="darkgreen"];
+    f2_n842 -> f2_n844 [label="F", color="red"];
+    f2_n843 -> f2_n844;
+    f2_n844 -> f2_n839;
+  }
+
+  subgraph cluster_3 {
+    label="analyze_edge_type (dependency_inference.jl, CC=2)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f3_n845 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f3_n846 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f3_n847 [label="BB1 L48,49", shape=box, fillcolor=lightblue, style="filled"];
+    f3_n848 [label="BRANCH2 L52", shape=diamond, fillcolor=yellow, style="filled"];
+    f3_n849 [label="BRANCH3 L53", shape=diamond, fillcolor=yellow, style="filled"];
+    f3_n850 [label="RETURN4 L54", shape=box, fillcolor=lightblue, style="filled"];
+    f3_n851 [label="BRANCH5 L59", shape=diamond, fillcolor=yellow, style="filled"];
+    f3_n852 [label="RETURN6 L60", shape=box, fillcolor=lightblue, style="filled"];
+    f3_n853 [label="BB7 L64", shape=box, fillcolor=lightblue, style="filled"];
+
+    f3_n845 -> f3_n847;
+    f3_n847 -> f3_n848;
+    f3_n848 -> f3_n849 [label="T", color="darkgreen"];
+    f3_n848 -> f3_n850 [label="F", color="red"];
+    f3_n849 -> f3_n850 [label="T", color="darkgreen"];
+    f3_n849 -> f3_n851 [label="F", color="red"];
+    f3_n851 -> f3_n852 [label="T", color="darkgreen"];
+    f3_n851 -> f3_n853 [label="F", color="red"];
+    f3_n853 -> f3_n846;
+  }
+
+  subgraph cluster_4 {
+    label="analyze_flow (dependency_inference.jl, CC=7)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f4_n854 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f4_n855 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f4_n856 [label="BB1 L115,118", shape=box, fillcolor=lightblue, style="filled"];
+    f4_n857 [label="LOOP2 L119", shape=box, fillcolor=orange, style="filled,rounded"];
+    f4_n858 [label="BRANCH3 L120", shape=diamond, fillcolor=yellow, style="filled"];
+    f4_n859 [label="BB4 L121", shape=box, fillcolor=lightblue, style="filled"];
+    f4_n860 [label="BB5 L124,127", shape=box, fillcolor=lightblue, style="filled"];
+    f4_n861 [label="LOOP6 L128", shape=box, fillcolor=orange, style="filled,rounded"];
+    f4_n862 [label="BRANCH7 L129", shape=diamond, fillcolor=yellow, style="filled"];
+    f4_n863 [label="BB8 L130", shape=box, fillcolor=lightblue, style="filled"];
+    f4_n864 [label="BB9 L133,136,138", shape=box, fillcolor=lightblue, style="filled"];
+
+    f4_n854 -> f4_n856;
+    f4_n856 -> f4_n857;
+    f4_n857 -> f4_n858 [label="T", color="darkgreen"];
+    f4_n858 -> f4_n857;
+    f4_n857 -> f4_n859 [label="F", color="red"];
+    f4_n858 -> f4_n859 [label="T", color="darkgreen"];
+    f4_n858 -> f4_n860 [label="F", color="red"];
+    f4_n859 -> f4_n860;
+    f4_n860 -> f4_n861;
+    f4_n861 -> f4_n862 [label="T", color="darkgreen"];
+    f4_n862 -> f4_n861;
+    f4_n861 -> f4_n863 [label="F", color="red"];
+    f4_n862 -> f4_n863 [label="T", color="darkgreen"];
+    f4_n862 -> f4_n864 [label="F", color="red"];
+    f4_n863 -> f4_n864;
+    f4_n864 -> f4_n855;
+  }
+
+  subgraph cluster_5 {
+    label="apply_rule (rule_evaluation.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f5_n865 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f5_n866 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f5_n867 [label="BRANCH1 L50", shape=diamond, fillcolor=yellow, style="filled"];
+    f5_n868 [label="RETURN2 L51", shape=box, fillcolor=lightblue, style="filled"];
+    f5_n869 [label="BB3 L53", shape=box, fillcolor=lightblue, style="filled"];
+
+    f5_n865 -> f5_n867;
+    f5_n867 -> f5_n868 [label="T", color="darkgreen"];
+    f5_n867 -> f5_n869 [label="F", color="red"];
+    f5_n869 -> f5_n866;
+  }
+
+  subgraph cluster_6 {
+    label="backward_propagate (constraint_propagation.jl, CC=7)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f6_n870 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f6_n871 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f6_n872 [label="BB1 L97,99,100", shape=box, fillcolor=lightblue, style="filled"];
+    f6_n873 [label="LOOP2 L102", shape=box, fillcolor=orange, style="filled,rounded"];
+    f6_n874 [label="BB3 L103", shape=box, fillcolor=lightblue, style="filled"];
+    f6_n875 [label="BRANCH4 L105", shape=diamond, fillcolor=yellow, style="filled"];
+    f6_n876 [label="LOOP5 L107", shape=box, fillcolor=orange, style="filled,rounded"];
+    f6_n877 [label="BRANCH6 L108", shape=diamond, fillcolor=yellow, style="filled"];
+    f6_n878 [label="BB7 L109,110,116", shape=box, fillcolor=lightblue, style="filled"];
+    f6_n879 [label="BB8 L122", shape=box, fillcolor=lightblue, style="filled"];
+
+    f6_n870 -> f6_n872;
+    f6_n872 -> f6_n873;
+    f6_n873 -> f6_n874 [label="T", color="darkgreen"];
+    f6_n874 -> f6_n873;
+    f6_n873 -> f6_n875 [label="F", color="red"];
+    f6_n874 -> f6_n875;
+    f6_n875 -> f6_n876 [label="T", color="darkgreen"];
+    f6_n875 -> f6_n877 [label="F", color="red"];
+    f6_n876 -> f6_n877 [label="T", color="darkgreen"];
+    f6_n877 -> f6_n876;
+    f6_n876 -> f6_n878 [label="F", color="red"];
+    f6_n877 -> f6_n878 [label="T", color="darkgreen"];
+    f6_n877 -> f6_n879 [label="F", color="red"];
+    f6_n878 -> f6_n879;
+    f6_n879 -> f6_n871;
+  }
+
+  subgraph cluster_7 {
+    label="check_consistency (structural_inference.jl, CC=7)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f7_n880 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f7_n881 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f7_n882 [label="LOOP1 L80", shape=box, fillcolor=orange, style="filled,rounded"];
+    f7_n883 [label="LOOP2 L81", shape=box, fillcolor=orange, style="filled,rounded"];
+    f7_n884 [label="BB3 L82", shape=box, fillcolor=lightblue, style="filled"];
+    f7_n885 [label="BRANCH4 L83", shape=diamond, fillcolor=yellow, style="filled"];
+    f7_n886 [label="BRANCH5 L85", shape=diamond, fillcolor=yellow, style="filled"];
+    f7_n887 [label="BB6 L88", shape=box, fillcolor=lightblue, style="filled"];
+    f7_n888 [label="BB7 L93", shape=box, fillcolor=lightblue, style="filled"];
+
+    f7_n880 -> f7_n882;
+    f7_n882 -> f7_n883 [label="T", color="darkgreen"];
+    f7_n883 -> f7_n882;
+    f7_n882 -> f7_n884 [label="F", color="red"];
+    f7_n883 -> f7_n884 [label="T", color="darkgreen"];
+    f7_n884 -> f7_n883;
+    f7_n883 -> f7_n885 [label="F", color="red"];
+    f7_n884 -> f7_n885;
+    f7_n885 -> f7_n886 [label="T", color="darkgreen"];
+    f7_n885 -> f7_n887 [label="F", color="red"];
+    f7_n886 -> f7_n887 [label="T", color="darkgreen"];
+    f7_n886 -> f7_n888 [label="F", color="red"];
+    f7_n887 -> f7_n888;
+    f7_n888 -> f7_n881;
+  }
+
+  subgraph cluster_8 {
+    label="compute_critical_path (dependency_inference.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f8_n889 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f8_n890 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f8_n891 [label="BB1 L144", shape=box, fillcolor=lightblue, style="filled"];
+
+    f8_n889 -> f8_n891;
+    f8_n891 -> f8_n890;
+  }
+
+  subgraph cluster_9 {
+    label="compute_dependency_strength (dependency_inference.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f9_n892 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f9_n893 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f9_n894 [label="BB1 L74,75,78,79,82", shape=box, fillcolor=lightblue, style="filled"];
+
+    f9_n892 -> f9_n894;
+    f9_n894 -> f9_n893;
+  }
+
+  subgraph cluster_10 {
+    label="count_paths (dependency_inference.jl, CC=3)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f10_n895 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f10_n896 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f10_n897 [label="BRANCH1 L91", shape=diamond, fillcolor=yellow, style="filled"];
+    f10_n898 [label="RETURN2 L92", shape=box, fillcolor=lightblue, style="filled"];
+    f10_n899 [label="BRANCH3 L95", shape=diamond, fillcolor=yellow, style="filled"];
+    f10_n900 [label="RETURN4 L96", shape=box, fillcolor=lightblue, style="filled"];
+    f10_n901 [label="BB5 L99,100", shape=box, fillcolor=lightblue, style="filled"];
+    f10_n902 [label="LOOP6 L102", shape=box, fillcolor=orange, style="filled,rounded"];
+    f10_n903 [label="BB7 L103", shape=box, fillcolor=lightblue, style="filled"];
+    f10_n904 [label="BB8 L106", shape=box, fillcolor=lightblue, style="filled"];
+
+    f10_n895 -> f10_n897;
+    f10_n897 -> f10_n898 [label="T", color="darkgreen"];
+    f10_n897 -> f10_n899 [label="F", color="red"];
+    f10_n899 -> f10_n900 [label="T", color="darkgreen"];
+    f10_n899 -> f10_n901 [label="F", color="red"];
+    f10_n901 -> f10_n902;
+    f10_n902 -> f10_n903 [label="T", color="darkgreen"];
+    f10_n903 -> f10_n902;
+    f10_n902 -> f10_n904 [label="F", color="red"];
+    f10_n903 -> f10_n904;
+    f10_n904 -> f10_n896;
+  }
+
+  subgraph cluster_11 {
+    label="create_default_rules (rule_evaluation.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f11_n905 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f11_n906 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f11_n907 [label="BB1 L62,65,86,103,116", shape=box, fillcolor=lightblue, style="filled"];
+
+    f11_n905 -> f11_n907;
+    f11_n907 -> f11_n906;
+  }
+
+  subgraph cluster_12 {
+    label="deduce (logic_engine.jl, CC=4)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f12_n908 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f12_n909 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f12_n910 [label="BB1 L20", shape=box, fillcolor=lightblue, style="filled"];
+    f12_n911 [label="LOOP2 L22", shape=box, fillcolor=orange, style="filled,rounded"];
+    f12_n912 [label="BRANCH3 L24", shape=diamond, fillcolor=yellow, style="filled"];
+    f12_n913 [label="BB4 L27,33", shape=box, fillcolor=lightblue, style="filled"];
+    f12_n914 [label="BB5 L37", shape=box, fillcolor=lightblue, style="filled"];
+
+    f12_n908 -> f12_n910;
+    f12_n910 -> f12_n911;
+    f12_n911 -> f12_n912 [label="T", color="darkgreen"];
+    f12_n912 -> f12_n911;
+    f12_n911 -> f12_n913 [label="F", color="red"];
+    f12_n912 -> f12_n913 [label="T", color="darkgreen"];
+    f12_n912 -> f12_n914 [label="F", color="red"];
+    f12_n913 -> f12_n914;
+    f12_n914 -> f12_n909;
+  }
+
+  subgraph cluster_13 {
+    label="derive_constraints (structural_inference.jl, CC=4)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f13_n915 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f13_n916 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f13_n917 [label="BB1 L61", shape=box, fillcolor=lightblue, style="filled"];
+    f13_n918 [label="LOOP2 L63", shape=box, fillcolor=orange, style="filled,rounded"];
+    f13_n919 [label="BB3 L64", shape=box, fillcolor=lightblue, style="filled"];
+    f13_n920 [label="BRANCH4 L65", shape=diamond, fillcolor=yellow, style="filled"];
+    f13_n921 [label="BB5 L66", shape=box, fillcolor=lightblue, style="filled"];
+    f13_n922 [label="BB6 L70", shape=box, fillcolor=lightblue, style="filled"];
+
+    f13_n915 -> f13_n917;
+    f13_n917 -> f13_n918;
+    f13_n918 -> f13_n919 [label="T", color="darkgreen"];
+    f13_n919 -> f13_n918;
+    f13_n918 -> f13_n920 [label="F", color="red"];
+    f13_n919 -> f13_n920;
+    f13_n920 -> f13_n921 [label="T", color="darkgreen"];
+    f13_n920 -> f13_n922 [label="F", color="red"];
+    f13_n921 -> f13_n922;
+    f13_n922 -> f13_n916;
+  }
+
+  subgraph cluster_14 {
+    label="evaluate_rules (rule_evaluation.jl, CC=5)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f14_n923 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f14_n924 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f14_n925 [label="BB1 L20,22", shape=box, fillcolor=lightblue, style="filled"];
+    f14_n926 [label="LOOP2 L24", shape=box, fillcolor=orange, style="filled,rounded"];
+    f14_n927 [label="BRANCH3 L26", shape=diamond, fillcolor=yellow, style="filled"];
+    f14_n928 [label="BB4 L28", shape=box, fillcolor=lightblue, style="filled"];
+    f14_n929 [label="BRANCH5 L30", shape=diamond, fillcolor=yellow, style="filled"];
+    f14_n930 [label="BB6 L31", shape=box, fillcolor=lightblue, style="filled"];
+    f14_n931 [label="BB7 L41", shape=box, fillcolor=lightblue, style="filled"];
+
+    f14_n923 -> f14_n925;
+    f14_n925 -> f14_n926;
+    f14_n926 -> f14_n927 [label="T", color="darkgreen"];
+    f14_n927 -> f14_n926;
+    f14_n926 -> f14_n928 [label="F", color="red"];
+    f14_n927 -> f14_n928 [label="T", color="darkgreen"];
+    f14_n927 -> f14_n929 [label="F", color="red"];
+    f14_n928 -> f14_n929;
+    f14_n929 -> f14_n930 [label="T", color="darkgreen"];
+    f14_n929 -> f14_n931 [label="F", color="red"];
+    f14_n930 -> f14_n931;
+    f14_n931 -> f14_n924;
+  }
+
+  subgraph cluster_15 {
+    label="extract_edges (pattern_formation.jl, CC=6)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f15_n932 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f15_n933 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f15_n934 [label="BB1 L130,131", shape=box, fillcolor=lightblue, style="filled"];
+    f15_n935 [label="LOOP2 L133", shape=box, fillcolor=orange, style="filled,rounded"];
+    f15_n936 [label="BB3 L134", shape=box, fillcolor=lightblue, style="filled"];
+    f15_n937 [label="LOOP4 L135", shape=box, fillcolor=orange, style="filled,rounded"];
+    f15_n938 [label="BRANCH5 L136", shape=diamond, fillcolor=yellow, style="filled"];
+    f15_n939 [label="BB6 L137", shape=box, fillcolor=lightblue, style="filled"];
+    f15_n940 [label="BB7 L142", shape=box, fillcolor=lightblue, style="filled"];
+
+    f15_n932 -> f15_n934;
+    f15_n934 -> f15_n935;
+    f15_n935 -> f15_n936 [label="T", color="darkgreen"];
+    f15_n936 -> f15_n935;
+    f15_n935 -> f15_n937 [label="F", color="red"];
+    f15_n936 -> f15_n937;
+    f15_n937 -> f15_n938 [label="T", color="darkgreen"];
+    f15_n938 -> f15_n937;
+    f15_n937 -> f15_n939 [label="F", color="red"];
+    f15_n938 -> f15_n939 [label="T", color="darkgreen"];
+    f15_n938 -> f15_n940 [label="F", color="red"];
+    f15_n939 -> f15_n940;
+    f15_n940 -> f15_n933;
+  }
+
+  subgraph cluster_16 {
+    label="extract_subgraph_signature (pattern_formation.jl, CC=8)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f16_n941 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f16_n942 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f16_n943 [label="BB1 L101,103,106,107", shape=box, fillcolor=lightblue, style="filled"];
+    f16_n944 [label="LOOP2 L108", shape=box, fillcolor=orange, style="filled,rounded"];
+    f16_n945 [label="BB3 L109", shape=box, fillcolor=lightblue, style="filled"];
+    f16_n946 [label="LOOP4 L110", shape=box, fillcolor=orange, style="filled,rounded"];
+    f16_n947 [label="BRANCH5 L111", shape=diamond, fillcolor=yellow, style="filled"];
+    f16_n948 [label="BB6 L112", shape=box, fillcolor=lightblue, style="filled"];
+    f16_n949 [label="BB7 L116", shape=box, fillcolor=lightblue, style="filled"];
+    f16_n950 [label="LOOP8 L119", shape=box, fillcolor=orange, style="filled,rounded"];
+    f16_n951 [label="BB9 L120,121,122,123", shape=box, fillcolor=lightblue, style="filled"];
+    f16_n952 [label="BB10 L126", shape=box, fillcolor=lightblue, style="filled"];
+
+    f16_n941 -> f16_n943;
+    f16_n943 -> f16_n944;
+    f16_n944 -> f16_n945 [label="T", color="darkgreen"];
+    f16_n945 -> f16_n944;
+    f16_n944 -> f16_n946 [label="F", color="red"];
+    f16_n945 -> f16_n946;
+    f16_n946 -> f16_n947 [label="T", color="darkgreen"];
+    f16_n947 -> f16_n946;
+    f16_n946 -> f16_n948 [label="F", color="red"];
+    f16_n947 -> f16_n948 [label="T", color="darkgreen"];
+    f16_n947 -> f16_n949 [label="F", color="red"];
+    f16_n948 -> f16_n949;
+    f16_n949 -> f16_n950;
+    f16_n950 -> f16_n951 [label="T", color="darkgreen"];
+    f16_n951 -> f16_n950;
+    f16_n950 -> f16_n952 [label="F", color="red"];
+    f16_n951 -> f16_n952;
+    f16_n952 -> f16_n942;
+  }
+
+  subgraph cluster_17 {
+    label="extract_subgraphs (pattern_formation.jl, CC=4)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f17_n953 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f17_n954 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f17_n955 [label="BB1 L61", shape=box, fillcolor=lightblue, style="filled"];
+    f17_n956 [label="LOOP2 L63", shape=box, fillcolor=orange, style="filled,rounded"];
+    f17_n957 [label="BB3 L64", shape=box, fillcolor=lightblue, style="filled"];
+    f17_n958 [label="BRANCH4 L65", shape=diamond, fillcolor=yellow, style="filled"];
+    f17_n959 [label="BB5 L66", shape=box, fillcolor=lightblue, style="filled"];
+    f17_n960 [label="BB6 L70", shape=box, fillcolor=lightblue, style="filled"];
+
+    f17_n953 -> f17_n955;
+    f17_n955 -> f17_n956;
+    f17_n956 -> f17_n957 [label="T", color="darkgreen"];
+    f17_n957 -> f17_n956;
+    f17_n956 -> f17_n958 [label="F", color="red"];
+    f17_n957 -> f17_n958;
+    f17_n958 -> f17_n959 [label="T", color="darkgreen"];
+    f17_n958 -> f17_n960 [label="F", color="red"];
+    f17_n959 -> f17_n960;
+    f17_n960 -> f17_n954;
+  }
+
+  subgraph cluster_18 {
+    label="find_patterns (pattern_formation.jl, CC=6)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f18_n961 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f18_n962 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f18_n963 [label="BB1 L20,21,24,27", shape=box, fillcolor=lightblue, style="filled"];
+    f18_n964 [label="LOOP2 L28", shape=box, fillcolor=orange, style="filled,rounded"];
+    f18_n965 [label="BB3 L29,30,31", shape=box, fillcolor=lightblue, style="filled"];
+    f18_n966 [label="LOOP4 L35", shape=box, fillcolor=orange, style="filled,rounded"];
+    f18_n967 [label="BRANCH5 L36", shape=diamond, fillcolor=yellow, style="filled"];
+    f18_n968 [label="BB6 L38,39,41,48", shape=box, fillcolor=lightblue, style="filled"];
+    f18_n969 [label="BB7 L52", shape=box, fillcolor=lightblue, style="filled"];
+
+    f18_n961 -> f18_n963;
+    f18_n963 -> f18_n964;
+    f18_n964 -> f18_n965 [label="T", color="darkgreen"];
+    f18_n965 -> f18_n964;
+    f18_n964 -> f18_n966 [label="F", color="red"];
+    f18_n965 -> f18_n966;
+    f18_n966 -> f18_n967 [label="T", color="darkgreen"];
+    f18_n967 -> f18_n966;
+    f18_n966 -> f18_n968 [label="F", color="red"];
+    f18_n967 -> f18_n968 [label="T", color="darkgreen"];
+    f18_n967 -> f18_n969 [label="F", color="red"];
+    f18_n968 -> f18_n969;
+    f18_n969 -> f18_n962;
+  }
+
+  subgraph cluster_19 {
+    label="forward_propagate (constraint_propagation.jl, CC=6)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f19_n970 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f19_n971 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f19_n972 [label="BB1 L64,65,66", shape=box, fillcolor=lightblue, style="filled"];
+    f19_n973 [label="LOOP2 L68", shape=box, fillcolor=orange, style="filled,rounded"];
+    f19_n974 [label="BB3 L69,70,72,73", shape=box, fillcolor=lightblue, style="filled"];
+    f19_n975 [label="LOOP4 L76", shape=box, fillcolor=orange, style="filled,rounded"];
+    f19_n976 [label="BRANCH5 L77", shape=diamond, fillcolor=yellow, style="filled"];
+    f19_n977 [label="BB6 L78", shape=box, fillcolor=lightblue, style="filled"];
+    f19_n978 [label="BB7 L83", shape=box, fillcolor=lightblue, style="filled"];
+
+    f19_n970 -> f19_n972;
+    f19_n972 -> f19_n973;
+    f19_n973 -> f19_n974 [label="T", color="darkgreen"];
+    f19_n974 -> f19_n973;
+    f19_n973 -> f19_n975 [label="F", color="red"];
+    f19_n974 -> f19_n975;
+    f19_n975 -> f19_n976 [label="T", color="darkgreen"];
+    f19_n976 -> f19_n975;
+    f19_n975 -> f19_n977 [label="F", color="red"];
+    f19_n976 -> f19_n977 [label="T", color="darkgreen"];
+    f19_n976 -> f19_n978 [label="F", color="red"];
+    f19_n977 -> f19_n978;
+    f19_n978 -> f19_n971;
+  }
+
+  subgraph cluster_20 {
+    label="grow_subgraph (pattern_formation.jl, CC=6)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f20_n979 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f20_n980 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f20_n981 [label="BB1 L74,75,76", shape=box, fillcolor=lightblue, style="filled"];
+    f20_n982 [label="LOOP2 L78", shape=box, fillcolor=orange, style="filled,rounded"];
+    f20_n983 [label="BB3 L79,80", shape=box, fillcolor=lightblue, style="filled"];
+    f20_n984 [label="LOOP4 L82", shape=box, fillcolor=orange, style="filled,rounded"];
+    f20_n985 [label="BRANCH5 L83", shape=diamond, fillcolor=yellow, style="filled"];
+    f20_n986 [label="BB6 L84,85,86", shape=box, fillcolor=lightblue, style="filled"];
+    f20_n987 [label="BB7 L91", shape=box, fillcolor=lightblue, style="filled"];
+
+    f20_n979 -> f20_n981;
+    f20_n981 -> f20_n982;
+    f20_n982 -> f20_n983 [label="T", color="darkgreen"];
+    f20_n983 -> f20_n982;
+    f20_n982 -> f20_n984 [label="F", color="red"];
+    f20_n983 -> f20_n984;
+    f20_n984 -> f20_n985 [label="T", color="darkgreen"];
+    f20_n985 -> f20_n984;
+    f20_n984 -> f20_n986 [label="F", color="red"];
+    f20_n985 -> f20_n986 [label="T", color="darkgreen"];
+    f20_n985 -> f20_n987 [label="F", color="red"];
+    f20_n986 -> f20_n987;
+    f20_n987 -> f20_n980;
+  }
+
+  subgraph cluster_21 {
+    label="induce (logic_engine.jl, CC=6)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f21_n988 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f21_n989 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f21_n990 [label="BB1 L71,72,75", shape=box, fillcolor=lightblue, style="filled"];
+    f21_n991 [label="LOOP2 L77", shape=box, fillcolor=orange, style="filled,rounded"];
+    f21_n992 [label="BB3 L78,79,80", shape=box, fillcolor=lightblue, style="filled"];
+    f21_n993 [label="LOOP4 L84", shape=box, fillcolor=orange, style="filled,rounded"];
+    f21_n994 [label="BRANCH5 L85", shape=diamond, fillcolor=yellow, style="filled"];
+    f21_n995 [label="BB6 L87,94", shape=box, fillcolor=lightblue, style="filled"];
+    f21_n996 [label="BB7 L98", shape=box, fillcolor=lightblue, style="filled"];
+
+    f21_n988 -> f21_n990;
+    f21_n990 -> f21_n991;
+    f21_n991 -> f21_n992 [label="T", color="darkgreen"];
+    f21_n992 -> f21_n991;
+    f21_n991 -> f21_n993 [label="F", color="red"];
+    f21_n992 -> f21_n993;
+    f21_n993 -> f21_n994 [label="T", color="darkgreen"];
+    f21_n994 -> f21_n993;
+    f21_n993 -> f21_n995 [label="F", color="red"];
+    f21_n994 -> f21_n995 [label="T", color="darkgreen"];
+    f21_n994 -> f21_n996 [label="F", color="red"];
+    f21_n995 -> f21_n996;
+    f21_n996 -> f21_n989;
+  }
+
+  subgraph cluster_22 {
+    label="infer_dependencies (dependency_inference.jl, CC=3)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f22_n997 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f22_n998 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f22_n999 [label="BB1 L20,22", shape=box, fillcolor=lightblue, style="filled"];
+    f22_n1000 [label="LOOP2 L24", shape=box, fillcolor=orange, style="filled,rounded"];
+    f22_n1001 [label="BB3 L26,27,29", shape=box, fillcolor=lightblue, style="filled"];
+    f22_n1002 [label="BB4 L38", shape=box, fillcolor=lightblue, style="filled"];
+
+    f22_n997 -> f22_n999;
+    f22_n999 -> f22_n1000;
+    f22_n1000 -> f22_n1001 [label="T", color="darkgreen"];
+    f22_n1001 -> f22_n1000;
+    f22_n1000 -> f22_n1002 [label="F", color="red"];
+    f22_n1001 -> f22_n1002;
+    f22_n1002 -> f22_n998;
+  }
+
+  subgraph cluster_23 {
+    label="infer_from_structure (structural_inference.jl, CC=7)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f23_n1003 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f23_n1004 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f23_n1005 [label="BB1 L20,23", shape=box, fillcolor=lightblue, style="filled"];
+    f23_n1006 [label="LOOP2 L26", shape=box, fillcolor=orange, style="filled,rounded"];
+    f23_n1007 [label="BB3 L27", shape=box, fillcolor=lightblue, style="filled"];
+    f23_n1008 [label="LOOP4 L28", shape=box, fillcolor=orange, style="filled,rounded"];
+    f23_n1009 [label="BRANCH5 L29", shape=diamond, fillcolor=yellow, style="filled"];
+    f23_n1010 [label="BB6 L31", shape=box, fillcolor=lightblue, style="filled"];
+    f23_n1011 [label="BRANCH7 L42", shape=diamond, fillcolor=yellow, style="filled"];
+    f23_n1012 [label="BB8 L44", shape=box, fillcolor=lightblue, style="filled"];
+    f23_n1013 [label="BB9 L52", shape=box, fillcolor=lightblue, style="filled"];
+
+    f23_n1003 -> f23_n1005;
+    f23_n1005 -> f23_n1006;
+    f23_n1006 -> f23_n1007 [label="T", color="darkgreen"];
+    f23_n1007 -> f23_n1006;
+    f23_n1006 -> f23_n1008 [label="F", color="red"];
+    f23_n1007 -> f23_n1008;
+    f23_n1008 -> f23_n1009 [label="T", color="darkgreen"];
+    f23_n1009 -> f23_n1008;
+    f23_n1008 -> f23_n1010 [label="F", color="red"];
+    f23_n1009 -> f23_n1010 [label="T", color="darkgreen"];
+    f23_n1009 -> f23_n1011 [label="F", color="red"];
+    f23_n1010 -> f23_n1011;
+    f23_n1011 -> f23_n1012 [label="T", color="darkgreen"];
+    f23_n1011 -> f23_n1013 [label="F", color="red"];
+    f23_n1012 -> f23_n1013;
+    f23_n1013 -> f23_n1004;
+  }
+
+  subgraph cluster_24 {
+    label="initialize_reasoning (reasoning_engine.jl, CC=7)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f24_n1014 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f24_n1015 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f24_n1016 [label="BB1 L26,29", shape=box, fillcolor=lightblue, style="filled"];
+    f24_n1017 [label="LOOP2 L32", shape=box, fillcolor=orange, style="filled,rounded"];
+    f24_n1018 [label="BB3 L33", shape=box, fillcolor=lightblue, style="filled"];
+    f24_n1019 [label="LOOP4 L34", shape=box, fillcolor=orange, style="filled,rounded"];
+    f24_n1020 [label="BB5 L35", shape=box, fillcolor=lightblue, style="filled"];
+    f24_n1021 [label="BB6 L40", shape=box, fillcolor=lightblue, style="filled"];
+    f24_n1022 [label="LOOP7 L41", shape=box, fillcolor=orange, style="filled,rounded"];
+    f24_n1023 [label="BB8 L42", shape=box, fillcolor=lightblue, style="filled"];
+    f24_n1024 [label="BB9 L45", shape=box, fillcolor=lightblue, style="filled"];
+
+    f24_n1014 -> f24_n1016;
+    f24_n1016 -> f24_n1017;
+    f24_n1017 -> f24_n1018 [label="T", color="darkgreen"];
+    f24_n1018 -> f24_n1017;
+    f24_n1017 -> f24_n1019 [label="F", color="red"];
+    f24_n1018 -> f24_n1019;
+    f24_n1019 -> f24_n1020 [label="T", color="darkgreen"];
+    f24_n1020 -> f24_n1019;
+    f24_n1019 -> f24_n1021 [label="F", color="red"];
+    f24_n1020 -> f24_n1021;
+    f24_n1021 -> f24_n1022;
+    f24_n1022 -> f24_n1023 [label="T", color="darkgreen"];
+    f24_n1023 -> f24_n1022;
+    f24_n1022 -> f24_n1024 [label="F", color="red"];
+    f24_n1023 -> f24_n1024;
+    f24_n1024 -> f24_n1015;
+  }
+
+  subgraph cluster_25 {
+    label="match_pattern (pattern_formation.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f25_n1025 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f25_n1026 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f25_n1027 [label="BB1 L152", shape=box, fillcolor=lightblue, style="filled"];
+    f25_n1028 [label="BRANCH2 L154", shape=diamond, fillcolor=yellow, style="filled"];
+    f25_n1029 [label="RETURN3 L155", shape=box, fillcolor=lightblue, style="filled"];
+    f25_n1030 [label="BB4 L159", shape=box, fillcolor=lightblue, style="filled"];
+    f25_n1031 [label="BRANCH5 L160", shape=diamond, fillcolor=yellow, style="filled"];
+    f25_n1032 [label="RETURN6 L161", shape=box, fillcolor=lightblue, style="filled"];
+    f25_n1033 [label="BB7 L165,167", shape=box, fillcolor=lightblue, style="filled"];
+
+    f25_n1025 -> f25_n1027;
+    f25_n1027 -> f25_n1028;
+    f25_n1028 -> f25_n1029 [label="T", color="darkgreen"];
+    f25_n1028 -> f25_n1030 [label="F", color="red"];
+    f25_n1030 -> f25_n1031;
+    f25_n1031 -> f25_n1032 [label="T", color="darkgreen"];
+    f25_n1031 -> f25_n1033 [label="F", color="red"];
+    f25_n1033 -> f25_n1026;
+  }
+
+  subgraph cluster_26 {
+    label="perform_inference (reasoning_engine.jl, CC=5)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f26_n1034 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f26_n1035 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f26_n1036 [label="BRANCH1 L106", shape=diamond, fillcolor=yellow, style="filled"];
+    f26_n1037 [label="RETURN2 L107", shape=box, fillcolor=lightblue, style="filled"];
+    f26_n1038 [label="BB3 L111,114,115", shape=box, fillcolor=lightblue, style="filled"];
+    f26_n1039 [label="LOOP4 L116", shape=box, fillcolor=orange, style="filled,rounded"];
+    f26_n1040 [label="BB5 L117,118", shape=box, fillcolor=lightblue, style="filled"];
+    f26_n1041 [label="BRANCH6 L122", shape=diamond, fillcolor=yellow, style="filled"];
+    f26_n1042 [label="BB7 L123", shape=box, fillcolor=lightblue, style="filled"];
+    f26_n1043 [label="BRANCH8 L124", shape=diamond, fillcolor=yellow, style="filled"];
+    f26_n1044 [label="BB9 L125", shape=box, fillcolor=lightblue, style="filled"];
+    f26_n1045 [label="BB10 L135,136", shape=box, fillcolor=lightblue, style="filled"];
+
+    f26_n1034 -> f26_n1036;
+    f26_n1036 -> f26_n1037 [label="T", color="darkgreen"];
+    f26_n1036 -> f26_n1038 [label="F", color="red"];
+    f26_n1038 -> f26_n1039;
+    f26_n1039 -> f26_n1040 [label="T", color="darkgreen"];
+    f26_n1040 -> f26_n1039;
+    f26_n1039 -> f26_n1041 [label="F", color="red"];
+    f26_n1040 -> f26_n1041;
+    f26_n1041 -> f26_n1042 [label="T", color="darkgreen"];
+    f26_n1041 -> f26_n1043 [label="F", color="red"];
+    f26_n1042 -> f26_n1043;
+    f26_n1043 -> f26_n1044 [label="T", color="darkgreen"];
+    f26_n1043 -> f26_n1045 [label="F", color="red"];
+    f26_n1044 -> f26_n1045;
+    f26_n1045 -> f26_n1035;
+  }
+
+  subgraph cluster_27 {
+    label="propagate_constraints (constraint_propagation.jl, CC=7)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f27_n1046 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f27_n1047 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f27_n1048 [label="BB1 L20,23,24,27", shape=box, fillcolor=lightblue, style="filled"];
+    f27_n1049 [label="LOOP2 L29", shape=box, fillcolor=orange, style="filled,rounded"];
+    f27_n1050 [label="BB3 L31", shape=box, fillcolor=lightblue, style="filled"];
+    f27_n1051 [label="LOOP4 L33", shape=box, fillcolor=orange, style="filled,rounded"];
+    f27_n1052 [label="BRANCH5 L35", shape=diamond, fillcolor=yellow, style="filled"];
+    f27_n1053 [label="BB6 L36", shape=box, fillcolor=lightblue, style="filled"];
+    f27_n1054 [label="BRANCH7 L37", shape=diamond, fillcolor=yellow, style="filled"];
+    f27_n1055 [label="BB8 L39,47,48,49", shape=box, fillcolor=lightblue, style="filled"];
+    f27_n1056 [label="BB9 L55", shape=box, fillcolor=lightblue, style="filled"];
+
+    f27_n1046 -> f27_n1048;
+    f27_n1048 -> f27_n1049;
+    f27_n1049 -> f27_n1050 [label="T", color="darkgreen"];
+    f27_n1050 -> f27_n1049;
+    f27_n1049 -> f27_n1051 [label="F", color="red"];
+    f27_n1050 -> f27_n1051;
+    f27_n1051 -> f27_n1052 [label="T", color="darkgreen"];
+    f27_n1052 -> f27_n1051;
+    f27_n1051 -> f27_n1053 [label="F", color="red"];
+    f27_n1052 -> f27_n1053 [label="T", color="darkgreen"];
+    f27_n1052 -> f27_n1054 [label="F", color="red"];
+    f27_n1053 -> f27_n1054;
+    f27_n1054 -> f27_n1055 [label="T", color="darkgreen"];
+    f27_n1054 -> f27_n1056 [label="F", color="red"];
+    f27_n1055 -> f27_n1056;
+    f27_n1056 -> f27_n1047;
+  }
+
+  subgraph cluster_28 {
+    label="reason_over_dag (reasoning_engine.jl, CC=13)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f28_n1057 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f28_n1058 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f28_n1059 [label="BB1 L55", shape=box, fillcolor=lightblue, style="filled"];
+    f28_n1060 [label="LOOP2 L56", shape=box, fillcolor=orange, style="filled,rounded"];
+    f28_n1061 [label="BB3 L57,58", shape=box, fillcolor=lightblue, style="filled"];
+    f28_n1062 [label="BB4 L62", shape=box, fillcolor=lightblue, style="filled"];
+    f28_n1063 [label="LOOP5 L63", shape=box, fillcolor=orange, style="filled,rounded"];
+    f28_n1064 [label="BRANCH6 L64", shape=diamond, fillcolor=yellow, style="filled"];
+    f28_n1065 [label="BB7 L65", shape=box, fillcolor=lightblue, style="filled"];
+    f28_n1066 [label="BB8 L68,71", shape=box, fillcolor=lightblue, style="filled"];
+    f28_n1067 [label="LOOP9 L72", shape=box, fillcolor=orange, style="filled,rounded"];
+    f28_n1068 [label="BB10 L73,74,77", shape=box, fillcolor=lightblue, style="filled"];
+    f28_n1069 [label="BB11 L81", shape=box, fillcolor=lightblue, style="filled"];
+    f28_n1070 [label="LOOP12 L82", shape=box, fillcolor=orange, style="filled,rounded"];
+    f28_n1071 [label="LOOP13 L83", shape=box, fillcolor=orange, style="filled,rounded"];
+    f28_n1072 [label="BB14 L84", shape=box, fillcolor=lightblue, style="filled"];
+    f28_n1073 [label="BRANCH15 L85", shape=diamond, fillcolor=yellow, style="filled"];
+    f28_n1074 [label="BB16 L86", shape=box, fillcolor=lightblue, style="filled"];
+    f28_n1075 [label="BB17 L91", shape=box, fillcolor=lightblue, style="filled"];
+
+    f28_n1057 -> f28_n1059;
+    f28_n1059 -> f28_n1060;
+    f28_n1060 -> f28_n1061 [label="T", color="darkgreen"];
+    f28_n1061 -> f28_n1060;
+    f28_n1060 -> f28_n1062 [label="F", color="red"];
+    f28_n1061 -> f28_n1062;
+    f28_n1062 -> f28_n1063;
+    f28_n1063 -> f28_n1064 [label="T", color="darkgreen"];
+    f28_n1064 -> f28_n1063;
+    f28_n1063 -> f28_n1065 [label="F", color="red"];
+    f28_n1064 -> f28_n1065 [label="T", color="darkgreen"];
+    f28_n1064 -> f28_n1066 [label="F", color="red"];
+    f28_n1065 -> f28_n1066;
+    f28_n1066 -> f28_n1067;
+    f28_n1067 -> f28_n1068 [label="T", color="darkgreen"];
+    f28_n1068 -> f28_n1067;
+    f28_n1067 -> f28_n1069 [label="F", color="red"];
+    f28_n1068 -> f28_n1069;
+    f28_n1069 -> f28_n1070;
+    f28_n1070 -> f28_n1071 [label="T", color="darkgreen"];
+    f28_n1071 -> f28_n1070;
+    f28_n1070 -> f28_n1072 [label="F", color="red"];
+    f28_n1071 -> f28_n1072 [label="T", color="darkgreen"];
+    f28_n1072 -> f28_n1071;
+    f28_n1071 -> f28_n1073 [label="F", color="red"];
+    f28_n1072 -> f28_n1073;
+    f28_n1073 -> f28_n1074 [label="T", color="darkgreen"];
+    f28_n1073 -> f28_n1075 [label="F", color="red"];
+    f28_n1074 -> f28_n1075;
+    f28_n1075 -> f28_n1058;
+  }
+
+  subgraph cluster_29 {
+    label="unify_constraints (logic_engine.jl, CC=3)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f29_n1076 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f29_n1077 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f29_n1078 [label="BRANCH1 L108", shape=diamond, fillcolor=yellow, style="filled"];
+    f29_n1079 [label="RETURN2 L109", shape=box, fillcolor=lightblue, style="filled"];
+    f29_n1080 [label="BRANCH3 L113", shape=diamond, fillcolor=yellow, style="filled"];
+    f29_n1081 [label="RETURN4 L114", shape=box, fillcolor=lightblue, style="filled"];
+    f29_n1082 [label="BRANCH5 L123", shape=diamond, fillcolor=yellow, style="filled"];
+    f29_n1083 [label="BB6 L123", shape=box, fillcolor=lightblue, style="filled"];
+    f29_n1084 [label="BRANCH7 L123", shape=diamond, fillcolor=yellow, style="filled"];
+    f29_n1085 [label="BB8 L123", shape=box, fillcolor=lightblue, style="filled"];
+    f29_n1086 [label="BB9 L123", shape=box, fillcolor=lightblue, style="filled"];
+
+    f29_n1076 -> f29_n1078;
+    f29_n1078 -> f29_n1079 [label="T", color="darkgreen"];
+    f29_n1078 -> f29_n1080 [label="F", color="red"];
+    f29_n1080 -> f29_n1081 [label="T", color="darkgreen"];
+    f29_n1080 -> f29_n1082 [label="F", color="red"];
+    f29_n1082 -> f29_n1083 [label="T", color="darkgreen"];
+    f29_n1082 -> f29_n1084 [label="F", color="red"];
+    f29_n1083 -> f29_n1084;
+    f29_n1084 -> f29_n1085 [label="T", color="darkgreen"];
+    f29_n1084 -> f29_n1086 [label="F", color="red"];
+    f29_n1085 -> f29_n1086;
+    f29_n1086 -> f29_n1077;
+  }
+
+  // Inter-function calls
+  edge [style=dashed, color=blue, penwidth=2];
+
+  f1_n836 -> f1_n835 [ltail=cluster_1, lhead=cluster_1, label="call"];
+  f10_n896 -> f10_n895 [ltail=cluster_10, lhead=cluster_10, label="call"];
+}

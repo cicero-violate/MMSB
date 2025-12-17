@@ -427,30 +427,30 @@
 
 ### Julia
 
-- struct `CUDAGraphState` @ src/04_propagation/PropagationEngine.jl:34
-- struct `PropagationQueue` @ src/04_propagation/PropagationEngine.jl:43
-- fn `enable_graph_capture` @ src/04_propagation/PropagationEngine.jl:56
-- fn `disable_graph_capture` @ src/04_propagation/PropagationEngine.jl:68
-- fn `replay_cuda_graph` @ src/04_propagation/PropagationEngine.jl:89
-- fn `batch_route_deltas` @ src/04_propagation/PropagationEngine.jl:110
-- fn `_buffer` @ src/04_propagation/PropagationEngine.jl:145
-- fn `register_recompute_fn` @ src/04_propagation/PropagationEngine.jl:157
-- fn `register_passthrough_recompute` @ src/04_propagation/PropagationEngine.jl:170
-- fn `queue_recomputation` @ src/04_propagation/PropagationEngine.jl:184
-- fn `propagate_change` @ src/04_propagation/PropagationEngine.jl:197
-- fn `propagate_change` @ src/04_propagation/PropagationEngine.jl:202
-- fn `_aggregate_children` @ src/04_propagation/PropagationEngine.jl:212
-- fn `_execute_command_buffer` @ src/04_propagation/PropagationEngine.jl:225
-- fn `_apply_edges` @ src/04_propagation/PropagationEngine.jl:233
-- fn `_handle_data_dependency` @ src/04_propagation/PropagationEngine.jl:246
-- fn `_collect_descendants` @ src/04_propagation/PropagationEngine.jl:259
-- fn `schedule_propagation` @ src/04_propagation/PropagationEngine.jl:279
-- fn `execute_propagation` @ src/04_propagation/PropagationEngine.jl:295
-- fn `recompute_page` @ src/04_propagation/PropagationEngine.jl:309
-- fn `mark_page_stale` @ src/04_propagation/PropagationEngine.jl:333
-- fn `schedule_gpu_sync` @ src/04_propagation/PropagationEngine.jl:344
-- fn `invalidate_compilation` @ src/04_propagation/PropagationEngine.jl:354
-- fn `topological_order_subset` @ src/04_propagation/PropagationEngine.jl:367
+- struct `CUDAGraphState` @ src/04_propagation/PropagationEngine.jl:35
+- struct `PropagationQueue` @ src/04_propagation/PropagationEngine.jl:44
+- fn `enable_graph_capture` @ src/04_propagation/PropagationEngine.jl:57
+- fn `disable_graph_capture` @ src/04_propagation/PropagationEngine.jl:69
+- fn `replay_cuda_graph` @ src/04_propagation/PropagationEngine.jl:90
+- fn `batch_route_deltas` @ src/04_propagation/PropagationEngine.jl:111
+- fn `_buffer` @ src/04_propagation/PropagationEngine.jl:146
+- fn `register_recompute_fn` @ src/04_propagation/PropagationEngine.jl:158
+- fn `register_passthrough_recompute` @ src/04_propagation/PropagationEngine.jl:171
+- fn `queue_recomputation` @ src/04_propagation/PropagationEngine.jl:185
+- fn `propagate_change` @ src/04_propagation/PropagationEngine.jl:198
+- fn `propagate_change` @ src/04_propagation/PropagationEngine.jl:203
+- fn `_aggregate_children` @ src/04_propagation/PropagationEngine.jl:213
+- fn `_execute_command_buffer` @ src/04_propagation/PropagationEngine.jl:226
+- fn `_apply_edges` @ src/04_propagation/PropagationEngine.jl:234
+- fn `_handle_data_dependency` @ src/04_propagation/PropagationEngine.jl:247
+- fn `_collect_descendants` @ src/04_propagation/PropagationEngine.jl:260
+- fn `schedule_propagation` @ src/04_propagation/PropagationEngine.jl:280
+- fn `execute_propagation` @ src/04_propagation/PropagationEngine.jl:296
+- fn `recompute_page` @ src/04_propagation/PropagationEngine.jl:310
+- fn `mark_page_stale` @ src/04_propagation/PropagationEngine.jl:334
+- fn `schedule_gpu_sync` @ src/04_propagation/PropagationEngine.jl:345
+- fn `invalidate_compilation` @ src/04_propagation/PropagationEngine.jl:355
+- fn `topological_order_subset` @ src/04_propagation/PropagationEngine.jl:368
 - fn `schedule` @ src/04_propagation/PropagationScheduler.jl:8
 - struct `Transaction` @ src/04_propagation/TransactionIsolation.jl:5
 
@@ -836,6 +836,9 @@
 - fn `dense_delta` @ tests/delta_validation.rs:3
 - fn `validates_dense_lengths` @ tests/delta_validation.rs:18
 - fn `rejects_mismatched_dense_lengths` @ tests/delta_validation.rs:24
+- fn `example_page_allocation` @ tests/examples_basic.rs:5
+- fn `example_delta_operations` @ tests/examples_basic.rs:17
+- fn `example_checkpoint` @ tests/examples_basic.rs:27
 - fn `read_page` @ tests/mmsb_tests.rs:9
 - fn `test_page_info_metadata_roundtrip` @ tests/mmsb_tests.rs:14
 - fn `test_page_snapshot_and_restore` @ tests/mmsb_tests.rs:26
@@ -846,6 +849,12 @@
 - fn `test_sparse_delta_application` @ tests/mmsb_tests.rs:113
 - fn `test_dense_delta_application` @ tests/mmsb_tests.rs:139
 - fn `test_api_public_interface` @ tests/mmsb_tests.rs:163
+- fn `test_allocator_cpu_gpu_latency` @ tests/week27_31_integration.rs:7
+- fn `test_semiring_operations_tropical` @ tests/week27_31_integration.rs:19
+- fn `test_delta_merge_simd` @ tests/week27_31_integration.rs:25
+- fn `test_lockfree_allocator` @ tests/week27_31_integration.rs:45
+- fn `test_propagation_queue` @ tests/week27_31_integration.rs:58
+- fn `test_cpu_features` @ tests/week27_31_integration.rs:65
 
 ### Julia
 
@@ -941,13 +950,13 @@
 
 ## Summary Statistics
 
-Total elements: 832
-Rust elements: 306
+Total elements: 841
+Rust elements: 315
 Julia elements: 526
 
 By type:
 - julia_fn: 439
 - julia_struct: 87
-- rust_fn: 211
+- rust_fn: 220
 - rust_impl: 44
 - rust_struct: 51

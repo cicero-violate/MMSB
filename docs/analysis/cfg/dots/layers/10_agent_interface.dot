@@ -1,0 +1,324 @@
+digraph LayerCFG {
+  rankdir=TB;
+  compound=true;
+  newrank=true;
+
+  label="10_agent_interface - 22 functions from 7 files";
+  labelloc=t;
+  fontsize=18;
+
+  subgraph cluster_1 {
+    label="InstrumentationConfig (InstrumentationManager.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f1_n1461 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f1_n1462 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f1_n1463 [label="BB1 L36", shape=box, fillcolor=lightblue, style="filled"];
+
+    f1_n1461 -> f1_n1463;
+    f1_n1463 -> f1_n1462;
+  }
+
+  subgraph cluster_2 {
+    label="MMSBInterpreter (CompilerHooks.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f2_n1464 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f2_n1465 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f2_n1466 [label="BB1 L45", shape=box, fillcolor=lightblue, style="filled"];
+
+    f2_n1464 -> f2_n1466;
+    f2_n1466 -> f2_n1465;
+  }
+
+  subgraph cluster_3 {
+    label="configure_instrumentation! (InstrumentationManager.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f3_n1467 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f3_n1468 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f3_n1469 [label="BB1 L103", shape=box, fillcolor=lightblue, style="filled"];
+
+    f3_n1467 -> f3_n1469;
+    f3_n1469 -> f3_n1468;
+  }
+
+  subgraph cluster_4 {
+    label="create_inference_pages! (CompilerHooks.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f4_n1470 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f4_n1471 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f4_n1472 [label="BB1 L238", shape=box, fillcolor=lightblue, style="filled"];
+
+    f4_n1470 -> f4_n1472;
+    f4_n1472 -> f4_n1471;
+  }
+
+  subgraph cluster_5 {
+    label="disable_base_hooks! (BaseHook.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f5_n1473 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f5_n1474 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f5_n1475 [label="BB1 L77", shape=box, fillcolor=lightblue, style="filled"];
+
+    f5_n1473 -> f5_n1475;
+    f5_n1475 -> f5_n1474;
+  }
+
+  subgraph cluster_6 {
+    label="disable_compiler_hooks! (CompilerHooks.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f6_n1476 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f6_n1477 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f6_n1478 [label="BB1 L276", shape=box, fillcolor=lightblue, style="filled"];
+
+    f6_n1476 -> f6_n1478;
+    f6_n1478 -> f6_n1477;
+  }
+
+  subgraph cluster_7 {
+    label="disable_core_hooks! (CoreHooks.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f7_n1479 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f7_n1480 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f7_n1481 [label="BB1 L52", shape=box, fillcolor=lightblue, style="filled"];
+
+    f7_n1479 -> f7_n1481;
+    f7_n1481 -> f7_n1480;
+  }
+
+  subgraph cluster_8 {
+    label="disable_instrumentation! (InstrumentationManager.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f8_n1482 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f8_n1483 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f8_n1484 [label="BB1 L80", shape=box, fillcolor=lightblue, style="filled"];
+
+    f8_n1482 -> f8_n1484;
+    f8_n1484 -> f8_n1483;
+  }
+
+  subgraph cluster_9 {
+    label="emit_event (event_subscription.jl, CC=2)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f9_n1485 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f9_n1486 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f9_n1487 [label="LOOP1 L43", shape=box, fillcolor=orange, style="filled,rounded"];
+    f9_n1488 [label="BB2 L44", shape=box, fillcolor=lightblue, style="filled"];
+
+    f9_n1485 -> f9_n1487;
+    f9_n1487 -> f9_n1488 [label="T", color="darkgreen"];
+    f9_n1488 -> f9_n1487;
+    f9_n1488 -> f9_n1486;
+  }
+
+  subgraph cluster_10 {
+    label="enable_base_hooks! (BaseHook.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f10_n1489 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f10_n1490 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f10_n1491 [label="BB1 L40", shape=box, fillcolor=lightblue, style="filled"];
+
+    f10_n1489 -> f10_n1491;
+    f10_n1491 -> f10_n1490;
+  }
+
+  subgraph cluster_11 {
+    label="enable_compiler_hooks! (CompilerHooks.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f11_n1492 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f11_n1493 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f11_n1494 [label="BB1 L262", shape=box, fillcolor=lightblue, style="filled"];
+
+    f11_n1492 -> f11_n1494;
+    f11_n1494 -> f11_n1493;
+  }
+
+  subgraph cluster_12 {
+    label="enable_core_hooks! (CoreHooks.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f12_n1495 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f12_n1496 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f12_n1497 [label="BB1 L35", shape=box, fillcolor=lightblue, style="filled"];
+
+    f12_n1495 -> f12_n1497;
+    f12_n1497 -> f12_n1496;
+  }
+
+  subgraph cluster_13 {
+    label="enable_instrumentation! (InstrumentationManager.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f13_n1498 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f13_n1499 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f13_n1500 [label="BB1 L54", shape=box, fillcolor=lightblue, style="filled"];
+
+    f13_n1498 -> f13_n1500;
+    f13_n1500 -> f13_n1499;
+  }
+
+  subgraph cluster_14 {
+    label="hook_codeinfo_creation (CoreHooks.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f14_n1501 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f14_n1502 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f14_n1503 [label="BB1 L75", shape=box, fillcolor=lightblue, style="filled"];
+
+    f14_n1501 -> f14_n1503;
+    f14_n1503 -> f14_n1502;
+  }
+
+  subgraph cluster_15 {
+    label="hook_getfield (BaseHook.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f15_n1504 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f15_n1505 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f15_n1506 [label="BB1 L163", shape=box, fillcolor=lightblue, style="filled"];
+
+    f15_n1504 -> f15_n1506;
+    f15_n1506 -> f15_n1505;
+  }
+
+  subgraph cluster_16 {
+    label="hook_invoke (BaseHook.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f16_n1507 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f16_n1508 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f16_n1509 [label="BB1 L110", shape=box, fillcolor=lightblue, style="filled"];
+
+    f16_n1507 -> f16_n1509;
+    f16_n1509 -> f16_n1508;
+  }
+
+  subgraph cluster_17 {
+    label="hook_methodinstance (CoreHooks.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f17_n1510 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f17_n1511 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f17_n1512 [label="BB1 L106", shape=box, fillcolor=lightblue, style="filled"];
+
+    f17_n1510 -> f17_n1512;
+    f17_n1512 -> f17_n1511;
+  }
+
+  subgraph cluster_18 {
+    label="hook_setfield! (BaseHook.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f18_n1513 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f18_n1514 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f18_n1515 [label="BB1 L138", shape=box, fillcolor=lightblue, style="filled"];
+
+    f18_n1513 -> f18_n1515;
+    f18_n1515 -> f18_n1514;
+  }
+
+  subgraph cluster_19 {
+    label="log_inference_result! (CompilerHooks.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f19_n1516 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f19_n1517 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f19_n1518 [label="BB1 L215", shape=box, fillcolor=lightblue, style="filled"];
+
+    f19_n1516 -> f19_n1518;
+    f19_n1518 -> f19_n1517;
+  }
+
+  subgraph cluster_20 {
+    label="log_inference_start! (CompilerHooks.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f20_n1519 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f20_n1520 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f20_n1521 [label="BB1 L197", shape=box, fillcolor=lightblue, style="filled"];
+
+    f20_n1519 -> f20_n1521;
+    f20_n1521 -> f20_n1520;
+  }
+
+  subgraph cluster_21 {
+    label="restore_checkpoint (checkpoint_api.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f21_n1522 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f21_n1523 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f21_n1524 [label="BB1 L20", shape=box, fillcolor=lightblue, style="filled"];
+
+    f21_n1522 -> f21_n1524;
+    f21_n1524 -> f21_n1523;
+  }
+
+  subgraph cluster_22 {
+    label="unsubscribe (event_subscription.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f22_n1525 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f22_n1526 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f22_n1527 [label="BB1 L39", shape=box, fillcolor=lightblue, style="filled"];
+
+    f22_n1525 -> f22_n1527;
+    f22_n1527 -> f22_n1526;
+  }
+
+  // Inter-function calls
+  edge [style=dashed, color=blue, penwidth=2];
+
+}

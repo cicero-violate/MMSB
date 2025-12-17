@@ -1,0 +1,57 @@
+digraph LayerCFG {
+  rankdir=TB;
+  compound=true;
+  newrank=true;
+
+  label="01_types - 3 functions from 2 files";
+  labelloc=t;
+  fontsize=18;
+
+  subgraph cluster_1 {
+    label="MMSBConfig (MMSBState.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f1_n320 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f1_n321 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f1_n322 [label="RETURN1 L43", shape=box, fillcolor=lightblue, style="filled"];
+
+    f1_n320 -> f1_n322;
+    f1_n322 -> f1_n321;
+  }
+
+  subgraph cluster_2 {
+    label="MMSBState (MMSBState.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f2_n323 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f2_n324 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f2_n325 [label="BB1 L85", shape=box, fillcolor=lightblue, style="filled"];
+
+    f2_n323 -> f2_n325;
+    f2_n325 -> f2_n324;
+  }
+
+  subgraph cluster_3 {
+    label="register_page! (MMSBState.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f3_n326 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f3_n327 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f3_n328 [label="BB1 L138", shape=box, fillcolor=lightblue, style="filled"];
+
+    f3_n326 -> f3_n328;
+    f3_n328 -> f3_n327;
+  }
+
+  // Inter-function calls
+  edge [style=dashed, color=blue, penwidth=2];
+
+  f2_n324 -> f2_n323 [ltail=cluster_2, lhead=cluster_2, label="call"];
+  f2_n324 -> f1_n320 [ltail=cluster_2, lhead=cluster_1, label="call"];
+}
