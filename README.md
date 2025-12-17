@@ -2,7 +2,31 @@
 
 Self-optimizing GPU-accelerated memory system covering Layers 0‑6 (physical → utility). MMSB is a deterministic, delta-driven shared-memory fabric that lets CPU, GPU, and compiler subsystems share page-aligned state under a single transaction log. Every operation follows the MMSB semiring law `state × delta → state′`, enabling deterministic replay and algebraic propagation. Reasoning, planning, and agent tooling (Layers 7‑12) now live in the [MMSB-top](../MMSB-top) repository.
 
+## Phase Status
+- **Phase 6 Complete** — Core runtime, stress harnesses, and documentation are validated and archived under `project_schedule/completed/`.
+- **Phase 7 In Flight** — Production validation week (stress, Julia harness, docs) is tracked in `project_schedule/05_DAG_DEPENDENCIES.md` and `project_schedule/PHASE_7_PLAN.md`.
 
+### Feature Coverage (Phase 6)
+| Capability                                      | Status | Notes                                                                                           |
+|-------------------------------------------------+--------+-------------------------------------------------------------------------------------------------|
+| Lock-free propagation queue + throughput engine | ✅     | Release tests cover single + multi-worker deltas with perf hints (`tests/stress_throughput.rs`) |
+| Long-run stability + invariant suite            | ✅     | 10k-cycle perturbation harness exercises DAG + invariant checker (`tests/stress_stability.rs`)  |
+| Memory pressure + GC monitor                    | ✅     | 1KB/page budget enforced with GC latency metrics (`tests/stress_memory.rs`)                     |
+| Julia validation harness                        | ✅     | `benchmark/run_validation.jl` orchestrates Rust stress tests + `BenchmarkTools` suite           |
+| CLI validation summary                          | ✅     | `benchmark/validate_all.jl` emits the ✓/✗ report shown below and propagates exit codes          |
+| Documentation refresh                           | ✅     | README tables and Phase DAG updated for the Phase 6→7 hand-off                                  |
+
+### Benchmark Snapshot (release build)
+| Benchmark                    | Target                                     | Latest Measurement                                                                                                       |
+|------------------------------+--------------------------------------------+--------------------------------------------------------------------------------------------------------------------------|
+| #1 Replay determinism        | divergence `< 1e-9`                        | `benchmark/benchmarks.jl` replay median `≤50ms` (deterministic diff baseline)                                            |
+| #5 Throughput                | ≥1M (single) / 10M (multi) deltas/sec      | Single-thread `≈2.2M/sec`, multi-thread `≈2.1M/sec` (10M multi goal tracked in schedule; `perf` guidance in test output) |
+| #6 Tick latency              | `<16ms` per tick                           | Full pipeline median `≈13ms` (BenchmarkTools `system/full_pipeline`)                                                     |
+| #7 Memory footprint          | avg page ≤1KB, GC `<3ms`, 1M pages `<1GiB` | Avg `1024B`, projected `0.95GiB`, GC `0.017ms`, fragmentation `≈12.5MiB` (see `stress_memory.rs`)                        |
+| #8/#9 Stability & invariants | 10k cycles, 0 violations                   | Harness reports `10,000 cycles`, `max divergence ≈0.13`, `0 invariants` (`stress_stability.rs`)                          |
+| #10 Provenance               | lookup `<50ms`, depth <32                  | Graph BFS median `≤50ms` (BenchmarkTools `graph/bfs_1024`)                                                               |
+
+Run `julia --project=. benchmark/validate_all.jl` (set `HOME`/`JULIA_DEPOT_PATH` if needed) to execute the combined validation harness, which calls the Rust stress tests and BenchmarkTools suite above.
 
 ## Why MMSB
 - **Deterministic replay** — Byte-level deltas, epochs, and transaction log (TLog) enable checkpoint/reconstruction
@@ -35,7 +59,8 @@ cargo build --release
 
 ### Test
 ```bash
-julia --project=. -e 'using Pkg; Pkg.test()'
+cargo test --release
+HOME=$PWD/.home JULIA_DEPOT_PATH=$PWD/.julia-depot julia --project=. benchmark/validate_all.jl
 ```
 
 ### Basic Usage (Layers 0-6)
@@ -101,10 +126,10 @@ Each layer now has a co-located benchmark guide under `benchmark/<layer>/README.
 - **Current version:** Phase 6 validation (v0.2.0-alpha)
 - **Testing:** `cargo test --lib --tests --no-default-features`
 - **Examples:** `julia --project=. examples/quickstart.jl`
-- **Performance baselines:** `benchmark/results/baseline.json` (legacy) and `benchmark/results/phase6.json` (latest Phase 6 run)
+- **Performance baselines:** `benchmark/results/phase6.json` (latest archive) + `benchmark/validate_all.jl` (live stress/benchmark harness)
 
 ## Next Steps
-- Phase 6 benchmark validation complete (see `benchmark/results/phase6.json`).
+- Phase 6 benchmark validation complete (see `benchmark/results/phase6.json` + README snapshot tables).
 - Remaining scheduling/architecture docs are archived under `project_schedule/completed/`.
 - Use [`MMSB-top`](../MMSB-top) for Layers 7‑12 development.
 
@@ -117,8 +142,8 @@ Each layer now has a co-located benchmark guide under `benchmark/<layer>/README.
 
 ### Development
 - `project_schedule/DAG_DEPENDENCIES.md` — Phase 1-4 completion status
-- `project_schedule/PHASE_5.md` — Production hardening roadmap
-- `project_schedule/TASK_LOG_PHASE_5.md` — Detailed task tracking
+- `project_schedule/PHASE_7_PLAN.md` — Current production validation roadmap (Phase 7)
+- `project_schedule/TASK_LOG_PHASE_5.md` — Archived Phase 5 task tracking (see `project_schedule/completed/` for Phase 6)
 - `project_schedule/completed/` — Archived phase documentation
 - [`../MMSB-top/README.md`](../MMSB-top/README.md) — Intention, reasoning, planning, agents, and application layers
 
