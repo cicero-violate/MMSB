@@ -344,22 +344,46 @@ Recompute page contents based on dependencies.
 function recompute_page!(state::MMSBState, page_id::PageID)
     page = get_page(state, page_id)
     page === nothing && return
+    
+    # T1.2: Signature-based cache validation
+    current_sig = compute_signature(state, page)
+    cached_sig = get(page.metadata, :last_signature, nothing)
+    
+    # Validate dependency set hasn't changed
+    if cached_sig !== nothing
+        if current_sig.parent_ids != cached_sig.parent_ids
+            error("Dependency set changed for page $(page_id): was $(cached_sig.parent_ids), now $(current_sig.parent_ids)")
+        end
+        
+        # Skip recompute if all parent epochs unchanged
+        if current_sig.parent_epochs == cached_sig.parent_epochs
+            page.metadata[:stale] = false
+            return
+        end
+    end
+    
     recompute_fn = get(page.metadata, :recompute_fn, nothing)
     recompute_fn === nothing && return
+    
     baseline = read_page(page)
     new_data = recompute_fn(state, page)
     length(new_data) == page.size || throw(InvalidDeltaError("Recompute returned incorrect length", UInt64(page_id)))
+    
     mask = Vector{Bool}(undef, page.size)
     @inbounds for i in eachindex(baseline)
         mask[i] = baseline[i] != new_data[i]
     end
+    
     any(mask) || begin
         page.metadata[:stale] = false
+        page.metadata[:last_signature] = current_sig
         return
     end
+    
     delta = create_delta(state, page_id, mask, new_data; source=:propagation)
     route_delta!(state, delta)
     page.metadata[:stale] = false
+    page.metadata[:last_signature] = current_sig
 end
 
 """
