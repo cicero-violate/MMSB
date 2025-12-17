@@ -61,6 +61,10 @@ function optimize_layout!(state::LayoutState, access_pattern::Dict{Tuple{PageId,
     state.locality_score = new_score
     state.last_optimization = time()
     
+    if isempty(access_pattern)
+        return 1.0
+    end
+    
     return new_score / (old_score + 1e-10)
 end
 

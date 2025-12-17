@@ -5,7 +5,7 @@ Tests page reordering, clustering, and locality optimization.
 """
 
 using Test
-using MMSB
+const MMSB = Main.MMSB
 
 @testset "Layer 5: Adaptive Memory" begin
     @testset "Memory Layout Basics" begin
@@ -22,7 +22,8 @@ using MMSB
         state.placement[3] = 0x3000  # 3 pages away from p1
         
         # Access pattern: p1-p2 accessed 10 times, p2-p3 accessed 5 times
-        pattern = Dict((1, 2) => 10, (2, 3) => 5)
+        pattern = Dict((UInt64(1), UInt64(2)) => 10,
+                       (UInt64(2), UInt64(3)) => 5)
         
         score = MMSB.AdaptiveLayout.compute_locality_score(state, pattern)
         # Expected: 10*1 + 5*2 = 20
@@ -37,7 +38,9 @@ using MMSB
         state.placement[3] = 0x8000   # 8 pages away
         
         # Hottest pair: p1-p2 (100 accesses)
-        pattern = Dict((1, 2) => 100, (1, 3) => 10, (2, 3) => 5)
+        pattern = Dict((UInt64(1), UInt64(2)) => 100,
+                       (UInt64(1), UInt64(3)) => 10,
+                       (UInt64(2), UInt64(3)) => 5)
         
         old_score = MMSB.AdaptiveLayout.compute_locality_score(state, pattern)
         ratio = MMSB.AdaptiveLayout.optimize_layout!(state, pattern)

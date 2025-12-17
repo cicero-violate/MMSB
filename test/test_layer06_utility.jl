@@ -3,7 +3,7 @@ Layer 6: Utility Engine - Test Suite
 """
 
 using Test
-using MMSB
+const MMSB = Main.MMSB
 
 @testset "Layer 6: Utility Engine" begin
     @testset "Cost Functions" begin
@@ -23,12 +23,14 @@ using MMSB
 
     @testset "Entropy Measure" begin
         # Uniform distribution has maximum entropy
-        pattern = Dict((1, 2) => 10, (2, 3) => 10, (3, 4) => 10)
+        pattern = Dict((UInt64(1), UInt64(2)) => 10,
+                       (UInt64(2), UInt64(3)) => 10,
+                       (UInt64(3), UInt64(4)) => 10)
         entropy = MMSB.EntropyMeasure.state_entropy(pattern)
         @test entropy > 0.0
         
         # Single access has zero entropy
-        pattern_single = Dict((1, 2) => 100)
+        pattern_single = Dict((UInt64(1), UInt64(2)) => 100)
         entropy_single = MMSB.EntropyMeasure.state_entropy(pattern_single)
         @test entropy_single == 0.0
         
