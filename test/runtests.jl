@@ -225,7 +225,7 @@ include(joinpath(@__DIR__, "checkpoint_fuzz.jl"))
 include(joinpath(@__DIR__, "test_layer05_adaptive.jl"))
 include(joinpath(@__DIR__, "test_layer06_utility.jl"))
 
-include(joinpath(@__DIR__, "test_layer06_utility.jl"))
+include(joinpath(@__DIR__, "test_signature_system.jl"))
 
 # include(joinpath(@__DIR__, "test_week24_25_integration.jl"))
 
