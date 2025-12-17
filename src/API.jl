@@ -90,6 +90,7 @@ function update_page(state::MMSBState, page_id::PageID, bytes::AbstractVector{UI
     page = get_page(state, page_id)
     page === nothing && throw(PageNotFoundError(UInt64(page_id), "update_page"))
     length(bytes) == page.size || throw(InvalidDeltaError("update payload size mismatch", UInt64(page_id)))
+    
     data_vec = Vector{UInt8}(bytes)
     current = read_page(page)
     mask = Vector{Bool}(undef, length(current))
@@ -99,8 +100,14 @@ function update_page(state::MMSBState, page_id::PageID, bytes::AbstractVector{UI
         mask[i] = diff
         changed |= diff
     end
+    
+    # T2.2: Early return if no changes
     changed || return page
+    
+    # Store diff result to avoid recomputation in create_delta
+    page.metadata[:last_diff] = (mask=mask, data=data_vec)
     delta = create_delta(state, page_id, mask, data_vec; source=source)
+    delete!(page.metadata, :last_diff)
     route_delta!(state, delta)
     return page
 end
