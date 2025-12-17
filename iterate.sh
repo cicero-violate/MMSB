@@ -20,4 +20,4 @@ run cargo test --lib --tests --no-default-features
 run cargo run --bin phase6_bench --release
 run julia --startup-file=no --project=. -e "using Pkg; Pkg.test();"
 run julia --startup-file=no --project=. benchmark/benchmarks.jl
-run julia --startup-file=no --project=. test/week27_31_integration.jl
+run julia --startup-file=no --project=. validate_week27_32.jl

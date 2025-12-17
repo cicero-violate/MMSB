@@ -3,8 +3,8 @@
 
 // Layer-based imports
 use mmsb_core::page::*;  // Layer 1: Page, PageID, PageLocation, Delta, etc.
-use mmsb_core::physical::{PageAllocator, PageAllocatorConfig};  // Layer 0
-use mmsb_core::{dag::*, propagation::*, physical::DeviceBufferRegistry};
+use mmsb_core::page::{PageAllocator, PageAllocatorConfig, DeviceBufferRegistry};
+use mmsb_core::{dag::*, propagation::*};
 use mmsb_core::page::{tlog_compression::compact, tlog_replay::apply_log, tlog_serialization::read_log};
 use std::fs;
 use std::sync::Arc;
