@@ -221,6 +221,10 @@ include(joinpath(@__DIR__, "gc_stress_test.jl"))
 include(joinpath(@__DIR__, "fuzz_replay.jl"))
 include(joinpath(@__DIR__, "propagation_fuzz.jl"))
 include(joinpath(@__DIR__, "checkpoint_fuzz.jl"))
+
+include(joinpath(@__DIR__, "test_layer05_adaptive.jl")
+include(joinpath(@__DIR__, "test_layer06_utility.jl")
+
 # include(joinpath(@__DIR__, "test_week24_25_integration.jl"))
 
 # Phase 4 tests
