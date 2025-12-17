@@ -2,10 +2,10 @@
 
 This directory captures all performance measurements emitted by the Phase 6 tooling.
 
-| Artifact | Purpose |
-|----------|---------|
-| `baseline.json` | Legacy Julia benchmark suite captured prior to the Rust refactor. Useful for historical comparison. |
-| `phase6.json` | Latest Rust Phase 6 run (`cargo run --bin phase6_bench --release`). Contains throughput and tick latency metrics. |
+| Artifact        | Purpose                                                                                                           |
+|-----------------+-------------------------------------------------------------------------------------------------------------------|
+| `baseline.json` | Legacy Julia benchmark suite captured prior to the Rust refactor. Useful for historical comparison.               |
+| `phase6.json`   | Latest Rust Phase 6 run (`cargo run --bin phase6_bench --release`). Contains throughput and tick latency metrics. |
 
 ## Latest Run (`phase6.json`)
 - Processed deltas: **20,000**
