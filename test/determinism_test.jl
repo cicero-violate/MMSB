@@ -32,9 +32,10 @@ Deterministic graph serialization (sorted keys).
 """
 function serialize_graph(graph)
     edges = Dict{PageID, Vector{Tuple{PageID, Any}}}()
-    for (parent_id, children) in graph.edges
-        sorted_children = sort(collect(children); by = x -> x[1])
-        edges[parent_id] = sorted_children
+    # Graph uses 'deps' not 'edges'
+    for parent_id in sort(collect(keys(graph.deps)))
+        children = graph.deps[parent_id]
+        edges[parent_id] = sort(children; by = x -> x[1])
     end
     return Dict("edges" => edges)
 end

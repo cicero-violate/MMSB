@@ -43,7 +43,8 @@ using MMSB.MMSBStateTypes: get_page
         
         # Signature should reflect new epoch
         sig2 = compute_signature(state, child)
-        @test sig2.parent_epochs[1] > initial_epoch
+        new_epoch = sig2.parent_epochs[1]
+        @test new_epoch > initial_epoch
     end
     
     @testset "Multiple dependencies" begin

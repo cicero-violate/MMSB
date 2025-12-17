@@ -33,6 +33,8 @@ function route_delta!(state::MMSBState, delta::Delta; propagate::Bool=true)
     GC.@preserve page delta begin
         FFIWrapper.rust_delta_apply!(page.handle, delta.handle)
     end
+    # Track epoch in metadata
+    page.metadata[:epoch_dirty] = delta.epoch
     append_to_log!(state, delta)
     track_delta_latency!(state, time_ns() - start_ns)
     emit_event!(state, DELTA_APPLIED, delta.page_id, delta.id, delta.epoch)
