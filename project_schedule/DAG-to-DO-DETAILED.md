@@ -247,7 +247,28 @@ end
 ```
 **Expected:** Allocation 6 μs → 2-3 μs
 **File:** `src/01_types/MMSBState.jl`
-**Status:** 🔨 Blocked by T3.3
+**Status:** ✅ Implemented
+
+**T3.5 — Thread-Safe Allocator for Concurrent Pool Access**
+
+**Problem:** Rust allocator hits `AllocError` under concurrent thread access.
+**Root cause:** Global allocator state without mutex protection.
+
+**Solution:**
+```rust
+// Option 1: Thread-local allocators
+thread_local! {
+    static ALLOCATOR: RefCell<PageAllocator> = RefCell::new(PageAllocator::new());
+}
+
+// Option 2: Mutex-protected global allocator
+static GLOBAL_ALLOCATOR: Mutex<PageAllocator> = Mutex::new(PageAllocator::new());
+```
+
+**Test:** `test/state_pool_test.jl` - "Concurrent pool access (thread safety)" (currently skipped)
+**File:** `src/ffi.rs`, allocator implementation
+**Status:** 🔨 To implement
+**Priority:** Medium (pool works for single-threaded, concurrent is edge case)
 
 ---
 
