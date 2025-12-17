@@ -1,6 +1,7 @@
 // src/lib.rs
 #![allow(dead_code)]
 
+#[path = "01_types/mod.rs"]     pub mod types;
 #[path = "00_physical/mod.rs"]  pub mod physical;
 #[path = "01_page/mod.rs"]      pub mod page;
 #[path = "02_semiring/mod.rs"]  pub mod semiring;

@@ -1,39 +1,47 @@
 # Submodules
 
-## MMSB/src/00_physical/allocator.rs (00_physical)
+## MMSB/src/00_physical/mod.rs (00_physical)
+
+Module `mod`
+
+- `allocator_stats`
+- `gpu_memory_pool`
+- `nccl_integration`
+
+## MMSB/src/01_page/allocator.rs (01_page)
 
 Module `allocator`
 
 - `tests`
 
-## MMSB/src/00_physical/mod.rs (00_physical)
-
-Module `mod`
-
-- `allocator`
-- `allocator_stats`
-- `device`
-- `device_registry`
-- `gpu_memory_pool`
-- `host_device_sync`
-- `lockfree_allocator`
-- `nccl_integration`
-
 ## MMSB/src/01_page/mod.rs (01_page)
 
 Module `mod`
 
+- `allocator`
 - `checkpoint`
 - `delta`
 - `delta_merge`
 - `delta_validation`
+- `device`
+- `device_registry`
 - `epoch`
+- `host_device_sync`
+- `lockfree_allocator`
 - `page`
 - `simd_mask`
 - `tlog`
 - `tlog_compression`
 - `tlog_replay`
 - `tlog_serialization`
+
+## MMSB/src/01_types/mod.rs (01_types)
+
+Module `mod`
+
+- `delta_types`
+- `epoch_types`
+- `page_types`
 
 ## MMSB/src/02_semiring/mod.rs (02_semiring)
 
@@ -121,5 +129,6 @@ Module `lib`
 - `physical`
 - `propagation`
 - `semiring`
+- `types`
 - `utility`
 

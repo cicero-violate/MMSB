@@ -1,7 +1,6 @@
 use crate::page::checkpoint;
 use crate::page::tlog::{TransactionLog, TransactionLogReader};
-use crate::page::{Delta, DeltaID, Epoch, Page, PageError, PageID, PageLocation, Source};
-use crate::physical::allocator::{PageAllocator, PageAllocatorConfig};
+use crate::page::{Delta, DeltaID, Epoch, Page, PageAllocator, PageAllocatorConfig, PageError, PageID, PageLocation, Source};
 use crate::semiring::{
     accumulate, fold_add, fold_mul, BooleanSemiring, Semiring, TropicalSemiring,
 };

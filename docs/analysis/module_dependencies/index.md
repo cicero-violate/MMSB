@@ -1,33 +1,36 @@
 # Module Dependencies
 
-- Module files analyzed: 49
-- Unique imports captured: 130
-- Unique exports captured: 39
-- Submodule declarations captured: 53
+- Module files analyzed: 52
+- Unique imports captured: 133
+- Unique exports captured: 42
+- Submodule declarations captured: 57
 
 ## Per-file Summary
 
-- `MMSB/src/00_physical/allocator.rs` → module `allocator` (layer 00_physical, 7 imports / 0 exports / 1 submodules)
 - `MMSB/src/00_physical/allocator_stats.rs` → module `allocator_stats` (layer 00_physical, 1 imports / 0 exports / 0 submodules)
-- `MMSB/src/00_physical/device.rs` → module `device` (layer 00_physical, 4 imports / 0 exports / 0 submodules)
-- `MMSB/src/00_physical/device_registry.rs` → module `device_registry` (layer 00_physical, 4 imports / 0 exports / 0 submodules)
 - `MMSB/src/00_physical/gpu_memory_pool.rs` → module `gpu_memory_pool` (layer 00_physical, 3 imports / 0 exports / 0 submodules)
-- `MMSB/src/00_physical/host_device_sync.rs` → module `host_device_sync` (layer 00_physical, 1 imports / 0 exports / 0 submodules)
-- `MMSB/src/00_physical/lockfree_allocator.rs` → module `lockfree_allocator` (layer 00_physical, 3 imports / 0 exports / 0 submodules)
-- `MMSB/src/00_physical/mod.rs` → module `mod` (layer 00_physical, 0 imports / 8 exports / 8 submodules)
+- `MMSB/src/00_physical/mod.rs` → module `mod` (layer 00_physical, 0 imports / 3 exports / 3 submodules)
 - `MMSB/src/00_physical/nccl_integration.rs` → module `nccl_integration` (layer 00_physical, 3 imports / 0 exports / 0 submodules)
-- `MMSB/src/01_page/checkpoint.rs` → module `checkpoint` (layer 01_page, 6 imports / 0 exports / 0 submodules)
+- `MMSB/src/01_page/allocator.rs` → module `allocator` (layer 01_page, 8 imports / 0 exports / 1 submodules)
+- `MMSB/src/01_page/checkpoint.rs` → module `checkpoint` (layer 01_page, 5 imports / 0 exports / 0 submodules)
 - `MMSB/src/01_page/delta.rs` → module `delta` (layer 01_page, 3 imports / 0 exports / 0 submodules)
 - `MMSB/src/01_page/delta_merge.rs` → module `delta_merge` (layer 01_page, 2 imports / 0 exports / 0 submodules)
 - `MMSB/src/01_page/delta_validation.rs` → module `delta_validation` (layer 01_page, 1 imports / 0 exports / 0 submodules)
-- `MMSB/src/01_page/epoch.rs` → module `epoch` (layer 01_page, 1 imports / 0 exports / 0 submodules)
-- `MMSB/src/01_page/mod.rs` → module `mod` (layer 01_page, 0 imports / 8 exports / 11 submodules)
-- `MMSB/src/01_page/page.rs` → module `page` (layer 01_page, 11 imports / 0 exports / 0 submodules)
+- `MMSB/src/01_page/device.rs` → module `device` (layer 01_page, 5 imports / 0 exports / 0 submodules)
+- `MMSB/src/01_page/device_registry.rs` → module `device_registry` (layer 01_page, 4 imports / 0 exports / 0 submodules)
+- `MMSB/src/01_page/epoch.rs` → module `epoch` (layer 01_page, 0 imports / 1 exports / 0 submodules)
+- `MMSB/src/01_page/host_device_sync.rs` → module `host_device_sync` (layer 01_page, 1 imports / 0 exports / 0 submodules)
+- `MMSB/src/01_page/lockfree_allocator.rs` → module `lockfree_allocator` (layer 01_page, 4 imports / 0 exports / 0 submodules)
+- `MMSB/src/01_page/mod.rs` → module `mod` (layer 01_page, 0 imports / 13 exports / 16 submodules)
+- `MMSB/src/01_page/page.rs` → module `page` (layer 01_page, 9 imports / 0 exports / 0 submodules)
 - `MMSB/src/01_page/tlog.rs` → module `tlog` (layer 01_page, 6 imports / 0 exports / 0 submodules)
 - `MMSB/src/01_page/tlog_compression.rs` → module `tlog_compression` (layer 01_page, 1 imports / 0 exports / 0 submodules)
 - `MMSB/src/01_page/tlog_replay.rs` → module `tlog_replay` (layer 01_page, 1 imports / 0 exports / 0 submodules)
 - `MMSB/src/01_page/tlog_serialization.rs` → module `tlog_serialization` (layer 01_page, 4 imports / 0 exports / 0 submodules)
-- `MMSB/src/01_types/mod.rs` → module `mod` (layer 01_types, 0 imports / 1 exports / 0 submodules)
+- `MMSB/src/01_types/delta_types.rs` → module `delta_types` (layer 01_types, 2 imports / 0 exports / 0 submodules)
+- `MMSB/src/01_types/epoch_types.rs` → module `epoch_types` (layer 01_types, 1 imports / 0 exports / 0 submodules)
+- `MMSB/src/01_types/mod.rs` → module `mod` (layer 01_types, 0 imports / 3 exports / 3 submodules)
+- `MMSB/src/01_types/page_types.rs` → module `page_types` (layer 01_types, 2 imports / 0 exports / 0 submodules)
 - `MMSB/src/02_semiring/mod.rs` → module `mod` (layer 02_semiring, 0 imports / 3 exports / 3 submodules)
 - `MMSB/src/02_semiring/semiring_ops.rs` → module `semiring_ops` (layer 02_semiring, 1 imports / 0 exports / 0 submodules)
 - `MMSB/src/02_semiring/standard_semirings.rs` → module `standard_semirings` (layer 02_semiring, 1 imports / 0 exports / 0 submodules)
@@ -50,8 +53,8 @@
 - `MMSB/src/06_utility/cpu_features.rs` → module `cpu_features` (layer 06_utility, 1 imports / 0 exports / 0 submodules)
 - `MMSB/src/06_utility/mod.rs` → module `mod` (layer 06_utility, 0 imports / 2 exports / 2 submodules)
 - `MMSB/src/06_utility/telemetry.rs` → module `telemetry` (layer 06_utility, 3 imports / 0 exports / 1 submodules)
-- `MMSB/src/ffi.rs` → module `ffi` (layer root, 13 imports / 0 exports / 0 submodules)
-- `MMSB/src/lib.rs` → module `lib` (layer root, 0 imports / 1 exports / 8 submodules)
+- `MMSB/src/ffi.rs` → module `ffi` (layer root, 12 imports / 0 exports / 0 submodules)
+- `MMSB/src/lib.rs` → module `lib` (layer root, 0 imports / 1 exports / 9 submodules)
 - `MMSB/tests/delta_validation.rs` → module `delta_validation` (layer root, 1 imports / 0 exports / 0 submodules)
 - `MMSB/tests/examples_basic.rs` → module `examples_basic` (layer root, 3 imports / 0 exports / 0 submodules)
 - `MMSB/tests/mmsb_tests.rs` → module `mmsb_tests` (layer root, 5 imports / 0 exports / 0 submodules)

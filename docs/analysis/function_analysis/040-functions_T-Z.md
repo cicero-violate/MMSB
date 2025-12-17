@@ -1,12 +1,12 @@
 # Functions T-Z
 
-## Layer: 00_physical
+## Layer: 01_page
 
 ### Rust Functions
 
 #### `test_checkpoint_roundtrip_in_memory`
 
-- **File:** MMSB/src/00_physical/allocator.rs:0
+- **File:** MMSB/src/01_page/allocator.rs:0
 - **Visibility:** Private
 - **Calls:**
   - `PageAllocator::new`
@@ -30,7 +30,7 @@
 
 #### `test_page_info_metadata_roundtrip`
 
-- **File:** MMSB/src/00_physical/allocator.rs:0
+- **File:** MMSB/src/01_page/allocator.rs:0
 - **Visibility:** Private
 - **Calls:**
   - `PageAllocator::new`
@@ -43,7 +43,7 @@
 
 #### `test_unified_page`
 
-- **File:** MMSB/src/00_physical/allocator.rs:0
+- **File:** MMSB/src/01_page/allocator.rs:0
 - **Visibility:** Private
 - **Calls:**
   - `PageAllocator::new`
@@ -51,10 +51,6 @@
   - `allocate_raw`
   - `PageID`
   - `data_mut_slice`
-
-## Layer: 01_page
-
-### Rust Functions
 
 #### `validate_delta`
 

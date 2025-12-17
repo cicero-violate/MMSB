@@ -1,2 +1,9 @@
-//! Legacy shim: core types now live under `crate::page`.
-pub use crate::page::*;
+//! Core types layer - foundational types used across all layers
+
+mod page_types;
+mod delta_types;
+mod epoch_types;
+
+pub use page_types::{PageID, PageLocation, PageError};
+pub use delta_types::{DeltaID, Source, DeltaError};
+pub use epoch_types::{Epoch, EpochCell};

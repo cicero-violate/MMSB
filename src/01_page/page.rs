@@ -2,15 +2,13 @@
 // FULLY INSTRUMENTED + MEMORY-SAFE + DEEP CLONE — DECEMBER 8 2025
 // 355+ lines — complete and final
 
-use super::delta::{Delta, DeltaError};
+use super::delta::Delta;
 use super::delta_validation;
-use super::epoch::{Epoch, EpochCell};
+use crate::types::{Epoch, EpochCell, PageError, PageID, PageLocation, DeltaError};
 use parking_lot::RwLock;
 use std::convert::TryInto;
 use std::ffi::c_void;
 use std::sync::Arc;
-use std::fmt;
-use thiserror::Error;
 use std::sync::atomic::{AtomicU64, Ordering};
 use std::ptr;
 
@@ -21,37 +19,6 @@ extern "C" {
 
 // Global counter for debugging page lifetimes
 static PAGE_COUNTER: AtomicU64 = AtomicU64::new(0);
-
-/// Possible backing locations for a page. Matches Julia enum order.
-#[repr(i32)]
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum PageLocation {
-    Cpu = 0,
-    Gpu = 1,
-    Unified = 2,
-}
-
-impl PageLocation {
-    pub fn from_tag(tag: i32) -> Result<Self, PageError> {
-        match tag {
-            0 => Ok(PageLocation::Cpu),
-            1 => Ok(PageLocation::Gpu),
-            2 => Ok(PageLocation::Unified),
-            other => Err(PageError::InvalidLocation(other)),
-        }
-    }
-}
-
-/// Globally unique identifier for pages.
-#[repr(transparent)]
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-pub struct PageID(pub u64);
-
-impl fmt::Display for PageID {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}", self.0)
-    }
-}
 
 /// Metadata key-value store with copy-on-write semantics.
 #[derive(Debug, Clone, Default)]
@@ -330,24 +297,6 @@ impl Drop for Page {
             }
         }
     }
-}
-
-#[derive(Debug, Error)]
-pub enum PageError {
-    #[error("Invalid page size: {0}")]
-    InvalidSize(usize),
-    #[error("Invalid location tag: {0}")]
-    InvalidLocation(i32),
-    #[error("PageID mismatch: expected {expected:?}, found {found:?}")]
-    PageIDMismatch { expected: PageID, found: PageID },
-    #[error("Mask size mismatch: expected {expected}, found {found}")]
-    MaskSizeMismatch { expected: usize, found: usize },
-    #[error("Metadata decode error: {0}")]
-    MetadataDecode(&'static str),
-    #[error("Allocation error: code {0}")]
-    AllocError(i32),
-    #[error("Page with ID {0} already exists")]
-    AlreadyExists(PageID),
 }
 
 unsafe impl Send for Page {}

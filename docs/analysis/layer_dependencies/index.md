@@ -1,52 +1,25 @@
 # Layer Dependency Report
 
-Generated: 2025-12-17 00:41:41
+Generated: 2025-12-17 08:15:43
 
 ## Rust Layer Graph
 
 ### Layer Order
-1. `root` (cycle)
-2. `02_semiring`
-3. `03_device`
-4. `05_adaptive`
-5. `06_utility`
-6. `00_physical` (cycle)
-7. `01_page` (cycle)
-8. `01_types` (cycle)
-9. `03_dag` (cycle)
-10. `04_propagation` (cycle)
-
-### Cycles Detected
-- `00_physical`
-- `01_page`
-- `01_types`
-- `03_dag`
-- `04_propagation`
-- `root`
+1. `root`
+2. `00_physical`
+3. `01_types`
+4. `01_page`
+5. `02_semiring`
+6. `03_dag`
+7. `03_device`
+8. `04_propagation`
+9. `05_adaptive`
+10. `06_utility`
 
 ### Layer Violations
-- `00_physical` depends on `01_page` (6 references)
-  - MMSB/src/00_physical/allocator.rs :: use crate :: page :: { Delta , DeltaID , Source } ;
-  - MMSB/src/00_physical/allocator.rs :: use crate :: page :: { Epoch , Page , PageError , PageID , PageLocation } ;
-  - MMSB/src/00_physical/device.rs :: use crate :: page :: { Page , PageID } ;
-  - MMSB/src/00_physical/device_registry.rs :: use crate :: page :: { Page , PageID } ;
-  - MMSB/src/00_physical/host_device_sync.rs :: use crate :: page :: PageID ;
-  - MMSB/src/00_physical/lockfree_allocator.rs :: use crate :: page :: { Page , PageID , PageLocation } ;
+- None detected.
 
 ### Dependency Edges
-- `00_physical` → `01_page` (1 references)
-  - MMSB/src/01_page/checkpoint.rs :: use crate :: physical :: allocator :: { PageAllocator , PageSnapshotData } ;
-- `00_physical` → `root` (1 references)
-  - MMSB/src/ffi.rs :: use crate :: physical :: allocator :: { PageAllocator , PageAllocatorConfig } ;
-- `01_page` → `00_physical` (6 references, VIOLATION)
-  - MMSB/src/00_physical/allocator.rs :: use crate :: page :: { Delta , DeltaID , Source } ;
-  - MMSB/src/00_physical/allocator.rs :: use crate :: page :: { Epoch , Page , PageError , PageID , PageLocation } ;
-  - MMSB/src/00_physical/device.rs :: use crate :: page :: { Page , PageID } ;
-  - MMSB/src/00_physical/device_registry.rs :: use crate :: page :: { Page , PageID } ;
-  - MMSB/src/00_physical/host_device_sync.rs :: use crate :: page :: PageID ;
-  - MMSB/src/00_physical/lockfree_allocator.rs :: use crate :: page :: { Page , PageID , PageLocation } ;
-- `01_page` → `01_types` (1 references)
-  - MMSB/src/01_types/mod.rs :: pub use crate :: page :: * ;
 - `01_page` → `03_dag` (3 references)
   - MMSB/src/03_dag/cycle_detection.rs :: use crate :: page :: PageID ;
   - MMSB/src/03_dag/shadow_graph.rs :: use crate :: page :: PageID ;
@@ -58,7 +31,16 @@ Generated: 2025-12-17 00:41:41
 - `01_page` → `root` (3 references)
   - MMSB/src/ffi.rs :: use crate :: page :: checkpoint ;
   - MMSB/src/ffi.rs :: use crate :: page :: tlog :: { TransactionLog , TransactionLogReader } ;
-  - MMSB/src/ffi.rs :: use crate :: page :: { Delta , DeltaID , Epoch , Page , PageError , PageID , PageLocation , Source } ;
+  - MMSB/src/ffi.rs :: use crate :: page :: { Delta , DeltaID , Epoch , Page , PageAllocator , PageAllocatorConfig , PageError , PageID , PageLocation , Source } ;
+- `01_types` → `01_page` (8 references)
+  - MMSB/src/01_page/allocator.rs :: use crate :: types :: { PageError , PageID , PageLocation } ;
+  - MMSB/src/01_page/delta.rs :: use crate :: types :: { DeltaError , DeltaID , Epoch , PageError , PageID , Source } ;
+  - MMSB/src/01_page/device.rs :: use crate :: types :: PageID ;
+  - MMSB/src/01_page/epoch.rs :: pub use crate :: types :: { Epoch , EpochCell } ;
+  - MMSB/src/01_page/host_device_sync.rs :: use crate :: types :: PageID ;
+  - MMSB/src/01_page/lockfree_allocator.rs :: use crate :: types :: { PageID , PageLocation } ;
+  - MMSB/src/01_page/mod.rs :: pub use crate :: types :: { PageID , PageLocation , PageError , Epoch , EpochCell , DeltaID , Source , DeltaError } ;
+  - MMSB/src/01_page/page.rs :: use crate :: types :: { Epoch , EpochCell , PageError , PageID , PageLocation , DeltaError } ;
 - `02_semiring` → `root` (1 references)
   - MMSB/src/ffi.rs :: use crate :: semiring :: { accumulate , fold_add , fold_mul , BooleanSemiring , Semiring , TropicalSemiring , } ;
 
@@ -77,12 +59,6 @@ Generated: 2025-12-17 00:41:41
 7. `04_propagation`
 8. `05_adaptive`
 9. `06_utility`
-10. `07_intention`
-11. `08_reasoning`
-12. `09_planning`
-13. `10_agent_interface`
-14. `11_agents`
-15. `12_applications`
 
 ### Layer Violations
 - None detected.
@@ -129,73 +105,6 @@ Generated: 2025-12-17 00:41:41
   - MMSB/src/MMSB.jl :: include("06_utility/entropy_measure.jl"
   - MMSB/src/MMSB.jl :: include("06_utility/utility_engine.jl"
   - MMSB/src/MMSB.jl :: using .Monitoring
-- `07_intention` → `root` (7 references)
-  - MMSB/src/MMSB.jl :: include("07_intention/IntentionTypes.jl"
-  - MMSB/src/MMSB.jl :: include("07_intention/UpsertPlan.jl"
-  - MMSB/src/MMSB.jl :: include("07_intention/attractor_states.jl"
-  - MMSB/src/MMSB.jl :: include("07_intention/goal_emergence.jl"
-  - MMSB/src/MMSB.jl :: include("07_intention/intent_lowering.jl"
-  - MMSB/src/MMSB.jl :: include("07_intention/intention_engine.jl"
-  - MMSB/src/MMSB.jl :: include("07_intention/structural_preferences.jl"
-- `08_reasoning` → `root` (10 references)
-  - MMSB/src/MMSB.jl :: include("08_reasoning/ReasoningTypes.jl"
-  - MMSB/src/MMSB.jl :: include("08_reasoning/constraint_propagation.jl"
-  - MMSB/src/MMSB.jl :: include("08_reasoning/dependency_inference.jl"
-  - MMSB/src/MMSB.jl :: include("08_reasoning/logic_engine.jl"
-  - MMSB/src/MMSB.jl :: include("08_reasoning/pattern_formation.jl"
-  - MMSB/src/MMSB.jl :: include("08_reasoning/reasoning_engine.jl"
-  - MMSB/src/MMSB.jl :: include("08_reasoning/rule_evaluation.jl"
-  - MMSB/src/MMSB.jl :: include("08_reasoning/structural_inference.jl"
-  - MMSB/src/MMSB.jl :: using .ReasoningEngine
-  - MMSB/src/MMSB.jl :: using .ReasoningTypes
-- `09_planning` → `root` (12 references)
-  - MMSB/src/MMSB.jl :: include("09_planning/PlanningTypes.jl"
-  - MMSB/src/MMSB.jl :: include("09_planning/decision_graphs.jl"
-  - MMSB/src/MMSB.jl :: include("09_planning/goal_decomposition.jl"
-  - MMSB/src/MMSB.jl :: include("09_planning/optimization_planning.jl"
-  - MMSB/src/MMSB.jl :: include("09_planning/planning_engine.jl"
-  - MMSB/src/MMSB.jl :: include("09_planning/rl_planning.jl"
-  - MMSB/src/MMSB.jl :: include("09_planning/rollout_simulation.jl"
-  - MMSB/src/MMSB.jl :: include("09_planning/search_algorithms.jl"
-  - MMSB/src/MMSB.jl :: include("09_planning/strategy_generation.jl"
-  - MMSB/src/MMSB.jl :: using .PlanningEngine
-  - MMSB/src/MMSB.jl :: using .PlanningTypes
-  - MMSB/src/MMSB.jl :: using .RolloutSimulation
-- `10_agent_interface` → `root` (10 references)
-  - MMSB/src/MMSB.jl :: include("10_agent_interface/AgentProtocol.jl"
-  - MMSB/src/MMSB.jl :: include("10_agent_interface/BaseHook.jl"
-  - MMSB/src/MMSB.jl :: include("10_agent_interface/CompilerHooks.jl"
-  - MMSB/src/MMSB.jl :: include("10_agent_interface/CoreHooks.jl"
-  - MMSB/src/MMSB.jl :: include("10_agent_interface/InstrumentationManager.jl"
-  - MMSB/src/MMSB.jl :: include("10_agent_interface/checkpoint_api.jl"
-  - MMSB/src/MMSB.jl :: include("10_agent_interface/event_subscription.jl"
-  - MMSB/src/MMSB.jl :: using .AgentProtocol
-  - MMSB/src/MMSB.jl :: using .CheckpointAPI
-  - MMSB/src/MMSB.jl :: using .EventSubscription
-- `11_agents` → `root` (12 references)
-  - MMSB/src/MMSB.jl :: include("11_agents/AgentTypes.jl"
-  - MMSB/src/MMSB.jl :: include("11_agents/enzyme_integration.jl"
-  - MMSB/src/MMSB.jl :: include("11_agents/hybrid_agent.jl"
-  - MMSB/src/MMSB.jl :: include("11_agents/lux_models.jl"
-  - MMSB/src/MMSB.jl :: include("11_agents/planning_agent.jl"
-  - MMSB/src/MMSB.jl :: include("11_agents/rl_agent.jl"
-  - MMSB/src/MMSB.jl :: include("11_agents/symbolic_agent.jl"
-  - MMSB/src/MMSB.jl :: using .AgentTypes
-  - MMSB/src/MMSB.jl :: using .HybridAgents
-  - MMSB/src/MMSB.jl :: using .PlanningAgents
-  - MMSB/src/MMSB.jl :: using .RLAgents
-  - MMSB/src/MMSB.jl :: using .SymbolicAgents
-- `12_applications` → `root` (10 references)
-  - MMSB/src/MMSB.jl :: include("12_applications/financial_modeling.jl"
-  - MMSB/src/MMSB.jl :: include("12_applications/llm_tools.jl"
-  - MMSB/src/MMSB.jl :: include("12_applications/memory_driven_reasoning.jl"
-  - MMSB/src/MMSB.jl :: include("12_applications/multi_agent_system.jl"
-  - MMSB/src/MMSB.jl :: include("12_applications/world_simulation.jl"
-  - MMSB/src/MMSB.jl :: using .FinancialModeling
-  - MMSB/src/MMSB.jl :: using .LLMTools
-  - MMSB/src/MMSB.jl :: using .MemoryDrivenReasoning
-  - MMSB/src/MMSB.jl :: using .MultiAgentSystem
-  - MMSB/src/MMSB.jl :: using .WorldSimulation
 
 ### Unresolved References
 - MMSB/benchmark/benchmarks.jl → `using .MMSB`

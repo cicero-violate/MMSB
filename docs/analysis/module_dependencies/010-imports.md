@@ -1,40 +1,10 @@
 # Module Imports
 
-## MMSB/src/00_physical/allocator.rs (00_physical)
-
-Module `allocator`
-
-- `crate :: page :: { Delta , DeltaID , Source }`
-- `crate :: page :: { Epoch , Page , PageError , PageID , PageLocation }`
-- `parking_lot :: Mutex`
-- `std :: collections :: HashMap`
-- `std :: ffi :: c_void`
-- `std :: sync :: atomic :: AtomicU64`
-- `super :: *`
-
 ## MMSB/src/00_physical/allocator_stats.rs (00_physical)
 
 Module `allocator_stats`
 
 - `std :: sync :: atomic :: { AtomicU64 , Ordering }`
-
-## MMSB/src/00_physical/device.rs (00_physical)
-
-Module `device`
-
-- `crate :: page :: { Page , PageID }`
-- `parking_lot :: RwLock`
-- `std :: collections :: HashMap`
-- `std :: sync :: Arc`
-
-## MMSB/src/00_physical/device_registry.rs (00_physical)
-
-Module `device_registry`
-
-- `crate :: page :: { Page , PageID }`
-- `parking_lot :: RwLock`
-- `std :: collections :: HashMap`
-- `std :: sync :: Arc`
 
 ## MMSB/src/00_physical/gpu_memory_pool.rs (00_physical)
 
@@ -44,20 +14,6 @@ Module `gpu_memory_pool`
 - `std :: collections :: HashMap`
 - `std :: ffi :: c_void`
 
-## MMSB/src/00_physical/host_device_sync.rs (00_physical)
-
-Module `host_device_sync`
-
-- `crate :: page :: PageID`
-
-## MMSB/src/00_physical/lockfree_allocator.rs (00_physical)
-
-Module `lockfree_allocator`
-
-- `crate :: page :: { Page , PageID , PageLocation }`
-- `std :: ptr`
-- `std :: sync :: atomic :: { AtomicPtr , AtomicU64 , Ordering }`
-
 ## MMSB/src/00_physical/nccl_integration.rs (00_physical)
 
 Module `nccl_integration`
@@ -66,12 +22,24 @@ Module `nccl_integration`
 - `std :: collections :: HashMap`
 - `std :: ffi :: c_void`
 
+## MMSB/src/01_page/allocator.rs (01_page)
+
+Module `allocator`
+
+- `crate :: page :: { Delta , DeltaID , Source }`
+- `crate :: page :: { Page , Epoch }`
+- `crate :: types :: { PageError , PageID , PageLocation }`
+- `parking_lot :: Mutex`
+- `std :: collections :: HashMap`
+- `std :: ffi :: c_void`
+- `std :: sync :: atomic :: AtomicU64`
+- `super :: *`
+
 ## MMSB/src/01_page/checkpoint.rs (01_page)
 
 Module `checkpoint`
 
-- `crate :: page :: { PageID , PageLocation }`
-- `crate :: physical :: allocator :: { PageAllocator , PageSnapshotData }`
+- `crate :: page :: { PageAllocator , PageSnapshotData , PageID , PageLocation }`
 - `std :: fs :: File`
 - `std :: io :: { BufReader , BufWriter , Read , Write }`
 - `std :: path :: Path`
@@ -81,9 +49,9 @@ Module `checkpoint`
 
 Module `delta`
 
+- `crate :: types :: { DeltaError , DeltaID , Epoch , PageError , PageID , Source }`
 - `std :: time :: { SystemTime , UNIX_EPOCH }`
-- `super :: epoch :: Epoch`
-- `super :: page :: { Page , PageError , PageID }`
+- `super :: page :: Page`
 
 ## MMSB/src/01_page/delta_merge.rs (01_page)
 
@@ -98,27 +66,53 @@ Module `delta_validation`
 
 - `crate :: page :: { Delta , DeltaError }`
 
-## MMSB/src/01_page/epoch.rs (01_page)
+## MMSB/src/01_page/device.rs (01_page)
 
-Module `epoch`
+Module `device`
 
-- `std :: sync :: atomic :: { AtomicU32 , Ordering }`
+- `crate :: page :: Page`
+- `crate :: types :: PageID`
+- `parking_lot :: RwLock`
+- `std :: collections :: HashMap`
+- `std :: sync :: Arc`
+
+## MMSB/src/01_page/device_registry.rs (01_page)
+
+Module `device_registry`
+
+- `crate :: page :: { Page , PageID }`
+- `parking_lot :: RwLock`
+- `std :: collections :: HashMap`
+- `std :: sync :: Arc`
+
+## MMSB/src/01_page/host_device_sync.rs (01_page)
+
+Module `host_device_sync`
+
+- `crate :: types :: PageID`
+
+## MMSB/src/01_page/lockfree_allocator.rs (01_page)
+
+Module `lockfree_allocator`
+
+- `crate :: page :: Page`
+- `crate :: types :: { PageID , PageLocation }`
+- `std :: ptr`
+- `std :: sync :: atomic :: { AtomicPtr , AtomicU64 , Ordering }`
 
 ## MMSB/src/01_page/page.rs (01_page)
 
 Module `page`
 
+- `crate :: types :: { Epoch , EpochCell , PageError , PageID , PageLocation , DeltaError }`
 - `parking_lot :: RwLock`
 - `std :: convert :: TryInto`
 - `std :: ffi :: c_void`
-- `std :: fmt`
 - `std :: ptr`
 - `std :: sync :: Arc`
 - `std :: sync :: atomic :: { AtomicU64 , Ordering }`
-- `super :: delta :: { Delta , DeltaError }`
+- `super :: delta :: Delta`
 - `super :: delta_validation`
-- `super :: epoch :: { Epoch , EpochCell }`
-- `thiserror :: Error`
 
 ## MMSB/src/01_page/tlog.rs (01_page)
 
@@ -151,6 +145,26 @@ Module `tlog_serialization`
 - `std :: fs :: File`
 - `std :: io :: { BufReader , Read }`
 - `std :: path :: Path`
+
+## MMSB/src/01_types/delta_types.rs (01_types)
+
+Module `delta_types`
+
+- `super :: page_types :: PageID`
+- `thiserror :: Error`
+
+## MMSB/src/01_types/epoch_types.rs (01_types)
+
+Module `epoch_types`
+
+- `std :: sync :: atomic :: { AtomicU32 , Ordering }`
+
+## MMSB/src/01_types/page_types.rs (01_types)
+
+Module `page_types`
+
+- `std :: fmt`
+- `thiserror :: Error`
 
 ## MMSB/src/02_semiring/semiring_ops.rs (02_semiring)
 
@@ -271,8 +285,7 @@ Module `ffi`
 
 - `crate :: page :: checkpoint`
 - `crate :: page :: tlog :: { TransactionLog , TransactionLogReader }`
-- `crate :: page :: { Delta , DeltaID , Epoch , Page , PageError , PageID , PageLocation , Source }`
-- `crate :: physical :: allocator :: { PageAllocator , PageAllocatorConfig }`
+- `crate :: page :: { Delta , DeltaID , Epoch , Page , PageAllocator , PageAllocatorConfig , PageError , PageID , PageLocation , Source }`
 - `crate :: semiring :: { accumulate , fold_add , fold_mul , BooleanSemiring , Semiring , TropicalSemiring , }`
 - `std :: cell :: RefCell`
 - `std :: cmp :: min`

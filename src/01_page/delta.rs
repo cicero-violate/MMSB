@@ -1,13 +1,6 @@
-use super::epoch::Epoch;
-use super::page::{Page, PageError, PageID};
+use super::page::Page;
+use crate::types::{DeltaError, DeltaID, Epoch, PageError, PageID, Source};
 use std::time::{SystemTime, UNIX_EPOCH};
-
-#[repr(transparent)]
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-pub struct DeltaID(pub u64);
-
-#[derive(Debug, Clone)]
-pub struct Source(pub String);
 
 #[derive(Debug, Clone)]
 pub struct Delta {
@@ -154,18 +147,6 @@ impl Delta {
         }
         page.apply_delta(self)
     }
-}
-
-#[derive(Debug, thiserror::Error)]
-pub enum DeltaError {
-    #[error("Mask/payload size mismatch mask={mask_len} payload={payload_len}")]
-    SizeMismatch { mask_len: usize, payload_len: usize },
-
-    #[error("PageID mismatch: expected {expected:?}, found {found:?}")]
-    PageIDMismatch { expected: PageID, found: PageID },
-
-    #[error("Mask size mismatch: expected {expected}, found {found}")]
-    MaskSizeMismatch { expected: usize, found: usize },
 }
 
 fn now_ns() -> u64 {

@@ -4,25 +4,31 @@
 
 Module `mod`
 
-- `allocator :: { PageAllocator , PageAllocatorConfig , PageInfo , PageSnapshotData }`
 - `allocator_stats :: AllocatorStats`
-- `device :: DeviceRegistry`
-- `device_registry :: DeviceBufferRegistry`
 - `gpu_memory_pool :: { GPUMemoryPool , PoolStats }`
-- `host_device_sync :: HostDeviceSync`
-- `lockfree_allocator :: LockFreeAllocator`
 - `nccl_integration :: { NCCLContext , ncclRedOp_t , ncclDataType_t }`
+
+## MMSB/src/01_page/epoch.rs (01_page)
+
+Module `epoch`
+
+- `crate :: types :: { Epoch , EpochCell }`
 
 ## MMSB/src/01_page/mod.rs (01_page)
 
 Module `mod`
 
+- `allocator :: { PageAllocator , PageAllocatorConfig , PageInfo , PageSnapshotData }`
 - `checkpoint :: { load_checkpoint , write_checkpoint }`
-- `delta :: { Delta , DeltaError , DeltaID , Source }`
+- `crate :: types :: { PageID , PageLocation , PageError , Epoch , EpochCell , DeltaID , Source , DeltaError }`
+- `delta :: Delta`
 - `delta_merge :: merge_deltas`
 - `delta_validation :: validate_delta`
-- `epoch :: { Epoch , EpochCell }`
-- `page :: { Metadata , Page , PageError , PageID , PageLocation }`
+- `device :: DeviceRegistry`
+- `device_registry :: DeviceBufferRegistry`
+- `host_device_sync :: HostDeviceSync`
+- `lockfree_allocator :: LockFreeAllocator`
+- `page :: { Metadata , Page }`
 - `simd_mask :: generate_mask`
 - `tlog :: { LogSummary , TransactionLog , TransactionLogReader , summary }`
 
@@ -30,7 +36,9 @@ Module `mod`
 
 Module `mod`
 
-- `crate :: page :: *`
+- `delta_types :: { DeltaID , Source , DeltaError }`
+- `epoch_types :: { Epoch , EpochCell }`
+- `page_types :: { PageID , PageLocation , PageError }`
 
 ## MMSB/src/02_semiring/mod.rs (02_semiring)
 
