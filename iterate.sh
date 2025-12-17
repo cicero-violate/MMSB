@@ -37,3 +37,6 @@ echo "--------------------------------------------------"
 echo "Running Julia tests.."
 julia --startup-file=no --project=. test/week27_31_integration.jl
 echo "--------------------------------------------------"
+
+cargo run --bin phase6_bench --release
+cargo test --lib --no-default-features
