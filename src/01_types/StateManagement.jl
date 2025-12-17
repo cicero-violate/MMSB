@@ -6,7 +6,7 @@ Handles state reset with proper buffer clearing across modules.
 """
 module StateManagement
 
-using ..MMSBStateTypes: MMSBState, MMSBConfig
+using ..MMSBStateTypes: MMSBState, MMSBConfig, reset!
 
 export reset_state!, get_pooled_state!, return_to_pool!
 
@@ -18,7 +18,7 @@ Delegates to MMSBState.reset! and PropagationEngine.clear_propagation_buffers!
 """
 function reset_state!(state::MMSBState)
     # Reset core state
-    MMSBStateTypes.reset!(state)
+    reset!(state)
     
     # Clear propagation buffers if module is loaded
     # Access via parent module to avoid circular dependency
