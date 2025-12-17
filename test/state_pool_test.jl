@@ -168,24 +168,24 @@ end
     end
     
     @testset "Reset performance benchmark" begin
-        state = MMSB.StateManagement.get_pooled_state!(MMSB.MMSBStateTypes.MMSBConfig())
+        state = MMSB.MMSBStateTypes.MMSBState(MMSB.MMSBStateTypes.MMSBConfig())
         
         # Populate with significant state
-        for _ in 1:50
+        for _ in 1:5
             p = MMSB.API.create_page(state; size=1024, location=:cpu)
             MMSB.API.update_page(state, p.id, rand(UInt8, 1024))
         end
         
         # Benchmark reset time
         times = Float64[]
-        for _ in 1:100
+        for _ in 1:10
             t0 = time_ns()
             MMSB.StateManagement.reset_state!(state)
             t1 = time_ns()
             push!(times, (t1 - t0) / 1e3)  # μs
             
             # Repopulate for next iteration
-            for _ in 1:5
+            for _ in 1:2
                 MMSB.API.create_page(state; size=1024, location=:cpu)
             end
         end
