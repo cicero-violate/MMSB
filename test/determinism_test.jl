@@ -2,7 +2,7 @@
 
 using Test
 using MMSB.PageTypes: PageID, read_page
-using MMSB.MMSBStateTypes: MMSBState, get_page
+using MMSB.MMSBStateTypes: MMSBState, get_page, allocate_delta_id!
 using MMSB.PropagationEngine: register_passthrough_recompute!
 using MMSB.API: create_page, update_page
 
@@ -138,8 +138,8 @@ end
         state2 = MMSBState()
         
         # Same sequence of delta allocations
-        ids1 = [MMSB.MMSBStateTypes.allocate_delta_id!(state1) for _ in 1:100]
-        ids2 = [MMSB.MMSBStateTypes.allocate_delta_id!(state2) for _ in 1:100]
+        ids1 = [allocate_delta_id!(state1) for _ in 1:100]
+        ids2 = [allocate_delta_id!(state2) for _ in 1:100]
         
         @test ids1 == ids2
         @test all(ids1[i] < ids1[i+1] for i in 1:99)  # Monotonic
