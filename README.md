@@ -19,16 +19,10 @@ Self-optimizing GPU-accelerated memory system with autonomous reasoning and plan
 - **Instrumentation** — Julia compiler hooks for SSA/IR provenance
 - **Observability** — Built-in monitoring: allocator pressure, delta latency, propagation metrics
 
-## Architecture (13 Layers)
+## Architecture (6 Layers)
 
 ```
-Layer 12: Applications     → LLM Tools, World Simulation, Multi-Agent, Finance
-Layer 11: External Agents  → RL Agent, Symbolic Agent, Planning Agent, Hybrid
-Layer 10: Agent Interface  → Checkpoint API, Event Subscription, Agent Protocol
-Layer 9:  Planning Engine  → MCTS, Goal Decomposition, RL Planning, Enzyme Integration
-Layer 8:  Reasoning Engine → Structural Inference, Constraints, Logic, Patterns
-Layer 7:  Intention Engine → Goal Emergence, Preferences, Attractor States
-Layer 6:  Utility Engine   → Cost Functions, Telemetry, Entropy Measurement
+
 Layer 5:  Adaptive Memory  → Layout Optimization, Clustering, Graph Rewriting
 Layer 4:  Propagation      → CPU/GPU Message Passing, Sparse Propagation
 Layer 3:  DAG/Graph        → ShadowPageGraph, Dependency Tracking, Cycles
