@@ -1,9 +1,9 @@
 # Module Dependencies
 
-- Module files analyzed: 73
-- Unique imports captured: 264
-- Unique exports captured: 53
-- Submodule declarations captured: 80
+- Module files analyzed: 78
+- Unique imports captured: 282
+- Unique exports captured: 55
+- Submodule declarations captured: 82
 
 ## Per-file Summary
 
@@ -12,7 +12,7 @@
 - `MMSB/src/00_physical/mod.rs` → module `mod` (layer 00_physical, 0 imports / 3 exports / 3 submodules)
 - `MMSB/src/00_physical/nccl_integration.rs` → module `nccl_integration` (layer 00_physical, 3 imports / 0 exports / 0 submodules)
 - `MMSB/src/01_page/allocator.rs` → module `allocator` (layer 01_page, 10 imports / 0 exports / 1 submodules)
-- `MMSB/src/01_page/checkpoint.rs` → module `checkpoint` (layer 01_page, 5 imports / 0 exports / 0 submodules)
+- `MMSB/src/01_page/checkpoint.rs` → module `checkpoint` (layer 01_page, 6 imports / 0 exports / 0 submodules)
 - `MMSB/src/01_page/columnar_delta.rs` → module `columnar_delta` (layer 01_page, 7 imports / 0 exports / 1 submodules)
 - `MMSB/src/01_page/delta.rs` → module `delta` (layer 01_page, 3 imports / 0 exports / 0 submodules)
 - `MMSB/src/01_page/delta_merge.rs` → module `delta_merge` (layer 01_page, 2 imports / 0 exports / 0 submodules)
@@ -32,7 +32,8 @@
 - `MMSB/src/01_page/tlog_serialization.rs` → module `tlog_serialization` (layer 01_page, 4 imports / 0 exports / 0 submodules)
 - `MMSB/src/01_types/delta_types.rs` → module `delta_types` (layer 01_types, 2 imports / 0 exports / 0 submodules)
 - `MMSB/src/01_types/epoch_types.rs` → module `epoch_types` (layer 01_types, 1 imports / 0 exports / 0 submodules)
-- `MMSB/src/01_types/mod.rs` → module `mod` (layer 01_types, 0 imports / 3 exports / 3 submodules)
+- `MMSB/src/01_types/gc.rs` → module `gc` (layer 01_types, 1 imports / 0 exports / 0 submodules)
+- `MMSB/src/01_types/mod.rs` → module `mod` (layer 01_types, 0 imports / 4 exports / 4 submodules)
 - `MMSB/src/01_types/page_types.rs` → module `page_types` (layer 01_types, 2 imports / 0 exports / 0 submodules)
 - `MMSB/src/02_semiring/mod.rs` → module `mod` (layer 02_semiring, 0 imports / 4 exports / 4 submodules)
 - `MMSB/src/02_semiring/purity_validator.rs` → module `purity_validator` (layer 02_semiring, 5 imports / 0 exports / 1 submodules)
@@ -61,12 +62,13 @@
 - `MMSB/src/06_utility/cpu_features.rs` → module `cpu_features` (layer 06_utility, 1 imports / 0 exports / 0 submodules)
 - `MMSB/src/06_utility/invariant_checker.rs` → module `invariant_checker` (layer 06_utility, 8 imports / 0 exports / 1 submodules)
 - `MMSB/src/06_utility/memory_monitor.rs` → module `memory_monitor` (layer 06_utility, 11 imports / 0 exports / 1 submodules)
-- `MMSB/src/06_utility/mod.rs` → module `mod` (layer 06_utility, 0 imports / 5 exports / 5 submodules)
+- `MMSB/src/06_utility/mod.rs` → module `mod` (layer 06_utility, 0 imports / 6 exports / 5 submodules)
 - `MMSB/src/06_utility/provenance_tracker.rs` → module `provenance_tracker` (layer 06_utility, 7 imports / 0 exports / 1 submodules)
 - `MMSB/src/06_utility/telemetry.rs` → module `telemetry` (layer 06_utility, 3 imports / 0 exports / 1 submodules)
-- `MMSB/src/bin/phase6_bench.rs` → module `phase6_bench` (layer root, 9 imports / 0 exports / 0 submodules)
-- `MMSB/src/ffi.rs` → module `ffi` (layer root, 12 imports / 0 exports / 0 submodules)
-- `MMSB/src/lib.rs` → module `lib` (layer root, 0 imports / 1 exports / 9 submodules)
+- `MMSB/src/bin/phase6_bench.rs` → module `phase6_bench` (layer root, 10 imports / 0 exports / 0 submodules)
+- `MMSB/src/ffi.rs` → module `ffi` (layer root, 13 imports / 0 exports / 0 submodules)
+- `MMSB/src/lib.rs` → module `lib` (layer root, 0 imports / 1 exports / 10 submodules)
+- `MMSB/src/logging.rs` → module `logging` (layer root, 1 imports / 0 exports / 0 submodules)
 - `MMSB/tests/benchmark_01_replay.rs` → module `benchmark_01_replay` (layer root, 3 imports / 0 exports / 0 submodules)
 - `MMSB/tests/benchmark_02_integrity.rs` → module `benchmark_02_integrity` (layer root, 2 imports / 0 exports / 0 submodules)
 - `MMSB/tests/benchmark_03_graph.rs` → module `benchmark_03_graph` (layer root, 2 imports / 0 exports / 0 submodules)
@@ -79,6 +81,9 @@
 - `MMSB/tests/delta_validation.rs` → module `delta_validation` (layer root, 1 imports / 0 exports / 0 submodules)
 - `MMSB/tests/examples_basic.rs` → module `examples_basic` (layer root, 1 imports / 0 exports / 0 submodules)
 - `MMSB/tests/mmsb_tests.rs` → module `mmsb_tests` (layer root, 3 imports / 0 exports / 0 submodules)
+- `MMSB/tests/stress_memory.rs` → module `stress_memory` (layer root, 3 imports / 0 exports / 0 submodules)
+- `MMSB/tests/stress_stability.rs` → module `stress_stability` (layer root, 5 imports / 0 exports / 0 submodules)
+- `MMSB/tests/stress_throughput.rs` → module `stress_throughput` (layer root, 5 imports / 0 exports / 0 submodules)
 - `MMSB/tests/week27_31_integration.rs` → module `week27_31_integration` (layer root, 7 imports / 0 exports / 0 submodules)
 
 ## Detailed Files

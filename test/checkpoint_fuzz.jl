@@ -1,6 +1,5 @@
 using Test
-using .MMSB
-using .MMSB.PageTypes: read_page
+import MMSB
 
 function _checkpoint_fuzz_state(path_prefix::String=tempname())
     config = MMSB.MMSBStateTypes.MMSBConfig(tlog_path=path_prefix)
@@ -11,7 +10,7 @@ end
     state = _checkpoint_fuzz_state()
 
     # Create a few pages
-    pages = PageID[]
+    pages = MMSB.PageTypes.PageID[]
     for _ in 1:3
         p = MMSB.PageAllocator.create_cpu_page!(state, 128)
         push!(pages, p.id)
@@ -49,10 +48,10 @@ end
     GC.gc()
     rep = MMSB.ReplayEngine.replay_to_epoch(new_state, target_epoch)
 
-    # Structural sanity: all pages must exist and be readable
-    for pid in pages
-        pg = get(rep.pages, pid, nothing)
-        @test pg !== nothing
-        @test length(read_page(pg)) == 128
-    end
+   # Structural sanity: all pages must exist and be readable
+   for pid in pages
+       pg = get(rep.pages, pid, nothing)
+       @test pg !== nothing
+        @test length(MMSB.PageTypes.read_page(pg)) == 128
+   end
 end

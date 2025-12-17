@@ -403,6 +403,32 @@
   - `std::env::temp_dir`
   - `push`
 
+#### `ten_thousand_cycles_no_violations`
+
+- **File:** MMSB/tests/stress_stability.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `Arc::new`
+  - `PageAllocator::new`
+  - `PageAllocatorConfig::default`
+  - `expect`
+  - `allocate_raw`
+  - `PageID`
+  - `Some`
+  - `ShadowPageGraph::default`
+  - `DeviceBufferRegistry::default`
+  - `InvariantChecker::with_builtins`
+  - `Lcg::new`
+  - `SignalProbe::new`
+  - `apply_random_deltas`
+  - `mutate_graph`
+  - `step`
+  - `assert_within_bounds`
+  - `Some`
+  - `Some`
+  - `Some`
+  - `run`
+
 #### `test_allocator_cpu_gpu_latency`
 
 - **File:** MMSB/tests/week27_31_integration.rs:0

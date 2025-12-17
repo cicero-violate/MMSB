@@ -180,12 +180,15 @@
 ## File: MMSB/src/04_propagation/tick_orchestrator.rs
 
 - Layer(s): 04_propagation
-- Language coverage: Rust (8)
-- Element types: Function (4), Impl (1), Module (1), Struct (2)
-- Total elements: 8
+- Language coverage: Rust (11)
+- Element types: Function (4), Impl (3), Module (1), Struct (3)
+- Total elements: 11
 
 ### Elements
 
+- [Rust | Impl] `MemoryPressureHandler for impl MemoryPressureHandler for TestMemoryHandler { fn incremental_batch_pages (& self) -> usize { self . batch } fn run_gc (& self , _budget_pages : usize) -> Option < GCMetrics > { if ! self . collect { return None ; } Some (GCMetrics { reclaimed_pages : self . batch , reclaimed_bytes : self . batch * 4096 , duration : Duration :: from_millis (1) , }) } } . self_ty` (line 0, priv)
+- [Rust | Struct] `TestMemoryHandler` (line 0, priv)
+  - Signature: `struct TestMemoryHandler { batch : usize , collect : bool , }`
 - [Rust | Struct] `TickMetrics` (line 0, pub)
   - Signature: `# [derive (Debug , Clone)] pub struct TickMetrics { pub propagation : Duration , pub graph_validation : Duration , pu...`
 - [Rust | Struct] `TickOrchestrator` (line 0, pub)
@@ -193,10 +196,11 @@
 - [Rust | Function] `gc_invoked_when_threshold_low` (line 0, priv)
   - Signature: `# [test] fn gc_invoked_when_threshold_low () { let (orchestrator , _) = orchestrator (1) ; let deltas = vec ! [sample...`
   - Calls: orchestrator, unwrap, execute_tick
-- [Rust | Impl] `impl TickOrchestrator { pub fn new (throughput : ThroughputEngine , graph : Arc < ShadowPageGraph > , memory_monitor : Arc < MemoryMonitor > ,) -> Self { Self { throughput , graph , memory_monitor , tick_budget_ms : 16 , } } pub fn execute_tick (& self , deltas : Vec < Delta >) -> Result < TickMetrics , PageError > { let tick_start = Instant :: now () ; let throughput_metrics = self . throughput . process_parallel (deltas) ? ; let graph_report = { let validator = GraphValidator :: new (& self . graph) ; validator . detect_cycles () } ; let gc_metrics = self . memory_monitor . trigger_incremental_gc (self . memory_monitor . config () . incremental_batch_pages) ; let total = tick_start . elapsed () ; Ok (TickMetrics { propagation : throughput_metrics . duration , graph_validation : graph_report . duration , gc : gc_metrics . map (| m | m . duration) . unwrap_or_default () , total , throughput : throughput_metrics . throughput , gc_invoked : gc_metrics . is_some () , graph_has_cycle : graph_report . has_cycle , processed : throughput_metrics . processed , }) } pub fn budget_ms (& self) -> u64 { self . tick_budget_ms } } . self_ty` (line 0, priv)
+- [Rust | Impl] `impl TestMemoryHandler { fn new (batch : usize , collect : bool) -> Self { Self { batch , collect } } } . self_ty` (line 0, priv)
+- [Rust | Impl] `impl TickOrchestrator { pub fn new (throughput : ThroughputEngine , graph : Arc < ShadowPageGraph > , memory_monitor : Arc < dyn MemoryPressureHandler > ,) -> Self { Self { throughput , graph , memory_monitor , tick_budget_ms : 16 , } } pub fn execute_tick (& self , deltas : Vec < Delta >) -> Result < TickMetrics , PageError > { let tick_start = Instant :: now () ; let throughput_metrics = self . throughput . process_parallel (deltas) ? ; let graph_report = { let validator = GraphValidator :: new (& self . graph) ; validator . detect_cycles () } ; let gc_metrics = self . memory_monitor . run_gc (self . memory_monitor . incremental_batch_pages ()) ; let total = tick_start . elapsed () ; Ok (TickMetrics { propagation : throughput_metrics . duration , graph_validation : graph_report . duration , gc : gc_metrics . map (| m | m . duration) . unwrap_or_default () , total , throughput : throughput_metrics . throughput , gc_invoked : gc_metrics . is_some () , graph_has_cycle : graph_report . has_cycle , processed : throughput_metrics . processed , }) } pub fn budget_ms (& self) -> u64 { self . tick_budget_ms } } . self_ty` (line 0, priv)
 - [Rust | Function] `orchestrator` (line 0, priv)
   - Signature: `fn orchestrator (threshold : usize) -> (TickOrchestrator , Arc < PageAllocator >) { let allocator = Arc :: new (PageA...`
-  - Calls: Arc::new, PageAllocator::new, PageAllocatorConfig::default, unwrap, allocate_raw, PageID, Some, ThroughputEngine::new, Arc::clone, Arc::new, ShadowPageGraph::default, add_edge, PageID, PageID, Arc::new, MemoryMonitor::with_config, Arc::clone, MemoryMonitorConfig::default, TickOrchestrator::new
+  - Calls: Arc::new, PageAllocator::new, PageAllocatorConfig::default, unwrap, allocate_raw, PageID, Some, ThroughputEngine::new, Arc::clone, Arc::new, ShadowPageGraph::default, add_edge, PageID, PageID, Arc::new, TestMemoryHandler::new, TickOrchestrator::new
 - [Rust | Function] `sample_delta` (line 0, priv)
   - Signature: `fn sample_delta (id : u64 , page : u64 , value : u8) -> Delta { Delta { delta_id : DeltaID (id) , page_id : PageID (p...`
   - Calls: DeltaID, PageID, Epoch, Source

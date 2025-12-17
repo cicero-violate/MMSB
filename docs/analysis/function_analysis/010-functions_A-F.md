@@ -420,6 +420,38 @@
 
 ### Rust Functions
 
+#### `apply_random_deltas`
+
+- **File:** MMSB/tests/stress_stability.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `PageID`
+  - `next_u64`
+  - `max`
+  - `next_in_range`
+  - `next_in_range`
+  - `collect`
+  - `map`
+  - `iter`
+  - `next_u32`
+  - `DeltaID`
+  - `Epoch`
+  - `Source`
+  - `String::new`
+  - `wrapping_add`
+  - `expect`
+  - `acquire_page`
+  - `expect`
+  - `apply_delta`
+
+#### `assert_throughput`
+
+- **File:** MMSB/tests/stress_throughput.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `as_secs_f64`
+  - `abs`
+
 #### `build_deltas`
 
 - **File:** MMSB/src/bin/phase6_bench.rs:0
@@ -442,6 +474,18 @@
   - `add_edge`
   - `PageID`
   - `PageID`
+
+#### `build_noop_delta`
+
+- **File:** MMSB/tests/stress_throughput.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `DeltaID`
+  - `Epoch`
+  - `Vec::new`
+  - `Vec::new`
+  - `Source`
+  - `String::new`
 
 #### `convert_location`
 
@@ -471,6 +515,15 @@
   - `Epoch`
   - `Source`
   - `into`
+
+#### `diagnostics_enabled`
+
+- **File:** MMSB/src/logging.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `OnceLock::new`
+  - `get_or_init`
+  - `std::env::var`
 
 #### `divergence`
 
@@ -512,4 +565,27 @@
   - `allocate_raw`
   - `Some`
   - `free`
+
+#### `fragmentation_probe_remains_stable`
+
+- **File:** MMSB/tests/stress_memory.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `Arc::new`
+  - `PageAllocator::new`
+  - `PageAllocatorConfig::default`
+  - `MemoryMonitor::with_config`
+  - `Arc::clone`
+  - `Vec::new`
+  - `expect`
+  - `allocate_raw`
+  - `PageID`
+  - `Some`
+  - `push`
+  - `PageID`
+  - `len`
+  - `pop`
+  - `free`
+  - `snapshot`
+  - `snapshot`
 

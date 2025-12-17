@@ -1,7 +1,7 @@
 use super::throughput_engine::ThroughputEngine;
 use crate::dag::{GraphValidator, ShadowPageGraph};
 use crate::page::{Delta, PageError};
-use crate::utility::MemoryMonitor;
+use crate::types::{MemoryPressureHandler};
 use std::sync::Arc;
 use std::time::{Duration, Instant};
 
@@ -20,7 +20,7 @@ pub struct TickMetrics {
 pub struct TickOrchestrator {
     throughput: ThroughputEngine,
     graph: Arc<ShadowPageGraph>,
-    memory_monitor: Arc<MemoryMonitor>,
+    memory_monitor: Arc<dyn MemoryPressureHandler>,
     tick_budget_ms: u64,
 }
 
@@ -28,7 +28,7 @@ impl TickOrchestrator {
     pub fn new(
         throughput: ThroughputEngine,
         graph: Arc<ShadowPageGraph>,
-        memory_monitor: Arc<MemoryMonitor>,
+        memory_monitor: Arc<dyn MemoryPressureHandler>,
     ) -> Self {
         Self {
             throughput,
@@ -49,7 +49,7 @@ impl TickOrchestrator {
 
         let gc_metrics = self
             .memory_monitor
-            .trigger_incremental_gc(self.memory_monitor.config().incremental_batch_pages);
+            .run_gc(self.memory_monitor.incremental_batch_pages());
 
         let total = tick_start.elapsed();
         Ok(TickMetrics {
@@ -74,10 +74,38 @@ mod tests {
     use super::TickOrchestrator;
     use crate::dag::{EdgeType, ShadowPageGraph};
     use crate::page::{Delta, DeltaID, PageAllocator, PageAllocatorConfig, PageID, PageLocation, Source};
-    use crate::types::Epoch;
-    use crate::utility::{MemoryMonitor, MemoryMonitorConfig};
+    use crate::types::{Epoch, GCMetrics, MemoryPressureHandler};
     use super::ThroughputEngine;
     use std::sync::Arc;
+    use std::time::Duration;
+
+    struct TestMemoryHandler {
+        batch: usize,
+        collect: bool,
+    }
+
+    impl TestMemoryHandler {
+        fn new(batch: usize, collect: bool) -> Self {
+            Self { batch, collect }
+        }
+    }
+
+    impl MemoryPressureHandler for TestMemoryHandler {
+        fn incremental_batch_pages(&self) -> usize {
+            self.batch
+        }
+
+        fn run_gc(&self, _budget_pages: usize) -> Option<GCMetrics> {
+            if !self.collect {
+                return None;
+            }
+            Some(GCMetrics {
+                reclaimed_pages: self.batch,
+                reclaimed_bytes: self.batch * 4096,
+                duration: Duration::from_millis(1),
+            })
+        }
+    }
 
     fn sample_delta(id: u64, page: u64, value: u8) -> Delta {
         Delta {
@@ -103,15 +131,8 @@ mod tests {
         let throughput = ThroughputEngine::new(Arc::clone(&allocator), 2, 64);
         let graph = Arc::new(ShadowPageGraph::default());
         graph.add_edge(PageID(1), PageID(2), EdgeType::Data);
-        let cold_limit = if threshold == usize::MAX { u64::MAX } else { 0 };
-        let memory = Arc::new(MemoryMonitor::with_config(
-            Arc::clone(&allocator),
-            MemoryMonitorConfig {
-                gc_threshold_bytes: threshold,
-                cold_page_age_limit: cold_limit,
-                ..MemoryMonitorConfig::default()
-            },
-        ));
+        let memory: Arc<dyn MemoryPressureHandler> =
+            Arc::new(TestMemoryHandler::new(32, threshold != usize::MAX));
         (
             TickOrchestrator::new(throughput, graph, memory),
             allocator,

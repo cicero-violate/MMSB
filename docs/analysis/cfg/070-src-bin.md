@@ -64,7 +64,7 @@ flowchart TD
     main_8["let throughput_engine = ThroughputEngine :: new (Arc :: clone (& allocator) , worker_count , 1024)"]
     main_9["let throughput_metrics = throughput_engine . process_parallel (deltas . clone ()) ?"]
     main_10["let graph = Arc :: new (build_graph (page_count))"]
-    main_11["let memory_monitor = Arc :: new (MemoryMonitor :: with_config (Arc :: clone (& allocator) , Memory..."]
+    main_11["let memory_monitor : Arc < dyn MemoryPressureHandler > = Arc :: new (MemoryMonitor :: with_config (Arc :: clone (& allocator) , Memory..."]
     main_12["let tick_throughput = ThroughputEngine :: new (Arc :: clone (& allocator) , worker_count , 1024)"]
     main_13["let orchestrator = TickOrchestrator :: new (tick_throughput , Arc :: clone (& graph) , memory_mo..."]
     main_14["let tick_metrics = orchestrator . execute_tick (deltas) ?"]

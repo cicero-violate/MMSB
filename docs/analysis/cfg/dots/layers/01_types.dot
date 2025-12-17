@@ -43,7 +43,7 @@ digraph LayerCFG {
 
     f3_n326 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
     f3_n327 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
-    f3_n328 [label="BB1 L138", shape=box, fillcolor=lightblue, style="filled"];
+    f3_n328 [label="BB1 L136", shape=box, fillcolor=lightblue, style="filled"];
 
     f3_n326 -> f3_n328;
     f3_n328 -> f3_n327;

@@ -6,10 +6,10 @@ This document shows the **interprocedural call graph** - which functions call wh
 
 ## Call Graph Statistics
 
-- Total functions: 192
-- Total function calls: 169
-- Maximum call depth: 3
-- Leaf functions (no outgoing calls): 114
+- Total functions: 209
+- Total function calls: 188
+- Maximum call depth: 4
+- Leaf functions (no outgoing calls): 123
 
 ## Call Graph Visualization
 
@@ -74,6 +74,8 @@ graph TD
     MMSB_src_ffi_rs__mmsb_semiring_boolean_fold_add["MMSB/src/ffi.rs::mmsb_semiring_boolean_fold_add"]
     MMSB_src_ffi_rs__mmsb_semiring_boolean_fold_mul["MMSB/src/ffi.rs::mmsb_semiring_boolean_fold_mul"]
     MMSB_src_ffi_rs__mmsb_semiring_boolean_accumulate["MMSB/src/ffi.rs::mmsb_semiring_boolean_accumulate"]
+    MMSB_src_logging_rs__diagnostics_enabled["MMSB/src/logging.rs::diagnostics_enabled"]
+    MMSB_src_logging_rs__is_enabled["MMSB/src/logging.rs::is_enabled"]
     MMSB_tests_benchmark_01_replay_rs__temp_log_path["MMSB/tests/benchmark_01_replay.rs::temp_log_path"]
     MMSB_tests_benchmark_01_replay_rs__replay_validator_divergence_under_threshold["MMSB/tests/benchmark_01_replay.rs::replay_validator_divergence_under_threshold"]
     MMSB_tests_benchmark_02_integrity_rs__integrity_checker_accepts_valid_delta["MMSB/tests/benchmark_02_integrity.rs::integrity_checker_accepts_valid_delta"]
@@ -105,6 +107,21 @@ graph TD
     MMSB_tests_mmsb_tests_rs__test_sparse_delta_application["MMSB/tests/mmsb_tests.rs::test_sparse_delta_application"]
     MMSB_tests_mmsb_tests_rs__test_dense_delta_application["MMSB/tests/mmsb_tests.rs::test_dense_delta_application"]
     MMSB_tests_mmsb_tests_rs__test_api_public_interface["MMSB/tests/mmsb_tests.rs::test_api_public_interface"]
+    MMSB_tests_stress_memory_rs__sampled_allocation_projects_under_budget["MMSB/tests/stress_memory.rs::sampled_allocation_projects_under_budget"]
+    MMSB_tests_stress_memory_rs__incremental_gc_latency_stays_within_budget["MMSB/tests/stress_memory.rs::incremental_gc_latency_stays_within_budget"]
+    MMSB_tests_stress_memory_rs__fragmentation_probe_remains_stable["MMSB/tests/stress_memory.rs::fragmentation_probe_remains_stable"]
+    MMSB_tests_stress_memory_rs__one_million_pages_under_1gb_full_run["MMSB/tests/stress_memory.rs::one_million_pages_under_1gb_full_run"]
+    MMSB_tests_stress_stability_rs__ten_thousand_cycles_no_violations["MMSB/tests/stress_stability.rs::ten_thousand_cycles_no_violations"]
+    MMSB_tests_stress_stability_rs__apply_random_deltas["MMSB/tests/stress_stability.rs::apply_random_deltas"]
+    MMSB_tests_stress_stability_rs__mutate_graph["MMSB/tests/stress_stability.rs::mutate_graph"]
+    MMSB_tests_stress_stability_rs__random_edge_type["MMSB/tests/stress_stability.rs::random_edge_type"]
+    MMSB_tests_stress_throughput_rs__single_thread_1m_deltas_per_sec["MMSB/tests/stress_throughput.rs::single_thread_1m_deltas_per_sec"]
+    MMSB_tests_stress_throughput_rs__multi_thread_10m_deltas_per_sec["MMSB/tests/stress_throughput.rs::multi_thread_10m_deltas_per_sec"]
+    MMSB_tests_stress_throughput_rs__prepare_allocator["MMSB/tests/stress_throughput.rs::prepare_allocator"]
+    MMSB_tests_stress_throughput_rs__run_throughput_benchmark["MMSB/tests/stress_throughput.rs::run_throughput_benchmark"]
+    MMSB_tests_stress_throughput_rs__generate_delta_batch["MMSB/tests/stress_throughput.rs::generate_delta_batch"]
+    MMSB_tests_stress_throughput_rs__build_noop_delta["MMSB/tests/stress_throughput.rs::build_noop_delta"]
+    MMSB_tests_stress_throughput_rs__assert_throughput["MMSB/tests/stress_throughput.rs::assert_throughput"]
     MMSB_tests_week27_31_integration_rs__test_allocator_cpu_gpu_latency["MMSB/tests/week27_31_integration.rs::test_allocator_cpu_gpu_latency"]
     MMSB_tests_week27_31_integration_rs__test_semiring_operations_tropical["MMSB/tests/week27_31_integration.rs::test_semiring_operations_tropical"]
     MMSB_tests_week27_31_integration_rs__test_delta_merge_simd["MMSB/tests/week27_31_integration.rs::test_delta_merge_simd"]
@@ -164,6 +181,26 @@ graph TD
     MMSB_src_03_dag_graph_validator_rs__detects_cycle["MMSB/src/03_dag/graph_validator.rs::detects_cycle"]
     MMSB_src_03_dag_graph_validator_rs__per_page_validation["MMSB/src/03_dag/graph_validator.rs::per_page_validation"]
     MMSB_src_03_dag_shadow_graph_traversal_rs__topological_sort["MMSB/src/03_dag/shadow_graph_traversal.rs::topological_sort"]
+    MMSB_src_04_propagation_propagation_fastpath_rs__passthrough["MMSB/src/04_propagation/propagation_fastpath.rs::passthrough"]
+    MMSB_src_04_propagation_propagation_queue_rs__command["MMSB/src/04_propagation/propagation_queue.rs::command"]
+    MMSB_src_04_propagation_propagation_queue_rs__queue_roundtrip["MMSB/src/04_propagation/propagation_queue.rs::queue_roundtrip"]
+    MMSB_src_04_propagation_propagation_queue_rs__drain_batch_respects_bounds["MMSB/src/04_propagation/propagation_queue.rs::drain_batch_respects_bounds"]
+    MMSB_src_04_propagation_ring_buffer_rs__test_basic_push_pop["MMSB/src/04_propagation/ring_buffer.rs::test_basic_push_pop"]
+    MMSB_src_04_propagation_ring_buffer_rs__test_wraparound_behavior["MMSB/src/04_propagation/ring_buffer.rs::test_wraparound_behavior"]
+    MMSB_src_04_propagation_ring_buffer_rs__test_concurrent_producers_consumers["MMSB/src/04_propagation/ring_buffer.rs::test_concurrent_producers_consumers"]
+    MMSB_src_04_propagation_sparse_message_passing_rs__enqueue_sparse["MMSB/src/04_propagation/sparse_message_passing.rs::enqueue_sparse"]
+    MMSB_src_04_propagation_throughput_engine_rs__partition_by_page["MMSB/src/04_propagation/throughput_engine.rs::partition_by_page"]
+    MMSB_src_04_propagation_throughput_engine_rs__chunk_partitions["MMSB/src/04_propagation/throughput_engine.rs::chunk_partitions"]
+    MMSB_src_04_propagation_throughput_engine_rs__process_chunk["MMSB/src/04_propagation/throughput_engine.rs::process_chunk"]
+    MMSB_src_04_propagation_throughput_engine_rs__delta_error_to_page["MMSB/src/04_propagation/throughput_engine.rs::delta_error_to_page"]
+    MMSB_src_04_propagation_throughput_engine_rs__make_delta["MMSB/src/04_propagation/throughput_engine.rs::make_delta"]
+    MMSB_src_04_propagation_throughput_engine_rs__applies_batches_in_parallel["MMSB/src/04_propagation/throughput_engine.rs::applies_batches_in_parallel"]
+    MMSB_src_04_propagation_throughput_engine_rs__merges_multiple_deltas_per_page["MMSB/src/04_propagation/throughput_engine.rs::merges_multiple_deltas_per_page"]
+    MMSB_src_04_propagation_throughput_engine_rs__reports_nonzero_throughput_for_large_batches["MMSB/src/04_propagation/throughput_engine.rs::reports_nonzero_throughput_for_large_batches"]
+    MMSB_src_04_propagation_tick_orchestrator_rs__sample_delta["MMSB/src/04_propagation/tick_orchestrator.rs::sample_delta"]
+    MMSB_src_04_propagation_tick_orchestrator_rs__orchestrator["MMSB/src/04_propagation/tick_orchestrator.rs::orchestrator"]
+    MMSB_src_04_propagation_tick_orchestrator_rs__tick_metrics_capture_all_phases["MMSB/src/04_propagation/tick_orchestrator.rs::tick_metrics_capture_all_phases"]
+    MMSB_src_04_propagation_tick_orchestrator_rs__gc_invoked_when_threshold_low["MMSB/src/04_propagation/tick_orchestrator.rs::gc_invoked_when_threshold_low"]
     MMSB_src_05_adaptive_locality_optimizer_rs__test_locality_optimizer["MMSB/src/05_adaptive/locality_optimizer.rs::test_locality_optimizer"]
     MMSB_src_05_adaptive_memory_layout_rs__test_memory_layout_creation["MMSB/src/05_adaptive/memory_layout.rs::test_memory_layout_creation"]
     MMSB_src_05_adaptive_memory_layout_rs__test_locality_cost_empty["MMSB/src/05_adaptive/memory_layout.rs::test_locality_cost_empty"]
@@ -187,26 +224,6 @@ graph TD
     MMSB_src_06_utility_telemetry_rs__test_telemetry_basic["MMSB/src/06_utility/telemetry.rs::test_telemetry_basic"]
     MMSB_src_06_utility_telemetry_rs__test_cache_hit_rate["MMSB/src/06_utility/telemetry.rs::test_cache_hit_rate"]
     MMSB_src_06_utility_telemetry_rs__test_reset["MMSB/src/06_utility/telemetry.rs::test_reset"]
-    MMSB_src_04_propagation_propagation_fastpath_rs__passthrough["MMSB/src/04_propagation/propagation_fastpath.rs::passthrough"]
-    MMSB_src_04_propagation_propagation_queue_rs__command["MMSB/src/04_propagation/propagation_queue.rs::command"]
-    MMSB_src_04_propagation_propagation_queue_rs__queue_roundtrip["MMSB/src/04_propagation/propagation_queue.rs::queue_roundtrip"]
-    MMSB_src_04_propagation_propagation_queue_rs__drain_batch_respects_bounds["MMSB/src/04_propagation/propagation_queue.rs::drain_batch_respects_bounds"]
-    MMSB_src_04_propagation_ring_buffer_rs__test_basic_push_pop["MMSB/src/04_propagation/ring_buffer.rs::test_basic_push_pop"]
-    MMSB_src_04_propagation_ring_buffer_rs__test_wraparound_behavior["MMSB/src/04_propagation/ring_buffer.rs::test_wraparound_behavior"]
-    MMSB_src_04_propagation_ring_buffer_rs__test_concurrent_producers_consumers["MMSB/src/04_propagation/ring_buffer.rs::test_concurrent_producers_consumers"]
-    MMSB_src_04_propagation_sparse_message_passing_rs__enqueue_sparse["MMSB/src/04_propagation/sparse_message_passing.rs::enqueue_sparse"]
-    MMSB_src_04_propagation_throughput_engine_rs__partition_by_page["MMSB/src/04_propagation/throughput_engine.rs::partition_by_page"]
-    MMSB_src_04_propagation_throughput_engine_rs__chunk_partitions["MMSB/src/04_propagation/throughput_engine.rs::chunk_partitions"]
-    MMSB_src_04_propagation_throughput_engine_rs__process_chunk["MMSB/src/04_propagation/throughput_engine.rs::process_chunk"]
-    MMSB_src_04_propagation_throughput_engine_rs__delta_error_to_page["MMSB/src/04_propagation/throughput_engine.rs::delta_error_to_page"]
-    MMSB_src_04_propagation_throughput_engine_rs__make_delta["MMSB/src/04_propagation/throughput_engine.rs::make_delta"]
-    MMSB_src_04_propagation_throughput_engine_rs__applies_batches_in_parallel["MMSB/src/04_propagation/throughput_engine.rs::applies_batches_in_parallel"]
-    MMSB_src_04_propagation_throughput_engine_rs__merges_multiple_deltas_per_page["MMSB/src/04_propagation/throughput_engine.rs::merges_multiple_deltas_per_page"]
-    MMSB_src_04_propagation_throughput_engine_rs__reports_nonzero_throughput_for_large_batches["MMSB/src/04_propagation/throughput_engine.rs::reports_nonzero_throughput_for_large_batches"]
-    MMSB_src_04_propagation_tick_orchestrator_rs__sample_delta["MMSB/src/04_propagation/tick_orchestrator.rs::sample_delta"]
-    MMSB_src_04_propagation_tick_orchestrator_rs__orchestrator["MMSB/src/04_propagation/tick_orchestrator.rs::orchestrator"]
-    MMSB_src_04_propagation_tick_orchestrator_rs__tick_metrics_capture_all_phases["MMSB/src/04_propagation/tick_orchestrator.rs::tick_metrics_capture_all_phases"]
-    MMSB_src_04_propagation_tick_orchestrator_rs__gc_invoked_when_threshold_low["MMSB/src/04_propagation/tick_orchestrator.rs::gc_invoked_when_threshold_low"]
     MMSB_src_bin_phase6_bench_rs__main --> MMSB_src_bin_phase6_bench_rs__build_deltas
     MMSB_src_bin_phase6_bench_rs__main --> MMSB_src_bin_phase6_bench_rs__build_graph
     MMSB_src_bin_phase6_bench_rs__main --> MMSB_src_bin_phase6_bench_rs__write_report
@@ -290,6 +307,7 @@ graph TD
     MMSB_src_ffi_rs__mmsb_semiring_boolean_fold_mul --> MMSB_src_ffi_rs__slice_from_ptr
     MMSB_src_ffi_rs__mmsb_semiring_boolean_fold_mul --> MMSB_src_02_semiring_semiring_ops_rs__fold_mul
     MMSB_src_ffi_rs__mmsb_semiring_boolean_accumulate --> MMSB_src_02_semiring_semiring_ops_rs__accumulate
+    MMSB_src_logging_rs__is_enabled --> MMSB_src_logging_rs__diagnostics_enabled
     MMSB_tests_benchmark_01_replay_rs__replay_validator_divergence_under_threshold --> MMSB_tests_benchmark_01_replay_rs__temp_log_path
     MMSB_tests_benchmark_01_replay_rs__replay_validator_divergence_under_threshold --> MMSB_src_01_page_replay_validator_rs__temp_log_path
     MMSB_tests_benchmark_01_replay_rs__replay_validator_divergence_under_threshold --> MMSB_src_06_utility_memory_monitor_rs__allocator
@@ -317,6 +335,24 @@ graph TD
     MMSB_tests_mmsb_tests_rs__test_sparse_delta_application --> MMSB_src_01_page_integrity_checker_rs__delta
     MMSB_tests_mmsb_tests_rs__test_dense_delta_application --> MMSB_tests_benchmark_06_tick_latency_rs__delta
     MMSB_tests_mmsb_tests_rs__test_dense_delta_application --> MMSB_src_01_page_integrity_checker_rs__delta
+    MMSB_tests_stress_stability_rs__ten_thousand_cycles_no_violations --> MMSB_tests_stress_stability_rs__apply_random_deltas
+    MMSB_tests_stress_stability_rs__ten_thousand_cycles_no_violations --> MMSB_tests_stress_stability_rs__mutate_graph
+    MMSB_tests_stress_stability_rs__apply_random_deltas --> MMSB_src_01_page_integrity_checker_rs__page
+    MMSB_tests_stress_stability_rs__apply_random_deltas --> MMSB_tests_benchmark_06_tick_latency_rs__delta
+    MMSB_tests_stress_stability_rs__apply_random_deltas --> MMSB_src_01_page_integrity_checker_rs__delta
+    MMSB_tests_stress_stability_rs__mutate_graph --> MMSB_tests_stress_stability_rs__random_edge_type
+    MMSB_tests_stress_throughput_rs__single_thread_1m_deltas_per_sec --> MMSB_tests_stress_throughput_rs__prepare_allocator
+    MMSB_tests_stress_throughput_rs__single_thread_1m_deltas_per_sec --> MMSB_src_06_utility_memory_monitor_rs__allocator
+    MMSB_tests_stress_throughput_rs__single_thread_1m_deltas_per_sec --> MMSB_tests_stress_throughput_rs__run_throughput_benchmark
+    MMSB_tests_stress_throughput_rs__multi_thread_10m_deltas_per_sec --> MMSB_tests_stress_throughput_rs__prepare_allocator
+    MMSB_tests_stress_throughput_rs__multi_thread_10m_deltas_per_sec --> MMSB_src_06_utility_memory_monitor_rs__allocator
+    MMSB_tests_stress_throughput_rs__multi_thread_10m_deltas_per_sec --> MMSB_tests_stress_throughput_rs__run_throughput_benchmark
+    MMSB_tests_stress_throughput_rs__run_throughput_benchmark --> MMSB_tests_stress_throughput_rs__generate_delta_batch
+    MMSB_tests_stress_throughput_rs__run_throughput_benchmark --> MMSB_tests_stress_throughput_rs__assert_throughput
+    MMSB_tests_stress_throughput_rs__run_throughput_benchmark --> MMSB_tests_stress_throughput_rs__assert_throughput
+    MMSB_tests_stress_throughput_rs__generate_delta_batch --> MMSB_tests_benchmark_06_tick_latency_rs__delta
+    MMSB_tests_stress_throughput_rs__generate_delta_batch --> MMSB_tests_stress_throughput_rs__build_noop_delta
+    MMSB_tests_stress_throughput_rs__generate_delta_batch --> MMSB_src_01_page_integrity_checker_rs__delta
     MMSB_tests_week27_31_integration_rs__test_delta_merge_simd --> MMSB_src_01_page_delta_merge_rs__merge_deltas
     MMSB_src_01_page_allocator_rs__test_checkpoint_roundtrip_in_memory --> MMSB_tests_benchmark_06_tick_latency_rs__delta
     MMSB_src_01_page_allocator_rs__test_checkpoint_roundtrip_in_memory --> MMSB_src_01_page_integrity_checker_rs__delta
@@ -343,6 +379,22 @@ graph TD
     MMSB_src_03_dag_graph_validator_rs__strong_connect --> MMSB_src_03_dag_graph_validator_rs__strong_connect
     MMSB_src_03_dag_graph_validator_rs__strong_connect --> MMSB_src_03_dag_graph_validator_rs__is_self_loop
     MMSB_src_03_dag_graph_validator_rs__per_page_validation --> MMSB_src_01_page_integrity_checker_rs__page
+    MMSB_src_04_propagation_propagation_queue_rs__queue_roundtrip --> MMSB_src_04_propagation_propagation_queue_rs__command
+    MMSB_src_04_propagation_propagation_queue_rs__drain_batch_respects_bounds --> MMSB_src_04_propagation_propagation_queue_rs__command
+    MMSB_src_04_propagation_throughput_engine_rs__process_chunk --> MMSB_src_01_page_integrity_checker_rs__page
+    MMSB_src_04_propagation_throughput_engine_rs__process_chunk --> MMSB_src_01_page_delta_merge_rs__merge_deltas
+    MMSB_src_04_propagation_throughput_engine_rs__process_chunk --> MMSB_tests_benchmark_06_tick_latency_rs__delta
+    MMSB_src_04_propagation_throughput_engine_rs__process_chunk --> MMSB_src_01_page_integrity_checker_rs__delta
+    MMSB_src_04_propagation_throughput_engine_rs__applies_batches_in_parallel --> MMSB_src_01_page_integrity_checker_rs__page
+    MMSB_src_04_propagation_throughput_engine_rs__applies_batches_in_parallel --> MMSB_src_01_page_integrity_checker_rs__page
+    MMSB_src_04_propagation_throughput_engine_rs__merges_multiple_deltas_per_page --> MMSB_src_01_page_integrity_checker_rs__page
+    MMSB_src_04_propagation_throughput_engine_rs__reports_nonzero_throughput_for_large_batches --> MMSB_tests_benchmark_05_throughput_rs__make_delta
+    MMSB_src_04_propagation_throughput_engine_rs__reports_nonzero_throughput_for_large_batches --> MMSB_tests_benchmark_06_tick_latency_rs__delta
+    MMSB_src_04_propagation_throughput_engine_rs__reports_nonzero_throughput_for_large_batches --> MMSB_src_01_page_columnar_delta_rs__make_delta
+    MMSB_src_04_propagation_throughput_engine_rs__reports_nonzero_throughput_for_large_batches --> MMSB_src_01_page_integrity_checker_rs__delta
+    MMSB_src_04_propagation_throughput_engine_rs__reports_nonzero_throughput_for_large_batches --> MMSB_src_04_propagation_throughput_engine_rs__make_delta
+    MMSB_src_04_propagation_tick_orchestrator_rs__tick_metrics_capture_all_phases --> MMSB_src_04_propagation_tick_orchestrator_rs__orchestrator
+    MMSB_src_04_propagation_tick_orchestrator_rs__gc_invoked_when_threshold_low --> MMSB_src_04_propagation_tick_orchestrator_rs__orchestrator
     MMSB_src_06_utility_invariant_checker_rs__validate_metadata_blob --> MMSB_src_01_page_page_rs__read_u32
     MMSB_src_06_utility_invariant_checker_rs__validate_metadata_blob --> MMSB_src_06_utility_invariant_checker_rs__read_u32
     MMSB_src_06_utility_invariant_checker_rs__validate_metadata_blob --> MMSB_src_01_page_page_rs__read_u32
@@ -360,20 +412,4 @@ graph TD
     MMSB_src_06_utility_memory_monitor_rs__incremental_gc_reclaims_pages_under_budget --> MMSB_src_06_utility_memory_monitor_rs__allocator
     MMSB_src_06_utility_memory_monitor_rs__snapshot_reflects_allocator_state --> MMSB_src_06_utility_memory_monitor_rs__allocator
     MMSB_src_06_utility_memory_monitor_rs__gc_trigger_depends_on_threshold --> MMSB_src_06_utility_memory_monitor_rs__allocator
-    MMSB_src_04_propagation_propagation_queue_rs__queue_roundtrip --> MMSB_src_04_propagation_propagation_queue_rs__command
-    MMSB_src_04_propagation_propagation_queue_rs__drain_batch_respects_bounds --> MMSB_src_04_propagation_propagation_queue_rs__command
-    MMSB_src_04_propagation_throughput_engine_rs__process_chunk --> MMSB_src_01_page_integrity_checker_rs__page
-    MMSB_src_04_propagation_throughput_engine_rs__process_chunk --> MMSB_src_01_page_delta_merge_rs__merge_deltas
-    MMSB_src_04_propagation_throughput_engine_rs__process_chunk --> MMSB_tests_benchmark_06_tick_latency_rs__delta
-    MMSB_src_04_propagation_throughput_engine_rs__process_chunk --> MMSB_src_01_page_integrity_checker_rs__delta
-    MMSB_src_04_propagation_throughput_engine_rs__applies_batches_in_parallel --> MMSB_src_01_page_integrity_checker_rs__page
-    MMSB_src_04_propagation_throughput_engine_rs__applies_batches_in_parallel --> MMSB_src_01_page_integrity_checker_rs__page
-    MMSB_src_04_propagation_throughput_engine_rs__merges_multiple_deltas_per_page --> MMSB_src_01_page_integrity_checker_rs__page
-    MMSB_src_04_propagation_throughput_engine_rs__reports_nonzero_throughput_for_large_batches --> MMSB_tests_benchmark_05_throughput_rs__make_delta
-    MMSB_src_04_propagation_throughput_engine_rs__reports_nonzero_throughput_for_large_batches --> MMSB_tests_benchmark_06_tick_latency_rs__delta
-    MMSB_src_04_propagation_throughput_engine_rs__reports_nonzero_throughput_for_large_batches --> MMSB_src_01_page_columnar_delta_rs__make_delta
-    MMSB_src_04_propagation_throughput_engine_rs__reports_nonzero_throughput_for_large_batches --> MMSB_src_01_page_integrity_checker_rs__delta
-    MMSB_src_04_propagation_throughput_engine_rs__reports_nonzero_throughput_for_large_batches --> MMSB_src_04_propagation_throughput_engine_rs__make_delta
-    MMSB_src_04_propagation_tick_orchestrator_rs__tick_metrics_capture_all_phases --> MMSB_src_04_propagation_tick_orchestrator_rs__orchestrator
-    MMSB_src_04_propagation_tick_orchestrator_rs__gc_invoked_when_threshold_low --> MMSB_src_04_propagation_tick_orchestrator_rs__orchestrator
 ```

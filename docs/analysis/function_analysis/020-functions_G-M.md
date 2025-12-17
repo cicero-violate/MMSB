@@ -287,6 +287,16 @@
 
 ### Rust Functions
 
+#### `generate_delta_batch`
+
+- **File:** MMSB/tests/stress_throughput.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `collect`
+  - `map`
+  - `build_noop_delta`
+  - `PageID`
+
 #### `graph_validator_detects_no_cycles`
 
 - **File:** MMSB/tests/benchmark_03_graph.rs:0
@@ -301,6 +311,27 @@
   - `PageID`
   - `GraphValidator::new`
   - `detect_cycles`
+
+#### `incremental_gc_latency_stays_within_budget`
+
+- **File:** MMSB/tests/stress_memory.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `Arc::new`
+  - `PageAllocator::new`
+  - `PageAllocatorConfig::default`
+  - `MemoryMonitor::with_config`
+  - `Arc::clone`
+  - `config`
+  - `expect`
+  - `allocate_raw`
+  - `PageID`
+  - `Some`
+  - `snapshot`
+  - `expect`
+  - `trigger_incremental_gc`
+  - `config`
+  - `as_secs_f64`
 
 #### `integrity_checker_accepts_valid_delta`
 
@@ -340,6 +371,13 @@
   - `Some`
   - `InvariantChecker::with_builtins`
   - `run`
+
+#### `is_enabled`
+
+- **File:** MMSB/src/logging.rs:0
+- **Visibility:** Crate
+- **Calls:**
+  - `diagnostics_enabled`
 
 #### `log_error_code`
 
@@ -1015,4 +1053,28 @@
   - `crate::page::tlog::summary`
   - `set_last_error`
   - `log_error_code`
+
+#### `multi_thread_10m_deltas_per_sec`
+
+- **File:** MMSB/tests/stress_throughput.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `prepare_allocator`
+  - `run_throughput_benchmark`
+
+#### `mutate_graph`
+
+- **File:** MMSB/tests/stress_stability.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `PageID`
+  - `next_u64`
+  - `PageID`
+  - `next_u64`
+  - `PageID`
+  - `std::mem::swap`
+  - `next_bool`
+  - `add_edge`
+  - `random_edge_type`
+  - `remove_edge`
 

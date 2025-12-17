@@ -62,6 +62,7 @@ Module `mod`
 
 - `delta_types`
 - `epoch_types`
+- `gc`
 - `page_types`
 
 ## MMSB/src/02_semiring/mod.rs (02_semiring)
@@ -208,6 +209,7 @@ Module `lib`
 - `adaptive`
 - `dag`
 - `ffi`
+- `logging`
 - `page`
 - `physical`
 - `propagation`

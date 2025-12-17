@@ -1,26 +1,23 @@
 # Test T1.3: Deterministic Replay Oracle
 
 using Test
-using MMSB.PageTypes: PageID
-using MMSB.MMSBStateTypes: MMSBState, get_page, allocate_delta_id!
-using MMSB.PropagationEngine: register_passthrough_recompute!, recompute_page!
-using MMSB.API: create_page, update_page
-
-# Import read_page from the correct module context
-import MMSB.PageTypes: read_page
+import ..MMSB
 
 """
     canonical_snapshot(state) -> Dict
 
 Create deterministic snapshot of state for replay comparison.
 """
-function canonical_snapshot(state::MMSBState)
+function canonical_snapshot(state::MMSB.MMSBStateTypes.MMSBState)
     # Sort page IDs for deterministic iteration
     page_ids = sort(collect(keys(state.pages)))
-    
     return Dict(
-        "pages" => Dict(id => read_page(get_page(state, id)) for id in page_ids),
-        "epochs" => Dict(id => get(get_page(state, id).metadata, :epoch_dirty, UInt32(0)) for id in page_ids),
+        "pages" => Dict(id => MMSB.API.query_page(state, id) for id in page_ids),
+        "epochs" => Dict(id => begin
+            page = MMSB.MMSBStateTypes.get_page(state, id)
+            page === nothing && error("Missing page with id $id while recording epoch")
+            get(page.metadata, :epoch_dirty, UInt32(0))
+        end for id in page_ids),
         "graph" => serialize_graph(state.graph),
         "next_page_id" => state.next_page_id[],
         "next_delta_id" => state.next_delta_id[],  # Atomic read
@@ -33,7 +30,7 @@ end
 Deterministic graph serialization (sorted keys).
 """
 function serialize_graph(graph)
-    edges = Dict{PageID, Vector{Tuple{PageID, Any}}}()
+    edges = Dict{MMSB.PageTypes.PageID, Vector{Tuple{MMSB.PageTypes.PageID, Any}}}()
     # Graph uses 'deps' not 'edges'
     for parent_id in sort(collect(keys(graph.deps)))
         children = graph.deps[parent_id]
@@ -46,13 +43,13 @@ end
     @testset "Fresh state determinism" begin
         # Execute same operations on two fresh states
         ops = [
-            (state) -> create_page(state; size=1024, location=:cpu),
-            (state) -> create_page(state; size=2048, location=:cpu),
-            (state) -> update_page(state, PageID(1), rand(UInt8, 1024)),
+            (state) -> MMSB.API.create_page(state; size=1024, location=:cpu),
+            (state) -> MMSB.API.create_page(state; size=2048, location=:cpu),
+            (state) -> MMSB.API.update_page(state, MMSB.PageTypes.PageID(1), rand(UInt8, 1024)),
         ]
         
-        state1 = MMSBState()
-        state2 = MMSBState()
+        state1 = MMSB.MMSBStateTypes.MMSBState()
+        state2 = MMSB.MMSBStateTypes.MMSBState()
         
         for op in ops
             op(state1)
@@ -67,14 +64,14 @@ end
     end
     
     @testset "Epoch tracking determinism" begin
-        state1 = MMSBState()
-        state2 = MMSBState()
+        state1 = MMSB.MMSBStateTypes.MMSBState()
+        state2 = MMSB.MMSBStateTypes.MMSBState()
         
         # Same operations
         for _ in 1:2
             for st in [state1, state2]
-                p = create_page(st; size=1024, location=:cpu)
-                update_page(st, p.id, rand(UInt8, 1024))
+                p = MMSB.API.create_page(st; size=1024, location=:cpu)
+                MMSB.API.update_page(st, p.id, rand(UInt8, 1024))
             end
         end
         
@@ -85,17 +82,17 @@ end
     end
     
     @testset "Propagation determinism" begin
-        state1 = MMSBState()
-        state2 = MMSBState()
+        state1 = MMSB.MMSBStateTypes.MMSBState()
+        state2 = MMSB.MMSBStateTypes.MMSBState()
         
         for st in [state1, state2]
-            parent = create_page(st; size=1024, location=:cpu)
-            child = create_page(st; size=1024, location=:cpu)
-            register_passthrough_recompute!(st, child.id, parent.id)
+            parent = MMSB.API.create_page(st; size=1024, location=:cpu)
+            child = MMSB.API.create_page(st; size=1024, location=:cpu)
+            MMSB.PropagationEngine.register_passthrough_recompute!(st, child.id, parent.id)
             
             data = [0x01, 0x02, 0x03, zeros(UInt8, 1021)...]
-            update_page(st, parent.id, collect(data))
-            recompute_page!(st, child.id)
+            MMSB.API.update_page(st, parent.id, collect(data))
+            MMSB.PropagationEngine.recompute_page!(st, child.id)
         end
         
         snap1 = canonical_snapshot(state1)
@@ -109,13 +106,13 @@ end
         runs = []
         
         for _ in 1:3
-            state = MMSBState()
-            parent = create_page(state; size=1024, location=:cpu)
-            child = create_page(state; size=1024, location=:cpu)
+            state = MMSB.MMSBStateTypes.MMSBState()
+            parent = MMSB.API.create_page(state; size=1024, location=:cpu)
+            child = MMSB.API.create_page(state; size=1024, location=:cpu)
             
-            register_passthrough_recompute!(state, child.id, parent.id)
-            update_page(state, parent.id, ones(UInt8, 1024))
-            recompute_page!(state, child.id)
+            MMSB.PropagationEngine.register_passthrough_recompute!(state, child.id, parent.id)
+            MMSB.API.update_page(state, parent.id, ones(UInt8, 1024))
+            MMSB.PropagationEngine.recompute_page!(state, child.id)
             
             push!(runs, canonical_snapshot(state))
         end
@@ -125,8 +122,8 @@ end
     end
     
     @testset "No dict iteration ordering issues" begin
-        state = MMSBState()
-        pages = [create_page(state; size=1024, location=:cpu) for _ in 1:10]
+        state = MMSB.MMSBStateTypes.MMSBState()
+        pages = [MMSB.API.create_page(state; size=1024, location=:cpu) for _ in 1:10]
         
         # Multiple snapshots should be identical
         snap1 = canonical_snapshot(state)
@@ -137,12 +134,12 @@ end
     end
     
     @testset "Atomic delta ID determinism" begin
-        state1 = MMSBState()
-        state2 = MMSBState()
+        state1 = MMSB.MMSBStateTypes.MMSBState()
+        state2 = MMSB.MMSBStateTypes.MMSBState()
         
         # Same sequence of delta allocations
-        ids1 = [allocate_delta_id!(state1) for _ in 1:100]
-        ids2 = [allocate_delta_id!(state2) for _ in 1:100]
+        ids1 = [MMSB.MMSBStateTypes.allocate_delta_id!(state1) for _ in 1:100]
+        ids2 = [MMSB.MMSBStateTypes.allocate_delta_id!(state2) for _ in 1:100]
         
         @test ids1 == ids2
         @test all(ids1[i] < ids1[i+1] for i in 1:99)  # Monotonic

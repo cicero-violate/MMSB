@@ -326,9 +326,7 @@
   - `PageID`
   - `PageID`
   - `Arc::new`
-  - `MemoryMonitor::with_config`
-  - `Arc::clone`
-  - `MemoryMonitorConfig::default`
+  - `TestMemoryHandler::new`
   - `TickOrchestrator::new`
 
 #### `partition_by_page`
@@ -500,6 +498,35 @@
 
 ### Rust Functions
 
+#### `one_million_pages_under_1gb_full_run`
+
+- **File:** MMSB/tests/stress_memory.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `Arc::new`
+  - `PageAllocator::new`
+  - `PageAllocatorConfig::default`
+  - `expect`
+  - `allocate_raw`
+  - `PageID`
+  - `Some`
+  - `MemoryMonitor::new`
+  - `Arc::clone`
+  - `snapshot`
+
+#### `prepare_allocator`
+
+- **File:** MMSB/tests/stress_throughput.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `Arc::new`
+  - `PageAllocator::new`
+  - `PageAllocatorConfig::default`
+  - `expect`
+  - `allocate_raw`
+  - `PageID`
+  - `Some`
+
 #### `provenance_tracker_resolves_with_cache`
 
 - **File:** MMSB/tests/benchmark_10_provenance.rs:0
@@ -529,6 +556,13 @@
 - **Visibility:** Private
 - **Calls:**
   - `PurityValidator::default`
+
+#### `random_edge_type`
+
+- **File:** MMSB/tests/stress_stability.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `next_in_range`
 
 #### `read_page`
 
@@ -567,6 +601,40 @@
   - `ok`
   - `std::fs::remove_file`
 
+#### `run_throughput_benchmark`
+
+- **File:** MMSB/tests/stress_throughput.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `ThroughputEngine::new`
+  - `Arc::clone`
+  - `Duration::default`
+  - `min`
+  - `generate_delta_batch`
+  - `expect`
+  - `process_parallel`
+  - `is_none`
+  - `Some`
+  - `assert_throughput`
+  - `assert_throughput`
+
+#### `sampled_allocation_projects_under_budget`
+
+- **File:** MMSB/tests/stress_memory.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `Arc::new`
+  - `PageAllocator::new`
+  - `PageAllocatorConfig::default`
+  - `MemoryMonitor::new`
+  - `Arc::clone`
+  - `expect`
+  - `allocate_raw`
+  - `PageID`
+  - `Some`
+  - `snapshot`
+  - `saturating_mul`
+
 #### `set_last_error`
 
 - **File:** MMSB/src/ffi.rs:0
@@ -586,6 +654,14 @@
   - `iter`
   - `sin`
   - `tanh`
+
+#### `single_thread_1m_deltas_per_sec`
+
+- **File:** MMSB/tests/stress_throughput.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `prepare_allocator`
+  - `run_throughput_benchmark`
 
 #### `slice_from_ptr`
 

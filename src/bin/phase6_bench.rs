@@ -3,6 +3,7 @@ use mmsb_core::page::{
     Delta, DeltaID, Epoch, PageAllocator, PageAllocatorConfig, PageID, PageLocation, Source,
 };
 use mmsb_core::propagation::{ThroughputEngine, TickOrchestrator};
+use mmsb_core::types::MemoryPressureHandler;
 use mmsb_core::utility::{MemoryMonitor, MemoryMonitorConfig};
 use std::error::Error;
 use std::fs::File;
@@ -27,7 +28,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let throughput_metrics = throughput_engine.process_parallel(deltas.clone())?;
 
     let graph = Arc::new(build_graph(page_count));
-    let memory_monitor = Arc::new(MemoryMonitor::with_config(
+    let memory_monitor: Arc<dyn MemoryPressureHandler> = Arc::new(MemoryMonitor::with_config(
         Arc::clone(&allocator),
         MemoryMonitorConfig {
             gc_threshold_bytes: 64 * 4096,

@@ -14,7 +14,7 @@ using ..GraphTypes: ShadowPageGraph
 using ..FFIWrapper
 
 export MMSBState, MMSBConfig, allocate_page_id!, allocate_delta_id!,
-       get_page, register_page!
+       get_page, register_page!, reset!
 export _reserve_page_id_unlocked!  # internal helper for allocator
 
 """
@@ -134,6 +134,45 @@ function register_page!(state::MMSBState, page::Page)
     lock(state.lock) do
         state.pages[page.id] = page
     end
+end
+
+"""
+    reset!(state::MMSBState)
+
+Reset state to initial conditions, clearing all mutable components.
+
+Clears in order:
+1. pages dictionary
+2. shadow page graph
+3. next_page_id counter
+4. next_delta_id atomic counter
+5. transaction log via FFI
+6. propagation buffers (if present)
+
+**Thread Safety**: Caller must ensure no concurrent operations.
+**Performance**: Target < 1μs for reset operation.
+"""
+function reset!(state::MMSBState)
+    lock(state.lock) do
+        # 1. Clear pages
+        empty!(state.pages)
+        
+        # 2. Reset graph
+        state.graph = ShadowPageGraph()
+        
+        # 3. Reset page ID counter
+        state.next_page_id[] = PageID(1)
+        
+        # 4. Reset delta ID counter (atomic)
+        Threads.atomic_store!(state.next_delta_id, UInt64(1))
+        
+        # 5. Clear transaction log
+        FFIWrapper.rust_tlog_clear!(state.tlog_handle)
+        
+        # 6. Clear propagation buffers (deferred to avoid circular dependency)
+        # PropagationEngine will handle this via clear_propagation_buffers!
+    end
+    return nothing
 end
 
 end # module MMSBStateTypes

@@ -31,17 +31,31 @@
 - [Rust | Impl] `impl Epoch { pub fn new (value : u32) -> Self { Epoch (value) } } . self_ty` (line 0, priv)
 - [Rust | Impl] `impl EpochCell { pub fn new (value : u32) -> Self { Self { inner : AtomicU32 :: new (value) , } } # [inline] pub fn load (& self) -> Epoch { Epoch (self . inner . load (Ordering :: Acquire)) } # [inline] pub fn store (& self , value : Epoch) { self . inner . store (value . 0 , Ordering :: Release) ; } # [inline] pub fn increment (& self) -> Epoch { let old = self . inner . fetch_add (1 , Ordering :: AcqRel) ; println ! ("EPOCH_INCREMENT: was {} → now {}" , old , old + 1) ; Epoch (old) } } . self_ty` (line 0, priv)
 
+## File: MMSB/src/01_types/gc.rs
+
+- Layer(s): 01_types
+- Language coverage: Rust (2)
+- Element types: Struct (1), Trait (1)
+- Total elements: 2
+
+### Elements
+
+- [Rust | Struct] `GCMetrics` (line 0, pub)
+  - Signature: `# [doc = " Metrics returned by memory pressure handlers after a GC pass."] # [derive (Debug , Clone , Copy)] pub stru...`
+- [Rust | Trait] `MemoryPressureHandler` (line 0, pub)
+
 ## File: MMSB/src/01_types/mod.rs
 
 - Layer(s): 01_types
-- Language coverage: Rust (3)
-- Element types: Module (3)
-- Total elements: 3
+- Language coverage: Rust (4)
+- Element types: Module (4)
+- Total elements: 4
 
 ### Elements
 
 - [Rust | Module] `delta_types` (line 0, priv)
 - [Rust | Module] `epoch_types` (line 0, priv)
+- [Rust | Module] `gc` (line 0, priv)
 - [Rust | Module] `page_types` (line 0, priv)
 
 ## File: MMSB/src/01_types/page_types.rs

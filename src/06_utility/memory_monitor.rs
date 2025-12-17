@@ -1,10 +1,10 @@
 use crate::page::PageAllocator;
 use crate::physical::AllocatorStats;
-use crate::types::PageID;
+use crate::types::{GCMetrics, MemoryPressureHandler, PageID};
 use parking_lot::Mutex;
 use std::collections::{HashMap, HashSet};
 use std::sync::Arc;
-use std::time::{Duration, Instant};
+use std::time::Instant;
 
 #[derive(Debug, Clone)]
 pub struct MemorySnapshot {
@@ -13,13 +13,6 @@ pub struct MemorySnapshot {
     pub avg_bytes_per_page: usize,
     pub cold_pages: Vec<PageID>,
     pub collected_at: Instant,
-}
-
-#[derive(Debug, Clone, Copy)]
-pub struct GCMetrics {
-    pub reclaimed_pages: usize,
-    pub reclaimed_bytes: usize,
-    pub duration: Duration,
 }
 
 #[derive(Debug, Clone)]
@@ -168,6 +161,16 @@ impl MemoryMonitor {
         }
         aging.retain(|page_id, _| seen.contains(page_id));
         cold
+    }
+}
+
+impl MemoryPressureHandler for MemoryMonitor {
+    fn incremental_batch_pages(&self) -> usize {
+        self.config.incremental_batch_pages
+    }
+
+    fn run_gc(&self, budget_pages: usize) -> Option<GCMetrics> {
+        self.trigger_incremental_gc(budget_pages)
     }
 }
 

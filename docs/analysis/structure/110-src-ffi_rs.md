@@ -50,7 +50,7 @@
   - Signature: `# [no_mangle] pub extern "C" fn mmsb_allocator_allocate (handle : AllocatorHandle , page_id_hint : u64 , size : usize...`
   - Calls: is_null, set_last_error, PageHandle::null, set_last_error, PageHandle::null, PageLocation::from_tag, Some, allocate_raw, PageID, set_last_error, PageHandle::null
 - [Rust | Function] `mmsb_allocator_free` (line 0, pub)
-  - Signature: `# [no_mangle] pub extern "C" fn mmsb_allocator_free (handle : AllocatorHandle) { if ! handle . ptr . is_null () { epr...`
+  - Signature: `# [no_mangle] pub extern "C" fn mmsb_allocator_free (handle : AllocatorHandle) { if ! handle . ptr . is_null () { ffi...`
   - Calls: is_null, drop, Box::from_raw
 - [Rust | Function] `mmsb_allocator_get_page` (line 0, pub)
   - Signature: `# [no_mangle] pub extern "C" fn mmsb_allocator_get_page (handle : AllocatorHandle , page_id : u64) -> PageHandle { if...`
@@ -59,7 +59,7 @@
   - Signature: `# [no_mangle] pub extern "C" fn mmsb_allocator_list_pages (handle : AllocatorHandle , out_infos : * mut PageInfoABI ,...`
   - Calls: is_null, is_null, set_last_error, page_infos, min, len, with, borrow_mut, clear, extend, map, take, iter, clone, enumerate, take, iter, is_empty, std::ptr::null, as_ptr, len, add
 - [Rust | Function] `mmsb_allocator_new` (line 0, pub)
-  - Signature: `# [no_mangle] pub extern "C" fn mmsb_allocator_new () -> AllocatorHandle { eprintln ! ("=== mmsb_allocator_new START ...`
+  - Signature: `# [no_mangle] pub extern "C" fn mmsb_allocator_new () -> AllocatorHandle { ffi_debug ! ("=== mmsb_allocator_new START...`
   - Calls: PageAllocatorConfig::default, PageAllocator::new, Box::new, Box::into_raw
 - [Rust | Function] `mmsb_allocator_page_count` (line 0, pub)
   - Signature: `# [no_mangle] pub extern "C" fn mmsb_allocator_page_count (handle : AllocatorHandle) -> usize { if handle . ptr . is_...`
@@ -146,7 +146,7 @@
   - Signature: `# [no_mangle] pub extern "C" fn mmsb_page_metadata_size (handle : PageHandle) -> usize { if handle . ptr . is_null ()...`
   - Calls: is_null, set_last_error, len, metadata_blob
 - [Rust | Function] `mmsb_page_read` (line 0, pub)
-  - Signature: `# [no_mangle] pub extern "C" fn mmsb_page_read (handle : PageHandle , dst : * mut u8 , len : usize) -> usize { eprint...`
+  - Signature: `# [no_mangle] pub extern "C" fn mmsb_page_read (handle : PageHandle , dst : * mut u8 , len : usize) -> usize { ffi_de...`
   - Calls: is_null, set_last_error, size, is_null, set_last_error, size, min, data_slice, std::ptr::copy_nonoverlapping, as_ptr
 - [Rust | Function] `mmsb_page_write_masked` (line 0, pub)
   - Signature: `# [no_mangle] pub extern "C" fn mmsb_page_write_masked (handle : PageHandle , mask_ptr : * const u8 , mask_len : usiz...`

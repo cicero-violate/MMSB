@@ -1,6 +1,6 @@
 # Layer Dependency Report
 
-Generated: 2025-12-17 10:50:26
+Generated: 2025-12-17 16:38:46
 
 ## Rust Layer Graph
 
@@ -12,14 +12,12 @@ Generated: 2025-12-17 10:50:26
 5. `02_semiring`
 6. `03_dag`
 7. `03_device`
-8. `05_adaptive`
-9. `06_utility`
-10. `04_propagation`
+8. `04_propagation`
+9. `05_adaptive`
+10. `06_utility`
 
 ### Layer Violations
-- `04_propagation` depends on `06_utility` (2 references)
-  - MMSB/src/04_propagation/tick_orchestrator.rs :: use crate :: utility :: MemoryMonitor ;
-  - MMSB/src/04_propagation/tick_orchestrator.rs :: use crate :: utility :: { MemoryMonitor , MemoryMonitorConfig } ;
+- None detected.
 
 ### Dependency Edges
 - `00_physical` → `01_page` (1 references)
@@ -66,14 +64,16 @@ Generated: 2025-12-17 10:50:26
   - MMSB/src/01_page/replay_validator.rs :: use crate :: types :: { PageError , PageID } ;
 - `01_types` → `03_dag` (1 references)
   - MMSB/src/03_dag/graph_validator.rs :: use crate :: types :: PageID ;
-- `01_types` → `04_propagation` (3 references)
+- `01_types` → `04_propagation` (4 references)
   - MMSB/src/04_propagation/throughput_engine.rs :: use crate :: types :: DeltaError ;
   - MMSB/src/04_propagation/throughput_engine.rs :: use crate :: types :: Epoch ;
-  - MMSB/src/04_propagation/tick_orchestrator.rs :: use crate :: types :: Epoch ;
-- `01_types` → `06_utility` (3 references)
+  - MMSB/src/04_propagation/tick_orchestrator.rs :: use crate :: types :: { Epoch , GCMetrics , MemoryPressureHandler } ;
+  - MMSB/src/04_propagation/tick_orchestrator.rs :: use crate :: types :: { MemoryPressureHandler } ;
+- `01_types` → `06_utility` (4 references)
   - MMSB/src/06_utility/invariant_checker.rs :: use crate :: types :: Epoch ;
   - MMSB/src/06_utility/memory_monitor.rs :: use crate :: types :: Epoch ;
-  - MMSB/src/06_utility/memory_monitor.rs :: use crate :: types :: PageID ;
+  - MMSB/src/06_utility/memory_monitor.rs :: use crate :: types :: { GCMetrics , MemoryPressureHandler , PageID } ;
+  - MMSB/src/06_utility/mod.rs :: pub use crate :: types :: GCMetrics ;
 - `02_semiring` → `root` (1 references)
   - MMSB/src/ffi.rs :: use crate :: semiring :: { accumulate , fold_add , fold_mul , BooleanSemiring , Semiring , TropicalSemiring , } ;
 - `03_dag` → `04_propagation` (2 references)
@@ -84,12 +84,10 @@ Generated: 2025-12-17 10:50:26
   - MMSB/src/06_utility/invariant_checker.rs :: use crate :: dag :: { GraphValidator , ShadowPageGraph } ;
   - MMSB/src/06_utility/provenance_tracker.rs :: use crate :: dag :: ShadowPageGraph ;
   - MMSB/src/06_utility/provenance_tracker.rs :: use crate :: dag :: { EdgeType , ShadowPageGraph } ;
-- `06_utility` → `04_propagation` (2 references, VIOLATION)
-  - MMSB/src/04_propagation/tick_orchestrator.rs :: use crate :: utility :: MemoryMonitor ;
-  - MMSB/src/04_propagation/tick_orchestrator.rs :: use crate :: utility :: { MemoryMonitor , MemoryMonitorConfig } ;
 
 ### Unresolved References
-- None.
+- MMSB/src/ffi.rs → `use crate :: ffi_debug ;`
+- MMSB/src/01_page/checkpoint.rs → `use crate :: ffi_debug ;`
 
 ## Julia Layer Graph
 
@@ -151,6 +149,9 @@ Generated: 2025-12-17 10:50:26
   - MMSB/src/MMSB.jl :: using .Monitoring
 
 ### Unresolved References
+- MMSB/benchmark/profiling/detailed_profile.jl → `using .MMSB`
+- MMSB/benchmark/validate_all.jl → `using .MMSBValidationHarness`
+- MMSB/benchmark/run_validation.jl → `using .MMSBBenchmarks`
 - MMSB/benchmark/benchmarks.jl → `using .MMSB`
 - MMSB/src/MMSB.jl → `using .API`
 

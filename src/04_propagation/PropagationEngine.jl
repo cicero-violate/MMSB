@@ -24,7 +24,7 @@ export PropagationMode, IMMEDIATE, DEFERRED, BATCH
 export register_recompute_fn!, register_passthrough_recompute!, queue_recomputation!
 export RecomputeSignature, compute_signature
 export enable_graph_capture, disable_graph_capture, replay_cuda_graph
-export batch_route_deltas!
+export batch_route_deltas!, clear_propagation_buffers!
 
 """
     RecomputeSignature
@@ -448,6 +448,26 @@ function topological_order_subset(state::MMSBState, subset::Vector{PageID})::Vec
         end
     end
     return ordered
+end
+
+"""
+    clear_propagation_buffers!(state::MMSBState)
+
+Clear propagation buffers and CUDA graph state for state reset.
+Called by reset!(state) to ensure clean state.
+"""
+function clear_propagation_buffers!(state::MMSBState)
+    # Clear propagation queue
+    if haskey(PROPAGATION_BUFFERS, state)
+        delete!(PROPAGATION_BUFFERS, state)
+    end
+    
+    # Clear CUDA graph state
+    if haskey(GRAPH_STATES, state)
+        delete!(GRAPH_STATES, state)
+    end
+    
+    return nothing
 end
 
 end # module PropagationEngine

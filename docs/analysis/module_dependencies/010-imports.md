@@ -41,6 +41,7 @@ Module `allocator`
 
 Module `checkpoint`
 
+- `crate :: ffi_debug`
 - `crate :: page :: { PageAllocator , PageSnapshotData , PageID , PageLocation }`
 - `std :: fs :: File`
 - `std :: io :: { BufReader , BufWriter , Read , Write }`
@@ -202,6 +203,12 @@ Module `epoch_types`
 
 - `std :: sync :: atomic :: { AtomicU32 , Ordering }`
 
+## MMSB/src/01_types/gc.rs (01_types)
+
+Module `gc`
+
+- `std :: time :: Duration`
+
 ## MMSB/src/01_types/page_types.rs (01_types)
 
 Module `page_types`
@@ -347,10 +354,10 @@ Module `tick_orchestrator`
 - `crate :: dag :: { GraphValidator , ShadowPageGraph }`
 - `crate :: page :: { Delta , DeltaID , PageAllocator , PageAllocatorConfig , PageID , PageLocation , Source }`
 - `crate :: page :: { Delta , PageError }`
-- `crate :: types :: Epoch`
-- `crate :: utility :: MemoryMonitor`
-- `crate :: utility :: { MemoryMonitor , MemoryMonitorConfig }`
+- `crate :: types :: { Epoch , GCMetrics , MemoryPressureHandler }`
+- `crate :: types :: { MemoryPressureHandler }`
 - `std :: sync :: Arc`
+- `std :: time :: Duration`
 - `std :: time :: { Duration , Instant }`
 - `super :: ThroughputEngine`
 - `super :: TickOrchestrator`
@@ -404,12 +411,12 @@ Module `memory_monitor`
 - `crate :: page :: { PageAllocator , PageAllocatorConfig , PageID , PageLocation }`
 - `crate :: physical :: AllocatorStats`
 - `crate :: types :: Epoch`
-- `crate :: types :: PageID`
+- `crate :: types :: { GCMetrics , MemoryPressureHandler , PageID }`
 - `parking_lot :: Mutex`
 - `std :: collections :: { HashMap , HashSet }`
 - `std :: sync :: Arc`
 - `std :: time :: Duration`
-- `std :: time :: { Duration , Instant }`
+- `std :: time :: Instant`
 - `super :: { MemoryMonitor , MemoryMonitorConfig }`
 
 ## MMSB/src/06_utility/provenance_tracker.rs (06_utility)
@@ -439,6 +446,7 @@ Module `phase6_bench`
 - `mmsb_core :: dag :: { EdgeType , ShadowPageGraph }`
 - `mmsb_core :: page :: { Delta , DeltaID , Epoch , PageAllocator , PageAllocatorConfig , PageID , PageLocation , Source , }`
 - `mmsb_core :: propagation :: { ThroughputEngine , TickOrchestrator }`
+- `mmsb_core :: types :: MemoryPressureHandler`
 - `mmsb_core :: utility :: { MemoryMonitor , MemoryMonitorConfig }`
 - `std :: error :: Error`
 - `std :: fs :: File`
@@ -450,6 +458,7 @@ Module `phase6_bench`
 
 Module `ffi`
 
+- `crate :: ffi_debug`
 - `crate :: page :: checkpoint`
 - `crate :: page :: tlog :: { TransactionLog , TransactionLogReader }`
 - `crate :: page :: { Delta , DeltaID , Epoch , Page , PageAllocator , PageAllocatorConfig , PageError , PageID , PageLocation , Source }`
@@ -462,6 +471,12 @@ Module `ffi`
 - `std :: ptr`
 - `std :: slice`
 - `std :: thread_local`
+
+## MMSB/src/logging.rs (root)
+
+Module `logging`
+
+- `std :: sync :: OnceLock`
 
 ## MMSB/tests/benchmark_01_replay.rs (root)
 
@@ -556,6 +571,34 @@ Module `mmsb_tests`
 - `mmsb_core :: page :: tlog :: TransactionLog`
 - `mmsb_core :: page :: { load_checkpoint , write_checkpoint , Delta , DeltaID , Epoch , Page , PageAllocator , PageAllocatorConfig , PageID , Source , }`
 - `std :: sync :: Arc`
+
+## MMSB/tests/stress_memory.rs (root)
+
+Module `stress_memory`
+
+- `mmsb_core :: page :: { PageAllocator , PageAllocatorConfig , PageID , PageLocation }`
+- `mmsb_core :: utility :: { MemoryMonitor , MemoryMonitorConfig }`
+- `std :: sync :: Arc`
+
+## MMSB/tests/stress_stability.rs (root)
+
+Module `stress_stability`
+
+- `mmsb_core :: dag :: { EdgeType , ShadowPageGraph }`
+- `mmsb_core :: page :: { Delta , DeltaID , DeviceBufferRegistry , PageAllocator , PageAllocatorConfig , PageID , PageLocation , Source , }`
+- `mmsb_core :: types :: Epoch`
+- `mmsb_core :: utility :: { InvariantChecker , InvariantContext }`
+- `std :: sync :: Arc`
+
+## MMSB/tests/stress_throughput.rs (root)
+
+Module `stress_throughput`
+
+- `mmsb_core :: page :: { Delta , DeltaID , PageAllocator , PageAllocatorConfig , PageID , PageLocation , Source , }`
+- `mmsb_core :: propagation :: ThroughputEngine`
+- `mmsb_core :: types :: Epoch`
+- `std :: sync :: Arc`
+- `std :: time :: Duration`
 
 ## MMSB/tests/week27_31_integration.rs (root)
 

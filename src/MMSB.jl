@@ -19,6 +19,7 @@ include("01_page/Page.jl")
 include("01_page/Delta.jl")
 include("03_dag/ShadowPageGraph.jl")
 include("01_types/MMSBState.jl")
+include("01_types/StateManagement.jl")
 
 # Rust error mapping
 include("ffi/RustErrors.jl")
@@ -47,6 +48,9 @@ include("03_dag/DependencyGraph.jl")
 include("03_dag/GraphDSL.jl")
 include("04_propagation/PropagationEngine.jl")
 include("04_propagation/PropagationScheduler.jl")
+
+# Link circular dependency for state reset
+StateManagement.clear_propagation_buffers! = PropagationEngine.clear_propagation_buffers!
 
 # Layer 5: Adaptive Memory
 include("05_adaptive/AdaptiveLayout.jl")

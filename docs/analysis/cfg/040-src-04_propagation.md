@@ -257,8 +257,8 @@ flowchart TD
 - File: MMSB/src/04_propagation/tick_orchestrator.rs
 - Branches: 0
 - Loops: 1
-- Nodes: 12
-- Edges: 12
+- Nodes: 11
+- Edges: 11
 
 ```mermaid
 flowchart TD
@@ -270,10 +270,9 @@ flowchart TD
     orchestrator_5["let throughput = ThroughputEngine :: new (Arc :: clone (& allocator) , 2 , 64)"]
     orchestrator_6["let graph = Arc :: new (ShadowPageGraph :: default ())"]
     orchestrator_7["graph . add_edge (PageID (1) , PageID (2) , EdgeType :: Data)"]
-    orchestrator_8["let cold_limit = if threshold == usize :: MAX { u64 :: MAX } else { 0 }"]
-    orchestrator_9["let memory = Arc :: new (MemoryMonitor :: with_config (Arc :: clone (& allocator) , Memory..."]
-    orchestrator_10["(TickOrchestrator :: new (throughput , graph , memory) , allocator ,)"]
-    orchestrator_11["EXIT"]
+    orchestrator_8["let memory : Arc < dyn MemoryPressureHandler > = Arc :: new (TestMemoryHandler :: new (32 , threshold != usize :: MAX))"]
+    orchestrator_9["(TickOrchestrator :: new (throughput , graph , memory) , allocator ,)"]
+    orchestrator_10["EXIT"]
     orchestrator_0 --> orchestrator_1
     orchestrator_1 --> orchestrator_2
     orchestrator_2 --> orchestrator_3
@@ -285,7 +284,6 @@ flowchart TD
     orchestrator_7 --> orchestrator_8
     orchestrator_8 --> orchestrator_9
     orchestrator_9 --> orchestrator_10
-    orchestrator_10 --> orchestrator_11
 ```
 
 ## Function: `partition_by_page`

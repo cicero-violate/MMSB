@@ -73,18 +73,17 @@
 
 - Layer(s): 06_utility
 - Language coverage: Rust (13)
-- Element types: Function (5), Impl (2), Module (1), Struct (5)
+- Element types: Function (5), Impl (3), Module (1), Struct (4)
 - Total elements: 13
 
 ### Elements
 
 - [Rust | Impl] `Default for impl Default for MemoryMonitorConfig { fn default () -> Self { Self { gc_threshold_bytes : 1 * 1024 * 1024 * 1024 , cold_page_age_limit : 3 , incremental_batch_pages : 32 , } } } . self_ty` (line 0, priv)
-- [Rust | Struct] `GCMetrics` (line 0, pub)
-  - Signature: `# [derive (Debug , Clone , Copy)] pub struct GCMetrics { pub reclaimed_pages : usize , pub reclaimed_bytes : usize , ...`
 - [Rust | Struct] `MemoryMonitor` (line 0, pub)
   - Signature: `pub struct MemoryMonitor { allocator : Arc < PageAllocator > , stats : Arc < AllocatorStats > , config : MemoryMonito...`
 - [Rust | Struct] `MemoryMonitorConfig` (line 0, pub)
   - Signature: `# [derive (Debug , Clone)] pub struct MemoryMonitorConfig { pub gc_threshold_bytes : usize , pub cold_page_age_limit ...`
+- [Rust | Impl] `MemoryPressureHandler for impl MemoryPressureHandler for MemoryMonitor { fn incremental_batch_pages (& self) -> usize { self . config . incremental_batch_pages } fn run_gc (& self , budget_pages : usize) -> Option < GCMetrics > { self . trigger_incremental_gc (budget_pages) } } . self_ty` (line 0, priv)
 - [Rust | Struct] `MemorySnapshot` (line 0, pub)
   - Signature: `# [derive (Debug , Clone)] pub struct MemorySnapshot { pub total_pages : usize , pub total_bytes : usize , pub avg_by...`
 - [Rust | Struct] `PageAging` (line 0, priv)

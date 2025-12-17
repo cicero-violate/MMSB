@@ -41,6 +41,7 @@ Module `mod`
 
 - `delta_types :: { DeltaID , Source , DeltaError }`
 - `epoch_types :: { Epoch , EpochCell }`
+- `gc :: { GCMetrics , MemoryPressureHandler }`
 - `page_types :: { PageID , PageLocation , PageError }`
 
 ## MMSB/src/02_semiring/mod.rs (02_semiring)
@@ -102,8 +103,9 @@ Module `mod`
 Module `mod`
 
 - `cpu_features :: CpuFeatures`
+- `crate :: types :: GCMetrics`
 - `invariant_checker :: { EpochMonotonicity , GraphAcyclicity , Invariant , InvariantChecker , InvariantContext , InvariantResult , PageConsistency }`
-- `memory_monitor :: { GCMetrics , MemoryMonitor , MemoryMonitorConfig , MemorySnapshot }`
+- `memory_monitor :: { MemoryMonitor , MemoryMonitorConfig , MemorySnapshot }`
 - `provenance_tracker :: { ProvenanceResult , ProvenanceTracker }`
 - `telemetry :: { Telemetry , TelemetrySnapshot }`
 
