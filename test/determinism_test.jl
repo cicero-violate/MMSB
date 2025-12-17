@@ -21,7 +21,7 @@ function canonical_snapshot(state::MMSBState)
         "epochs" => Dict(id => get(get_page(state, id).metadata, :epoch_dirty, UInt32(0)) for id in page_ids),
         "graph" => serialize_graph(state.graph),
         "next_page_id" => state.next_page_id[],
-        "next_delta_id" => state.next_delta_id[],
+        "next_delta_id" => state.next_delta_id[],  # Atomic read
     )
 end
 
@@ -132,5 +132,17 @@ end
         snap3 = canonical_snapshot(state)
         
         @test snap1 == snap2 == snap3
+    end
+    
+    @testset "Atomic delta ID determinism" begin
+        state1 = MMSBState()
+        state2 = MMSBState()
+        
+        # Same sequence of delta allocations
+        ids1 = [MMSB.MMSBStateTypes.allocate_delta_id!(state1) for _ in 1:100]
+        ids2 = [MMSB.MMSBStateTypes.allocate_delta_id!(state2) for _ in 1:100]
+        
+        @test ids1 == ids2
+        @test all(ids1[i] < ids1[i+1] for i in 1:99)  # Monotonic
     end
 end

@@ -54,7 +54,7 @@ mutable struct MMSBState
     allocator_handle::FFIWrapper.RustAllocatorHandle
     graph::ShadowPageGraph
     next_page_id::Ref{PageID}
-    next_delta_id::Ref{DeltaID}
+    next_delta_id::Threads.Atomic{UInt64}
     config::MMSBConfig
     lock::ReentrantLock
     
@@ -69,7 +69,7 @@ mutable struct MMSBState
             allocator,
             ShadowPageGraph(),
             Ref{PageID}(PageID(1)),
-            Ref{DeltaID}(DeltaID(1)),
+            Threads.Atomic{UInt64}(1),
             config,
             ReentrantLock(),
         )
@@ -109,11 +109,9 @@ end
 Thread-safe delta ID allocation.
 """
 function allocate_delta_id!(state::MMSBState)::DeltaID
-    lock(state.lock) do
-        id = state.next_delta_id[]
-        state.next_delta_id[] = DeltaID(id + 1)
-        return id
-    end
+    # T2.3: Lock-free atomic allocation
+    id = Threads.atomic_add!(state.next_delta_id, UInt64(1))
+    return DeltaID(id)
 end
 
 """
