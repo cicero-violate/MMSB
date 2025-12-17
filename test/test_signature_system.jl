@@ -9,8 +9,8 @@ using MMSB.API: create_page, update_page
 @testset "T1.1: Signature System" begin
     @testset "Signature creation" begin
         state = MMSBState()
-        parent = create_page(state; size=1024)
-        child = create_page(state; size=1024)
+        parent = create_page(state; size=1024, location=:cpu)
+        child = create_page(state; size=1024, location=:cpu)
         
         # Register passthrough dependency
         register_passthrough_recompute!(state, child.id, parent.id)
@@ -28,8 +28,8 @@ using MMSB.API: create_page, update_page
     
     @testset "Signature tracks epochs" begin
         state = MMSBState()
-        parent = create_page(state; size=1024)
-        child = create_page(state; size=1024)
+        parent = create_page(state; size=1024, location=:cpu)
+        child = create_page(state; size=1024, location=:cpu)
         
         register_passthrough_recompute!(state, child.id, parent.id)
         
@@ -48,9 +48,9 @@ using MMSB.API: create_page, update_page
     
     @testset "Multiple dependencies" begin
         state = MMSBState()
-        p1 = create_page(state; size=1024)
-        p2 = create_page(state; size=1024)
-        child = create_page(state; size=1024)
+        p1 = create_page(state; size=1024, location=:cpu)
+        p2 = create_page(state; size=1024, location=:cpu)
+        child = create_page(state; size=1024, location=:cpu)
         
         # Register custom recompute with multiple deps
         register_recompute_fn!(state, child.id, function(st, pg)
@@ -68,7 +68,7 @@ using MMSB.API: create_page, update_page
     
     @testset "Missing parent returns zero epoch" begin
         state = MMSBState()
-        child = create_page(state; size=1024)
+        child = create_page(state; size=1024, location=:cpu)
         fake_parent_id = PageID(99999)
         
         child.metadata[:recompute_deps] = [fake_parent_id]
@@ -80,9 +80,9 @@ using MMSB.API: create_page, update_page
     
     @testset "Deterministic signature ordering" begin
         state = MMSBState()
-        p1 = create_page(state; size=1024)
-        p2 = create_page(state; size=1024)
-        child = create_page(state; size=1024)
+        p1 = create_page(state; size=1024, location=:cpu)
+        p2 = create_page(state; size=1024, location=:cpu)
+        child = create_page(state; size=1024, location=:cpu)
         
         child.metadata[:recompute_deps] = [p1.id, p2.id]
         
@@ -99,8 +99,8 @@ end
 @testset "T1.2: Epoch Validation & Caching" begin
     @testset "Skip recompute when epochs unchanged" begin
         state = MMSBState()
-        parent = create_page(state; size=1024)
-        child = create_page(state; size=1024)
+        parent = create_page(state; size=1024, location=:cpu)
+        child = create_page(state; size=1024, location=:cpu)
         
         # Set parent content
         data = rand(UInt8, 1024)
@@ -121,8 +121,8 @@ end
     
     @testset "Recompute when parent epoch changes" begin
         state = MMSBState()
-        parent = create_page(state; size=1024)
-        child = create_page(state; size=1024)
+        parent = create_page(state; size=1024, location=:cpu)
+        child = create_page(state; size=1024, location=:cpu)
         
         register_passthrough_recompute!(state, child.id, parent.id)
         
@@ -144,9 +144,9 @@ end
     
     @testset "Fail fast on dependency set change" begin
         state = MMSBState()
-        p1 = create_page(state; size=1024)
-        p2 = create_page(state; size=1024)
-        child = create_page(state; size=1024)
+        p1 = create_page(state; size=1024, location=:cpu)
+        p2 = create_page(state; size=1024, location=:cpu)
+        child = create_page(state; size=1024, location=:cpu)
         
         # Initial dependency
         register_passthrough_recompute!(state, child.id, p1.id)
@@ -161,8 +161,8 @@ end
     
     @testset "Signature stored on no-op recompute" begin
         state = MMSBState()
-        parent = create_page(state; size=1024)
-        child = create_page(state; size=1024)
+        parent = create_page(state; size=1024, location=:cpu)
+        child = create_page(state; size=1024, location=:cpu)
         
         register_passthrough_recompute!(state, child.id, parent.id)
         

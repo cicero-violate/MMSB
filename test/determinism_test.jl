@@ -43,8 +43,8 @@ end
     @testset "Fresh state determinism" begin
         # Execute same operations on two fresh states
         ops = [
-            (state) -> create_page(state; size=1024),
-            (state) -> create_page(state; size=2048),
+            (state) -> create_page(state; size=1024, location=:cpu),
+            (state) -> create_page(state; size=2048, location=:cpu),
             (state) -> update_page(state, PageID(1), rand(UInt8, 1024)),
         ]
         
@@ -70,7 +70,7 @@ end
         # Same operations
         for _ in 1:2
             for st in [state1, state2]
-                p = create_page(st; size=1024)
+                p = create_page(st; size=1024, location=:cpu)
                 update_page(st, p.id, rand(UInt8, 1024))
             end
         end
@@ -86,8 +86,8 @@ end
         state2 = MMSBState()
         
         for st in [state1, state2]
-            parent = create_page(st; size=1024)
-            child = create_page(st; size=1024)
+            parent = create_page(st; size=1024, location=:cpu)
+            child = create_page(st; size=1024, location=:cpu)
             register_passthrough_recompute!(st, child.id, parent.id)
             
             data = [0x01, 0x02, 0x03, zeros(UInt8, 1021)...]
@@ -107,8 +107,8 @@ end
         
         for _ in 1:3
             state = MMSBState()
-            parent = create_page(state; size=1024)
-            child = create_page(state; size=1024)
+            parent = create_page(state; size=1024, location=:cpu)
+            child = create_page(state; size=1024, location=:cpu)
             
             register_passthrough_recompute!(state, child.id, parent.id)
             update_page(state, parent.id, ones(UInt8, 1024))
@@ -123,7 +123,7 @@ end
     
     @testset "No dict iteration ordering issues" begin
         state = MMSBState()
-        pages = [create_page(state; size=1024) for _ in 1:10]
+        pages = [create_page(state; size=1024, location=:cpu) for _ in 1:10]
         
         # Multiple snapshots should be identical
         snap1 = canonical_snapshot(state)
