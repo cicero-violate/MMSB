@@ -1,6 +1,6 @@
 # MMSB — Memory-Mapped State Bus
 
-Self-optimizing GPU-accelerated memory system with autonomous reasoning and planning. MMSB is a deterministic, delta-driven shared-memory fabric that lets CPU, GPU, and compiler subsystems share page-aligned state under a single transaction log. Every operation follows the MMSB semiring law `state × delta → state′`, enabling deterministic replay and algebraic propagation.
+Self-optimizing GPU-accelerated memory system covering Layers 0‑6 (physical → utility). MMSB is a deterministic, delta-driven shared-memory fabric that lets CPU, GPU, and compiler subsystems share page-aligned state under a single transaction log. Every operation follows the MMSB semiring law `state × delta → state′`, enabling deterministic replay and algebraic propagation. Reasoning, planning, and agent tooling (Layers 7‑12) now live in the [MMSB-top](../MMSB-top) repository.
 
 
 
@@ -9,9 +9,7 @@ Self-optimizing GPU-accelerated memory system with autonomous reasoning and plan
 - **CPU/GPU coherence** — Unified API across CPU pages, CUDA buffers, and unified memory
 - **Declarative graph** — ShadowPageGraph captures dependencies; propagation is algebraic
 - **Self-optimization** — Adaptive memory layout, graph rewriting, entropy reduction
-- **Autonomous reasoning** — Provided by [`MMSB-top`](../MMSB-top) (Layers 7-8: structural inference, goal emergence)
-- **Planning & agents** — Provided by [`MMSB-top`](../MMSB-top) (Layers 9-11: planners, RL, symbolic/hybrid agents)
-- **Instrumentation** — Compiler hooks and agent interface moved to [`MMSB-top`](../MMSB-top)
+- **Reasoning layers externalized** — [`MMSB-top`](../MMSB-top) now hosts Layers 7‑12 (intention, planners, LLM tooling), keeping this repository focused on the core runtime
 - **Observability** — Built-in monitoring: allocator pressure, delta latency, propagation metrics
 
 ## Architecture (Core Layers 0-6)
@@ -40,7 +38,7 @@ cargo build --release
 julia --project=. -e 'using Pkg; Pkg.test()'
 ```
 
-### Basic Usage
+### Basic Usage (Layers 0-6)
 ```julia
 using MMSB
 
@@ -60,22 +58,8 @@ data = query_page(state, page.id)
 mmsb_stop(state, checkpoint_path="state.ckpt")
 ```
 
-### Advanced: Cognitive Stack (via MMSB-top)
-```julia
-using MMSB
-using MMSBTop
-
-state = mmsb_start()
-
-# Hook Layer 6 utility into Layer 7 intention engine
-utility = MMSB.UtilityEngine.UtilityState()
-layout_stub = (placement = Dict{UInt64, Any}(), locality_score = 0.0)
-intention = MMSBTop.IntentionEngine.form_intention(utility, layout_stub, 1)
-
-# Use application helpers (Layer 12)
-ctx = MMSBTop.LLMTools.MMSBContext(state)
-response = MMSBTop.LLMTools.query_llm(ctx, "Summarize allocator health")
-```
+### Layers 7-12
+Reasoning, planning, and agent integrations moved to [`MMSB-top`](../MMSB-top). Use that repository for intention engines, LLM tools, or any logic above the utility layer.
 
 ## Repository Map
 
@@ -89,7 +73,7 @@ response = MMSBTop.LLMTools.query_llm(ctx, "Summarize allocator health")
 | `src/04_propagation/`     | CPU/GPU propagation engine                  |
 | `src/05_adaptive/`        | Layout optimization, graph rewriting        |
 | `src/06_utility/`         | Cost functions, monitoring, telemetry       |
-| `../MMSB-top/src/`        | Layers 7-12: Intention → Applications stack |
+| `../MMSB-top/`           | Layers 7-12: Intention → Applications stack (separate repo) |
 | `test/`                   | Comprehensive test suite (Layers 0-12)      |
 | `examples/`               | Quickstart and tutorial demos               |
 | `benchmark/`              | Performance benchmarks and baselines        |
@@ -114,21 +98,15 @@ Each layer now has a co-located benchmark guide under `benchmark/<layer>/README.
 - **Error propagation** — Rust → RustFFIError → Julia SerializationError chain
 
 ## Release Information
-- **Current version:** Phase 4 complete (v0.1.0-alpha)
-- **Testing:** `julia --project=. -e 'using Pkg; Pkg.test()'` — all passing
+- **Current version:** Phase 6 validation (v0.2.0-alpha)
+- **Testing:** `cargo test --lib --tests --no-default-features`
 - **Examples:** `julia --project=. examples/quickstart.jl`
-- **Performance baseline:** See `benchmark/results/baseline.json`
-- **Known hotspots:** Propagation ≈500 μs, sparse delta ≈200 μs, alloc ≈5 μs
+- **Performance baselines:** `benchmark/results/baseline.json` (legacy) and `benchmark/results/phase6.json` (latest Phase 6 run)
 
-## Next Phase
-
-**Phase 5: Production Hardening** (7 weeks)
-- GPU optimization: Persistent kernels, multi-GPU (NCCL), memory pools
-- Performance: SIMD delta merge, lock-free allocation, zero-copy FFI
-- Reliability: Error recovery, GPU fallback, memory pressure handling
-- Observability: Prometheus metrics, flamegraphs, trace visualization
-
-See `project_schedule/PHASE_5.md` for detailed DAG and task list.
+## Next Steps
+- Phase 6 benchmark validation complete (see `benchmark/results/phase6.json`).
+- Remaining scheduling/architecture docs are archived under `project_schedule/completed/`.
+- Use [`MMSB-top`](../MMSB-top) for Layers 7‑12 development.
 
 ## Documentation
 
@@ -155,8 +133,8 @@ See `project_schedule/PHASE_5.md` for detailed DAG and task list.
 
 1. Run formatting/linting and maintain docstrings
 2. Update `docs/*.md` and `examples/*.jl` when changing public API
-3. Capture new baselines with `benchmark/benchmarks.jl` for performance changes
-4. All tests must pass: `julia --project=. -e 'using Pkg; Pkg.test()'`
+3. Capture new baselines with `cargo run --bin phase6_bench --release` (writes to `benchmark/results/phase6.json`) and `benchmark/benchmarks.jl`
+4. All tests must pass: `cargo test --lib --tests --no-default-features`
 
 ## License
 
