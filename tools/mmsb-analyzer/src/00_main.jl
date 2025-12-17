@@ -3,12 +3,94 @@
 
 const BASE_DIR = @__DIR__
 
+using JSON
+using Printf
+using Base: Set
+
+const PROJECT_LOADED = Ref(false)
+const PROJECT_ROOT = Ref{String}("")
+const ROOT_MODULE_NAME = Ref{Symbol}(Symbol(""))
+const ROOT_MODULE_REF = Ref{Union{Module,Nothing}}(nothing)
+const SKIP_DIRECTORIES = Set(["test", "tests", "examples", "tools", ".julia"])
+
+function detect_entry_file(root_path::String)
+    candidates = [
+        joinpath(root_path, "src", "MMSB.jl"),
+        joinpath(root_path, "MMSB.jl"),
+    ]
+
+    for candidate in candidates
+        if isfile(candidate)
+            return candidate
+        end
+    end
+
+    error("Unable to locate Julia entry file under $root_path")
+end
+
+function detect_root_module_name(entry_path::String)
+    for line in eachline(entry_path)
+        m = match(r"^\s*module\s+([A-Za-z0-9_\.]+)", line)
+        if m !== nothing
+            return Symbol(m.captures[1])
+        end
+    end
+
+    error("Entry file $entry_path does not declare a module")
+end
+
+function alias_top_level_modules!(root_mod::Module)
+    for name in names(root_mod; all=true, imported=false)
+        if isdefined(root_mod, name)
+            obj = getfield(root_mod, name)
+            if obj isa Module && !isdefined(Main, name)
+                @eval Main const $(Symbol(name)) = $obj
+            end
+        end
+    end
+end
+
+function ensure_project_loaded(root_path::String)
+    if PROJECT_LOADED[]
+        return
+    end
+
+    entry = detect_entry_file(root_path)
+    root_module = detect_root_module_name(entry)
+    println(stderr, "[DEBUG] Loading root module $(root_module) from $(entry)")
+    Base.include(Main, entry)
+
+    if !isdefined(Main, root_module)
+        error("Root module $(root_module) not defined after including $(entry)")
+    end
+
+    root_mod = getfield(Main, root_module)
+    alias_top_level_modules!(root_mod)
+    PROJECT_LOADED[] = true
+    PROJECT_ROOT[] = root_path
+    ROOT_MODULE_NAME[] = root_module
+    ROOT_MODULE_REF[] = root_mod
+end
+
+function include_target_file(main_path::String)
+    if PROJECT_LOADED[] && ROOT_MODULE_REF[] !== nothing
+        root = PROJECT_ROOT[]
+        if !isempty(root)
+            norm_root = normpath(root)
+            norm_path = normpath(main_path)
+            if startswith(norm_path, norm_root)
+                Base.include(ROOT_MODULE_REF[]::Module, main_path)
+                return
+            end
+        end
+    end
+
+    Main.include(main_path)
+end
+
 include(joinpath(BASE_DIR, "01_ast_cfg.jl"))
 include(joinpath(BASE_DIR, "02_ir_ssa.jl"))
 include(joinpath(BASE_DIR, "03_build_model.jl"))
-
-using JSON
-using Printf
 
 function write_combined_cfg_dot(file_path::String, dot_path::String, title::String)
     """Generate one DOT file with all functions from a file, showing CFGs and inter-function calls"""
@@ -309,11 +391,68 @@ function detect_layer(file_path::String)
     return "root"
 end
 
+function collect_julia_files(root_path::String)
+    files = String[]
+    src_dir = joinpath(root_path, "src")
+
+    if !isdir(src_dir)
+        return files
+    end
+
+    for (dirpath, _, file_names) in walkdir(src_dir)
+        parts = splitpath(dirpath)
+        if any(part -> part in SKIP_DIRECTORIES, parts)
+            continue
+        end
+
+        for fname in file_names
+            endswith(fname, ".jl") || continue
+            push!(files, joinpath(dirpath, fname))
+        end
+    end
+
+    sort!(files)
+    return files
+end
+
+function generate_global_cfgs(root_path::String, dot_root::String)
+    ensure_project_loaded(root_path)
+    files = collect_julia_files(root_path)
+
+    if isempty(files)
+        println(stderr, "[DEBUG] No Julia files discovered under $(root_path)")
+        return
+    end
+
+    layers = Dict{String, Vector{String}}()
+
+    for file in files
+        layer = detect_layer(file)
+        push!(get!(layers, layer, String[]), file)
+    end
+
+    layers_dir = joinpath(dot_root, "layers")
+    project_dir = joinpath(dot_root, "project")
+    mkpath(layers_dir)
+    mkpath(project_dir)
+
+    println(stderr, "[DEBUG] Generating per-layer CFGs in $(layers_dir)")
+    for (layer, paths) in sort(collect(layers); by=x->x[1])
+        isempty(paths) && continue
+        dot_path = joinpath(layers_dir, "$(layer).dot")
+        write_layer_cfg_dot(layer, paths, dot_path)
+    end
+
+    println(stderr, "[DEBUG] Generating project-wide CFG in $(project_dir)")
+    write_layer_cfg_dot("project", files, joinpath(project_dir, "project_cfg.dot"))
+end
+
 function write_all_cfgs(file_path::String, dot_dir::String, title::String)
     println(stderr, "[DEBUG] Generating CFG DOT for $(title)")
     
-    # Per-file DOT
-    file_dot = joinpath(dot_dir, "file_cfg.dot")
+    mkpath(dot_dir)
+    base = replace(basename(file_path), r"\.jl$" => "")
+    file_dot = joinpath(dot_dir, "$(base).dot")
     func_count = write_combined_cfg_dot(file_path, file_dot, title)
     
     if func_count > 0
@@ -373,13 +512,35 @@ function convert_functions_to_json(functions::Dict{Symbol, Expr}, scg::Vector{Tu
 end
 
 function main()
-    if length(ARGS) < 2
-        println(stderr, "Usage: 00_main.jl <file_path> <dot_directory>")
+    if isempty(ARGS)
+        println(stderr, "Usage: 00_main.jl <file_path> <dot_directory> <project_root>")
+        println(stderr, "   or: 00_main.jl --global-cfgs <project_root> <dot_root>")
         exit(1)
     end
+
+    if ARGS[1] == "--global-cfgs"
+        if length(ARGS) < 3
+            println(stderr, "Usage: 00_main.jl --global-cfgs <project_root> <dot_root>")
+            exit(1)
+        end
+
+        root_path = abspath(ARGS[2])
+        dot_root = abspath(ARGS[3])
+        generate_global_cfgs(root_path, dot_root)
+        return
+    end
+
+    if length(ARGS) < 3
+        println(stderr, "Usage: 00_main.jl <file_path> <dot_directory> <project_root>")
+        exit(1)
+    end
+
     file_path = abspath(ARGS[1])
     dot_dir = abspath(ARGS[2])
-    
+    root_path = abspath(ARGS[3])
+
+    ensure_project_loaded(root_path)
+
     all_code = read_all_code(file_path)
     functions, scg = analyze_code(all_code)
     

@@ -55,8 +55,8 @@ cargo run --release -- --verbose
 
 ### Julia Analyzer Script
 
-The Julia helpers now live under `tools/mmsb-analyzer/src/julia/`. The CLI defaults to
-`--julia-script ./src/julia/analyzer.jl`. When the Julia runtime is unavailable (e.g. in
+The Julia helpers now live alongside the Rust sources under `tools/mmsb-analyzer/src/`. The CLI defaults to
+`--julia-script ./src/analyzer.jl`. When the Julia runtime is unavailable (e.g. in
 restricted environments), the analyzer automatically falls back to an internal parser so the
 reports continue to include Julia modules, structs, and functions.
 
@@ -67,9 +67,10 @@ All reports now live under `docs/analysis/` with one directory per category. Eac
 1. **`structure/`** - `index.md` summarizes counts, while `0xx-*.md` files group source files by MMSB prefix (e.g. `src/00_physical`).
 2. **`call_graph/`** - `index.md` retains the call graph statistics and Mermaid diagram.
 3. **`cfg/`** - Directory contains per-prefix CFG breakdowns so each file stays manageable; `index.md` lists the generated chunks.
-4. **`module_dependencies/`** - `index.md` summarizes module stats, and numbered files split imports, exports, submodules, and the current violations placeholder.
-5. **`function_analysis/`** - Functions are bucketed alphabetically (`010-functions_A-F.md`, etc.) with per-layer/language details.
-6. **`layer_dependencies/`** - `index.md` holds the combined Rust/Julia layer graph summary.
+4. **`cfg/dots/`** - Per-Julia-file Graphviz `call_graph.dot` exports derived from the SSA/CFG engine; Markdown pages link to these artifacts.
+5. **`module_dependencies/`** - `index.md` summarizes module stats, and numbered files split imports, exports, submodules, and the current violations placeholder.
+6. **`function_analysis/`** - Functions are bucketed alphabetically (`010-functions_A-F.md`, etc.) with per-layer/language details.
+7. **`layer_dependencies/`** - `index.md` holds the combined Rust/Julia layer graph summary.
 
 ## Integration
 

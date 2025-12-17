@@ -328,7 +328,7 @@ function build_model(
    
     # Step 2: Load into runtime
     try
-        Main.include(main_path)
+        include_target_file(main_path)
         println("✓ Loaded: $main_path\n")
     catch e
         println("✗ Load failed:")
@@ -417,4 +417,3 @@ function build_model(
    
     return model
 end
-

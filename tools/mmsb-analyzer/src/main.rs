@@ -12,7 +12,9 @@ use std::path::{Path, PathBuf};
 use walkdir::WalkDir;
 
 use crate::control_flow::ControlFlowAnalyzer;
-use crate::dependency::{order_julia_files_by_dependency, order_rust_files_by_dependency};
+use crate::dependency::{
+    order_julia_files_by_dependency, order_rust_files_by_dependency, LayerGraph,
+};
 use crate::julia_parser::JuliaAnalyzer;
 use crate::report::ReportGenerator;
 use crate::rust_parser::RustAnalyzer;
@@ -37,6 +39,10 @@ struct Args {
     /// Verbose output
     #[arg(short, long)]
     verbose: bool,
+
+    /// Skip Julia file analysis
+    #[arg(long)]
+    skip_julia: bool,
 }
 
 fn main() -> Result<()> {
@@ -63,13 +69,6 @@ fn main() -> Result<()> {
     println!("Julia script: {:?}\n", julia_script_path);
 
     let rust_analyzer = RustAnalyzer::new(root_path.to_string_lossy().to_string());
-
-    let julia_analyzer = JuliaAnalyzer::new(
-        root_path.clone(),
-        julia_script_path.clone(),
-        output_path.join("cfg/dots"),
-    );
-
     let mut combined_result = AnalysisResult::new();
 
     // Scan for Rust files
@@ -100,22 +99,35 @@ fn main() -> Result<()> {
     // Scan for Julia files
     println!("\nScanning Julia files (dependency-ordered)...");
     let mut julia_count = 0;
-    let julia_files = gather_julia_files(&root_path);
-    let (ordered_julia_files, julia_layer_graph) =
-        order_julia_files_by_dependency(&julia_files, &root_path)
-            .context("Failed to resolve Julia dependency order")?;
-    for path in ordered_julia_files {
-        if args.verbose {
-            println!("  Analyzing: {:?}", path);
-        }
+    let mut julia_layer_graph = LayerGraph::default();
+    if args.skip_julia {
+        println!("  Skipping Julia analysis (--skip-julia)");
+    } else {
+        let julia_analyzer = JuliaAnalyzer::new(
+            root_path.clone(),
+            julia_script_path.clone(),
+            output_path.join("cfg/dots"),
+        );
 
-        match julia_analyzer.analyze_file(&path) {
-            Ok(result) => {
-                julia_count += 1;
-                combined_result.merge(result);
+        let julia_files = gather_julia_files(&root_path);
+        let (ordered_julia_files, jl_graph) =
+            order_julia_files_by_dependency(&julia_files, &root_path)
+                .context("Failed to resolve Julia dependency order")?;
+        julia_layer_graph = jl_graph;
+
+        for path in ordered_julia_files {
+            if args.verbose {
+                println!("  Analyzing: {:?}", path);
             }
-            Err(e) => {
-                eprintln!("Warning: Failed to analyze {:?}: {}", path, e);
+
+            match julia_analyzer.analyze_file(&path) {
+                Ok(result) => {
+                    julia_count += 1;
+                    combined_result.merge(result);
+                }
+                Err(e) => {
+                    eprintln!("Warning: Failed to analyze {:?}: {}", path, e);
+                }
             }
         }
     }

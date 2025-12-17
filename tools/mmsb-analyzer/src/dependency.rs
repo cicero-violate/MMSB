@@ -20,6 +20,17 @@ pub struct LayerGraph {
     pub unresolved: Vec<UnresolvedDependency>,
 }
 
+impl Default for LayerGraph {
+    fn default() -> Self {
+        LayerGraph {
+            ordered_layers: Vec::new(),
+            edges: Vec::new(),
+            cycles: Vec::new(),
+            unresolved: Vec::new(),
+        }
+    }
+}
+
 #[derive(Debug, Clone)]
 pub struct LayerEdge {
     pub from: String,

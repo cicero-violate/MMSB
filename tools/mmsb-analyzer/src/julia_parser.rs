@@ -21,6 +21,7 @@ pub struct JuliaAnalyzer {
     dot_root: PathBuf,
     julia_bin: PathBuf,
     script_disabled: AtomicBool,
+    global_cfg_generated: AtomicBool,
 }
 
 impl JuliaAnalyzer {
@@ -39,6 +40,7 @@ impl JuliaAnalyzer {
             dot_root,
             julia_bin,
             script_disabled: AtomicBool::new(false),
+            global_cfg_generated: AtomicBool::new(false),
         }
     }
 
@@ -46,6 +48,8 @@ impl JuliaAnalyzer {
         println!("    [Julia] Analyzing {:?}", file_path);
 
         if !self.script_disabled.load(Ordering::Relaxed) {
+            self.ensure_global_cfgs()?;
+
             match self.run_script(file_path) {
                 Ok(result) => return Ok(result),
                 Err(err) => {
@@ -60,6 +64,34 @@ impl JuliaAnalyzer {
         self.fallback_parse(file_path)
     }
 
+    fn ensure_global_cfgs(&self) -> Result<()> {
+        if self.global_cfg_generated.load(Ordering::Relaxed) {
+            return Ok(());
+        }
+
+        let status = Command::new(&self.julia_bin)
+            .arg("--startup-file=no")
+            .arg(&self.script_path)
+            .arg("--global-cfgs")
+            .arg(&self.root_path)
+            .arg(&self.dot_root)
+            .env("JULIA_PROJECT", &self.project_dir)
+            .stderr(Stdio::inherit())
+            .stdout(Stdio::inherit())
+            .status()
+            .context("Failed to execute Julia analyzer for global CFG generation")?;
+
+        if !status.success() {
+            return Err(anyhow!(
+                "Julia analyzer exited with {} while generating global CFGs",
+                status
+            ));
+        }
+
+        self.global_cfg_generated.store(true, Ordering::Relaxed);
+        Ok(())
+    }
+
     fn run_script(&self, file_path: &Path) -> Result<AnalysisResult> {
         let dot_dir = self.compute_dot_dir(file_path);
         fs::create_dir_all(&dot_dir)?;
@@ -68,6 +100,7 @@ impl JuliaAnalyzer {
             .arg(&self.script_path)
             .arg(file_path)
             .arg(&dot_dir)
+            .arg(&self.root_path)
             .env("JULIA_PROJECT", &self.project_dir)
             .stderr(Stdio::inherit())
             .output()
@@ -349,6 +382,13 @@ impl JuliaAnalyzer {
     }
 
     fn compute_dot_dir(&self, path: &Path) -> PathBuf {
+        if let Ok(relative) = path.strip_prefix(&self.root_path) {
+            if let Some(parent) = relative.parent() {
+                return self.dot_root.join(parent);
+            }
+            return self.dot_root.clone();
+        }
+
         let slug = slugify_relative(&self.root_path, path);
         self.dot_root.join(slug)
     }
