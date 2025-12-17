@@ -2,7 +2,7 @@
 
 using Test
 using MMSB.PageTypes: PageID
-using MMSB.PropagationEngine: RecomputeSignature, compute_signature, register_passthrough_recompute!, register_recompute_fn!
+using MMSB.PropagationEngine: RecomputeSignature, compute_signature, register_passthrough_recompute!, register_recompute_fn!, recompute_page!
 using MMSB.MMSBStateTypes: MMSBState, get_page
 using MMSB.API: create_page, update_page
 
@@ -109,12 +109,12 @@ end
         register_passthrough_recompute!(state, child.id, parent.id)
         
         # First recompute - should execute
-        MMSB.PropagationEngine.recompute_page!(state, child.id)
+        recompute_page!(state, child.id)
         @test haskey(child.metadata, :last_signature)
         sig1 = child.metadata[:last_signature]
         
         # Second recompute without parent change - should skip
-        MMSB.PropagationEngine.recompute_page!(state, child.id)
+        recompute_page!(state, child.id)
         sig2 = child.metadata[:last_signature]
         @test sig1.parent_epochs == sig2.parent_epochs
     end
@@ -127,7 +127,7 @@ end
         register_passthrough_recompute!(state, child.id, parent.id)
         
         # Initial recompute
-        MMSB.PropagationEngine.recompute_page!(state, child.id)
+        recompute_page!(state, child.id)
         sig_before = child.metadata[:last_signature]
         epoch_before = sig_before.parent_epochs[1]
         
@@ -135,7 +135,7 @@ end
         update_page(state, parent.id, rand(UInt8, 1024))
         
         # Recompute should execute and update signature
-        MMSB.PropagationEngine.recompute_page!(state, child.id)
+        recompute_page!(state, child.id)
         sig_after = child.metadata[:last_signature]
         epoch_after = sig_after.parent_epochs[1]
         
@@ -150,13 +150,13 @@ end
         
         # Initial dependency
         register_passthrough_recompute!(state, child.id, p1.id)
-        MMSB.PropagationEngine.recompute_page!(state, child.id)
+        recompute_page!(state, child.id)
         
         # Change dependency set (violates contract)
         child.metadata[:recompute_deps] = [p2.id]
         
         # Should error
-        @test_throws ErrorException MMSB.PropagationEngine.recompute_page!(state, child.id)
+        @test_throws ErrorException recompute_page!(state, child.id)
     end
     
     @testset "Signature stored on no-op recompute" begin
@@ -167,7 +167,7 @@ end
         register_passthrough_recompute!(state, child.id, parent.id)
         
         # Recompute with no content change
-        MMSB.PropagationEngine.recompute_page!(state, child.id)
+        recompute_page!(state, child.id)
         @test haskey(child.metadata, :last_signature)
     end
 end
