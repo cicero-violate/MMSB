@@ -3,12 +3,12 @@ use std::collections::HashMap;
 use std::ffi::c_void;
 
 // NCCL opaque types
-type ncclComm_t = *mut c_void;
-type ncclUniqueId = [u8; 128];
+type NcclComm = *mut c_void;
+type NcclUniqueId = [u8; 128];
 
 #[repr(C)]
 #[derive(Debug, Clone, Copy)]
-pub enum ncclRedOp_t {
+pub enum NcclRedOp {
     Sum = 0,
     Prod = 1,
     Max = 2,
@@ -17,7 +17,7 @@ pub enum ncclRedOp_t {
 
 #[repr(C)]
 #[derive(Debug, Clone, Copy)]
-pub enum ncclDataType_t {
+pub enum NcclDataType {
     Int8 = 0,
     Uint8 = 1,
     Int32 = 2,
@@ -29,31 +29,31 @@ pub enum ncclDataType_t {
 }
 
 extern "C" {
-    fn ncclGetUniqueId(id: *mut ncclUniqueId) -> i32;
-    fn ncclCommInitRank(comm: *mut ncclComm_t, ndev: i32, id: ncclUniqueId, rank: i32) -> i32;
-    fn ncclCommDestroy(comm: ncclComm_t) -> i32;
+    fn ncclGetUniqueId(id: *mut NcclUniqueId) -> i32;
+    fn ncclCommInitRank(comm: *mut NcclComm, ndev: i32, id: NcclUniqueId, rank: i32) -> i32;
+    fn ncclCommDestroy(comm: NcclComm) -> i32;
     fn ncclAllReduce(
         sendbuff: *const c_void,
         recvbuff: *mut c_void,
         count: usize,
-        datatype: ncclDataType_t,
-        op: ncclRedOp_t,
-        comm: ncclComm_t,
+        datatype: NcclDataType,
+        op: NcclRedOp,
+        comm: NcclComm,
         stream: *mut c_void,
     ) -> i32;
     fn ncclAllGather(
         sendbuff: *const c_void,
         recvbuff: *mut c_void,
         sendcount: usize,
-        datatype: ncclDataType_t,
-        comm: ncclComm_t,
+        datatype: NcclDataType,
+        comm: NcclComm,
         stream: *mut c_void,
     ) -> i32;
 }
 
 #[derive(Debug)]
 pub struct NCCLCommunicator {
-    comm: ncclComm_t,
+    comm: NcclComm,
     rank: i32,
     world_size: i32,
 }
@@ -61,7 +61,7 @@ pub struct NCCLCommunicator {
 #[derive(Debug)]
 pub struct NCCLContext {
     communicators: Mutex<HashMap<i32, NCCLCommunicator>>,
-    unique_id: ncclUniqueId,
+    unique_id: NcclUniqueId,
 }
 
 impl NCCLContext {
@@ -80,7 +80,7 @@ impl NCCLContext {
     }
     
     pub fn init_communicator(&self, rank: i32, world_size: i32) -> Result<(), i32> {
-        let mut comm: ncclComm_t = std::ptr::null_mut();
+        let mut comm: NcclComm = std::ptr::null_mut();
         let result = unsafe {
             ncclCommInitRank(&mut comm, world_size, self.unique_id, rank)
         };
@@ -105,8 +105,8 @@ impl NCCLContext {
         sendbuf: *const c_void,
         recvbuf: *mut c_void,
         count: usize,
-        datatype: ncclDataType_t,
-        op: ncclRedOp_t,
+        datatype: NcclDataType,
+        op: NcclRedOp,
         stream: *mut c_void,
     ) -> Result<(), i32> {
         let comms = self.communicators.lock();
@@ -125,7 +125,7 @@ impl NCCLContext {
         sendbuf: *const c_void,
         recvbuf: *mut c_void,
         sendcount: usize,
-        datatype: ncclDataType_t,
+        datatype: NcclDataType,
         stream: *mut c_void,
     ) -> Result<(), i32> {
         let comms = self.communicators.lock();

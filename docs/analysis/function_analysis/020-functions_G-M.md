@@ -15,6 +15,23 @@
   - `iter`
   - `iter`
 
+#### `l2_distance`
+
+- **File:** MMSB/src/01_page/replay_validator.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `min`
+  - `len`
+  - `len`
+  - `max`
+  - `unsigned_abs`
+  - `len`
+  - `len`
+  - `powi`
+  - `abs`
+  - `len`
+  - `len`
+
 #### `load_checkpoint`
 
 - **File:** MMSB/src/01_page/checkpoint.rs:0
@@ -56,6 +73,20 @@
   - `Ok`
   - `Err`
   - `std::io::Error::new`
+
+#### `make_delta`
+
+- **File:** MMSB/src/01_page/columnar_delta.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `DeltaID`
+  - `PageID`
+  - `Epoch`
+  - `collect`
+  - `map`
+  - `iter`
+  - `to_vec`
+  - `Source`
 
 #### `merge_deltas`
 
@@ -143,9 +174,172 @@
   - `keys`
   - `dfs`
 
+#### `is_self_loop`
+
+- **File:** MMSB/src/03_dag/graph_validator.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `unwrap_or`
+  - `map`
+  - `get`
+  - `any`
+  - `iter`
+
+## Layer: 04_propagation
+
+### Rust Functions
+
+#### `gc_invoked_when_threshold_low`
+
+- **File:** MMSB/src/04_propagation/tick_orchestrator.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `orchestrator`
+  - `unwrap`
+  - `execute_tick`
+
+#### `make_delta`
+
+- **File:** MMSB/src/04_propagation/throughput_engine.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `DeltaID`
+  - `PageID`
+  - `Epoch`
+  - `collect`
+  - `map`
+  - `iter`
+  - `to_vec`
+  - `Source`
+
+#### `merges_multiple_deltas_per_page`
+
+- **File:** MMSB/src/04_propagation/throughput_engine.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `Arc::new`
+  - `PageAllocator::new`
+  - `Default::default`
+  - `unwrap`
+  - `allocate_raw`
+  - `PageID`
+  - `Some`
+  - `ThroughputEngine::new`
+  - `Arc::clone`
+  - `unwrap`
+  - `process_parallel`
+  - `unwrap`
+  - `acquire_page`
+  - `PageID`
+
+## Layer: 06_utility
+
+### Rust Functions
+
+#### `gc_trigger_depends_on_threshold`
+
+- **File:** MMSB/src/06_utility/memory_monitor.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `allocator`
+  - `unwrap`
+  - `allocate_raw`
+  - `PageID`
+  - `Some`
+  - `MemoryMonitor::with_config`
+  - `Arc::clone`
+  - `MemoryMonitor::with_config`
+  - `Arc::clone`
+
+#### `graph_acyclicity_detects_cycles`
+
+- **File:** MMSB/src/06_utility/invariant_checker.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `ShadowPageGraph::default`
+  - `add_edge`
+  - `PageID`
+  - `PageID`
+  - `add_edge`
+  - `PageID`
+  - `PageID`
+  - `Some`
+  - `InvariantChecker::new`
+  - `register`
+  - `GraphAcyclicity::new`
+
+#### `incremental_gc_reclaims_pages_under_budget`
+
+- **File:** MMSB/src/06_utility/memory_monitor.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `allocator`
+  - `unwrap`
+  - `allocate_raw`
+  - `PageID`
+  - `Some`
+  - `MemoryMonitor::with_config`
+  - `Arc::clone`
+  - `unwrap`
+  - `trigger_incremental_gc`
+
 ## Layer: root
 
 ### Rust Functions
+
+#### `graph_validator_detects_no_cycles`
+
+- **File:** MMSB/tests/benchmark_03_graph.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `ShadowPageGraph::default`
+  - `add_edge`
+  - `PageID`
+  - `PageID`
+  - `add_edge`
+  - `PageID`
+  - `PageID`
+  - `GraphValidator::new`
+  - `detect_cycles`
+
+#### `integrity_checker_accepts_valid_delta`
+
+- **File:** MMSB/tests/benchmark_02_integrity.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `Arc::new`
+  - `DeviceBufferRegistry::default`
+  - `Arc::new`
+  - `unwrap`
+  - `Page::new`
+  - `PageID`
+  - `insert`
+  - `DeltaID`
+  - `PageID`
+  - `Epoch`
+  - `Source`
+  - `into`
+  - `DeltaIntegrityChecker::new`
+  - `Arc::clone`
+  - `validate`
+
+#### `invariant_checker_reports_success`
+
+- **File:** MMSB/tests/benchmark_08_invariants.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `Arc::new`
+  - `PageAllocator::new`
+  - `PageAllocatorConfig::default`
+  - `unwrap`
+  - `allocate_raw`
+  - `PageID`
+  - `Some`
+  - `ShadowPageGraph::default`
+  - `Some`
+  - `Some`
+  - `InvariantChecker::with_builtins`
+  - `run`
 
 #### `log_error_code`
 
@@ -158,6 +352,52 @@
 
 - **File:** MMSB/build.rs:0
 - **Visibility:** Private
+
+#### `main`
+
+- **File:** MMSB/src/bin/phase6_bench.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `Arc::new`
+  - `PageAllocator::new`
+  - `PageAllocatorConfig::default`
+  - `expect`
+  - `allocate_raw`
+  - `PageID`
+  - `Some`
+  - `build_deltas`
+  - `unwrap_or`
+  - `map`
+  - `std::thread::available_parallelism`
+  - `get`
+  - `ThroughputEngine::new`
+  - `Arc::clone`
+  - `process_parallel`
+  - `clone`
+  - `Arc::new`
+  - `build_graph`
+  - `Arc::new`
+  - `MemoryMonitor::with_config`
+  - `Arc::clone`
+  - `MemoryMonitorConfig::default`
+  - `ThroughputEngine::new`
+  - `Arc::clone`
+  - `TickOrchestrator::new`
+  - `Arc::clone`
+  - `execute_tick`
+  - `write_report`
+  - `Ok`
+
+#### `make_delta`
+
+- **File:** MMSB/tests/benchmark_05_throughput.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `DeltaID`
+  - `PageID`
+  - `Epoch`
+  - `Source`
+  - `into`
 
 #### `mask_from_bytes`
 
@@ -176,6 +416,24 @@
   - `push`
   - `len`
   - `truncate`
+
+#### `memory_monitor_enforces_limits`
+
+- **File:** MMSB/tests/benchmark_07_memory.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `Arc::new`
+  - `PageAllocator::new`
+  - `PageAllocatorConfig::default`
+  - `unwrap`
+  - `allocate_raw`
+  - `PageID`
+  - `Some`
+  - `MemoryMonitor::with_config`
+  - `Arc::clone`
+  - `snapshot`
+  - `unwrap`
+  - `trigger_incremental_gc`
 
 #### `mmsb_allocator_allocate`
 

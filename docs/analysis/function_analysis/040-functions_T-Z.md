@@ -4,6 +4,40 @@
 
 ### Rust Functions
 
+#### `temp_log_path`
+
+- **File:** MMSB/src/01_page/replay_validator.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `std::env::temp_dir`
+  - `push`
+
+#### `test_apply_to_pages`
+
+- **File:** MMSB/src/01_page/columnar_delta.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `ColumnarDeltaBatch::from_rows`
+  - `HashMap::new`
+  - `unwrap`
+  - `Page::new`
+  - `PageID`
+  - `unwrap`
+  - `Page::new`
+  - `PageID`
+  - `insert`
+  - `PageID`
+  - `insert`
+  - `PageID`
+  - `unwrap`
+  - `apply_to_pages`
+  - `unwrap`
+  - `remove`
+  - `PageID`
+  - `unwrap`
+  - `remove`
+  - `PageID`
+
 #### `test_checkpoint_roundtrip_in_memory`
 
 - **File:** MMSB/src/01_page/allocator.rs:0
@@ -28,6 +62,15 @@
   - `acquire_page`
   - `PageID`
 
+#### `test_epoch_filter`
+
+- **File:** MMSB/src/01_page/columnar_delta.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `ColumnarDeltaBatch::from_rows`
+  - `filter_epoch_eq`
+  - `Epoch`
+
 #### `test_page_info_metadata_roundtrip`
 
 - **File:** MMSB/src/01_page/allocator.rs:0
@@ -40,6 +83,15 @@
   - `PageID`
   - `set_metadata`
   - `page_infos`
+
+#### `test_roundtrip`
+
+- **File:** MMSB/src/01_page/columnar_delta.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `ColumnarDeltaBatch::from_rows`
+  - `clone`
+  - `to_vec`
 
 #### `test_unified_page`
 
@@ -122,6 +174,17 @@
   - `flush`
   - `Ok`
 
+## Layer: 02_semiring
+
+### Rust Functions
+
+#### `validates_semiring_operations`
+
+- **File:** MMSB/src/02_semiring/purity_validator.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `PurityValidator::default`
+
 ## Layer: 03_dag
 
 ### Rust Functions
@@ -152,6 +215,74 @@
   - `get`
   - `get_mut`
   - `push_back`
+
+## Layer: 04_propagation
+
+### Rust Functions
+
+#### `test_basic_push_pop`
+
+- **File:** MMSB/src/04_propagation/ring_buffer.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `LockFreeRingBuffer::new`
+  - `unwrap`
+  - `try_push`
+  - `unwrap`
+  - `try_push`
+
+#### `test_concurrent_producers_consumers`
+
+- **File:** MMSB/src/04_propagation/ring_buffer.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `Arc::new`
+  - `LockFreeRingBuffer::new`
+  - `Arc::new`
+  - `AtomicUsize::new`
+  - `Arc::new`
+  - `AtomicUsize::new`
+  - `Vec::new`
+  - `Arc::clone`
+  - `Arc::clone`
+  - `push`
+  - `thread::spawn`
+  - `fetch_add`
+  - `is_err`
+  - `try_push`
+  - `thread::yield_now`
+  - `Arc::clone`
+  - `Arc::clone`
+  - `push`
+  - `thread::spawn`
+  - `load`
+  - `is_some`
+  - `try_pop`
+  - `fetch_add`
+  - `thread::sleep`
+  - `Duration::from_micros`
+  - `unwrap`
+  - `join`
+
+#### `test_wraparound_behavior`
+
+- **File:** MMSB/src/04_propagation/ring_buffer.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `LockFreeRingBuffer::new`
+  - `unwrap`
+  - `try_push`
+  - `unwrap`
+  - `try_push`
+
+#### `tick_metrics_capture_all_phases`
+
+- **File:** MMSB/src/04_propagation/tick_orchestrator.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `orchestrator`
+  - `unwrap`
+  - `execute_tick`
 
 ## Layer: 05_adaptive
 
@@ -246,9 +377,31 @@
   - `record_allocation`
   - `snapshot`
 
+#### `validate_metadata_blob`
+
+- **File:** MMSB/src/06_utility/invariant_checker.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `is_empty`
+  - `Ok`
+  - `read_u32`
+  - `read_u32`
+  - `read_bytes`
+  - `read_u32`
+  - `read_bytes`
+  - `Ok`
+
 ## Layer: root
 
 ### Rust Functions
+
+#### `temp_log_path`
+
+- **File:** MMSB/tests/benchmark_01_replay.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `std::env::temp_dir`
+  - `push`
 
 #### `test_allocator_cpu_gpu_latency`
 
@@ -456,6 +609,59 @@
   - `unwrap`
   - `join`
 
+#### `throughput_engine_exceeds_minimum_rate`
+
+- **File:** MMSB/tests/benchmark_05_throughput.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `Arc::new`
+  - `PageAllocator::new`
+  - `PageAllocatorConfig::default`
+  - `unwrap`
+  - `allocate_raw`
+  - `PageID`
+  - `Some`
+  - `ThroughputEngine::new`
+  - `Arc::clone`
+  - `collect`
+  - `map`
+  - `make_delta`
+  - `unwrap`
+  - `process_parallel`
+
+#### `tick_latency_stays_within_budget`
+
+- **File:** MMSB/tests/benchmark_06_tick_latency.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `Arc::new`
+  - `PageAllocator::new`
+  - `PageAllocatorConfig::default`
+  - `unwrap`
+  - `allocate_raw`
+  - `PageID`
+  - `Some`
+  - `ThroughputEngine::new`
+  - `Arc::clone`
+  - `Arc::new`
+  - `ShadowPageGraph::default`
+  - `add_edge`
+  - `PageID`
+  - `PageID`
+  - `add_edge`
+  - `PageID`
+  - `PageID`
+  - `Arc::new`
+  - `MemoryMonitor::with_config`
+  - `Arc::clone`
+  - `MemoryMonitorConfig::default`
+  - `TickOrchestrator::new`
+  - `collect`
+  - `map`
+  - `delta`
+  - `unwrap`
+  - `execute_tick`
+
 #### `validates_dense_lengths`
 
 - **File:** MMSB/tests/delta_validation.rs:0
@@ -472,4 +678,15 @@
   - `Vec::new`
   - `to_vec`
   - `std::slice::from_raw_parts`
+
+#### `write_report`
+
+- **File:** MMSB/src/bin/phase6_bench.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `as_secs_f64`
+  - `duration_since`
+  - `SystemTime::now`
+  - `File::create`
+  - `Ok`
 

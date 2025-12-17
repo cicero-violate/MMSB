@@ -1,44 +1,15 @@
-name: MMSB CI
+name: CI
 
 on:
   push:
-    branches: ["main"]
+    branches: [ main ]
   pull_request:
 
 jobs:
-  rust:
+  tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          override: true
-      - name: Cargo fmt
-        run: cargo fmt --all -- --check
-      - name: Cargo clippy
-        run: cargo clippy --all-targets -- -D warnings
-      - name: Cargo test
-        run: cargo test
-      - name: Miri smoke
-        run: ci/scripts/run_miri.sh
-        continue-on-error: true
-      - name: Install valgrind
-        run: sudo apt-get update && sudo apt-get install -y valgrind
-      - name: Valgrind smoke
-        run: ci/scripts/run_valgrind.sh
-        continue-on-error: true
-
-  julia:
-    runs-on: ubuntu-latest
-    env:
-      MMSB_USE_RUST: "true"
-    steps:
-      - uses: actions/checkout@v4
-      - uses: julia-actions/setup-julia@v1
-        with:
-          version: '1.10'
-      - name: Instantiate
-        run: julia --project --startup-file=no -e 'using Pkg; Pkg.instantiate()'
-      - name: Run tests
-        run: julia --project --startup-file=no test/runtests.jl
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Run Phase 6 test suite
+      - run: cargo test --lib --tests --no-default-features

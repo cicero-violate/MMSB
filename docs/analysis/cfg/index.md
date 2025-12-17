@@ -1,8 +1,8 @@
 # Control Flow Graphs (CFG)
 
-Generated: 2025-12-17 08:15:43
+Generated: 2025-12-17 10:16:28
 
-- Total CFGs: 123
+- Total CFGs: 192
 - Files are grouped by MMSB directory prefix; numeric prefixes match lexical ordering.
 
 ## Group Files
@@ -14,5 +14,6 @@ Generated: 2025-12-17 08:15:43
 - `src/04_propagation` → `040-src-04_propagation.md`
 - `src/05_adaptive` → `050-src-05_adaptive.md`
 - `src/06_utility` → `060-src-06_utility.md`
-- `src/ffi.rs` → `070-src-ffi_rs.md`
-- `tests` → `080-tests.md`
+- `src/bin` → `070-src-bin.md`
+- `src/ffi.rs` → `080-src-ffi_rs.md`
+- `tests` → `090-tests.md`

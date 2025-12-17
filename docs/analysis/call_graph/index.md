@@ -6,16 +6,20 @@ This document shows the **interprocedural call graph** - which functions call wh
 
 ## Call Graph Statistics
 
-- Total functions: 123
-- Total function calls: 89
+- Total functions: 192
+- Total function calls: 169
 - Maximum call depth: 3
-- Leaf functions (no outgoing calls): 74
+- Leaf functions (no outgoing calls): 114
 
 ## Call Graph Visualization
 
 ```mermaid
 graph TD
     MMSB_build_rs__main["MMSB/build.rs::main"]
+    MMSB_src_bin_phase6_bench_rs__main["MMSB/src/bin/phase6_bench.rs::main"]
+    MMSB_src_bin_phase6_bench_rs__build_deltas["MMSB/src/bin/phase6_bench.rs::build_deltas"]
+    MMSB_src_bin_phase6_bench_rs__build_graph["MMSB/src/bin/phase6_bench.rs::build_graph"]
+    MMSB_src_bin_phase6_bench_rs__write_report["MMSB/src/bin/phase6_bench.rs::write_report"]
     MMSB_src_ffi_rs__set_last_error["MMSB/src/ffi.rs::set_last_error"]
     MMSB_src_ffi_rs__log_error_code["MMSB/src/ffi.rs::log_error_code"]
     MMSB_src_ffi_rs__mmsb_error_is_retryable["MMSB/src/ffi.rs::mmsb_error_is_retryable"]
@@ -70,6 +74,21 @@ graph TD
     MMSB_src_ffi_rs__mmsb_semiring_boolean_fold_add["MMSB/src/ffi.rs::mmsb_semiring_boolean_fold_add"]
     MMSB_src_ffi_rs__mmsb_semiring_boolean_fold_mul["MMSB/src/ffi.rs::mmsb_semiring_boolean_fold_mul"]
     MMSB_src_ffi_rs__mmsb_semiring_boolean_accumulate["MMSB/src/ffi.rs::mmsb_semiring_boolean_accumulate"]
+    MMSB_tests_benchmark_01_replay_rs__temp_log_path["MMSB/tests/benchmark_01_replay.rs::temp_log_path"]
+    MMSB_tests_benchmark_01_replay_rs__replay_validator_divergence_under_threshold["MMSB/tests/benchmark_01_replay.rs::replay_validator_divergence_under_threshold"]
+    MMSB_tests_benchmark_02_integrity_rs__integrity_checker_accepts_valid_delta["MMSB/tests/benchmark_02_integrity.rs::integrity_checker_accepts_valid_delta"]
+    MMSB_tests_benchmark_03_graph_rs__graph_validator_detects_no_cycles["MMSB/tests/benchmark_03_graph.rs::graph_validator_detects_no_cycles"]
+    MMSB_tests_benchmark_04_purity_rs__purity_validator_covers_semiring_operations["MMSB/tests/benchmark_04_purity.rs::purity_validator_covers_semiring_operations"]
+    MMSB_tests_benchmark_05_throughput_rs__make_delta["MMSB/tests/benchmark_05_throughput.rs::make_delta"]
+    MMSB_tests_benchmark_05_throughput_rs__throughput_engine_exceeds_minimum_rate["MMSB/tests/benchmark_05_throughput.rs::throughput_engine_exceeds_minimum_rate"]
+    MMSB_tests_benchmark_06_tick_latency_rs__delta["MMSB/tests/benchmark_06_tick_latency.rs::delta"]
+    MMSB_tests_benchmark_06_tick_latency_rs__tick_latency_stays_within_budget["MMSB/tests/benchmark_06_tick_latency.rs::tick_latency_stays_within_budget"]
+    MMSB_tests_benchmark_07_memory_rs__memory_monitor_enforces_limits["MMSB/tests/benchmark_07_memory.rs::memory_monitor_enforces_limits"]
+    MMSB_tests_benchmark_08_invariants_rs__invariant_checker_reports_success["MMSB/tests/benchmark_08_invariants.rs::invariant_checker_reports_success"]
+    MMSB_tests_benchmark_09_stability_rs__simulate["MMSB/tests/benchmark_09_stability.rs::simulate"]
+    MMSB_tests_benchmark_09_stability_rs__divergence["MMSB/tests/benchmark_09_stability.rs::divergence"]
+    MMSB_tests_benchmark_09_stability_rs__stability_resists_small_noise["MMSB/tests/benchmark_09_stability.rs::stability_resists_small_noise"]
+    MMSB_tests_benchmark_10_provenance_rs__provenance_tracker_resolves_with_cache["MMSB/tests/benchmark_10_provenance.rs::provenance_tracker_resolves_with_cache"]
     MMSB_tests_delta_validation_rs__dense_delta["MMSB/tests/delta_validation.rs::dense_delta"]
     MMSB_tests_delta_validation_rs__validates_dense_lengths["MMSB/tests/delta_validation.rs::validates_dense_lengths"]
     MMSB_tests_delta_validation_rs__rejects_mismatched_dense_lengths["MMSB/tests/delta_validation.rs::rejects_mismatched_dense_lengths"]
@@ -97,15 +116,28 @@ graph TD
     MMSB_src_01_page_allocator_rs__test_checkpoint_roundtrip_in_memory["MMSB/src/01_page/allocator.rs::test_checkpoint_roundtrip_in_memory"]
     MMSB_src_01_page_checkpoint_rs__write_checkpoint["MMSB/src/01_page/checkpoint.rs::write_checkpoint"]
     MMSB_src_01_page_checkpoint_rs__load_checkpoint["MMSB/src/01_page/checkpoint.rs::load_checkpoint"]
+    MMSB_src_01_page_columnar_delta_rs__make_delta["MMSB/src/01_page/columnar_delta.rs::make_delta"]
+    MMSB_src_01_page_columnar_delta_rs__test_roundtrip["MMSB/src/01_page/columnar_delta.rs::test_roundtrip"]
+    MMSB_src_01_page_columnar_delta_rs__test_epoch_filter["MMSB/src/01_page/columnar_delta.rs::test_epoch_filter"]
+    MMSB_src_01_page_columnar_delta_rs__test_apply_to_pages["MMSB/src/01_page/columnar_delta.rs::test_apply_to_pages"]
     MMSB_src_01_page_delta_rs__now_ns["MMSB/src/01_page/delta.rs::now_ns"]
     MMSB_src_01_page_delta_merge_rs__merge_deltas["MMSB/src/01_page/delta_merge.rs::merge_deltas"]
     MMSB_src_01_page_delta_merge_rs__merge_dense_avx2["MMSB/src/01_page/delta_merge.rs::merge_dense_avx2"]
     MMSB_src_01_page_delta_merge_rs__merge_dense_avx512["MMSB/src/01_page/delta_merge.rs::merge_dense_avx512"]
     MMSB_src_01_page_delta_merge_rs__merge_dense_simd["MMSB/src/01_page/delta_merge.rs::merge_dense_simd"]
     MMSB_src_01_page_delta_validation_rs__validate_delta["MMSB/src/01_page/delta_validation.rs::validate_delta"]
+    MMSB_src_01_page_integrity_checker_rs__schema_valid["MMSB/src/01_page/integrity_checker.rs::schema_valid"]
+    MMSB_src_01_page_integrity_checker_rs__page["MMSB/src/01_page/integrity_checker.rs::page"]
+    MMSB_src_01_page_integrity_checker_rs__delta["MMSB/src/01_page/integrity_checker.rs::delta"]
+    MMSB_src_01_page_integrity_checker_rs__detects_orphan_and_epoch_errors["MMSB/src/01_page/integrity_checker.rs::detects_orphan_and_epoch_errors"]
     MMSB_src_01_page_page_rs__read_u32["MMSB/src/01_page/page.rs::read_u32"]
     MMSB_src_01_page_page_rs__read_bytes["MMSB/src/01_page/page.rs::read_bytes"]
     MMSB_src_01_page_page_rs__allocate_zeroed["MMSB/src/01_page/page.rs::allocate_zeroed"]
+    MMSB_src_01_page_replay_validator_rs__compare_snapshots["MMSB/src/01_page/replay_validator.rs::compare_snapshots"]
+    MMSB_src_01_page_replay_validator_rs__l2_distance["MMSB/src/01_page/replay_validator.rs::l2_distance"]
+    MMSB_src_01_page_replay_validator_rs__temp_log_path["MMSB/src/01_page/replay_validator.rs::temp_log_path"]
+    MMSB_src_01_page_replay_validator_rs__rand_suffix["MMSB/src/01_page/replay_validator.rs::rand_suffix"]
+    MMSB_src_01_page_replay_validator_rs__checkpoint_validation_detects_divergence["MMSB/src/01_page/replay_validator.rs::checkpoint_validation_detects_divergence"]
     MMSB_src_01_page_simd_mask_rs__generate_mask["MMSB/src/01_page/simd_mask.rs::generate_mask"]
     MMSB_src_01_page_tlog_rs__summary["MMSB/src/01_page/tlog.rs::summary"]
     MMSB_src_01_page_tlog_rs__serialize_frame["MMSB/src/01_page/tlog.rs::serialize_frame"]
@@ -119,14 +151,19 @@ graph TD
     MMSB_src_01_page_tlog_compression_rs__compact["MMSB/src/01_page/tlog_compression.rs::compact"]
     MMSB_src_01_page_tlog_replay_rs__apply_log["MMSB/src/01_page/tlog_replay.rs::apply_log"]
     MMSB_src_01_page_tlog_serialization_rs__read_log["MMSB/src/01_page/tlog_serialization.rs::read_log"]
+    MMSB_src_02_semiring_purity_validator_rs__detects_impure_function["MMSB/src/02_semiring/purity_validator.rs::detects_impure_function"]
+    MMSB_src_02_semiring_purity_validator_rs__validates_semiring_operations["MMSB/src/02_semiring/purity_validator.rs::validates_semiring_operations"]
     MMSB_src_02_semiring_semiring_ops_rs__fold_add["MMSB/src/02_semiring/semiring_ops.rs::fold_add"]
     MMSB_src_02_semiring_semiring_ops_rs__fold_mul["MMSB/src/02_semiring/semiring_ops.rs::fold_mul"]
     MMSB_src_02_semiring_semiring_ops_rs__accumulate["MMSB/src/02_semiring/semiring_ops.rs::accumulate"]
     MMSB_src_03_dag_cycle_detection_rs__has_cycle["MMSB/src/03_dag/cycle_detection.rs::has_cycle"]
     MMSB_src_03_dag_cycle_detection_rs__dfs["MMSB/src/03_dag/cycle_detection.rs::dfs"]
+    MMSB_src_03_dag_graph_validator_rs__reachable["MMSB/src/03_dag/graph_validator.rs::reachable"]
+    MMSB_src_03_dag_graph_validator_rs__strong_connect["MMSB/src/03_dag/graph_validator.rs::strong_connect"]
+    MMSB_src_03_dag_graph_validator_rs__is_self_loop["MMSB/src/03_dag/graph_validator.rs::is_self_loop"]
+    MMSB_src_03_dag_graph_validator_rs__detects_cycle["MMSB/src/03_dag/graph_validator.rs::detects_cycle"]
+    MMSB_src_03_dag_graph_validator_rs__per_page_validation["MMSB/src/03_dag/graph_validator.rs::per_page_validation"]
     MMSB_src_03_dag_shadow_graph_traversal_rs__topological_sort["MMSB/src/03_dag/shadow_graph_traversal.rs::topological_sort"]
-    MMSB_src_04_propagation_propagation_fastpath_rs__passthrough["MMSB/src/04_propagation/propagation_fastpath.rs::passthrough"]
-    MMSB_src_04_propagation_sparse_message_passing_rs__enqueue_sparse["MMSB/src/04_propagation/sparse_message_passing.rs::enqueue_sparse"]
     MMSB_src_05_adaptive_locality_optimizer_rs__test_locality_optimizer["MMSB/src/05_adaptive/locality_optimizer.rs::test_locality_optimizer"]
     MMSB_src_05_adaptive_memory_layout_rs__test_memory_layout_creation["MMSB/src/05_adaptive/memory_layout.rs::test_memory_layout_creation"]
     MMSB_src_05_adaptive_memory_layout_rs__test_locality_cost_empty["MMSB/src/05_adaptive/memory_layout.rs::test_locality_cost_empty"]
@@ -135,15 +172,52 @@ graph TD
     MMSB_src_06_utility_cpu_features_rs__cpu_has_avx2["MMSB/src/06_utility/cpu_features.rs::cpu_has_avx2"]
     MMSB_src_06_utility_cpu_features_rs__cpu_has_avx512["MMSB/src/06_utility/cpu_features.rs::cpu_has_avx512"]
     MMSB_src_06_utility_cpu_features_rs__cpu_has_sse42["MMSB/src/06_utility/cpu_features.rs::cpu_has_sse42"]
+    MMSB_src_06_utility_invariant_checker_rs__validate_metadata_blob["MMSB/src/06_utility/invariant_checker.rs::validate_metadata_blob"]
+    MMSB_src_06_utility_invariant_checker_rs__read_u32["MMSB/src/06_utility/invariant_checker.rs::read_u32"]
+    MMSB_src_06_utility_invariant_checker_rs__read_bytes["MMSB/src/06_utility/invariant_checker.rs::read_bytes"]
+    MMSB_src_06_utility_invariant_checker_rs__epoch_invariant_detects_regressions["MMSB/src/06_utility/invariant_checker.rs::epoch_invariant_detects_regressions"]
+    MMSB_src_06_utility_invariant_checker_rs__graph_acyclicity_detects_cycles["MMSB/src/06_utility/invariant_checker.rs::graph_acyclicity_detects_cycles"]
+    MMSB_src_06_utility_memory_monitor_rs__allocator["MMSB/src/06_utility/memory_monitor.rs::allocator"]
+    MMSB_src_06_utility_memory_monitor_rs__snapshot_identifies_cold_pages["MMSB/src/06_utility/memory_monitor.rs::snapshot_identifies_cold_pages"]
+    MMSB_src_06_utility_memory_monitor_rs__incremental_gc_reclaims_pages_under_budget["MMSB/src/06_utility/memory_monitor.rs::incremental_gc_reclaims_pages_under_budget"]
+    MMSB_src_06_utility_memory_monitor_rs__snapshot_reflects_allocator_state["MMSB/src/06_utility/memory_monitor.rs::snapshot_reflects_allocator_state"]
+    MMSB_src_06_utility_memory_monitor_rs__gc_trigger_depends_on_threshold["MMSB/src/06_utility/memory_monitor.rs::gc_trigger_depends_on_threshold"]
+    MMSB_src_06_utility_provenance_tracker_rs__resolves_chain_with_depth_limit["MMSB/src/06_utility/provenance_tracker.rs::resolves_chain_with_depth_limit"]
+    MMSB_src_06_utility_provenance_tracker_rs__cache_does_not_grow_unbounded["MMSB/src/06_utility/provenance_tracker.rs::cache_does_not_grow_unbounded"]
     MMSB_src_06_utility_telemetry_rs__test_telemetry_basic["MMSB/src/06_utility/telemetry.rs::test_telemetry_basic"]
     MMSB_src_06_utility_telemetry_rs__test_cache_hit_rate["MMSB/src/06_utility/telemetry.rs::test_cache_hit_rate"]
     MMSB_src_06_utility_telemetry_rs__test_reset["MMSB/src/06_utility/telemetry.rs::test_reset"]
+    MMSB_src_04_propagation_propagation_fastpath_rs__passthrough["MMSB/src/04_propagation/propagation_fastpath.rs::passthrough"]
+    MMSB_src_04_propagation_propagation_queue_rs__command["MMSB/src/04_propagation/propagation_queue.rs::command"]
+    MMSB_src_04_propagation_propagation_queue_rs__queue_roundtrip["MMSB/src/04_propagation/propagation_queue.rs::queue_roundtrip"]
+    MMSB_src_04_propagation_propagation_queue_rs__drain_batch_respects_bounds["MMSB/src/04_propagation/propagation_queue.rs::drain_batch_respects_bounds"]
+    MMSB_src_04_propagation_ring_buffer_rs__test_basic_push_pop["MMSB/src/04_propagation/ring_buffer.rs::test_basic_push_pop"]
+    MMSB_src_04_propagation_ring_buffer_rs__test_wraparound_behavior["MMSB/src/04_propagation/ring_buffer.rs::test_wraparound_behavior"]
+    MMSB_src_04_propagation_ring_buffer_rs__test_concurrent_producers_consumers["MMSB/src/04_propagation/ring_buffer.rs::test_concurrent_producers_consumers"]
+    MMSB_src_04_propagation_sparse_message_passing_rs__enqueue_sparse["MMSB/src/04_propagation/sparse_message_passing.rs::enqueue_sparse"]
+    MMSB_src_04_propagation_throughput_engine_rs__partition_by_page["MMSB/src/04_propagation/throughput_engine.rs::partition_by_page"]
+    MMSB_src_04_propagation_throughput_engine_rs__chunk_partitions["MMSB/src/04_propagation/throughput_engine.rs::chunk_partitions"]
+    MMSB_src_04_propagation_throughput_engine_rs__process_chunk["MMSB/src/04_propagation/throughput_engine.rs::process_chunk"]
+    MMSB_src_04_propagation_throughput_engine_rs__delta_error_to_page["MMSB/src/04_propagation/throughput_engine.rs::delta_error_to_page"]
+    MMSB_src_04_propagation_throughput_engine_rs__make_delta["MMSB/src/04_propagation/throughput_engine.rs::make_delta"]
+    MMSB_src_04_propagation_throughput_engine_rs__applies_batches_in_parallel["MMSB/src/04_propagation/throughput_engine.rs::applies_batches_in_parallel"]
+    MMSB_src_04_propagation_throughput_engine_rs__merges_multiple_deltas_per_page["MMSB/src/04_propagation/throughput_engine.rs::merges_multiple_deltas_per_page"]
+    MMSB_src_04_propagation_throughput_engine_rs__reports_nonzero_throughput_for_large_batches["MMSB/src/04_propagation/throughput_engine.rs::reports_nonzero_throughput_for_large_batches"]
+    MMSB_src_04_propagation_tick_orchestrator_rs__sample_delta["MMSB/src/04_propagation/tick_orchestrator.rs::sample_delta"]
+    MMSB_src_04_propagation_tick_orchestrator_rs__orchestrator["MMSB/src/04_propagation/tick_orchestrator.rs::orchestrator"]
+    MMSB_src_04_propagation_tick_orchestrator_rs__tick_metrics_capture_all_phases["MMSB/src/04_propagation/tick_orchestrator.rs::tick_metrics_capture_all_phases"]
+    MMSB_src_04_propagation_tick_orchestrator_rs__gc_invoked_when_threshold_low["MMSB/src/04_propagation/tick_orchestrator.rs::gc_invoked_when_threshold_low"]
+    MMSB_src_bin_phase6_bench_rs__main --> MMSB_src_bin_phase6_bench_rs__build_deltas
+    MMSB_src_bin_phase6_bench_rs__main --> MMSB_src_bin_phase6_bench_rs__build_graph
+    MMSB_src_bin_phase6_bench_rs__main --> MMSB_src_bin_phase6_bench_rs__write_report
     MMSB_src_ffi_rs__mmsb_page_read --> MMSB_src_ffi_rs__set_last_error
     MMSB_src_ffi_rs__mmsb_page_read --> MMSB_src_ffi_rs__set_last_error
     MMSB_src_ffi_rs__mmsb_page_epoch --> MMSB_src_ffi_rs__set_last_error
     MMSB_src_ffi_rs__mmsb_page_write_masked --> MMSB_src_ffi_rs__set_last_error
     MMSB_src_ffi_rs__mmsb_page_write_masked --> MMSB_src_ffi_rs__mask_from_bytes
     MMSB_src_ffi_rs__mmsb_page_write_masked --> MMSB_src_ffi_rs__vec_from_ptr
+    MMSB_src_ffi_rs__mmsb_page_write_masked --> MMSB_tests_benchmark_06_tick_latency_rs__delta
+    MMSB_src_ffi_rs__mmsb_page_write_masked --> MMSB_src_01_page_integrity_checker_rs__delta
     MMSB_src_ffi_rs__mmsb_page_write_masked --> MMSB_src_ffi_rs__set_last_error
     MMSB_src_ffi_rs__mmsb_page_metadata_size --> MMSB_src_ffi_rs__set_last_error
     MMSB_src_ffi_rs__mmsb_page_metadata_export --> MMSB_src_ffi_rs__set_last_error
@@ -152,6 +226,8 @@ graph TD
     MMSB_src_ffi_rs__mmsb_delta_new --> MMSB_src_ffi_rs__mask_from_bytes
     MMSB_src_ffi_rs__mmsb_delta_new --> MMSB_src_ffi_rs__vec_from_ptr
     MMSB_src_ffi_rs__mmsb_delta_apply --> MMSB_src_ffi_rs__set_last_error
+    MMSB_src_ffi_rs__mmsb_delta_apply --> MMSB_tests_benchmark_06_tick_latency_rs__delta
+    MMSB_src_ffi_rs__mmsb_delta_apply --> MMSB_src_01_page_integrity_checker_rs__delta
     MMSB_src_ffi_rs__mmsb_delta_apply --> MMSB_src_ffi_rs__set_last_error
     MMSB_src_ffi_rs__mmsb_delta_id --> MMSB_src_ffi_rs__set_last_error
     MMSB_src_ffi_rs__mmsb_delta_page_id --> MMSB_src_ffi_rs__set_last_error
@@ -200,6 +276,7 @@ graph TD
     MMSB_src_ffi_rs__mmsb_allocator_allocate --> MMSB_src_ffi_rs__set_last_error
     MMSB_src_ffi_rs__mmsb_allocator_release --> MMSB_src_ffi_rs__set_last_error
     MMSB_src_ffi_rs__mmsb_allocator_get_page --> MMSB_src_ffi_rs__set_last_error
+    MMSB_src_ffi_rs__mmsb_allocator_get_page --> MMSB_src_01_page_integrity_checker_rs__page
     MMSB_src_ffi_rs__mmsb_allocator_get_page --> MMSB_src_ffi_rs__set_last_error
     MMSB_src_ffi_rs__mmsb_allocator_page_count --> MMSB_src_ffi_rs__set_last_error
     MMSB_src_ffi_rs__mmsb_allocator_list_pages --> MMSB_src_ffi_rs__set_last_error
@@ -213,18 +290,90 @@ graph TD
     MMSB_src_ffi_rs__mmsb_semiring_boolean_fold_mul --> MMSB_src_ffi_rs__slice_from_ptr
     MMSB_src_ffi_rs__mmsb_semiring_boolean_fold_mul --> MMSB_src_02_semiring_semiring_ops_rs__fold_mul
     MMSB_src_ffi_rs__mmsb_semiring_boolean_accumulate --> MMSB_src_02_semiring_semiring_ops_rs__accumulate
+    MMSB_tests_benchmark_01_replay_rs__replay_validator_divergence_under_threshold --> MMSB_tests_benchmark_01_replay_rs__temp_log_path
+    MMSB_tests_benchmark_01_replay_rs__replay_validator_divergence_under_threshold --> MMSB_src_01_page_replay_validator_rs__temp_log_path
+    MMSB_tests_benchmark_01_replay_rs__replay_validator_divergence_under_threshold --> MMSB_src_06_utility_memory_monitor_rs__allocator
+    MMSB_tests_benchmark_05_throughput_rs__throughput_engine_exceeds_minimum_rate --> MMSB_tests_benchmark_05_throughput_rs__make_delta
+    MMSB_tests_benchmark_05_throughput_rs__throughput_engine_exceeds_minimum_rate --> MMSB_tests_benchmark_06_tick_latency_rs__delta
+    MMSB_tests_benchmark_05_throughput_rs__throughput_engine_exceeds_minimum_rate --> MMSB_src_01_page_columnar_delta_rs__make_delta
+    MMSB_tests_benchmark_05_throughput_rs__throughput_engine_exceeds_minimum_rate --> MMSB_src_01_page_integrity_checker_rs__delta
+    MMSB_tests_benchmark_05_throughput_rs__throughput_engine_exceeds_minimum_rate --> MMSB_src_04_propagation_throughput_engine_rs__make_delta
+    MMSB_tests_benchmark_06_tick_latency_rs__tick_latency_stays_within_budget --> MMSB_tests_benchmark_06_tick_latency_rs__delta
+    MMSB_tests_benchmark_06_tick_latency_rs__tick_latency_stays_within_budget --> MMSB_src_01_page_integrity_checker_rs__delta
+    MMSB_tests_benchmark_09_stability_rs__stability_resists_small_noise --> MMSB_tests_benchmark_09_stability_rs__simulate
+    MMSB_tests_benchmark_09_stability_rs__stability_resists_small_noise --> MMSB_tests_benchmark_09_stability_rs__simulate
+    MMSB_tests_benchmark_09_stability_rs__stability_resists_small_noise --> MMSB_tests_benchmark_09_stability_rs__divergence
+    MMSB_tests_delta_validation_rs__validates_dense_lengths --> MMSB_tests_benchmark_06_tick_latency_rs__delta
     MMSB_tests_delta_validation_rs__validates_dense_lengths --> MMSB_tests_delta_validation_rs__dense_delta
+    MMSB_tests_delta_validation_rs__validates_dense_lengths --> MMSB_src_01_page_integrity_checker_rs__delta
+    MMSB_tests_delta_validation_rs__rejects_mismatched_dense_lengths --> MMSB_tests_benchmark_06_tick_latency_rs__delta
     MMSB_tests_delta_validation_rs__rejects_mismatched_dense_lengths --> MMSB_tests_delta_validation_rs__dense_delta
+    MMSB_tests_delta_validation_rs__rejects_mismatched_dense_lengths --> MMSB_src_01_page_integrity_checker_rs__delta
+    MMSB_tests_mmsb_tests_rs__test_page_snapshot_and_restore --> MMSB_src_01_page_integrity_checker_rs__page
     MMSB_tests_mmsb_tests_rs__test_checkpoint_log_and_restore --> MMSB_src_01_page_checkpoint_rs__write_checkpoint
     MMSB_tests_mmsb_tests_rs__test_checkpoint_log_and_restore --> MMSB_src_01_page_checkpoint_rs__load_checkpoint
+    MMSB_tests_mmsb_tests_rs__test_checkpoint_log_and_restore --> MMSB_src_01_page_integrity_checker_rs__page
+    MMSB_tests_mmsb_tests_rs__test_sparse_delta_application --> MMSB_tests_benchmark_06_tick_latency_rs__delta
+    MMSB_tests_mmsb_tests_rs__test_sparse_delta_application --> MMSB_src_01_page_integrity_checker_rs__delta
+    MMSB_tests_mmsb_tests_rs__test_dense_delta_application --> MMSB_tests_benchmark_06_tick_latency_rs__delta
+    MMSB_tests_mmsb_tests_rs__test_dense_delta_application --> MMSB_src_01_page_integrity_checker_rs__delta
     MMSB_tests_week27_31_integration_rs__test_delta_merge_simd --> MMSB_src_01_page_delta_merge_rs__merge_deltas
+    MMSB_src_01_page_allocator_rs__test_checkpoint_roundtrip_in_memory --> MMSB_tests_benchmark_06_tick_latency_rs__delta
+    MMSB_src_01_page_allocator_rs__test_checkpoint_roundtrip_in_memory --> MMSB_src_01_page_integrity_checker_rs__delta
+    MMSB_src_01_page_allocator_rs__test_checkpoint_roundtrip_in_memory --> MMSB_src_01_page_integrity_checker_rs__page
     MMSB_src_01_page_delta_merge_rs__merge_dense_simd --> MMSB_src_01_page_delta_merge_rs__merge_dense_avx512
     MMSB_src_01_page_delta_merge_rs__merge_dense_simd --> MMSB_src_01_page_delta_merge_rs__merge_dense_avx2
+    MMSB_src_01_page_integrity_checker_rs__detects_orphan_and_epoch_errors --> MMSB_src_01_page_integrity_checker_rs__page
+    MMSB_src_01_page_replay_validator_rs__compare_snapshots --> MMSB_src_01_page_replay_validator_rs__l2_distance
+    MMSB_src_01_page_replay_validator_rs__checkpoint_validation_detects_divergence --> MMSB_tests_benchmark_01_replay_rs__temp_log_path
+    MMSB_src_01_page_replay_validator_rs__checkpoint_validation_detects_divergence --> MMSB_src_01_page_replay_validator_rs__temp_log_path
+    MMSB_src_01_page_replay_validator_rs__checkpoint_validation_detects_divergence --> MMSB_src_01_page_integrity_checker_rs__page
+    MMSB_src_01_page_replay_validator_rs__checkpoint_validation_detects_divergence --> MMSB_src_01_page_integrity_checker_rs__page
+    MMSB_src_01_page_replay_validator_rs__checkpoint_validation_detects_divergence --> MMSB_src_01_page_integrity_checker_rs__page
+    MMSB_src_01_page_replay_validator_rs__checkpoint_validation_detects_divergence --> MMSB_src_06_utility_memory_monitor_rs__allocator
     MMSB_src_01_page_tlog_rs__summary --> MMSB_src_01_page_tlog_rs__validate_header
     MMSB_src_01_page_tlog_rs__summary --> MMSB_src_01_page_tlog_rs__read_frame
     MMSB_src_01_page_tlog_compression_rs__compress_delta_mask --> MMSB_src_01_page_tlog_compression_rs__encode_rle
     MMSB_src_01_page_tlog_compression_rs__compress_delta_mask --> MMSB_src_01_page_tlog_compression_rs__bitpack_mask
+    MMSB_src_01_page_tlog_replay_rs__apply_log --> MMSB_tests_benchmark_06_tick_latency_rs__delta
+    MMSB_src_01_page_tlog_replay_rs__apply_log --> MMSB_src_01_page_integrity_checker_rs__delta
     MMSB_src_03_dag_cycle_detection_rs__has_cycle --> MMSB_src_03_dag_cycle_detection_rs__dfs
     MMSB_src_03_dag_cycle_detection_rs__has_cycle --> MMSB_src_03_dag_cycle_detection_rs__dfs
     MMSB_src_03_dag_cycle_detection_rs__dfs --> MMSB_src_03_dag_cycle_detection_rs__dfs
+    MMSB_src_03_dag_graph_validator_rs__strong_connect --> MMSB_src_03_dag_graph_validator_rs__strong_connect
+    MMSB_src_03_dag_graph_validator_rs__strong_connect --> MMSB_src_03_dag_graph_validator_rs__is_self_loop
+    MMSB_src_03_dag_graph_validator_rs__per_page_validation --> MMSB_src_01_page_integrity_checker_rs__page
+    MMSB_src_06_utility_invariant_checker_rs__validate_metadata_blob --> MMSB_src_01_page_page_rs__read_u32
+    MMSB_src_06_utility_invariant_checker_rs__validate_metadata_blob --> MMSB_src_06_utility_invariant_checker_rs__read_u32
+    MMSB_src_06_utility_invariant_checker_rs__validate_metadata_blob --> MMSB_src_01_page_page_rs__read_u32
+    MMSB_src_06_utility_invariant_checker_rs__validate_metadata_blob --> MMSB_src_06_utility_invariant_checker_rs__read_u32
+    MMSB_src_06_utility_invariant_checker_rs__validate_metadata_blob --> MMSB_src_01_page_page_rs__read_bytes
+    MMSB_src_06_utility_invariant_checker_rs__validate_metadata_blob --> MMSB_src_06_utility_invariant_checker_rs__read_bytes
+    MMSB_src_06_utility_invariant_checker_rs__validate_metadata_blob --> MMSB_src_01_page_page_rs__read_u32
+    MMSB_src_06_utility_invariant_checker_rs__validate_metadata_blob --> MMSB_src_06_utility_invariant_checker_rs__read_u32
+    MMSB_src_06_utility_invariant_checker_rs__validate_metadata_blob --> MMSB_src_01_page_page_rs__read_bytes
+    MMSB_src_06_utility_invariant_checker_rs__validate_metadata_blob --> MMSB_src_06_utility_invariant_checker_rs__read_bytes
+    MMSB_src_06_utility_invariant_checker_rs__epoch_invariant_detects_regressions --> MMSB_src_01_page_integrity_checker_rs__page
+    MMSB_src_06_utility_invariant_checker_rs__epoch_invariant_detects_regressions --> MMSB_src_01_page_integrity_checker_rs__page
+    MMSB_src_06_utility_memory_monitor_rs__snapshot_identifies_cold_pages --> MMSB_src_06_utility_memory_monitor_rs__allocator
+    MMSB_src_06_utility_memory_monitor_rs__snapshot_identifies_cold_pages --> MMSB_src_01_page_integrity_checker_rs__page
+    MMSB_src_06_utility_memory_monitor_rs__incremental_gc_reclaims_pages_under_budget --> MMSB_src_06_utility_memory_monitor_rs__allocator
+    MMSB_src_06_utility_memory_monitor_rs__snapshot_reflects_allocator_state --> MMSB_src_06_utility_memory_monitor_rs__allocator
+    MMSB_src_06_utility_memory_monitor_rs__gc_trigger_depends_on_threshold --> MMSB_src_06_utility_memory_monitor_rs__allocator
+    MMSB_src_04_propagation_propagation_queue_rs__queue_roundtrip --> MMSB_src_04_propagation_propagation_queue_rs__command
+    MMSB_src_04_propagation_propagation_queue_rs__drain_batch_respects_bounds --> MMSB_src_04_propagation_propagation_queue_rs__command
+    MMSB_src_04_propagation_throughput_engine_rs__process_chunk --> MMSB_src_01_page_integrity_checker_rs__page
+    MMSB_src_04_propagation_throughput_engine_rs__process_chunk --> MMSB_src_01_page_delta_merge_rs__merge_deltas
+    MMSB_src_04_propagation_throughput_engine_rs__process_chunk --> MMSB_tests_benchmark_06_tick_latency_rs__delta
+    MMSB_src_04_propagation_throughput_engine_rs__process_chunk --> MMSB_src_01_page_integrity_checker_rs__delta
+    MMSB_src_04_propagation_throughput_engine_rs__applies_batches_in_parallel --> MMSB_src_01_page_integrity_checker_rs__page
+    MMSB_src_04_propagation_throughput_engine_rs__applies_batches_in_parallel --> MMSB_src_01_page_integrity_checker_rs__page
+    MMSB_src_04_propagation_throughput_engine_rs__merges_multiple_deltas_per_page --> MMSB_src_01_page_integrity_checker_rs__page
+    MMSB_src_04_propagation_throughput_engine_rs__reports_nonzero_throughput_for_large_batches --> MMSB_tests_benchmark_05_throughput_rs__make_delta
+    MMSB_src_04_propagation_throughput_engine_rs__reports_nonzero_throughput_for_large_batches --> MMSB_tests_benchmark_06_tick_latency_rs__delta
+    MMSB_src_04_propagation_throughput_engine_rs__reports_nonzero_throughput_for_large_batches --> MMSB_src_01_page_columnar_delta_rs__make_delta
+    MMSB_src_04_propagation_throughput_engine_rs__reports_nonzero_throughput_for_large_batches --> MMSB_src_01_page_integrity_checker_rs__delta
+    MMSB_src_04_propagation_throughput_engine_rs__reports_nonzero_throughput_for_large_batches --> MMSB_src_04_propagation_throughput_engine_rs__make_delta
+    MMSB_src_04_propagation_tick_orchestrator_rs__tick_metrics_capture_all_phases --> MMSB_src_04_propagation_tick_orchestrator_rs__orchestrator
+    MMSB_src_04_propagation_tick_orchestrator_rs__gc_invoked_when_threshold_low --> MMSB_src_04_propagation_tick_orchestrator_rs__orchestrator
 ```

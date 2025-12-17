@@ -1,9 +1,10 @@
 // tests/mmsb_tests.rs
 
-use mmsb_core::physical::{PageAllocator, PageAllocatorConfig};
-use mmsb_core::page::{load_checkpoint, write_checkpoint};
+use mmsb_core::page::{
+    load_checkpoint, write_checkpoint, Delta, DeltaID, Epoch, Page, PageAllocator,
+    PageAllocatorConfig, PageID, Source,
+};
 use mmsb_core::page::tlog::TransactionLog;
-use mmsb_core::page::{Delta, DeltaID, Epoch, Page, PageID, Source};
 use std::sync::Arc;
 
 fn read_page(page: &Page) -> Vec<u8> {

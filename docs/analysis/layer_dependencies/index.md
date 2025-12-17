@@ -1,6 +1,6 @@
 # Layer Dependency Report
 
-Generated: 2025-12-17 08:15:43
+Generated: 2025-12-17 10:16:28
 
 ## Rust Layer Graph
 
@@ -12,37 +12,81 @@ Generated: 2025-12-17 08:15:43
 5. `02_semiring`
 6. `03_dag`
 7. `03_device`
-8. `04_propagation`
-9. `05_adaptive`
-10. `06_utility`
+8. `05_adaptive`
+9. `06_utility`
+10. `04_propagation`
 
 ### Layer Violations
-- None detected.
+- `04_propagation` depends on `06_utility` (2 references)
+  - MMSB/src/04_propagation/tick_orchestrator.rs :: use crate :: utility :: MemoryMonitor ;
+  - MMSB/src/04_propagation/tick_orchestrator.rs :: use crate :: utility :: { MemoryMonitor , MemoryMonitorConfig } ;
 
 ### Dependency Edges
+- `00_physical` → `01_page` (1 references)
+  - MMSB/src/01_page/allocator.rs :: use crate :: physical :: AllocatorStats ;
+- `00_physical` → `06_utility` (1 references)
+  - MMSB/src/06_utility/memory_monitor.rs :: use crate :: physical :: AllocatorStats ;
 - `01_page` → `03_dag` (3 references)
   - MMSB/src/03_dag/cycle_detection.rs :: use crate :: page :: PageID ;
   - MMSB/src/03_dag/shadow_graph.rs :: use crate :: page :: PageID ;
   - MMSB/src/03_dag/shadow_graph_traversal.rs :: use crate :: page :: PageID ;
-- `01_page` → `04_propagation` (3 references)
+- `01_page` → `04_propagation` (8 references)
   - MMSB/src/04_propagation/propagation_command_buffer.rs :: use crate :: page :: { Page , PageID } ;
   - MMSB/src/04_propagation/propagation_engine.rs :: use crate :: page :: { Page , PageID } ;
   - MMSB/src/04_propagation/propagation_fastpath.rs :: use crate :: page :: Page ;
+  - MMSB/src/04_propagation/propagation_queue.rs :: use crate :: page :: { Page , PageID , PageLocation } ;
+  - MMSB/src/04_propagation/throughput_engine.rs :: use crate :: page :: { ColumnarDeltaBatch , Delta , PageAllocator , PageError , PageID , merge_deltas } ;
+  - MMSB/src/04_propagation/throughput_engine.rs :: use crate :: page :: { DeltaID , PageAllocator , PageID , PageLocation , Source } ;
+  - MMSB/src/04_propagation/tick_orchestrator.rs :: use crate :: page :: { Delta , DeltaID , PageAllocator , PageAllocatorConfig , PageID , PageLocation , Source } ;
+  - MMSB/src/04_propagation/tick_orchestrator.rs :: use crate :: page :: { Delta , PageError } ;
+- `01_page` → `06_utility` (5 references)
+  - MMSB/src/06_utility/invariant_checker.rs :: use crate :: page :: { DeviceBufferRegistry , PageAllocator , PageError , PageID } ;
+  - MMSB/src/06_utility/invariant_checker.rs :: use crate :: page :: { PageAllocator , PageAllocatorConfig , PageID , PageLocation } ;
+  - MMSB/src/06_utility/memory_monitor.rs :: use crate :: page :: PageAllocator ;
+  - MMSB/src/06_utility/memory_monitor.rs :: use crate :: page :: { PageAllocator , PageAllocatorConfig , PageID , PageLocation } ;
+  - MMSB/src/06_utility/provenance_tracker.rs :: use crate :: page :: PageID ;
 - `01_page` → `root` (3 references)
   - MMSB/src/ffi.rs :: use crate :: page :: checkpoint ;
   - MMSB/src/ffi.rs :: use crate :: page :: tlog :: { TransactionLog , TransactionLogReader } ;
   - MMSB/src/ffi.rs :: use crate :: page :: { Delta , DeltaID , Epoch , Page , PageAllocator , PageAllocatorConfig , PageError , PageID , PageLocation , Source } ;
-- `01_types` → `01_page` (8 references)
+- `01_types` → `01_page` (14 references)
   - MMSB/src/01_page/allocator.rs :: use crate :: types :: { PageError , PageID , PageLocation } ;
+  - MMSB/src/01_page/columnar_delta.rs :: use crate :: types :: Epoch ;
+  - MMSB/src/01_page/columnar_delta.rs :: use crate :: types :: { DeltaID , Epoch , PageError , PageID , Source } ;
   - MMSB/src/01_page/delta.rs :: use crate :: types :: { DeltaError , DeltaID , Epoch , PageError , PageID , Source } ;
   - MMSB/src/01_page/device.rs :: use crate :: types :: PageID ;
   - MMSB/src/01_page/epoch.rs :: pub use crate :: types :: { Epoch , EpochCell } ;
   - MMSB/src/01_page/host_device_sync.rs :: use crate :: types :: PageID ;
+  - MMSB/src/01_page/integrity_checker.rs :: use crate :: types :: Epoch ;
+  - MMSB/src/01_page/integrity_checker.rs :: use crate :: types :: { DeltaID , Epoch , PageID } ;
   - MMSB/src/01_page/lockfree_allocator.rs :: use crate :: types :: { PageID , PageLocation } ;
   - MMSB/src/01_page/mod.rs :: pub use crate :: types :: { PageID , PageLocation , PageError , Epoch , EpochCell , DeltaID , Source , DeltaError } ;
   - MMSB/src/01_page/page.rs :: use crate :: types :: { Epoch , EpochCell , PageError , PageID , PageLocation , DeltaError } ;
+  - MMSB/src/01_page/replay_validator.rs :: use crate :: types :: Epoch ;
+  - MMSB/src/01_page/replay_validator.rs :: use crate :: types :: { PageError , PageID } ;
+- `01_types` → `03_dag` (1 references)
+  - MMSB/src/03_dag/graph_validator.rs :: use crate :: types :: PageID ;
+- `01_types` → `04_propagation` (3 references)
+  - MMSB/src/04_propagation/throughput_engine.rs :: use crate :: types :: DeltaError ;
+  - MMSB/src/04_propagation/throughput_engine.rs :: use crate :: types :: Epoch ;
+  - MMSB/src/04_propagation/tick_orchestrator.rs :: use crate :: types :: Epoch ;
+- `01_types` → `06_utility` (3 references)
+  - MMSB/src/06_utility/invariant_checker.rs :: use crate :: types :: Epoch ;
+  - MMSB/src/06_utility/memory_monitor.rs :: use crate :: types :: Epoch ;
+  - MMSB/src/06_utility/memory_monitor.rs :: use crate :: types :: PageID ;
 - `02_semiring` → `root` (1 references)
   - MMSB/src/ffi.rs :: use crate :: semiring :: { accumulate , fold_add , fold_mul , BooleanSemiring , Semiring , TropicalSemiring , } ;
+- `03_dag` → `04_propagation` (2 references)
+  - MMSB/src/04_propagation/tick_orchestrator.rs :: use crate :: dag :: { EdgeType , ShadowPageGraph } ;
+  - MMSB/src/04_propagation/tick_orchestrator.rs :: use crate :: dag :: { GraphValidator , ShadowPageGraph } ;
+- `03_dag` → `06_utility` (4 references)
+  - MMSB/src/06_utility/invariant_checker.rs :: use crate :: dag :: { EdgeType , ShadowPageGraph } ;
+  - MMSB/src/06_utility/invariant_checker.rs :: use crate :: dag :: { GraphValidator , ShadowPageGraph } ;
+  - MMSB/src/06_utility/provenance_tracker.rs :: use crate :: dag :: ShadowPageGraph ;
+  - MMSB/src/06_utility/provenance_tracker.rs :: use crate :: dag :: { EdgeType , ShadowPageGraph } ;
+- `06_utility` → `04_propagation` (2 references, VIOLATION)
+  - MMSB/src/04_propagation/tick_orchestrator.rs :: use crate :: utility :: MemoryMonitor ;
+  - MMSB/src/04_propagation/tick_orchestrator.rs :: use crate :: utility :: { MemoryMonitor , MemoryMonitorConfig } ;
 
 ### Unresolved References
 - None.

@@ -10,7 +10,6 @@ use std::convert::TryInto;
 use std::ffi::c_void;
 use std::sync::Arc;
 use std::sync::atomic::{AtomicU64, Ordering};
-use std::ptr;
 
 extern "C" {
     fn cudaMallocManaged(ptr: *mut *mut c_void, size: usize, flags: u32) -> i32;

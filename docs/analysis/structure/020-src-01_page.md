@@ -18,7 +18,7 @@
   - Signature: `# [derive (Debug , Clone)] pub struct PageInfo { pub page_id : PageID , pub size : usize , pub location : PageLocatio...`
 - [Rust | Struct] `PageSnapshotData` (line 0, pub)
   - Signature: `# [derive (Debug , Clone)] pub struct PageSnapshotData { pub page_id : PageID , pub size : usize , pub location : Pag...`
-- [Rust | Impl] `impl PageAllocator { pub fn new (config : PageAllocatorConfig) -> Self { println ! ("Allocating new PageAllocator instance with config: {:?}" , config) ; Self { config , pages : Mutex :: new (HashMap :: new ()) , next_id : AtomicU64 :: new (1) , } } pub fn allocate_raw (& self , page_id_hint : PageID , size : usize , location : Option < PageLocation >) -> Result < * mut Page , PageError > { let loc = location . unwrap_or (self . config . default_location) ; if self . pages . lock () . contains_key (& page_id_hint) { return Err (PageError :: AlreadyExists (page_id_hint)) ; } let page = Box :: new (Page :: new (page_id_hint , size , loc) ?) ; let ptr = Box :: into_raw (page) ; println ! ("[ALLOCATOR] allocate_raw(id={}) → raw ptr = {:p}" , page_id_hint . 0 , ptr) ; self . pages . lock () . insert (page_id_hint , unsafe { Box :: from_raw (ptr) }) ; Ok (ptr) } pub fn free (& self , page_id : PageID) { if let Some (_) = self . pages . lock () . remove (& page_id) { println ! ("[ALLOCATOR] Freed page {}" , page_id . 0) ; } } pub fn release (& self , page_id : PageID) { if let Some (boxed_page) = self . pages . lock () . remove (& page_id) { println ! ("[ALLOCATOR] release({}): ownership transferred — Box removed from map but NOT dropped (caller now owns it)" , page_id . 0) ; std :: mem :: forget (boxed_page) ; } else { println ! ("[ALLOCATOR] release({}): page not found — already released?" , page_id . 0) ; } } pub fn acquire_page (& self , page_id : PageID) -> Option < * mut Page > { self . pages . lock () . get (& page_id) . map (| b | & * * b as * const Page as * mut Page) } pub fn len (& self) -> usize { self . pages . lock () . len () } pub fn page_infos (& self) -> Vec < PageInfo > { let pages = self . pages . lock () ; pages . values () . map (| page | PageInfo { page_id : page . id , size : page . size () , location : page . location () , epoch : page . epoch () . 0 , metadata : page . metadata_blob () , }) . collect () } pub fn snapshot_pages (& self) -> Vec < PageSnapshotData > { let pages = self . pages . lock () ; pages . values () . map (| page | PageSnapshotData { page_id : page . id , size : page . size () , location : page . location () , epoch : page . epoch () . 0 , metadata_blob : page . metadata_blob () , data : page . data_slice () . to_vec () , }) . collect () } pub fn restore_from_snapshot (& self , snapshots : Vec < PageSnapshotData >) -> Result < () , PageError > { eprintln ! ("\n=== RESTORE_FROM_SNAPSHOT STARTED ===") ; eprintln ! ("   Clearing {} existing pages" , self . pages . lock () . len ()) ; let mut pages = self . pages . lock () ; pages . clear () ; for (i , snapshot) in snapshots . iter () . enumerate () { eprintln ! ("   [{i}] Restoring page ID={:?} size={} epoch={} loc={:?}" , snapshot . page_id , snapshot . size , snapshot . epoch , snapshot . location) ; let mut page = match Page :: new (snapshot . page_id , snapshot . size , snapshot . location) { Ok (p) => Box :: new (p) , Err (e) => { eprintln ! ("      Page::new() FAILED: {e}") ; return Err (e) ; } } ; page . set_epoch (Epoch (snapshot . epoch)) ; eprintln ! ("      Epoch set to {}" , snapshot . epoch) ; let dst = page . data_mut_slice () ; if dst . len () != snapshot . data . len () { eprintln ! ("      FATAL: data size mismatch! page={} snapshot={}" , dst . len () , snapshot . data . len ()) ; return Err (PageError :: MetadataDecode ("data size mismatch in snapshot")) ; } dst . copy_from_slice (& snapshot . data) ; eprintln ! ("      Data copied ({} bytes)" , snapshot . data . len ()) ; eprintln ! ("      Applying metadata ({} bytes)..." , snapshot . metadata_blob . len ()) ; if let Err (e) = page . set_metadata_blob (& snapshot . metadata_blob) { eprintln ! ("      METADATA RESTORE FAILED: {e}") ; return Err (e) ; } eprintln ! ("      Metadata restored OK") ; pages . insert (snapshot . page_id , page) ; eprintln ! ("      Page inserted") ; } eprintln ! ("=== RESTORE_FROM_SNAPSHOT SUCCESS: {} pages restored ===" , snapshots . len ()) ; Ok (()) } } . self_ty` (line 0, priv)
+- [Rust | Impl] `impl PageAllocator { pub fn new (config : PageAllocatorConfig) -> Self { Self :: with_stats (config , Arc :: new (AllocatorStats :: default ())) } pub fn with_stats (config : PageAllocatorConfig , stats : Arc < AllocatorStats >) -> Self { println ! ("Allocating new PageAllocator instance with config: {:?}" , config) ; Self { config , pages : Mutex :: new (HashMap :: new ()) , next_id : AtomicU64 :: new (1) , stats , } } pub fn allocate_raw (& self , page_id_hint : PageID , size : usize , location : Option < PageLocation >) -> Result < * mut Page , PageError > { let loc = location . unwrap_or (self . config . default_location) ; if self . pages . lock () . contains_key (& page_id_hint) { return Err (PageError :: AlreadyExists (page_id_hint)) ; } let page = Box :: new (Page :: new (page_id_hint , size , loc) ?) ; let ptr = Box :: into_raw (page) ; println ! ("[ALLOCATOR] allocate_raw(id={}) → raw ptr = {:p}" , page_id_hint . 0 , ptr) ; self . pages . lock () . insert (page_id_hint , unsafe { Box :: from_raw (ptr) }) ; self . stats . record_alloc () ; Ok (ptr) } pub fn free (& self , page_id : PageID) { if let Some (_) = self . pages . lock () . remove (& page_id) { println ! ("[ALLOCATOR] Freed page {}" , page_id . 0) ; self . stats . record_free () ; } } pub fn release (& self , page_id : PageID) { if let Some (boxed_page) = self . pages . lock () . remove (& page_id) { println ! ("[ALLOCATOR] release({}): ownership transferred — Box removed from map but NOT dropped (caller now owns it)" , page_id . 0) ; std :: mem :: forget (boxed_page) ; } else { println ! ("[ALLOCATOR] release({}): page not found — already released?" , page_id . 0) ; } } pub fn acquire_page (& self , page_id : PageID) -> Option < * mut Page > { self . pages . lock () . get (& page_id) . map (| b | & * * b as * const Page as * mut Page) } pub fn len (& self) -> usize { self . pages . lock () . len () } pub fn page_infos (& self) -> Vec < PageInfo > { let pages = self . pages . lock () ; pages . values () . map (| page | PageInfo { page_id : page . id , size : page . size () , location : page . location () , epoch : page . epoch () . 0 , metadata : page . metadata_blob () , }) . collect () } pub fn snapshot_pages (& self) -> Vec < PageSnapshotData > { let pages = self . pages . lock () ; pages . values () . map (| page | PageSnapshotData { page_id : page . id , size : page . size () , location : page . location () , epoch : page . epoch () . 0 , metadata_blob : page . metadata_blob () , data : page . data_slice () . to_vec () , }) . collect () } pub fn restore_from_snapshot (& self , snapshots : Vec < PageSnapshotData >) -> Result < () , PageError > { eprintln ! ("\n=== RESTORE_FROM_SNAPSHOT STARTED ===") ; eprintln ! ("   Clearing {} existing pages" , self . pages . lock () . len ()) ; let mut pages = self . pages . lock () ; pages . clear () ; for (i , snapshot) in snapshots . iter () . enumerate () { eprintln ! ("   [{i}] Restoring page ID={:?} size={} epoch={} loc={:?}" , snapshot . page_id , snapshot . size , snapshot . epoch , snapshot . location) ; let mut page = match Page :: new (snapshot . page_id , snapshot . size , snapshot . location) { Ok (p) => Box :: new (p) , Err (e) => { eprintln ! ("      Page::new() FAILED: {e}") ; return Err (e) ; } } ; page . set_epoch (Epoch (snapshot . epoch)) ; eprintln ! ("      Epoch set to {}" , snapshot . epoch) ; let dst = page . data_mut_slice () ; if dst . len () != snapshot . data . len () { eprintln ! ("      FATAL: data size mismatch! page={} snapshot={}" , dst . len () , snapshot . data . len ()) ; return Err (PageError :: MetadataDecode ("data size mismatch in snapshot")) ; } dst . copy_from_slice (& snapshot . data) ; eprintln ! ("      Data copied ({} bytes)" , snapshot . data . len ()) ; eprintln ! ("      Applying metadata ({} bytes)..." , snapshot . metadata_blob . len ()) ; if let Err (e) = page . set_metadata_blob (& snapshot . metadata_blob) { eprintln ! ("      METADATA RESTORE FAILED: {e}") ; return Err (e) ; } eprintln ! ("      Metadata restored OK") ; pages . insert (snapshot . page_id , page) ; eprintln ! ("      Page inserted") ; } eprintln ! ("=== RESTORE_FROM_SNAPSHOT SUCCESS: {} pages restored ===" , snapshots . len ()) ; Ok (()) } pub fn stats (& self) -> Arc < AllocatorStats > { Arc :: clone (& self . stats) } } . self_ty` (line 0, priv)
 - [Rust | Function] `test_checkpoint_roundtrip_in_memory` (line 0, priv)
   - Signature: `# [test] fn test_checkpoint_roundtrip_in_memory () { let alloc = PageAllocator :: new (PageAllocatorConfig :: default...`
   - Calls: PageAllocator::new, PageAllocatorConfig::default, unwrap, allocate_raw, PageID, unwrap, apply_delta, DeltaID, PageID, Epoch, Source, into, snapshot_pages, expect, restore_from_snapshot, unwrap, acquire_page, PageID
@@ -45,6 +45,34 @@
 - [Rust | Function] `write_checkpoint` (line 0, pub)
   - Signature: `pub fn write_checkpoint (allocator : & PageAllocator , tlog : & TransactionLog , path : impl AsRef < Path > ,) -> std...`
   - Calls: snapshot_pages, current_offset, BufWriter::new, File::create, write_all, write_all, to_le_bytes, write_all, to_le_bytes, len, write_all, to_le_bytes, write_all, to_le_bytes, write_all, to_le_bytes, write_all, to_le_bytes, write_all, to_le_bytes, write_all, to_le_bytes, len, write_all, write_all, to_le_bytes, len, write_all, flush, Ok
+
+## File: MMSB/src/01_page/columnar_delta.rs
+
+- Layer(s): 01_page
+- Language coverage: Rust (9)
+- Element types: Function (4), Impl (3), Module (1), Struct (1)
+- Total elements: 9
+
+### Elements
+
+- [Rust | Struct] `ColumnarDeltaBatch` (line 0, pub)
+  - Signature: `# [derive (Debug , Clone)] pub struct ColumnarDeltaBatch { count : usize , delta_ids : Vec < DeltaID > , page_ids : V...`
+- [Rust | Impl] `Default for impl Default for ColumnarDeltaBatch { fn default () -> Self { Self :: new () } } . self_ty` (line 0, priv)
+- [Rust | Impl] `From for impl From < Vec < Delta > > for ColumnarDeltaBatch { fn from (value : Vec < Delta >) -> Self { Self :: from_rows (value) } } . self_ty` (line 0, priv)
+- [Rust | Impl] `impl ColumnarDeltaBatch { pub fn new () -> Self { Self { count : 0 , delta_ids : Vec :: new () , page_ids : Vec :: new () , epochs : Vec :: new () , is_sparse : Vec :: new () , mask_offsets : Vec :: new () , payload_offsets : Vec :: new () , mask_pool : Vec :: new () , payload_pool : Vec :: new () , timestamps : Vec :: new () , sources : Vec :: new () , metadata : Vec :: new () , } } pub fn from_rows (deltas : Vec < Delta >) -> Self { let mut batch = Self :: new () ; batch . extend (deltas) ; batch } pub fn len (& self) -> usize { self . count } pub fn is_empty (& self) -> bool { self . count == 0 } pub fn iter (& self) -> impl Iterator < Item = Delta > + '_ { (0 .. self . count) . map (move | idx | self . delta_at (idx) . expect ("index in range")) } pub fn extend < I > (& mut self , deltas : I) where I : IntoIterator < Item = Delta > , { for delta in deltas { let mask_start = self . mask_pool . len () ; self . mask_pool . extend (delta . mask . iter () . map (| flag | if * flag { 1 } else { 0 })) ; self . mask_offsets . push ((mask_start , delta . mask . len ())) ; let payload_start = self . payload_pool . len () ; self . payload_pool . extend (& delta . payload) ; self . payload_offsets . push ((payload_start , delta . payload . len ())) ; self . delta_ids . push (delta . delta_id) ; self . page_ids . push (delta . page_id) ; self . epochs . push (delta . epoch) ; self . is_sparse . push (delta . is_sparse) ; self . timestamps . push (delta . timestamp) ; self . sources . push (delta . source) ; self . metadata . push (delta . intent_metadata) ; self . count += 1 ; } } pub fn to_vec (& self) -> Vec < Delta > { self . iter () . collect () } pub fn filter_epoch_eq (& self , epoch : Epoch) -> Vec < usize > { let mut matches = Vec :: new () ; let words = self . epoch_words () ; let mut idx = 0usize ; const LANES : usize = 8 ; while idx + LANES <= words . len () { let mut lane_mask = 0u8 ; for lane in 0 .. LANES { if words [idx + lane] == epoch . 0 { lane_mask |= 1 << lane ; } } if lane_mask != 0 { for lane in 0 .. LANES { if (lane_mask >> lane) & 1 == 1 { matches . push (idx + lane) ; } } } idx += LANES ; } for (offset , value) in words [idx ..] . iter () . enumerate () { if * value == epoch . 0 { matches . push (idx + offset) ; } } matches } pub fn scan_page_id (& self , target : PageID) -> Vec < usize > { let mut matches = Vec :: new () ; let ids = self . page_words () ; let mut idx = 0usize ; const LANES : usize = 4 ; while idx + LANES <= ids . len () { let mut lane_mask = 0u8 ; for lane in 0 .. LANES { if ids [idx + lane] == target . 0 { lane_mask |= 1 << lane ; } } if lane_mask != 0 { for lane in 0 .. LANES { if (lane_mask >> lane) & 1 == 1 { matches . push (idx + lane) ; } } } idx += LANES ; } for (offset , value) in ids [idx ..] . iter () . enumerate () { if * value == target . 0 { matches . push (idx + offset) ; } } matches } pub fn apply_to_pages (& self , pages : & mut HashMap < PageID , Page > ,) -> Result < () , PageError > { for idx in 0 .. self . count { let delta = self . delta_at (idx) . expect ("index valid") ; if let Some (page) = pages . get_mut (& delta . page_id) { page . apply_delta (& delta) ? ; } else { return Err (PageError :: PageNotFound (delta . page_id)) ; } } Ok (()) } pub fn delta_at (& self , idx : usize) -> Option < Delta > { (idx < self . count) . then (| | self . build_delta (idx)) } pub fn page_id_at (& self , idx : usize) -> Option < PageID > { self . page_ids . get (idx) . copied () } fn build_delta (& self , idx : usize) -> Delta { let (mask_start , mask_len) = self . mask_offsets [idx] ; let mask = self . mask_pool [mask_start .. mask_start + mask_len] . iter () . map (| b | * b != 0) . collect :: < Vec < bool > > () ; let (payload_start , payload_len) = self . payload_offsets [idx] ; let payload = self . payload_pool [payload_start .. payload_start + payload_len] . to_vec () ; Delta { delta_id : self . delta_ids [idx] , page_id : self . page_ids [idx] , epoch : self . epochs [idx] , mask , payload , is_sparse : self . is_sparse [idx] , timestamp : self . timestamps [idx] , source : self . sources [idx] . clone () , intent_metadata : self . metadata [idx] . clone () , } } fn epoch_words (& self) -> & [u32] { unsafe { std :: slice :: from_raw_parts (self . epochs . as_ptr () as * const u32 , self . epochs . len ()) } } fn page_words (& self) -> & [u64] { unsafe { std :: slice :: from_raw_parts (self . page_ids . as_ptr () as * const u64 , self . page_ids . len ()) } } } . self_ty` (line 0, priv)
+- [Rust | Function] `make_delta` (line 0, priv)
+  - Signature: `fn make_delta (id : u64 , page : u64 , epoch : u32 , payload : & [u8]) -> Delta { Delta { delta_id : DeltaID (id) , p...`
+  - Calls: DeltaID, PageID, Epoch, collect, map, iter, to_vec, Source
+- [Rust | Function] `test_apply_to_pages` (line 0, priv)
+  - Signature: `# [test] fn test_apply_to_pages () { let deltas = vec ! [make_delta (1 , 1 , 1 , b"\x01\x02") , make_delta (2 , 2 , 2...`
+  - Calls: ColumnarDeltaBatch::from_rows, HashMap::new, unwrap, Page::new, PageID, unwrap, Page::new, PageID, insert, PageID, insert, PageID, unwrap, apply_to_pages, unwrap, remove, PageID, unwrap, remove, PageID
+- [Rust | Function] `test_epoch_filter` (line 0, priv)
+  - Signature: `# [test] fn test_epoch_filter () { let deltas = vec ! [make_delta (1 , 1 , 1 , b"a") , make_delta (2 , 2 , 2 , b"b") ...`
+  - Calls: ColumnarDeltaBatch::from_rows, filter_epoch_eq, Epoch
+- [Rust | Function] `test_roundtrip` (line 0, priv)
+  - Signature: `# [test] fn test_roundtrip () { let deltas = vec ! [make_delta (1 , 10 , 5 , b"abc") , make_delta (2 , 10 , 6 , b"def...`
+  - Calls: ColumnarDeltaBatch::from_rows, clone, to_vec
+- [Rust | Module] `tests` (line 0, priv)
 
 ## File: MMSB/src/01_page/delta.rs
 
@@ -121,7 +149,7 @@
 
 - [Rust | Struct] `DeviceBufferRegistry` (line 0, pub)
   - Signature: `# [derive (Debug , Default)] pub struct DeviceBufferRegistry { map : RwLock < HashMap < PageID , Arc < Page > > > , }`
-- [Rust | Impl] `impl DeviceBufferRegistry { pub fn insert (& self , page : Arc < Page >) { self . map . write () . insert (page . id , page) ; } pub fn remove (& self , page_id : PageID) { self . map . write () . remove (& page_id) ; } pub fn len (& self) -> usize { self . map . read () . len () } } . self_ty` (line 0, priv)
+- [Rust | Impl] `impl DeviceBufferRegistry { pub fn insert (& self , page : Arc < Page >) { self . map . write () . insert (page . id , page) ; } pub fn remove (& self , page_id : PageID) { self . map . write () . remove (& page_id) ; } pub fn len (& self) -> usize { self . map . read () . len () } pub fn contains (& self , page_id : PageID) -> bool { self . map . read () . contains_key (& page_id) } pub fn get (& self , page_id : PageID) -> Option < Arc < Page > > { self . map . read () . get (& page_id) . cloned () } } . self_ty` (line 0, priv)
 
 ## File: MMSB/src/01_page/host_device_sync.rs
 
@@ -135,6 +163,38 @@
 - [Rust | Struct] `HostDeviceSync` (line 0, pub)
   - Signature: `# [derive (Debug , Default)] pub struct HostDeviceSync { pending : Vec < PageID > , }`
 - [Rust | Impl] `impl HostDeviceSync { pub fn enqueue (& mut self , page_id : PageID) { self . pending . push (page_id) ; } pub fn drain (& mut self) -> Vec < PageID > { std :: mem :: take (& mut self . pending) } } . self_ty` (line 0, priv)
+
+## File: MMSB/src/01_page/integrity_checker.rs
+
+- Layer(s): 01_page
+- Language coverage: Rust (11)
+- Element types: Enum (1), Function (4), Impl (2), Module (1), Struct (3)
+- Total elements: 11
+
+### Elements
+
+- [Rust | Struct] `DeltaIntegrityChecker` (line 0, pub)
+  - Signature: `pub struct DeltaIntegrityChecker { registry : Arc < DeviceBufferRegistry > , last_epoch : HashMap < PageID , Epoch > , }`
+- [Rust | Struct] `IntegrityReport` (line 0, pub)
+  - Signature: `# [derive (Debug , Default)] pub struct IntegrityReport { pub total : usize , pub violations : Vec < IntegrityViolati...`
+- [Rust | Struct] `IntegrityViolation` (line 0, pub)
+  - Signature: `# [derive (Debug , Clone)] pub struct IntegrityViolation { pub delta_id : DeltaID , pub page_id : PageID , pub kind :...`
+- [Rust | Enum] `IntegrityViolationKind` (line 0, pub)
+- [Rust | Function] `delta` (line 0, priv)
+  - Signature: `fn delta (delta_id : u64 , page_id : u64 , epoch : u32 , payload : & [u8]) -> Delta { Delta { delta_id : DeltaID (del...`
+  - Calls: DeltaID, PageID, Epoch, collect, map, iter, to_vec, Source, into
+- [Rust | Function] `detects_orphan_and_epoch_errors` (line 0, priv)
+  - Signature: `# [test] fn detects_orphan_and_epoch_errors () { let registry = Arc :: new (DeviceBufferRegistry :: default ()) ; reg...`
+  - Calls: Arc::new, DeviceBufferRegistry::default, insert, page, DeltaIntegrityChecker::new, Arc::clone, validate
+- [Rust | Impl] `impl DeltaIntegrityChecker { pub fn new (registry : Arc < DeviceBufferRegistry >) -> Self { Self { registry , last_epoch : HashMap :: new () , } } pub fn validate (& mut self , deltas : & [Delta]) -> IntegrityReport { let mut report = IntegrityReport { total : deltas . len () , violations : Vec :: new () , } ; for delta in deltas { if ! self . registry . contains (delta . page_id) { report . violations . push (IntegrityViolation { delta_id : delta . delta_id , page_id : delta . page_id , kind : IntegrityViolationKind :: OrphanDelta , }) ; continue ; } if ! schema_valid (delta) { report . violations . push (IntegrityViolation { delta_id : delta . delta_id , page_id : delta . page_id , kind : IntegrityViolationKind :: SchemaMismatch { mask_len : delta . mask . len () , payload_len : delta . payload . len () , } , }) ; continue ; } let last_epoch = self . last_epoch . entry (delta . page_id) . or_insert (Epoch (0)) ; if delta . epoch . 0 < last_epoch . 0 { report . violations . push (IntegrityViolation { delta_id : delta . delta_id , page_id : delta . page_id , kind : IntegrityViolationKind :: EpochRegression { previous : * last_epoch , current : delta . epoch , } , }) ; } else { * last_epoch = delta . epoch ; } } report } } . self_ty` (line 0, priv)
+- [Rust | Impl] `impl IntegrityReport { pub fn passed (& self) -> bool { self . violations . is_empty () } } . self_ty` (line 0, priv)
+- [Rust | Function] `page` (line 0, priv)
+  - Signature: `fn page (page_id : u64) -> Arc < Page > { Arc :: new (Page :: new (PageID (page_id) , 4 , PageLocation :: Cpu) . unwr...`
+  - Calls: Arc::new, unwrap, Page::new, PageID
+- [Rust | Function] `schema_valid` (line 0, priv)
+  - Signature: `fn schema_valid (delta : & Delta) -> bool { if delta . is_sparse { let changed = delta . mask . iter () . filter (| f...`
+  - Calls: count, filter, iter, len, len, len
+- [Rust | Module] `tests` (line 0, priv)
 
 ## File: MMSB/src/01_page/lockfree_allocator.rs
 
@@ -152,19 +212,20 @@
   - Signature: `pub struct LockFreeAllocator { freelist_head : AtomicPtr < FreeListNode > , freelist_size : AtomicU64 , allocated_cou...`
 - [Rust | Impl] `Send for unsafe impl Send for LockFreeAllocator { } . self_ty` (line 0, priv)
 - [Rust | Impl] `Sync for unsafe impl Sync for LockFreeAllocator { } . self_ty` (line 0, priv)
-- [Rust | Impl] `impl LockFreeAllocator { pub fn new () -> Self { Self { freelist_head : AtomicPtr :: new (ptr :: null_mut ()) , freelist_size : AtomicU64 :: new (0) , allocated_count : AtomicU64 :: new (0) , freed_count : AtomicU64 :: new (0) , } } pub fn try_allocate_small (& self , _page_id : PageID , size : usize , _location : PageLocation) -> Option < * mut Page > { if size > SMALL_PAGE_THRESHOLD { return None ; } loop { let head = self . freelist_head . load (Ordering :: Acquire) ; if head . is_null () { return None ; } let node = unsafe { & * head } ; let next = node . next . load (Ordering :: Relaxed) ; if self . freelist_head . compare_exchange (head , next , Ordering :: Release , Ordering :: Acquire) . is_ok () { self . freelist_size . fetch_sub (1 , Ordering :: Relaxed) ; self . allocated_count . fetch_add (1 , Ordering :: Relaxed) ; let page_ptr = node . page_ptr ; unsafe { Box :: from_raw (head) ; } return Some (page_ptr) ; } } } pub fn deallocate_small (& self , page_ptr : * mut Page) -> bool { let page = unsafe { & * page_ptr } ; if page . size () > SMALL_PAGE_THRESHOLD { return false ; } let current_size = self . freelist_size . load (Ordering :: Relaxed) ; if current_size >= FREELIST_CAPACITY as u64 { return false ; } let node = Box :: into_raw (Box :: new (FreeListNode { next : AtomicPtr :: new (ptr :: null_mut ()) , page_ptr , })) ; loop { let head = self . freelist_head . load (Ordering :: Acquire) ; unsafe { (* node) . next . store (head , Ordering :: Relaxed) ; } if self . freelist_head . compare_exchange (head , node , Ordering :: Release , Ordering :: Acquire) . is_ok () { self . freelist_size . fetch_add (1 , Ordering :: Relaxed) ; self . freed_count . fetch_add (1 , Ordering :: Relaxed) ; return true ; } } } pub fn get_stats (& self) -> (u64 , u64 , u64) { (self . freelist_size . load (Ordering :: Relaxed) , self . allocated_count . load (Ordering :: Relaxed) , self . freed_count . load (Ordering :: Relaxed) ,) } pub fn clear (& self) { let mut head = self . freelist_head . swap (ptr :: null_mut () , Ordering :: AcqRel) ; while ! head . is_null () { let node = unsafe { Box :: from_raw (head) } ; head = node . next . load (Ordering :: Relaxed) ; unsafe { drop (Box :: from_raw (node . page_ptr)) ; } } self . freelist_size . store (0 , Ordering :: Relaxed) ; } } . self_ty` (line 0, priv)
+- [Rust | Impl] `impl LockFreeAllocator { pub fn new () -> Self { Self { freelist_head : AtomicPtr :: new (ptr :: null_mut ()) , freelist_size : AtomicU64 :: new (0) , allocated_count : AtomicU64 :: new (0) , freed_count : AtomicU64 :: new (0) , } } pub fn try_allocate_small (& self , _page_id : PageID , size : usize , _location : PageLocation) -> Option < * mut Page > { if size > SMALL_PAGE_THRESHOLD { return None ; } loop { let head = self . freelist_head . load (Ordering :: Acquire) ; if head . is_null () { return None ; } let node = unsafe { & * head } ; let next = node . next . load (Ordering :: Relaxed) ; if self . freelist_head . compare_exchange (head , next , Ordering :: Release , Ordering :: Acquire) . is_ok () { self . freelist_size . fetch_sub (1 , Ordering :: Relaxed) ; self . allocated_count . fetch_add (1 , Ordering :: Relaxed) ; let page_ptr = node . page_ptr ; unsafe { let _ = Box :: from_raw (head) ; } return Some (page_ptr) ; } } } pub fn deallocate_small (& self , page_ptr : * mut Page) -> bool { let page = unsafe { & * page_ptr } ; if page . size () > SMALL_PAGE_THRESHOLD { return false ; } let current_size = self . freelist_size . load (Ordering :: Relaxed) ; if current_size >= FREELIST_CAPACITY as u64 { return false ; } let node = Box :: into_raw (Box :: new (FreeListNode { next : AtomicPtr :: new (ptr :: null_mut ()) , page_ptr , })) ; loop { let head = self . freelist_head . load (Ordering :: Acquire) ; unsafe { (* node) . next . store (head , Ordering :: Relaxed) ; } if self . freelist_head . compare_exchange (head , node , Ordering :: Release , Ordering :: Acquire) . is_ok () { self . freelist_size . fetch_add (1 , Ordering :: Relaxed) ; self . freed_count . fetch_add (1 , Ordering :: Relaxed) ; return true ; } } } pub fn get_stats (& self) -> (u64 , u64 , u64) { (self . freelist_size . load (Ordering :: Relaxed) , self . allocated_count . load (Ordering :: Relaxed) , self . freed_count . load (Ordering :: Relaxed) ,) } pub fn clear (& self) { let mut head = self . freelist_head . swap (ptr :: null_mut () , Ordering :: AcqRel) ; while ! head . is_null () { let node = unsafe { Box :: from_raw (head) } ; head = node . next . load (Ordering :: Relaxed) ; unsafe { drop (Box :: from_raw (node . page_ptr)) ; } } self . freelist_size . store (0 , Ordering :: Relaxed) ; } } . self_ty` (line 0, priv)
 
 ## File: MMSB/src/01_page/mod.rs
 
 - Layer(s): 01_page
-- Language coverage: Rust (16)
-- Element types: Module (16)
-- Total elements: 16
+- Language coverage: Rust (19)
+- Element types: Module (19)
+- Total elements: 19
 
 ### Elements
 
 - [Rust | Module] `allocator` (line 0, pub)
 - [Rust | Module] `checkpoint` (line 0, pub)
+- [Rust | Module] `columnar_delta` (line 0, pub)
 - [Rust | Module] `delta` (line 0, pub)
 - [Rust | Module] `delta_merge` (line 0, pub)
 - [Rust | Module] `delta_validation` (line 0, pub)
@@ -172,8 +233,10 @@
 - [Rust | Module] `device_registry` (line 0, pub)
 - [Rust | Module] `epoch` (line 0, pub)
 - [Rust | Module] `host_device_sync` (line 0, pub)
+- [Rust | Module] `integrity_checker` (line 0, pub)
 - [Rust | Module] `lockfree_allocator` (line 0, pub)
 - [Rust | Module] `page` (line 0, pub)
+- [Rust | Module] `replay_validator` (line 0, pub)
 - [Rust | Module] `simd_mask` (line 0, pub)
 - [Rust | Module] `tlog` (line 0, pub)
 - [Rust | Module] `tlog_compression` (line 0, pub)
@@ -208,6 +271,40 @@
 - [Rust | Function] `read_u32` (line 0, priv)
   - Signature: `fn read_u32 (blob : & [u8] , cursor : & mut usize) -> Result < u32 , PageError > { if * cursor + 4 > blob . len () { ...`
   - Calls: len, Err, PageError::MetadataDecode, map_err, try_into, PageError::MetadataDecode, Ok, u32::from_le_bytes
+
+## File: MMSB/src/01_page/replay_validator.rs
+
+- Layer(s): 01_page
+- Language coverage: Rust (11)
+- Element types: Function (5), Impl (2), Module (1), Struct (3)
+- Total elements: 11
+
+### Elements
+
+- [Rust | Struct] `ReplayCheckpoint` (line 0, pub)
+  - Signature: `# [derive (Debug , Clone)] pub struct ReplayCheckpoint { pub id : usize , pub log_offset : u64 , pub snapshot : Vec <...`
+- [Rust | Struct] `ReplayReport` (line 0, pub)
+  - Signature: `# [derive (Debug)] pub struct ReplayReport { pub checkpoint_id : usize , pub divergence : f64 , pub violations : Vec ...`
+- [Rust | Struct] `ReplayValidator` (line 0, pub)
+  - Signature: `# [derive (Debug)] pub struct ReplayValidator { checkpoints : Vec < ReplayCheckpoint > , threshold : f64 , }`
+- [Rust | Function] `checkpoint_validation_detects_divergence` (line 0, priv)
+  - Signature: `# [test] fn checkpoint_validation_detects_divergence () { let path = temp_log_path () ; let log = TransactionLog :: n...`
+  - Calls: temp_log_path, unwrap, TransactionLog::new, PageAllocator::new, PageAllocatorConfig::default, unwrap, allocate_raw, PageID, Some, unwrap, allocate_raw, PageID, Some, unwrap, acquire_page, PageID, unwrap, acquire_page, PageID, copy_from_slice, data_mut_slice, set_epoch, Epoch, copy_from_slice, data_mut_slice, ReplayValidator::new, unwrap, record_checkpoint, unwrap, acquire_page, PageID, data_mut_slice, unwrap, validate_allocator, ok, fs::remove_file
+- [Rust | Function] `compare_snapshots` (line 0, priv)
+  - Signature: `fn compare_snapshots (checkpoint : & ReplayCheckpoint , current : & [PageSnapshotData] ,) -> ReplayReport { let mut b...`
+  - Calls: HashMap::new, insert, Vec::new, remove, l2_distance, max, push, keys, push, sqrt
+- [Rust | Impl] `impl ReplayReport { pub fn passed (& self , threshold : f64) -> bool { self . divergence <= threshold } } . self_ty` (line 0, priv)
+- [Rust | Impl] `impl ReplayValidator { pub fn new (threshold : f64) -> Self { Self { checkpoints : Vec :: new () , threshold , } } pub fn record_checkpoint (& mut self , allocator : & PageAllocator , tlog : & TransactionLog ,) -> std :: io :: Result < usize > { let snapshot = allocator . snapshot_pages () ; let offset = tlog . current_offset () ? ; let id = self . checkpoints . len () ; self . checkpoints . push (ReplayCheckpoint { id , log_offset : offset , snapshot , }) ; Ok (id) } pub fn checkpoint (& self , idx : usize) -> Option < & ReplayCheckpoint > { self . checkpoints . get (idx) } pub fn validate_allocator (& self , checkpoint_id : usize , allocator : & PageAllocator ,) -> Result < ReplayReport , PageError > { let snapshot = allocator . snapshot_pages () ; Ok (self . compare_with_snapshot (checkpoint_id , & snapshot) ?) } pub fn compare_with_snapshot (& self , checkpoint_id : usize , snapshot : & [PageSnapshotData] ,) -> Result < ReplayReport , PageError > { let checkpoint = self . checkpoint (checkpoint_id) . ok_or (PageError :: MetadataDecode ("invalid checkpoint id")) ? ; Ok (compare_snapshots (checkpoint , snapshot)) } pub fn threshold (& self) -> f64 { self . threshold } } . self_ty` (line 0, priv)
+- [Rust | Function] `l2_distance` (line 0, priv)
+  - Signature: `fn l2_distance (reference : & [u8] , candidate : & [u8]) -> (f64 , u8) { let len = reference . len () . min (candidat...`
+  - Calls: min, len, len, max, unsigned_abs, len, len, powi, abs, len, len
+- [Rust | Function] `rand_suffix` (line 0, priv)
+  - Signature: `fn rand_suffix () -> u64 { use std :: time :: { SystemTime , UNIX_EPOCH } ; SystemTime :: now () . duration_since (UN...`
+  - Calls: as_nanos, unwrap, duration_since, SystemTime::now
+- [Rust | Function] `temp_log_path` (line 0, priv)
+  - Signature: `fn temp_log_path () -> PathBuf { let mut path = std :: env :: temp_dir () ; path . push (format ! ("mmsb_replay_{}.lo...`
+  - Calls: std::env::temp_dir, push
+- [Rust | Module] `tests` (line 0, priv)
 
 ## File: MMSB/src/01_page/simd_mask.rs
 

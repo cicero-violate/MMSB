@@ -1,0 +1,44 @@
+{
+  "benchmarks": {
+    "1_deterministic_replay": {
+      "description": "Same inputs → same outputs",
+      "target": "replay_divergence < 1e-9 over 1000 cycles"
+    },
+    "2_delta_integrity": {
+      "description": "Deltas atomic, valid, traceable",
+      "target": "100% schema validation; 0 orphan deltas"
+    },
+    "3_page_graph_consistency": {
+      "description": "Graph must be acyclic + resolvable",
+      "target": "validation < 1ms/page; cycle-detect < 10ms per 10k pages"
+    },
+    "4_algorithm_isolation": {
+      "description": "Algorithms pure + deterministic",
+      "target": "0 side effects; purity validator = 100%"
+    },
+    "5_delta_throughput": {
+      "description": "Engine delta processing rate",
+      "target": ">= 1,000,000 deltas/sec (single), >= 10,000,000/sec (multi)"
+    },
+    "6_tick_latency": {
+      "description": "Full simulation tick time",
+      "target": "< 16ms per tick"
+    },
+    "7_memory_footprint": {
+      "description": "Page and GC efficiency",
+      "target": "avg_page <= 1KB; 1M pages <= 1GB RAM; GC < 3ms"
+    },
+    "8_invariant_preservation": {
+      "description": "Constraints must always hold",
+      "target": "0 invariant failures across 10,000 cycles"
+    },
+    "9_stability_under_perturbation": {
+      "description": "System response to small shocks",
+      "target": "bounded error; no NaNs; smooth trajectories"
+    },
+    "10_traceability_observability": {
+      "description": "Explainability + provenance",
+      "target": "provenance_resolve < 50ms; max_chain_depth < 32"
+    }
+  }
+}

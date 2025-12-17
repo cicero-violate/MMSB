@@ -1,8 +1,0 @@
-Core type system with proper separation
-Module structure following Julia conventions
-Type definitions with documented fields
-Function signatures with docstring placeholders
-Thread-safety primitives (locks, atomic refs)
-GPU/CPU distinction in types
-
-The architecture flows: Types → Runtime → Device → Instrumentation → Graph

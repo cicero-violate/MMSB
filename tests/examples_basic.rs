@@ -1,5 +1,6 @@
-use mmsb_core::page::{Delta, DeltaID, Epoch, Page, PageID, PageLocation, Source};
-use mmsb_core::physical::{PageAllocator, PageAllocatorConfig};
+use mmsb_core::page::{
+    Delta, DeltaID, Epoch, PageAllocator, PageAllocatorConfig, PageID, PageLocation, Source,
+};
 
 #[test]
 fn example_page_allocation() {
@@ -25,6 +26,5 @@ fn example_delta_operations() {
 
 #[test]
 fn example_checkpoint() {
-    use mmsb_core::page::{write_checkpoint, load_checkpoint};
     assert!(true);
 }

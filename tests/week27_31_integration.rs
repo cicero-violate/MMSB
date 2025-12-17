@@ -1,5 +1,6 @@
-use mmsb_core::page::{Delta, DeltaID, Epoch, Page, PageID, PageLocation, Source};
-use mmsb_core::physical::{PageAllocator, PageAllocatorConfig};
+use mmsb_core::page::{
+    Delta, DeltaID, Epoch, PageAllocator, PageAllocatorConfig, PageID, PageLocation, Source,
+};
 use mmsb_core::semiring::TropicalSemiring;
 use std::sync::Arc;
 
@@ -43,7 +44,7 @@ fn test_delta_merge_simd() {
 
 #[test]
 fn test_lockfree_allocator() {
-    use mmsb_core::physical::lockfree_allocator::LockFreeAllocator;
+    use mmsb_core::page::LockFreeAllocator;
     
     let allocator = LockFreeAllocator::new();
     

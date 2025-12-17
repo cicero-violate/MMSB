@@ -45,6 +45,48 @@
   - `iter_mut`
   - `len`
 
+#### `checkpoint_validation_detects_divergence`
+
+- **File:** MMSB/src/01_page/replay_validator.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `temp_log_path`
+  - `unwrap`
+  - `TransactionLog::new`
+  - `PageAllocator::new`
+  - `PageAllocatorConfig::default`
+  - `unwrap`
+  - `allocate_raw`
+  - `PageID`
+  - `Some`
+  - `unwrap`
+  - `allocate_raw`
+  - `PageID`
+  - `Some`
+  - `unwrap`
+  - `acquire_page`
+  - `PageID`
+  - `unwrap`
+  - `acquire_page`
+  - `PageID`
+  - `copy_from_slice`
+  - `data_mut_slice`
+  - `set_epoch`
+  - `Epoch`
+  - `copy_from_slice`
+  - `data_mut_slice`
+  - `ReplayValidator::new`
+  - `unwrap`
+  - `record_checkpoint`
+  - `unwrap`
+  - `acquire_page`
+  - `PageID`
+  - `data_mut_slice`
+  - `unwrap`
+  - `validate_allocator`
+  - `ok`
+  - `fs::remove_file`
+
 #### `compact`
 
 - **File:** MMSB/src/01_page/tlog_compression.rs:0
@@ -62,6 +104,22 @@
   - `merge`
   - `push`
   - `clone`
+
+#### `compare_snapshots`
+
+- **File:** MMSB/src/01_page/replay_validator.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `HashMap::new`
+  - `insert`
+  - `Vec::new`
+  - `remove`
+  - `l2_distance`
+  - `max`
+  - `push`
+  - `keys`
+  - `push`
+  - `sqrt`
 
 #### `compress_delta_mask`
 
@@ -85,6 +143,34 @@
 - **Calls:**
   - `len`
 
+#### `delta`
+
+- **File:** MMSB/src/01_page/integrity_checker.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `DeltaID`
+  - `PageID`
+  - `Epoch`
+  - `collect`
+  - `map`
+  - `iter`
+  - `to_vec`
+  - `Source`
+  - `into`
+
+#### `detects_orphan_and_epoch_errors`
+
+- **File:** MMSB/src/01_page/integrity_checker.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `Arc::new`
+  - `DeviceBufferRegistry::default`
+  - `insert`
+  - `page`
+  - `DeltaIntegrityChecker::new`
+  - `Arc::clone`
+  - `validate`
+
 #### `encode_rle`
 
 - **File:** MMSB/src/01_page/tlog_compression.rs:0
@@ -107,6 +193,16 @@
 - **Calls:**
   - `add`
   - `mul`
+
+#### `detects_impure_function`
+
+- **File:** MMSB/src/02_semiring/purity_validator.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `PurityValidator::default`
+  - `AtomicU32::new`
+  - `validate_fn`
+  - `fetch_add`
 
 #### `fold_add`
 
@@ -134,6 +230,24 @@
 
 ### Rust Functions
 
+#### `detects_cycle`
+
+- **File:** MMSB/src/03_dag/graph_validator.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `ShadowPageGraph::default`
+  - `add_edge`
+  - `PageID`
+  - `PageID`
+  - `add_edge`
+  - `PageID`
+  - `PageID`
+  - `add_edge`
+  - `PageID`
+  - `PageID`
+  - `GraphValidator::new`
+  - `detect_cycles`
+
 #### `dfs`
 
 - **File:** MMSB/src/03_dag/cycle_detection.rs:0
@@ -149,6 +263,77 @@
 
 ### Rust Functions
 
+#### `applies_batches_in_parallel`
+
+- **File:** MMSB/src/04_propagation/throughput_engine.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `Arc::new`
+  - `PageAllocator::new`
+  - `Default::default`
+  - `unwrap`
+  - `allocate_raw`
+  - `PageID`
+  - `Some`
+  - `unwrap`
+  - `allocate_raw`
+  - `PageID`
+  - `Some`
+  - `ThroughputEngine::new`
+  - `Arc::clone`
+  - `unwrap`
+  - `process_parallel`
+  - `unwrap`
+  - `acquire_page`
+  - `PageID`
+  - `unwrap`
+  - `acquire_page`
+  - `PageID`
+
+#### `chunk_partitions`
+
+- **File:** MMSB/src/04_propagation/throughput_engine.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `is_empty`
+  - `Vec::new`
+  - `max`
+  - `len`
+  - `Vec::new`
+  - `Vec::with_capacity`
+  - `push`
+  - `len`
+  - `push`
+  - `Vec::with_capacity`
+  - `is_empty`
+  - `push`
+
+#### `command`
+
+- **File:** MMSB/src/04_propagation/propagation_queue.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `Arc::new`
+  - `unwrap`
+  - `Page::new`
+  - `PageID`
+  - `Vec::new`
+
+#### `delta_error_to_page`
+
+- **File:** MMSB/src/04_propagation/throughput_engine.rs:0
+- **Visibility:** Private
+
+#### `drain_batch_respects_bounds`
+
+- **File:** MMSB/src/04_propagation/propagation_queue.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `PropagationQueue::with_capacity`
+  - `push`
+  - `command`
+  - `drain_batch`
+
 #### `enqueue_sparse`
 
 - **File:** MMSB/src/04_propagation/sparse_message_passing.rs:0
@@ -159,6 +344,30 @@
 ## Layer: 06_utility
 
 ### Rust Functions
+
+#### `allocator`
+
+- **File:** MMSB/src/06_utility/memory_monitor.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `Arc::new`
+  - `PageAllocator::new`
+  - `PageAllocatorConfig::default`
+
+#### `cache_does_not_grow_unbounded`
+
+- **File:** MMSB/src/06_utility/provenance_tracker.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `Arc::new`
+  - `ShadowPageGraph::default`
+  - `add_edge`
+  - `PageID`
+  - `PageID`
+  - `ProvenanceTracker::with_capacity`
+  - `Arc::clone`
+  - `resolve`
+  - `PageID`
 
 #### `cpu_has_avx2`
 
@@ -181,9 +390,58 @@
 - **Calls:**
   - `CpuFeatures::get`
 
+#### `epoch_invariant_detects_regressions`
+
+- **File:** MMSB/src/06_utility/invariant_checker.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `PageAllocator::new`
+  - `PageAllocatorConfig::default`
+  - `unwrap`
+  - `allocate_raw`
+  - `PageID`
+  - `Some`
+  - `unwrap`
+  - `acquire_page`
+  - `PageID`
+  - `set_epoch`
+  - `Epoch`
+  - `Some`
+  - `InvariantChecker::new`
+  - `register`
+  - `EpochMonotonicity::default`
+  - `unwrap`
+  - `acquire_page`
+  - `PageID`
+  - `set_epoch`
+  - `Epoch`
+
 ## Layer: root
 
 ### Rust Functions
+
+#### `build_deltas`
+
+- **File:** MMSB/src/bin/phase6_bench.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `collect`
+  - `map`
+  - `PageID`
+  - `DeltaID`
+  - `Epoch`
+  - `Source`
+  - `into`
+
+#### `build_graph`
+
+- **File:** MMSB/src/bin/phase6_bench.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `ShadowPageGraph::default`
+  - `add_edge`
+  - `PageID`
+  - `PageID`
 
 #### `convert_location`
 
@@ -191,6 +449,17 @@
 - **Visibility:** Private
 - **Calls:**
   - `PageLocation::from_tag`
+
+#### `delta`
+
+- **File:** MMSB/tests/benchmark_06_tick_latency.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `DeltaID`
+  - `PageID`
+  - `Epoch`
+  - `Source`
+  - `into`
 
 #### `dense_delta`
 
@@ -202,6 +471,18 @@
   - `Epoch`
   - `Source`
   - `into`
+
+#### `divergence`
+
+- **File:** MMSB/tests/benchmark_09_stability.rs:0
+- **Visibility:** Private
+- **Calls:**
+  - `sqrt`
+  - `sum`
+  - `map`
+  - `zip`
+  - `iter`
+  - `powi`
 
 #### `example_checkpoint`
 

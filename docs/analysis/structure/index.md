@@ -1,6 +1,6 @@
 # MMSB Code Structure Overview
 
-Generated: 2025-12-17 08:15:43
+Generated: 2025-12-17 10:16:28
 
 Each numbered file groups source files by MMSB prefix so a simple `ls structure/` shows the traversal order.
 
@@ -16,21 +16,22 @@ Each numbered file groups source files by MMSB prefix so a simple `ls structure/
 - `src/04_propagation` → `070-src-04_propagation.md`
 - `src/05_adaptive` → `080-src-05_adaptive.md`
 - `src/06_utility` → `090-src-06_utility.md`
-- `src/ffi.rs` → `100-src-ffi_rs.md`
-- `src/lib.rs` → `110-src-lib_rs.md`
-- `tests` → `120-tests.md`
+- `src/bin` → `100-src-bin.md`
+- `src/ffi.rs` → `110-src-ffi_rs.md`
+- `src/lib.rs` → `120-src-lib_rs.md`
+- `tests` → `130-tests.md`
 
 ## Summary Statistics
 
-- Total elements: 291
-- Rust elements: 291
+- Total elements: 458
+- Rust elements: 458
 - Julia elements: 0
 
 ### Elements by Type
 
-- Rust_Enum: 9
-- Rust_Function: 123
-- Rust_Impl: 48
-- Rust_Module: 57
-- Rust_Struct: 53
-- Rust_Trait: 1
+- Rust_Enum: 11
+- Rust_Function: 192
+- Rust_Impl: 86
+- Rust_Module: 80
+- Rust_Struct: 87
+- Rust_Trait: 2

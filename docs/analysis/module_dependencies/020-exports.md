@@ -20,6 +20,7 @@ Module `mod`
 
 - `allocator :: { PageAllocator , PageAllocatorConfig , PageInfo , PageSnapshotData }`
 - `checkpoint :: { load_checkpoint , write_checkpoint }`
+- `columnar_delta :: ColumnarDeltaBatch`
 - `crate :: types :: { PageID , PageLocation , PageError , Epoch , EpochCell , DeltaID , Source , DeltaError }`
 - `delta :: Delta`
 - `delta_merge :: merge_deltas`
@@ -27,8 +28,10 @@ Module `mod`
 - `device :: DeviceRegistry`
 - `device_registry :: DeviceBufferRegistry`
 - `host_device_sync :: HostDeviceSync`
+- `integrity_checker :: { DeltaIntegrityChecker , IntegrityReport , IntegrityViolation , IntegrityViolationKind }`
 - `lockfree_allocator :: LockFreeAllocator`
 - `page :: { Metadata , Page }`
+- `replay_validator :: { ReplayCheckpoint , ReplayReport , ReplayValidator }`
 - `simd_mask :: generate_mask`
 - `tlog :: { LogSummary , TransactionLog , TransactionLogReader , summary }`
 
@@ -44,6 +47,7 @@ Module `mod`
 
 Module `mod`
 
+- `purity_validator :: { PurityFailure , PurityReport , PurityValidator }`
 - `semiring_ops :: { accumulate , fold_add , fold_mul }`
 - `semiring_types :: Semiring`
 - `standard_semirings :: { BooleanSemiring , TropicalSemiring }`
@@ -54,6 +58,7 @@ Module `mod`
 
 - `cycle_detection :: has_cycle`
 - `edge_types :: EdgeType`
+- `graph_validator :: { GraphValidationReport , GraphValidator }`
 - `shadow_graph :: { Edge , ShadowPageGraph }`
 - `shadow_graph_traversal :: topological_sort`
 
@@ -79,7 +84,10 @@ Module `mod`
 - `propagation_engine :: PropagationEngine`
 - `propagation_fastpath :: passthrough`
 - `propagation_queue :: PropagationQueue`
+- `ring_buffer :: LockFreeRingBuffer`
 - `sparse_message_passing :: enqueue_sparse`
+- `throughput_engine :: { ThroughputEngine , ThroughputMetrics }`
+- `tick_orchestrator :: { TickMetrics , TickOrchestrator }`
 
 ## MMSB/src/05_adaptive/mod.rs (05_adaptive)
 
@@ -94,6 +102,9 @@ Module `mod`
 Module `mod`
 
 - `cpu_features :: CpuFeatures`
+- `invariant_checker :: { EpochMonotonicity , GraphAcyclicity , Invariant , InvariantChecker , InvariantContext , InvariantResult , PageConsistency }`
+- `memory_monitor :: { GCMetrics , MemoryMonitor , MemoryMonitorConfig , MemorySnapshot }`
+- `provenance_tracker :: { ProvenanceResult , ProvenanceTracker }`
 - `telemetry :: { Telemetry , TelemetrySnapshot }`
 
 ## MMSB/src/lib.rs (root)

@@ -96,6 +96,16 @@ response = MMSBTop.LLMTools.query_llm(ctx, "Summarize allocator health")
 | `docs/`                   | Architecture, API, serialization specs      |
 | `project_schedule/`       | Development roadmap and task tracking       |
 
+### Layer Benchmarks
+Each layer now has a co-located benchmark guide under `benchmark/<layer>/README.md`:
+- `benchmark/00_physical/` — allocation, unified memory, device sync hot paths
+- `benchmark/01_page/` — delta pipelines, TLog replay, checkpointing
+- `benchmark/02_semiring/` — semiring cores and purity validation
+- `benchmark/03_dag/` — graph validators, traversal workloads
+- `benchmark/04_propagation/` — ring buffer, throughput engine, tick latency
+- `benchmark/05_adaptive/` — layout optimizer and clustering heuristics
+- `benchmark/06_utility/` — telemetry, invariant, memory monitor suites
+
 ## Operational Model
 - **Semiring discipline** — Deltas as additive merges (`⊕`), propagations as causal applies (`⊗`)
 - **Explicit dependencies** — ShadowPageGraph is the only coordination backbone; no hidden globals
