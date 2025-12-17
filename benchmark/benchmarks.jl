@@ -41,7 +41,8 @@ const BENCH_PARAMS = BenchmarkTools.Parameters(
 )
 
 function _start_state(; enable_gpu::Bool=false)
-    return API.mmsb_start(enable_gpu=enable_gpu)
+    cfg = MMSB.MMSBStateTypes.MMSBConfig(enable_gpu=enable_gpu, enable_logging=false)
+    return API.mmsb_start(config=cfg)
 end
 
 function _stop_state!(state)

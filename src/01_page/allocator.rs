@@ -59,7 +59,12 @@ impl PageAllocator {
     }
 
     pub fn with_stats(config: PageAllocatorConfig, stats: Arc<AllocatorStats>) -> Self {
-        println!("Allocating new PageAllocator instance with config: {:?}", config);
+        if cfg!(debug_assertions) {
+            println!(
+                "Allocating new PageAllocator instance with config: {:?}",
+                config
+            );
+        }
         Self {
             config,
             pages: Mutex::new(HashMap::new()),
@@ -75,7 +80,12 @@ impl PageAllocator {
         }
         let page = Box::new(Page::new(page_id_hint, size, loc)?);
         let ptr = Box::into_raw(page);
-        println!("[ALLOCATOR] allocate_raw(id={}) → raw ptr = {:p}", page_id_hint.0, ptr);
+        if cfg!(debug_assertions) {
+            println!(
+                "[ALLOCATOR] allocate_raw(id={}) → raw ptr = {:p}",
+                page_id_hint.0, ptr
+            );
+        }
         self.pages.lock().insert(page_id_hint, unsafe { Box::from_raw(ptr) });
         self.stats.record_alloc();
         Ok(ptr)
@@ -83,20 +93,29 @@ impl PageAllocator {
 
     pub fn free(&self, page_id: PageID) {
         if let Some(_) = self.pages.lock().remove(&page_id) {
-            println!("[ALLOCATOR] Freed page {}", page_id.0);
+            if cfg!(debug_assertions) {
+                println!("[ALLOCATOR] Freed page {}", page_id.0);
+            }
             self.stats.record_free();
         }
     }
 
     pub fn release(&self, page_id: PageID) {
         if let Some(boxed_page) = self.pages.lock().remove(&page_id) {
-            println!("[ALLOCATOR] release({}): ownership transferred — Box removed from map but NOT dropped (caller now owns it)", page_id.0);
+            if cfg!(debug_assertions) {
+                println!("[ALLOCATOR] release({}): ownership transferred — Box removed from map but NOT dropped (caller now owns it)", page_id.0);
+            }
             // DO NOT drop the Box here!
             // The raw pointer from allocate_raw is now the sole owner.
             // Dropping boxed_page here would free the memory → use-after-free
             std::mem::forget(boxed_page);
         } else {
-            println!("[ALLOCATOR] release({}): page not found — already released?", page_id.0);
+            if cfg!(debug_assertions) {
+                println!(
+                    "[ALLOCATOR] release({}): page not found — already released?",
+                    page_id.0
+                );
+            }
         }
     }
 
@@ -138,52 +157,80 @@ impl PageAllocator {
     }
 
     pub fn restore_from_snapshot(&self, snapshots: Vec<PageSnapshotData>) -> Result<(), PageError> {
-        eprintln!("\n=== RESTORE_FROM_SNAPSHOT STARTED ===");
-        eprintln!("   Clearing {} existing pages", self.pages.lock().len());
+        if cfg!(debug_assertions) {
+            eprintln!("\n=== RESTORE_FROM_SNAPSHOT STARTED ===");
+            eprintln!("   Clearing {} existing pages", self.pages.lock().len());
+        }
 
         let mut pages = self.pages.lock();
         pages.clear();
 
         for (i, snapshot) in snapshots.iter().enumerate() {
-            eprintln!("   [{i}] Restoring page ID={:?} size={} epoch={} loc={:?}",
-                snapshot.page_id, snapshot.size, snapshot.epoch, snapshot.location);
+            if cfg!(debug_assertions) {
+                eprintln!("   [{i}] Restoring page ID={:?} size={} epoch={} loc={:?}",
+                    snapshot.page_id, snapshot.size, snapshot.epoch, snapshot.location);
+            }
 
             // 1. Create page — real error from Page::new
             let mut page = match Page::new(snapshot.page_id, snapshot.size, snapshot.location) {
                 Ok(p) => Box::new(p),
                 Err(e) => {
+                if cfg!(debug_assertions) {
                     eprintln!("      Page::new() FAILED: {e}");
-                    return Err(e);
                 }
+                return Err(e);
+            }
             };
 
             // 2. Set epoch
             page.set_epoch(Epoch(snapshot.epoch));
-            eprintln!("      Epoch set to {}", snapshot.epoch);
+            if cfg!(debug_assertions) {
+                eprintln!("      Epoch set to {}", snapshot.epoch);
+            }
 
             // 3. Copy data — size mismatch is impossible if snapshot was written correctly
             let dst = page.data_mut_slice();
             if dst.len() != snapshot.data.len() {
-                eprintln!("      FATAL: data size mismatch! page={} snapshot={}", dst.len(), snapshot.data.len());
+                if cfg!(debug_assertions) {
+                    eprintln!("      FATAL: data size mismatch! page={} snapshot={}", dst.len(), snapshot.data.len());
+                }
                 return Err(PageError::MetadataDecode("data size mismatch in snapshot"));
             }
             dst.copy_from_slice(&snapshot.data);
-            eprintln!("      Data copied ({} bytes)", snapshot.data.len());
+            if cfg!(debug_assertions) {
+                eprintln!("      Data copied ({} bytes)", snapshot.data.len());
+            }
 
             // 4. Apply metadata — THIS IS WHERE IT WAS FAILING
-            eprintln!("      Applying metadata ({} bytes)...", snapshot.metadata_blob.len());
+            if cfg!(debug_assertions) {
+                eprintln!(
+                    "      Applying metadata ({} bytes)...",
+                    snapshot.metadata_blob.len()
+                );
+            }
             if let Err(e) = page.set_metadata_blob(&snapshot.metadata_blob) {
-                eprintln!("      METADATA RESTORE FAILED: {e}");
+                if cfg!(debug_assertions) {
+                    eprintln!("      METADATA RESTORE FAILED: {e}");
+                }
                 return Err(e); // ← this is PageError::MetadataDecode(...)
             }
-            eprintln!("      Metadata restored OK");
+            if cfg!(debug_assertions) {
+                eprintln!("      Metadata restored OK");
+            }
 
             // 5. Insert
             pages.insert(snapshot.page_id, page);
-            eprintln!("      Page inserted");
+            if cfg!(debug_assertions) {
+                eprintln!("      Page inserted");
+            }
         }
 
-        eprintln!("=== RESTORE_FROM_SNAPSHOT SUCCESS: {} pages restored ===", snapshots.len());
+        if cfg!(debug_assertions) {
+            eprintln!(
+                "=== RESTORE_FROM_SNAPSHOT SUCCESS: {} pages restored ===",
+                snapshots.len()
+            );
+        }
         Ok(())
     }
 

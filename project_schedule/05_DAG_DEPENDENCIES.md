@@ -28,9 +28,21 @@
 ### P7-Patch: Performance Gap Closure (P1, parallel)
 **Owner:** Runtime/Julia
 
-- [ ] Raise multi-thread throughput ≥10 M/sec (profiling + batching plan).
-- [ ] Bring Julia tick median <16 ms (profiled hotspots + logging knobs).
-- [ ] Document tuning steps in `README.md` after targets met.
+**Throughput (Rust stress suite)**
+- [ ] Capture perf flamegraph for `multi_thread_10m_deltas_per_sec` (`perf record -F 4000`).
+- [ ] Batch FFI calls in `DeltaRouter` to reduce lock contention (target: ≤2 syscalls/delta).
+- [ ] Enable SIMD merge path by default (guard cleanup + benchmarks).
+- [ ] Re-run `tests/stress_throughput.rs` and store metrics in `benchmark/results/phase6.json`.
+
+**Julia Tick Latency**
+- [ ] Cache `ensure_rust_artifacts` result in `FFIWrapper.jl` (DONE) and extend cache to `dlopen`.
+- [ ] Gate event logging via config (DONE) and verify `state.config.enable_logging=false` everywhere.
+- [ ] Profile `_full_system_benchmark!` after changes and shrink tick median <16 ms.
+- [ ] Dump new Julia benchmark medians to `benchmark/results/julia_phase6.json` (new artifact).
+
+**Documentation**
+- [ ] Update `README.md` performance table once both targets met.
+- [ ] Add “Benchmark Capture” instructions describing how to refresh `benchmark/results/*.json`.
 
 ---
 

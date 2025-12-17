@@ -6,7 +6,7 @@ Module `mod`
 
 - `allocator_stats :: AllocatorStats`
 - `gpu_memory_pool :: { GPUMemoryPool , PoolStats }`
-- `nccl_integration :: { NCCLContext , ncclRedOp_t , ncclDataType_t }`
+- `nccl_integration :: { NCCLContext , NcclDataType , NcclRedOp }`
 
 ## MMSB/src/01_page/epoch.rs (01_page)
 

@@ -72,7 +72,12 @@ impl Page {
         }
 
         let debug_id = PAGE_COUNTER.fetch_add(1, Ordering::Relaxed);
-        println!("[PAGE {:>4}] NEW     id={:>6} size={:>7} loc={:?}", debug_id, id.0, size, location);
+        if cfg!(debug_assertions) {
+            println!(
+                "[PAGE {:>4}] NEW     id={:>6} size={:>7} loc={:?}",
+                debug_id, id.0, size, location
+            );
+        }
 
         // Use real cudaMallocManaged when Unified, fall back to Vec otherwise
         let (data_ptr, unified_cuda_backing) = if location == PageLocation::Unified {
@@ -251,7 +256,12 @@ impl Page {
 impl Clone for Page {
     fn clone(&self) -> Self {
         let new_debug_id = PAGE_COUNTER.fetch_add(1, Ordering::Relaxed);
-        println!("[PAGE {:>4}] CLONE → [PAGE {:>4}]  id={:>6}", self.debug_id, new_debug_id, self.id.0);
+        if cfg!(debug_assertions) {
+            println!(
+                "[PAGE {:>4}] CLONE → [PAGE {:>4}]  id={:>6}",
+                self.debug_id, new_debug_id, self.id.0
+            );
+        }
 
         // Deep copy — allocate fresh memory
         let layout_data = std::alloc::Layout::array::<u8>(self.capacity).expect("invalid capacity");
@@ -279,7 +289,12 @@ impl Clone for Page {
 
 impl Drop for Page {
     fn drop(&mut self) {
-        println!("[PAGE {:>4}] DROP    id={:>6} loc={:?}", self.debug_id, self.id.0, self.location);
+        if cfg!(debug_assertions) {
+            println!(
+                "[PAGE {:>4}] DROP    id={:>6} loc={:?}",
+                self.debug_id, self.id.0, self.location
+            );
+        }
 
         let mask_size = (self.capacity + 7) / 8;
         let mask_layout = std::alloc::Layout::array::<u8>(mask_size).unwrap();

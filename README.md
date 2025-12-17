@@ -46,6 +46,7 @@ Layer 3:  DAG/Graph        → ShadowPageGraph, Dependency Tracking, Cycles
 Layer 2:  Semiring Algebra → Delta Router, Merge Operations, Tropical/Boolean
 Layer 1:  Page Layer       → Pages, Deltas, TLog, Checkpoint/Replay
 Layer 0:  Physical Memory  → Page Allocator, Unified Memory, GPU Kernels
+Harness: Validation/CI    → Rust stress_* tests, `benchmark/run_validation.jl`, `benchmark/validate_all.jl`
 ```
 
  

@@ -1,9 +1,9 @@
 # Phase 6 Task Log
 
 ## Week 27: Benchmarking
-- [ ] Setup BenchmarkTools.jl suite
-- [ ] Profile allocator hotspots
-- [ ] End-to-end pipeline benchmark
+- [x] Setup BenchmarkTools.jl suite
+- [x] Profile allocator hotspots
+- [x] End-to-end pipeline benchmark
 
 ## Week 28-29: GPU Optimization
 - [ ] Persistent kernel implementation

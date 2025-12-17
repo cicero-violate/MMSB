@@ -1,0 +1,80 @@
+name: Benchmarks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "0 6 * * 1"
+
+env:
+  RUSTFLAGS: "-A warnings"
+  RUST_BACKTRACE: full
+  LD_LIBRARY_PATH: "${{ github.workspace }}/target/release:${LD_LIBRARY_PATH}"
+  JULIA_PROJECT: "${{ github.workspace }}"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: Cargo fmt
+        run: cargo fmt -- --check
+      - name: Cargo clippy
+        run: cargo clippy -- -D warnings
+
+  rust-tests:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: Cargo tests (lib + integration)
+        run: cargo test --release --lib --tests
+      - name: Stress throughput
+        run: cargo test --release --test stress_throughput -- --nocapture
+      - name: Stress stability
+        run: cargo test --release --test stress_stability -- --nocapture
+      - name: Stress memory
+        run: cargo test --release --test stress_memory -- --nocapture
+
+  phase6-bench:
+    needs: rust-tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: Run Phase 6 benchmark
+        run: cargo run --bin phase6_bench --release
+      - name: Upload Phase 6 metrics
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase6-bench-results
+          path: benchmark/results/phase6.json
+
+  julia-bench:
+    needs: rust-tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: julia-actions/setup-julia@v2
+        with:
+          version: "1.10"
+      - uses: julia-actions/cache@v1
+      - name: Julia BenchmarkTools suite
+        run: julia --startup-file=no --project=. benchmark/benchmarks.jl
+      - name: Julia validation harness
+        run: |
+          set -o pipefail
+          julia --startup-file=no --project=. benchmark/validate_all.jl | tee validation.log
+      - name: Upload Julia artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: julia-validation
+          path: |
+            validation.log
+            benchmark/results/julia_phase6.json

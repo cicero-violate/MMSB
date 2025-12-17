@@ -3,6 +3,7 @@ module FFIWrapper
 using Base: Csize_t
 
 const LIBMMSB = joinpath(@__DIR__, "..", "..", "target", "release", "libmmsb_core.so")
+const _LIBMMSB_AVAILABLE = Ref{Union{Nothing,Bool}}(nothing)
 
 const _ERROR_HOOK = Base.RefValue{Function}((::AbstractString) -> nothing)
 
@@ -65,7 +66,13 @@ struct RustSemiringPairBool
     mul::UInt8
 end
 
-rust_artifacts_available() = isfile(LIBMMSB)
+function rust_artifacts_available()
+    cached = _LIBMMSB_AVAILABLE[]
+    cached === true && return true
+    available = isfile(LIBMMSB)
+    _LIBMMSB_AVAILABLE[] = available
+    return available
+end
 
 function ensure_rust_artifacts()
     rust_artifacts_available() || error("Rust artifacts not built — run `cargo build --release`")

@@ -1,7 +1,7 @@
 # Module Dependencies
 
 - Module files analyzed: 73
-- Unique imports captured: 263
+- Unique imports captured: 264
 - Unique exports captured: 53
 - Submodule declarations captured: 80
 
@@ -24,7 +24,7 @@
 - `MMSB/src/01_page/integrity_checker.rs` → module `integrity_checker` (layer 01_page, 8 imports / 0 exports / 1 submodules)
 - `MMSB/src/01_page/lockfree_allocator.rs` → module `lockfree_allocator` (layer 01_page, 4 imports / 0 exports / 0 submodules)
 - `MMSB/src/01_page/mod.rs` → module `mod` (layer 01_page, 0 imports / 16 exports / 19 submodules)
-- `MMSB/src/01_page/page.rs` → module `page` (layer 01_page, 8 imports / 0 exports / 0 submodules)
+- `MMSB/src/01_page/page.rs` → module `page` (layer 01_page, 9 imports / 0 exports / 0 submodules)
 - `MMSB/src/01_page/replay_validator.rs` → module `replay_validator` (layer 01_page, 11 imports / 0 exports / 1 submodules)
 - `MMSB/src/01_page/tlog.rs` → module `tlog` (layer 01_page, 6 imports / 0 exports / 0 submodules)
 - `MMSB/src/01_page/tlog_compression.rs` → module `tlog_compression` (layer 01_page, 1 imports / 0 exports / 0 submodules)

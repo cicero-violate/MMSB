@@ -1,3 +1,4 @@
+use crate::ffi_debug;
 use crate::page::checkpoint;
 use crate::page::tlog::{TransactionLog, TransactionLogReader};
 use crate::page::{Delta, DeltaID, Epoch, Page, PageAllocator, PageAllocatorConfig, PageError, PageID, PageLocation, Source};
@@ -250,13 +251,13 @@ fn slice_from_ptr<'a, T>(ptr: *const T, len: usize) -> &'a [T] {
 
 #[no_mangle]
 pub extern "C" fn mmsb_page_read(handle: PageHandle, dst: *mut u8, len: usize) -> usize {
-    eprintln!("=== mmsb_page_read START ===");
-    eprintln!("  handle.ptr = {:p}", handle.ptr);
-    eprintln!("  dst = {:p}", dst);
-    eprintln!("  requested len = {}", len);
+    ffi_debug!("=== mmsb_page_read START ===");
+    ffi_debug!("  handle.ptr = {:p}", handle.ptr);
+    ffi_debug!("  dst = {:p}", dst);
+    ffi_debug!("  requested len = {}", len);
 
     if handle.ptr.is_null() {
-        eprintln!("  ERROR: Invalid page handle (null)");
+        ffi_debug!("  ERROR: Invalid page handle (null)");
         set_last_error(MMSBErrorCode::InvalidHandle);
         return 0;
     }
@@ -265,13 +266,13 @@ pub extern "C" fn mmsb_page_read(handle: PageHandle, dst: *mut u8, len: usize) -
     if len == 0 {
         let page = unsafe { &*handle.ptr };
         let size = page.size();
-        eprintln!("  Returning page size: {} (len=0 query)", size);
+        ffi_debug!("  Returning page size: {} (len=0 query)", size);
         return size;
     }
 
     // Normal case: dst must not be null
     if dst.is_null() {
-        eprintln!("  ERROR: dst is null but len > 0");
+        ffi_debug!("  ERROR: dst is null but len > 0");
         set_last_error(MMSBErrorCode::InvalidHandle);
         return 0;
     }
@@ -280,14 +281,14 @@ pub extern "C" fn mmsb_page_read(handle: PageHandle, dst: *mut u8, len: usize) -
     let page_size = page.size();
     let bytes_to_copy = len.min(page_size);
 
-    eprintln!("  page size = {}, copying {} bytes", page_size, bytes_to_copy);
+    ffi_debug!("  page size = {}, copying {} bytes", page_size, bytes_to_copy);
 
     let src_slice = page.data_slice();
     unsafe {
         std::ptr::copy_nonoverlapping(src_slice.as_ptr(), dst, bytes_to_copy);
     }
 
-    eprintln!("=== mmsb_page_read END (success, {} bytes) ===", bytes_to_copy);
+    ffi_debug!("=== mmsb_page_read END (success, {} bytes) ===", bytes_to_copy);
     bytes_to_copy
 }
 
@@ -877,20 +878,20 @@ pub extern "C" fn mmsb_tlog_summary(path: *const c_char, out: *mut TLogSummary) 
 // ──────────────────────────────────────────────────────────────
 #[no_mangle]
 pub extern "C" fn mmsb_allocator_new() -> AllocatorHandle {
-    eprintln!("=== mmsb_allocator_new START ===");
+    ffi_debug!("=== mmsb_allocator_new START ===");
     let config = PageAllocatorConfig::default();
     let allocator = PageAllocator::new(config);
     let boxed = Box::new(allocator);
     let ptr = Box::into_raw(boxed);
-    eprintln!("   Allocator created at {:p}", ptr);
-    eprintln!("=== mmsb_allocator_new END ===");
+    ffi_debug!("   Allocator created at {:p}", ptr);
+    ffi_debug!("=== mmsb_allocator_new END ===");
     AllocatorHandle { ptr }
 }
 
 #[no_mangle]
 pub extern "C" fn mmsb_allocator_free(handle: AllocatorHandle) {
     if !handle.ptr.is_null() {
-        eprintln!("Freeing allocator at {:p}", handle.ptr);
+        ffi_debug!("Freeing allocator at {:p}", handle.ptr);
         unsafe {
             drop(Box::from_raw(handle.ptr));
         }
@@ -904,8 +905,8 @@ pub extern "C" fn mmsb_allocator_allocate(
     size: usize,
     location: i32,
 ) -> PageHandle {
-    eprintln!("=== mmsb_allocator_allocate START ===");
-    eprintln!("  handle = {:p}, page_id_hint = {}, size = {}", handle.ptr, page_id_hint, size);
+    ffi_debug!("=== mmsb_allocator_allocate START ===");
+    ffi_debug!("  handle = {:p}, page_id_hint = {}, size = {}", handle.ptr, page_id_hint, size);
 
     if handle.ptr.is_null() {
         set_last_error(MMSBErrorCode::InvalidHandle);
@@ -922,17 +923,17 @@ pub extern "C" fn mmsb_allocator_allocate(
         Err(_) => None,
     };
 
-    match allocator.allocate_raw(PageID(page_id_hint), size, loc) {
-        Ok(page_ptr) => {
-            eprintln!("   Allocation SUCCESS → page at {:p}", page_ptr);
-            eprintln!("=== mmsb_allocator_allocate END (success) ===");
-            PageHandle { ptr: page_ptr }
-        }
-        Err(_) => {
-            eprintln!("   Allocation FAILED");
-            set_last_error(MMSBErrorCode::AllocError);
-            PageHandle::null()
-        }
+        match allocator.allocate_raw(PageID(page_id_hint), size, loc) {
+            Ok(page_ptr) => {
+                ffi_debug!("   Allocation SUCCESS → page at {:p}", page_ptr);
+                ffi_debug!("=== mmsb_allocator_allocate END (success) ===");
+                PageHandle { ptr: page_ptr }
+            }
+            Err(_) => {
+                ffi_debug!("   Allocation FAILED");
+                set_last_error(MMSBErrorCode::AllocError);
+                PageHandle::null()
+            }
     }
 }
 

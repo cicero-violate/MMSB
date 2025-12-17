@@ -30,7 +30,7 @@ pub enum NcclDataType {
 
 extern "C" {
     fn ncclGetUniqueId(id: *mut NcclUniqueId) -> i32;
-    fn ncclCommInitRank(comm: *mut NcclComm, ndev: i32, id: NcclUniqueId, rank: i32) -> i32;
+    fn ncclCommInitRank(comm: *mut NcclComm, ndev: i32, id: *const u8, rank: i32) -> i32;
     fn ncclCommDestroy(comm: NcclComm) -> i32;
     fn ncclAllReduce(
         sendbuff: *const c_void,
@@ -82,7 +82,7 @@ impl NCCLContext {
     pub fn init_communicator(&self, rank: i32, world_size: i32) -> Result<(), i32> {
         let mut comm: NcclComm = std::ptr::null_mut();
         let result = unsafe {
-            ncclCommInitRank(&mut comm, world_size, self.unique_id, rank)
+            ncclCommInitRank(&mut comm, world_size, self.unique_id.as_ptr(), rank)
         };
         
         if result != 0 {

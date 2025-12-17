@@ -135,6 +135,7 @@ Module `page`
 - `parking_lot :: RwLock`
 - `std :: convert :: TryInto`
 - `std :: ffi :: c_void`
+- `std :: ptr`
 - `std :: sync :: Arc`
 - `std :: sync :: atomic :: { AtomicU64 , Ordering }`
 - `super :: delta :: Delta`
