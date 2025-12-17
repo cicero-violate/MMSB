@@ -1,10 +1,13 @@
 # Test T1.3: Deterministic Replay Oracle
 
 using Test
-using MMSB.PageTypes: PageID, read_page
+using MMSB.PageTypes: PageID
 using MMSB.MMSBStateTypes: MMSBState, get_page, allocate_delta_id!
 using MMSB.PropagationEngine: register_passthrough_recompute!, recompute_page!
 using MMSB.API: create_page, update_page
+
+# Import read_page from the correct module context
+import MMSB.PageTypes: read_page
 
 """
     canonical_snapshot(state) -> Dict
