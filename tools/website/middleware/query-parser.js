@@ -48,6 +48,11 @@ function parseQueryParams(requestUrl) {
     metadata: parseBoolean(query.metadata, false),
     stats: parseBoolean(query.stats, false),
 
+    // Apply-patch parameters
+    patch: query.patch || null,
+    workdir: query.workdir || null,
+    encoding: query.encoding || null,
+
     // Preview parameters
     preview: parseBoolean(query.preview, false),
     lines: parseInt(query.lines) || 20,
