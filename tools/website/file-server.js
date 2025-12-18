@@ -120,15 +120,21 @@ const server = http.createServer(async (req, res) => {
 
 /**
  * Handle directory listing requests
- */
+*/
 async function handleDirectoryRequest(dirPath, urlPath, params, res) {
-  // Check for index.html
-  const indexPath = path.join(dirPath, 'index.html');
-  if (fs.existsSync(indexPath) && !params.format) {
-    const data = fs.readFileSync(indexPath);
-    res.writeHead(200, { 'Content-Type': 'text/html' });
-    res.end(data);
-    return;
+  // Only serve index.html if no query parameters are present
+  const hasQueryParams = params.format || params.ext || params.search || 
+                         params.sort || params.stats || params.recursive ||
+                         params.limit || params.pattern || params.type;
+  
+  if (!hasQueryParams) {
+    const indexPath = path.join(dirPath, 'index.html');
+    if (fs.existsSync(indexPath)) {
+      const data = fs.readFileSync(indexPath);
+      res.writeHead(200, { 'Content-Type': 'text/html' });
+      res.end(data);
+      return;
+    }
   }
 
   // Force JSON format for stats requests
