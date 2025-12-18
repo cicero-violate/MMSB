@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MMSB File Server - LLM Agent Navigation Guide</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            line-height: 1.6;
+        }
+        h1 { color: #569cd6; border-bottom: 2px solid #569cd6; padding-bottom: 10px; }
+        h2 { color: #4ec9b0; margin-top: 30px; }
+        h3 { color: #dcdcaa; }
+        code {
+            background-color: #2d2d2d;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #ce9178;
+        }
+        pre {
+            background-color: #2d2d2d;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border-left: 4px solid #569cd6;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #2d2d2d;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #3e3e3e;
+        }
+        th {
+            background-color: #252526;
+            color: #569cd6;
+            font-weight: bold;
+        }
+        tr:hover { background-color: #2a2a2a; }
+        .working { color: #4ec9b0; }
+        .partial { color: #dcdcaa; }
+        .broken { color: #f48771; }
+        .section {
+            background-color: #252526;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            border-left: 4px solid #4ec9b0;
+        }
+        .warning {
+            background-color: #3e2723;
+            padding: 15px;
+            border-left: 4px solid #f48771;
+            margin: 15px 0;
+            border-radius: 3px;
+        }
+        a { color: #569cd6; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        ul { margin: 10px 0; }
+        li { margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <h1>🤖 MMSB File Server - LLM Agent Navigation Guide</h1>
+    
+    <div class="section">
+        <h2>📍 Base URL</h2>
+        <p><strong>Public Server:</strong> <code>https://cheese-server.duckdns.org/mmsb/</code></p>
+        <p>All paths and queries are relative to this base URL.</p>
+    </div>
+
+    <h2>🎯 Quick Start for LLM Agents</h2>
+    <div class="section">
+        <h3>Essential URLs</h3>
+        <ul>
+            <li><strong>Root directory:</strong> <code>/mmsb/</code> - Browse project root</li>
+            <li><strong>Source code:</strong> <code>/mmsb/src</code> - All Rust source files</li>
+            <li><strong>JSON listing:</strong> <code>/mmsb/src?format=json</code> - Machine-readable directory data</li>
+            <li><strong>Search files:</strong> <code>/mmsb/?search=config</code> - Find files by name</li>
+            <li><strong>Preview README:</strong> <code>/mmsb/README.md?preview=true</code> - Quick summary view</li>
+            <li><strong>Recursive listing:</strong> <code>/mmsb/?recursive=true</code> - Full project tree</li>
+        </ul>
+    </div>
+
+    <h2>🔧 API Query Parameters</h2>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Status</th>
+                <th>Example</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>format=json</code></td>
+                <td class="working">✅ Working</td>
+                <td><code>/mmsb/src?format=json</code></td>
+                <td>Returns directory listing in JSON format</td>
+            </tr>
+            <tr>
+                <td><code>ext=.rs</code></td>
+                <td class="partial">⚠️ Partial</td>
+                <td><code>/mmsb/src?ext=.rs</code></td>
+                <td>Filters to .rs files (HTML only, not JSON)</td>
+            </tr>
+            <tr>
+                <td><code>search=term</code></td>
+                <td class="working">✅ Working</td>
+                <td><code>/mmsb/?search=config</code></td>
+                <td>Search for files containing term in filename</td>
+            </tr>
+            <tr>
+                <td><code>preview=true</code></td>
+                <td class="working">✅ Working</td>
+                <td><code>/mmsb/README.md?preview=true</code></td>
+                <td>Shows inline preview/summary of file</td>
+            </tr>
+            <tr>
+                <td><code>recursive=true</code></td>
+                <td class="working">✅ Working</td>
+                <td><code>/mmsb/?recursive=true</code></td>
+                <td>Full recursive listing (text format)</td>
+            </tr>
+            <tr>
+                <td><code>sort=modified</code></td>
+                <td class="broken">❌ Not Implemented</td>
+                <td><code>/mmsb/src?sort=modified&order=desc</code></td>
+                <td>Sort by name, size, or modified date</td>
+            </tr>
+            <tr>
+                <td><code>stats=true</code></td>
+                <td class="broken">❌ Not Implemented</td>
+                <td><code>/mmsb/src?stats=true</code></td>
+                <td>Returns 400 error</td>
+            </tr>
+            <tr>
+                <td><code>metadata=true</code></td>
+                <td class="broken">❌ Not Implemented</td>
+                <td><code>/mmsb/src/lib.rs?metadata=true</code></td>
+                <td>Returns 400 error</td>
+            </tr>
+            <tr>
+                <td><code>limit=5</code></td>
+                <td class="broken">❌ Ignored</td>
+                <td><code>/mmsb/src?limit=5&format=json</code></td>
+                <td>Pagination not implemented</td>
+            </tr>
+            <tr>
+                <td><code>pretty=true</code></td>
+                <td class="broken">❌ Ignored</td>
+                <td><code>/mmsb/src?format=json&pretty=true</code></td>
+                <td>JSON pretty-printing not available</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>📋 Workflow Recommendations for LLM Agents</h2>
+
+    <div class="section">
+        <h3>1. Initial Project Discovery</h3>
+        <pre>Step 1: GET /mmsb/?format=json
+→ Get top-level structure
+
+Step 2: GET /mmsb/README.md?preview=true
+→ Understand project purpose
+
+Step 3: GET /mmsb/src?format=json
+→ Discover source files</pre>
+    </div>
+
+    <div class="section">
+        <h3>2. Finding Specific Files</h3>
+        <pre>Option A: Search by name
+GET /mmsb/?search=handler
+
+Option B: Filter by extension (HTML view only)
+GET /mmsb/src?ext=.rs
+
+Option C: Recursive full scan
+GET /mmsb/?recursive=true</pre>
+    </div>
+
+    <div class="section">
+        <h3>3. Reading File Contents</h3>
+        <pre>Direct file access:
+GET /mmsb/src/lib.rs
+
+With preview (summaries):
+GET /mmsb/README.md?preview=true</pre>
+    </div>
+
+    <h2>⚠️ Current Limitations (TO_DO_FIX.md)</h2>
+    
+    <div class="warning">
+        <h3>Known Issues</h3>
+        <ul>
+            <li><strong>ext filter + JSON:</strong> <code>?ext=.rs&format=json</code> returns HTML instead of filtered JSON</li>
+            <li><strong>Sorting:</strong> All sort parameters are ignored</li>
+            <li><strong>Statistics:</strong> <code>?stats=true</code> returns 400 Bad Request</li>
+            <li><strong>Metadata:</strong> <code>?metadata=true</code> returns 400 Bad Request</li>
+            <li><strong>Pagination:</strong> limit/offset/page parameters ignored</li>
+            <li><strong>Pretty JSON:</strong> <code>?pretty=true</code> has no effect</li>
+            <li><strong>Type filtering:</strong> <code>?type=rust</code> not supported (400 error)</li>
+            <li><strong>Recursive + JSON:</strong> <code>?recursive=true&format=json</code> returns text instead of JSON</li>
+        </ul>
+    </div>
+
+    <h2>✨ Working Feature Matrix</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Feature</th>
+                <th>Status</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Directory listing (HTML)</td>
+                <td class="working">✅ Working</td>
+                <td>Dark theme, clickable links</td>
+            </tr>
+            <tr>
+                <td>JSON format</td>
+                <td class="working">✅ Working</td>
+                <td>Works perfectly without conflicting params</td>
+            </tr>
+            <tr>
+                <td>File search</td>
+                <td class="working">✅ Working</td>
+                <td>Excellent name-based filtering</td>
+            </tr>
+            <tr>
+                <td>File preview</td>
+                <td class="working">✅ Working</td>
+                <td>Gorgeous inline summaries (~150 words)</td>
+            </tr>
+            <tr>
+                <td>Recursive listing</td>
+                <td class="working">✅ Working</td>
+                <td>Full project dump in plain text</td>
+            </tr>
+            <tr>
+                <td>Extension filter</td>
+                <td class="partial">⚠️ Partial</td>
+                <td>HTML only, not JSON</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>🎓 Best Practices for LLM Agents</h2>
+
+    <div class="section">
+        <h3>DO:</h3>
+        <ul>
+            <li>✅ Use <code>format=json</code> for structured data retrieval</li>
+            <li>✅ Use <code>search=term</code> to find specific files quickly</li>
+            <li>✅ Use <code>preview=true</code> for quick file summaries before full read</li>
+            <li>✅ Start with root <code>/mmsb/?format=json</code> to understand structure</li>
+            <li>✅ Combine working parameters: <code>/mmsb/?search=config&format=json</code></li>
+        </ul>
+
+        <h3>DON'T:</h3>
+        <ul>
+            <li>❌ Don't expect <code>sort=</code> parameters to work</li>
+            <li>❌ Don't use <code>stats=true</code> or <code>metadata=true</code> (will error)</li>
+            <li>❌ Don't rely on <code>limit</code> or <code>offset</code> for pagination</li>
+            <li>❌ Don't expect <code>ext=.rs&format=json</code> to work together</li>
+            <li>❌ Don't use <code>recursive=true&format=json</code> (returns text)</li>
+        </ul>
+    </div>
+
+    <h2>📖 Example Agent Workflows</h2>
+
+    <div class="section">
+        <h3>Workflow 1: "Find all Rust files with 'handler' in the name"</h3>
+        <pre>1. GET /mmsb/src?search=handler
+   → Returns HTML list of matching files
+
+2. For each result, GET /mmsb/src/{filename}
+   → Read file contents</pre>
+    </div>
+
+    <div class="section">
+        <h3>Workflow 2: "Get structured data about the src directory"</h3>
+        <pre>1. GET /mmsb/src?format=json
+   → Receive JSON with file metadata (name, size, modified, type)
+
+2. Parse JSON response:
+   {
+     "path": "/src",
+     "entries": [...],
+     "total": 15,
+     ...
+   }</pre>
+    </div>
+
+    <div class="section">
+        <h3>Workflow 3: "Understand project before deep dive"</h3>
+        <pre>1. GET /mmsb/README.md?preview=true
+   → Quick 150-word summary
+
+2. GET /mmsb/?format=json
+   → See all top-level directories
+
+3. GET /mmsb/src?format=json
+   → Map out source structure
+
+4. GET /mmsb/?search={specific_term}
+   → Find relevant files</pre>
+    </div>
+
+    <h2>🔗 Related Documentation</h2>
+    <ul>
+        <li><a href="README.md">README.md</a> - Project overview</li>
+        <li><a href="INSTRUCTIONS.md">INSTRUCTIONS.md</a> - Setup and configuration</li>
+        <li><a href="TO_DO_FIX.md">TO_DO_FIX.md</a> - Known issues and test results</li>
+        <li><a href="PERFORMANCE.md">PERFORMANCE.md</a> - Benchmarking data</li>
+    </ul>
+
+    <h2>💡 Tips for Efficient Navigation</h2>
+    <div class="section">
+        <ol>
+            <li><strong>Start broad, narrow down:</strong> Begin with <code>/mmsb/?format=json</code>, then drill into specific directories</li>
+            <li><strong>Use search liberally:</strong> The search function is fast and works well - use it!</li>
+            <li><strong>Preview before reading:</strong> For documentation files, use <code>?preview=true</code> to see if it's relevant</li>
+            <li><strong>Understand limitations:</strong> Don't waste time trying broken features - stick to working parameters</li>
+            <li><strong>Combine wisely:</strong> <code>search</code> + <code>format=json</code> works, but <code>ext</code> + <code>format=json</code> doesn't</li>
+        </ol>
+    </div>
+
+    <footer style="margin-top: 50px; padding-top: 20px; border-top: 1px solid #3e3e3e; color: #808080; text-align: center;">
+        <p>Last Updated: 2025-12-18 | MMSB File Server Navigation Guide for LLM Agents</p>
+        <p>For issues or improvements, see <a href="TO_DO_FIX.md">TO_DO_FIX.md</a></p>
+    </footer>
+</body>
+</html>
