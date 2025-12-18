@@ -247,6 +247,29 @@ Edit `config/server-config.json` to customize:
 - Rate limiting
 - Caching policy
 
+## Cache-Busting for Fresh Content
+
+The server enforces strict no-cache headers by default to ensure LLMs and clients always receive fresh content:
+
+```
+Cache-Control: no-cache, no-store, must-revalidate
+Pragma: no-cache
+Expires: 0
+```
+
+**For LLM web_fetch tool:** If cached results persist, append a timestamp parameter:
+```
+GET /mmsb/src/lib.rs?_t=1734567890123
+GET /mmsb/docs?format=json&_t=1734567890123
+```
+
+The server ignores the `_t` parameter but each unique URL bypasses cache. Generate timestamps with:
+- JavaScript: `Date.now()`
+- Python: `int(time.time() * 1000)`
+- Bash: `date +%s%3N`
+
+This ensures LLMs always fetch current file content even if their web_fetch tool caches aggressively.
+
 ## Use with Grok or AI Agents
 
 The JSON API is optimized for programmatic access:

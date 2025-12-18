@@ -60,6 +60,20 @@ function getContentType(filePath) {
 }
 
 /**
+ * Add cache-busting headers to response
+ */
+function addCacheHeaders(headers) {
+  if (config.cache.noCache) {
+    headers['Cache-Control'] = 'no-cache, no-store, must-revalidate';
+    headers['Pragma'] = 'no-cache';
+    headers['Expires'] = '0';
+  } else if (config.cache.maxAge) {
+    headers['Cache-Control'] = `max-age=${config.cache.maxAge}`;
+  }
+  return headers;
+}
+
+/**
  * Main request handler
  */
 const server = http.createServer(async (req, res) => {
@@ -131,7 +145,8 @@ async function handleDirectoryRequest(dirPath, urlPath, params, res) {
     const indexPath = path.join(dirPath, 'index.html');
     if (fs.existsSync(indexPath)) {
       const data = fs.readFileSync(indexPath);
-      res.writeHead(200, { 'Content-Type': 'text/html' });
+      const headers = addCacheHeaders({ 'Content-Type': 'text/html' });
+      res.writeHead(200, headers);
       res.end(data);
       return;
     }
@@ -149,7 +164,8 @@ async function handleDirectoryRequest(dirPath, urlPath, params, res) {
     
     // For recursive queries, return special format
     const response = formatRecursiveResponse(files, params, urlPath);
-    res.writeHead(200, { 'Content-Type': response.contentType });
+    const headers = addCacheHeaders({ 'Content-Type': response.contentType });
+    res.writeHead(200, headers);
     res.end(response.content);
     return;
   } else {
@@ -159,7 +175,8 @@ async function handleDirectoryRequest(dirPath, urlPath, params, res) {
   // Handle stats-only request
   if (params.stats) {
     const response = formatStatsResponse(files, params, urlPath);
-    res.writeHead(200, { 'Content-Type': response.contentType });
+    const headers = addCacheHeaders({ 'Content-Type': response.contentType });
+    res.writeHead(200, headers);
     res.end(response.content);
     return;
   }
@@ -181,7 +198,8 @@ async function handleDirectoryRequest(dirPath, urlPath, params, res) {
     paginated.pagination
   );
 
-  res.writeHead(200, { 'Content-Type': response.contentType });
+  const headers = addCacheHeaders({ 'Content-Type': response.contentType });
+  res.writeHead(200, headers);
   res.end(response.content);
 }
 
@@ -197,7 +215,8 @@ async function handleFileRequest(filePath, urlPath, params, res, stat) {
   // Handle metadata-only request
   if (params.metadata) {
     const response = formatMetadataResponse(filePath, stat, params);
-    res.writeHead(200, { 'Content-Type': response.contentType });
+    const headers = addCacheHeaders({ 'Content-Type': response.contentType });
+    res.writeHead(200, headers);
     res.end(response.content);
     return;
   }
@@ -206,7 +225,8 @@ async function handleFileRequest(filePath, urlPath, params, res, stat) {
   if (params.preview) {
     try {
       const response = formatPreviewResponse(filePath, params);
-      res.writeHead(200, { 'Content-Type': response.contentType });
+      const headers = addCacheHeaders({ 'Content-Type': response.contentType });
+      res.writeHead(200, headers);
       res.end(response.content);
       return;
     } catch (err) {
@@ -222,16 +242,7 @@ async function handleFileRequest(filePath, urlPath, params, res, stat) {
     'Content-Type': contentType,
   };
 
-  // Apply cache headers
-  if (config.cache.noCache) {
-    headers['Cache-Control'] = 'no-cache, no-store, must-revalidate';
-    headers['Pragma'] = 'no-cache';
-    headers['Expires'] = '0';
-  } else if (config.cache.maxAge) {
-    headers['Cache-Control'] = `max-age=${config.cache.maxAge}`;
-  }
-
-  res.writeHead(200, headers);
+  res.writeHead(200, addCacheHeaders(headers));
   res.end(data);
 }
 

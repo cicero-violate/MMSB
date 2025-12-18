@@ -1,0 +1,17 @@
+Endpoint,Status,Description/Response
+https://cheese-server.duckdns.org/mmsb/									
+https://cheese-server.duckdns.org/mmsb/src								
+https://cheese-server.duckdns.org/mmsb/src?format=json					
+https://cheese-server.duckdns.org/mmsb/?search=config					
+https://cheese-server.duckdns.org/mmsb/README.md?preview=true			
+https://cheese-server.duckdns.org/mmsb/?recursive=true					
+https://cheese-server.duckdns.org/mmsb/src?ext=.rs						
+https://cheese-server.duckdns.org/mmsb/src?sort=modified&order=desc		
+https://cheese-server.duckdns.org/mmsb/src?stats=true&format=json		
+https://cheese-server.duckdns.org/mmsb/src/lib.rs?metadata=true&format=json
+https://cheese-server.duckdns.org/mmsb/src?limit=5&format=json			
+https://cheese-server.duckdns.org/mmsb/src?format=json&pretty=true		
+https://cheese-server.duckdns.org/mmsb/src/lib.rs						
+https://cheese-server.duckdns.org/mmsb/src?search=handler				
+https://cheese-server.duckdns.org/mmsb/?recursive=true&format=json
+https://cheese-server.duckdns.org/mmsb/?type=rust
