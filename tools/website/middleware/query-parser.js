@@ -53,6 +53,26 @@ function parseQueryParams(requestUrl) {
     workdir: query.workdir || null,
     encoding: query.encoding || null,
 
+    // Instruction-builder parameters
+    template: query.template || null,
+    file: query.file || null,
+    function: query.function || null,
+    line_before: query.line_before || null,
+    line_after: query.line_after || null,
+    old_line: query.old_line || null,
+    new_line: query.new_line || null,
+    context_before: query.context_before || null,
+    context_after: query.context_after || null,
+    context_1: query.context_1 || null,
+    context_2: query.context_2 || null,
+    context_3: query.context_3 || null,
+    context_4: query.context_4 || null,
+    context_5: query.context_5 || null,
+    context_6: query.context_6 || null,
+    headers_object: query.headers_object || null,
+    function_body: query.function_body || null,
+    location: query.location || null,
+
     // Preview parameters
     preview: parseBoolean(query.preview, false),
     lines: parseInt(query.lines) || 20,

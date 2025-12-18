@@ -306,6 +306,36 @@ GET /mmsb/apply-patch?patch=ENCODED_PATCH&workdir=OPTIONAL&_t=TIMESTAMP
 **Agent Loop Pattern:**
 See `AGENT_LOOP_PROMPT.txt` for complete LLM agent workflow with context gathering, patch generation, and iterative refinement.
 
+## Build-Patch Endpoint (No Encoding Required)
+
+Build patches from GET parameters—no base64 or URL encoding complexity.
+
+**Endpoint:**
+```
+GET /mmsb/build-patch?template=simple_replace&file=path/file.ext&old_line=before&new_line=after&context_before=line1&context_after=line2&_t=TIMESTAMP
+```
+
+**Templates:**
+- `simple_replace`: Replace one line with another
+- `add_cache_headers`: Add cache header logic
+- `add_function`: Insert new function
+
+**Parameters:**
+- `template`: Template name (optional if providing direct params)
+- `file`: Target file path
+- `old_line`/`new_line`: Lines to replace
+- `context_before`/`context_after`: Context for matching
+- `function`: Function/class name for context marker
+- `workdir`: Optional working directory
+- `_t`: Timestamp for cache-busting
+
+**Direct mode (no template):**
+```
+GET /mmsb/build-patch?file=test.txt&line_before=old&line_after=new&context_1=ctx1&context_2=ctx2&context_3=ctx3&_t=TIMESTAMP
+```
+
+**Response same as apply-patch endpoint.**
+
 ## Use with Grok or AI Agents
 
 The JSON API is optimized for programmatic access:
