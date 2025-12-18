@@ -148,10 +148,61 @@ Each layer now has a co-located benchmark guide under `benchmark/<layer>/README.
 - `project_schedule/completed/` — Archived phase documentation
 - [`../MMSB-top/README.md`](../MMSB-top/README.md) — Intention, reasoning, planning, agents, and application layers
 
+## Enhanced File Server
+
+A production-ready HTTP server with advanced query capabilities for serving MMSB project files to AI agents (Grok, Claude, etc).
+
+**Location:** `tools/website/`
+
+### Features
+
+- **Advanced Queries**: Filter by extension, type, search, pattern matching
+- **Multiple Formats**: JSON, HTML, text output
+- **Sorting**: By name, size, modified date, type
+- **Pagination**: Limit/offset and page-based navigation
+- **Recursive Traversal**: Depth-limited directory exploration
+- **Metadata Queries**: File info without content download
+- **Statistics**: Directory aggregation and analysis
+- **Performance**: Sub-20ms response times, 175 req/s throughput
+
+### Quick Start
+
+```bash
+cd tools/website
+node file-server.js
+# Server runs on http://127.0.0.1:8889/mmsb
+```
+
+### Example Queries
+
+```bash
+# Get all Rust files, sorted by modification date
+curl "http://127.0.0.1:8889/mmsb/src?ext=.rs&sort=modified&order=desc&format=json"
+
+# Search for test files recursively
+curl "http://127.0.0.1:8889/mmsb?pattern=test_*&recursive=true&format=json"
+
+# Get directory statistics
+curl "http://127.0.0.1:8889/mmsb/src?stats=true&format=json"
+
+# File metadata only
+curl "http://127.0.0.1:8889/mmsb/Cargo.toml?metadata=true&format=json"
+```
+
+### Documentation
+
+- **API Reference**: `tools/website/README.md`
+- **Performance Analysis**: `tools/website/PERFORMANCE.md`
+- **Test Suite**: `tools/website/test-server.sh`
+- **Benchmarks**: `tools/website/benchmark-server.sh`
+
+**Production Deployment:** https://cheese-server.duckdns.org/mmsb
+
 ## Requirements
 
 - **Rust:** 1.70+
 - **Julia:** 1.12+
+- **Node.js:** 14.0+ (for file server)
 - **CUDA:** 12.0+ (optional, for GPU acceleration)
 - **OS:** Linux x86_64 (primary target)
 
