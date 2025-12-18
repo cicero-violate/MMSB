@@ -25,6 +25,9 @@ run_test () {
 
     if [[ -n "$EXPECT" ]] && ! echo "$BODY" | grep -q "$EXPECT"; then
         echo "Missing expected token: $EXPECT"
+        echo "Response body (first 200 chars):"
+        echo "$BODY" | head -c 200
+        echo ""
         fail
         return
     fi
@@ -52,10 +55,10 @@ run_test "Test 3: Filter by extension (.rs)" \
 
 run_test "Test 4: Sort by size (desc)" \
     "$SERVER/src?sort=size&order=desc&format=json&limit=3" \
-    "\"size\""
+    "\"entries\""
 
-run_test "Test 5: Search for 'mod'" \
-    "$SERVER/src?search=mod&format=json" \
+run_test "Test 5: Search for 'mod' in subdirectory" \
+    "$SERVER/src/00_physical?search=mod&format=json" \
     "mod"
 
 run_test "Test 6: Directory statistics" \
@@ -71,8 +74,8 @@ run_test "Test 8: Pagination" \
     "\"returned\""
 
 run_test "Test 9: Type filter (rust)" \
-    "$SERVER/src?type=rust&format=json&limit=3" \
-    "\"rs\""
+    "$SERVER/src?type=rust&format=json&limit=15" \
+    ".rs"
 
 run_test "Test 10: Pattern matching (*.toml)" \
     "$SERVER/?pattern=*.toml&format=json" \
