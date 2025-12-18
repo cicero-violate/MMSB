@@ -110,12 +110,12 @@
                 <td><code>/mmsb/src?format=json</code></td>
                 <td>Returns directory listing in JSON format</td>
             </tr>
-            <tr>
-                <td><code>ext=.rs</code></td>
-                <td class="partial">⚠️ Partial</td>
-                <td><code>/mmsb/src?ext=.rs</code></td>
-                <td>Filters to .rs files (HTML only, not JSON)</td>
-            </tr>
+           <tr>
+               <td><code>ext=.rs</code></td>
+                <td class="working">✔️ Working</td>
+               <td><code>/mmsb/src?ext=.rs</code></td>
+                <td>Filter by extension (works with HTML and JSON)</td>
+           </tr>
             <tr>
                 <td><code>search=term</code></td>
                 <td class="working">✅ Working</td>
@@ -128,42 +128,42 @@
                 <td><code>/mmsb/README.md?preview=true</code></td>
                 <td>Shows inline preview/summary of file</td>
             </tr>
-            <tr>
-                <td><code>recursive=true</code></td>
-                <td class="working">✅ Working</td>
-                <td><code>/mmsb/?recursive=true</code></td>
-                <td>Full recursive listing (text format)</td>
-            </tr>
-            <tr>
-                <td><code>sort=modified</code></td>
-                <td class="broken">❌ Not Implemented</td>
-                <td><code>/mmsb/src?sort=modified&order=desc</code></td>
-                <td>Sort by name, size, or modified date</td>
-            </tr>
-            <tr>
-                <td><code>stats=true</code></td>
-                <td class="broken">❌ Not Implemented</td>
-                <td><code>/mmsb/src?stats=true</code></td>
-                <td>Returns 400 error</td>
-            </tr>
-            <tr>
-                <td><code>metadata=true</code></td>
-                <td class="broken">❌ Not Implemented</td>
-                <td><code>/mmsb/src/lib.rs?metadata=true</code></td>
-                <td>Returns 400 error</td>
-            </tr>
-            <tr>
-                <td><code>limit=5</code></td>
-                <td class="broken">❌ Ignored</td>
-                <td><code>/mmsb/src?limit=5&format=json</code></td>
-                <td>Pagination not implemented</td>
-            </tr>
-            <tr>
-                <td><code>pretty=true</code></td>
-                <td class="broken">❌ Ignored</td>
-                <td><code>/mmsb/src?format=json&pretty=true</code></td>
-                <td>JSON pretty-printing not available</td>
-            </tr>
+           <tr>
+               <td><code>recursive=true</code></td>
+               <td class="working">✅ Working</td>
+               <td><code>/mmsb/?recursive=true</code></td>
+                <td>Full recursive listing (text or JSON with format=json)</td>
+           </tr>
+           <tr>
+               <td><code>sort=modified</code></td>
+                <td class="working">✔️ Working</td>
+               <td><code>/mmsb/src?sort=modified&order=desc</code></td>
+                <td>Sort by name, size, modified, or type</td>
+           </tr>
+           <tr>
+               <td><code>stats=true</code></td>
+                <td class="working">✔️ Working</td>
+                <td><code>/mmsb/src?stats=true&format=json</code></td>
+                <td>Directory statistics (total files, dirs, sizes, types)</td>
+           </tr>
+           <tr>
+               <td><code>metadata=true</code></td>
+                <td class="working">✔️ Working</td>
+                <td><code>/mmsb/src/lib.rs?metadata=true&format=json</code></td>
+                <td>File metadata (size, dates, permissions)</td>
+           </tr>
+           <tr>
+               <td><code>limit=5</code></td>
+                <td class="working">✔️ Working</td>
+               <td><code>/mmsb/src?limit=5&format=json</code></td>
+                <td>Pagination with limit and offset support</td>
+           </tr>
+           <tr>
+               <td><code>pretty=true</code></td>
+                <td class="working">✔️ Working</td>
+               <td><code>/mmsb/src?format=json&pretty=true</code></td>
+                <td>JSON pretty-printing with 2-space indentation</td>
+           </tr>
         </tbody>
     </table>
 
@@ -204,18 +204,12 @@ GET /mmsb/README.md?preview=true</pre>
 
     <h2>⚠️ Current Limitations (TO_DO_FIX.md)</h2>
     
-    <div class="warning">
-        <h3>Known Issues</h3>
-        <ul>
-            <li><strong>ext filter + JSON:</strong> <code>?ext=.rs&format=json</code> returns HTML instead of filtered JSON</li>
-            <li><strong>Sorting:</strong> All sort parameters are ignored</li>
-            <li><strong>Statistics:</strong> <code>?stats=true</code> returns 400 Bad Request</li>
-            <li><strong>Metadata:</strong> <code>?metadata=true</code> returns 400 Bad Request</li>
-            <li><strong>Pagination:</strong> limit/offset/page parameters ignored</li>
-            <li><strong>Pretty JSON:</strong> <code>?pretty=true</code> has no effect</li>
+   <div class="warning">
+       <h3>Known Issues</h3>
+       <ul>
             <li><strong>Type filtering:</strong> <code>?type=rust</code> not supported (400 error)</li>
-            <li><strong>Recursive + JSON:</strong> <code>?recursive=true&format=json</code> returns text instead of JSON</li>
         </ul>
+        <p><strong>✅ FIXED (Dec 2024):</strong> All other features now work: sort, stats, metadata, pagination, pretty JSON, ext+JSON, recursive+JSON!</p>
     </div>
 
     <h2>✨ Working Feature Matrix</h2>
@@ -254,11 +248,11 @@ GET /mmsb/README.md?preview=true</pre>
                 <td class="working">✅ Working</td>
                 <td>Full project dump in plain text</td>
             </tr>
-            <tr>
-                <td>Extension filter</td>
-                <td class="partial">⚠️ Partial</td>
-                <td>HTML only, not JSON</td>
-            </tr>
+           <tr>
+               <td>Extension filter</td>
+                <td class="working">✅ Working</td>
+                <td>Works with HTML and JSON</td>
+           </tr>
         </tbody>
     </table>
 
@@ -274,14 +268,12 @@ GET /mmsb/README.md?preview=true</pre>
             <li>✅ Combine working parameters: <code>/mmsb/?search=config&format=json</code></li>
         </ul>
 
-        <h3>DON'T:</h3>
-        <ul>
-            <li>❌ Don't expect <code>sort=</code> parameters to work</li>
-            <li>❌ Don't use <code>stats=true</code> or <code>metadata=true</code> (will error)</li>
-            <li>❌ Don't rely on <code>limit</code> or <code>offset</code> for pagination</li>
-            <li>❌ Don't expect <code>ext=.rs&format=json</code> to work together</li>
-            <li>❌ Don't use <code>recursive=true&format=json</code> (returns text)</li>
-        </ul>
+       <h3>DON'T:</h3>
+       <ul>
+            <li>⚠️ Be aware that <code>recursive=true&format=json</code> is supported but may be slow for large directories</li>
+            <li>⚠️ Use reasonable <code>limit</code> values to avoid overwhelming responses</li>
+            <li>⚠️ Always include <code>format=json</code> when using API features like sort, stats, or metadata</li>
+       </ul>
     </div>
 
     <h2>📖 Example Agent Workflows</h2>
