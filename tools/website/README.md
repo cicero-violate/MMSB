@@ -10,6 +10,7 @@ node file-server.js
 ```
 
 Server runs on `http://127.0.0.1:8888/mmsb`
+'https://cheese-server.duckdns.org/mmsb'
 
 ## Query Parameters
 
