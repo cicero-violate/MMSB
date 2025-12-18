@@ -44,6 +44,6 @@ echo ""
 
 # Cleanup
 echo "Cleaning up test files..."
-rm -f /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/test_patch_output.txt
+# rm -f /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/test_patch_output.txt
 
 echo "=== Tests Complete ==="
