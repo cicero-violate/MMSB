@@ -270,6 +270,42 @@ The server ignores the `_t` parameter but each unique URL bypasses cache. Genera
 
 This ensures LLMs always fetch current file content even if their web_fetch tool caches aggressively.
 
+## Apply-Patch Endpoint (Experimental)
+
+Execute patches remotely via GET request for LLM agent workflows.
+
+**Endpoint:**
+```
+GET /mmsb/apply-patch?patch=ENCODED_PATCH&workdir=OPTIONAL&_t=TIMESTAMP
+```
+
+**Parameters:**
+- `patch`: URL-encoded patch content (or base64 with `&encoding=base64`)
+- `workdir`: Optional working directory (defaults to MMSB root)
+- `_t`: Timestamp for cache-busting
+
+**Response (Success):**
+```json
+{
+  "success": true,
+  "message": "Patch applied successfully",
+  "output": "Success. Updated the following files:\nM file.ext",
+  "workdir": "/path/to/workdir"
+}
+```
+
+**Response (Failure):**
+```json
+{
+  "success": false,
+  "error": "Patch failed: ...",
+  "details": "stderr output"
+}
+```
+
+**Agent Loop Pattern:**
+See `AGENT_LOOP_PROMPT.txt` for complete LLM agent workflow with context gathering, patch generation, and iterative refinement.
+
 ## Use with Grok or AI Agents
 
 The JSON API is optimized for programmatic access:

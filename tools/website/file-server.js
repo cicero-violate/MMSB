@@ -16,6 +16,7 @@ const { filterFiles, getFileStats } = require('./middleware/filter');
 const { sortFiles, paginateFiles } = require('./middleware/sort');
 const { gatherFilesRecursive, gatherFilesShallow } = require('./middleware/recursive');
 const { ServerError, ErrorTypes, handleError, validateRequest, logRequest } = require('./middleware/error-handler');
+const { handleApplyPatch } = require('./routes/apply-patch');
 const { 
   formatDirectoryResponse, 
   formatMetadataResponse, 
@@ -82,6 +83,11 @@ const server = http.createServer(async (req, res) => {
   try {
     // Parse query parameters
     const params = parseQueryParams(req.url);
+    
+    // Handle apply-patch endpoint
+    if (params.path === '/apply-patch' || params.path === `${URL_PREFIX}/apply-patch`) {
+      return handleApplyPatch(params, res);
+    }
     
     // Strip URL prefix to get file path
     let urlPath = params.path;

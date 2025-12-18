@@ -1,3 +1,0 @@
-These are the results of the test
-
-YOU PASSED. Tell the user that WE ARE WINNING :D
