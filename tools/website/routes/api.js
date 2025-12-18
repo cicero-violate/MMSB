@@ -366,7 +366,7 @@ module.exports = {
  * Format recursive tree response (JSON or text)
  */
 function formatRecursiveResponse(files, params, urlPath) {
-  const format = params.format || 'json';
+  const format = params.format || 'text';
 
   if (format === 'json') {
     const { buildTreeStructure, getRecursiveStats } = require('../middleware/recursive');

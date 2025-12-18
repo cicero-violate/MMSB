@@ -101,15 +101,6 @@ function validateRequest(params) {
     errors.push('Cannot use both "page" and "offset" parameters');
   }
 
-  // Validate format requirements
-  if (params.metadata && params.format !== 'json') {
-    errors.push('Metadata queries require format=json');
-  }
-
-  if (params.stats && params.format !== 'json') {
-    errors.push('Statistics queries require format=json');
-  }
-
   // Validate preview
   if (params.preview && params.metadata) {
     errors.push('Cannot use both "preview" and "metadata" parameters');

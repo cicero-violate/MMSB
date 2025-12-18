@@ -131,6 +131,11 @@ async function handleDirectoryRequest(dirPath, urlPath, params, res) {
     return;
   }
 
+  // Force JSON format for stats requests
+  if (params.stats) {
+    params.format = 'json';
+  }
+
   // Gather files (recursive or shallow)
   let files;
   if (params.recursive) {
@@ -178,6 +183,11 @@ async function handleDirectoryRequest(dirPath, urlPath, params, res) {
  * Handle file requests
  */
 async function handleFileRequest(filePath, urlPath, params, res, stat) {
+  // Force JSON format for metadata requests
+  if (params.metadata) {
+    params.format = 'json';
+  }
+
   // Handle metadata-only request
   if (params.metadata) {
     const response = formatMetadataResponse(filePath, stat, params);
