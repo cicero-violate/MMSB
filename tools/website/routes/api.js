@@ -44,19 +44,19 @@ function formatDirectoryJSON(files, params, urlPath, pagination) {
 
     if (!file.isDir) {
       obj.size = file.stat.size;
-      obj.sizeFormatted = formatSize(file.stat.size);
+      obj.size_formatted = formatSize(file.stat.size);
       obj.extension = path.extname(file.name).toLowerCase();
     }
 
     obj.modified = file.stat.mtime.toISOString();
-    obj.modifiedFormatted = formatDate(file.stat.mtime);
+    obj.modified_formatted = formatDate(file.stat.mtime);
 
     return obj;
   });
 
   const response = {
     path: urlPath,
-    files: fileObjects
+    entries: fileObjects
   };
 
   if (pagination) {
@@ -206,13 +206,13 @@ function formatMetadataResponse(filePath, stat, params) {
     name: path.basename(filePath),
     path: filePath,
     size: stat.size,
-    sizeFormatted: formatSize(stat.size),
+    size_formatted: formatSize(stat.size),
     modified: stat.mtime.toISOString(),
-    modifiedFormatted: formatDate(stat.mtime),
+    modified_formatted: formatDate(stat.mtime),
     created: stat.birthtime.toISOString(),
     accessed: stat.atime.toISOString(),
-    isDirectory: stat.isDirectory(),
-    isFile: stat.isFile(),
+    is_directory: stat.isDirectory(),
+    is_file: stat.isFile(),
   };
 
   if (stat.isFile()) {
@@ -235,25 +235,25 @@ function formatMetadataResponse(filePath, stat, params) {
 function formatStatsResponse(files, params, urlPath) {
   const stats = {
     path: urlPath,
-    totalFiles: 0,
-    totalDirs: 0,
-    totalSize: 0,
-    fileTypes: {}
+    total_files: 0,
+    total_dirs: 0,
+    total_size: 0,
+    file_types: {}
   };
 
   for (const file of files) {
     if (file.isDir) {
-      stats.totalDirs++;
+      stats.total_dirs++;
     } else {
-      stats.totalFiles++;
-      stats.totalSize += file.stat.size;
+      stats.total_files++;
+      stats.total_size += file.stat.size;
       
       const ext = path.extname(file.name).toLowerCase() || '.none';
-      stats.fileTypes[ext] = (stats.fileTypes[ext] || 0) + 1;
+      stats.file_types[ext] = (stats.file_types[ext] || 0) + 1;
     }
   }
 
-  stats.totalSizeFormatted = formatSize(stats.totalSize);
+  stats.total_size_formatted = formatSize(stats.total_size);
 
   const content = params.pretty 
     ? JSON.stringify(stats, null, 2)
@@ -271,14 +271,14 @@ function formatStatsResponse(files, params, urlPath) {
 function formatPreviewResponse(filePath, params) {
   const content = fs.readFileSync(filePath, 'utf8');
   const lines = content.split('\n');
-  const previewLines = params.lines || 20;
-  const truncated = lines.slice(0, previewLines);
+  const preview_lines = params.lines || 20;
+  const truncated = lines.slice(0, preview_lines);
 
   const response = {
     path: filePath,
-    totalLines: lines.length,
-    previewLines: previewLines,
-    truncated: lines.length > previewLines,
+    total_lines: lines.length,
+    preview_lines: preview_lines,
+    truncated: lines.length > preview_lines,
     content: truncated.join('\n')
   };
 

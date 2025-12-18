@@ -105,10 +105,10 @@ Response:
   "name": "lib.rs",
   "path": "/src/lib.rs",
   "size": 15420,
-  "sizeFormatted": "15.06 KB",
+  "size_formatted": "15.06 KB",
   "modified": "2025-12-18T10:30:00.000Z",
   "extension": ".rs",
-  "isFile": true
+  "is_file": true
 }
 ```
 
@@ -121,11 +121,11 @@ Response:
 ```json
 {
   "path": "/src",
-  "totalFiles": 45,
-  "totalDirs": 8,
-  "totalSize": 256000,
-  "totalSizeFormatted": "250 KB",
-  "fileTypes": {
+  "total_files": 45,
+  "total_dirs": 8,
+  "total_size": 256000,
+  "total_size_formatted": "250 KB",
+  "file_types": {
     ".rs": 40,
     ".toml": 3,
     ".md": 2
@@ -166,14 +166,14 @@ GET /mmsb/?type=config&stats=true&format=json
 ```json
 {
   "path": "/src",
-  "files": [
+  "entries": [
     {
       "name": "lib.rs",
       "type": "file",
       "path": "/src/lib.rs",
       "url": "/mmsb/src/lib.rs",
       "size": 15420,
-      "sizeFormatted": "15.06 KB",
+      "size_formatted": "15.06 KB",
       "extension": ".rs",
       "modified": "2025-12-18T10:30:00.000Z"
     },
@@ -252,12 +252,12 @@ The JSON API is optimized for programmatic access:
 
 ```javascript
 // Get all Rust files modified today
-const url = 'http://127.0.0.1:8888/mmsb/src?ext=.rs&sort=modified&order=desc&format=json';
+const url = 'http://127.0.0.1:8889/mmsb/src?ext=.rs&sort=modified&order=desc&format=json';
 const response = await fetch(url);
 const data = await response.json();
 
-for (const file of data.files) {
-  console.log(`${file.name}: ${file.sizeFormatted}`);
+for (const file of data.entries) {
+  console.log(`${file.name}: ${file.size_formatted}`);
 }
 ```
 
