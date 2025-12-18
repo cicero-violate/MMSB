@@ -1,13 +1,37 @@
+/**
+ * MMSB Enhanced File Server
+ * Advanced query-based file serving with filtering, sorting, and multiple output formats
+ */
+
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-const PORT = 8888;
-const ROOT_DIR = __dirname;
+// Load configuration
+const config = require('./config/server-config.json');
 
-const URL_PREFIX = '/mmsb';  // Change if your public path changes
-const FULL_URL = URL_PREFIX.endsWith('/') ? URL_PREFIX : URL_PREFIX + '/';
+// Import middleware
+const { parseQueryParams, validateQueryParams } = require('./middleware/query-parser');
+const { filterFiles, getFileStats } = require('./middleware/filter');
+const { sortFiles, paginateFiles } = require('./middleware/sort');
+const { gatherFilesRecursive, gatherFilesShallow } = require('./middleware/recursive');
+const { ServerError, ErrorTypes, handleError, validateRequest, logRequest } = require('./middleware/error-handler');
+const { 
+  formatDirectoryResponse, 
+  formatMetadataResponse, 
+  formatStatsResponse,
+  formatPreviewResponse,
+  formatRecursiveResponse,
+  formatErrorResponse
+} = require('./routes/api');
 
+// Server configuration
+const PORT = config.server.port || 8888;
+const HOST = config.server.host || '127.0.0.1';
+const URL_PREFIX = config.server.urlPrefix || '/mmsb';
+const ROOT_DIR = path.resolve(__dirname, '../..');
+
+// MIME types for direct file serving
 const MIME_TYPES = {
   '.html': 'text/html',
   '.css': 'text/css',
@@ -21,6 +45,7 @@ const MIME_TYPES = {
   '.yml': 'text/yaml',
   '.sh': 'text/x-shellscript',
   '.py': 'text/x-python',
+  '.jl': 'text/plain',
   '.pdf': 'application/pdf',
   '.png': 'image/png',
   '.jpg': 'image/jpeg',
@@ -34,112 +59,197 @@ function getContentType(filePath) {
   return MIME_TYPES[ext] || 'application/octet-stream';
 }
 
-function generateDirectoryListing(dirPath, urlPath) {
-  const files = fs.readdirSync(dirPath);
-  const parentPath = path.dirname(urlPath);
-    const parentHref = parentPath === '.' ? URL_PREFIX : URL_PREFIX + parentPath.replace(/\\/g, '/');
-    const parent = urlPath === '/' ? '' : `<tr><td><a href="${parentHref}">../</a></td><td>-</td><td>-</td></tr>`;
-  
-  const items = files.map(file => {
-    const fullPath = path.join(dirPath, file);
-    const stat = fs.statSync(fullPath);
-    const isDir = stat.isDirectory();
-    const href = URL_PREFIX + path.join(urlPath, file).replace(/\\/g, '/');
-const size = isDir ? '-' : `${(stat.size / 1024).toFixed(2)} KB`;
-    const modified = stat.mtime.toISOString().slice(0, 19).replace('T', ' ');
+/**
+ * Main request handler
+ */
+const server = http.createServer(async (req, res) => {
+  const startTime = Date.now();
+
+  try {
+    // Parse query parameters
+    const params = parseQueryParams(req.url);
     
-    return `<tr>
-      <td><a href="${href}">${file}${isDir ? '/' : ''}</a></td>
-      <td>${size}</td>
-      <td>${modified}</td>
-    </tr>`;
-  }).join('\n');
+    // Strip URL prefix to get file path
+    let urlPath = params.path;
+    if (urlPath.startsWith(URL_PREFIX)) {
+      urlPath = urlPath.substring(URL_PREFIX.length);
+    }
+    
+    // Normalize path
+    urlPath = urlPath || '/';
+    params.path = urlPath;
 
-  return `<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Index of ${urlPath}</title>
-  <style>
-    body { font-family: monospace; margin: 20px; background: #1e1e1e; color: #d4d4d4; }
-    h1 { color: #4ec9b0; }
-    table { border-collapse: collapse; width: 100%; margin-top: 20px; }
-    th, td { text-align: left; padding: 8px; border-bottom: 1px solid #3e3e3e; }
-    th { background: #2d2d2d; color: #4ec9b0; }
-    a { color: #569cd6; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    tr:hover { background: #2d2d2d; }
-  </style>
-</head>
-<body>
-  <h1>Index of ${urlPath}</h1>
-  <table>
-    <thead>
-      <tr><th>Name</th><th>Size</th><th>Modified</th></tr>
-    </thead>
-    <tbody>
-      ${parent}
-      ${items}
-    </tbody>
-  </table>
-</body>
-</html>`;
-}
+    // Validate request
+    validateRequest(params);
 
-const server = http.createServer((req, res) => {
-  let urlPath = decodeURIComponent(req.url);
-  if (urlPath.includes('..')) {
-    res.writeHead(403);
-    res.end('Forbidden');
+    // Resolve file system path
+    const filePath = path.join(ROOT_DIR, urlPath);
+
+    // Check if path exists
+    if (!fs.existsSync(filePath)) {
+      throw new ServerError(ErrorTypes.NOT_FOUND, 'File or directory not found');
+    }
+
+    const stat = fs.statSync(filePath);
+
+    // Handle directory requests
+    if (stat.isDirectory()) {
+      await handleDirectoryRequest(filePath, urlPath, params, res);
+    } 
+    // Handle file requests
+    else {
+      await handleFileRequest(filePath, urlPath, params, res, stat);
+    }
+
+    // Log successful request
+    const duration = Date.now() - startTime;
+    if (config.logging.logRequests) {
+      logRequest(req.method, req.url, 200);
+      console.log(`  → Completed in ${duration}ms`);
+    }
+
+  } catch (err) {
+    if (config.logging.logErrors) {
+      console.error('Request failed:', err.message);
+    }
+    
+    const params = parseQueryParams(req.url);
+    handleError(err, res, params.format);
+  }
+});
+
+/**
+ * Handle directory listing requests
+ */
+async function handleDirectoryRequest(dirPath, urlPath, params, res) {
+  // Check for index.html
+  const indexPath = path.join(dirPath, 'index.html');
+  if (fs.existsSync(indexPath) && !params.format) {
+    const data = fs.readFileSync(indexPath);
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.end(data);
     return;
   }
 
-  const filePath = path.join(ROOT_DIR, urlPath);
+  // Gather files (recursive or shallow)
+  let files;
+  if (params.recursive) {
+    files = gatherFilesRecursive(dirPath, params, urlPath);
+    
+    // For recursive queries, return special format
+    const response = formatRecursiveResponse(files, params, urlPath);
+    res.writeHead(200, { 'Content-Type': response.contentType });
+    res.end(response.content);
+    return;
+  } else {
+    files = gatherFilesShallow(dirPath, urlPath);
+  }
 
-  fs.stat(filePath, (err, stats) => {
-    if (err) {
-      res.writeHead(404);
-      res.end('Not Found');
+  // Handle stats-only request
+  if (params.stats) {
+    const response = formatStatsResponse(files, params, urlPath);
+    res.writeHead(200, { 'Content-Type': response.contentType });
+    res.end(response.content);
+    return;
+  }
+
+  // Apply filters
+  let filtered = filterFiles(files, params);
+
+  // Apply sorting
+  let sorted = sortFiles(filtered, params);
+
+  // Apply pagination
+  const paginated = paginateFiles(sorted, params);
+
+  // Format response
+  const response = formatDirectoryResponse(
+    paginated.files, 
+    params, 
+    urlPath, 
+    paginated.pagination
+  );
+
+  res.writeHead(200, { 'Content-Type': response.contentType });
+  res.end(response.content);
+}
+
+/**
+ * Handle file requests
+ */
+async function handleFileRequest(filePath, urlPath, params, res, stat) {
+  // Handle metadata-only request
+  if (params.metadata) {
+    const response = formatMetadataResponse(filePath, stat, params);
+    res.writeHead(200, { 'Content-Type': response.contentType });
+    res.end(response.content);
+    return;
+  }
+
+  // Handle preview request (text files only)
+  if (params.preview) {
+    try {
+      const response = formatPreviewResponse(filePath, params);
+      res.writeHead(200, { 'Content-Type': response.contentType });
+      res.end(response.content);
       return;
+    } catch (err) {
+      throw new ServerError(ErrorTypes.BAD_REQUEST, 'Cannot preview binary or non-text files');
     }
+  }
 
-    if (stats.isDirectory()) {
-      const indexPath = path.join(filePath, 'index.html');
-      if (fs.existsSync(indexPath)) {
-        fs.readFile(indexPath, (err, data) => {
-          if (err) {
-            res.writeHead(500);
-            res.end('Internal Server Error');
-            return;
-          }
-          res.writeHead(200, { 'Content-Type': 'text/html' });
-          res.end(data);
-        });
-      } else {
-        const html = generateDirectoryListing(filePath, urlPath);
-        res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.end(html);
-      }
-    } else {
-      fs.readFile(filePath, (err, data) => {
-        if (err) {
-          res.writeHead(500);
-          res.end('Internal Server Error');
-          return;
-        }
-        res.writeHead(200, { 
-          'Content-Type': getContentType(filePath),
-          'Cache-Control': 'no-cache, no-store, must-revalidate',
-          'Pragma': 'no-cache',
-          'Expires': '0'
-        });
-        res.end(data);
-      });
-    }
-  });
+  // Serve file content
+  const data = fs.readFileSync(filePath);
+  const contentType = getContentType(filePath);
+  
+  const headers = {
+    'Content-Type': contentType,
+  };
+
+  // Apply cache headers
+  if (config.cache.noCache) {
+    headers['Cache-Control'] = 'no-cache, no-store, must-revalidate';
+    headers['Pragma'] = 'no-cache';
+    headers['Expires'] = '0';
+  } else if (config.cache.maxAge) {
+    headers['Cache-Control'] = `max-age=${config.cache.maxAge}`;
+  }
+
+  res.writeHead(200, headers);
+  res.end(data);
+}
+
+/**
+ * Start server
+ */
+server.listen(PORT, HOST, () => {
+  console.log('='.repeat(60));
+  console.log('MMSB Enhanced File Server');
+  console.log('='.repeat(60));
+  console.log(`Server:    http://${HOST}:${PORT}${URL_PREFIX}`);
+  console.log(`Root Dir:  ${ROOT_DIR}`);
+  console.log(`Config:    ./config/server-config.json`);
+  console.log('='.repeat(60));
+  console.log('Features enabled:');
+  console.log(`  ✓ Query filtering (ext, type, search, pattern)`);
+  console.log(`  ✓ Sorting (name, size, modified, type)`);
+  console.log(`  ✓ Multiple formats (JSON, HTML, text)`);
+  console.log(`  ✓ Pagination (limit/offset, page/pagesize)`);
+  console.log(`  ${config.features.recursive.enabled ? '✓' : '✗'} Recursive listing (depth: ${config.features.recursive.maxDepth})`);
+  console.log(`  ${config.features.preview.enabled ? '✓' : '✗'} Content preview`);
+  console.log(`  ✓ Metadata queries`);
+  console.log(`  ✓ Statistics aggregation`);
+  console.log('='.repeat(60));
+  console.log('Documentation: ./README.md');
+  console.log('Example: ' + `http://${HOST}:${PORT}${URL_PREFIX}/src?ext=.rs&sort=modified&format=json`);
+  console.log('='.repeat(60));
 });
 
-server.listen(PORT, '127.0.0.1', () => {
-  console.log(`MMSB file server running on http://127.0.0.1:${PORT}`);
+// Handle shutdown gracefully
+process.on('SIGINT', () => {
+  console.log('\nShutting down server...');
+  server.close(() => {
+    console.log('Server stopped');
+    process.exit(0);
+  });
 });

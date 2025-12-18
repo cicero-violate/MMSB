@@ -1,0 +1,21 @@
+{
+  "name": "mmsb-file-server",
+  "version": "1.0.0",
+  "description": "Enhanced file server with advanced query capabilities for MMSB project",
+  "main": "file-server.js",
+  "scripts": {
+    "start": "node file-server.js",
+    "dev": "node --watch file-server.js"
+  },
+  "keywords": [
+    "file-server",
+    "http",
+    "api",
+    "mmsb"
+  ],
+  "author": "MMSB Team",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
