@@ -1,0 +1,44 @@
+{
+  "server": {
+    "port": 8888,
+    "host": "127.0.0.1",
+    "urlPrefix": "/mmsb"
+  },
+  "features": {
+    "recursive": {
+      "enabled": true,
+      "maxDepth": 10,
+      "defaultDepth": null
+    },
+    "pagination": {
+      "enabled": true,
+      "defaultLimit": null,
+      "maxLimit": 10000
+    },
+    "preview": {
+      "enabled": true,
+      "defaultLines": 20,
+      "maxLines": 1000
+    },
+    "search": {
+      "enabled": true,
+      "caseInsensitive": true
+    }
+  },
+  "security": {
+    "preventPathTraversal": true,
+    "allowedExtensions": null,
+    "blockedExtensions": [],
+    "maxRequestsPerMinute": 100
+  },
+  "cache": {
+    "enabled": true,
+    "maxAge": 0,
+    "noCache": true
+  },
+  "logging": {
+    "enabled": true,
+    "logRequests": true,
+    "logErrors": true
+  }
+}

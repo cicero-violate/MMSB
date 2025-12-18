@@ -361,3 +361,52 @@ module.exports = {
   formatSize,
   formatDate,
 };
+
+/**
+ * Format recursive tree response (JSON or text)
+ */
+function formatRecursiveResponse(files, params, urlPath) {
+  const format = params.format || 'json';
+
+  if (format === 'json') {
+    const { buildTreeStructure, getRecursiveStats } = require('../middleware/recursive');
+    
+    const tree = buildTreeStructure(files);
+    const stats = getRecursiveStats(files);
+
+    const response = {
+      path: urlPath,
+      recursive: true,
+      depth: params.depth || 'unlimited',
+      tree: tree,
+      stats: stats
+    };
+
+    const content = params.pretty 
+      ? JSON.stringify(response, null, 2)
+      : JSON.stringify(response);
+
+    return {
+      content: content,
+      contentType: 'application/json'
+    };
+  } else {
+    const { formatRecursiveTree } = require('../middleware/recursive');
+    
+    return {
+      content: formatRecursiveTree(files),
+      contentType: 'text/plain'
+    };
+  }
+}
+
+module.exports = {
+  formatDirectoryResponse,
+  formatMetadataResponse,
+  formatStatsResponse,
+  formatPreviewResponse,
+  formatErrorResponse,
+  formatRecursiveResponse,
+  formatSize,
+  formatDate,
+};
