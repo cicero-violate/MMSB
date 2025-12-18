@@ -2,8 +2,30 @@
 # Test instruction-builder endpoint
 
 BASE_URL="http://127.0.0.1:8888/mmsb"
+WORKDIR="/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB"
 
 echo "=== Testing Build-Patch Endpoint ==="
+echo ""
+
+# Setup: Create test files
+echo "Creating test files..."
+cat > "$WORKDIR/test_file.txt" << 'EOF'
+line1
+old content
+line2
+EOF
+
+cat > "$WORKDIR/test_direct.txt" << 'EOF'
+ctx1
+ctx2
+ctx3
+before
+ctx4
+ctx5
+ctx6
+EOF
+
+echo "Test files created."
 echo ""
 
 # Test 1: Simple replace with template
@@ -25,5 +47,9 @@ echo ""
 echo "Test 4: Unknown template"
 curl -s "${BASE_URL}/build-patch?template=nonexistent&file=test.txt&_t=$(date +%s%3N)" | jq .
 echo ""
+
+# Cleanup
+echo "Cleaning up test files..."
+rm -f "$WORKDIR/test_file.txt" "$WORKDIR/test_direct.txt"
 
 echo "=== Tests Complete ==="

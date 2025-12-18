@@ -40,17 +40,25 @@ function applySimpleReplace(params, res) {
 
   // Build patch
   const contextMarker = params.function || '';
+  const contextLines = [
+    params.context_1,
+    params.context_2,
+    params.context_3
+  ].filter(c => c).map(c => ` ${c}`).join('\n');
+  
+  const contextAfter = [
+    params.context_4,
+    params.context_5,
+    params.context_6
+  ].filter(c => c).map(c => ` ${c}`).join('\n');
+  
   const patch = `*** Begin Patch
 *** Update File: ${params.file}
 ${contextMarker ? `@@ ${contextMarker}` : '@@'}
- ${params.context_1 || ''}
- ${params.context_2 || ''}
- ${params.context_3 || ''}
+${contextLines}
 -${params.line_before}
 +${params.line_after}
- ${params.context_4 || ''}
- ${params.context_5 || ''}
- ${params.context_6 || ''}
+${contextAfter}
 *** End Patch`;
 
   return executePatch(patch, workdir, res, params);
