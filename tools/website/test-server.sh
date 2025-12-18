@@ -3,7 +3,8 @@
 # MMSB File Server Integration Test Script
 # Tests all major query features
 
-SERVER="http://127.0.0.1:8889/mmsb"
+# SERVER="http://127.0.0.1:8889/mmsb"
+SERVER="https://cheese-server.duckdns.org/mmsb"
 
 echo "=========================================="
 echo "MMSB File Server Integration Tests"
