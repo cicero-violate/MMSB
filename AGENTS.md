@@ -1,6 +1,8 @@
 # MMSB Agent Instructions
 
 **START HERE:**
+USER GOAL : Create a test file at project root. Call it my_first_julia_file.jl and create 10 functions in it. This is a test.
+
 
 Execute this GET request to begin the workflow:
 ```
