@@ -11,15 +11,15 @@ Performance benchmarks for the enhanced file server with query capabilities.
 
 ### Summary Statistics
 
-| Benchmark | Metric | Result |
-|-----------|--------|--------|
-| Large directory listing | Response time | ~0.014s |
-| Pagination (avg) | Response time | 0.040s |
-| Filter overhead | Added latency | ~10ms |
-| Search overhead | Added latency | Negligible |
-| Statistics overhead | Added latency | Negligible |
-| Concurrent (10 req) | Total time | 0.058s |
-| Concurrent (10 req) | Avg per request | 0.006s |
+| Benchmark               | Metric          | Result     |
+|-------------------------+-----------------+------------|
+| Large directory listing | Response time   | ~0.014s    |
+| Pagination (avg)        | Response time   | 0.040s     |
+| Filter overhead         | Added latency   | ~10ms      |
+| Search overhead         | Added latency   | Negligible |
+| Statistics overhead     | Added latency   | Negligible |
+| Concurrent (10 req)     | Total time      | 0.058s     |
+| Concurrent (10 req)     | Avg per request | 0.006s     |
 
 ## Detailed Analysis
 
