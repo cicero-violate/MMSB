@@ -336,6 +336,40 @@ GET /mmsb/build-patch?file=test.txt&line_before=old&line_after=new&context_1=ctx
 
 **Response same as apply-patch endpoint.**
 
+## Instruction System (Generate → Review → Save → Reuse)
+
+Complete workflow for LLM agents to build, save, and reuse proven patches.
+
+**Workflow:**
+```
+1. Build: GET /build-patch?params... → preview patch
+2. Save: GET /save-instruction?id=PATCH_001&params... → persist
+3. List: GET /list-instructions → see all saved
+4. Apply: GET /apply-instruction?id=PATCH_001 → execute
+```
+
+**Save instruction:**
+```
+GET /save-instruction?id=USER_FIX_001&file=server.js&template=simple_replace&old_line=bug&new_line=fix&context_before=line1&context_after=line2&purpose=Fix%20bug&risk=low
+```
+
+**List all:**
+```
+GET /list-instructions
+```
+
+**Get details:**
+```
+GET /instruction?id=USER_FIX_001
+```
+
+**Apply by ID:**
+```
+GET /apply-instruction?id=USER_FIX_001
+```
+
+Saved instructions stored in `/instructions/` directory with patch.diff, target.json, meta.json.
+
 ## Use with Grok or AI Agents
 
 The JSON API is optimized for programmatic access:
