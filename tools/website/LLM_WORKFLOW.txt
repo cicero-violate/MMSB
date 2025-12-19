@@ -1,159 +1,68 @@
-# LLM Agent Workflow with Task Tracking
+# LLM Agent Workflow - EXECUTE THESE STEPS
 
-## Task Tracking Endpoints
+## IMPORTANT: You must EXECUTE each GET request, not just describe them.
 
-**Create task:**
-```
-GET /create-task?task_id=TASK_001&description=Fix%20cache%20headers&_t=T1
-```
+## Creating a New File
 
-**Track context queries:**
-```
-GET /add-context?task_id=TASK_001&query_url=/mmsb/file.js?_t=T2
-```
+**Step 1: Create task**
+EXECUTE: GET https://cheese-server.duckdns.org/mmsb/create-task?task_id=TASK_CREATE_FILE&description=Create%20new%20file&_t=<current_timestamp>
 
-**Link instruction:**
-```
-GET /add-instruction?task_id=TASK_001&instruction_id=FIX_CACHE_001&action=created&_t=T3
-```
+**Step 2: Build patch to create file**
+EXECUTE: GET https://cheese-server.duckdns.org/mmsb/build-patch?file=<filename>&line_before=&line_after=<first_line_of_content>&_t=<current_timestamp>
 
-**Complete task:**
-```
-GET /complete-task?task_id=TASK_001&status=completed&result=success&_t=T4
-```
+Note: For creating files, use the add file syntax:
+- template=add_file (if we add this template)
+- Or build manually with empty line_before
 
-**List/Get tasks:**
-```
-GET /list-tasks?_t=T5
-GET /task?task_id=TASK_001&_t=T6
-```
+**Step 3: Save as instruction**
+EXECUTE: GET https://cheese-server.duckdns.org/mmsb/save-instruction?id=CREATE_<FILENAME>&file=<filename>&template=simple_replace&line_before=&line_after=<content>&purpose=Create%20file&_t=<current_timestamp>
 
-## Complete Workflow: Build & Save
+**Step 4: Apply instruction**
+EXECUTE: GET https://cheese-server.duckdns.org/mmsb/apply-instruction?id=CREATE_<FILENAME>&_t=<current_timestamp>
 
-1. **Create task**
-   ```
-   GET /create-task?task_id=TASK_001&description=User%20request&_t=T1
-   ```
+**Step 5: Complete task**
+EXECUTE: GET https://cheese-server.duckdns.org/mmsb/complete-task?task_id=TASK_CREATE_FILE&status=completed&result=success&_t=<current_timestamp>
 
-2. **Gather context**
-   ```
-   GET /mmsb/?format=json&_t=T2
-   GET /add-context?task_id=TASK_001&query_url=/mmsb/?format=json&_t=T3
-   
-   GET /mmsb/path/file.ext?_t=T4
-   GET /add-context?task_id=TASK_001&query_url=/mmsb/path/file.ext&_t=T5
-   ```
+## Modifying Existing File
 
-3. **Check existing instructions**
-   ```
-   GET /list-instructions?_t=T6
-   ```
+**Step 1: Create task**
+EXECUTE: GET https://cheese-server.duckdns.org/mmsb/create-task?task_id=TASK_MODIFY&description=Modify%20file&_t=<timestamp>
 
-4. **Build patch preview**
-   ```
-   GET /build-patch?template=simple_replace&file=X&old_line=A&new_line=B&context_before=C&context_after=D&_t=T7
-   ```
+**Step 2: Read current file**
+EXECUTE: GET https://cheese-server.duckdns.org/mmsb/<path_to_file>?_t=<timestamp>
+Track: GET https://cheese-server.duckdns.org/mmsb/add-context?task_id=TASK_MODIFY&query_url=/mmsb/<path>&_t=<timestamp>
 
-5. **Save instruction**
-   ```
-   GET /save-instruction?id=FIX_001&file=X&template=simple_replace&old_line=A&new_line=B&context_before=C&context_after=D&purpose=Fix%20X&risk=low&_t=T8
-   GET /add-instruction?task_id=TASK_001&instruction_id=FIX_001&action=created&_t=T9
-   ```
+**Step 3: Build patch**
+EXECUTE: GET https://cheese-server.duckdns.org/mmsb/build-patch?template=simple_replace&file=<file>&old_line=<old>&new_line=<new>&context_before=<line>&context_after=<line>&_t=<timestamp>
 
-6. **Apply instruction**
-   ```
-   GET /apply-instruction?id=FIX_001&_t=T10
-   GET /add-instruction?task_id=TASK_001&instruction_id=FIX_001&action=applied&_t=T11
-   ```
+**Step 4: Save instruction**
+EXECUTE: GET https://cheese-server.duckdns.org/mmsb/save-instruction?id=FIX_001&<same_params_as_build>&purpose=Fix%20X&_t=<timestamp>
 
-7. **Complete task**
-   ```
-   GET /complete-task?task_id=TASK_001&status=completed&result=success&_t=T12
-   ```
+**Step 5: Apply**
+EXECUTE: GET https://cheese-server.duckdns.org/mmsb/apply-instruction?id=FIX_001&_t=<timestamp>
 
-## Reuse Existing Instruction
+**Step 6: Complete**
+EXECUTE: GET https://cheese-server.duckdns.org/mmsb/complete-task?task_id=TASK_MODIFY&status=completed&_t=<timestamp>
 
-1. **Create task**
-   ```
-   GET /create-task?task_id=TASK_002&description=Reuse%20FIX_001&_t=T1
-   ```
+## Key Rules
 
-2. **Check instructions**
-   ```
-   GET /list-instructions?_t=T2
-   GET /instruction?id=FIX_001&_t=T3
-   ```
+1. Replace <timestamp> with actual milliseconds: use Date.now() or current time
+2. URL-encode all parameters (spaces = %20, etc)
+3. EXECUTE means: use web_fetch to call the URL, don't just show it
+4. Check response.success before proceeding
+5. If error, read error message and retry with corrections
 
-3. **Verify file state**
-   ```
-   GET /mmsb/path/file?_t=T4
-   GET /add-context?task_id=TASK_002&query_url=/mmsb/path/file&_t=T5
-   ```
+## Example: Create Test.jl
 
-4. **Apply & complete**
-   ```
-   GET /apply-instruction?id=FIX_001&_t=T6
-   GET /add-instruction?task_id=TASK_002&instruction_id=FIX_001&action=reused&_t=T7
-   GET /complete-task?task_id=TASK_002&status=completed&result=success&_t=T8
-   ```
+EXECUTE these in order:
 
-## Directory Structure
+1. GET https://cheese-server.duckdns.org/mmsb/create-task?task_id=TASK_TEST_JL&description=Create%20Test.jl&_t=1734567890000
 
-```
-tasks/
-  TASK_001/
-    task.json
-  index.json
+2. Save instruction to create file with content:
+GET https://cheese-server.duckdns.org/mmsb/save-instruction?id=CREATE_TEST_JL&file=Test.jl&template=simple_replace&old_line=&new_line=module%20Test%0A%23%20TODO:%20add%20tests%0Aend&purpose=Create%20Test.jl&_t=1734567890001
 
-instructions/
-  FIX_001/
-    patch.diff
-    target.json
-    meta.json
-  index.json
-```
+3. Apply:
+GET https://cheese-server.duckdns.org/mmsb/apply-instruction?id=CREATE_TEST_JL&_t=1734567890002
 
-## Task JSON Format
-
-```json
-{
-  "id": "TASK_001",
-  "description": "Fix cache headers",
-  "status": "completed",
-  "created": "2025-12-19T00:10:00Z",
-  "completed": "2025-12-19T00:15:00Z",
-  "context_queries": [
-    {"url": "/mmsb/file.js", "timestamp": "..."}
-  ],
-  "instructions": [
-    {"id": "FIX_001", "action": "created", "timestamp": "..."},
-    {"id": "FIX_001", "action": "applied", "timestamp": "..."}
-  ],
-  "result": "success"
-}
-```
-
-## Templates
-
-### simple_replace
-```
-?template=simple_replace&file=X&old_line=A&new_line=B&context_before=C&context_after=D
-```
-
-### add_cache_headers
-```
-?template=add_cache_headers&file=X&function=funcName&old_line=A&context_before=C&context_after=D
-```
-
-### Direct mode
-```
-?file=X&line_before=A&line_after=B&context_1=C1&context_2=C2&context_3=C3
-```
-
-## Benefits
-
-- **Auditability**: Every action tracked
-- **Replay**: Reconstruct entire session
-- **Learning**: See which instructions work
-- **Efficiency**: Reuse proven patterns
-- **Pure GET**: No POST/PUT needed
+4. Complete:
+GET https://cheese-server.duckdns.org/mmsb/complete-task?task_id=TASK_TEST_JL&status=completed&_t=1734567890003

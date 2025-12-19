@@ -1,1 +1,9 @@
-{}
+{
+  "MY_TASK": {
+    "description": "Fix bug in server",
+    "status": "created",
+    "created": "2025-12-19T00:17:32.743Z",
+    "completed": null,
+    "instruction_count": 0
+  }
+}

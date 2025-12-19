@@ -1,0 +1,9 @@
+{
+  "id": "MY_TASK",
+  "description": "create a test file",
+  "status": "created",
+  "created": "2025-12-19T00:17:32.743Z",
+  "instructions": [],
+  "context_queries": [],
+  "result": null
+}
