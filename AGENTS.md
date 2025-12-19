@@ -4,7 +4,7 @@
 
 Execute this GET request to begin the workflow:
 ```
-https://cheese-server.duckdns.org/mmsb/INSTRUCTION_START.md?_t=<Date.now()>
+https://cheese-server.duckdns.org/mmsb/INSTRUCTION_01_START.md?_t=<Date.now()>
 ```
 
 Each instruction file contains:
