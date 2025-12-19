@@ -1,159 +1,159 @@
-# LLM Agent Workflow: Instruction System
+# LLM Agent Workflow with Task Tracking
 
-## Complete GET-Only Pattern
+## Task Tracking Endpoints
 
-### Session 1: Build & Save New Patch
+**Create task:**
+```
+GET /create-task?task_id=TASK_001&description=Fix%20cache%20headers&_t=T1
+```
 
-1. **Understand task**
-   - Parse user request
-   - Identify target files
+**Track context queries:**
+```
+GET /add-context?task_id=TASK_001&query_url=/mmsb/file.js?_t=T2
+```
 
-2. **Gather context (3-5 queries)**
+**Link instruction:**
+```
+GET /add-instruction?task_id=TASK_001&instruction_id=FIX_CACHE_001&action=created&_t=T3
+```
+
+**Complete task:**
+```
+GET /complete-task?task_id=TASK_001&status=completed&result=success&_t=T4
+```
+
+**List/Get tasks:**
+```
+GET /list-tasks?_t=T5
+GET /task?task_id=TASK_001&_t=T6
+```
+
+## Complete Workflow: Build & Save
+
+1. **Create task**
    ```
-   GET /mmsb/?format=json&_t=T1
-   GET /mmsb/path/to/file.ext?_t=T2
-   GET /mmsb/path/to/related?_t=T3
+   GET /create-task?task_id=TASK_001&description=User%20request&_t=T1
+   ```
+
+2. **Gather context**
+   ```
+   GET /mmsb/?format=json&_t=T2
+   GET /add-context?task_id=TASK_001&query_url=/mmsb/?format=json&_t=T3
+   
+   GET /mmsb/path/file.ext?_t=T4
+   GET /add-context?task_id=TASK_001&query_url=/mmsb/path/file.ext&_t=T5
    ```
 
 3. **Check existing instructions**
    ```
-   GET /list-instructions?_t=T4
+   GET /list-instructions?_t=T6
    ```
-   - If matching instruction exists → skip to step 6
 
 4. **Build patch preview**
    ```
-   GET /build-patch?template=simple_replace&file=X&old_line=A&new_line=B&context_before=C&context_after=D&_t=T5
+   GET /build-patch?template=simple_replace&file=X&old_line=A&new_line=B&context_before=C&context_after=D&_t=T7
    ```
-   - Review JSON response
-   - Check patch_preview field
 
-5. **Save if correct**
+5. **Save instruction**
    ```
-   GET /save-instruction?id=USER_TASK_001&file=X&template=simple_replace&old_line=A&new_line=B&context_before=C&context_after=D&purpose=Fix%20X&risk=low&_t=T6
+   GET /save-instruction?id=FIX_001&file=X&template=simple_replace&old_line=A&new_line=B&context_before=C&context_after=D&purpose=Fix%20X&risk=low&_t=T8
+   GET /add-instruction?task_id=TASK_001&instruction_id=FIX_001&action=created&_t=T9
    ```
 
 6. **Apply instruction**
    ```
-   GET /apply-instruction?id=USER_TASK_001&_t=T7
+   GET /apply-instruction?id=FIX_001&_t=T10
+   GET /add-instruction?task_id=TASK_001&instruction_id=FIX_001&action=applied&_t=T11
    ```
 
-### Session 2+: Reuse Existing
-
-1. **Check instructions**
+7. **Complete task**
    ```
-   GET /list-instructions?_t=T1
+   GET /complete-task?task_id=TASK_001&status=completed&result=success&_t=T12
    ```
 
-2. **Review candidate**
+## Reuse Existing Instruction
+
+1. **Create task**
    ```
-   GET /instruction?id=USER_TASK_001&_t=T2
+   GET /create-task?task_id=TASK_002&description=Reuse%20FIX_001&_t=T1
+   ```
+
+2. **Check instructions**
+   ```
+   GET /list-instructions?_t=T2
+   GET /instruction?id=FIX_001&_t=T3
    ```
 
 3. **Verify file state**
    ```
-   GET /mmsb/path/to/file?_t=T3
+   GET /mmsb/path/file?_t=T4
+   GET /add-context?task_id=TASK_002&query_url=/mmsb/path/file&_t=T5
    ```
 
-4. **Apply**
+4. **Apply & complete**
    ```
-   GET /apply-instruction?id=USER_TASK_001&_t=T4
+   GET /apply-instruction?id=FIX_001&_t=T6
+   GET /add-instruction?task_id=TASK_002&instruction_id=FIX_001&action=reused&_t=T7
+   GET /complete-task?task_id=TASK_002&status=completed&result=success&_t=T8
    ```
 
-## Template Reference
+## Directory Structure
+
+```
+tasks/
+  TASK_001/
+    task.json
+  index.json
+
+instructions/
+  FIX_001/
+    patch.diff
+    target.json
+    meta.json
+  index.json
+```
+
+## Task JSON Format
+
+```json
+{
+  "id": "TASK_001",
+  "description": "Fix cache headers",
+  "status": "completed",
+  "created": "2025-12-19T00:10:00Z",
+  "completed": "2025-12-19T00:15:00Z",
+  "context_queries": [
+    {"url": "/mmsb/file.js", "timestamp": "..."}
+  ],
+  "instructions": [
+    {"id": "FIX_001", "action": "created", "timestamp": "..."},
+    {"id": "FIX_001", "action": "applied", "timestamp": "..."}
+  ],
+  "result": "success"
+}
+```
+
+## Templates
 
 ### simple_replace
 ```
-?template=simple_replace
-&file=path/file.ext
-&old_line=text
-&new_line=text
-&context_before=line
-&context_after=line
+?template=simple_replace&file=X&old_line=A&new_line=B&context_before=C&context_after=D
 ```
 
 ### add_cache_headers
 ```
-?template=add_cache_headers
-&file=path/file.js
-&function=functionName
-&old_line=res.writeHead(...)
-&context_before=line
-&context_after=line
+?template=add_cache_headers&file=X&function=funcName&old_line=A&context_before=C&context_after=D
 ```
 
-### Direct mode (no template)
+### Direct mode
 ```
-?file=path/file.ext
-&line_before=old
-&line_after=new
-&context_1=ctx1
-&context_2=ctx2
-&context_3=ctx3
+?file=X&line_before=A&line_after=B&context_1=C1&context_2=C2&context_3=C3
 ```
-
-## Naming Convention
-
-**Instruction IDs:**
-- `USER_<TASK>_NNN` - User-requested changes
-- `FIX_<BUG>_NNN` - Bug fixes
-- `FEAT_<FEATURE>_NNN` - New features
-- `REFACTOR_<AREA>_NNN` - Refactorings
-
-## Error Recovery
-
-**Build fails:**
-- Re-fetch file with new timestamp
-- Adjust context to match exact lines
-- Retry build
-
-**Apply fails:**
-- Check if file changed since save
-- Re-fetch and verify context
-- Build new instruction if needed
-
-**Instruction not found:**
-- List all instructions
-- Build new one
 
 ## Benefits
 
-1. **Learning**: Successful patches persist
-2. **Efficiency**: Future tasks reuse proven solutions
-3. **Auditability**: All changes tracked by ID
-4. **Determinism**: Same ID = identical execution
-5. **Pure GET**: No POST/PUT/DELETE needed
-
-## Example Complete Flow
-
-```
-User: "Fix the cache headers in file-server.js"
-
-LLM:
-1. GET /list-instructions → check for existing
-2. Not found → proceed to build
-3. GET /mmsb/tools/website/file-server.js → read current
-4. GET /build-patch?template=add_cache_headers&file=file-server.js&function=handleDirectoryRequest&old_line=res.writeHead(200, { 'Content-Type': 'text/html' });
-   → Review: looks good
-5. GET /save-instruction?id=FIX_CACHE_001&[same params]&purpose=Add cache headers
-   → Saved
-6. GET /apply-instruction?id=FIX_CACHE_001
-   → Success
-
-User: "Do the same for handleFileRequest"
-
-LLM:
-1. GET /list-instructions → FIX_CACHE_001 exists
-2. GET /instruction?id=FIX_CACHE_001 → review pattern
-3. Build new: GET /save-instruction?id=FIX_CACHE_002&file=file-server.js&function=handleFileRequest&...
-4. GET /apply-instruction?id=FIX_CACHE_002
-   → Success
-```
-
-## Integration with MMSB
-
-Instructions = persistent deltas
-- Stored on "bus" (instructions/ directory)
-- LLM selects, doesn't mutate
-- Replay = GET /apply-instruction
-- Audit = read index.json
+- **Auditability**: Every action tracked
+- **Replay**: Reconstruct entire session
+- **Learning**: See which instructions work
+- **Efficiency**: Reuse proven patterns
+- **Pure GET**: No POST/PUT needed

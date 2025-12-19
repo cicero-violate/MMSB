@@ -79,6 +79,15 @@ function parseQueryParams(requestUrl) {
     risk: query.risk || null,
     author: query.author || null,
 
+    // Task management parameters
+    task_id: query.task_id || null,
+    description: query.description || null,
+    query_url: query.query_url || null,
+    instruction_id: query.instruction_id || null,
+    action: query.action || null,
+    status: query.status || null,
+    result: query.result || null,
+
     // Preview parameters
     preview: parseBoolean(query.preview, false),
     lines: parseInt(query.lines) || 20,

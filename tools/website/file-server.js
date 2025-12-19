@@ -21,6 +21,14 @@ const { handleInstructionBuilder } = require('./routes/instruction-builder');
 const { handleSaveInstruction } = require('./routes/save-instruction');
 const { handleListInstructions, handleGetInstruction } = require('./routes/list-instructions');
 const { handleApplyInstruction } = require('./routes/apply-instruction');
+const {
+  handleCreateTask,
+  handleAddContext,
+  handleAddInstruction,
+  handleCompleteTask,
+  handleListTasks,
+  handleGetTask
+} = require('./routes/task-manager');
 const { 
   formatDirectoryResponse, 
   formatMetadataResponse, 
@@ -116,6 +124,26 @@ const server = http.createServer(async (req, res) => {
     // Handle apply-instruction endpoint
     if (params.path === '/apply-instruction' || params.path === `${URL_PREFIX}/apply-instruction`) {
       return handleApplyInstruction(params, res);
+    }
+    
+    // Handle task management endpoints
+    if (params.path === '/create-task' || params.path === `${URL_PREFIX}/create-task`) {
+      return handleCreateTask(params, res);
+    }
+    if (params.path === '/add-context' || params.path === `${URL_PREFIX}/add-context`) {
+      return handleAddContext(params, res);
+    }
+    if (params.path === '/add-instruction' || params.path === `${URL_PREFIX}/add-instruction`) {
+      return handleAddInstruction(params, res);
+    }
+    if (params.path === '/complete-task' || params.path === `${URL_PREFIX}/complete-task`) {
+      return handleCompleteTask(params, res);
+    }
+    if (params.path === '/list-tasks' || params.path === `${URL_PREFIX}/list-tasks`) {
+      return handleListTasks(params, res);
+    }
+    if (params.path === '/task' || params.path === `${URL_PREFIX}/task`) {
+      return handleGetTask(params, res);
     }
     
     // Strip URL prefix to get file path
