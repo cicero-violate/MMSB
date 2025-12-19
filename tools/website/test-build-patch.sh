@@ -49,7 +49,7 @@ curl -s "${BASE_URL}/build-patch?template=nonexistent&file=test.txt&_t=$(date +%
 echo ""
 
 # Cleanup
-echo "Cleaning up test files..."
-rm -f "$WORKDIR/test_file.txt" "$WORKDIR/test_direct.txt"
+# echo "Cleaning up test files..."
+# rm -f "$WORKDIR/test_file.txt" "$WORKDIR/test_direct.txt"
 
 echo "=== Tests Complete ==="
