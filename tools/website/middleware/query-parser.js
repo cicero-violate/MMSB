@@ -73,6 +73,12 @@ function parseQueryParams(requestUrl) {
     function_body: query.function_body || null,
     location: query.location || null,
 
+    // Instruction management parameters
+    id: query.id || null,
+    purpose: query.purpose || null,
+    risk: query.risk || null,
+    author: query.author || null,
+
     // Preview parameters
     preview: parseBoolean(query.preview, false),
     lines: parseInt(query.lines) || 20,

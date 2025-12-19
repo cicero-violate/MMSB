@@ -18,6 +18,9 @@ const { gatherFilesRecursive, gatherFilesShallow } = require('./middleware/recur
 const { ServerError, ErrorTypes, handleError, validateRequest, logRequest } = require('./middleware/error-handler');
 const { handleApplyPatch } = require('./routes/apply-patch');
 const { handleInstructionBuilder } = require('./routes/instruction-builder');
+const { handleSaveInstruction } = require('./routes/save-instruction');
+const { handleListInstructions, handleGetInstruction } = require('./routes/list-instructions');
+const { handleApplyInstruction } = require('./routes/apply-instruction');
 const { 
   formatDirectoryResponse, 
   formatMetadataResponse, 
@@ -93,6 +96,26 @@ const server = http.createServer(async (req, res) => {
     // Handle instruction-builder endpoint
     if (params.path === '/build-patch' || params.path === `${URL_PREFIX}/build-patch`) {
       return handleInstructionBuilder(params, res);
+    }
+    
+    // Handle save-instruction endpoint
+    if (params.path === '/save-instruction' || params.path === `${URL_PREFIX}/save-instruction`) {
+      return handleSaveInstruction(params, res);
+    }
+    
+    // Handle list-instructions endpoint
+    if (params.path === '/list-instructions' || params.path === `${URL_PREFIX}/list-instructions`) {
+      return handleListInstructions(params, res);
+    }
+    
+    // Handle get-instruction endpoint
+    if (params.path === '/instruction' || params.path === `${URL_PREFIX}/instruction`) {
+      return handleGetInstruction(params, res);
+    }
+    
+    // Handle apply-instruction endpoint
+    if (params.path === '/apply-instruction' || params.path === `${URL_PREFIX}/apply-instruction`) {
+      return handleApplyInstruction(params, res);
     }
     
     // Strip URL prefix to get file path
