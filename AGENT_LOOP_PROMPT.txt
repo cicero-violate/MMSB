@@ -1,0 +1,164 @@
+# LLM Agent Loop for Apply-Patch Workflow
+
+## Server Endpoint
+https://cheese-server.duckdns.org/mmsb/apply-patch
+
+## Workflow
+
+### Step 1: Context Gathering (3 queries)
+Query the project to understand structure and current code:
+
+1. **Project structure:**
+   https://cheese-server.duckdns.org/mmsb/?recursive=true&depth=2&format=json&_t=TIMESTAMP
+
+2. **Target file content:**
+   https://cheese-server.duckdns.org/mmsb/PATH/TO/FILE?_t=TIMESTAMP
+
+3. **Related files (if needed):**
+   https://cheese-server.duckdns.org/mmsb/PATH/TO/RELATED?_t=TIMESTAMP
+
+### Step 2: Generate Patch
+Create patch following Codex format:
+```
+*** Begin Patch
+*** Update File: relative/path/file.ext
+@@ function_or_class_context
+ context_line_1
+ context_line_2
+ context_line_3
+-old_line
++new_line
+ context_line_1
+ context_line_2
+ context_line_3
+*** End Patch
+```
+
+### Step 3: Apply Patch
+Submit via GET request:
+
+**URL Format:**
+```
+https://cheese-server.duckdns.org/mmsb/apply-patch?patch=ENCODED_PATCH&workdir=OPTIONAL&_t=TIMESTAMP
+```
+
+**Parameters:**
+- `patch`: URL-encoded patch content OR base64-encoded (add `&encoding=base64`)
+- `workdir`: (Optional) Working directory, defaults to MMSB root
+- `_t`: Timestamp for cache-busting
+
+**Example:**
+```
+https://cheese-server.duckdns.org/mmsb/apply-patch?patch=%2A%2A%2A%20Begin%20Patch%0A...&_t=1734567890123
+```
+
+### Step 4: Verify Result
+Server returns JSON:
+
+**Success:**
+```json
+{
+  "success": true,
+  "message": "Patch applied successfully",
+  "output": "Success. Updated the following files:\nM file.ext",
+  "workdir": "/path/to/workdir"
+}
+```
+
+**Failure:**
+```json
+{
+  "success": false,
+  "error": "Patch failed: Failed to find context...",
+  "details": "stderr output"
+}
+```
+
+### Step 5: Iterate if Failed
+If patch fails:
+1. Read the error details
+2. Fetch the file again with `?_t=NEW_TIMESTAMP`
+3. Adjust patch context to match exact file content
+4. Resubmit patch
+
+## Agent Loop Pattern
+
+```
+LOOP:
+  1. Analyze task
+  2. Gather context (3 queries with timestamps)
+  3. Generate patch
+  4. Apply patch (GET with timestamp)
+  5. Check response
+  6. IF success: DONE
+  7. IF failure: 
+     - Read error
+     - Re-fetch files
+     - Adjust patch
+     - GOTO step 4
+  8. MAX 5 iterations
+END LOOP
+```
+
+## Important Notes
+
+1. **Always use timestamps:** Add `?_t=<current_ms>` to every URL to bypass cache
+2. **URL encode patches:** Use proper URL encoding for special characters
+3. **Match context exactly:** Context lines must be character-perfect matches
+4. **Base64 for complex patches:** Use `&encoding=base64` for patches with special chars
+5. **Check working directory:** Verify workdir parameter if not using default
+
+## Example Complete Flow
+
+```
+Task: "Fix bug in file-server.js line 150"
+
+1. GET https://cheese-server.duckdns.org/mmsb/tools/website?format=json&_t=1734567890123
+   → Understand project structure
+
+2. GET https://cheese-server.duckdns.org/mmsb/tools/website/file-server.js?_t=1734567890124
+   → Read current file content
+
+3. Generate patch:
+   *** Begin Patch
+   *** Update File: file-server.js
+   @@ async function handleDirectoryRequest
+    const indexPath = path.join(dirPath, 'index.html');
+    if (fs.existsSync(indexPath)) {
+      const data = fs.readFileSync(indexPath);
+-     res.writeHead(200, { 'Content-Type': 'text/html' });
++     const headers = addCacheHeaders({ 'Content-Type': 'text/html' });
++     res.writeHead(200, headers);
+      res.end(data);
+      return;
+   *** End Patch
+
+4. URL encode and submit:
+   GET https://cheese-server.duckdns.org/mmsb/apply-patch?patch=...ENCODED...&_t=1734567890125
+
+5. Check response:
+   {"success": true, "message": "Patch applied successfully"}
+
+6. DONE
+```
+
+## Security Notes
+
+- Server only applies patches within MMSB project directory
+- No arbitrary command execution
+- Patch validation before execution
+- Error messages include details for debugging
+
+## Troubleshooting
+
+**"Failed to find context"**
+→ Context lines don't match file. Re-fetch file with new timestamp.
+
+**"Invalid patch format"**
+→ Missing "*** Begin Patch" header or incorrect syntax.
+
+**"Working directory does not exist"**
+→ Check workdir parameter or use default.
+
+**"Patch failed" with stderr**
+→ Read details field for specific error from apply_patch tool.

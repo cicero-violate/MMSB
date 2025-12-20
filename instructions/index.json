@@ -1,11 +1,20 @@
 {
-  "CREATE_TEST3_JL": {
-    "summary": "Create Test3.jl",
+  "CREATE_TEST3_JL_FIXED": {
+    "summary": "Fix%20patch%20for%20Test3.jl%20creation%20with%20proper%20format",
     "files": [
       "Test3.jl"
     ],
     "risk": "unknown",
-    "created": "2025-12-19T00:39:55.291Z",
+    "created": "2025-12-19T17:35:13.067Z",
     "template": "direct"
+  },
+  "CREATE_TEST3_JL_V2": {
+    "summary": "Create%20Test3.jl%20with%20proper%20empty%20old_line",
+    "files": [
+      "Test3.jl"
+    ],
+    "risk": "unknown",
+    "created": "2025-12-19T17:36:15.066Z",
+    "template": "simple_replace"
   }
 }

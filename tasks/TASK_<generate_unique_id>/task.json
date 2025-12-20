@@ -1,0 +1,9 @@
+{
+  "id": "TASK_<generate_unique_id>",
+  "description": "<your_task_description>",
+  "status": "created",
+  "created": "2025-12-19T00:47:19.804Z",
+  "instructions": [],
+  "context_queries": [],
+  "result": null
+}
