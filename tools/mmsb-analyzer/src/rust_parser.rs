@@ -467,5 +467,21 @@ impl CfgExtractor {
     }
 }
 
-// Helper functions (pat_snippet, expr_snippet, truncate_label) remain the same...
-// [Assume the rest of the file is unchanged; only CfgExtractor updated]
+fn expr_snippet(expr: &syn::Expr) -> String {
+    truncate_label(quote::quote!(#expr).to_string())
+}
+
+fn pat_snippet(pat: &syn::Pat) -> String {
+    truncate_label(quote::quote!(#pat).to_string())
+}
+
+fn truncate_label(text: String) -> String {
+    let collapsed = text.split_whitespace().collect::<Vec<_>>().join(" ");
+    let mut label = collapsed;
+    if label.len() > 80 {
+        label.truncate(77);
+        label.push_str("...");
+    }
+    label
+}
+
