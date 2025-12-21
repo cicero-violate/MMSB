@@ -1,36 +1,14 @@
 //! Type definitions for code analysis
-
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub enum Language {
-    Rust,
-    Julia,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub enum ElementType {
-    Struct,
-    Enum,
-    Trait,
-    Impl,
-    Function,
-    Module,
-    Const,
-    Static,
-}
-
-#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct CodeElement {
-    pub element_type: ElementType,
     pub name: String,
     pub file_path: String,
     pub line_number: usize,
-    pub language: Language,
-    pub layer: String,
+    pub element_type: String,
     pub signature: String,
-    pub calls: Vec<String>,
     pub visibility: Visibility,
     pub generic_params: Vec<String>,
 }
@@ -59,20 +37,46 @@ pub struct CallGraphNode {
     pub called_by: Vec<String>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct CfgNode {
-    pub id: usize,
-    pub label: String,
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum NodeType {
+    Entry,
+    Exit,
+    BasicBlock,
+    Branch,
+    LoopHeader,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone)]
+pub struct CfgNode {
+    pub id: usize,
+    pub node_type: NodeType,
+    pub label: String,
+    pub lines: Vec<u32>,  // Source line numbers (empty for Rust currently)
+}
+
+#[derive(Debug, Clone)]
+pub struct CfgEdge {
+    pub from: usize,
+    pub to: usize,
+    pub condition: Option<bool>,  // Some(true)=taken/true branch, Some(false)=false/else, None=unconditional
+}
+
+#[derive(Debug, Clone)]
 pub struct FunctionCfg {
     pub function: String,
     pub file_path: String,
+    pub entry_id: usize,
+    pub exit_id: usize,
     pub nodes: Vec<CfgNode>,
-    pub edges: Vec<(usize, usize)>,
+    pub edges: Vec<CfgEdge>,
     pub branch_count: usize,
     pub loop_count: usize,
+}
+
+#[derive(Debug)]
+pub struct ProgramCFG {
+    pub functions: HashMap<String, FunctionCfg>,  // Key: function name (assume unique)
+    pub call_edges: Vec<(String, String)>,  // (caller, callee)
 }
 
 #[derive(Debug)]
