@@ -46,103 +46,112 @@ struct Args {
 }
 
 fn main() -> Result<()> {
-    let args = Args::parse();
+    let args = std::env::args().collect::<Vec<_>>();
+    if args.len() < 2 {
+        eprintln!("Usage: {} <project-root>", args[0]);
+        std::process::exit(1);
+    }
 
-    // Resolve to absolute paths
-    let root_path = env::current_dir()?.join(&args.root).canonicalize()?;
-    let output_path = env::current_dir()?
-        .join(&args.output)
-        .canonicalize()
-        .unwrap_or_else(|_| {
-            let p = env::current_dir().unwrap().join(&args.output);
-            std::fs::create_dir_all(&p).ok();
-            p.canonicalize().unwrap_or(p)
-        });
-    let julia_script_path = env::current_dir()?
-        .join(&args.julia_script)
-        .canonicalize()?;
+    let project_root = PathBuf::from(&args[1]);
+    let output_path = project_root.join("analysis_report");
+    fs::create_dir_all(&output_path)?;
 
-    println!("MMSB Intelligence Substrate Analyzer");
-    println!("=====================================\n");
-    println!("Root directory: {:?}", root_path);
-    println!("Output directory: {:?}", output_path);
-    println!("Julia script: {:?}\n", julia_script_path);
+    println!("Starting MMSB analysis on: {}", project_root.display());
 
-    let rust_analyzer = RustAnalyzer::new(root_path.to_string_lossy().to_string());
+    // === 1. Discover and order files by layer ===
+    println!("\nDiscovering and ordering source files...");
+    let rust_files = gather_rust_files(&project_root)?;
+    let julia_files = gather_julia_files(&project_root)?;
+
+    let rust_layer_graph = build_layer_dependency_graph(&rust_files);
+    let julia_layer_graph = build_layer_dependency_graph(&julia_files);
+
+    let rust_ordered = topological_sort_files(&rust_files, &rust_layer_graph);
+    let julia_ordered = topological_sort_files(&julia_files, &julia_layer_graph);
+
+    // === 2. Analyze Rust files ===
+    println!("\nAnalyzing {} Rust files...", rust_ordered.len());
+    let rust_analyzer = RustAnalyzer::new();
     let mut combined_result = AnalysisResult::new();
 
-    // Scan for Rust files
-    println!("Scanning Rust files (dependency-ordered)...");
-    let mut rust_count = 0;
-    let rust_files = gather_rust_files(&root_path);
-    let (ordered_rust_files, rust_layer_graph) =
-        order_rust_files_by_dependency(&rust_files, &root_path)
-            .context("Failed to resolve Rust dependency order")?;
-
-    for path in ordered_rust_files {
-        if args.verbose {
-            println!("  Analyzing: {:?}", path);
-        }
-
-        match rust_analyzer.analyze_file(&path) {
-            Ok(result) => {
-                rust_count += 1;
-                combined_result.merge(result);
-            }
-            Err(e) => {
-                eprintln!("Warning: Failed to analyze {:?}: {}", path, e);
-            }
+    for file in rust_ordered {
+        if let Ok(result) = rust_analyzer.analyze_file(&file) {
+            combined_result.merge(result);
         }
     }
-    println!("Analyzed {} Rust files", rust_count);
 
-    // Scan for Julia files
-    println!("\nScanning Julia files (dependency-ordered)...");
-    let mut julia_count = 0;
-    let mut julia_layer_graph = LayerGraph::default();
-    let julia_files = gather_julia_files(&root_path);
-    let (ordered_julia_files, jl_graph) =
-        order_julia_files_by_dependency(&julia_files, &root_path)
-            .context("Failed to resolve Julia dependency order")?;
-    julia_layer_graph = jl_graph;
-
-    let julia_analyzer = JuliaAnalyzer::new(
-        root_path.clone(),
-        julia_script_path.clone(),
-        output_path.join("cfg/dots"),
-    );
-
-    if args.skip_julia {
-        println!("  Per-file Julia analysis skipped (--skip-julia); generating layer/project CFGs only");
-        julia_analyzer
-            .generate_global_cfgs()
-            .context("Failed to generate Julia layer/project CFGs")?;
-    } else {
-        for path in ordered_julia_files {
-            if args.verbose {
-                println!("  Analyzing: {:?}", path);
-            }
-
-            match julia_analyzer.analyze_file(&path) {
-                Ok(result) => {
-                    julia_count += 1;
-                    combined_result.merge(result);
-                }
-                Err(e) => {
-                    eprintln!("Warning: Failed to analyze {:?}: {}", path, e);
-                }
-            }
+    // === 3. Analyze Julia files ===
+    println!("\nAnalyzing {} Julia files...", julia_ordered.len());
+    let julia_analyzer = JuliaAnalyzer::new();
+    for file in julia_ordered {
+        if let Ok(result) = julia_analyzer.analyze_file(&file) {
+            combined_result.merge(result);
         }
     }
-    println!("Analyzed {} Julia files", julia_count);
 
-    // Build control flow graph
+    // === 4. Build call graph ===
     println!("\nBuilding control flow graph...");
     let mut cf_analyzer = ControlFlowAnalyzer::new();
     cf_analyzer.build_call_graph(&combined_result);
 
-    // Generate reports
-    println!("\nGenerating reports...");
+    // === 5. EXPORT RICH PROGRAM-LEVEL CFG TO DOT (the big new feature) ===
+    println!("\nExporting complete program CFG (with clusters, ENTRY/EXIT, clickable nodes)...");
+    use crate::types::{FunctionCfg, ProgramCFG};
+    use std::collections::HashMap;
+
+    let mut program_cfg = ProgramCFG {
+        functions: HashMap::new(),
+        call_edges: Vec::new(),
+    };
+
+    // Insert all CFGs (Rust + Julia if any)
+    for cfg in &combined_result.cfgs {
+        program_cfg
+            .functions
+            .insert(cfg.function.clone(), cfg.clone());
+    }
+
+    // Extract inter-function call edges from petgraph
+    for edge in cf_analyzer.graph.edge_indices() {
+        let (source, target) = cf_analyzer.graph.edge_endpoints(edge).unwrap();
+        let caller_node = &cf_analyzer.graph[source];
+        let callee_node = &cf_analyzer.graph[target];
+
+        // Strip module path, keep just function name (assumes uniqueness or you can keep full path)
+        let caller = caller_node.split("::").last().unwrap_or(caller_node).to_string();
+        let callee = callee_node.split("::").last().unwrap_or(callee_node).to_string();
+
+        if !caller.is_empty() && !callee.is_empty() {
+            program_cfg.call_edges.push((caller, callee));
+        }
+    }
+
+    // Ensure output directory
+    let cfg_dir = output_path.join("cfg");
+    fs::create_dir_all(&cfg_dir)?;
+
+    let dot_path = cfg_dir.join("complete_program.dot");
+    crate::dot_exporter::export_complete_program_dot(&program_cfg, dot_path.to_str().unwrap())?;
+    println!("Program CFG exported to: {}", dot_path.display());
+
+    // Optional: auto-generate PNG
+    #[cfg(feature = "png")]
+    {
+        let png_path = cfg_dir.join("complete_program.png");
+        if let Ok(dot_path_str) = dot_path.to_str() {
+            if let Ok(png_path_str) = png_path.to_str() {
+                let status = std::process::Command::new("dot")
+                    .args(&["-Tpng", dot_path_str, "-o", png_path_str])
+                    .status();
+                if status.map_or(false, |s| s.success()) {
+                    println!("PNG rendered: {}", png_path.display());
+                }
+            }
+        }
+    }
+
+    // === 6. Generate final reports ===
+    println!("\nGenerating Markdown reports...");
     let report_gen = ReportGenerator::new(output_path.to_string_lossy().to_string());
     report_gen
         .generate_all(
@@ -153,11 +162,9 @@ fn main() -> Result<()> {
         )
         .context("Failed to generate reports")?;
 
-    println!("\n✓ Analysis complete!");
-    println!("  Total elements: {}", combined_result.elements.len());
-    println!("  Rust files: {}", rust_count);
-    println!("  Julia files: {}", julia_count);
-    println!("  Reports saved to: {:?}", output_path);
+    println!("\nAnalysis complete!");
+    println!("Report: {}/index.html", output_path.display());
+    println!("Interactive CFG: {}/cfg/complete_program.dot (open with xdot!)", output_path.display());
 
     Ok(())
 }
