@@ -1,9 +1,9 @@
 # Module Dependencies
 
-- Module files analyzed: 78
+- Module files analyzed: 77
 - Unique imports captured: 282
-- Unique exports captured: 55
-- Submodule declarations captured: 82
+- Unique exports captured: 54
+- Submodule declarations captured: 79
 
 ## Per-file Summary
 
@@ -45,7 +45,6 @@
 - `MMSB/src/03_dag/shadow_graph.rs` → module `shadow_graph` (layer 03_dag, 4 imports / 0 exports / 0 submodules)
 - `MMSB/src/03_dag/shadow_graph_mod.rs` → module `shadow_graph_mod` (layer 03_dag, 0 imports / 3 exports / 0 submodules)
 - `MMSB/src/03_dag/shadow_graph_traversal.rs` → module `shadow_graph_traversal` (layer 03_dag, 3 imports / 0 exports / 0 submodules)
-- `MMSB/src/03_device/mod.rs` → module `mod` (layer 03_device, 0 imports / 1 exports / 3 submodules)
 - `MMSB/src/04_propagation/mod.rs` → module `mod` (layer 04_propagation, 0 imports / 8 exports / 8 submodules)
 - `MMSB/src/04_propagation/propagation_command_buffer.rs` → module `propagation_command_buffer` (layer 04_propagation, 2 imports / 0 exports / 0 submodules)
 - `MMSB/src/04_propagation/propagation_engine.rs` → module `propagation_engine` (layer 04_propagation, 6 imports / 0 exports / 0 submodules)

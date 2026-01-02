@@ -1,0 +1,310 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://mmsb.dev/schemas/effect-signature/0.1.0",
+  "title": "MMSB Effect Signature Schema",
+  "description": "Static Effect Signature Schema for PHASE 6.5: Admission Intelligence Formalization. Defines the formal language of transformation effects for compositional reasoning.",
+  "version": "0.1.0",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "action_type",
+    "action_id",
+    "reads",
+    "writes",
+    "structural_transitions",
+    "invariant_touchpoints",
+    "executor_surface"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "0.1.0",
+      "description": "Schema version this signature conforms to (frozen field)"
+    },
+    "action_type": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Action identifier (e.g., 'MoveToLayer', 'AdjustVisibility')",
+      "examples": ["MoveToLayer", "AdjustVisibility", "ReExport"]
+    },
+    "action_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique identifier for this specific action instance"
+    },
+    "reads": {
+      "type": "object",
+      "description": "Read effects: surfaces the action inspects",
+      "required": ["paths", "symbols", "visibility_scopes", "module_boundaries"],
+      "additionalProperties": false,
+      "properties": {
+        "paths": {
+          "type": "array",
+          "description": "File paths read (absolute paths from project root)",
+          "items": {
+            "type": "string"
+          }
+        },
+        "symbols": {
+          "type": "array",
+          "description": "Symbols referenced (fully qualified: module::item)",
+          "items": {
+            "type": "string"
+          }
+        },
+        "visibility_scopes": {
+          "type": "array",
+          "description": "Visibility scopes inspected (module paths)",
+          "items": {
+            "type": "string"
+          }
+        },
+        "module_boundaries": {
+          "type": "array",
+          "description": "Module boundaries traversed during analysis",
+          "items": {
+            "type": "object",
+            "required": ["from_module", "to_module", "crossing_type"],
+            "properties": {
+              "from_module": {
+                "type": "string"
+              },
+              "to_module": {
+                "type": "string"
+              },
+              "crossing_type": {
+                "type": "string",
+                "enum": ["Import", "ReExport", "VisibilityExtension"]
+              }
+            }
+          }
+        }
+      }
+    },
+    "writes": {
+      "type": "object",
+      "description": "Write effects: surfaces the action mutates",
+      "required": ["files", "modules", "imports", "re_exports", "visibility_modifiers"],
+      "additionalProperties": false,
+      "properties": {
+        "files": {
+          "type": "array",
+          "description": "Files created or modified",
+          "items": {
+            "type": "string"
+          }
+        },
+        "modules": {
+          "type": "array",
+          "description": "Modules created or modified",
+          "items": {
+            "type": "object",
+            "required": ["module_path", "declaration_file", "operation"],
+            "properties": {
+              "module_path": {
+                "type": "string"
+              },
+              "declaration_file": {
+                "type": "string"
+              },
+              "operation": {
+                "type": "string",
+                "enum": ["Create", "Modify", "Remove"]
+              }
+            }
+          }
+        },
+        "imports": {
+          "type": "array",
+          "description": "Imports added or modified",
+          "items": {
+            "type": "object",
+            "required": ["target_file", "import_path", "is_re_export"],
+            "properties": {
+              "target_file": {
+                "type": "string"
+              },
+              "import_path": {
+                "type": "string"
+              },
+              "is_re_export": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        "re_exports": {
+          "type": "array",
+          "description": "Re-exports added or modified",
+          "items": {
+            "type": "object",
+            "required": ["file", "symbol", "from_module", "visibility"],
+            "properties": {
+              "file": {
+                "type": "string"
+              },
+              "symbol": {
+                "type": "string"
+              },
+              "from_module": {
+                "type": "string"
+              },
+              "visibility": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "visibility_modifiers": {
+          "type": "array",
+          "description": "Visibility modifiers changed",
+          "items": {
+            "type": "object",
+            "required": ["file", "symbol", "old_visibility", "new_visibility"],
+            "properties": {
+              "file": {
+                "type": "string"
+              },
+              "symbol": {
+                "type": "string"
+              },
+              "old_visibility": {
+                "type": "string"
+              },
+              "new_visibility": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "structural_transitions": {
+      "type": "object",
+      "description": "Structural transitions: architectural shape changes",
+      "required": ["file_to_module", "module_to_layer", "test_boundary_crossings"],
+      "additionalProperties": false,
+      "properties": {
+        "file_to_module": {
+          "type": "array",
+          "description": "File → module promotions",
+          "items": {
+            "type": "object",
+            "required": ["file_path", "module_path"],
+            "properties": {
+              "file_path": {
+                "type": "string"
+              },
+              "module_path": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "module_to_layer": {
+          "type": "array",
+          "description": "Module → layer movements",
+          "items": {
+            "type": "object",
+            "required": ["module_path", "from_layer", "to_layer"],
+            "properties": {
+              "module_path": {
+                "type": "string"
+              },
+              "from_layer": {
+                "type": "string"
+              },
+              "to_layer": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "test_boundary_crossings": {
+          "type": "array",
+          "description": "Test boundary crossings (#[cfg(test)] transitions)",
+          "items": {
+            "type": "object",
+            "required": ["symbol", "direction", "file"],
+            "properties": {
+              "symbol": {
+                "type": "string"
+              },
+              "direction": {
+                "type": "string",
+                "enum": ["IntoTest", "OutOfTest"]
+              },
+              "file": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "invariant_touchpoints": {
+      "type": "object",
+      "description": "Invariant touchpoints: which invariants this action validates against",
+      "required": [
+        "i1_module_coherence",
+        "i2_dependency_direction",
+        "visibility_law",
+        "re_export_law",
+        "test_topology_law"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "i1_module_coherence": {
+          "type": "boolean",
+          "description": "I1: Module coherence (mod declarations match file structure)"
+        },
+        "i2_dependency_direction": {
+          "type": "boolean",
+          "description": "I2: Dependency direction (no reverse or circular dependencies)"
+        },
+        "visibility_law": {
+          "type": "boolean",
+          "description": "Visibility law (pub exposure matches usage)"
+        },
+        "re_export_law": {
+          "type": "boolean",
+          "description": "Re-export law (re-exports maintain module boundaries)"
+        },
+        "test_topology_law": {
+          "type": "boolean",
+          "description": "Test topology law (cfg(test) placement rules)"
+        }
+      }
+    },
+    "executor_surface": {
+      "type": "object",
+      "description": "Executor surface: infrastructure gates required for safe execution",
+      "required": [
+        "requires_import_repair",
+        "requires_module_shim",
+        "requires_re_export_enforcement",
+        "requires_verification_gate"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "requires_import_repair": {
+          "type": "boolean",
+          "description": "Requires import repair (auto-add missing imports)"
+        },
+        "requires_module_shim": {
+          "type": "boolean",
+          "description": "Requires module shim (auto-add module declarations)"
+        },
+        "requires_re_export_enforcement": {
+          "type": "boolean",
+          "description": "Requires re-export enforcement (maintain re-export coherence)"
+        },
+        "requires_verification_gate": {
+          "type": "boolean",
+          "description": "Requires verification gate (cargo check after apply)"
+        }
+      }
+    }
+  }
+}

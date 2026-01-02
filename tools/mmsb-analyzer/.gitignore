@@ -1,0 +1,52 @@
+# Cargo
+/target/
+/Cargo.lock
+
+# Julia
+/Manifest.toml
+/.julia_artifacts/
+/.julia_depot/
+tools/mmsb-analyzer/.julia-home/
+tools/mmsb-analyzer/src/.julia-home/
+tools/mmsb-analyzer/src/.julia-depot/
+
+# Build artifacts
+*.so
+*.dylib
+*.dll
+*.rlib
+*.d
+*.pdb
+
+# Editor / OS garbage
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*~
+
+# Benchmark / test output
+/test.tlog
+/test.chk
+/mmsb.tlog
+/mmsb.chk
+/benchmark/results/
+benchmark/results/
+
+# Docs build
+/docs/build/
+/docs/site/
+
+# Temporary files
+*.tmp
+*.bak
+*.log
+
+# Python (if you ever add scripts)
+/__pycache__/
+/*.py[cod]
+
+# Keep the license and README
+!LICENSE
+!README.md

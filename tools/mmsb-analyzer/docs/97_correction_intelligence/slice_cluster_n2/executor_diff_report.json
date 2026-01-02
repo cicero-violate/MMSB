@@ -1,0 +1,67 @@
+{
+  "version": "1.0",
+  "timestamp": "2026-01-01T05:52:25.554491977+00:00",
+  "actions": [
+    {
+      "action_id": "move_emit_verification_policy_to_src/620_correction_plan_serializer.rs",
+      "diffs": []
+    },
+    {
+      "action_id": "move_write_intelligence_outputs_to_src/620_correction_plan_serializer.rs",
+      "diffs": []
+    },
+    {
+      "action_id": "move_strip_numeric_prefix_to_src/330_report.rs",
+      "diffs": []
+    },
+    {
+      "action_id": "move_compress_path_to_src/330_report.rs",
+      "diffs": []
+    },
+    {
+      "action_id": "move_collect_directory_files_to_src/330_report.rs",
+      "diffs": []
+    },
+    {
+      "action_id": "move_path_common_prefix_len_to_src/330_report.rs",
+      "diffs": []
+    },
+    {
+      "action_id": "move_compute_move_metrics_to_src/330_report.rs",
+      "diffs": []
+    },
+    {
+      "action_id": "move_generate_canonical_name_to_src/330_report.rs",
+      "diffs": []
+    },
+    {
+      "action_id": "move_collect_directory_moves_to_src/330_report.rs",
+      "diffs": []
+    },
+    {
+      "action_id": "move_write_structural_batches_to_src/330_report.rs",
+      "diffs": []
+    },
+    {
+      "action_id": "move_write_cluster_batches_to_src/330_report.rs",
+      "diffs": []
+    },
+    {
+      "action_id": "move_resolve_required_layer_path_to_src/330_report.rs",
+      "diffs": []
+    },
+    {
+      "action_id": "move_collect_move_items_to_src/330_report.rs",
+      "diffs": [
+        {
+          "path": "tools/mmsb-analyzer/src/220_utilities.rs",
+          "diff": "--- original\n+++ modified\n@@ -1,9 +1,6 @@\n //! Utility functions shared across modules\n\n-use std::collections::{BTreeSet};\n-use std::path::{Path};\n-use crate::types::{DirectoryAnalysis, FunctionPlacement, PlacementStatus};\n-use crate::report::{PlanItem, Priority, ActionKind};\n+#[allow(unused_imports)] pub use crate::report::collect_move_items;\n #[allow(unused_imports)] pub use crate::report::resolve_required_layer_path;\n #[allow(unused_imports)] pub use crate::report::write_cluster_batches;\n #[allow(unused_imports)] pub use crate::report::write_structural_batches;\n@@ -24,106 +21,7 @@\n\n\n\n-pub fn collect_move_items(\n-    placements: &[FunctionPlacement],\n-    utility_names: &BTreeSet<String>,\n-    directory: &DirectoryAnalysis,\n-    root_path: &Path,\n-) -> Vec<PlanItem> {\n-    let mut items = Vec::new();\n-    for placement in placements {\n-        match &placement.placement_status {\n-            PlacementStatus::ShouldMove { reason, impact } => {\n-                let priority = if *impact >= 0.5 {\n-                    Priority::Critical\n-                } else if *impact >= 0.2 {\n-                    Priority::High\n-                } else if *impact >= 0.1 {\n-                    Priority::Medium\n-                } else {\n-                    Priority::Low\n-                };\n-                let (impact_weight, benefit, cost, callers, caller_files, outgoing_files) =\n-                    compute_move_metrics(placement);\n-                let to = placement\n-                    .suggested_file\n-                    .as_ref()\n-                    .map(|p| compress_path(p.to_string_lossy().as_ref()))\n-                    .unwrap_or_else(|| \"-\".to_string());\n-                items.push(PlanItem {\n-                    kind: ActionKind::Cohesion,\n-                    priority,\n-                    description: format!(\n-                        \"`{}` from `{}` to `{}`: {} (impact {:.2})\",\n-                        placement.name,\n-                        compress_path(placement.current_file.to_string_lossy().as_ref()),\n-                        to,\n-                        reason,\n-                        impact\n-                    ),\n-                    command: String::new(),\n-                    current_layer: None,\n-                    required_layer: None,\n-                    is_utility: utility_names.contains(&placement.name),\n-                    impact_weight,\n-                    benefit,\n-                    cost,\n-                    callers,\n-                    caller_files,\n-                    current_file: Some(placement.current_file.clone()),\n-                    target_file: placement.suggested_file.clone(),\n-                    outgoing_files,\n-                    name: Some(placement.name.clone()),\n-                    cluster_cohesion: 0.0,\n-                    member_count: 0,\n-                });\n-            }\n-            PlacementStatus::LayerViolation {\n-                current_layer,\n-                required_layer,\n-            } => {\n-                let target_path = resolve_required_layer_path(\n-                    required_layer,\n-                    &placement.current_file,\n-                    directory,\n-                    root_path,\n-                );\n-                let to = compress_path(target_path.to_string_lossy().as_ref());\n-                let (impact_weight, benefit, cost, callers, caller_files, outgoing_files) =\n-                    compute_move_metrics(placement);\n-                items.push(PlanItem {\n-                    kind: ActionKind::Structural,\n-                    priority: Priority::Critical,\n-                    description: format!(\n-                        \"`{}` from `{}` to `{}`: layer violation {} -> {}\",\n-                        placement.name,\n-                        compress_path(placement.current_file.to_string_lossy().as_ref()),\n-                        to,\n-                        current_layer,\n-                        required_layer\n-                    ),\n-                    command: String::new(),\n-                    current_layer: Some(current_layer.clone()),\n-                    required_layer: Some(required_layer.clone()),\n-                    is_utility: utility_names.contains(&placement.name),\n-                    impact_weight,\n-                    benefit,\n-                    cost,\n-                    callers,\n-                    caller_files,\n-                    current_file: Some(placement.current_file.clone()),\n-                    target_file: Some(target_path),\n-                    outgoing_files,\n-                    name: Some(placement.name.clone()),\n-                    cluster_cohesion: 0.0,\n-                    member_count: 0,\n-                });\n-            }\n-            _ => {}\n-        }\n-    }\n-    items\n-}\n\n\n\n+\n"
+        },
+        {
+          "path": "tools/mmsb-analyzer/src/330_report.rs",
+          "diff": "--- original\n+++ modified\n@@ -2,7 +2,6 @@\n\n use crate::cluster_008::collect_cluster_plans;\n use crate::layer_core::{sort_structural_items};\n-use crate::utilities::{collect_move_items};\n use crate::control_flow::ControlFlowAnalyzer;\n use crate::dependency::{LayerGraph, build_directory_entry_map, build_file_dependency_graph, collect_naming_warnings};\n use crate::file_ordering::DirectoryMove;\n@@ -3834,3 +3833,104 @@\n             .join(required_layer)\n     })\n }\n+\n+pub fn collect_move_items(\n+    placements: &[FunctionPlacement],\n+    utility_names: &BTreeSet<String>,\n+    directory: &DirectoryAnalysis,\n+    root_path: &Path,\n+) -> Vec<PlanItem> {\n+    let mut items = Vec::new();\n+    for placement in placements {\n+        match &placement.placement_status {\n+            PlacementStatus::ShouldMove { reason, impact } => {\n+                let priority = if *impact >= 0.5 {\n+                    Priority::Critical\n+                } else if *impact >= 0.2 {\n+                    Priority::High\n+                } else if *impact >= 0.1 {\n+                    Priority::Medium\n+                } else {\n+                    Priority::Low\n+                };\n+                let (impact_weight, benefit, cost, callers, caller_files, outgoing_files) =\n+                    compute_move_metrics(placement);\n+                let to = placement\n+                    .suggested_file\n+                    .as_ref()\n+                    .map(|p| compress_path(p.to_string_lossy().as_ref()))\n+                    .unwrap_or_else(|| \"-\".to_string());\n+                items.push(PlanItem {\n+                    kind: ActionKind::Cohesion,\n+                    priority,\n+                    description: format!(\n+                        \"`{}` from `{}` to `{}`: {} (impact {:.2})\",\n+                        placement.name,\n+                        compress_path(placement.current_file.to_string_lossy().as_ref()),\n+                        to,\n+                        reason,\n+                        impact\n+                    ),\n+                    command: String::new(),\n+                    current_layer: None,\n+                    required_layer: None,\n+                    is_utility: utility_names.contains(&placement.name),\n+                    impact_weight,\n+                    benefit,\n+                    cost,\n+                    callers,\n+                    caller_files,\n+                    current_file: Some(placement.current_file.clone()),\n+                    target_file: placement.suggested_file.clone(),\n+                    outgoing_files,\n+                    name: Some(placement.name.clone()),\n+                    cluster_cohesion: 0.0,\n+                    member_count: 0,\n+                });\n+            }\n+            PlacementStatus::LayerViolation {\n+                current_layer,\n+                required_layer,\n+            } => {\n+                let target_path = resolve_required_layer_path(\n+                    required_layer,\n+                    &placement.current_file,\n+                    directory,\n+                    root_path,\n+                );\n+                let to = compress_path(target_path.to_string_lossy().as_ref());\n+                let (impact_weight, benefit, cost, callers, caller_files, outgoing_files) =\n+                    compute_move_metrics(placement);\n+                items.push(PlanItem {\n+                    kind: ActionKind::Structural,\n+                    priority: Priority::Critical,\n+                    description: format!(\n+                        \"`{}` from `{}` to `{}`: layer violation {} -> {}\",\n+                        placement.name,\n+                        compress_path(placement.current_file.to_string_lossy().as_ref()),\n+                        to,\n+                        current_layer,\n+                        required_layer\n+                    ),\n+                    command: String::new(),\n+                    current_layer: Some(current_layer.clone()),\n+                    required_layer: Some(required_layer.clone()),\n+                    is_utility: utility_names.contains(&placement.name),\n+                    impact_weight,\n+                    benefit,\n+                    cost,\n+                    callers,\n+                    caller_files,\n+                    current_file: Some(placement.current_file.clone()),\n+                    target_file: Some(target_path),\n+                    outgoing_files,\n+                    name: Some(placement.name.clone()),\n+                    cluster_cohesion: 0.0,\n+                    member_count: 0,\n+                });\n+            }\n+            _ => {}\n+        }\n+    }\n+    items\n+}\n"
+        }
+      ]
+    }
+  ]
+}

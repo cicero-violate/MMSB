@@ -3,7 +3,7 @@ digraph LayerCFG {
   compound=true;
   newrank=true;
 
-  label="root - 32 functions from 4 files";
+  label="root - 34 functions from 4 files";
   labelloc=t;
   fontsize=18;
 
@@ -13,12 +13,12 @@ digraph LayerCFG {
     fillcolor=lightgray;
     color=black;
 
-    f1_n783 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
-    f1_n784 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
-    f1_n785 [label="BB1 L18,19", shape=box, fillcolor=lightblue, style="filled"];
+    f1_n809 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f1_n810 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f1_n811 [label="BB1 L18,19", shape=box, fillcolor=lightblue, style="filled"];
 
-    f1_n783 -> f1_n785;
-    f1_n785 -> f1_n784;
+    f1_n809 -> f1_n811;
+    f1_n811 -> f1_n810;
   }
 
   subgraph cluster_2 {
@@ -27,12 +27,12 @@ digraph LayerCFG {
     fillcolor=lightgray;
     color=black;
 
-    f2_n786 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
-    f2_n787 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
-    f2_n788 [label="BB1 L45,46", shape=box, fillcolor=lightblue, style="filled"];
+    f2_n812 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f2_n813 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f2_n814 [label="BB1 L45,46", shape=box, fillcolor=lightblue, style="filled"];
 
-    f2_n786 -> f2_n788;
-    f2_n788 -> f2_n787;
+    f2_n812 -> f2_n814;
+    f2_n814 -> f2_n813;
   }
 
   subgraph cluster_3 {
@@ -41,16 +41,16 @@ digraph LayerCFG {
     fillcolor=lightgray;
     color=black;
 
-    f3_n789 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
-    f3_n790 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
-    f3_n791 [label="BRANCH1 L55", shape=diamond, fillcolor=yellow, style="filled"];
-    f3_n792 [label="RETURN2 L56", shape=box, fillcolor=lightblue, style="filled"];
-    f3_n793 [label="BB3 L55", shape=box, fillcolor=lightblue, style="filled"];
+    f3_n815 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f3_n816 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f3_n817 [label="BRANCH1 L55", shape=diamond, fillcolor=yellow, style="filled"];
+    f3_n818 [label="RETURN2 L56", shape=box, fillcolor=lightblue, style="filled"];
+    f3_n819 [label="BB3 L55", shape=box, fillcolor=lightblue, style="filled"];
 
-    f3_n789 -> f3_n791;
-    f3_n791 -> f3_n792 [label="T", color="darkgreen"];
-    f3_n791 -> f3_n793 [label="F", color="red"];
-    f3_n793 -> f3_n790;
+    f3_n815 -> f3_n817;
+    f3_n817 -> f3_n818 [label="T", color="darkgreen"];
+    f3_n817 -> f3_n819 [label="F", color="red"];
+    f3_n819 -> f3_n816;
   }
 
   subgraph cluster_4 {
@@ -59,12 +59,12 @@ digraph LayerCFG {
     fillcolor=lightgray;
     color=black;
 
-    f4_n794 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
-    f4_n795 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
-    f4_n796 [label="BB1 L39,40,41", shape=box, fillcolor=lightblue, style="filled"];
+    f4_n820 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f4_n821 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f4_n822 [label="BB1 L39,40,41", shape=box, fillcolor=lightblue, style="filled"];
 
-    f4_n794 -> f4_n796;
-    f4_n796 -> f4_n795;
+    f4_n820 -> f4_n822;
+    f4_n822 -> f4_n821;
   }
 
   subgraph cluster_5 {
@@ -73,12 +73,12 @@ digraph LayerCFG {
     fillcolor=lightgray;
     color=black;
 
-    f5_n797 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
-    f5_n798 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
-    f5_n799 [label="BB1 L80", shape=box, fillcolor=lightblue, style="filled"];
+    f5_n823 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f5_n824 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f5_n825 [label="BB1 L80", shape=box, fillcolor=lightblue, style="filled"];
 
-    f5_n797 -> f5_n799;
-    f5_n799 -> f5_n798;
+    f5_n823 -> f5_n825;
+    f5_n825 -> f5_n824;
   }
 
   subgraph cluster_6 {
@@ -87,12 +87,12 @@ digraph LayerCFG {
     fillcolor=lightgray;
     color=black;
 
-    f6_n800 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
-    f6_n801 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
-    f6_n802 [label="BB1 L508", shape=box, fillcolor=lightblue, style="filled"];
+    f6_n826 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f6_n827 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f6_n828 [label="BB1 L522", shape=box, fillcolor=lightblue, style="filled"];
 
-    f6_n800 -> f6_n802;
-    f6_n802 -> f6_n801;
+    f6_n826 -> f6_n828;
+    f6_n828 -> f6_n827;
   }
 
   subgraph cluster_7 {
@@ -101,12 +101,12 @@ digraph LayerCFG {
     fillcolor=lightgray;
     color=black;
 
-    f7_n803 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
-    f7_n804 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
-    f7_n805 [label="RETURN1 L34,36,37,38", shape=box, fillcolor=lightblue, style="filled"];
+    f7_n829 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f7_n830 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f7_n831 [label="RETURN1 L34,36,37,38", shape=box, fillcolor=lightblue, style="filled"];
 
-    f7_n803 -> f7_n805;
-    f7_n805 -> f7_n804;
+    f7_n829 -> f7_n831;
+    f7_n831 -> f7_n830;
   }
 
   subgraph cluster_8 {
@@ -115,17 +115,17 @@ digraph LayerCFG {
     fillcolor=lightgray;
     color=black;
 
-    f8_n806 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
-    f8_n807 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
-    f8_n808 [label="BRANCH1 L47", shape=diamond, fillcolor=yellow, style="filled"];
-    f8_n809 [label="BB2 L48", shape=box, fillcolor=lightblue, style="filled"];
-    f8_n810 [label="RETURN3 L50,51", shape=box, fillcolor=lightblue, style="filled"];
+    f8_n832 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f8_n833 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f8_n834 [label="BRANCH1 L47", shape=diamond, fillcolor=yellow, style="filled"];
+    f8_n835 [label="BB2 L48", shape=box, fillcolor=lightblue, style="filled"];
+    f8_n836 [label="RETURN3 L50,51", shape=box, fillcolor=lightblue, style="filled"];
 
-    f8_n806 -> f8_n808;
-    f8_n808 -> f8_n809 [label="T", color="darkgreen"];
-    f8_n808 -> f8_n810 [label="F", color="red"];
-    f8_n809 -> f8_n810;
-    f8_n810 -> f8_n807;
+    f8_n832 -> f8_n834;
+    f8_n834 -> f8_n835 [label="T", color="darkgreen"];
+    f8_n834 -> f8_n836 [label="F", color="red"];
+    f8_n835 -> f8_n836;
+    f8_n836 -> f8_n833;
   }
 
   subgraph cluster_9 {
@@ -134,12 +134,12 @@ digraph LayerCFG {
     fillcolor=lightgray;
     color=black;
 
-    f9_n811 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
-    f9_n812 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
-    f9_n813 [label="BB1 L13,14", shape=box, fillcolor=lightblue, style="filled"];
+    f9_n837 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f9_n838 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f9_n839 [label="BB1 L13,14", shape=box, fillcolor=lightblue, style="filled"];
 
-    f9_n811 -> f9_n813;
-    f9_n813 -> f9_n812;
+    f9_n837 -> f9_n839;
+    f9_n839 -> f9_n838;
   }
 
   subgraph cluster_10 {
@@ -148,381 +148,413 @@ digraph LayerCFG {
     fillcolor=lightgray;
     color=black;
 
-    f10_n814 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
-    f10_n815 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
-    f10_n816 [label="BB1 L62", shape=box, fillcolor=lightblue, style="filled"];
+    f10_n840 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f10_n841 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f10_n842 [label="BB1 L62", shape=box, fillcolor=lightblue, style="filled"];
 
-    f10_n814 -> f10_n816;
-    f10_n816 -> f10_n815;
+    f10_n840 -> f10_n842;
+    f10_n842 -> f10_n841;
   }
 
   subgraph cluster_11 {
+    label="rust_allocator_clear! (FFIWrapper.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f11_n843 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f11_n844 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f11_n845 [label="BB1 L188,189,190,191", shape=box, fillcolor=lightblue, style="filled"];
+
+    f11_n843 -> f11_n845;
+    f11_n845 -> f11_n844;
+  }
+
+  subgraph cluster_12 {
     label="rust_allocator_free! (FFIWrapper.jl, CC=1)";
     style=filled;
     fillcolor=lightgray;
     color=black;
 
-    f11_n817 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
-    f11_n818 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
-    f11_n819 [label="BB1 L188,189,190,191", shape=box, fillcolor=lightblue, style="filled"];
+    f12_n846 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f12_n847 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f12_n848 [label="BB1 L195,196,197,198", shape=box, fillcolor=lightblue, style="filled"];
 
-    f11_n817 -> f11_n819;
-    f11_n819 -> f11_n818;
+    f12_n846 -> f12_n848;
+    f12_n848 -> f12_n847;
   }
 
-  subgraph cluster_12 {
+  subgraph cluster_13 {
     label="rust_allocator_release! (FFIWrapper.jl, CC=1)";
     style=filled;
     fillcolor=lightgray;
     color=black;
 
-    f12_n820 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
-    f12_n821 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
-    f12_n822 [label="BB1 L212,213,219,220", shape=box, fillcolor=lightblue, style="filled"];
+    f13_n849 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f13_n850 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f13_n851 [label="BB1 L219,220,226,227", shape=box, fillcolor=lightblue, style="filled"];
 
-    f12_n820 -> f12_n822;
-    f12_n822 -> f12_n821;
+    f13_n849 -> f13_n851;
+    f13_n851 -> f13_n850;
   }
 
-  subgraph cluster_13 {
+  subgraph cluster_14 {
     label="rust_artifacts_available (FFIWrapper.jl, CC=1)";
     style=filled;
     fillcolor=lightgray;
     color=black;
 
-    f13_n823 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
-    f13_n824 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
-    f13_n825 [label="RETURN1 L72,73,74,75,76", shape=box, fillcolor=lightblue, style="filled"];
+    f14_n852 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f14_n853 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f14_n854 [label="RETURN1 L72,73,74,75,76", shape=box, fillcolor=lightblue, style="filled"];
 
-    f13_n823 -> f13_n825;
-    f13_n825 -> f13_n824;
+    f14_n852 -> f14_n854;
+    f14_n854 -> f14_n853;
   }
 
-  subgraph cluster_14 {
+  subgraph cluster_15 {
     label="rust_checkpoint_load! (FFIWrapper.jl, CC=1)";
     style=filled;
     fillcolor=lightgray;
     color=black;
 
-    f14_n826 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
-    f14_n827 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
-    f14_n828 [label="BB1 L412,413,416,417", shape=box, fillcolor=lightblue, style="filled"];
+    f15_n855 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f15_n856 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f15_n857 [label="BB1 L426,427,430,431", shape=box, fillcolor=lightblue, style="filled"];
 
-    f14_n826 -> f14_n828;
-    f14_n828 -> f14_n827;
+    f15_n855 -> f15_n857;
+    f15_n857 -> f15_n856;
   }
 
-  subgraph cluster_15 {
+  subgraph cluster_16 {
     label="rust_checkpoint_write! (FFIWrapper.jl, CC=1)";
     style=filled;
     fillcolor=lightgray;
     color=black;
 
-    f15_n829 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
-    f15_n830 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
-    f15_n831 [label="BB1 L403,404,407,408", shape=box, fillcolor=lightblue, style="filled"];
+    f16_n858 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f16_n859 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f16_n860 [label="BB1 L417,418,421,422", shape=box, fillcolor=lightblue, style="filled"];
 
-    f15_n829 -> f15_n831;
-    f15_n831 -> f15_n830;
+    f16_n858 -> f16_n860;
+    f16_n860 -> f16_n859;
   }
 
-  subgraph cluster_16 {
+  subgraph cluster_17 {
     label="rust_delta_apply! (FFIWrapper.jl, CC=1)";
     style=filled;
     fillcolor=lightgray;
     color=black;
 
-    f16_n832 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
-    f16_n833 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
-    f16_n834 [label="BB1 L170,171,172,173", shape=box, fillcolor=lightblue, style="filled"];
+    f17_n861 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f17_n862 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f17_n863 [label="BB1 L170,171,172,173", shape=box, fillcolor=lightblue, style="filled"];
 
-    f16_n832 -> f16_n834;
-    f16_n834 -> f16_n833;
+    f17_n861 -> f17_n863;
+    f17_n863 -> f17_n862;
   }
 
-  subgraph cluster_17 {
+  subgraph cluster_18 {
     label="rust_delta_free! (FFIWrapper.jl, CC=1)";
     style=filled;
     fillcolor=lightgray;
     color=black;
 
-    f17_n835 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
-    f17_n836 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
-    f17_n837 [label="BB1 L163,164,165,166", shape=box, fillcolor=lightblue, style="filled"];
+    f18_n864 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f18_n865 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f18_n866 [label="BB1 L163,164,165,166", shape=box, fillcolor=lightblue, style="filled"];
 
-    f17_n835 -> f17_n837;
-    f17_n837 -> f17_n836;
+    f18_n864 -> f18_n866;
+    f18_n866 -> f18_n865;
   }
 
-  subgraph cluster_18 {
+  subgraph cluster_19 {
     label="rust_delta_new (FFIWrapper.jl, CC=1)";
     style=filled;
     fillcolor=lightgray;
     color=black;
 
-    f18_n838 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
-    f18_n839 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
-    f18_n840 [label="BB1 L151,152,153,158,159", shape=box, fillcolor=lightblue, style="filled"];
+    f19_n867 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f19_n868 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f19_n869 [label="BB1 L151,152,153,158,159", shape=box, fillcolor=lightblue, style="filled"];
 
-    f18_n838 -> f18_n840;
-    f18_n840 -> f18_n839;
+    f19_n867 -> f19_n869;
+    f19_n869 -> f19_n868;
   }
 
-  subgraph cluster_19 {
+  subgraph cluster_20 {
     label="rust_delta_set_intent_metadata! (FFIWrapper.jl, CC=1)";
     style=filled;
     fillcolor=lightgray;
     color=black;
 
-    f19_n841 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
-    f19_n842 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
-    f19_n843 [label="BB1 L372", shape=box, fillcolor=lightblue, style="filled"];
-    f19_n844 [label="BRANCH2 L373", shape=diamond, fillcolor=yellow, style="filled"];
-    f19_n845 [label="RETURN3 L374,376,377", shape=box, fillcolor=lightblue, style="filled"];
-    f19_n846 [label="BB4 L379,380,384,385", shape=box, fillcolor=lightblue, style="filled"];
+    f20_n870 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f20_n871 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f20_n872 [label="BB1 L386", shape=box, fillcolor=lightblue, style="filled"];
+    f20_n873 [label="BRANCH2 L387", shape=diamond, fillcolor=yellow, style="filled"];
+    f20_n874 [label="RETURN3 L388,390,391", shape=box, fillcolor=lightblue, style="filled"];
+    f20_n875 [label="BB4 L393,394,398,399", shape=box, fillcolor=lightblue, style="filled"];
 
-    f19_n841 -> f19_n843;
-    f19_n843 -> f19_n844;
-    f19_n844 -> f19_n845 [label="T", color="darkgreen"];
-    f19_n844 -> f19_n846 [label="F", color="red"];
-    f19_n846 -> f19_n842;
+    f20_n870 -> f20_n872;
+    f20_n872 -> f20_n873;
+    f20_n873 -> f20_n874 [label="T", color="darkgreen"];
+    f20_n873 -> f20_n875 [label="F", color="red"];
+    f20_n875 -> f20_n871;
   }
 
-  subgraph cluster_20 {
+  subgraph cluster_21 {
     label="rust_page_metadata_import! (FFIWrapper.jl, CC=1)";
     style=filled;
     fillcolor=lightgray;
     color=black;
 
-    f20_n847 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
-    f20_n848 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
-    f20_n849 [label="BB1 L128,129,133,134", shape=box, fillcolor=lightblue, style="filled"];
+    f21_n876 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f21_n877 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f21_n878 [label="BB1 L128,129,133,134", shape=box, fillcolor=lightblue, style="filled"];
 
-    f20_n847 -> f20_n849;
-    f20_n849 -> f20_n848;
+    f21_n876 -> f21_n878;
+    f21_n878 -> f21_n877;
   }
 
-  subgraph cluster_21 {
+  subgraph cluster_22 {
     label="rust_page_read! (FFIWrapper.jl, CC=1)";
     style=filled;
     fillcolor=lightgray;
     color=black;
 
-    f21_n850 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
-    f21_n851 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
-    f21_n852 [label="BB1 L87,88,91,92,93,96,97,101,102,103", shape=box, fillcolor=lightblue, style="filled"];
+    f22_n879 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f22_n880 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f22_n881 [label="BB1 L87,88,91,92,93,96,97,101,102,103", shape=box, fillcolor=lightblue, style="filled"];
 
-    f21_n850 -> f21_n852;
-    f21_n852 -> f21_n851;
+    f22_n879 -> f22_n881;
+    f22_n881 -> f22_n880;
   }
 
-  subgraph cluster_22 {
+  subgraph cluster_23 {
     label="rust_page_write_masked! (FFIWrapper.jl, CC=1)";
     style=filled;
     fillcolor=lightgray;
     color=black;
 
-    f22_n853 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
-    f22_n854 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
-    f22_n855 [label="BB1 L139,140,145,146", shape=box, fillcolor=lightblue, style="filled"];
+    f23_n882 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f23_n883 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f23_n884 [label="BB1 L139,140,145,146", shape=box, fillcolor=lightblue, style="filled"];
 
-    f22_n853 -> f22_n855;
-    f22_n855 -> f22_n854;
+    f23_n882 -> f23_n884;
+    f23_n884 -> f23_n883;
   }
 
-  subgraph cluster_23 {
+  subgraph cluster_24 {
     label="rust_semiring_boolean_accumulate (FFIWrapper.jl, CC=1)";
     style=filled;
     fillcolor=lightgray;
     color=black;
 
-    f23_n856 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
-    f23_n857 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
-    f23_n858 [label="RETURN1 L501,502,504,505", shape=box, fillcolor=lightblue, style="filled"];
+    f24_n885 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f24_n886 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f24_n887 [label="RETURN1 L515,516,518,519", shape=box, fillcolor=lightblue, style="filled"];
 
-    f23_n856 -> f23_n858;
-    f23_n858 -> f23_n857;
+    f24_n885 -> f24_n887;
+    f24_n887 -> f24_n886;
   }
 
-  subgraph cluster_24 {
+  subgraph cluster_25 {
     label="rust_semiring_tropical_accumulate (FFIWrapper.jl, CC=1)";
     style=filled;
     fillcolor=lightgray;
     color=black;
 
-    f24_n859 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
-    f24_n860 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
-    f24_n861 [label="RETURN1 L471,472,474,475", shape=box, fillcolor=lightblue, style="filled"];
+    f25_n888 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f25_n889 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f25_n890 [label="RETURN1 L485,486,488,489", shape=box, fillcolor=lightblue, style="filled"];
 
-    f24_n859 -> f24_n861;
-    f24_n861 -> f24_n860;
+    f25_n888 -> f25_n890;
+    f25_n890 -> f25_n889;
   }
 
-  subgraph cluster_25 {
+  subgraph cluster_26 {
     label="rust_tlog_append! (FFIWrapper.jl, CC=1)";
     style=filled;
     fillcolor=lightgray;
     color=black;
 
-    f25_n862 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
-    f25_n863 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
-    f25_n864 [label="BB1 L250,251,252,253", shape=box, fillcolor=lightblue, style="filled"];
+    f26_n891 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f26_n892 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f26_n893 [label="BB1 L257,258,259,260", shape=box, fillcolor=lightblue, style="filled"];
 
-    f25_n862 -> f25_n864;
-    f25_n864 -> f25_n863;
+    f26_n891 -> f26_n893;
+    f26_n893 -> f26_n892;
   }
 
-  subgraph cluster_26 {
+  subgraph cluster_27 {
+    label="rust_tlog_clear_entries! (FFIWrapper.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f27_n894 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f27_n895 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f27_n896 [label="BB1 L264,265,266,267", shape=box, fillcolor=lightblue, style="filled"];
+
+    f27_n894 -> f27_n896;
+    f27_n896 -> f27_n895;
+  }
+
+  subgraph cluster_28 {
     label="rust_tlog_free! (FFIWrapper.jl, CC=1)";
     style=filled;
     fillcolor=lightgray;
     color=black;
 
-    f26_n865 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
-    f26_n866 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
-    f26_n867 [label="BB1 L243,244,245,246", shape=box, fillcolor=lightblue, style="filled"];
+    f28_n897 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f28_n898 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f28_n899 [label="BB1 L250,251,252,253", shape=box, fillcolor=lightblue, style="filled"];
 
-    f26_n865 -> f26_n867;
-    f26_n867 -> f26_n866;
+    f28_n897 -> f28_n899;
+    f28_n899 -> f28_n898;
   }
 
-  subgraph cluster_27 {
+  subgraph cluster_29 {
     label="rust_tlog_new (FFIWrapper.jl, CC=1)";
     style=filled;
     fillcolor=lightgray;
     color=black;
 
-    f27_n868 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
-    f27_n869 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
-    f27_n870 [label="BB1 L236,237,238,239", shape=box, fillcolor=lightblue, style="filled"];
+    f29_n900 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f29_n901 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f29_n902 [label="BB1 L243,244,245,246", shape=box, fillcolor=lightblue, style="filled"];
 
-    f27_n868 -> f27_n870;
-    f27_n870 -> f27_n869;
+    f29_n900 -> f29_n902;
+    f29_n902 -> f29_n901;
   }
 
-  subgraph cluster_28 {
+  subgraph cluster_30 {
     label="rust_tlog_reader_free! (FFIWrapper.jl, CC=1)";
     style=filled;
     fillcolor=lightgray;
     color=black;
 
-    f28_n871 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
-    f28_n872 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
-    f28_n873 [label="BB1 L264,265,266,267", shape=box, fillcolor=lightblue, style="filled"];
+    f30_n903 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f30_n904 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f30_n905 [label="BB1 L278,279,280,281", shape=box, fillcolor=lightblue, style="filled"];
 
-    f28_n871 -> f28_n873;
-    f28_n873 -> f28_n872;
+    f30_n903 -> f30_n905;
+    f30_n905 -> f30_n904;
   }
 
-  subgraph cluster_29 {
+  subgraph cluster_31 {
     label="rust_tlog_reader_new (FFIWrapper.jl, CC=1)";
     style=filled;
     fillcolor=lightgray;
     color=black;
 
-    f29_n874 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
-    f29_n875 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
-    f29_n876 [label="BB1 L257,258,259,260", shape=box, fillcolor=lightblue, style="filled"];
+    f31_n906 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f31_n907 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f31_n908 [label="BB1 L271,272,273,274", shape=box, fillcolor=lightblue, style="filled"];
 
-    f29_n874 -> f29_n876;
-    f29_n876 -> f29_n875;
+    f31_n906 -> f31_n908;
+    f31_n908 -> f31_n907;
   }
 
-  subgraph cluster_30 {
+  subgraph cluster_32 {
     label="rust_tlog_summary (FFIWrapper.jl, CC=1)";
     style=filled;
     fillcolor=lightgray;
     color=black;
 
-    f30_n877 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
-    f30_n878 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
-    f30_n879 [label="BB1 L278,279,280", shape=box, fillcolor=lightblue, style="filled"];
-    f30_n880 [label="BRANCH2 L281", shape=diamond, fillcolor=yellow, style="filled"];
-    f30_n881 [label="RETURN3 L282,283", shape=box, fillcolor=lightblue, style="filled"];
-    f30_n882 [label="BB4 L285,286,287", shape=box, fillcolor=lightblue, style="filled"];
+    f32_n909 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f32_n910 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f32_n911 [label="BB1 L292,293,294", shape=box, fillcolor=lightblue, style="filled"];
+    f32_n912 [label="BRANCH2 L295", shape=diamond, fillcolor=yellow, style="filled"];
+    f32_n913 [label="RETURN3 L296,297", shape=box, fillcolor=lightblue, style="filled"];
+    f32_n914 [label="BB4 L299,300,301", shape=box, fillcolor=lightblue, style="filled"];
 
-    f30_n877 -> f30_n879;
-    f30_n879 -> f30_n880;
-    f30_n880 -> f30_n881 [label="T", color="darkgreen"];
-    f30_n880 -> f30_n882 [label="F", color="red"];
-    f30_n882 -> f30_n878;
+    f32_n909 -> f32_n911;
+    f32_n911 -> f32_n912;
+    f32_n912 -> f32_n913 [label="T", color="darkgreen"];
+    f32_n912 -> f32_n914 [label="F", color="red"];
+    f32_n914 -> f32_n910;
   }
 
-  subgraph cluster_31 {
+  subgraph cluster_33 {
     label="translate_error (RustErrors.jl, CC=1)";
     style=filled;
     fillcolor=lightgray;
     color=black;
 
-    f31_n883 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
-    f31_n884 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
-    f31_n885 [label="BB1 L50", shape=box, fillcolor=lightblue, style="filled"];
-    f31_n886 [label="BRANCH2 L51", shape=diamond, fillcolor=yellow, style="filled"];
-    f31_n887 [label="RETURN3 L52", shape=box, fillcolor=lightblue, style="filled"];
-    f31_n888 [label="BB4 L51", shape=box, fillcolor=lightblue, style="filled"];
+    f33_n915 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f33_n916 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f33_n917 [label="BB1 L50", shape=box, fillcolor=lightblue, style="filled"];
+    f33_n918 [label="BRANCH2 L51", shape=diamond, fillcolor=yellow, style="filled"];
+    f33_n919 [label="RETURN3 L52", shape=box, fillcolor=lightblue, style="filled"];
+    f33_n920 [label="BB4 L51", shape=box, fillcolor=lightblue, style="filled"];
 
-    f31_n883 -> f31_n885;
-    f31_n885 -> f31_n886;
-    f31_n886 -> f31_n887 [label="T", color="darkgreen"];
-    f31_n886 -> f31_n888 [label="F", color="red"];
-    f31_n888 -> f31_n884;
+    f33_n915 -> f33_n917;
+    f33_n917 -> f33_n918;
+    f33_n918 -> f33_n919 [label="T", color="darkgreen"];
+    f33_n918 -> f33_n920 [label="F", color="red"];
+    f33_n920 -> f33_n916;
   }
 
-  subgraph cluster_32 {
+  subgraph cluster_34 {
     label="update_page (API.jl, CC=1)";
     style=filled;
     fillcolor=lightgray;
     color=black;
 
-    f32_n889 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
-    f32_n890 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
-    f32_n891 [label="RETURN1 L92,93,94,96,97,98,99,100,107,110,111,112,113,114", shape=box, fillcolor=lightblue, style="filled"];
+    f34_n921 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f34_n922 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f34_n923 [label="RETURN1 L92,93,94,96,97,98,99,100,107,110,111,112,113,114", shape=box, fillcolor=lightblue, style="filled"];
 
-    f32_n889 -> f32_n891;
-    f32_n891 -> f32_n890;
+    f34_n921 -> f34_n923;
+    f34_n923 -> f34_n922;
   }
 
   // Inter-function calls
   edge [style=dashed, color=blue, penwidth=2];
 
-  f5_n798 -> f13_n823 [ltail=cluster_5, lhead=cluster_13, label="call"];
-  f21_n851 -> f5_n797 [ltail=cluster_21, lhead=cluster_5, label="call"];
-  f21_n851 -> f1_n783 [ltail=cluster_21, lhead=cluster_1, label="call"];
-  f20_n848 -> f5_n797 [ltail=cluster_20, lhead=cluster_5, label="call"];
-  f20_n848 -> f1_n783 [ltail=cluster_20, lhead=cluster_1, label="call"];
-  f22_n854 -> f5_n797 [ltail=cluster_22, lhead=cluster_5, label="call"];
-  f22_n854 -> f1_n783 [ltail=cluster_22, lhead=cluster_1, label="call"];
-  f18_n839 -> f5_n797 [ltail=cluster_18, lhead=cluster_5, label="call"];
-  f18_n839 -> f1_n783 [ltail=cluster_18, lhead=cluster_1, label="call"];
-  f17_n836 -> f5_n797 [ltail=cluster_17, lhead=cluster_5, label="call"];
-  f17_n836 -> f1_n783 [ltail=cluster_17, lhead=cluster_1, label="call"];
-  f16_n833 -> f5_n797 [ltail=cluster_16, lhead=cluster_5, label="call"];
-  f16_n833 -> f1_n783 [ltail=cluster_16, lhead=cluster_1, label="call"];
-  f11_n818 -> f5_n797 [ltail=cluster_11, lhead=cluster_5, label="call"];
-  f11_n818 -> f1_n783 [ltail=cluster_11, lhead=cluster_1, label="call"];
-  f12_n821 -> f5_n797 [ltail=cluster_12, lhead=cluster_5, label="call"];
-  f12_n821 -> f1_n783 [ltail=cluster_12, lhead=cluster_1, label="call"];
-  f27_n869 -> f5_n797 [ltail=cluster_27, lhead=cluster_5, label="call"];
-  f27_n869 -> f1_n783 [ltail=cluster_27, lhead=cluster_1, label="call"];
-  f26_n866 -> f5_n797 [ltail=cluster_26, lhead=cluster_5, label="call"];
-  f26_n866 -> f1_n783 [ltail=cluster_26, lhead=cluster_1, label="call"];
-  f25_n863 -> f5_n797 [ltail=cluster_25, lhead=cluster_5, label="call"];
-  f25_n863 -> f1_n783 [ltail=cluster_25, lhead=cluster_1, label="call"];
-  f29_n875 -> f5_n797 [ltail=cluster_29, lhead=cluster_5, label="call"];
-  f29_n875 -> f1_n783 [ltail=cluster_29, lhead=cluster_1, label="call"];
-  f28_n872 -> f5_n797 [ltail=cluster_28, lhead=cluster_5, label="call"];
-  f28_n872 -> f1_n783 [ltail=cluster_28, lhead=cluster_1, label="call"];
-  f30_n878 -> f5_n797 [ltail=cluster_30, lhead=cluster_5, label="call"];
-  f30_n878 -> f1_n783 [ltail=cluster_30, lhead=cluster_1, label="call"];
-  f19_n842 -> f5_n797 [ltail=cluster_19, lhead=cluster_5, label="call"];
-  f19_n842 -> f1_n783 [ltail=cluster_19, lhead=cluster_1, label="call"];
-  f15_n830 -> f5_n797 [ltail=cluster_15, lhead=cluster_5, label="call"];
-  f15_n830 -> f1_n783 [ltail=cluster_15, lhead=cluster_1, label="call"];
-  f14_n827 -> f5_n797 [ltail=cluster_14, lhead=cluster_5, label="call"];
-  f14_n827 -> f1_n783 [ltail=cluster_14, lhead=cluster_1, label="call"];
-  f24_n860 -> f5_n797 [ltail=cluster_24, lhead=cluster_5, label="call"];
-  f24_n860 -> f1_n783 [ltail=cluster_24, lhead=cluster_1, label="call"];
-  f23_n857 -> f5_n797 [ltail=cluster_23, lhead=cluster_5, label="call"];
-  f23_n857 -> f1_n783 [ltail=cluster_23, lhead=cluster_1, label="call"];
-  f10_n815 -> f31_n883 [ltail=cluster_10, lhead=cluster_31, label="call"];
+  f5_n824 -> f14_n852 [ltail=cluster_5, lhead=cluster_14, label="call"];
+  f22_n880 -> f5_n823 [ltail=cluster_22, lhead=cluster_5, label="call"];
+  f22_n880 -> f1_n809 [ltail=cluster_22, lhead=cluster_1, label="call"];
+  f21_n877 -> f5_n823 [ltail=cluster_21, lhead=cluster_5, label="call"];
+  f21_n877 -> f1_n809 [ltail=cluster_21, lhead=cluster_1, label="call"];
+  f23_n883 -> f5_n823 [ltail=cluster_23, lhead=cluster_5, label="call"];
+  f23_n883 -> f1_n809 [ltail=cluster_23, lhead=cluster_1, label="call"];
+  f19_n868 -> f5_n823 [ltail=cluster_19, lhead=cluster_5, label="call"];
+  f19_n868 -> f1_n809 [ltail=cluster_19, lhead=cluster_1, label="call"];
+  f18_n865 -> f5_n823 [ltail=cluster_18, lhead=cluster_5, label="call"];
+  f18_n865 -> f1_n809 [ltail=cluster_18, lhead=cluster_1, label="call"];
+  f17_n862 -> f5_n823 [ltail=cluster_17, lhead=cluster_5, label="call"];
+  f17_n862 -> f1_n809 [ltail=cluster_17, lhead=cluster_1, label="call"];
+  f11_n844 -> f5_n823 [ltail=cluster_11, lhead=cluster_5, label="call"];
+  f11_n844 -> f1_n809 [ltail=cluster_11, lhead=cluster_1, label="call"];
+  f12_n847 -> f5_n823 [ltail=cluster_12, lhead=cluster_5, label="call"];
+  f12_n847 -> f1_n809 [ltail=cluster_12, lhead=cluster_1, label="call"];
+  f13_n850 -> f5_n823 [ltail=cluster_13, lhead=cluster_5, label="call"];
+  f13_n850 -> f1_n809 [ltail=cluster_13, lhead=cluster_1, label="call"];
+  f29_n901 -> f5_n823 [ltail=cluster_29, lhead=cluster_5, label="call"];
+  f29_n901 -> f1_n809 [ltail=cluster_29, lhead=cluster_1, label="call"];
+  f28_n898 -> f5_n823 [ltail=cluster_28, lhead=cluster_5, label="call"];
+  f28_n898 -> f1_n809 [ltail=cluster_28, lhead=cluster_1, label="call"];
+  f26_n892 -> f5_n823 [ltail=cluster_26, lhead=cluster_5, label="call"];
+  f26_n892 -> f1_n809 [ltail=cluster_26, lhead=cluster_1, label="call"];
+  f27_n895 -> f5_n823 [ltail=cluster_27, lhead=cluster_5, label="call"];
+  f27_n895 -> f1_n809 [ltail=cluster_27, lhead=cluster_1, label="call"];
+  f31_n907 -> f5_n823 [ltail=cluster_31, lhead=cluster_5, label="call"];
+  f31_n907 -> f1_n809 [ltail=cluster_31, lhead=cluster_1, label="call"];
+  f30_n904 -> f5_n823 [ltail=cluster_30, lhead=cluster_5, label="call"];
+  f30_n904 -> f1_n809 [ltail=cluster_30, lhead=cluster_1, label="call"];
+  f32_n910 -> f5_n823 [ltail=cluster_32, lhead=cluster_5, label="call"];
+  f32_n910 -> f1_n809 [ltail=cluster_32, lhead=cluster_1, label="call"];
+  f20_n871 -> f5_n823 [ltail=cluster_20, lhead=cluster_5, label="call"];
+  f20_n871 -> f1_n809 [ltail=cluster_20, lhead=cluster_1, label="call"];
+  f16_n859 -> f5_n823 [ltail=cluster_16, lhead=cluster_5, label="call"];
+  f16_n859 -> f1_n809 [ltail=cluster_16, lhead=cluster_1, label="call"];
+  f15_n856 -> f5_n823 [ltail=cluster_15, lhead=cluster_5, label="call"];
+  f15_n856 -> f1_n809 [ltail=cluster_15, lhead=cluster_1, label="call"];
+  f25_n889 -> f5_n823 [ltail=cluster_25, lhead=cluster_5, label="call"];
+  f25_n889 -> f1_n809 [ltail=cluster_25, lhead=cluster_1, label="call"];
+  f24_n886 -> f5_n823 [ltail=cluster_24, lhead=cluster_5, label="call"];
+  f24_n886 -> f1_n809 [ltail=cluster_24, lhead=cluster_1, label="call"];
+  f10_n841 -> f33_n915 [ltail=cluster_10, lhead=cluster_33, label="call"];
 }

@@ -1,0 +1,559 @@
+{
+  "version": "1.0",
+  "timestamp": "2026-01-01T02:42:54.151825103+00:00",
+  "actions": [
+    {
+      "action_id": "create_file_src/226_correction_plan_generator.rs",
+      "phase": 2,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "create_file_src/226_correction_plan_generator.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_order_julia_files_by_dependency_to_src/000_cluster_001.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "MoveToLayer skipped (not allowlisted): move_order_julia_files_by_dependency_to_src/000_cluster_001.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_order_julia_files_by_dependency_to_src/000_cluster_001.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_order_julia_files_by_dependency_to_src/000_cluster_001.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_structural_cmp_to_src/010_cluster_008.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "MoveToLayer skipped (not allowlisted): move_structural_cmp_to_src/010_cluster_008.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_structural_cmp_to_src/010_cluster_008.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_structural_cmp_to_src/010_cluster_008.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_sort_structural_items_to_src/010_cluster_008.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "MoveToLayer skipped (not allowlisted): move_sort_structural_items_to_src/010_cluster_008.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_sort_structural_items_to_src/010_cluster_008.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_sort_structural_items_to_src/010_cluster_008.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_gather_rust_files_to_src/020_cluster_010.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [
+        "MoveToLayer gather_rust_files -> 020_cluster_010.rs",
+        "MoveToLayerInvariant I2 passed: gather_rust_files"
+      ],
+      "errors": [],
+      "warnings": [
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_gather_rust_files_to_src/020_cluster_010.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_gather_rust_files_to_src/020_cluster_010.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_run_analysis_to_src/000_cluster_001.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "MoveToLayer skipped (not allowlisted): move_run_analysis_to_src/000_cluster_001.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_run_analysis_to_src/000_cluster_001.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_run_analysis_to_src/000_cluster_001.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_parse_mmsb_latent_attr_to_src/214_dead_code_intent.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_parse_mmsb_latent_attr_to_src/214_dead_code_intent.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_scan_doc_comments_to_src/211_dead_code_attribute_parser.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [
+        "MoveToLayer scan_doc_comments -> 211_dead_code_attribute_parser.rs",
+        "MoveToLayerInvariant I2 passed: scan_doc_comments"
+      ],
+      "errors": [],
+      "warnings": [
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_scan_doc_comments_to_src/211_dead_code_attribute_parser.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_scan_doc_comments_to_src/211_dead_code_attribute_parser.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_detect_intent_signals_to_src/211_dead_code_attribute_parser.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "MoveToLayer skipped (not allowlisted): move_detect_intent_signals_to_src/211_dead_code_attribute_parser.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_detect_intent_signals_to_src/211_dead_code_attribute_parser.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_detect_intent_signals_to_src/211_dead_code_attribute_parser.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_scan_intent_tags_to_src/211_dead_code_attribute_parser.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "MoveToLayer skipped (not allowlisted): move_scan_intent_tags_to_src/211_dead_code_attribute_parser.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_scan_intent_tags_to_src/211_dead_code_attribute_parser.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_scan_intent_tags_to_src/211_dead_code_attribute_parser.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_is_cfg_test_item_to_src/211_dead_code_attribute_parser.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "MoveToLayer skipped (not allowlisted): move_is_cfg_test_item_to_src/211_dead_code_attribute_parser.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_is_cfg_test_item_to_src/211_dead_code_attribute_parser.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_is_cfg_test_item_to_src/211_dead_code_attribute_parser.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_classify_symbol_to_src/213_dead_code_call_graph.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "MoveToLayer skipped (not allowlisted): move_classify_symbol_to_src/213_dead_code_call_graph.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_classify_symbol_to_src/213_dead_code_call_graph.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_classify_symbol_to_src/213_dead_code_call_graph.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_is_test_only_to_src/213_dead_code_call_graph.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "MoveToLayer skipped (not allowlisted): move_is_test_only_to_src/213_dead_code_call_graph.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_is_test_only_to_src/213_dead_code_call_graph.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_is_test_only_to_src/213_dead_code_call_graph.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_run_dead_code_pipeline_to_src/070_layer_utilities.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "MoveToLayer skipped (not allowlisted): move_run_dead_code_pipeline_to_src/070_layer_utilities.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_run_dead_code_pipeline_to_src/070_layer_utilities.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_run_dead_code_pipeline_to_src/070_layer_utilities.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_write_outputs_to_src/220_dead_code_report.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "MoveToLayer skipped (not allowlisted): move_write_outputs_to_src/220_dead_code_report.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_write_outputs_to_src/220_dead_code_report.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_write_outputs_to_src/220_dead_code_report.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_estimate_impact_to_src/229_quality_delta_calculator.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "MoveToLayer skipped (not allowlisted): move_estimate_impact_to_src/229_quality_delta_calculator.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_estimate_impact_to_src/229_quality_delta_calculator.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_estimate_impact_to_src/229_quality_delta_calculator.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_generate_intelligence_report_to_src/223_violation_predictor.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "MoveToLayer skipped (not allowlisted): move_generate_intelligence_report_to_src/223_violation_predictor.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_generate_intelligence_report_to_src/223_violation_predictor.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_generate_intelligence_report_to_src/223_violation_predictor.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_write_intelligence_outputs_at_to_src/232_verification_policy_emitter.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "MoveToLayer skipped (not allowlisted): move_write_intelligence_outputs_at_to_src/232_verification_policy_emitter.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_write_intelligence_outputs_at_to_src/232_verification_policy_emitter.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_write_intelligence_outputs_at_to_src/232_verification_policy_emitter.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_serialize_correction_plans_to_src/231_correction_plan_serializer.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "MoveToLayer skipped (not allowlisted): move_serialize_correction_plans_to_src/231_correction_plan_serializer.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_serialize_correction_plans_to_src/231_correction_plan_serializer.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_serialize_correction_plans_to_src/231_correction_plan_serializer.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    }
+  ],
+  "summary": {
+    "total_actions": 19,
+    "applied": 19,
+    "failed": 0,
+    "manual_review": 0,
+    "skipped": 0,
+    "total_diffs": 0
+  },
+  "verification_report": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/docs/97_correction_intelligence/slice_one_per_prefix/executor_verification_results.json",
+  "rollback_log": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/docs/97_correction_intelligence/slice_one_per_prefix/executor_rollback_log.json",
+  "diff_report": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/docs/97_correction_intelligence/slice_one_per_prefix/executor_diff_report.json",
+  "input_report": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/docs/97_correction_intelligence/slice_one_per_prefix/executor_input_report.json"
+}

@@ -1,0 +1,5 @@
+directory_cohesion=1.00
+ordering_correctness=100.0
+avg_function_cohesion=0.77
+rename_ops_needed=0
+function_relocations=20

@@ -1,0 +1,1161 @@
+{
+  "policies": [
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/030_is_cfg_test_item.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/040_is_cfg_test_item.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/040_classify_symbol.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/050_classify_symbol.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/040_refactor_constraints.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/060_refactor_constraints.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/050_scc_compressor.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/070_scc_compressor.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/060_module_resolution.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/080_module_resolution.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/070_layer_inference.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/090_layer_inference.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/080_cluster_011.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/100_cluster_011.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/090_fixpoint_solver.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/110_fixpoint_solver.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/100_dependency.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/120_dependency.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/110_structural_detector.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/130_structural_detector.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/120_cluster_006.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/140_cluster_006.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/130_semantic_detector.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/150_semantic_detector.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/140_layer_core.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/160_layer_core.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/150_path_detector.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/170_path_detector.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/160_invariant_integrator.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/180_invariant_integrator.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/170_layer_utilities.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_layer_utilities.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/180_invariant_reporter.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_invariant_reporter.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_conscience_graph.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/210_conscience_graph.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_action_validator.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/220_action_validator.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/210_agent_conscience.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/230_agent_conscience.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/211_dead_code_doc_comment_scanner.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/240_dead_code_doc_comment_scanner.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/220_utilities.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/250_utilities.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/230_dead_code_attribute_parser.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/260_dead_code_attribute_parser.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/240_types.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/270_types.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/250_cohesion_analyzer.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/280_cohesion_analyzer.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/260_directory_analyzer.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/290_directory_analyzer.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/270_control_flow.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/300_control_flow.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/280_file_ordering.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/310_file_ordering.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/290_julia_parser.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/320_julia_parser.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/300_rust_parser.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/330_rust_parser.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/310_dot_exporter.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/340_dot_exporter.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/320_file_gathering.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/350_file_gathering.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/330_markdown_report.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/360_markdown_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/340_main.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/370_main.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/350_agent_cli.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/380_agent_cli.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/360_lib.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/390_lib.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/370_dead_code_types.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/400_dead_code_types.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/380_dead_code_doc_comment_parser.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/410_dead_code_doc_comment_parser.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/390_dead_code_call_graph.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/420_dead_code_call_graph.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/400_dead_code_intent.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/430_dead_code_intent.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/410_dead_code_test_boundaries.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/440_dead_code_test_boundaries.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/420_dead_code_entrypoints.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/450_dead_code_entrypoints.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/430_dead_code_classifier.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/460_dead_code_classifier.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/440_dead_code_confidence.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/470_dead_code_confidence.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/450_dead_code_actions.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/480_dead_code_actions.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/460_correction_plan_types.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/490_correction_plan_types.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/470_dead_code_report.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/500_dead_code_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/480_dead_code_filter.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/510_dead_code_filter.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/490_verification_policy_types.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/520_verification_policy_types.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/500_dead_code_cli.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/530_dead_code_cli.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/510_quality_delta_types.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/540_quality_delta_types.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/520_dead_code_policy.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/550_dead_code_policy.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/530_violation_predictor.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/560_violation_predictor.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/540_dead_code_report_split.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/570_dead_code_report_split.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/550_tier_classifier.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/580_tier_classifier.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/560_confidence_scorer.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/590_confidence_scorer.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/570_correction_plan_generator.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/600_correction_plan_generator.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/580_verification_scope_planner.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/610_verification_scope_planner.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/590_rollback_criteria_builder.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/620_rollback_criteria_builder.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/600_quality_delta_calculator.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/630_quality_delta_calculator.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/610_action_impact_estimator.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/640_action_impact_estimator.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/620_correction_plan_serializer.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/650_correction_plan_serializer.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/630_verification_policy_emitter.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/660_verification_policy_emitter.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/640_correction_intelligence_report.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/670_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/admission_composition_artifact.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/680_admission_composition_artifact.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/batch_admission.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/690_batch_admission.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/composition_rule.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/700_composition_rule.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/effect_signature_schema.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/710_effect_signature_schema.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    }
+  ],
+  "version": "1.0"
+}

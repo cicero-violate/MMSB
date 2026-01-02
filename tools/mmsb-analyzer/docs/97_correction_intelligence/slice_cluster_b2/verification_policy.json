@@ -1,0 +1,43 @@
+{
+  "policies": [
+    {
+      "action_id": "move_emit_verification_policy_to_src/620_correction_plan_serializer.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/620_correction_plan_serializer.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_write_intelligence_outputs_to_src/620_correction_plan_serializer.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/620_correction_plan_serializer.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    }
+  ],
+  "version": "1.0"
+}

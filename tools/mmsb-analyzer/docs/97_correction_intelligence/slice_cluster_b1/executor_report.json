@@ -1,0 +1,827 @@
+{
+  "version": "1.0",
+  "timestamp": "2026-01-01T05:00:53.930718634+00:00",
+  "actions": [
+    {
+      "action_id": "move_find_element_file_to_src/640_correction_intelligence_report.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [
+        "MoveToLayer find_element_file -> src/640_correction_intelligence_report.rs",
+        "MoveToLayerInvariant I2 passed: find_element_file"
+      ],
+      "errors": [],
+      "warnings": [
+        "EnsureImports found no missing imports for find_element_file",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_find_element_file_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_find_element_file_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_symbol_exists_to_src/640_correction_intelligence_report.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [
+        "MoveToLayer symbol_exists -> src/640_correction_intelligence_report.rs",
+        "MoveToLayerInvariant I2 passed: symbol_exists"
+      ],
+      "errors": [],
+      "warnings": [
+        "EnsureImports found no missing imports for symbol_exists",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_symbol_exists_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_symbol_exists_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_move_violates_invariant_to_src/640_correction_intelligence_report.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [
+        "MoveToLayer move_violates_invariant -> src/640_correction_intelligence_report.rs",
+        "MoveToLayerInvariant I2 passed: move_violates_invariant"
+      ],
+      "errors": [],
+      "warnings": [
+        "EnsureImports found no missing imports for move_violates_invariant",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_move_violates_invariant_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_move_violates_invariant_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_average_confidence_to_src/640_correction_intelligence_report.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [
+        "MoveToLayer average_confidence -> src/640_correction_intelligence_report.rs",
+        "MoveToLayerInvariant I2 passed: average_confidence"
+      ],
+      "errors": [],
+      "warnings": [
+        "EnsureImports found no missing imports for average_confidence",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_average_confidence_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_average_confidence_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_estimate_fix_time_to_src/640_correction_intelligence_report.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [
+        "MoveToLayer estimate_fix_time -> src/640_correction_intelligence_report.rs",
+        "MoveToLayerInvariant I2 passed: estimate_fix_time"
+      ],
+      "errors": [],
+      "warnings": [
+        "EnsureImports found no missing imports for estimate_fix_time",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_estimate_fix_time_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_estimate_fix_time_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_action_symbol_to_src/640_correction_intelligence_report.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [
+        "MoveToLayer action_symbol -> src/640_correction_intelligence_report.rs",
+        "MoveToLayerInvariant I2 passed: action_symbol"
+      ],
+      "errors": [],
+      "warnings": [
+        "EnsureImports found no missing imports for action_symbol",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_action_symbol_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_action_symbol_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_action_function_to_src/640_correction_intelligence_report.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [
+        "MoveToLayer action_function -> src/640_correction_intelligence_report.rs",
+        "MoveToLayerInvariant I2 passed: action_function"
+      ],
+      "errors": [],
+      "warnings": [
+        "EnsureImports found no missing imports for action_function",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_action_function_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_action_function_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_action_module_path_to_src/640_correction_intelligence_report.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [
+        "MoveToLayer action_module_path -> src/640_correction_intelligence_report.rs",
+        "MoveToLayerInvariant I2 passed: action_module_path"
+      ],
+      "errors": [],
+      "warnings": [
+        "EnsureImports found no missing imports for action_module_path",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_action_module_path_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_action_module_path_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_action_refs_to_src/640_correction_intelligence_report.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [
+        "MoveToLayer action_refs -> src/640_correction_intelligence_report.rs",
+        "MoveToLayerInvariant I2 passed: action_refs"
+      ],
+      "errors": [],
+      "warnings": [
+        "EnsureImports found no missing imports for action_refs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_action_refs_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_action_refs_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_action_target_layer_to_src/640_correction_intelligence_report.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [
+        "MoveToLayer action_target_layer -> src/640_correction_intelligence_report.rs",
+        "MoveToLayerInvariant I2 passed: action_target_layer"
+      ],
+      "errors": [],
+      "warnings": [
+        "EnsureImports found no missing imports for action_target_layer",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_action_target_layer_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_action_target_layer_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_action_visibility_to_src/640_correction_intelligence_report.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [
+        "MoveToLayer action_visibility -> src/640_correction_intelligence_report.rs",
+        "MoveToLayerInvariant I2 passed: action_visibility"
+      ],
+      "errors": [],
+      "warnings": [
+        "EnsureImports found no missing imports for action_visibility",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_action_visibility_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_action_visibility_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_affected_files_to_src/640_correction_intelligence_report.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [
+        "MoveToLayer affected_files -> src/640_correction_intelligence_report.rs",
+        "MoveToLayerInvariant I2 passed: affected_files"
+      ],
+      "errors": [],
+      "warnings": [
+        "EnsureImports found no missing imports for affected_files",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_affected_files_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_affected_files_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_action_module_to_src/640_correction_intelligence_report.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [
+        "MoveToLayer action_module -> src/640_correction_intelligence_report.rs",
+        "MoveToLayerInvariant I2 passed: action_module"
+      ],
+      "errors": [],
+      "warnings": [
+        "EnsureImports found no missing imports for action_module",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_action_module_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_action_module_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_estimate_verification_time_to_src/640_correction_intelligence_report.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [
+        "MoveToLayer estimate_verification_time -> src/640_correction_intelligence_report.rs",
+        "MoveToLayerInvariant I2 passed: estimate_verification_time"
+      ],
+      "errors": [],
+      "warnings": [
+        "EnsureImports found no missing imports for estimate_verification_time",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_estimate_verification_time_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_estimate_verification_time_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_extract_critical_tests_to_src/640_correction_intelligence_report.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [
+        "MoveToLayer extract_critical_tests -> src/640_correction_intelligence_report.rs",
+        "MoveToLayerInvariant I2 passed: extract_critical_tests"
+      ],
+      "errors": [],
+      "warnings": [
+        "EnsureImports found no missing imports for extract_critical_tests",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_extract_critical_tests_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_extract_critical_tests_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_calculate_quality_delta_to_src/640_correction_intelligence_report.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [
+        "MoveToLayer calculate_quality_delta -> src/640_correction_intelligence_report.rs",
+        "MoveToLayerInvariant I2 passed: calculate_quality_delta"
+      ],
+      "errors": [],
+      "warnings": [
+        "EnsureImports found no missing imports for calculate_quality_delta",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_calculate_quality_delta_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_calculate_quality_delta_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_simulate_action_to_src/640_correction_intelligence_report.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [
+        "MoveToLayer simulate_action -> src/640_correction_intelligence_report.rs",
+        "MoveToLayerInvariant I2 passed: simulate_action"
+      ],
+      "errors": [],
+      "warnings": [
+        "EnsureImports found no missing imports for simulate_action",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_simulate_action_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_simulate_action_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_find_callers_to_src/640_correction_intelligence_report.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [
+        "MoveToLayer find_callers -> src/640_correction_intelligence_report.rs",
+        "MoveToLayerInvariant I2 passed: find_callers"
+      ],
+      "errors": [],
+      "warnings": [
+        "EnsureImports found no missing imports for find_callers",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_find_callers_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_find_callers_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_find_reference_files_to_src/640_correction_intelligence_report.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [
+        "MoveToLayer find_reference_files -> src/640_correction_intelligence_report.rs",
+        "MoveToLayerInvariant I2 passed: find_reference_files"
+      ],
+      "errors": [],
+      "warnings": [
+        "EnsureImports found no missing imports for find_reference_files",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_find_reference_files_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_find_reference_files_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_generate_correction_plan_to_src/640_correction_intelligence_report.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [
+        "MoveToLayer generate_correction_plan -> src/640_correction_intelligence_report.rs",
+        "MoveToLayerInvariant I2 passed: generate_correction_plan"
+      ],
+      "errors": [],
+      "warnings": [
+        "EnsureImports found no missing imports for generate_correction_plan",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_generate_correction_plan_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_generate_correction_plan_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_plan_verification_scope_to_src/640_correction_intelligence_report.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [
+        "MoveToLayer plan_verification_scope -> src/640_correction_intelligence_report.rs",
+        "MoveToLayerInvariant I2 passed: plan_verification_scope"
+      ],
+      "errors": [],
+      "warnings": [
+        "EnsureImports found no missing imports for plan_verification_scope",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_plan_verification_scope_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_plan_verification_scope_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_build_rollback_criteria_to_src/640_correction_intelligence_report.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [
+        "MoveToLayer build_rollback_criteria -> src/640_correction_intelligence_report.rs",
+        "MoveToLayerInvariant I2 passed: build_rollback_criteria"
+      ],
+      "errors": [],
+      "warnings": [
+        "EnsureImports found no missing imports for build_rollback_criteria",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_build_rollback_criteria_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_build_rollback_criteria_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_estimate_impact_to_src/640_correction_intelligence_report.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [
+        "MoveToLayer estimate_impact -> src/640_correction_intelligence_report.rs",
+        "MoveToLayerInvariant I2 passed: estimate_impact"
+      ],
+      "errors": [],
+      "warnings": [
+        "EnsureImports found no missing imports for estimate_impact",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_estimate_impact_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_estimate_impact_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_predict_violations_to_src/640_correction_intelligence_report.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [
+        "MoveToLayer predict_violations -> src/640_correction_intelligence_report.rs",
+        "MoveToLayerInvariant I2 passed: predict_violations"
+      ],
+      "errors": [],
+      "warnings": [
+        "EnsureImports found no missing imports for predict_violations",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_predict_violations_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_predict_violations_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_generate_intelligence_report_to_src/640_correction_intelligence_report.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [
+        "MoveToLayer generate_intelligence_report -> src/640_correction_intelligence_report.rs",
+        "MoveToLayerInvariant I2 passed: generate_intelligence_report"
+      ],
+      "errors": [],
+      "warnings": [
+        "EnsureImports found no missing imports for generate_intelligence_report",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_generate_intelligence_report_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_generate_intelligence_report_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [
+        {
+          "path": "tools/mmsb-analyzer/src/530_violation_predictor.rs",
+          "diff": "--- original\n+++ modified\n@@ -1,20 +1,7 @@\n #![allow(dead_code)]\n //! Predict violations for refactor actions.\n\n-use crate::correction_plan_types::{\n-    RefactorAction,\n-};\n-use crate::correction_intelligence_report::{\n-    augment_path_coherence_strategies,\n-    compute_summary,\n-    fill_prediction_confidence,\n-    CorrectionIntelligenceReport,\n-    IntelligenceState,\n-};\n-use crate::correction_plan_generator::generate_correction_plan;\n-use crate::rollback_criteria_builder::build_rollback_criteria;\n-use crate::verification_scope_planner::plan_verification_scope;\n-use crate::action_impact_estimator::{estimate_impact, AnalysisState as ImpactState};\n+#[allow(unused_imports)] pub use crate::correction_intelligence_report::generate_intelligence_report;\n #[allow(unused_imports)] pub use crate::correction_intelligence_report::predict_violations;\n\n\n@@ -29,44 +16,4 @@\n\n\n\n-pub fn generate_intelligence_report(\n-    actions: &[RefactorAction],\n-    state: &IntelligenceState<'_>,\n-) -> CorrectionIntelligenceReport {\n-    let mut plans = Vec::new();\n-    let mut policies = Vec::new();\n-    let mut criteria = Vec::new();\n-    let mut deltas = Vec::new();\n\n-    for action in actions {\n-        let mut predictions =\n-            predict_violations(action, state.invariants, state.call_graph, state.elements);\n-        fill_prediction_confidence(&mut predictions);\n-        let mut plan = generate_correction_plan(action, &predictions);\n-        augment_path_coherence_strategies(&mut plan, action, &state.root);\n-        let policy = plan_verification_scope(action, &plan);\n-        let rollback = build_rollback_criteria(action, &plan);\n-        let delta = estimate_impact(action, &ImpactState {\n-            metrics: state.metrics.clone(),\n-        });\n-\n-        plans.push(plan);\n-        policies.push(policy);\n-        criteria.push(rollback);\n-        deltas.push(delta);\n-    }\n-\n-    let summary = compute_summary(&plans, &deltas);\n-\n-    CorrectionIntelligenceReport {\n-        version: \"1.0\".to_string(),\n-        timestamp: chrono::Utc::now().to_rfc3339(),\n-        project_root: state.root.clone(),\n-        actions_analyzed: actions.len(),\n-        correction_plans: plans,\n-        verification_policies: policies,\n-        rollback_criteria: criteria,\n-        quality_deltas: deltas,\n-        summary,\n-    }\n-}\n"
+        },
+        {
+          "path": "tools/mmsb-analyzer/src/640_correction_intelligence_report.rs",
+          "diff": "--- original\n+++ modified\n@@ -20,9 +20,9 @@\n\n use crate::invariant_types::InvariantAnalysisResult;\n use crate::types::{AnalysisResult, CallGraphNode, CodeElement};\n+use crate::action_impact_estimator::AnalysisState as ImpactState;\n\n #[allow(unused_imports)] pub use crate::correction_plan_serializer::write_intelligence_outputs_at;\n-#[allow(unused_imports)] pub use crate::violation_predictor::generate_intelligence_report;\n use crate::action_impact_estimator::AnalysisState;\n use crate::correction_plan_types::VisibilityPlanOption;\n use crate::tier_classifier::classify_tier;\n@@ -995,3 +995,45 @@\n     let simulated = simulate_action(action, current_state);\n     calculate_quality_delta(action, &current_state.metrics, &simulated.metrics)\n }\n+\n+pub fn generate_intelligence_report(\n+    actions: &[RefactorAction],\n+    state: &IntelligenceState<'_>,\n+) -> CorrectionIntelligenceReport {\n+    let mut plans = Vec::new();\n+    let mut policies = Vec::new();\n+    let mut criteria = Vec::new();\n+    let mut deltas = Vec::new();\n+\n+    for action in actions {\n+        let mut predictions =\n+            predict_violations(action, state.invariants, state.call_graph, state.elements);\n+        fill_prediction_confidence(&mut predictions);\n+        let mut plan = generate_correction_plan(action, &predictions);\n+        augment_path_coherence_strategies(&mut plan, action, &state.root);\n+        let policy = plan_verification_scope(action, &plan);\n+        let rollback = build_rollback_criteria(action, &plan);\n+        let delta = estimate_impact(action, &ImpactState {\n+            metrics: state.metrics.clone(),\n+        });\n+\n+        plans.push(plan);\n+        policies.push(policy);\n+        criteria.push(rollback);\n+        deltas.push(delta);\n+    }\n+\n+    let summary = compute_summary(&plans, &deltas);\n+\n+    CorrectionIntelligenceReport {\n+        version: \"1.0\".to_string(),\n+        timestamp: chrono::Utc::now().to_rfc3339(),\n+        project_root: state.root.clone(),\n+        actions_analyzed: actions.len(),\n+        correction_plans: plans,\n+        verification_policies: policies,\n+        rollback_criteria: criteria,\n+        quality_deltas: deltas,\n+        summary,\n+    }\n+}\n"
+        }
+      ],
+      "diff_count": 2
+    }
+  ],
+  "summary": {
+    "total_actions": 25,
+    "applied": 25,
+    "failed": 0,
+    "manual_review": 0,
+    "skipped": 0,
+    "total_diffs": 2
+  },
+  "verification_report": "tools/mmsb-analyzer/docs/97_correction_intelligence/slice_cluster_b1/executor_verification_results.json",
+  "rollback_log": "tools/mmsb-analyzer/docs/97_correction_intelligence/slice_cluster_b1/executor_rollback_log.json",
+  "diff_report": "tools/mmsb-analyzer/docs/97_correction_intelligence/slice_cluster_b1/executor_diff_report.json",
+  "input_report": "tools/mmsb-analyzer/docs/97_correction_intelligence/slice_cluster_b1/executor_input_report.json"
+}

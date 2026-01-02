@@ -1,0 +1,846 @@
+{
+  "version": "1.0",
+  "timestamp": "2026-01-01T02:51:48.094010971+00:00",
+  "actions": [
+    {
+      "action_id": "adjust_visibility_build_directory_entry_map_in_src/000_cluster_001.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_collect_naming_warnings_in_src/000_cluster_001.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_layer_constrained_sort_in_src/000_cluster_001.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_topo_sort_within_in_src/000_cluster_001.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_detect_layer_in_src/000_cluster_001.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_rust_entry_paths_in_src/000_cluster_001.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_order_rust_files_by_dependency_in_src/000_cluster_001.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_collect_julia_dependencies_in_src/000_cluster_001.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_julia_entry_paths_in_src/000_cluster_001.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_build_file_layers_in_src/000_cluster_001.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_gather_julia_files_in_src/000_cluster_001.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_topological_sort_in_src/000_cluster_001.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_ordered_by_name_in_src/000_cluster_001.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_build_entries_in_src/000_cluster_001.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_analyze_file_ordering_in_src/000_cluster_001.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_naming_score_for_file_in_src/000_cluster_001.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_detect_cycles_in_src/000_cluster_001.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_detect_violations_in_src/000_cluster_001.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_export_complete_program_dot_in_src/000_cluster_001.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_order_julia_files_by_dependency_in_src/000_cluster_001.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_run_analysis_in_src/000_cluster_001.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_build_result_in_src/010_cluster_008.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_is_layer_violation_in_src/010_cluster_008.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_compare_dir_layers_in_src/010_cluster_008.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_compare_path_components_in_src/010_cluster_008.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_layer_adheres_in_src/010_cluster_008.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_structural_layer_value_in_src/010_cluster_008.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_detect_layer_violation_in_src/010_cluster_008.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_parse_cluster_members_in_src/010_cluster_008.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_is_core_module_path_in_src/010_cluster_008.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_cluster_target_path_in_src/010_cluster_008.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_collect_cluster_plans_in_src/010_cluster_008.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_node_style_in_src/010_cluster_008.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_cyclomatic_complexity_in_src/010_cluster_008.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_structural_cmp_in_src/010_cluster_008.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_sort_structural_items_in_src/010_cluster_008.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_gather_rust_files_in_src/020_cluster_010.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_classify_symbol_in_src/040_classify_symbol.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_generate_constraints_in_src/040_refactor_constraints.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_normalize_module_name_in_src/060_cluster_010.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_resolve_module_in_src/060_cluster_010.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_contains_tools_in_src/060_cluster_010.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_build_module_root_map_in_src/060_cluster_010.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_extract_rust_dependencies_in_src/060_cluster_010.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_extract_julia_dependencies_in_src/060_cluster_010.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_build_dependency_map_in_src/060_cluster_010.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_extract_dependencies_in_src/060_cluster_010.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_build_module_map_in_src/080_cluster_011.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_resolve_path_in_src/080_cluster_011.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_build_directory_dag_in_src/080_cluster_011.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_build_file_dependency_graph_in_src/080_cluster_011.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_export_program_cfg_to_path_in_src/080_cluster_011.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_build_file_dag_in_src/080_cluster_011.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_collect_roots_in_src/100_dependency.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_layer_prefix_value_in_src/120_cluster_006.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_order_directories_in_src/120_cluster_006.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_common_root_in_src/120_cluster_006.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_strip_numeric_prefix_in_src/120_cluster_006.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_generate_canonical_name_in_src/120_cluster_006.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_collect_directory_moves_in_src/120_cluster_006.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_compute_cohesion_score_in_src/120_cluster_006.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_resolve_source_root_in_src/170_layer_utilities.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_allow_analysis_dir_in_src/170_layer_utilities.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_run_dead_code_pipeline_in_src/170_layer_utilities.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_export_json_in_src/180_invariant_reporter.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_export_constraints_json_in_src/180_invariant_reporter.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_generate_conscience_map_in_src/190_conscience_graph.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_validate_action_in_src/200_action_validator.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_compress_path_in_src/220_utilities.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_collect_directory_files_in_src/220_utilities.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_path_common_prefix_len_in_src/220_utilities.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_resolve_required_layer_path_in_src/220_utilities.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_compute_move_metrics_in_src/220_utilities.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_collect_move_items_in_src/220_utilities.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_write_structural_batches_in_src/220_utilities.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_write_cluster_batches_in_src/220_utilities.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_parse_mmsb_latent_attr_in_src/230_dead_code_attribute_parser.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_scan_file_attributes_in_src/230_dead_code_attribute_parser.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_extract_attribute_value_in_src/230_dead_code_attribute_parser.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_scan_intent_tags_in_src/230_dead_code_attribute_parser.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_scan_doc_comments_in_src/230_dead_code_attribute_parser.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_detect_intent_signals_in_src/230_dead_code_attribute_parser.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_detect_test_modules_in_src/230_dead_code_attribute_parser.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_detect_test_symbols_in_src/230_dead_code_attribute_parser.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_parallel_build_file_dag_in_src/280_file_ordering.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_run_agent_cli_in_src/350_agent_cli.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_detect_latent_markers_in_src/380_dead_code_doc_comment_parser.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_merge_doc_intent_in_src/380_dead_code_doc_comment_parser.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_extract_doc_markers_in_src/380_dead_code_doc_comment_parser.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_item_name_in_src/380_dead_code_doc_comment_parser.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_item_attrs_in_src/380_dead_code_doc_comment_parser.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_build_call_graph_in_src/390_dead_code_call_graph.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_build_reverse_call_graph_in_src/390_dead_code_call_graph.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_compute_reachability_in_src/390_dead_code_call_graph.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_is_reachable_in_src/390_dead_code_call_graph.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_is_test_only_in_src/390_dead_code_call_graph.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_check_planned_directory_in_src/400_dead_code_intent.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_merge_intent_sources_in_src/400_dead_code_intent.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_planned_directory_intent_in_src/400_dead_code_intent.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_collect_symbols_in_src/400_dead_code_intent.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_collect_entrypoints_in_src/420_dead_code_entrypoints.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_collect_exports_in_src/420_dead_code_entrypoints.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_is_public_api_in_src/420_dead_code_entrypoints.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_is_reachable_in_src/430_dead_code_classifier.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_assign_confidence_in_src/440_dead_code_confidence.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_recommend_action_in_src/450_dead_code_actions.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_build_report_in_src/470_dead_code_report.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_write_report_in_src/470_dead_code_report.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_build_basic_report_in_src/470_dead_code_report.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_write_outputs_in_src/470_dead_code_report.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_filter_dead_code_elements_in_src/480_dead_code_filter.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_should_exclude_from_analysis_in_src/480_dead_code_filter.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_merge_intent_map_in_src/500_dead_code_cli.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_reason_for_category_in_src/500_dead_code_cli.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_is_test_path_in_src/500_dead_code_cli.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_load_policy_in_src/520_dead_code_policy.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_parse_policy_in_src/520_dead_code_policy.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_predict_violations_in_src/530_violation_predictor.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_generate_intelligence_report_in_src/530_violation_predictor.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_write_summary_markdown_in_src/540_dead_code_report_split.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_write_plan_markdown_in_src/540_dead_code_report_split.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_classify_tier_in_src/550_tier_classifier.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_compute_confidence_in_src/560_confidence_scorer.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_generate_correction_plan_in_src/570_correction_plan_generator.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_plan_verification_scope_in_src/580_verification_scope_planner.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_build_rollback_criteria_in_src/590_rollback_criteria_builder.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_calculate_quality_delta_in_src/600_quality_delta_calculator.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_estimate_impact_in_src/600_quality_delta_calculator.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_simulate_action_in_src/610_action_impact_estimator.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_serialize_correction_plan_in_src/620_correction_plan_serializer.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_serialize_correction_plans_in_src/620_correction_plan_serializer.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_write_intelligence_outputs_at_in_src/620_correction_plan_serializer.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_emit_verification_policy_in_src/630_verification_policy_emitter.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_build_state_in_src/640_correction_intelligence_report.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_write_intelligence_outputs_in_src/640_correction_intelligence_report.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_filter_path_coherence_report_in_src/640_correction_intelligence_report.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_filter_visibility_report_in_src/640_correction_intelligence_report.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_augment_path_coherence_strategies_in_src/640_correction_intelligence_report.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_compute_summary_in_src/640_correction_intelligence_report.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "adjust_visibility_fill_prediction_confidence_in_src/640_correction_intelligence_report.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    }
+  ]
+}

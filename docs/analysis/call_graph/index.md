@@ -6,8 +6,8 @@ This document shows the **interprocedural call graph** - which functions call wh
 
 ## Call Graph Statistics
 
-- Total functions: 209
-- Total function calls: 188
+- Total functions: 211
+- Total function calls: 190
 - Maximum call depth: 4
 - Leaf functions (no outgoing calls): 123
 
@@ -55,6 +55,7 @@ graph TD
     MMSB_src_ffi_rs__mmsb_tlog_new["MMSB/src/ffi.rs::mmsb_tlog_new"]
     MMSB_src_ffi_rs__mmsb_tlog_free["MMSB/src/ffi.rs::mmsb_tlog_free"]
     MMSB_src_ffi_rs__mmsb_tlog_append["MMSB/src/ffi.rs::mmsb_tlog_append"]
+    MMSB_src_ffi_rs__mmsb_tlog_clear_entries["MMSB/src/ffi.rs::mmsb_tlog_clear_entries"]
     MMSB_src_ffi_rs__mmsb_checkpoint_write["MMSB/src/ffi.rs::mmsb_checkpoint_write"]
     MMSB_src_ffi_rs__mmsb_checkpoint_load["MMSB/src/ffi.rs::mmsb_checkpoint_load"]
     MMSB_src_ffi_rs__mmsb_tlog_reader_new["MMSB/src/ffi.rs::mmsb_tlog_reader_new"]
@@ -62,6 +63,7 @@ graph TD
     MMSB_src_ffi_rs__mmsb_tlog_reader_next["MMSB/src/ffi.rs::mmsb_tlog_reader_next"]
     MMSB_src_ffi_rs__mmsb_tlog_summary["MMSB/src/ffi.rs::mmsb_tlog_summary"]
     MMSB_src_ffi_rs__mmsb_allocator_new["MMSB/src/ffi.rs::mmsb_allocator_new"]
+    MMSB_src_ffi_rs__mmsb_allocator_clear["MMSB/src/ffi.rs::mmsb_allocator_clear"]
     MMSB_src_ffi_rs__mmsb_allocator_free["MMSB/src/ffi.rs::mmsb_allocator_free"]
     MMSB_src_ffi_rs__mmsb_allocator_allocate["MMSB/src/ffi.rs::mmsb_allocator_allocate"]
     MMSB_src_ffi_rs__mmsb_allocator_release["MMSB/src/ffi.rs::mmsb_allocator_release"]
@@ -268,6 +270,7 @@ graph TD
     MMSB_src_ffi_rs__mmsb_tlog_append --> MMSB_src_ffi_rs__set_last_error
     MMSB_src_ffi_rs__mmsb_tlog_append --> MMSB_src_ffi_rs__set_last_error
     MMSB_src_ffi_rs__mmsb_tlog_append --> MMSB_src_ffi_rs__log_error_code
+    MMSB_src_ffi_rs__mmsb_tlog_clear_entries --> MMSB_src_ffi_rs__set_last_error
     MMSB_src_ffi_rs__mmsb_checkpoint_write --> MMSB_src_ffi_rs__set_last_error
     MMSB_src_ffi_rs__mmsb_checkpoint_write --> MMSB_src_ffi_rs__set_last_error
     MMSB_src_ffi_rs__mmsb_checkpoint_write --> MMSB_src_01_page_checkpoint_rs__write_checkpoint
@@ -288,6 +291,7 @@ graph TD
     MMSB_src_ffi_rs__mmsb_tlog_summary --> MMSB_src_01_page_tlog_rs__summary
     MMSB_src_ffi_rs__mmsb_tlog_summary --> MMSB_src_ffi_rs__set_last_error
     MMSB_src_ffi_rs__mmsb_tlog_summary --> MMSB_src_ffi_rs__log_error_code
+    MMSB_src_ffi_rs__mmsb_allocator_clear --> MMSB_src_ffi_rs__set_last_error
     MMSB_src_ffi_rs__mmsb_allocator_allocate --> MMSB_src_ffi_rs__set_last_error
     MMSB_src_ffi_rs__mmsb_allocator_allocate --> MMSB_src_ffi_rs__set_last_error
     MMSB_src_ffi_rs__mmsb_allocator_allocate --> MMSB_src_ffi_rs__set_last_error

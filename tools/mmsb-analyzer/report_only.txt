@@ -1,0 +1,36 @@
+REFACTORING TODO LIST
+
+SUMMARY:
+  Phase 1 (Correctness blockers): 0
+  Phase 2 (Cluster extractions): 7
+  Phase 3 (Structural constraints): 10
+  Phase 4 (Cohesion improvements): 4
+  Phase 5 (Ordering & renames): 0
+
+PHASE 2: CLUSTER EXTRACTION
+  1. Create cluster file `src/070_layer_utilities.rs` with 3 functions (cohesion 1.00)
+  2. Create cluster file `src/010_cluster_008.rs` with 2 functions (cohesion 0.07)
+  3. Move `gather_julia_files` from `src/000_cluster_001.rs`
+  4. Move `resolve_source_root` from `src/020_cluster_010.rs`
+  5. Move `export_program_cfg_to_path` from `src/030_cluster_011.rs`
+  6. Move `layer_constrained_sort` from `src/000_cluster_001.rs`
+  7. Move `topo_sort_within` from `src/000_cluster_001.rs`
+
+PHASE 3: STRUCTURAL CONSTRAINTS
+  1. `order_julia_files_by_dependency` from `src/020_cluster_010.rs` to `src/000_cluster_001.rs`: layer violation 020_cluster_010.rs -> 000_cluster_001.rs
+  2. `run_analysis` from `src/070_layer_utilities.rs` to `src/000_cluster_001.rs`: layer violation 070_layer_utilities.rs -> 000_cluster_001.rs
+  3. `sort_structural_items` from `src/060_layer_core.rs` to `src/010_cluster_008.rs`: layer violation 060_layer_core.rs -> 010_cluster_008.rs
+  4. `structural_cmp` from `src/060_layer_core.rs` to `src/010_cluster_008.rs`: layer violation 060_layer_core.rs -> 010_cluster_008.rs
+  5. `gather_rust_files` from `src/070_layer_utilities.rs` to `src/020_cluster_010.rs`: layer violation 070_layer_utilities.rs -> 020_cluster_010.rs
+  6. Move `order_julia_files_by_dependency` from `src/020_cluster_010.rs` (impact 0, benefit/cost 0.50, touches 2 files; no external callers)
+  7. Move `run_analysis` from `src/070_layer_utilities.rs` (impact 0, benefit/cost 0.33, touches 3 files; no external callers)
+  8. Move `sort_structural_items` from `src/060_layer_core.rs` (impact 0, benefit/cost 0.50, touches 2 files; no external callers)
+  9. Move `structural_cmp` from `src/060_layer_core.rs` (impact 0, benefit/cost 0.50, touches 2 files; no external callers)
+  10. Move `gather_rust_files` from `src/070_layer_utilities.rs` (impact 0, benefit/cost 0.50, touches 2 files; no external callers)
+
+PHASE 4: COHESION IMPROVEMENTS
+  1. `detect_layer_violations` from `src/010_cluster_008.rs` to `-`: cohesion 0.35 below threshold 0.60 (impact 0.25)
+  2. `build_directory_entry_map` from `src/000_cluster_001.rs` to `-`: cohesion 0.49 below threshold 0.60 (impact 0.11)
+  3. `cluster_target_path` from `src/010_cluster_008.rs` to `-`: cohesion 0.43 below threshold 0.60 (impact 0.17)
+  4. `layer_constrained_sort` from `src/000_cluster_001.rs` to `-`: cohesion 0.57 below threshold 0.60 (impact 0.03)
+

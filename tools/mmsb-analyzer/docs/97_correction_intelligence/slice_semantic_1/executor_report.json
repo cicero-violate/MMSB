@@ -1,0 +1,250 @@
+{
+  "version": "1.0",
+  "timestamp": "2025-12-31T08:22:39.597829290+00:00",
+  "actions": [
+    {
+      "action_id": "move_test_detect_layer_violations_none_to_src/010_cluster_008.rs",
+      "phase": 3,
+      "status": "failed",
+      "applied_strategies": [],
+      "errors": [
+        "EnsureImports: function test_detect_layer_violations_none signature not found in target"
+      ],
+      "warnings": [
+        "MoveToLayer skipped for test-scoped function test_detect_layer_violations_none in \"/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/020_layer_inference.rs\""
+      ],
+      "dependency_plan": null,
+      "verification_results": [],
+      "rollback_applied": true,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_test_check_move_allowed_to_src/010_refactor_constraints.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "MoveToLayer skipped for test-scoped function test_check_move_allowed in \"/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/010_refactor_constraints.rs\"",
+        "EnsureImports found no missing imports for test_check_move_allowed",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_test_conscience_blocks_invalid_move_to_src/082_conscience_graph.rs",
+      "phase": 3,
+      "status": "failed",
+      "applied_strategies": [],
+      "errors": [
+        "EnsureImports: function test_conscience_blocks_invalid_move signature not found in target"
+      ],
+      "warnings": [
+        "MoveToLayer skipped for test-scoped function test_conscience_blocks_invalid_move in \"/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/085_agent_conscience.rs\""
+      ],
+      "dependency_plan": null,
+      "verification_results": [],
+      "rollback_applied": true,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_test_conscience_allows_valid_action_to_src/082_conscience_graph.rs",
+      "phase": 3,
+      "status": "failed",
+      "applied_strategies": [],
+      "errors": [
+        "EnsureImports: function test_conscience_allows_valid_action signature not found in target"
+      ],
+      "warnings": [
+        "MoveToLayer skipped for test-scoped function test_conscience_allows_valid_action in \"/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/085_agent_conscience.rs\""
+      ],
+      "dependency_plan": null,
+      "verification_results": [],
+      "rollback_applied": true,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_test_query_allowed_actions_to_src/082_conscience_graph.rs",
+      "phase": 3,
+      "status": "failed",
+      "applied_strategies": [],
+      "errors": [
+        "EnsureImports: function test_query_allowed_actions signature not found in target"
+      ],
+      "warnings": [
+        "MoveToLayer skipped for test-scoped function test_query_allowed_actions in \"/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/085_agent_conscience.rs\""
+      ],
+      "dependency_plan": null,
+      "verification_results": [],
+      "rollback_applied": true,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_collect_refactor_actions_to_src/010_cluster_008.rs",
+      "phase": 3,
+      "status": "failed",
+      "applied_strategies": [],
+      "errors": [
+        "BundleMove permanently blocked: Policy: permanently blocked by design intent",
+        "EnsureImports: function collect_refactor_actions signature not found in target"
+      ],
+      "warnings": [
+        "MoveToLayer skipped for collect_refactor_actions: RequiresEnsureDependencies [collect_rename_items (fn; private) @ /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/180_report.rs; directory_moves_to_plan (fn; private) @ /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/180_report.rs; collect_cluster_items (fn; private) @ /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/180_report.rs; new (fn; private) @ /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/180_report.rs]"
+      ],
+      "dependency_plan": {
+        "levels": [
+          {
+            "level": 0,
+            "items": [
+              {
+                "name": "collect_refactor_actions",
+                "kind": "fn",
+                "visibility": "primary",
+                "path": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/180_report.rs"
+              }
+            ]
+          },
+          {
+            "level": 1,
+            "items": [
+              {
+                "name": "collect_rename_items",
+                "kind": "fn",
+                "visibility": "private",
+                "path": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/180_report.rs"
+              },
+              {
+                "name": "directory_moves_to_plan",
+                "kind": "fn",
+                "visibility": "private",
+                "path": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/180_report.rs"
+              },
+              {
+                "name": "collect_cluster_items",
+                "kind": "fn",
+                "visibility": "private",
+                "path": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/180_report.rs"
+              },
+              {
+                "name": "new",
+                "kind": "fn",
+                "visibility": "private",
+                "path": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/180_report.rs"
+              }
+            ]
+          },
+          {
+            "level": 2,
+            "items": [
+              {
+                "name": "cluster_priority",
+                "kind": "fn",
+                "visibility": "private",
+                "path": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/180_report.rs"
+              }
+            ]
+          }
+        ],
+        "options": [
+          {
+            "option": "Option A",
+            "title": "Move helper(s) together as a bundle",
+            "affected_symbols": [
+              "collect_refactor_actions",
+              "collect_rename_items",
+              "directory_moves_to_plan",
+              "collect_cluster_items",
+              "new",
+              "cluster_priority"
+            ],
+            "files": [
+              "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/180_report.rs"
+            ],
+            "visibility_delta": "none",
+            "blast_radius": "high (6 symbol(s), 1 file(s))"
+          },
+          {
+            "option": "Option B",
+            "title": "Widen visibility (pub(crate))",
+            "affected_symbols": [
+              "collect_refactor_actions",
+              "collect_rename_items",
+              "directory_moves_to_plan",
+              "collect_cluster_items",
+              "new",
+              "cluster_priority"
+            ],
+            "files": [
+              "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/180_report.rs"
+            ],
+            "visibility_delta": "private -> pub(crate)",
+            "blast_radius": "high (6 symbol(s), 1 file(s))"
+          },
+          {
+            "option": "Option C",
+            "title": "Re-export helper(s) from original module",
+            "affected_symbols": [
+              "collect_refactor_actions",
+              "collect_rename_items",
+              "directory_moves_to_plan",
+              "collect_cluster_items",
+              "new",
+              "cluster_priority"
+            ],
+            "files": [
+              "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/180_report.rs"
+            ],
+            "visibility_delta": "private -> pub(crate) via re-export",
+            "blast_radius": "high (6 symbol(s), 1 file(s))"
+          },
+          {
+            "option": "Option D",
+            "title": "Mark move as permanently blocked (design intent)",
+            "affected_symbols": [
+              "collect_refactor_actions",
+              "collect_rename_items",
+              "directory_moves_to_plan",
+              "collect_cluster_items",
+              "new",
+              "cluster_priority"
+            ],
+            "files": [
+              "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/180_report.rs"
+            ],
+            "visibility_delta": "none",
+            "blast_radius": "high (6 symbol(s), 1 file(s))"
+          }
+        ],
+        "default_policy": "BundleMove",
+        "requires_manual_review": false,
+        "manual_review_reason": null,
+        "permanent_blocked": true,
+        "permanent_block_reason": "Policy: permanently blocked by design intent"
+      },
+      "verification_results": [],
+      "rollback_applied": true,
+      "diffs": [],
+      "diff_count": 0
+    }
+  ],
+  "summary": {
+    "total_actions": 6,
+    "applied": 1,
+    "failed": 5,
+    "manual_review": 0,
+    "skipped": 0,
+    "total_diffs": 0
+  },
+  "verification_report": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/docs/97_correction_intelligence/slice_semantic_1/executor_verification_results.json",
+  "rollback_log": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/docs/97_correction_intelligence/slice_semantic_1/executor_rollback_log.json",
+  "diff_report": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/docs/97_correction_intelligence/slice_semantic_1/executor_diff_report.json",
+  "input_report": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/docs/97_correction_intelligence/slice_semantic_1/executor_input_report.json"
+}

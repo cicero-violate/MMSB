@@ -1,0 +1,7 @@
+# Dead code policy (simple key/value format).
+# Lists are in JSON-like brackets.
+
+planned_directories = []
+public_api_roots = []
+entrypoint_symbols = []
+treat_public_as_entrypoint = true

@@ -1,0 +1,49 @@
+{
+  "version": "1.0",
+  "timestamp": "2026-01-01T03:03:50.555184781+00:00",
+  "actions": [
+    {
+      "action_id": "move_scan_doc_comments_to_src/211_dead_code_attribute_parser.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [
+        "MoveToLayer scan_doc_comments -> 211_dead_code_attribute_parser.rs",
+        "MoveToLayerInvariant I2 passed: scan_doc_comments"
+      ],
+      "errors": [],
+      "warnings": [
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_scan_doc_comments_to_src/211_dead_code_attribute_parser.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_scan_doc_comments_to_src/211_dead_code_attribute_parser.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    }
+  ],
+  "summary": {
+    "total_actions": 1,
+    "applied": 1,
+    "failed": 0,
+    "manual_review": 0,
+    "skipped": 0,
+    "total_diffs": 0
+  },
+  "verification_report": "tools/mmsb-analyzer/docs/97_correction_intelligence/slice_batch_b1/executor_verification_results.json",
+  "rollback_log": "tools/mmsb-analyzer/docs/97_correction_intelligence/slice_batch_b1/executor_rollback_log.json",
+  "diff_report": "tools/mmsb-analyzer/docs/97_correction_intelligence/slice_batch_b1/executor_diff_report.json",
+  "input_report": "tools/mmsb-analyzer/docs/97_correction_intelligence/slice_batch_b1/executor_input_report.json"
+}

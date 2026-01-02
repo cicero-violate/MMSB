@@ -1,0 +1,82 @@
+{
+  "version": "1.0",
+  "timestamp": "2026-01-01T02:42:54.152804591+00:00",
+  "actions": [
+    {
+      "action_id": "create_file_src/226_correction_plan_generator.rs",
+      "diffs": []
+    },
+    {
+      "action_id": "move_order_julia_files_by_dependency_to_src/000_cluster_001.rs",
+      "diffs": []
+    },
+    {
+      "action_id": "move_structural_cmp_to_src/010_cluster_008.rs",
+      "diffs": []
+    },
+    {
+      "action_id": "move_sort_structural_items_to_src/010_cluster_008.rs",
+      "diffs": []
+    },
+    {
+      "action_id": "move_gather_rust_files_to_src/020_cluster_010.rs",
+      "diffs": []
+    },
+    {
+      "action_id": "move_run_analysis_to_src/000_cluster_001.rs",
+      "diffs": []
+    },
+    {
+      "action_id": "move_parse_mmsb_latent_attr_to_src/214_dead_code_intent.rs",
+      "diffs": []
+    },
+    {
+      "action_id": "move_scan_doc_comments_to_src/211_dead_code_attribute_parser.rs",
+      "diffs": []
+    },
+    {
+      "action_id": "move_detect_intent_signals_to_src/211_dead_code_attribute_parser.rs",
+      "diffs": []
+    },
+    {
+      "action_id": "move_scan_intent_tags_to_src/211_dead_code_attribute_parser.rs",
+      "diffs": []
+    },
+    {
+      "action_id": "move_is_cfg_test_item_to_src/211_dead_code_attribute_parser.rs",
+      "diffs": []
+    },
+    {
+      "action_id": "move_classify_symbol_to_src/213_dead_code_call_graph.rs",
+      "diffs": []
+    },
+    {
+      "action_id": "move_is_test_only_to_src/213_dead_code_call_graph.rs",
+      "diffs": []
+    },
+    {
+      "action_id": "move_run_dead_code_pipeline_to_src/070_layer_utilities.rs",
+      "diffs": []
+    },
+    {
+      "action_id": "move_write_outputs_to_src/220_dead_code_report.rs",
+      "diffs": []
+    },
+    {
+      "action_id": "move_estimate_impact_to_src/229_quality_delta_calculator.rs",
+      "diffs": []
+    },
+    {
+      "action_id": "move_generate_intelligence_report_to_src/223_violation_predictor.rs",
+      "diffs": []
+    },
+    {
+      "action_id": "move_write_intelligence_outputs_at_to_src/232_verification_policy_emitter.rs",
+      "diffs": []
+    },
+    {
+      "action_id": "move_serialize_correction_plans_to_src/231_correction_plan_serializer.rs",
+      "diffs": []
+    }
+  ]
+}

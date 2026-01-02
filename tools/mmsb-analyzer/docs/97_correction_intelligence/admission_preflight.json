@@ -1,0 +1,50 @@
+{
+  "version": "1.0",
+  "timestamp": "2026-01-01T07:49:50.056112505+00:00",
+  "project_root": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer",
+  "entries": [
+    {
+      "action_id": "move_scan_intent_tags_to_src/211_dead_code_doc_comment_scanner.rs",
+      "function": "scan_intent_tags",
+      "target_layer": "211_dead_code_doc_comment_scanner.rs",
+      "admissible": true,
+      "reasons": []
+    },
+    {
+      "action_id": "move_detect_intent_signals_to_src/211_dead_code_doc_comment_scanner.rs",
+      "function": "detect_intent_signals",
+      "target_layer": "211_dead_code_doc_comment_scanner.rs",
+      "admissible": true,
+      "reasons": []
+    },
+    {
+      "action_id": "move_detect_test_modules_to_src/030_is_cfg_test_item.rs",
+      "function": "detect_test_modules",
+      "target_layer": "030_is_cfg_test_item.rs",
+      "admissible": true,
+      "reasons": []
+    },
+    {
+      "action_id": "move_detect_test_symbols_to_src/030_is_cfg_test_item.rs",
+      "function": "detect_test_symbols",
+      "target_layer": "030_is_cfg_test_item.rs",
+      "admissible": true,
+      "reasons": []
+    },
+    {
+      "action_id": "move_find_private_dependencies_to_src/250_cohesion_analyzer.rs",
+      "function": "find_private_dependencies",
+      "target_layer": "250_cohesion_analyzer.rs",
+      "admissible": false,
+      "reasons": [
+        "MoveToLayer blocked for find_private_dependencies: RequiresEnsureDependencies [DependencyBlocker (struct; private) @ /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/640_correction_intelligence_report.rs; extract_function_block_from_contents (fn; private) @ /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/640_correction_intelligence_report.rs; extract_identifiers (fn; private) @ /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/640_correction_intelligence_report.rs]",
+        "Admission blocked by C12 pre-flight guard: move_find_private_dependencies_to_src/250_cohesion_analyzer.rs"
+      ]
+    }
+  ],
+  "summary": {
+    "total_moves": 5,
+    "admissible": 4,
+    "blocked": 1
+  }
+}

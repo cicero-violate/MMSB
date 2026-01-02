@@ -1,0 +1,103 @@
+# MMSB Analyzer: DAG Implementation Plan (High Priority)
+
+## Scope
+Focus on the high-priority requirements from `docs/Requirements.txt`:
+1) Layer-constrained ordering + layer violation reporting at the file DAG level
+2) Refactoring plan generation (rename/move suggestions + ranked impact)
+3) Louvain/modularity-based clustering (replace connected components)
+4) Directory ordering by layer prefix (recursive)
+
+## [x] 1. Layer-Constrained File Ordering
+
+### Goals
+- Enforce layer monotonicity during ordering: edges must go from lower/equal to higher layers.
+- Report layer violations at the file DAG level.
+
+### Data
+- `file_layers: HashMap<PathBuf, String>` from `detect_layer`.
+- `file_dag: DiGraph<PathBuf, ()>` from dependency extraction.
+
+### Algorithm
+1. Build file DAG and map each file to a numeric layer prefix (e.g., "020_*" -> 20).
+2. Compute a layer-aware topological order:
+   - Group nodes by layer value.
+   - For each layer group, run topo sort restricted to that layer.
+   - Concatenate results by layer order.
+3. Detect layer violations:
+   - For each edge (u -> v), if layer(u) > layer(v), record violation with source/target files.
+4. Report violations in `file_ordering` report section.
+
+### Output
+- `FileOrderingResult` extended with layer violation list.
+- Report section: "Layer Violations" with file pairs and layers.
+
+## [x] 2. Refactoring Plan Generation
+
+### Goals
+- Produce `refactoring_plan.md` with rename and move suggestions.
+- Rank by impact (cohesion gain, violation severity).
+
+### Inputs
+- File ordering results (rename suggestions + violations).
+- Function placements + cohesion scores (move suggestions).
+- Function clusters (suggest new files).
+
+### Algorithm
+1. Build rename list from `FileOrderEntry.needs_rename`.
+2. Build move list from `FunctionPlacement::ShouldMove` with `impact`.
+3. Rank items:
+   - Critical: layer violations, cycles, cohesion impact > 0.5.
+   - High/Medium/Low based on impact thresholds.
+4. Generate plan:
+   - Summary counts.
+   - Critical actions with `git mv` commands.
+   - Move suggestions with manual steps.
+
+### Output
+- `refactoring_plan.md` report with actionable steps.
+
+## [x] 3. Louvain / Modularity Clustering
+
+### Goals
+- Replace connected-component clustering with modularity-based communities.
+
+### Algorithm (simplified Louvain)
+1. Build undirected function graph from call edges.
+2. Initialize each node in its own community.
+3. Greedy modularity optimization:
+   - For each node, move to neighboring community if modularity improves.
+   - Repeat until no improvement.
+4. Aggregate communities into clusters (size >= 3).
+
+### Output
+- `FunctionCluster` list with members, cohesion, suggested file.
+- Report updated to show community clusters.
+
+## Validation
+- Unit tests:
+  - Layer violation detection.
+  - Refactoring plan ranking rules.
+  - Modularity clustering yields stable communities on small graphs.
+- Integration:
+  - Run analyzer and confirm `refactoring_plan.md` output is produced.
+
+## [x] 4. Directory Ordering
+
+### Goals
+- Order directories recursively using numeric layer prefixes (00_, 10_, etc).
+- Expose ordered directory list in file ordering report.
+
+### Algorithm
+1. Collect all directories containing source files and their ancestors up to project root.
+2. Sort by path components; compare numeric prefixes first, fallback to lexicographic.
+3. Emit ordered list in the file ordering report section.
+
+## [x] 5. Directory-Level Refactoring Suggestions
+
+### Goals
+- Extend refactoring plan to include directory renames using numeric prefixes.
+
+### Algorithm
+1. Group ordered directories by parent directory.
+2. Assign canonical numbers by position within each parent.
+3. Generate `git mv` commands for directories whose prefix is missing or mismatched.

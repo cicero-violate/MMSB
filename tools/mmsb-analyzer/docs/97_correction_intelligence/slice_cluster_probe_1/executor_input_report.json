@@ -1,0 +1,60 @@
+{
+  "version": "1.0",
+  "timestamp": "2026-01-01T04:05:50.359618340+00:00",
+  "correction_summary": {
+    "trivial_count": 0,
+    "moderate_count": 1,
+    "complex_count": 0,
+    "total_predicted_violations": 1,
+    "average_confidence": 0.6,
+    "estimated_total_fix_time_seconds": 15
+  },
+  "plans": [
+    {
+      "action_id": "move_action_function_to_src/640_correction_intelligence_report.rs",
+      "tier": "Moderate",
+      "confidence": 0.6,
+      "estimated_fix_time_seconds": 15,
+      "violations": [
+        {
+          "kind": "LayerViolation",
+          "severity": "Medium",
+          "confidence": 0.6,
+          "affected_files": 2
+        }
+      ],
+      "verification": {
+        "scope": "ModuleLocal",
+        "scope_details": [
+          "module:src/640_correction_intelligence_report.rs",
+          "transitive_depth:2"
+        ],
+        "incremental_eligible": false,
+        "estimated_time_seconds": 60
+      },
+      "strategies": [
+        {
+          "kind": "MoveToLayer",
+          "context": null
+        },
+        {
+          "kind": "EnsureImports",
+          "context": null
+        }
+      ]
+    }
+  ],
+  "policies": [
+    {
+      "action_id": "move_action_function_to_src/640_correction_intelligence_report.rs",
+      "scope": "ModuleLocal",
+      "scope_details": [
+        "module:src/640_correction_intelligence_report.rs",
+        "transitive_depth:2"
+      ],
+      "incremental": false,
+      "estimated_time_seconds": 60,
+      "checks": 2
+    }
+  ]
+}

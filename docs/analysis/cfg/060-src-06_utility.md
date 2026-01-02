@@ -21,35 +21,25 @@ flowchart TD
 
 - File: MMSB/src/06_utility/provenance_tracker.rs
 - Branches: 0
-- Loops: 2
-- Nodes: 11
-- Edges: 12
+- Loops: 0
+- Nodes: 7
+- Edges: 6
 
 ```mermaid
 flowchart TD
     cache_does_not_grow_unbounded_0["ENTRY"]
     cache_does_not_grow_unbounded_1["let graph = Arc :: new (ShadowPageGraph :: default ())"]
-    cache_does_not_grow_unbounded_2["for id in 1 ..= 10"]
-    cache_does_not_grow_unbounded_3["graph . add_edge (PageID (id) , PageID (id + 1) , EdgeType :: Data)"]
-    cache_does_not_grow_unbounded_4["after for"]
-    cache_does_not_grow_unbounded_5["let tracker = ProvenanceTracker :: with_capacity (Arc :: clone (& graph) , 4 , 4)"]
-    cache_does_not_grow_unbounded_6["for id in 5 ..= 10"]
-    cache_does_not_grow_unbounded_7["tracker . resolve (PageID (id))"]
-    cache_does_not_grow_unbounded_8["after for"]
-    cache_does_not_grow_unbounded_9["macro assert"]
-    cache_does_not_grow_unbounded_10["EXIT"]
+    cache_does_not_grow_unbounded_2["for id in 1 ..= 10 { graph . add_edge (PageID (id) , PageID (id + 1) , EdgeTy..."]
+    cache_does_not_grow_unbounded_3["let tracker = ProvenanceTracker :: with_capacity (Arc :: clone (& graph) , 4 , 4)"]
+    cache_does_not_grow_unbounded_4["for id in 5 ..= 10 { tracker . resolve (PageID (id)) ; }"]
+    cache_does_not_grow_unbounded_5["macro assert"]
+    cache_does_not_grow_unbounded_6["EXIT"]
     cache_does_not_grow_unbounded_0 --> cache_does_not_grow_unbounded_1
     cache_does_not_grow_unbounded_1 --> cache_does_not_grow_unbounded_2
     cache_does_not_grow_unbounded_2 --> cache_does_not_grow_unbounded_3
-    cache_does_not_grow_unbounded_3 --> cache_does_not_grow_unbounded_2
-    cache_does_not_grow_unbounded_2 --> cache_does_not_grow_unbounded_4
+    cache_does_not_grow_unbounded_3 --> cache_does_not_grow_unbounded_4
     cache_does_not_grow_unbounded_4 --> cache_does_not_grow_unbounded_5
     cache_does_not_grow_unbounded_5 --> cache_does_not_grow_unbounded_6
-    cache_does_not_grow_unbounded_6 --> cache_does_not_grow_unbounded_7
-    cache_does_not_grow_unbounded_7 --> cache_does_not_grow_unbounded_6
-    cache_does_not_grow_unbounded_6 --> cache_does_not_grow_unbounded_8
-    cache_does_not_grow_unbounded_8 --> cache_does_not_grow_unbounded_9
-    cache_does_not_grow_unbounded_9 --> cache_does_not_grow_unbounded_10
 ```
 
 ## Function: `cpu_has_avx2`
@@ -108,24 +98,22 @@ flowchart TD
 - File: MMSB/src/06_utility/invariant_checker.rs
 - Branches: 0
 - Loops: 0
-- Nodes: 13
-- Edges: 12
+- Nodes: 11
+- Edges: 10
 
 ```mermaid
 flowchart TD
     epoch_invariant_detects_regressions_0["ENTRY"]
     epoch_invariant_detects_regressions_1["let allocator = PageAllocator :: new (PageAllocatorConfig :: default ())"]
     epoch_invariant_detects_regressions_2["allocator . allocate_raw (PageID (1) , 8 , Some (PageLocation :: Cpu)) . unwr..."]
-    epoch_invariant_detects_regressions_3["let page = allocator . acquire_page (PageID (1)) . unwrap ()"]
-    epoch_invariant_detects_regressions_4["unsafe { (* page) . set_epoch (Epoch (5)) ; }"]
-    epoch_invariant_detects_regressions_5["let ctx = InvariantContext { allocator : Some (& allocator) , graph : None , registry :..."]
-    epoch_invariant_detects_regressions_6["let mut checker = InvariantChecker :: new ()"]
-    epoch_invariant_detects_regressions_7["checker . register (EpochMonotonicity :: default ())"]
-    epoch_invariant_detects_regressions_8["macro assert"]
-    epoch_invariant_detects_regressions_9["let page = allocator . acquire_page (PageID (1)) . unwrap ()"]
-    epoch_invariant_detects_regressions_10["unsafe { (* page) . set_epoch (Epoch (4)) ; }"]
-    epoch_invariant_detects_regressions_11["macro assert"]
-    epoch_invariant_detects_regressions_12["EXIT"]
+    epoch_invariant_detects_regressions_3["{ let page = allocator . acquire_page (PageID (1)) . unwrap () ; unsafe { (* ..."]
+    epoch_invariant_detects_regressions_4["let ctx = InvariantContext { allocator : Some (& allocator) , graph : None , registry :..."]
+    epoch_invariant_detects_regressions_5["let mut checker = InvariantChecker :: new ()"]
+    epoch_invariant_detects_regressions_6["checker . register (EpochMonotonicity :: default ())"]
+    epoch_invariant_detects_regressions_7["macro assert"]
+    epoch_invariant_detects_regressions_8["{ let page = allocator . acquire_page (PageID (1)) . unwrap () ; unsafe { (* ..."]
+    epoch_invariant_detects_regressions_9["macro assert"]
+    epoch_invariant_detects_regressions_10["EXIT"]
     epoch_invariant_detects_regressions_0 --> epoch_invariant_detects_regressions_1
     epoch_invariant_detects_regressions_1 --> epoch_invariant_detects_regressions_2
     epoch_invariant_detects_regressions_2 --> epoch_invariant_detects_regressions_3
@@ -136,8 +124,6 @@ flowchart TD
     epoch_invariant_detects_regressions_7 --> epoch_invariant_detects_regressions_8
     epoch_invariant_detects_regressions_8 --> epoch_invariant_detects_regressions_9
     epoch_invariant_detects_regressions_9 --> epoch_invariant_detects_regressions_10
-    epoch_invariant_detects_regressions_10 --> epoch_invariant_detects_regressions_11
-    epoch_invariant_detects_regressions_11 --> epoch_invariant_detects_regressions_12
 ```
 
 ## Function: `gc_trigger_depends_on_threshold`
@@ -202,36 +188,31 @@ flowchart TD
 
 - File: MMSB/src/06_utility/memory_monitor.rs
 - Branches: 0
-- Loops: 1
-- Nodes: 12
-- Edges: 12
+- Loops: 0
+- Nodes: 10
+- Edges: 9
 
 ```mermaid
 flowchart TD
     incremental_gc_reclaims_pages_under_budget_0["ENTRY"]
     incremental_gc_reclaims_pages_under_budget_1["let allocator = allocator ()"]
-    incremental_gc_reclaims_pages_under_budget_2["for id in 1 ..= 4"]
-    incremental_gc_reclaims_pages_under_budget_3["allocator . allocate_raw (PageID (id) , 2048 , Some (PageLocation :: Cpu)) . ..."]
-    incremental_gc_reclaims_pages_under_budget_4["after for"]
-    incremental_gc_reclaims_pages_under_budget_5["let config = MemoryMonitorConfig { gc_threshold_bytes : 2048 , cold_page_age_limit : 0 , i..."]
-    incremental_gc_reclaims_pages_under_budget_6["let monitor = MemoryMonitor :: with_config (Arc :: clone (& allocator) , config)"]
-    incremental_gc_reclaims_pages_under_budget_7["let metrics = monitor . trigger_incremental_gc (4) . unwrap ()"]
+    incremental_gc_reclaims_pages_under_budget_2["for id in 1 ..= 4 { allocator . allocate_raw (PageID (id) , 2048 , Some (Page..."]
+    incremental_gc_reclaims_pages_under_budget_3["let config = MemoryMonitorConfig { gc_threshold_bytes : 2048 , cold_page_age_limit : 0 , i..."]
+    incremental_gc_reclaims_pages_under_budget_4["let monitor = MemoryMonitor :: with_config (Arc :: clone (& allocator) , config)"]
+    incremental_gc_reclaims_pages_under_budget_5["let metrics = monitor . trigger_incremental_gc (4) . unwrap ()"]
+    incremental_gc_reclaims_pages_under_budget_6["macro assert"]
+    incremental_gc_reclaims_pages_under_budget_7["macro assert"]
     incremental_gc_reclaims_pages_under_budget_8["macro assert"]
-    incremental_gc_reclaims_pages_under_budget_9["macro assert"]
-    incremental_gc_reclaims_pages_under_budget_10["macro assert"]
-    incremental_gc_reclaims_pages_under_budget_11["EXIT"]
+    incremental_gc_reclaims_pages_under_budget_9["EXIT"]
     incremental_gc_reclaims_pages_under_budget_0 --> incremental_gc_reclaims_pages_under_budget_1
     incremental_gc_reclaims_pages_under_budget_1 --> incremental_gc_reclaims_pages_under_budget_2
     incremental_gc_reclaims_pages_under_budget_2 --> incremental_gc_reclaims_pages_under_budget_3
-    incremental_gc_reclaims_pages_under_budget_3 --> incremental_gc_reclaims_pages_under_budget_2
-    incremental_gc_reclaims_pages_under_budget_2 --> incremental_gc_reclaims_pages_under_budget_4
+    incremental_gc_reclaims_pages_under_budget_3 --> incremental_gc_reclaims_pages_under_budget_4
     incremental_gc_reclaims_pages_under_budget_4 --> incremental_gc_reclaims_pages_under_budget_5
     incremental_gc_reclaims_pages_under_budget_5 --> incremental_gc_reclaims_pages_under_budget_6
     incremental_gc_reclaims_pages_under_budget_6 --> incremental_gc_reclaims_pages_under_budget_7
     incremental_gc_reclaims_pages_under_budget_7 --> incremental_gc_reclaims_pages_under_budget_8
     incremental_gc_reclaims_pages_under_budget_8 --> incremental_gc_reclaims_pages_under_budget_9
-    incremental_gc_reclaims_pages_under_budget_9 --> incremental_gc_reclaims_pages_under_budget_10
-    incremental_gc_reclaims_pages_under_budget_10 --> incremental_gc_reclaims_pages_under_budget_11
 ```
 
 ## Function: `read_bytes`
@@ -239,25 +220,29 @@ flowchart TD
 - File: MMSB/src/06_utility/invariant_checker.rs
 - Branches: 1
 - Loops: 0
-- Nodes: 7
-- Edges: 7
+- Nodes: 9
+- Edges: 9
 
 ```mermaid
 flowchart TD
     read_bytes_0["ENTRY"]
     read_bytes_1["if * cursor + len > blob . len ()"]
-    read_bytes_2["return Err (PageError :: MetadataDecode ('blob truncated'))"]
-    read_bytes_3["if join"]
-    read_bytes_4["* cursor += len"]
-    read_bytes_5["Ok (())"]
-    read_bytes_6["EXIT"]
+    read_bytes_2["THEN BB"]
+    read_bytes_3["return Err (PageError :: MetadataDecode ('blob truncated'))"]
+    read_bytes_4["EMPTY ELSE"]
+    read_bytes_5["IF JOIN"]
+    read_bytes_6["* cursor += len"]
+    read_bytes_7["Ok (())"]
+    read_bytes_8["EXIT"]
     read_bytes_0 --> read_bytes_1
     read_bytes_1 --> read_bytes_2
     read_bytes_2 --> read_bytes_3
-    read_bytes_1 --> read_bytes_3
-    read_bytes_3 --> read_bytes_4
+    read_bytes_1 --> read_bytes_4
+    read_bytes_3 --> read_bytes_5
     read_bytes_4 --> read_bytes_5
     read_bytes_5 --> read_bytes_6
+    read_bytes_6 --> read_bytes_7
+    read_bytes_7 --> read_bytes_8
 ```
 
 ## Function: `read_u32`
@@ -265,27 +250,31 @@ flowchart TD
 - File: MMSB/src/06_utility/invariant_checker.rs
 - Branches: 1
 - Loops: 0
-- Nodes: 8
-- Edges: 8
+- Nodes: 10
+- Edges: 10
 
 ```mermaid
 flowchart TD
     read_u32_0["ENTRY"]
     read_u32_1["if * cursor + 4 > blob . len ()"]
-    read_u32_2["return Err (PageError :: MetadataDecode ('unexpected end of blob'))"]
-    read_u32_3["if join"]
-    read_u32_4["let val = u32 :: from_le_bytes (blob [* cursor .. * cursor + 4] . try_into () . unwrap ())"]
-    read_u32_5["* cursor += 4"]
-    read_u32_6["Ok (val)"]
-    read_u32_7["EXIT"]
+    read_u32_2["THEN BB"]
+    read_u32_3["return Err (PageError :: MetadataDecode ('unexpected end of blob'))"]
+    read_u32_4["EMPTY ELSE"]
+    read_u32_5["IF JOIN"]
+    read_u32_6["let val = u32 :: from_le_bytes (blob [* cursor .. * cursor + 4] . try_into () . unwrap ())"]
+    read_u32_7["* cursor += 4"]
+    read_u32_8["Ok (val)"]
+    read_u32_9["EXIT"]
     read_u32_0 --> read_u32_1
     read_u32_1 --> read_u32_2
     read_u32_2 --> read_u32_3
-    read_u32_1 --> read_u32_3
-    read_u32_3 --> read_u32_4
+    read_u32_1 --> read_u32_4
+    read_u32_3 --> read_u32_5
     read_u32_4 --> read_u32_5
     read_u32_5 --> read_u32_6
     read_u32_6 --> read_u32_7
+    read_u32_7 --> read_u32_8
+    read_u32_8 --> read_u32_9
 ```
 
 ## Function: `resolves_chain_with_depth_limit`
@@ -482,40 +471,33 @@ flowchart TD
 
 - File: MMSB/src/06_utility/invariant_checker.rs
 - Branches: 1
-- Loops: 1
-- Nodes: 14
-- Edges: 15
+- Loops: 0
+- Nodes: 11
+- Edges: 11
 
 ```mermaid
 flowchart TD
     validate_metadata_blob_0["ENTRY"]
     validate_metadata_blob_1["if blob . is_empty ()"]
-    validate_metadata_blob_2["return Ok (())"]
-    validate_metadata_blob_3["if join"]
-    validate_metadata_blob_4["let mut cursor = 0usize"]
-    validate_metadata_blob_5["let entry_count = read_u32 (blob , & mut cursor) ?"]
-    validate_metadata_blob_6["for _ in 0 .. entry_count"]
-    validate_metadata_blob_7["let key_len = read_u32 (blob , & mut cursor) ? as usize"]
-    validate_metadata_blob_8["read_bytes (blob , & mut cursor , key_len) ?"]
-    validate_metadata_blob_9["let value_len = read_u32 (blob , & mut cursor) ? as usize"]
-    validate_metadata_blob_10["read_bytes (blob , & mut cursor , value_len) ?"]
-    validate_metadata_blob_11["after for"]
-    validate_metadata_blob_12["Ok (())"]
-    validate_metadata_blob_13["EXIT"]
+    validate_metadata_blob_2["THEN BB"]
+    validate_metadata_blob_3["return Ok (())"]
+    validate_metadata_blob_4["EMPTY ELSE"]
+    validate_metadata_blob_5["IF JOIN"]
+    validate_metadata_blob_6["let mut cursor = 0usize"]
+    validate_metadata_blob_7["let entry_count = read_u32 (blob , & mut cursor) ?"]
+    validate_metadata_blob_8["for _ in 0 .. entry_count { let key_len = read_u32 (blob , & mut cursor) ? as..."]
+    validate_metadata_blob_9["Ok (())"]
+    validate_metadata_blob_10["EXIT"]
     validate_metadata_blob_0 --> validate_metadata_blob_1
     validate_metadata_blob_1 --> validate_metadata_blob_2
     validate_metadata_blob_2 --> validate_metadata_blob_3
-    validate_metadata_blob_1 --> validate_metadata_blob_3
-    validate_metadata_blob_3 --> validate_metadata_blob_4
+    validate_metadata_blob_1 --> validate_metadata_blob_4
+    validate_metadata_blob_3 --> validate_metadata_blob_5
     validate_metadata_blob_4 --> validate_metadata_blob_5
     validate_metadata_blob_5 --> validate_metadata_blob_6
     validate_metadata_blob_6 --> validate_metadata_blob_7
     validate_metadata_blob_7 --> validate_metadata_blob_8
     validate_metadata_blob_8 --> validate_metadata_blob_9
     validate_metadata_blob_9 --> validate_metadata_blob_10
-    validate_metadata_blob_10 --> validate_metadata_blob_6
-    validate_metadata_blob_6 --> validate_metadata_blob_11
-    validate_metadata_blob_11 --> validate_metadata_blob_12
-    validate_metadata_blob_12 --> validate_metadata_blob_13
 ```
 

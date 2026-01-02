@@ -1,0 +1,53 @@
+{
+  "version": "1.0",
+  "timestamp": "2025-12-31T07:19:02.302008655+00:00",
+  "actions": [
+    {
+      "action_id": "create_file_src/231_correction_plan_serializer.rs",
+      "phase": 2,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "verification_results": [],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/005_refactor_constraints.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/010_refactor_constraints.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [
+        "UpdatePath /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/005_refactor_constraints.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/010_refactor_constraints.rs"
+      ],
+      "errors": [],
+      "warnings": [
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "verification_results": [],
+      "rollback_applied": false,
+      "diffs": [
+        {
+          "path": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/010_refactor_constraints.rs",
+          "diff": "--- original\n+++ modified\n"
+        }
+      ],
+      "diff_count": 1
+    }
+  ],
+  "summary": {
+    "total_actions": 2,
+    "applied": 2,
+    "failed": 0,
+    "manual_review": 0,
+    "skipped": 0,
+    "total_diffs": 1
+  },
+  "verification_report": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/docs/97_correction_intelligence/slice_one_per_prefix_2/executor_verification_results.json",
+  "rollback_log": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/docs/97_correction_intelligence/slice_one_per_prefix_2/executor_rollback_log.json",
+  "diff_report": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/docs/97_correction_intelligence/slice_one_per_prefix_2/executor_diff_report.json",
+  "input_report": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/docs/97_correction_intelligence/slice_one_per_prefix_2/executor_input_report.json"
+}

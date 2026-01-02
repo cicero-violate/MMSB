@@ -1,0 +1,1668 @@
+{
+  "actions_analyzed": 25,
+  "correction_plans": [
+    {
+      "action_id": "move_predict_violations_to_src/640_correction_intelligence_report.rs",
+      "confidence": 0.6,
+      "correction_strategies": [
+        {
+          "function": "predict_violations",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "MoveToLayer"
+        },
+        {
+          "function": "predict_violations",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "EnsureImports"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/530_violation_predictor.rs",
+            "src/640_correction_intelligence_report.rs"
+          ],
+          "confidence": 0.6,
+          "severity": "Medium",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/640_correction_intelligence_report.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_find_callers_to_src/640_correction_intelligence_report.rs",
+      "confidence": 0.6,
+      "correction_strategies": [
+        {
+          "function": "find_callers",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "MoveToLayer"
+        },
+        {
+          "function": "find_callers",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "EnsureImports"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/530_violation_predictor.rs",
+            "src/640_correction_intelligence_report.rs"
+          ],
+          "confidence": 0.6,
+          "severity": "Medium",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/640_correction_intelligence_report.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_find_reference_files_to_src/640_correction_intelligence_report.rs",
+      "confidence": 0.6,
+      "correction_strategies": [
+        {
+          "function": "find_reference_files",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "MoveToLayer"
+        },
+        {
+          "function": "find_reference_files",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "EnsureImports"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/530_violation_predictor.rs",
+            "src/640_correction_intelligence_report.rs"
+          ],
+          "confidence": 0.6,
+          "severity": "Medium",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/640_correction_intelligence_report.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_find_element_file_to_src/640_correction_intelligence_report.rs",
+      "confidence": 0.6,
+      "correction_strategies": [
+        {
+          "function": "find_element_file",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "MoveToLayer"
+        },
+        {
+          "function": "find_element_file",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "EnsureImports"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/530_violation_predictor.rs",
+            "src/640_correction_intelligence_report.rs"
+          ],
+          "confidence": 0.6,
+          "severity": "Medium",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/640_correction_intelligence_report.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_symbol_exists_to_src/640_correction_intelligence_report.rs",
+      "confidence": 0.6,
+      "correction_strategies": [
+        {
+          "function": "symbol_exists",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "MoveToLayer"
+        },
+        {
+          "function": "symbol_exists",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "EnsureImports"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/530_violation_predictor.rs",
+            "src/640_correction_intelligence_report.rs"
+          ],
+          "confidence": 0.6,
+          "severity": "Medium",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/640_correction_intelligence_report.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_move_violates_invariant_to_src/640_correction_intelligence_report.rs",
+      "confidence": 0.6,
+      "correction_strategies": [
+        {
+          "function": "move_violates_invariant",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "MoveToLayer"
+        },
+        {
+          "function": "move_violates_invariant",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "EnsureImports"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/530_violation_predictor.rs",
+            "src/640_correction_intelligence_report.rs"
+          ],
+          "confidence": 0.6,
+          "severity": "Medium",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/640_correction_intelligence_report.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_generate_intelligence_report_to_src/640_correction_intelligence_report.rs",
+      "confidence": 0.6,
+      "correction_strategies": [
+        {
+          "function": "generate_intelligence_report",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "MoveToLayer"
+        },
+        {
+          "function": "generate_intelligence_report",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "EnsureImports"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/530_violation_predictor.rs",
+            "src/640_correction_intelligence_report.rs"
+          ],
+          "confidence": 0.6,
+          "severity": "Medium",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/640_correction_intelligence_report.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_generate_correction_plan_to_src/640_correction_intelligence_report.rs",
+      "confidence": 0.6,
+      "correction_strategies": [
+        {
+          "function": "generate_correction_plan",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "MoveToLayer"
+        },
+        {
+          "function": "generate_correction_plan",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "EnsureImports"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/570_correction_plan_generator.rs",
+            "src/640_correction_intelligence_report.rs"
+          ],
+          "confidence": 0.6,
+          "severity": "Medium",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/640_correction_intelligence_report.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_average_confidence_to_src/640_correction_intelligence_report.rs",
+      "confidence": 0.6,
+      "correction_strategies": [
+        {
+          "function": "average_confidence",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "MoveToLayer"
+        },
+        {
+          "function": "average_confidence",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "EnsureImports"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/570_correction_plan_generator.rs",
+            "src/640_correction_intelligence_report.rs"
+          ],
+          "confidence": 0.6,
+          "severity": "Medium",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/640_correction_intelligence_report.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_estimate_fix_time_to_src/640_correction_intelligence_report.rs",
+      "confidence": 0.6,
+      "correction_strategies": [
+        {
+          "function": "estimate_fix_time",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "MoveToLayer"
+        },
+        {
+          "function": "estimate_fix_time",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "EnsureImports"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/570_correction_plan_generator.rs",
+            "src/640_correction_intelligence_report.rs"
+          ],
+          "confidence": 0.6,
+          "severity": "Medium",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/640_correction_intelligence_report.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_action_symbol_to_src/640_correction_intelligence_report.rs",
+      "confidence": 0.6,
+      "correction_strategies": [
+        {
+          "function": "action_symbol",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "MoveToLayer"
+        },
+        {
+          "function": "action_symbol",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "EnsureImports"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/570_correction_plan_generator.rs",
+            "src/640_correction_intelligence_report.rs"
+          ],
+          "confidence": 0.6,
+          "severity": "Medium",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/640_correction_intelligence_report.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_action_function_to_src/640_correction_intelligence_report.rs",
+      "confidence": 0.6,
+      "correction_strategies": [
+        {
+          "function": "action_function",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "MoveToLayer"
+        },
+        {
+          "function": "action_function",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "EnsureImports"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/570_correction_plan_generator.rs",
+            "src/640_correction_intelligence_report.rs"
+          ],
+          "confidence": 0.6,
+          "severity": "Medium",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/640_correction_intelligence_report.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_action_module_path_to_src/640_correction_intelligence_report.rs",
+      "confidence": 0.6,
+      "correction_strategies": [
+        {
+          "function": "action_module_path",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "MoveToLayer"
+        },
+        {
+          "function": "action_module_path",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "EnsureImports"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/570_correction_plan_generator.rs",
+            "src/640_correction_intelligence_report.rs"
+          ],
+          "confidence": 0.6,
+          "severity": "Medium",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/640_correction_intelligence_report.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_action_refs_to_src/640_correction_intelligence_report.rs",
+      "confidence": 0.6,
+      "correction_strategies": [
+        {
+          "function": "action_refs",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "MoveToLayer"
+        },
+        {
+          "function": "action_refs",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "EnsureImports"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/570_correction_plan_generator.rs",
+            "src/640_correction_intelligence_report.rs"
+          ],
+          "confidence": 0.6,
+          "severity": "Medium",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/640_correction_intelligence_report.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_action_target_layer_to_src/640_correction_intelligence_report.rs",
+      "confidence": 0.6,
+      "correction_strategies": [
+        {
+          "function": "action_target_layer",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "MoveToLayer"
+        },
+        {
+          "function": "action_target_layer",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "EnsureImports"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/570_correction_plan_generator.rs",
+            "src/640_correction_intelligence_report.rs"
+          ],
+          "confidence": 0.6,
+          "severity": "Medium",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/640_correction_intelligence_report.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_action_visibility_to_src/640_correction_intelligence_report.rs",
+      "confidence": 0.6,
+      "correction_strategies": [
+        {
+          "function": "action_visibility",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "MoveToLayer"
+        },
+        {
+          "function": "action_visibility",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "EnsureImports"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/570_correction_plan_generator.rs",
+            "src/640_correction_intelligence_report.rs"
+          ],
+          "confidence": 0.6,
+          "severity": "Medium",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/640_correction_intelligence_report.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_plan_verification_scope_to_src/640_correction_intelligence_report.rs",
+      "confidence": 0.6,
+      "correction_strategies": [
+        {
+          "function": "plan_verification_scope",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "MoveToLayer"
+        },
+        {
+          "function": "plan_verification_scope",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "EnsureImports"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/580_verification_scope_planner.rs",
+            "src/640_correction_intelligence_report.rs"
+          ],
+          "confidence": 0.6,
+          "severity": "Medium",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/640_correction_intelligence_report.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_affected_files_to_src/640_correction_intelligence_report.rs",
+      "confidence": 0.6,
+      "correction_strategies": [
+        {
+          "function": "affected_files",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "MoveToLayer"
+        },
+        {
+          "function": "affected_files",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "EnsureImports"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/580_verification_scope_planner.rs",
+            "src/640_correction_intelligence_report.rs"
+          ],
+          "confidence": 0.6,
+          "severity": "Medium",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/640_correction_intelligence_report.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_action_module_to_src/640_correction_intelligence_report.rs",
+      "confidence": 0.6,
+      "correction_strategies": [
+        {
+          "function": "action_module",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "MoveToLayer"
+        },
+        {
+          "function": "action_module",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "EnsureImports"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/580_verification_scope_planner.rs",
+            "src/640_correction_intelligence_report.rs"
+          ],
+          "confidence": 0.6,
+          "severity": "Medium",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/640_correction_intelligence_report.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_estimate_verification_time_to_src/640_correction_intelligence_report.rs",
+      "confidence": 0.6,
+      "correction_strategies": [
+        {
+          "function": "estimate_verification_time",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "MoveToLayer"
+        },
+        {
+          "function": "estimate_verification_time",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "EnsureImports"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/580_verification_scope_planner.rs",
+            "src/640_correction_intelligence_report.rs"
+          ],
+          "confidence": 0.6,
+          "severity": "Medium",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/640_correction_intelligence_report.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_build_rollback_criteria_to_src/640_correction_intelligence_report.rs",
+      "confidence": 0.6,
+      "correction_strategies": [
+        {
+          "function": "build_rollback_criteria",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "MoveToLayer"
+        },
+        {
+          "function": "build_rollback_criteria",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "EnsureImports"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/590_rollback_criteria_builder.rs",
+            "src/640_correction_intelligence_report.rs"
+          ],
+          "confidence": 0.6,
+          "severity": "Medium",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/640_correction_intelligence_report.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_extract_critical_tests_to_src/640_correction_intelligence_report.rs",
+      "confidence": 0.6,
+      "correction_strategies": [
+        {
+          "function": "extract_critical_tests",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "MoveToLayer"
+        },
+        {
+          "function": "extract_critical_tests",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "EnsureImports"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/590_rollback_criteria_builder.rs",
+            "src/640_correction_intelligence_report.rs"
+          ],
+          "confidence": 0.6,
+          "severity": "Medium",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/640_correction_intelligence_report.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_calculate_quality_delta_to_src/640_correction_intelligence_report.rs",
+      "confidence": 0.6,
+      "correction_strategies": [
+        {
+          "function": "calculate_quality_delta",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "MoveToLayer"
+        },
+        {
+          "function": "calculate_quality_delta",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "EnsureImports"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/600_quality_delta_calculator.rs",
+            "src/640_correction_intelligence_report.rs"
+          ],
+          "confidence": 0.6,
+          "severity": "Medium",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/640_correction_intelligence_report.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_estimate_impact_to_src/640_correction_intelligence_report.rs",
+      "confidence": 0.6,
+      "correction_strategies": [
+        {
+          "function": "estimate_impact",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "MoveToLayer"
+        },
+        {
+          "function": "estimate_impact",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "EnsureImports"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/600_quality_delta_calculator.rs",
+            "src/640_correction_intelligence_report.rs"
+          ],
+          "confidence": 0.6,
+          "severity": "Medium",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/640_correction_intelligence_report.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_simulate_action_to_src/640_correction_intelligence_report.rs",
+      "confidence": 0.6,
+      "correction_strategies": [
+        {
+          "function": "simulate_action",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "MoveToLayer"
+        },
+        {
+          "function": "simulate_action",
+          "target_layer": "src/640_correction_intelligence_report.rs",
+          "type": "EnsureImports"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/610_action_impact_estimator.rs",
+            "src/640_correction_intelligence_report.rs"
+          ],
+          "confidence": 0.6,
+          "severity": "Medium",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/640_correction_intelligence_report.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    }
+  ],
+  "project_root": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer",
+  "quality_deltas": [
+    {
+      "acceptable": true,
+      "action_id": "move_predict_violations_to_src/640_correction_intelligence_report.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Not estimated for cluster slice",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_find_callers_to_src/640_correction_intelligence_report.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Not estimated for cluster slice",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_find_reference_files_to_src/640_correction_intelligence_report.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Not estimated for cluster slice",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_find_element_file_to_src/640_correction_intelligence_report.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Not estimated for cluster slice",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_symbol_exists_to_src/640_correction_intelligence_report.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Not estimated for cluster slice",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_move_violates_invariant_to_src/640_correction_intelligence_report.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Not estimated for cluster slice",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_generate_intelligence_report_to_src/640_correction_intelligence_report.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Not estimated for cluster slice",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_generate_correction_plan_to_src/640_correction_intelligence_report.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Not estimated for cluster slice",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_average_confidence_to_src/640_correction_intelligence_report.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Not estimated for cluster slice",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_estimate_fix_time_to_src/640_correction_intelligence_report.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Not estimated for cluster slice",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_action_symbol_to_src/640_correction_intelligence_report.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Not estimated for cluster slice",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_action_function_to_src/640_correction_intelligence_report.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Not estimated for cluster slice",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_action_module_path_to_src/640_correction_intelligence_report.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Not estimated for cluster slice",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_action_refs_to_src/640_correction_intelligence_report.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Not estimated for cluster slice",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_action_target_layer_to_src/640_correction_intelligence_report.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Not estimated for cluster slice",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_action_visibility_to_src/640_correction_intelligence_report.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Not estimated for cluster slice",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_plan_verification_scope_to_src/640_correction_intelligence_report.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Not estimated for cluster slice",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_affected_files_to_src/640_correction_intelligence_report.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Not estimated for cluster slice",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_action_module_to_src/640_correction_intelligence_report.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Not estimated for cluster slice",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_estimate_verification_time_to_src/640_correction_intelligence_report.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Not estimated for cluster slice",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_build_rollback_criteria_to_src/640_correction_intelligence_report.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Not estimated for cluster slice",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_extract_critical_tests_to_src/640_correction_intelligence_report.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Not estimated for cluster slice",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_calculate_quality_delta_to_src/640_correction_intelligence_report.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Not estimated for cluster slice",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_estimate_impact_to_src/640_correction_intelligence_report.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Not estimated for cluster slice",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_simulate_action_to_src/640_correction_intelligence_report.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Not estimated for cluster slice",
+      "violation_delta": 0
+    }
+  ],
+  "summary": {
+    "average_confidence": 0.5999999999999998,
+    "complex_count": 0,
+    "estimated_total_fix_time_seconds": 375,
+    "moderate_count": 25,
+    "total_predicted_violations": 25,
+    "trivial_count": 0
+  },
+  "timestamp": "2026-01-01T03:17:35.289300544+00:00",
+  "version": "1.0"
+}

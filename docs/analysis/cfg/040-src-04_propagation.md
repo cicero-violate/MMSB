@@ -34,37 +34,35 @@ flowchart TD
 ## Function: `chunk_partitions`
 
 - File: MMSB/src/04_propagation/throughput_engine.rs
-- Branches: 3
-- Loops: 1
-- Nodes: 19
-- Edges: 22
+- Branches: 2
+- Loops: 0
+- Nodes: 17
+- Edges: 18
 
 ```mermaid
 flowchart TD
     chunk_partitions_0["ENTRY"]
     chunk_partitions_1["if partitions . is_empty ()"]
-    chunk_partitions_2["return Vec :: new ()"]
-    chunk_partitions_3["if join"]
-    chunk_partitions_4["let chunk_size = ((partitions . len () + workers - 1) / workers) . max (1)"]
-    chunk_partitions_5["let mut chunks = Vec :: new ()"]
-    chunk_partitions_6["let mut current = Vec :: with_capacity (chunk_size)"]
-    chunk_partitions_7["for entry in partitions"]
-    chunk_partitions_8["current . push (entry)"]
-    chunk_partitions_9["if current . len () == chunk_size"]
-    chunk_partitions_10["chunks . push (current)"]
-    chunk_partitions_11["current = Vec :: with_capacity (chunk_size)"]
-    chunk_partitions_12["if join"]
-    chunk_partitions_13["after for"]
-    chunk_partitions_14["if ! current . is_empty ()"]
-    chunk_partitions_15["chunks . push (current)"]
-    chunk_partitions_16["if join"]
-    chunk_partitions_17["chunks"]
-    chunk_partitions_18["EXIT"]
+    chunk_partitions_2["THEN BB"]
+    chunk_partitions_3["return Vec :: new ()"]
+    chunk_partitions_4["EMPTY ELSE"]
+    chunk_partitions_5["IF JOIN"]
+    chunk_partitions_6["let chunk_size = ((partitions . len () + workers - 1) / workers) . max (1)"]
+    chunk_partitions_7["let mut chunks = Vec :: new ()"]
+    chunk_partitions_8["let mut current = Vec :: with_capacity (chunk_size)"]
+    chunk_partitions_9["for entry in partitions { current . push (entry) ; if current . len () == chu..."]
+    chunk_partitions_10["if ! current . is_empty ()"]
+    chunk_partitions_11["THEN BB"]
+    chunk_partitions_12["chunks . push (current)"]
+    chunk_partitions_13["EMPTY ELSE"]
+    chunk_partitions_14["IF JOIN"]
+    chunk_partitions_15["chunks"]
+    chunk_partitions_16["EXIT"]
     chunk_partitions_0 --> chunk_partitions_1
     chunk_partitions_1 --> chunk_partitions_2
     chunk_partitions_2 --> chunk_partitions_3
-    chunk_partitions_1 --> chunk_partitions_3
-    chunk_partitions_3 --> chunk_partitions_4
+    chunk_partitions_1 --> chunk_partitions_4
+    chunk_partitions_3 --> chunk_partitions_5
     chunk_partitions_4 --> chunk_partitions_5
     chunk_partitions_5 --> chunk_partitions_6
     chunk_partitions_6 --> chunk_partitions_7
@@ -73,15 +71,11 @@ flowchart TD
     chunk_partitions_9 --> chunk_partitions_10
     chunk_partitions_10 --> chunk_partitions_11
     chunk_partitions_11 --> chunk_partitions_12
-    chunk_partitions_9 --> chunk_partitions_12
-    chunk_partitions_12 --> chunk_partitions_7
-    chunk_partitions_7 --> chunk_partitions_13
+    chunk_partitions_10 --> chunk_partitions_13
+    chunk_partitions_12 --> chunk_partitions_14
     chunk_partitions_13 --> chunk_partitions_14
     chunk_partitions_14 --> chunk_partitions_15
     chunk_partitions_15 --> chunk_partitions_16
-    chunk_partitions_14 --> chunk_partitions_16
-    chunk_partitions_16 --> chunk_partitions_17
-    chunk_partitions_17 --> chunk_partitions_18
 ```
 
 ## Function: `command`
@@ -106,64 +100,43 @@ flowchart TD
 ## Function: `delta_error_to_page`
 
 - File: MMSB/src/04_propagation/throughput_engine.rs
-- Branches: 3
+- Branches: 0
 - Loops: 0
-- Nodes: 10
-- Edges: 11
+- Nodes: 3
+- Edges: 2
 
 ```mermaid
 flowchart TD
     delta_error_to_page_0["ENTRY"]
-    delta_error_to_page_1["match err"]
-    delta_error_to_page_2["arm DeltaError :: SizeMismatch { mask_len , payload_len }"]
-    delta_error_to_page_3["PageError :: MaskSizeMismatch { expected : mask_len , found : payload_len , }"]
-    delta_error_to_page_4["arm DeltaError :: PageIDMismatch { expected , found }"]
-    delta_error_to_page_5["PageError :: PageIDMismatch { expected , found , }"]
-    delta_error_to_page_6["arm DeltaError :: MaskSizeMismatch { expected , found }"]
-    delta_error_to_page_7["PageError :: MaskSizeMismatch { expected , found , }"]
-    delta_error_to_page_8["match join"]
-    delta_error_to_page_9["EXIT"]
+    delta_error_to_page_1["match err { DeltaError :: SizeMismatch { mask_len , payload_len } => { PageEr..."]
+    delta_error_to_page_2["EXIT"]
     delta_error_to_page_0 --> delta_error_to_page_1
     delta_error_to_page_1 --> delta_error_to_page_2
-    delta_error_to_page_2 --> delta_error_to_page_3
-    delta_error_to_page_1 --> delta_error_to_page_4
-    delta_error_to_page_4 --> delta_error_to_page_5
-    delta_error_to_page_1 --> delta_error_to_page_6
-    delta_error_to_page_6 --> delta_error_to_page_7
-    delta_error_to_page_3 --> delta_error_to_page_8
-    delta_error_to_page_5 --> delta_error_to_page_8
-    delta_error_to_page_7 --> delta_error_to_page_8
-    delta_error_to_page_8 --> delta_error_to_page_9
 ```
 
 ## Function: `drain_batch_respects_bounds`
 
 - File: MMSB/src/04_propagation/propagation_queue.rs
 - Branches: 0
-- Loops: 1
-- Nodes: 9
-- Edges: 9
+- Loops: 0
+- Nodes: 7
+- Edges: 6
 
 ```mermaid
 flowchart TD
     drain_batch_respects_bounds_0["ENTRY"]
     drain_batch_respects_bounds_1["let queue = PropagationQueue :: with_capacity (8)"]
-    drain_batch_respects_bounds_2["for i in 0 .. 6"]
-    drain_batch_respects_bounds_3["queue . push (command (i))"]
-    drain_batch_respects_bounds_4["after for"]
-    drain_batch_respects_bounds_5["let drained = queue . drain_batch (4)"]
-    drain_batch_respects_bounds_6["macro assert_eq"]
-    drain_batch_respects_bounds_7["macro assert_eq"]
-    drain_batch_respects_bounds_8["EXIT"]
+    drain_batch_respects_bounds_2["for i in 0 .. 6 { queue . push (command (i)) ; }"]
+    drain_batch_respects_bounds_3["let drained = queue . drain_batch (4)"]
+    drain_batch_respects_bounds_4["macro assert_eq"]
+    drain_batch_respects_bounds_5["macro assert_eq"]
+    drain_batch_respects_bounds_6["EXIT"]
     drain_batch_respects_bounds_0 --> drain_batch_respects_bounds_1
     drain_batch_respects_bounds_1 --> drain_batch_respects_bounds_2
     drain_batch_respects_bounds_2 --> drain_batch_respects_bounds_3
-    drain_batch_respects_bounds_3 --> drain_batch_respects_bounds_2
-    drain_batch_respects_bounds_2 --> drain_batch_respects_bounds_4
+    drain_batch_respects_bounds_3 --> drain_batch_respects_bounds_4
     drain_batch_respects_bounds_4 --> drain_batch_respects_bounds_5
     drain_batch_respects_bounds_5 --> drain_batch_respects_bounds_6
-    drain_batch_respects_bounds_6 --> drain_batch_respects_bounds_7
-    drain_batch_respects_bounds_7 --> drain_batch_respects_bounds_8
 ```
 
 ## Function: `enqueue_sparse`
@@ -256,65 +229,50 @@ flowchart TD
 
 - File: MMSB/src/04_propagation/tick_orchestrator.rs
 - Branches: 0
-- Loops: 1
-- Nodes: 11
-- Edges: 11
+- Loops: 0
+- Nodes: 9
+- Edges: 8
 
 ```mermaid
 flowchart TD
     orchestrator_0["ENTRY"]
     orchestrator_1["let allocator = Arc :: new (PageAllocator :: new (PageAllocatorConfig :: default ()))"]
-    orchestrator_2["for id in 1 ..= 4"]
-    orchestrator_3["allocator . allocate_raw (PageID (id) , 32 , Some (PageLocation :: Cpu)) . un..."]
-    orchestrator_4["after for"]
-    orchestrator_5["let throughput = ThroughputEngine :: new (Arc :: clone (& allocator) , 2 , 64)"]
-    orchestrator_6["let graph = Arc :: new (ShadowPageGraph :: default ())"]
-    orchestrator_7["graph . add_edge (PageID (1) , PageID (2) , EdgeType :: Data)"]
-    orchestrator_8["let memory : Arc < dyn MemoryPressureHandler > = Arc :: new (TestMemoryHandler :: new (32 , threshold != usize :: MAX))"]
-    orchestrator_9["(TickOrchestrator :: new (throughput , graph , memory) , allocator ,)"]
-    orchestrator_10["EXIT"]
+    orchestrator_2["for id in 1 ..= 4 { allocator . allocate_raw (PageID (id) , 32 , Some (PageLo..."]
+    orchestrator_3["let throughput = ThroughputEngine :: new (Arc :: clone (& allocator) , 2 , 64)"]
+    orchestrator_4["let graph = Arc :: new (ShadowPageGraph :: default ())"]
+    orchestrator_5["graph . add_edge (PageID (1) , PageID (2) , EdgeType :: Data)"]
+    orchestrator_6["let memory : Arc < dyn MemoryPressureHandler > = Arc :: new (TestMemoryHandler :: new (32 , threshold != usize :: MAX))"]
+    orchestrator_7["(TickOrchestrator :: new (throughput , graph , memory) , allocator ,)"]
+    orchestrator_8["EXIT"]
     orchestrator_0 --> orchestrator_1
     orchestrator_1 --> orchestrator_2
     orchestrator_2 --> orchestrator_3
-    orchestrator_3 --> orchestrator_2
-    orchestrator_2 --> orchestrator_4
+    orchestrator_3 --> orchestrator_4
     orchestrator_4 --> orchestrator_5
     orchestrator_5 --> orchestrator_6
     orchestrator_6 --> orchestrator_7
     orchestrator_7 --> orchestrator_8
-    orchestrator_8 --> orchestrator_9
-    orchestrator_9 --> orchestrator_10
 ```
 
 ## Function: `partition_by_page`
 
 - File: MMSB/src/04_propagation/throughput_engine.rs
-- Branches: 1
-- Loops: 1
-- Nodes: 9
-- Edges: 10
+- Branches: 0
+- Loops: 0
+- Nodes: 5
+- Edges: 4
 
 ```mermaid
 flowchart TD
     partition_by_page_0["ENTRY"]
     partition_by_page_1["let mut map : HashMap < PageID , Vec < usize > > = HashMap :: new ()"]
-    partition_by_page_2["for idx in 0 .. batch . len ()"]
-    partition_by_page_3["if let Some (page_id) = batch . page_id_at (idx)"]
-    partition_by_page_4["map . entry (page_id) . or_default () . push (idx)"]
-    partition_by_page_5["if join"]
-    partition_by_page_6["after for"]
-    partition_by_page_7["map . into_iter () . collect ()"]
-    partition_by_page_8["EXIT"]
+    partition_by_page_2["for idx in 0 .. batch . len () { if let Some (page_id) = batch . page_id_at (..."]
+    partition_by_page_3["map . into_iter () . collect ()"]
+    partition_by_page_4["EXIT"]
     partition_by_page_0 --> partition_by_page_1
     partition_by_page_1 --> partition_by_page_2
     partition_by_page_2 --> partition_by_page_3
     partition_by_page_3 --> partition_by_page_4
-    partition_by_page_4 --> partition_by_page_5
-    partition_by_page_3 --> partition_by_page_5
-    partition_by_page_5 --> partition_by_page_2
-    partition_by_page_2 --> partition_by_page_6
-    partition_by_page_6 --> partition_by_page_7
-    partition_by_page_7 --> partition_by_page_8
 ```
 
 ## Function: `passthrough`
@@ -335,139 +293,80 @@ flowchart TD
 ## Function: `process_chunk`
 
 - File: MMSB/src/04_propagation/throughput_engine.rs
-- Branches: 3
-- Loops: 2
-- Nodes: 20
-- Edges: 24
+- Branches: 0
+- Loops: 0
+- Nodes: 5
+- Edges: 4
 
 ```mermaid
 flowchart TD
     process_chunk_0["ENTRY"]
     process_chunk_1["let mut processed = 0usize"]
-    process_chunk_2["for (page_id , indexes) in chunk"]
-    process_chunk_3["let ptr = allocator . acquire_page (page_id) . ok_or (PageError :: PageNotFound (page_i..."]
-    process_chunk_4["if indexes . is_empty ()"]
-    process_chunk_5["continue"]
-    process_chunk_6["if join"]
-    process_chunk_7["let mut merged : Option < Delta > = None"]
-    process_chunk_8["for idx in indexes"]
-    process_chunk_9["if let Some (delta) = batch . delta_at (idx)"]
-    process_chunk_10["processed += 1"]
-    process_chunk_11["merged = Some (match merged { Some (ref current) => merge_deltas (current , &..."]
-    process_chunk_12["if join"]
-    process_chunk_13["after for"]
-    process_chunk_14["if let Some (final_delta) = merged"]
-    process_chunk_15["unsafe { (* ptr) . apply_delta (& final_delta) ? ; }"]
-    process_chunk_16["if join"]
-    process_chunk_17["after for"]
-    process_chunk_18["Ok (processed)"]
-    process_chunk_19["EXIT"]
+    process_chunk_2["for (page_id , indexes) in chunk { let ptr = allocator . acquire_page (page_i..."]
+    process_chunk_3["Ok (processed)"]
+    process_chunk_4["EXIT"]
     process_chunk_0 --> process_chunk_1
     process_chunk_1 --> process_chunk_2
     process_chunk_2 --> process_chunk_3
     process_chunk_3 --> process_chunk_4
-    process_chunk_4 --> process_chunk_5
-    process_chunk_5 --> process_chunk_6
-    process_chunk_4 --> process_chunk_6
-    process_chunk_6 --> process_chunk_7
-    process_chunk_7 --> process_chunk_8
-    process_chunk_8 --> process_chunk_9
-    process_chunk_9 --> process_chunk_10
-    process_chunk_10 --> process_chunk_11
-    process_chunk_11 --> process_chunk_12
-    process_chunk_9 --> process_chunk_12
-    process_chunk_12 --> process_chunk_8
-    process_chunk_8 --> process_chunk_13
-    process_chunk_13 --> process_chunk_14
-    process_chunk_14 --> process_chunk_15
-    process_chunk_15 --> process_chunk_16
-    process_chunk_14 --> process_chunk_16
-    process_chunk_16 --> process_chunk_2
-    process_chunk_2 --> process_chunk_17
-    process_chunk_17 --> process_chunk_18
-    process_chunk_18 --> process_chunk_19
 ```
 
 ## Function: `queue_roundtrip`
 
 - File: MMSB/src/04_propagation/propagation_queue.rs
 - Branches: 0
-- Loops: 2
-- Nodes: 12
-- Edges: 13
+- Loops: 0
+- Nodes: 7
+- Edges: 6
 
 ```mermaid
 flowchart TD
     queue_roundtrip_0["ENTRY"]
     queue_roundtrip_1["let queue = PropagationQueue :: with_capacity (8)"]
-    queue_roundtrip_2["for i in 0 .. 8"]
-    queue_roundtrip_3["queue . push (command (i))"]
-    queue_roundtrip_4["after for"]
-    queue_roundtrip_5["macro assert_eq"]
-    queue_roundtrip_6["for i in 0 .. 8"]
-    queue_roundtrip_7["let popped = queue . pop () . unwrap ()"]
-    queue_roundtrip_8["macro assert_eq"]
-    queue_roundtrip_9["after for"]
-    queue_roundtrip_10["macro assert"]
-    queue_roundtrip_11["EXIT"]
+    queue_roundtrip_2["for i in 0 .. 8 { queue . push (command (i)) ; }"]
+    queue_roundtrip_3["macro assert_eq"]
+    queue_roundtrip_4["for i in 0 .. 8 { let popped = queue . pop () . unwrap () ; assert_eq ! (popp..."]
+    queue_roundtrip_5["macro assert"]
+    queue_roundtrip_6["EXIT"]
     queue_roundtrip_0 --> queue_roundtrip_1
     queue_roundtrip_1 --> queue_roundtrip_2
     queue_roundtrip_2 --> queue_roundtrip_3
-    queue_roundtrip_3 --> queue_roundtrip_2
-    queue_roundtrip_2 --> queue_roundtrip_4
+    queue_roundtrip_3 --> queue_roundtrip_4
     queue_roundtrip_4 --> queue_roundtrip_5
     queue_roundtrip_5 --> queue_roundtrip_6
-    queue_roundtrip_6 --> queue_roundtrip_7
-    queue_roundtrip_7 --> queue_roundtrip_8
-    queue_roundtrip_8 --> queue_roundtrip_6
-    queue_roundtrip_6 --> queue_roundtrip_9
-    queue_roundtrip_9 --> queue_roundtrip_10
-    queue_roundtrip_10 --> queue_roundtrip_11
 ```
 
 ## Function: `reports_nonzero_throughput_for_large_batches`
 
 - File: MMSB/src/04_propagation/throughput_engine.rs
 - Branches: 0
-- Loops: 2
-- Nodes: 16
-- Edges: 17
+- Loops: 0
+- Nodes: 11
+- Edges: 10
 
 ```mermaid
 flowchart TD
     reports_nonzero_throughput_for_large_batches_0["ENTRY"]
     reports_nonzero_throughput_for_large_batches_1["let allocator = Arc :: new (PageAllocator :: new (Default :: default ()))"]
-    reports_nonzero_throughput_for_large_batches_2["for id in 1 ..= 8"]
-    reports_nonzero_throughput_for_large_batches_3["allocator . allocate_raw (PageID (id) , 8 , Some (PageLocation :: Cpu)) . unw..."]
-    reports_nonzero_throughput_for_large_batches_4["after for"]
-    reports_nonzero_throughput_for_large_batches_5["let engine = ThroughputEngine :: new (Arc :: clone (& allocator) , 4 , 256)"]
-    reports_nonzero_throughput_for_large_batches_6["let mut deltas = Vec :: new ()"]
-    reports_nonzero_throughput_for_large_batches_7["for i in 0 .. 2000u64"]
-    reports_nonzero_throughput_for_large_batches_8["let page = 1 + (i % 8)"]
-    reports_nonzero_throughput_for_large_batches_9["deltas . push (make_delta (i + 1 , page , & [i as u8 ; 8]))"]
-    reports_nonzero_throughput_for_large_batches_10["after for"]
-    reports_nonzero_throughput_for_large_batches_11["let metrics = engine . process_parallel (deltas) . unwrap ()"]
-    reports_nonzero_throughput_for_large_batches_12["macro assert_eq"]
-    reports_nonzero_throughput_for_large_batches_13["macro assert"]
-    reports_nonzero_throughput_for_large_batches_14["macro assert"]
-    reports_nonzero_throughput_for_large_batches_15["EXIT"]
+    reports_nonzero_throughput_for_large_batches_2["for id in 1 ..= 8 { allocator . allocate_raw (PageID (id) , 8 , Some (PageLoc..."]
+    reports_nonzero_throughput_for_large_batches_3["let engine = ThroughputEngine :: new (Arc :: clone (& allocator) , 4 , 256)"]
+    reports_nonzero_throughput_for_large_batches_4["let mut deltas = Vec :: new ()"]
+    reports_nonzero_throughput_for_large_batches_5["for i in 0 .. 2000u64 { let page = 1 + (i % 8) ; deltas . push (make_delta (i..."]
+    reports_nonzero_throughput_for_large_batches_6["let metrics = engine . process_parallel (deltas) . unwrap ()"]
+    reports_nonzero_throughput_for_large_batches_7["macro assert_eq"]
+    reports_nonzero_throughput_for_large_batches_8["macro assert"]
+    reports_nonzero_throughput_for_large_batches_9["macro assert"]
+    reports_nonzero_throughput_for_large_batches_10["EXIT"]
     reports_nonzero_throughput_for_large_batches_0 --> reports_nonzero_throughput_for_large_batches_1
     reports_nonzero_throughput_for_large_batches_1 --> reports_nonzero_throughput_for_large_batches_2
     reports_nonzero_throughput_for_large_batches_2 --> reports_nonzero_throughput_for_large_batches_3
-    reports_nonzero_throughput_for_large_batches_3 --> reports_nonzero_throughput_for_large_batches_2
-    reports_nonzero_throughput_for_large_batches_2 --> reports_nonzero_throughput_for_large_batches_4
+    reports_nonzero_throughput_for_large_batches_3 --> reports_nonzero_throughput_for_large_batches_4
     reports_nonzero_throughput_for_large_batches_4 --> reports_nonzero_throughput_for_large_batches_5
     reports_nonzero_throughput_for_large_batches_5 --> reports_nonzero_throughput_for_large_batches_6
     reports_nonzero_throughput_for_large_batches_6 --> reports_nonzero_throughput_for_large_batches_7
     reports_nonzero_throughput_for_large_batches_7 --> reports_nonzero_throughput_for_large_batches_8
     reports_nonzero_throughput_for_large_batches_8 --> reports_nonzero_throughput_for_large_batches_9
-    reports_nonzero_throughput_for_large_batches_9 --> reports_nonzero_throughput_for_large_batches_7
-    reports_nonzero_throughput_for_large_batches_7 --> reports_nonzero_throughput_for_large_batches_10
-    reports_nonzero_throughput_for_large_batches_10 --> reports_nonzero_throughput_for_large_batches_11
-    reports_nonzero_throughput_for_large_batches_11 --> reports_nonzero_throughput_for_large_batches_12
-    reports_nonzero_throughput_for_large_batches_12 --> reports_nonzero_throughput_for_large_batches_13
-    reports_nonzero_throughput_for_large_batches_13 --> reports_nonzero_throughput_for_large_batches_14
-    reports_nonzero_throughput_for_large_batches_14 --> reports_nonzero_throughput_for_large_batches_15
+    reports_nonzero_throughput_for_large_batches_9 --> reports_nonzero_throughput_for_large_batches_10
 ```
 
 ## Function: `sample_delta`
@@ -520,9 +419,9 @@ flowchart TD
 
 - File: MMSB/src/04_propagation/ring_buffer.rs
 - Branches: 0
-- Loops: 3
-- Nodes: 22
-- Edges: 24
+- Loops: 0
+- Nodes: 12
+- Edges: 11
 
 ```mermaid
 flowchart TD
@@ -532,22 +431,12 @@ flowchart TD
     test_concurrent_producers_consumers_3["let produced = Arc :: new (AtomicUsize :: new (0))"]
     test_concurrent_producers_consumers_4["let consumed = Arc :: new (AtomicUsize :: new (0))"]
     test_concurrent_producers_consumers_5["let mut handles = Vec :: new ()"]
-    test_concurrent_producers_consumers_6["for _ in 0 .. 4"]
-    test_concurrent_producers_consumers_7["let buf = Arc :: clone (& buffer)"]
-    test_concurrent_producers_consumers_8["let counter = Arc :: clone (& produced)"]
-    test_concurrent_producers_consumers_9["handles . push (thread :: spawn (move | | { loop { let next = counter . fetch..."]
-    test_concurrent_producers_consumers_10["after for"]
-    test_concurrent_producers_consumers_11["for _ in 0 .. 2"]
-    test_concurrent_producers_consumers_12["let buf = Arc :: clone (& buffer)"]
-    test_concurrent_producers_consumers_13["let counter = Arc :: clone (& consumed)"]
-    test_concurrent_producers_consumers_14["handles . push (thread :: spawn (move | | { while counter . load (Ordering ::..."]
-    test_concurrent_producers_consumers_15["after for"]
-    test_concurrent_producers_consumers_16["for handle in handles"]
-    test_concurrent_producers_consumers_17["handle . join () . unwrap ()"]
-    test_concurrent_producers_consumers_18["after for"]
-    test_concurrent_producers_consumers_19["macro assert_eq"]
-    test_concurrent_producers_consumers_20["macro assert"]
-    test_concurrent_producers_consumers_21["EXIT"]
+    test_concurrent_producers_consumers_6["for _ in 0 .. 4 { let buf = Arc :: clone (& buffer) ; let counter = Arc :: cl..."]
+    test_concurrent_producers_consumers_7["for _ in 0 .. 2 { let buf = Arc :: clone (& buffer) ; let counter = Arc :: cl..."]
+    test_concurrent_producers_consumers_8["for handle in handles { handle . join () . unwrap () ; }"]
+    test_concurrent_producers_consumers_9["macro assert_eq"]
+    test_concurrent_producers_consumers_10["macro assert"]
+    test_concurrent_producers_consumers_11["EXIT"]
     test_concurrent_producers_consumers_0 --> test_concurrent_producers_consumers_1
     test_concurrent_producers_consumers_1 --> test_concurrent_producers_consumers_2
     test_concurrent_producers_consumers_2 --> test_concurrent_producers_consumers_3
@@ -557,21 +446,8 @@ flowchart TD
     test_concurrent_producers_consumers_6 --> test_concurrent_producers_consumers_7
     test_concurrent_producers_consumers_7 --> test_concurrent_producers_consumers_8
     test_concurrent_producers_consumers_8 --> test_concurrent_producers_consumers_9
-    test_concurrent_producers_consumers_9 --> test_concurrent_producers_consumers_6
-    test_concurrent_producers_consumers_6 --> test_concurrent_producers_consumers_10
+    test_concurrent_producers_consumers_9 --> test_concurrent_producers_consumers_10
     test_concurrent_producers_consumers_10 --> test_concurrent_producers_consumers_11
-    test_concurrent_producers_consumers_11 --> test_concurrent_producers_consumers_12
-    test_concurrent_producers_consumers_12 --> test_concurrent_producers_consumers_13
-    test_concurrent_producers_consumers_13 --> test_concurrent_producers_consumers_14
-    test_concurrent_producers_consumers_14 --> test_concurrent_producers_consumers_11
-    test_concurrent_producers_consumers_11 --> test_concurrent_producers_consumers_15
-    test_concurrent_producers_consumers_15 --> test_concurrent_producers_consumers_16
-    test_concurrent_producers_consumers_16 --> test_concurrent_producers_consumers_17
-    test_concurrent_producers_consumers_17 --> test_concurrent_producers_consumers_16
-    test_concurrent_producers_consumers_16 --> test_concurrent_producers_consumers_18
-    test_concurrent_producers_consumers_18 --> test_concurrent_producers_consumers_19
-    test_concurrent_producers_consumers_19 --> test_concurrent_producers_consumers_20
-    test_concurrent_producers_consumers_20 --> test_concurrent_producers_consumers_21
 ```
 
 ## Function: `test_wraparound_behavior`

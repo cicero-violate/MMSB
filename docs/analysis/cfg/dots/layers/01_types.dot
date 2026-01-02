@@ -3,7 +3,7 @@ digraph LayerCFG {
   compound=true;
   newrank=true;
 
-  label="01_types - 3 functions from 2 files";
+  label="01_types - 7 functions from 3 files";
   labelloc=t;
   fontsize=18;
 
@@ -36,17 +36,89 @@ digraph LayerCFG {
   }
 
   subgraph cluster_3 {
-    label="register_page! (MMSBState.jl, CC=1)";
+    label="get_pooled_state! (StateManagement.jl, CC=1)";
     style=filled;
     fillcolor=lightgray;
     color=black;
 
     f3_n326 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
     f3_n327 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
-    f3_n328 [label="BB1 L136", shape=box, fillcolor=lightblue, style="filled"];
+    f3_n328 [label="BRANCH1 L47", shape=diamond, fillcolor=yellow, style="filled"];
+    f3_n329 [label="RETURN2 L48,49,50,51", shape=box, fillcolor=lightblue, style="filled"];
+    f3_n330 [label="RETURN3 L53", shape=box, fillcolor=lightblue, style="filled"];
 
     f3_n326 -> f3_n328;
-    f3_n328 -> f3_n327;
+    f3_n328 -> f3_n329 [label="T", color="darkgreen"];
+    f3_n328 -> f3_n330 [label="F", color="red"];
+    f3_n330 -> f3_n327;
+  }
+
+  subgraph cluster_4 {
+    label="register_page! (MMSBState.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f4_n331 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f4_n332 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f4_n333 [label="BB1 L136", shape=box, fillcolor=lightblue, style="filled"];
+
+    f4_n331 -> f4_n333;
+    f4_n333 -> f4_n332;
+  }
+
+  subgraph cluster_5 {
+    label="reset! (MMSBState.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f5_n334 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f5_n335 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f5_n336 [label="RETURN1 L158,177", shape=box, fillcolor=lightblue, style="filled"];
+
+    f5_n334 -> f5_n336;
+    f5_n336 -> f5_n335;
+  }
+
+  subgraph cluster_6 {
+    label="reset_state! (StateManagement.jl, CC=3)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f6_n337 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f6_n338 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f6_n339 [label="BB1 L23", shape=box, fillcolor=lightblue, style="filled"];
+    f6_n340 [label="BRANCH2 L27", shape=diamond, fillcolor=yellow, style="filled"];
+    f6_n341 [label="BB3 L28", shape=box, fillcolor=lightblue, style="filled"];
+    f6_n342 [label="BRANCH4 L29", shape=diamond, fillcolor=yellow, style="filled"];
+    f6_n343 [label="BB5 L30", shape=box, fillcolor=lightblue, style="filled"];
+    f6_n344 [label="RETURN6 L34", shape=box, fillcolor=lightblue, style="filled"];
+
+    f6_n337 -> f6_n339;
+    f6_n339 -> f6_n340;
+    f6_n340 -> f6_n341 [label="T", color="darkgreen"];
+    f6_n340 -> f6_n342 [label="F", color="red"];
+    f6_n341 -> f6_n342;
+    f6_n342 -> f6_n343 [label="T", color="darkgreen"];
+    f6_n342 -> f6_n344 [label="F", color="red"];
+    f6_n343 -> f6_n344;
+    f6_n344 -> f6_n338;
+  }
+
+  subgraph cluster_7 {
+    label="return_to_pool! (StateManagement.jl, CC=1)";
+    style=filled;
+    fillcolor=lightgray;
+    color=black;
+
+    f7_n345 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
+    f7_n346 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
+    f7_n347 [label="RETURN1 L62,63", shape=box, fillcolor=lightblue, style="filled"];
+
+    f7_n345 -> f7_n347;
+    f7_n347 -> f7_n346;
   }
 
   // Inter-function calls
@@ -54,4 +126,7 @@ digraph LayerCFG {
 
   f2_n324 -> f2_n323 [ltail=cluster_2, lhead=cluster_2, label="call"];
   f2_n324 -> f1_n320 [ltail=cluster_2, lhead=cluster_1, label="call"];
+  f6_n338 -> f5_n334 [ltail=cluster_6, lhead=cluster_5, label="call"];
+  f3_n327 -> f6_n337 [ltail=cluster_3, lhead=cluster_6, label="call"];
+  f3_n327 -> f2_n323 [ltail=cluster_3, lhead=cluster_2, label="call"];
 }

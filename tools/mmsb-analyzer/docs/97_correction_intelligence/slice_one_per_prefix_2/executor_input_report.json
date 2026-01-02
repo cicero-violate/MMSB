@@ -1,0 +1,629 @@
+{
+  "version": "1.0",
+  "timestamp": "2025-12-31T07:19:02.303340624+00:00",
+  "correction_summary": {
+    "trivial_count": 6,
+    "moderate_count": 0,
+    "complex_count": 63,
+    "total_predicted_violations": 69,
+    "average_confidence": 0.6826086956521743,
+    "estimated_total_fix_time_seconds": 1035
+  },
+  "plans": [
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/005_refactor_constraints.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/010_refactor_constraints.rs",
+      "tier": "Complex",
+      "confidence": 0.7,
+      "estimated_fix_time_seconds": 15,
+      "violations": [
+        {
+          "kind": "BrokenReference",
+          "severity": "High",
+          "confidence": 0.7,
+          "affected_files": 2
+        }
+      ],
+      "verification": {
+        "scope": "FullWorkspace",
+        "scope_details": [],
+        "incremental_eligible": false,
+        "estimated_time_seconds": 180
+      },
+      "strategies": [
+        {
+          "kind": "UpdatePath",
+          "context": null
+        }
+      ]
+    },
+    {
+      "action_id": "create_file_src/231_correction_plan_serializer.rs",
+      "tier": "Trivial",
+      "confidence": 0.5,
+      "estimated_fix_time_seconds": 15,
+      "violations": [
+        {
+          "kind": "UnresolvedImport",
+          "severity": "Low",
+          "confidence": 0.5,
+          "affected_files": 1
+        }
+      ],
+      "verification": {
+        "scope": "SyntaxOnly",
+        "scope_details": [
+          "files:1"
+        ],
+        "incremental_eligible": true,
+        "estimated_time_seconds": 10
+      },
+      "strategies": []
+    }
+  ],
+  "policies": [
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/005_refactor_constraints.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/010_refactor_constraints.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/010_cluster_008.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/020_cluster_008.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/010_invariant_types.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/030_invariant_types.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/010_scc_compressor.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/040_scc_compressor.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/020_cluster_010.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/050_cluster_010.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/020_layer_inference.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/060_layer_inference.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/030_cluster_011.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/070_cluster_011.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/030_fixpoint_solver.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/080_fixpoint_solver.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/040_dependency.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/090_dependency.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/040_structural_detector.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/100_structural_detector.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/050_cluster_006.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/110_cluster_006.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/050_semantic_detector.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/120_semantic_detector.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/060_layer_core.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/130_layer_core.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/060_path_detector.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/140_path_detector.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/070_invariant_integrator.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/150_invariant_integrator.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/070_layer_utilities.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/160_layer_utilities.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/080_invariant_reporter.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/170_invariant_reporter.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/082_conscience_graph.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/180_conscience_graph.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/083_action_validator.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_action_validator.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/085_agent_conscience.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_agent_conscience.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/090_utilities.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/210_utilities.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/100_types.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/220_types.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/110_cohesion_analyzer.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/230_cohesion_analyzer.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/120_directory_analyzer.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/240_directory_analyzer.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/130_control_flow.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/250_control_flow.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/140_file_ordering.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/260_file_ordering.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/150_julia_parser.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/270_julia_parser.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/160_rust_parser.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/280_rust_parser.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/170_dot_exporter.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/290_dot_exporter.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/170_file_gathering.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/300_file_gathering.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/180_report.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/310_report.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/320_main.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/191_agent_cli.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/330_agent_cli.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/340_lib.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/210_dead_code_types.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/350_dead_code_types.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/211_dead_code_attribute_parser.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/360_dead_code_attribute_parser.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/212_dead_code_doc_comment_parser.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/370_dead_code_doc_comment_parser.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/213_dead_code_call_graph.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/380_dead_code_call_graph.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/214_dead_code_intent.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/390_dead_code_intent.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/215_dead_code_test_boundaries.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/400_dead_code_test_boundaries.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/216_dead_code_entrypoints.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/410_dead_code_entrypoints.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/217_dead_code_classifier.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/420_dead_code_classifier.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/218_dead_code_confidence.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/430_dead_code_confidence.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/219_dead_code_actions.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/440_dead_code_actions.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/220_correction_plan_types.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/450_correction_plan_types.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/220_dead_code_report.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/460_dead_code_report.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/221_dead_code_filter.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/470_dead_code_filter.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/221_verification_policy_types.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/480_verification_policy_types.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/222_dead_code_cli.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/490_dead_code_cli.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/222_quality_delta_types.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/500_quality_delta_types.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/223_dead_code_policy.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/510_dead_code_policy.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/223_violation_predictor.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/520_violation_predictor.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/224_dead_code_report_split.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/530_dead_code_report_split.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/224_tier_classifier.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/540_tier_classifier.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/225_confidence_scorer.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/550_confidence_scorer.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/226_correction_plan_generator.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/560_correction_plan_generator.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/227_verification_scope_planner.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/570_verification_scope_planner.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/228_rollback_criteria_builder.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/580_rollback_criteria_builder.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/229_quality_delta_calculator.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/590_quality_delta_calculator.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/230_action_impact_estimator.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/600_action_impact_estimator.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/231_correction_plan_serializer.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/610_correction_plan_serializer.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/232_verification_policy_emitter.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/620_verification_policy_emitter.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/233_correction_intelligence_report.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/630_correction_intelligence_report.rs",
+      "scope": "FullWorkspace",
+      "scope_details": [],
+      "incremental": false,
+      "estimated_time_seconds": 180,
+      "checks": 2
+    },
+    {
+      "action_id": "create_file_src/226_correction_plan_generator.rs",
+      "scope": "SyntaxOnly",
+      "scope_details": [
+        "files:1"
+      ],
+      "incremental": true,
+      "estimated_time_seconds": 10,
+      "checks": 1
+    },
+    {
+      "action_id": "create_file_src/231_correction_plan_serializer.rs",
+      "scope": "SyntaxOnly",
+      "scope_details": [
+        "files:1"
+      ],
+      "incremental": true,
+      "estimated_time_seconds": 10,
+      "checks": 1
+    },
+    {
+      "action_id": "create_file_src/211_dead_code_attribute_parser.rs",
+      "scope": "SyntaxOnly",
+      "scope_details": [
+        "files:1"
+      ],
+      "incremental": true,
+      "estimated_time_seconds": 10,
+      "checks": 1
+    },
+    {
+      "action_id": "create_file_src/216_dead_code_entrypoints.rs",
+      "scope": "SyntaxOnly",
+      "scope_details": [
+        "files:1"
+      ],
+      "incremental": true,
+      "estimated_time_seconds": 10,
+      "checks": 1
+    },
+    {
+      "action_id": "create_file_src/070_layer_utilities.rs",
+      "scope": "SyntaxOnly",
+      "scope_details": [
+        "files:1"
+      ],
+      "incremental": true,
+      "estimated_time_seconds": 10,
+      "checks": 1
+    },
+    {
+      "action_id": "create_file_src/010_cluster_008.rs",
+      "scope": "SyntaxOnly",
+      "scope_details": [
+        "files:1"
+      ],
+      "incremental": true,
+      "estimated_time_seconds": 10,
+      "checks": 1
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+# Structure Group: src/000_dependency_analysis.rs
+
+## File: src/000_dependency_analysis.rs
+
+- Layer(s): 000_dependency_analysis.rs
+- Language coverage: Rust (29)
+- Element types: Enum (2), Function (22), Impl (1), Module (1), Struct (3)
+- Total elements: 29
+
+### Elements
+
+- [Rust | Enum] `CrateRootState` (line 0, priv)
+- [Rust | Struct] `JuliaDependency` (line 0, pub(crate))
+  - Signature: `# [derive (Clone)] pub (crate) struct JuliaDependency { pub (crate) target : JuliaTarget , pub (crate) detail : Strin...`
+- [Rust | Enum] `JuliaTarget` (line 0, pub(crate))
+- [Rust | Struct] `RustDependency` (line 0, priv)
+  - Signature: `# [derive (Clone)] struct RustDependency { root : String , detail : String , }`
+- [Rust | Struct] `UseCollector` (line 0, priv)
+  - Signature: `# [derive (Default)] struct UseCollector { deps : Vec < RustDependency > , }`
+- [Rust | Impl] `Visit for impl < 'ast > Visit < 'ast > for UseCollector { fn visit_item_use (& mut self , node : & 'ast ItemUse) { let mut roots = BTreeSet :: new () ; collect_roots_from_crate (& node . tree , CrateRootState :: Start , & mut roots) ; let stmt = quote :: quote ! (# node) . to_string () ; for root in roots { self . deps . push (RustDependency { root , detail : stmt . clone () , }) ; } } } . self_ty` (line 0, priv)
+- [Rust | Function] `analyze_file_ordering` (line 0, pub)
+  - Signature: `pub fn analyze_file_ordering (files : & [PathBuf] , step : Option < usize > ,) -> Result < crate :: types :: FileOrde...`
+  - Calls: unwrap_or, collect, cloned, iter, crate::cluster_011::build_module_map, crate::cluster_010::build_dependency_map, build_file_layers, crate::layer_core::order_directories, crate::cluster_011::build_file_dag, crate::cluster_008::detect_layer_violations, detect_cycles, is_empty, unwrap_or_else, crate::layer_core::layer_constrained_sort, unwrap_or_else, topological_sort, ordered_by_name, ordered_by_name, collect, map, into_iter, clone, build_entries, detect_violations, Ok
+- [Rust | Function] `build_directory_entry_map` (line 0, pub)
+  - Signature: `pub fn build_directory_entry_map (files : & [PathBuf] ,) -> Result < HashMap < PathBuf , crate :: types :: FileOrderE...`
+  - Calls: is_empty, Ok, HashMap::new, collect, cloned, iter, crate::cluster_011::build_module_map, build_dependency_map, build_file_layers, build_file_dag, detect_cycles, is_empty, unwrap_or_else, layer_constrained_sort, unwrap_or_else, topological_sort, ordered_by_name, ordered_by_name, collect, map, into_iter, clone, build_entries, Vec::new, Vec::new, Vec::new, HashMap::new, insert, clone, Ok
+- [Rust | Function] `build_entries` (line 0, pub)
+  - Signature: `# [doc = " Builds file ordering entries with canonical names and rename flags"] pub fn build_entries (ordered : & [Pa...`
+  - Calls: collect, map, enumerate, iter, crate::cluster_006::generate_canonical_name, unwrap_or, map, and_then, file_name, to_str, clone
+- [Rust | Function] `build_file_layers` (line 0, pub)
+  - Signature: `pub fn build_file_layers (files : & [PathBuf]) -> HashMap < PathBuf , String > { let mut layers = HashMap :: new () ;...`
+  - Calls: HashMap::new, insert, clone, detect_layer
+- [Rust | Function] `collect_julia_dependencies` (line 0, pub(crate))
+  - Signature: `pub (crate) fn collect_julia_dependencies (path : & Path) -> Result < Vec < JuliaDependency > > { let content = fs ::...`
+  - Calls: with_context, fs::read_to_string, Vec::new, captures_iter, get, PathBuf::from, as_str, unwrap_or_default, map, get, to_string, trim, as_str, push, JuliaTarget::Include, captures_iter, get, as_str, to_string, unwrap_or, next, split, unwrap_or_default, map, get, to_string, trim, as_str, push, JuliaTarget::Module, captures_iter, get, unwrap_or_default, map, get, to_string, trim, as_str, filter, map, split, as_str, trim, is_empty, to_string, unwrap_or, next, split, push, JuliaTarget::Module, clone, captures_iter, get, as_str, unwrap_or_default, map, get, to_string, trim, as_str, push, JuliaTarget::Module, to_string, Ok
+- [Rust | Function] `collect_naming_warnings` (line 0, pub)
+  - Signature: `pub fn collect_naming_warnings (directory : & crate :: types :: DirectoryAnalysis , config : & crate :: report :: Rep...`
+  - Calls: any, components, as_os_str, Ok, build_directory_entry_map, any, components, as_os_str, get, naming_score_for_file, unwrap_or, map, as_str, push, collect_naming_warnings, Ok
+- [Rust | Function] `collect_rust_dependencies` (line 0, priv)
+  - Signature: `fn collect_rust_dependencies (path : & Path) -> Result < Vec < RustDependency > > { let content = fs :: read_to_strin...`
+  - Calls: with_context, fs::read_to_string, with_context, syn::parse_file, UseCollector::default, visit_file, Ok
+- [Rust | Function] `detect_cycles` (line 0, pub(crate))
+  - Signature: `pub (crate) fn detect_cycles (graph : & DiGraph < PathBuf , () > , files : & [PathBuf] ,) -> Vec < Vec < PathBuf > > ...`
+  - Calls: tarjan_scc, Vec::new, len, push, collect, map, into_iter, clone, is_empty, all, iter, is_empty, to_vec, sort, push
+- [Rust | Function] `detect_layer` (line 0, pub)
+  - Signature: `# [doc = " Detects the layer identifier from a path by finding first digit-prefixed component"] pub fn detect_layer (...`
+  - Calls: components, to_str, as_os_str, next, chars, is_ascii_digit, find, all, chars, is_ascii_digit, to_string, to_string
+- [Rust | Function] `detect_violations` (line 0, pub(crate))
+  - Signature: `pub (crate) fn detect_violations (ordered_files : & [crate :: types :: FileOrderEntry] , dep_map : & HashMap < PathBu...`
+  - Calls: to_vec, sort_by, cmp, collect, map, enumerate, iter, clone, collect, map, enumerate, iter, clone, Vec::new, get, get, unwrap_or_default, map, get, collect, cloned, filter, iter, unwrap_or, copied, get, push, clone
+- [Rust | Function] `export_complete_program_dot` (line 0, pub)
+  - Signature: `# [doc = " Exports a complete program CFG to DOT format"] pub fn export_complete_program_dot (program : & crate :: ty...`
+  - Calls: replace, replace, replace, String::new, unwrap, unwrap, unwrap, unwrap, unwrap, unwrap, unwrap, unwrap, collect, iter, sort_by_key, as_str, HashMap::new, enumerate, iter, replace, crate::cluster_008::cyclomatic_complexity, insert, unwrap, unwrap, unwrap, unwrap, unwrap, unwrap, crate::cluster_008::node_style, clone, is_empty, join, collect, map, iter, to_string, unwrap, unwrap, Vec::new, push, push, is_empty, to_string, unwrap, unwrap, unwrap, unwrap, unwrap, unwrap, get, get, get, get, unwrap, unwrap, std::fs::write, Ok
+- [Rust | Function] `gather_julia_files` (line 0, pub)
+  - Signature: `pub fn gather_julia_files (root : & Path) -> Vec < PathBuf > { use walkdir :: WalkDir ; let src_root = crate :: layer...`
+  - Calls: crate::layer_utilities::resolve_source_root, collect, map, filter, filter, filter_map, filter_entry, into_iter, WalkDir::new, depth, is_dir, file_type, crate::layer_utilities::allow_analysis_dir, path, ok, map_or, extension, path, unwrap_or, strip_prefix, path, path, count, components, starts_with, path, join, into_path
+- [Rust | Function] `julia_entry_paths` (line 0, pub)
+  - Signature: `pub fn julia_entry_paths (root : & Path) -> BTreeSet < PathBuf > { let src_dir = crate :: layer_utilities :: resolve_...`
+  - Calls: crate::layer_utilities::resolve_source_root, collect, filter, map, iter, join, exists
+- [Rust | Function] `layer_constrained_sort` (line 0, pub)
+  - Signature: `pub fn layer_constrained_sort (graph : & DiGraph < PathBuf , () > , file_layers : & HashMap < PathBuf , String > ,) -...`
+  - Calls: BTreeMap::new, node_indices, unwrap_or_else, cloned, get, to_string, unwrap_or, layer_prefix_value, push, or_default, entry, Vec::new, topo_sort_within, extend, Ok
+- [Rust | Function] `naming_score_for_file` (line 0, pub)
+  - Signature: `pub fn naming_score_for_file (file : & Path , order_entry : Option < & crate :: types :: FileOrderEntry > ,) -> Optio...`
+  - Calls: to_string_lossy, file_name, to_string_lossy, file_stem, len, len, any, chars, is_uppercase, all, chars, is_ascii_lowercase, is_ascii_digit, contains, as_str, as_ref, fs::read_to_string, HashMap::new, Regex::new, captures_iter, get, to_lowercase, as_str, or_insert, entry, collect, into_iter, sort_by, cmp, collect, map, take, into_iter, collect, filter, map, split, to_lowercase, is_empty, all, chars, is_ascii_digit, count, filter, iter, any, iter, Some
+- [Rust | Function] `order_julia_files_by_dependency` (line 0, pub)
+  - Signature: `pub fn order_julia_files_by_dependency (files : & [PathBuf] , root : & Path ,) -> Result < (Vec < PathBuf > , crate :...`
+  - Calls: HashMap::new, BTreeSet::new, BTreeMap::new, Vec::new, LayerResolver::build, crate::cluster_001::julia_entry_paths, crate::cluster_001::detect_layer, insert, clone, insert, clone, clone, with_context, collect_julia_dependencies, is_absolute, clone, unwrap_or, map, parent, join, clone, exists, crate::cluster_001::detect_layer, insert, clone, insert, or_default, entry, clone, clone, clone, clone, push, clone, clone, resolve_module, insert, clone, insert, or_default, entry, clone, clone, clone, clone, push, clone, clone, crate::cluster_008::build_result
+- [Rust | Function] `order_rust_files_by_dependency` (line 0, pub)
+  - Signature: `# [doc = " Order Rust files by dependency and capture layer graph details."] pub fn order_rust_files_by_dependency (f...`
+  - Calls: crate::cluster_010::build_module_root_map, rust_entry_paths, HashMap::new, BTreeSet::new, BTreeMap::new, Vec::new, detect_layer, insert, clone, insert, clone, clone, with_context, collect_rust_dependencies, get, insert, clone, insert, or_default, entry, clone, clone, clone, clone, push, clone, clone, crate::cluster_008::build_result
+- [Rust | Function] `ordered_by_name` (line 0, pub)
+  - Signature: `pub fn ordered_by_name (files : & [PathBuf] , node_map : & HashMap < PathBuf , NodeIndex > ,) -> Vec < NodeIndex > { ...`
+  - Calls: to_vec, sort, collect, filter_map, into_iter, copied, get
+- [Rust | Function] `run_analysis` (line 0, pub)
+  - Signature: `pub fn run_analysis (root_path : & Path , output_path : & Path , verbose : bool , skip_julia : bool , dead_code : boo...`
+  - Calls: join, RustAnalyzer::new, to_string, to_string_lossy, AnalysisResult::new, gather_rust_files, context, crate::dependency::order_rust_files_by_dependency, context, crate::dependency::analyze_file_ordering, Vec::new, Vec::new, Vec::new, Vec::new, Vec::new, analyze_file, merge, Vec::new, Vec::new, Vec::new, Vec::new, gather_julia_files, context, crate::dependency::order_julia_files_by_dependency, exists, JuliaAnalyzer::new, to_path_buf, clone, join, analyze_file, merge, is_some, is_some, Some, context, crate::dead_code_policy::load_policy, to_path_buf, to_path_buf, context, crate::dead_code_cli::run_dead_code_pipeline, crate::dead_code_filter::filter_dead_code_elements, ControlFlowAnalyzer::new, build_call_graph, InvariantDetector::new, detect_all, InvariantDetector::new, generate_constraints, FunctionCohesionAnalyzer::new, analyze, detect_clusters, DirectoryAnalyzer::new, to_path_buf, analyze, ReportGenerator::new, to_string, to_string_lossy, context, generate_all, export_program_cfg_to_path, call_edges, context, invariant_reporter::generate_invariant_report, context, invariant_reporter::export_constraints_json, Ok
+- [Rust | Function] `rust_entry_paths` (line 0, pub)
+  - Signature: `pub fn rust_entry_paths (root : & Path) -> BTreeSet < PathBuf > { let src_dir = crate :: layer_utilities :: resolve_s...`
+  - Calls: crate::layer_utilities::resolve_source_root, collect, filter, map, iter, join, exists
+- [Rust | Module] `tests` (line 0, priv)
+- [Rust | Function] `topo_sort_within` (line 0, pub)
+  - Signature: `pub fn topo_sort_within (graph : & DiGraph < PathBuf , () > , nodes : & [NodeIndex] ,) -> Result < Vec < NodeIndex > ...`
+  - Calls: collect, copied, iter, HashMap::new, insert, count, filter, neighbors_directed, contains, insert, std::collections::VecDeque::new, unwrap_or, copied, get, push_back, Vec::new, pop_front, push, neighbors_directed, contains, get_mut, saturating_sub, push_back, len, len, Err, Ok
+- [Rust | Function] `topological_sort` (line 0, pub)
+  - Signature: `pub fn topological_sort (graph : & DiGraph < PathBuf , () >) -> Result < Vec < NodeIndex > > { use petgraph :: Direct...`
+  - Calls: node_indices, index, count, neighbors_directed, VecDeque::new, node_indices, index, push_back, Vec::new, pop_front, push, neighbors_directed, index, saturating_sub, push_back, len, node_count, Err, Ok
+

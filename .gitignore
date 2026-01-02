@@ -29,6 +29,10 @@ Thumbs.db
 # Benchmark / test output
 /test.tlog
 /test.chk
+/test/*.tlog
+/test/*.chk
+/tests/*.tlog
+/tests/*.chk
 /mmsb.tlog
 /mmsb.chk
 /benchmark/results/

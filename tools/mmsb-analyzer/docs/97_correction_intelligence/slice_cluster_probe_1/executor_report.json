@@ -1,0 +1,63 @@
+{
+  "version": "1.0",
+  "timestamp": "2026-01-01T04:05:50.352965489+00:00",
+  "actions": [
+    {
+      "action_id": "move_action_function_to_src/640_correction_intelligence_report.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [
+        "MoveToLayer action_function -> src/640_correction_intelligence_report.rs",
+        "MoveToLayerInvariant I2 passed: action_function"
+      ],
+      "errors": [],
+      "warnings": [
+        "EnsureImports found no missing imports for action_function",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "move_action_function_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "move_action_function_to_src/640_correction_intelligence_report.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [
+        {
+          "path": "tools/mmsb-analyzer/src/570_correction_plan_generator.rs",
+          "diff": "--- original\n+++ modified\n@@ -6,6 +6,7 @@\n     ViolationType, VisibilityPlanOption,\n };\n use crate::tier_classifier::classify_tier;\n+use crate::correction_intelligence_report::action_function;\n\n pub fn generate_correction_plan(\n     action: &RefactorAction,\n@@ -160,13 +161,8 @@\n     }\n }\n\n-fn action_function(action: &RefactorAction) -> Option<String> {\n-    match action {\n-        RefactorAction::MoveFunction { function, .. } => Some(function.clone()),\n-        _ => None,\n-    }\n-}\n\n+\n fn action_module_path(action: &RefactorAction) -> String {\n     match action {\n         RefactorAction::MoveFunction { to, .. } => to.display().to_string(),\n"
+        },
+        {
+          "path": "tools/mmsb-analyzer/src/640_correction_intelligence_report.rs",
+          "diff": "--- original\n+++ modified\n@@ -534,3 +534,10 @@\n         reason,\n     }\n }\n+\n+pub(crate) fn action_function(action: &RefactorAction) -> Option<String> {\n+    match action {\n+        RefactorAction::MoveFunction { function, .. } => Some(function.clone()),\n+        _ => None,\n+    }\n+}\n"
+        },
+        {
+          "path": "tools/mmsb-analyzer/src/600_quality_delta_calculator.rs",
+          "diff": "--- original\n+++ modified\n@@ -19,6 +19,4 @@\n     calculate_quality_delta(action, &current_state.metrics, &simulated.metrics)\n }\n\n-#[path = \"640_correction_intelligence_report.rs\"]\n-mod moved_calculate_quality_delta;\n-pub use moved_calculate_quality_delta::calculate_quality_delta;\n+pub use crate::correction_intelligence_report::calculate_quality_delta;\n"
+        }
+      ],
+      "diff_count": 3
+    }
+  ],
+  "summary": {
+    "total_actions": 1,
+    "applied": 1,
+    "failed": 0,
+    "manual_review": 0,
+    "skipped": 0,
+    "total_diffs": 3
+  },
+  "verification_report": "tools/mmsb-analyzer/docs/97_correction_intelligence/slice_cluster_probe_1/executor_verification_results.json",
+  "rollback_log": "tools/mmsb-analyzer/docs/97_correction_intelligence/slice_cluster_probe_1/executor_rollback_log.json",
+  "diff_report": "tools/mmsb-analyzer/docs/97_correction_intelligence/slice_cluster_probe_1/executor_diff_report.json",
+  "input_report": "tools/mmsb-analyzer/docs/97_correction_intelligence/slice_cluster_probe_1/executor_input_report.json"
+}

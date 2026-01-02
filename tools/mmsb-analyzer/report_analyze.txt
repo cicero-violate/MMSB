@@ -1,0 +1,52 @@
+Building analyzer...
+Running analysis...
+MMSB Intelligence Substrate Analyzer
+=====================================
+
+Root directory: "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer"
+Output directory: "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/docs"
+Julia script: "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/000_main.jl"
+
+Scanning Rust files (dependency-ordered)...
+  Analyzed 21 Rust files
+
+Building call graph...
+  Call graph progress: 50/166 functions
+  Call graph progress: 100/166 functions
+  Call graph progress: 150/166 functions
+  Call graph progress: 166/166 functions
+Analyzing function cohesion...
+  Louvain pass 1...
+  Louvain pass 6...
+  Louvain pass 11...
+  Louvain pass 16...
+  Louvain pass 21...
+Analyzing directory structure...
+
+Generating reports...
+  Report: structure
+  Report: call_graph
+  Report: cfg
+  Report: module_dependencies
+  Report: function_analysis
+  Report: layer_dependencies
+  Report: file_ordering
+  Report: cohesion_analysis
+  Report: refactoring_plan
+Baseline deltas:
+  directory_cohesion: 1.00 -> 1.00 (delta +0.00)
+  ordering_correctness: 100.0% -> 100.0% (delta +0.0%)
+  avg_function_cohesion: 0.77 -> 0.78 (delta +0.01)
+  rename_ops_needed: 0 -> 0 (delta +0)
+  function_relocations: 20 -> 9 (delta -11)
+  Report: file_organization
+
+Exporting program CFG...
+Complete program CFG exported to /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/docs/cfg/complete_program.dot
+
+✓ Analysis complete!
+  Total elements: 277
+  Rust files: 21
+  Julia files: 0
+  Output: /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/docs
+

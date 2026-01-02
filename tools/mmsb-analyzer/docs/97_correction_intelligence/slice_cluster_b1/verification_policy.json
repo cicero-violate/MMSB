@@ -1,0 +1,480 @@
+{
+  "policies": [
+    {
+      "action_id": "move_predict_violations_to_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/640_correction_intelligence_report.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_find_callers_to_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/640_correction_intelligence_report.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_find_reference_files_to_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/640_correction_intelligence_report.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_find_element_file_to_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/640_correction_intelligence_report.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_symbol_exists_to_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/640_correction_intelligence_report.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_move_violates_invariant_to_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/640_correction_intelligence_report.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_generate_intelligence_report_to_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/640_correction_intelligence_report.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_generate_correction_plan_to_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/640_correction_intelligence_report.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_average_confidence_to_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/640_correction_intelligence_report.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_estimate_fix_time_to_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/640_correction_intelligence_report.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_action_symbol_to_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/640_correction_intelligence_report.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_action_function_to_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/640_correction_intelligence_report.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_action_module_path_to_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/640_correction_intelligence_report.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_action_refs_to_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/640_correction_intelligence_report.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_action_target_layer_to_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/640_correction_intelligence_report.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_action_visibility_to_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/640_correction_intelligence_report.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_plan_verification_scope_to_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/640_correction_intelligence_report.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_affected_files_to_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/640_correction_intelligence_report.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_action_module_to_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/640_correction_intelligence_report.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_estimate_verification_time_to_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/640_correction_intelligence_report.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_build_rollback_criteria_to_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/640_correction_intelligence_report.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_extract_critical_tests_to_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/640_correction_intelligence_report.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_calculate_quality_delta_to_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/640_correction_intelligence_report.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_estimate_impact_to_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/640_correction_intelligence_report.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_simulate_action_to_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/640_correction_intelligence_report.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    }
+  ],
+  "version": "1.0"
+}

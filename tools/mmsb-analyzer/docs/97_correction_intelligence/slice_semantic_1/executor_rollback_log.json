@@ -1,0 +1,42 @@
+{
+  "version": "1.0",
+  "timestamp": "2025-12-31T08:22:39.597957481+00:00",
+  "actions": [
+    {
+      "action_id": "move_test_detect_layer_violations_none_to_src/010_cluster_008.rs",
+      "mutations": [],
+      "applied": true,
+      "errors": []
+    },
+    {
+      "action_id": "move_test_check_move_allowed_to_src/010_refactor_constraints.rs",
+      "mutations": [],
+      "applied": false,
+      "errors": []
+    },
+    {
+      "action_id": "move_test_conscience_blocks_invalid_move_to_src/082_conscience_graph.rs",
+      "mutations": [],
+      "applied": true,
+      "errors": []
+    },
+    {
+      "action_id": "move_test_conscience_allows_valid_action_to_src/082_conscience_graph.rs",
+      "mutations": [],
+      "applied": true,
+      "errors": []
+    },
+    {
+      "action_id": "move_test_query_allowed_actions_to_src/082_conscience_graph.rs",
+      "mutations": [],
+      "applied": true,
+      "errors": []
+    },
+    {
+      "action_id": "move_collect_refactor_actions_to_src/010_cluster_008.rs",
+      "mutations": [],
+      "applied": true,
+      "errors": []
+    }
+  ]
+}

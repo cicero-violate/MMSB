@@ -1,0 +1,689 @@
+# MMSB-Analyzer Phase 2: Conscience Implementation Plan
+# Complete Implementation Guide for Claude Code
+# Generated: 2025-12-30
+# Estimated: 1,200 LOC new + 150 LOC modifications
+
+## EXECUTIVE SUMMARY
+
+Phase 1: ✓ COMPLETE (184 invariants detected, 2,809 LOC)
+Phase 2: Implement conscience-driven agent architecture
+
+Critical additions:
+1. Fix PROVEN invariants detection (build real call graph)
+2. Replace placeholder constraint enforcement
+3. Build AgentConscience API
+4. Create agent CLI tool
+5. Generate conscience visualization
+
+Expected outcome:
+- 40-60 PROVEN invariants (currently 0)
+- 20-30% of refactorings blocked by constraints
+- Working agent query interface
+- Conscience map visualization
+
+---
+
+## PHASE 2 FILES TO CREATE
+
+### File 1: src/085_agent_conscience.rs (400 LOC)
+
+**Purpose**: Agent conscience API - validates actions against invariants
+
+**Key structs**:
+```rust
+pub struct AgentConscience {
+    invariants: Vec<Invariant>,
+    constraints: Vec<RefactorConstraint>,
+}
+
+pub enum AgentAction {
+    MoveFunction { name, from, to },
+    RenameFunction { old_name, new_name, file },
+    ChangeSignature { name, old_sig, new_sig },
+    DeleteFunction { name, file },
+    CreateFunction { name, file, signature },
+}
+
+pub struct ActionPermission {
+    pub allowed: bool,
+    pub action: AgentAction,
+    pub violations: Vec<ConstraintViolation>,
+    pub warnings: Vec<String>,
+}
+
+pub struct ConstraintViolation {
+    pub constraint_id: usize,
+    pub invariant_id: usize,
+    pub reason: String,
+    pub severity: ViolationSeverity,
+    pub blocking: bool,
+}
+```
+
+**Key methods**:
+```rust
+impl AgentConscience {
+    pub fn new(invariants: Vec<Invariant>) -> Self;
+    pub fn check_action(&self, action: &AgentAction) -> ActionPermission;
+    pub fn query_allowed_actions(&self, function: &str) -> Vec<AgentAction>;
+    pub fn export_json(&self, path: &Path) -> io::Result<()>;
+}
+```
+
+**Critical logic**:
+```rust
+pub fn check_action(&self, action: &AgentAction) -> ActionPermission {
+    let mut violations = Vec::new();
+    
+    // Check each blocking constraint
+    for (idx, constraint) in self.constraints.iter().enumerate() {
+        if let Some(violation) = self.check_constraint(action, constraint, idx) {
+            if violation.blocking {
+                violations.push(violation);
+            }
+        }
+    }
+    
+    ActionPermission {
+        allowed: violations.is_empty(),  // Blocked if ANY blocking violation
+        action: action.clone(),
+        violations,
+        warnings: vec![],
+    }
+}
+```
+
+**Tests**:
+```rust
+#[test]
+fn test_conscience_blocks_layer_violation() {
+    let inv = Invariant {
+        kind: InvariantKind::Structural(StructuralInvariant {
+            property: StructuralProperty::LayerFixed { layer: 0 },
+            scope: InvariantScope::Function { name: "foo".into(), ... },
+        }),
+        strength: InvariantStrength::Proven,
+        ...
+    };
+    
+    let conscience = AgentConscience::new(vec![inv]);
+    
+    let action = AgentAction::MoveFunction {
+        name: "foo".to_string(),
+        from: PathBuf::from("src/000_test.rs"),
+        to: PathBuf::from("src/010_test.rs"),  // Different layer!
+    };
+    
+    let result = conscience.check_action(&action);
+    assert!(!result.allowed);
+    assert_eq!(result.violations.len(), 1);
+}
+```
+
+---
+
+### File 2: src/191_agent_cli.rs (250 LOC)
+
+**Purpose**: CLI for agents to interact with conscience
+
+**Commands**:
+```bash
+mmsb-agent check --action action.json --conscience invariants.json
+mmsb-agent query --function foo --conscience invariants.json
+mmsb-agent invariants --conscience invariants.json
+```
+
+**Structure**:
+```rust
+use clap::Parser;
+
+#[derive(Parser)]
+pub enum AgentCommand {
+    Check { action: PathBuf, conscience: PathBuf },
+    Query { function: String, conscience: PathBuf },
+    Invariants { conscience: PathBuf },
+}
+
+pub fn run_agent_cli() -> Result<()> {
+    let cli = AgentCli::parse();
+    
+    match cli.command {
+        AgentCommand::Check { action, conscience } => {
+            // Load action and conscience
+            // Validate action
+            // Output JSON result
+            // Exit code: 0=allowed, 1=blocked
+        }
+        ...
+    }
+}
+```
+
+**Example usage**:
+```bash
+# Agent proposes move
+echo '{"MoveFunction":{"name":"foo","from":"a.rs","to":"b.rs"}}' > action.json
+
+# Check permission
+mmsb-agent check -a action.json -c docs/invariants/invariants.json
+
+# Output:
+{
+  "allowed": false,
+  "violations": [{
+    "reason": "Cannot move foo: layer 0 is fixed",
+    "blocking": true
+  }]
+}
+```
+
+---
+
+### File 3: src/082_conscience_graph.rs (200 LOC)
+
+**Purpose**: Generate visual conscience map
+
+**Output example** (docs/conscience_map.md):
+```markdown
+# Conscience Map
+
+Functions protected by mechanical constraints:
+
+## `normalize_module_name` (100% protected)
+- 🔒 ✓ **LayerFixed**: layer=0 (PROVEN)
+- 🔒 ✓ **InDegreeStable**: called by 5 modules (PROVEN)
+- 🔒 ◆ **TypeStable**: signature immutable (EMPIRICAL)
+
+## `build_file_dag` (67% protected)
+- 🔒 ✓ **AlwaysLeaf**: no callees (PROVEN)
+- ◆ **PureFunction**: deterministic (EMPIRICAL)
+- ? **Idempotent**: name suggests (HEURISTIC - LOW CONFIDENCE)
+```
+
+**Key logic**:
+```rust
+pub fn generate_conscience_map(
+    invariants: &[Invariant],
+    output: &Path,
+) -> io::Result<()> {
+    // Group invariants by function
+    let mut by_function: HashMap<String, Vec<&Invariant>> = HashMap::new();
+    
+    for inv in invariants {
+        if let Some(func) = get_function_name(inv) {
+            by_function.entry(func).or_default().push(inv);
+        }
+    }
+    
+    // Sort by protection level (blocking invariants first)
+    let mut funcs: Vec<_> = by_function.into_iter().collect();
+    funcs.sort_by_key(|(_, invs)| {
+        -(invs.iter().filter(|i| i.is_blocking()).count() as i32)
+    });
+    
+    // Generate markdown
+    for (func, invs) in funcs {
+        let blocking = invs.iter().filter(|i| i.is_blocking()).count();
+        let percent = (blocking * 100) / invs.len();
+        
+        write!(output, "## `{}` ({}% protected)\n\n", func, percent);
+        
+        for inv in invs.iter().filter(|i| i.is_blocking()) {
+            write!(output, "- 🔒 {} **{}**: {}\n",
+                strength_emoji(inv),
+                property_name(inv),
+                description(inv)
+            );
+        }
+    }
+}
+```
+
+---
+
+### File 4: src/083_action_validator.rs (150 LOC)
+
+**Purpose**: Core action validation logic (used by conscience)
+
+**Key function**:
+```rust
+pub fn validate_action(
+    action: &AgentAction,
+    constraints: &[RefactorConstraint],
+) -> Result<(), Vec<ConstraintViolation>> {
+    let mut violations = Vec::new();
+    
+    for (idx, constraint) in constraints.iter().enumerate() {
+        match (action, constraint) {
+            (
+                AgentAction::MoveFunction { name, from, to },
+                RefactorConstraint::NoMove { reason, invariant_id }
+            ) if matches_function(name, from, constraint) => {
+                violations.push(ConstraintViolation {
+                    constraint_id: idx,
+                    invariant_id: *invariant_id,
+                    reason: format!("Cannot move {}: {}", name, reason),
+                    severity: ViolationSeverity::Critical,
+                    blocking: true,
+                });
+            }
+            
+            (
+                AgentAction::MoveFunction { name, from, to },
+                RefactorConstraint::LayerFixed { layer, invariant_id }
+            ) if extract_layer(from) != extract_layer(to) => {
+                violations.push(ConstraintViolation {
+                    constraint_id: idx,
+                    invariant_id: *invariant_id,
+                    reason: format!(
+                        "Cannot move {} across layers: layer {} fixed",
+                        name, layer
+                    ),
+                    severity: ViolationSeverity::Critical,
+                    blocking: true,
+                });
+            }
+            
+            (
+                AgentAction::ChangeSignature { name, .. },
+                RefactorConstraint::PreserveSignature { reason, invariant_id }
+            ) if matches_function(name, &PathBuf::new(), constraint) => {
+                violations.push(ConstraintViolation {
+                    constraint_id: idx,
+                    invariant_id: *invariant_id,
+                    reason: format!("Cannot change signature of {}: {}", name, reason),
+                    severity: ViolationSeverity::High,
+                    blocking: true,
+                });
+            }
+            
+            _ => {}
+        }
+    }
+    
+    if violations.is_empty() {
+        Ok(())
+    } else {
+        Err(violations)
+    }
+}
+```
+
+---
+
+## MODIFICATIONS TO EXISTING FILES
+
+### Mod 1: src/040_structural_detector.rs (ADD 100 LOC)
+
+**Problem**: Currently returns 0 PROVEN invariants
+**Root cause**: No call graph built from AnalysisResult
+
+**Fix**: Add call graph builder
+
+```rust
+use petgraph::graph::DiGraph;
+use petgraph::algo::{connected_components, min_spanning_tree};
+use std::collections::HashMap;
+
+impl StructuralDetector {
+    /// Build call graph from analysis result
+    fn build_call_graph(analysis: &AnalysisResult) -> DiGraph<String, ()> {
+        let mut graph = DiGraph::new();
+        let mut node_map: HashMap<String, NodeIndex> = HashMap::new();
+        
+        // Add nodes for all functions
+        for element in &analysis.elements {
+            if element.element_type == ElementType::Function {
+                let node = graph.add_node(element.name.clone());
+                node_map.insert(element.name.clone(), node);
+            }
+        }
+        
+        // Add edges from calls
+        for element in &analysis.elements {
+            if element.element_type == ElementType::Function {
+                if let Some(&source) = node_map.get(&element.name) {
+                    for callee in &element.calls {
+                        if let Some(&target) = node_map.get(callee) {
+                            if source != target {  // No self-loops
+                                graph.add_edge(source, target, ());
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        graph
+    }
+    
+    /// Detect PROVEN structural invariants from call graph
+    pub fn detect_from_call_graph(
+        &mut self,
+        analysis: &AnalysisResult,
+    ) -> Vec<Invariant> {
+        let graph = Self::build_call_graph(analysis);
+        let mut invariants = Vec::new();
+        
+        // Detect leaf nodes (PROVEN)
+        for node in graph.node_indices() {
+            let out_degree = graph.neighbors_directed(node, Direction::Outgoing).count();
+            
+            if out_degree == 0 {
+                invariants.push(Invariant {
+                    id: self.next_id(),
+                    kind: InvariantKind::Structural(StructuralInvariant {
+                        property: StructuralProperty::AlwaysLeaf,
+                        scope: InvariantScope::Function {
+                            name: graph[node].clone(),
+                            file: PathBuf::new(),  // TODO: map back to file
+                        },
+                    }),
+                    strength: InvariantStrength::Proven,  // PROVEN from graph!
+                    supporting_nodes: vec![node],
+                    supporting_edges: vec![],
+                    violations: vec![],
+                });
+            }
+        }
+        
+        // Detect root nodes (PROVEN)
+        for node in graph.node_indices() {
+            let in_degree = graph.neighbors_directed(node, Direction::Incoming).count();
+            
+            if in_degree == 0 {
+                invariants.push(Invariant {
+                    id: self.next_id(),
+                    kind: InvariantKind::Structural(StructuralInvariant {
+                        property: StructuralProperty::AlwaysRoot,
+                        scope: InvariantScope::Function {
+                            name: graph[node].clone(),
+                            file: PathBuf::new(),
+                        },
+                    }),
+                    strength: InvariantStrength::Proven,
+                    supporting_nodes: vec![node],
+                    supporting_edges: vec![],
+                    violations: vec![],
+                });
+            }
+        }
+        
+        // Detect high in-degree (utility functions) - PROVEN
+        for node in graph.node_indices() {
+            let in_degree = graph.neighbors_directed(node, Direction::Incoming).count();
+            
+            if in_degree >= 3 {  // Called by >=3 functions
+                invariants.push(Invariant {
+                    id: self.next_id(),
+                    kind: InvariantKind::Structural(StructuralInvariant {
+                        property: StructuralProperty::InDegreeStable { degree: in_degree },
+                        scope: InvariantScope::Function {
+                            name: graph[node].clone(),
+                            file: PathBuf::new(),
+                        },
+                    }),
+                    strength: InvariantStrength::Proven,  // PROVEN topology
+                    supporting_nodes: vec![node],
+                    supporting_edges: vec![],
+                    violations: vec![],
+                });
+            }
+        }
+        
+        invariants
+    }
+}
+```
+
+**Expected**: 40-60 PROVEN invariants after this change
+
+---
+
+### Mod 2: src/180_report.rs (REPLACE lines 1606-1616)
+
+**Problem**: Placeholder code doesn't actually filter
+
+**Before**:
+```rust
+// Note: This is a placeholder for constraint-based filtering
+if let Ok(_constraints) = serde_json::from_str::<Vec<RefactorConstraint>>(&constraints_json) {
+    // Placeholder: In a full implementation, filter moves here
+}
+```
+
+**After**:
+```rust
+// MECHANICAL CONSTRAINT ENFORCEMENT
+if let Ok(constraints) = serde_json::from_str::<Vec<RefactorConstraint>>(&constraints_json) {
+    let original_count = moves.len();
+    
+    moves.retain(|m| {
+        // Check if this move violates any constraint
+        let action = crate::agent_conscience::AgentAction::MoveFunction {
+            name: m.name.clone(),
+            from: m.from.clone(),
+            to: m.to.clone(),
+        };
+        
+        match crate::action_validator::validate_action(&action, &constraints) {
+            Ok(_) => true,  // Allowed
+            Err(violations) => {
+                // Log rejection
+                for v in violations {
+                    println!("⚠️  BLOCKED: {} - {}", m.name, v.reason);
+                }
+                false  // Filtered out
+            }
+        }
+    });
+    
+    let blocked = original_count - moves.len();
+    if blocked > 0 {
+        println!("✅ Constraint enforcement: {} moves allowed, {} blocked", 
+                 moves.len(), blocked);
+    }
+}
+```
+
+**Expected**: 20-30% of refactoring suggestions filtered
+
+---
+
+### Mod 3: src/070_invariant_integrator.rs (ADD 20 LOC)
+
+**Add**: Call enhanced structural detector
+
+```rust
+// In detect_all()
+pub fn detect_all(&mut self) -> InvariantAnalysisResult {
+    // ... existing code ...
+    
+    // NEW: Enhanced structural detection with call graph
+    println!("  ├─ Enhanced structural (call graph)...");
+    let call_graph_structural = self.structural_detector
+        .detect_from_call_graph(&self.analysis);
+    result.invariants.extend(call_graph_structural);
+    
+    // ... rest of code ...
+}
+```
+
+---
+
+### Mod 4: src/200_lib.rs (ADD 5 LOC)
+
+**Add exports**:
+```rust
+pub mod agent_conscience;
+pub mod action_validator;
+pub mod conscience_graph;
+
+pub use agent_conscience::*;
+pub use action_validator::*;
+```
+
+---
+
+### Mod 5: src/190_main.rs (ADD 10 LOC)
+
+**Add agent CLI**:
+```rust
+mod agent_cli;
+
+fn main() {
+    // Check if running as agent
+    if std::env::args().nth(1) == Some("agent".to_string()) {
+        agent_cli::run_agent_cli().unwrap();
+        return;
+    }
+    
+    // Normal analyzer mode
+    // ... existing code ...
+}
+```
+
+---
+
+### Mod 6: src/080_invariant_reporter.rs (ADD 30 LOC)
+
+**Add**: Generate conscience map
+
+```rust
+pub fn generate_reports(
+    result: &InvariantAnalysisResult,
+    output_dir: &Path,
+) -> Result<()> {
+    // ... existing markdown generation ...
+    
+    // NEW: Generate conscience map
+    let conscience_map_path = output_dir.join("conscience_map.md");
+    crate::conscience_graph::generate_conscience_map(
+        &result.invariants,
+        &conscience_map_path,
+    )?;
+    
+    println!("  ├─ Conscience map: {:?}", conscience_map_path);
+    
+    Ok(())
+}
+```
+
+---
+
+## IMPLEMENTATION ORDER
+
+### Step 1: Core Validation (No Dependencies)
+1. Create src/083_action_validator.rs
+2. Add tests for validate_action()
+3. cargo test
+
+### Step 2: Conscience API
+4. Create src/085_agent_conscience.rs
+5. Add tests for check_action()
+6. cargo test
+
+### Step 3: Enhanced Detection
+7. Modify src/040_structural_detector.rs (add build_call_graph)
+8. Modify src/070_invariant_integrator.rs (call enhanced detector)
+9. cargo test
+
+### Step 4: Enforce Constraints
+10. Modify src/180_report.rs (replace placeholder)
+11. cargo test
+12. Run self-analysis: cargo run -- --root . --output docs
+13. Verify: cat docs/invariants/index.md | grep "Proven:"
+
+### Step 5: Agent Interface
+14. Create src/191_agent_cli.rs
+15. Create src/082_conscience_graph.rs
+16. Modify src/190_main.rs (agent mode)
+17. Modify src/080_invariant_reporter.rs (conscience map)
+18. Modify src/200_lib.rs (exports)
+19. cargo build
+
+### Step 6: Integration Testing
+20. Test agent CLI:
+```bash
+echo '{"MoveFunction":{"name":"test","from":"a.rs","to":"b.rs"}}' > action.json
+cargo run -- agent check -a action.json -c docs/invariants/invariants.json
+```
+21. Verify conscience map generated: ls docs/conscience_map.md
+22. Count proven invariants: cat docs/invariants/index.md | grep "Proven:"
+
+---
+
+## EXPECTED RESULTS
+
+After Phase 2 implementation:
+
+```
+🔍 Detecting invariants...
+  ├─ SCC compression: 21 nodes → 21 SCCs
+  ├─ Enhanced structural (call graph): 45 PROVEN invariants
+  ├─ Semantic invariants: 140 (100 EMPIRICAL, 40 HEURISTIC)
+  ├─ Path invariants: 15 (EMPIRICAL)
+  └─ Violations: 0
+
+✅ Invariants: 200 (proven: 45, empirical: 115, heuristic: 40)
+✅ Constraints generated: 52
+✅ Refactoring suggestions: 45 allowed, 12 blocked
+
+📊 Output:
+  ├─ docs/invariants/index.md
+  ├─ docs/invariants/invariants.json
+  ├─ docs/constraints/refactor_constraints.json
+  └─ docs/conscience_map.md (NEW!)
+
+🤖 Agent CLI ready:
+  $ mmsb-agent check -a action.json -c docs/invariants/invariants.json
+```
+
+---
+
+## VALIDATION CHECKLIST
+
+- [ ] PROVEN invariants > 40 (currently 0)
+- [ ] Constraint enforcement: placeholder replaced
+- [ ] Agent CLI: `mmsb-agent check` works
+- [ ] Conscience map: docs/conscience_map.md exists
+- [ ] Refactorings blocked: output shows "X blocked"
+- [ ] Tests pass: cargo test
+- [ ] Self-analysis runs: cargo run -- --root . --output docs
+- [ ] JSON valid: jq . docs/constraints/refactor_constraints.json
+
+---
+
+## ESTIMATED LOC
+
+New files:
+- src/085_agent_conscience.rs: 400 LOC
+- src/191_agent_cli.rs: 250 LOC
+- src/082_conscience_graph.rs: 200 LOC
+- src/083_action_validator.rs: 150 LOC
+
+Modifications:
+- src/040_structural_detector.rs: +100 LOC
+- src/180_report.rs: +30 LOC
+- src/070_invariant_integrator.rs: +20 LOC
+- src/080_invariant_reporter.rs: +30 LOC
+- src/190_main.rs: +10 LOC
+- src/200_lib.rs: +5 LOC
+
+Total: ~1,195 LOC
+
+---
+
+## SUCCESS CRITERIA
+
+Phase 2 succeeds when:
+1. ✅ PROVEN invariants > 40
+2. ✅ Agent can query conscience via CLI
+3. ✅ Refactoring suggestions respect constraints
+4. ✅ Conscience map visualizes protection
+5. ✅ Zero placeholder code remains
+6. ✅ All tests pass
+
+---
+
+END OF IMPLEMENTATION PLAN

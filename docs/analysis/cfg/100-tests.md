@@ -4,43 +4,17 @@
 
 - File: MMSB/tests/stress_stability.rs
 - Branches: 0
-- Loops: 2
-- Nodes: 15
-- Edges: 16
+- Loops: 0
+- Nodes: 3
+- Edges: 2
 
 ```mermaid
 flowchart TD
     apply_random_deltas_0["ENTRY"]
-    apply_random_deltas_1["for _ in 0 .. count"]
-    apply_random_deltas_2["let page_id = PageID ((rng . next_u64 () % PAGE_COUNT) + 1)"]
-    apply_random_deltas_3["let mut mask = vec ! [false ; DELTA_WIDTH]"]
-    apply_random_deltas_4["let flips = rng . next_in_range (DELTA_WIDTH / 2) . max (1)"]
-    apply_random_deltas_5["for _ in 0 .. flips"]
-    apply_random_deltas_6["let idx = rng . next_in_range (DELTA_WIDTH)"]
-    apply_random_deltas_7["mask [idx] = true"]
-    apply_random_deltas_8["after for"]
-    apply_random_deltas_9["let payload = mask . iter () . map (| & flag | if flag { (rng . next_u32 () & 0xFF) as u8 }..."]
-    apply_random_deltas_10["let delta = Delta { delta_id : DeltaID (* next_delta) , page_id , epoch : Epoch ((* next_..."]
-    apply_random_deltas_11["* next_delta = next_delta . wrapping_add (1)"]
-    apply_random_deltas_12["unsafe { let page_ptr = allocator . acquire_page (page_id) . expect ('page mi..."]
-    apply_random_deltas_13["after for"]
-    apply_random_deltas_14["EXIT"]
+    apply_random_deltas_1["for _ in 0 .. count { let page_id = PageID ((rng . next_u64 () % PAGE_COUNT) ..."]
+    apply_random_deltas_2["EXIT"]
     apply_random_deltas_0 --> apply_random_deltas_1
     apply_random_deltas_1 --> apply_random_deltas_2
-    apply_random_deltas_2 --> apply_random_deltas_3
-    apply_random_deltas_3 --> apply_random_deltas_4
-    apply_random_deltas_4 --> apply_random_deltas_5
-    apply_random_deltas_5 --> apply_random_deltas_6
-    apply_random_deltas_6 --> apply_random_deltas_7
-    apply_random_deltas_7 --> apply_random_deltas_5
-    apply_random_deltas_5 --> apply_random_deltas_8
-    apply_random_deltas_8 --> apply_random_deltas_9
-    apply_random_deltas_9 --> apply_random_deltas_10
-    apply_random_deltas_10 --> apply_random_deltas_11
-    apply_random_deltas_11 --> apply_random_deltas_12
-    apply_random_deltas_12 --> apply_random_deltas_1
-    apply_random_deltas_1 --> apply_random_deltas_13
-    apply_random_deltas_13 --> apply_random_deltas_14
 ```
 
 ## Function: `assert_throughput`
@@ -208,10 +182,10 @@ flowchart TD
 ## Function: `fragmentation_probe_remains_stable`
 
 - File: MMSB/tests/stress_memory.rs
-- Branches: 3
-- Loops: 3
-- Nodes: 29
-- Edges: 34
+- Branches: 0
+- Loops: 0
+- Nodes: 12
+- Edges: 11
 
 ```mermaid
 flowchart TD
@@ -220,30 +194,13 @@ flowchart TD
     fragmentation_probe_remains_stable_2["let monitor = MemoryMonitor :: with_config (Arc :: clone (& allocator) , MemoryMonitorConfi..."]
     fragmentation_probe_remains_stable_3["let mut live_pages = Vec :: new ()"]
     fragmentation_probe_remains_stable_4["let mut next_page = 1u64"]
-    fragmentation_probe_remains_stable_5["for iteration in 0 .. 512"]
-    fragmentation_probe_remains_stable_6["let burst = 32 + (iteration % 32) as usize"]
-    fragmentation_probe_remains_stable_7["for _ in 0 .. burst"]
-    fragmentation_probe_remains_stable_8["allocator . allocate_raw (PageID (next_page) , PAGE_BYTES , Some (PageLocatio..."]
-    fragmentation_probe_remains_stable_9["live_pages . push (PageID (next_page))"]
-    fragmentation_probe_remains_stable_10["next_page += 1"]
-    fragmentation_probe_remains_stable_11["after for"]
-    fragmentation_probe_remains_stable_12["if live_pages . len () > 1024"]
-    fragmentation_probe_remains_stable_13["for _ in 0 .. (burst / 2)"]
-    fragmentation_probe_remains_stable_14["if let Some (page_id) = live_pages . pop ()"]
-    fragmentation_probe_remains_stable_15["allocator . free (page_id)"]
-    fragmentation_probe_remains_stable_16["if join"]
-    fragmentation_probe_remains_stable_17["after for"]
-    fragmentation_probe_remains_stable_18["if join"]
-    fragmentation_probe_remains_stable_19["if iteration % 128 == 0"]
-    fragmentation_probe_remains_stable_20["monitor . snapshot ()"]
-    fragmentation_probe_remains_stable_21["if join"]
-    fragmentation_probe_remains_stable_22["after for"]
-    fragmentation_probe_remains_stable_23["let snapshot = monitor . snapshot ()"]
-    fragmentation_probe_remains_stable_24["macro assert"]
-    fragmentation_probe_remains_stable_25["let estimate = snapshot . avg_bytes_per_page * snapshot . total_pages"]
-    fragmentation_probe_remains_stable_26["macro assert"]
-    fragmentation_probe_remains_stable_27["macro println"]
-    fragmentation_probe_remains_stable_28["EXIT"]
+    fragmentation_probe_remains_stable_5["for iteration in 0 .. 512 { let burst = 32 + (iteration % 32) as usize ; for ..."]
+    fragmentation_probe_remains_stable_6["let snapshot = monitor . snapshot ()"]
+    fragmentation_probe_remains_stable_7["macro assert"]
+    fragmentation_probe_remains_stable_8["let estimate = snapshot . avg_bytes_per_page * snapshot . total_pages"]
+    fragmentation_probe_remains_stable_9["macro assert"]
+    fragmentation_probe_remains_stable_10["macro println"]
+    fragmentation_probe_remains_stable_11["EXIT"]
     fragmentation_probe_remains_stable_0 --> fragmentation_probe_remains_stable_1
     fragmentation_probe_remains_stable_1 --> fragmentation_probe_remains_stable_2
     fragmentation_probe_remains_stable_2 --> fragmentation_probe_remains_stable_3
@@ -254,30 +211,7 @@ flowchart TD
     fragmentation_probe_remains_stable_7 --> fragmentation_probe_remains_stable_8
     fragmentation_probe_remains_stable_8 --> fragmentation_probe_remains_stable_9
     fragmentation_probe_remains_stable_9 --> fragmentation_probe_remains_stable_10
-    fragmentation_probe_remains_stable_10 --> fragmentation_probe_remains_stable_7
-    fragmentation_probe_remains_stable_7 --> fragmentation_probe_remains_stable_11
-    fragmentation_probe_remains_stable_11 --> fragmentation_probe_remains_stable_12
-    fragmentation_probe_remains_stable_12 --> fragmentation_probe_remains_stable_13
-    fragmentation_probe_remains_stable_13 --> fragmentation_probe_remains_stable_14
-    fragmentation_probe_remains_stable_14 --> fragmentation_probe_remains_stable_15
-    fragmentation_probe_remains_stable_15 --> fragmentation_probe_remains_stable_16
-    fragmentation_probe_remains_stable_14 --> fragmentation_probe_remains_stable_16
-    fragmentation_probe_remains_stable_16 --> fragmentation_probe_remains_stable_13
-    fragmentation_probe_remains_stable_13 --> fragmentation_probe_remains_stable_17
-    fragmentation_probe_remains_stable_17 --> fragmentation_probe_remains_stable_18
-    fragmentation_probe_remains_stable_12 --> fragmentation_probe_remains_stable_18
-    fragmentation_probe_remains_stable_18 --> fragmentation_probe_remains_stable_19
-    fragmentation_probe_remains_stable_19 --> fragmentation_probe_remains_stable_20
-    fragmentation_probe_remains_stable_20 --> fragmentation_probe_remains_stable_21
-    fragmentation_probe_remains_stable_19 --> fragmentation_probe_remains_stable_21
-    fragmentation_probe_remains_stable_21 --> fragmentation_probe_remains_stable_5
-    fragmentation_probe_remains_stable_5 --> fragmentation_probe_remains_stable_22
-    fragmentation_probe_remains_stable_22 --> fragmentation_probe_remains_stable_23
-    fragmentation_probe_remains_stable_23 --> fragmentation_probe_remains_stable_24
-    fragmentation_probe_remains_stable_24 --> fragmentation_probe_remains_stable_25
-    fragmentation_probe_remains_stable_25 --> fragmentation_probe_remains_stable_26
-    fragmentation_probe_remains_stable_26 --> fragmentation_probe_remains_stable_27
-    fragmentation_probe_remains_stable_27 --> fragmentation_probe_remains_stable_28
+    fragmentation_probe_remains_stable_10 --> fragmentation_probe_remains_stable_11
 ```
 
 ## Function: `generate_delta_batch`
@@ -330,50 +264,44 @@ flowchart TD
 
 - File: MMSB/tests/stress_memory.rs
 - Branches: 1
-- Loops: 2
-- Nodes: 18
-- Edges: 20
+- Loops: 0
+- Nodes: 16
+- Edges: 16
 
 ```mermaid
 flowchart TD
     incremental_gc_latency_stays_within_budget_0["ENTRY"]
     incremental_gc_latency_stays_within_budget_1["if cfg ! (debug_assertions)"]
-    incremental_gc_latency_stays_within_budget_2["macro eprintln"]
-    incremental_gc_latency_stays_within_budget_3["return"]
-    incremental_gc_latency_stays_within_budget_4["if join"]
-    incremental_gc_latency_stays_within_budget_5["let allocator = Arc :: new (PageAllocator :: new (PageAllocatorConfig :: default ()))"]
-    incremental_gc_latency_stays_within_budget_6["let monitor = MemoryMonitor :: with_config (Arc :: clone (& allocator) , MemoryMonitorConfi..."]
-    incremental_gc_latency_stays_within_budget_7["for idx in 0 .. (monitor . config () . incremental_batch_pages * 4)"]
-    incremental_gc_latency_stays_within_budget_8["allocator . allocate_raw (PageID (idx as u64 + 1) , PAGE_BYTES , Some (PageLo..."]
-    incremental_gc_latency_stays_within_budget_9["after for"]
-    incremental_gc_latency_stays_within_budget_10["for _ in 0 .. 3"]
-    incremental_gc_latency_stays_within_budget_11["monitor . snapshot ()"]
-    incremental_gc_latency_stays_within_budget_12["after for"]
-    incremental_gc_latency_stays_within_budget_13["let metrics = monitor . trigger_incremental_gc (monitor . config () . incremental_batch_pag..."]
-    incremental_gc_latency_stays_within_budget_14["let gc_ms = metrics . duration . as_secs_f64 () * 1_000.0"]
-    incremental_gc_latency_stays_within_budget_15["macro assert"]
-    incremental_gc_latency_stays_within_budget_16["macro println"]
-    incremental_gc_latency_stays_within_budget_17["EXIT"]
+    incremental_gc_latency_stays_within_budget_2["THEN BB"]
+    incremental_gc_latency_stays_within_budget_3["macro eprintln"]
+    incremental_gc_latency_stays_within_budget_4["return"]
+    incremental_gc_latency_stays_within_budget_5["EMPTY ELSE"]
+    incremental_gc_latency_stays_within_budget_6["IF JOIN"]
+    incremental_gc_latency_stays_within_budget_7["let allocator = Arc :: new (PageAllocator :: new (PageAllocatorConfig :: default ()))"]
+    incremental_gc_latency_stays_within_budget_8["let monitor = MemoryMonitor :: with_config (Arc :: clone (& allocator) , MemoryMonitorConfi..."]
+    incremental_gc_latency_stays_within_budget_9["for idx in 0 .. (monitor . config () . incremental_batch_pages * 4) { allocat..."]
+    incremental_gc_latency_stays_within_budget_10["for _ in 0 .. 3 { monitor . snapshot () ; }"]
+    incremental_gc_latency_stays_within_budget_11["let metrics = monitor . trigger_incremental_gc (monitor . config () . incremental_batch_pag..."]
+    incremental_gc_latency_stays_within_budget_12["let gc_ms = metrics . duration . as_secs_f64 () * 1_000.0"]
+    incremental_gc_latency_stays_within_budget_13["macro assert"]
+    incremental_gc_latency_stays_within_budget_14["macro println"]
+    incremental_gc_latency_stays_within_budget_15["EXIT"]
     incremental_gc_latency_stays_within_budget_0 --> incremental_gc_latency_stays_within_budget_1
     incremental_gc_latency_stays_within_budget_1 --> incremental_gc_latency_stays_within_budget_2
     incremental_gc_latency_stays_within_budget_2 --> incremental_gc_latency_stays_within_budget_3
     incremental_gc_latency_stays_within_budget_3 --> incremental_gc_latency_stays_within_budget_4
-    incremental_gc_latency_stays_within_budget_1 --> incremental_gc_latency_stays_within_budget_4
-    incremental_gc_latency_stays_within_budget_4 --> incremental_gc_latency_stays_within_budget_5
+    incremental_gc_latency_stays_within_budget_1 --> incremental_gc_latency_stays_within_budget_5
+    incremental_gc_latency_stays_within_budget_4 --> incremental_gc_latency_stays_within_budget_6
     incremental_gc_latency_stays_within_budget_5 --> incremental_gc_latency_stays_within_budget_6
     incremental_gc_latency_stays_within_budget_6 --> incremental_gc_latency_stays_within_budget_7
     incremental_gc_latency_stays_within_budget_7 --> incremental_gc_latency_stays_within_budget_8
-    incremental_gc_latency_stays_within_budget_8 --> incremental_gc_latency_stays_within_budget_7
-    incremental_gc_latency_stays_within_budget_7 --> incremental_gc_latency_stays_within_budget_9
+    incremental_gc_latency_stays_within_budget_8 --> incremental_gc_latency_stays_within_budget_9
     incremental_gc_latency_stays_within_budget_9 --> incremental_gc_latency_stays_within_budget_10
     incremental_gc_latency_stays_within_budget_10 --> incremental_gc_latency_stays_within_budget_11
-    incremental_gc_latency_stays_within_budget_11 --> incremental_gc_latency_stays_within_budget_10
-    incremental_gc_latency_stays_within_budget_10 --> incremental_gc_latency_stays_within_budget_12
+    incremental_gc_latency_stays_within_budget_11 --> incremental_gc_latency_stays_within_budget_12
     incremental_gc_latency_stays_within_budget_12 --> incremental_gc_latency_stays_within_budget_13
     incremental_gc_latency_stays_within_budget_13 --> incremental_gc_latency_stays_within_budget_14
     incremental_gc_latency_stays_within_budget_14 --> incremental_gc_latency_stays_within_budget_15
-    incremental_gc_latency_stays_within_budget_15 --> incremental_gc_latency_stays_within_budget_16
-    incremental_gc_latency_stays_within_budget_16 --> incremental_gc_latency_stays_within_budget_17
 ```
 
 ## Function: `integrity_checker_accepts_valid_delta`
@@ -409,9 +337,9 @@ flowchart TD
 
 - File: MMSB/tests/benchmark_08_invariants.rs
 - Branches: 0
-- Loops: 1
-- Nodes: 10
-- Edges: 10
+- Loops: 0
+- Nodes: 8
+- Edges: 7
 
 ```mermaid
 flowchart TD
@@ -421,10 +349,8 @@ flowchart TD
     invariant_checker_reports_success_3["let graph = ShadowPageGraph :: default ()"]
     invariant_checker_reports_success_4["let ctx = InvariantContext { allocator : Some (& allocator) , graph : Some (& graph) , ..."]
     invariant_checker_reports_success_5["let checker = InvariantChecker :: with_builtins ()"]
-    invariant_checker_reports_success_6["for result in checker . run (& ctx)"]
-    invariant_checker_reports_success_7["macro assert"]
-    invariant_checker_reports_success_8["after for"]
-    invariant_checker_reports_success_9["EXIT"]
+    invariant_checker_reports_success_6["for result in checker . run (& ctx) { assert ! (result . passed) ; }"]
+    invariant_checker_reports_success_7["EXIT"]
     invariant_checker_reports_success_0 --> invariant_checker_reports_success_1
     invariant_checker_reports_success_1 --> invariant_checker_reports_success_2
     invariant_checker_reports_success_2 --> invariant_checker_reports_success_3
@@ -432,9 +358,6 @@ flowchart TD
     invariant_checker_reports_success_4 --> invariant_checker_reports_success_5
     invariant_checker_reports_success_5 --> invariant_checker_reports_success_6
     invariant_checker_reports_success_6 --> invariant_checker_reports_success_7
-    invariant_checker_reports_success_7 --> invariant_checker_reports_success_6
-    invariant_checker_reports_success_6 --> invariant_checker_reports_success_8
-    invariant_checker_reports_success_8 --> invariant_checker_reports_success_9
 ```
 
 ## Function: `make_delta`
@@ -458,36 +381,31 @@ flowchart TD
 
 - File: MMSB/tests/benchmark_07_memory.rs
 - Branches: 0
-- Loops: 1
-- Nodes: 12
-- Edges: 12
+- Loops: 0
+- Nodes: 10
+- Edges: 9
 
 ```mermaid
 flowchart TD
     memory_monitor_enforces_limits_0["ENTRY"]
     memory_monitor_enforces_limits_1["let allocator = Arc :: new (PageAllocator :: new (PageAllocatorConfig :: default ()))"]
-    memory_monitor_enforces_limits_2["for id in 1 ..= 128"]
-    memory_monitor_enforces_limits_3["allocator . allocate_raw (PageID (id) , 1024 , Some (PageLocation :: Cpu)) . ..."]
-    memory_monitor_enforces_limits_4["after for"]
-    memory_monitor_enforces_limits_5["let monitor = MemoryMonitor :: with_config (Arc :: clone (& allocator) , MemoryMonitorConfi..."]
-    memory_monitor_enforces_limits_6["let snapshot = monitor . snapshot ()"]
-    memory_monitor_enforces_limits_7["macro assert_eq"]
+    memory_monitor_enforces_limits_2["for id in 1 ..= 128 { allocator . allocate_raw (PageID (id) , 1024 , Some (Pa..."]
+    memory_monitor_enforces_limits_3["let monitor = MemoryMonitor :: with_config (Arc :: clone (& allocator) , MemoryMonitorConfi..."]
+    memory_monitor_enforces_limits_4["let snapshot = monitor . snapshot ()"]
+    memory_monitor_enforces_limits_5["macro assert_eq"]
+    memory_monitor_enforces_limits_6["macro assert"]
+    memory_monitor_enforces_limits_7["let metrics = monitor . trigger_incremental_gc (32) . unwrap ()"]
     memory_monitor_enforces_limits_8["macro assert"]
-    memory_monitor_enforces_limits_9["let metrics = monitor . trigger_incremental_gc (32) . unwrap ()"]
-    memory_monitor_enforces_limits_10["macro assert"]
-    memory_monitor_enforces_limits_11["EXIT"]
+    memory_monitor_enforces_limits_9["EXIT"]
     memory_monitor_enforces_limits_0 --> memory_monitor_enforces_limits_1
     memory_monitor_enforces_limits_1 --> memory_monitor_enforces_limits_2
     memory_monitor_enforces_limits_2 --> memory_monitor_enforces_limits_3
-    memory_monitor_enforces_limits_3 --> memory_monitor_enforces_limits_2
-    memory_monitor_enforces_limits_2 --> memory_monitor_enforces_limits_4
+    memory_monitor_enforces_limits_3 --> memory_monitor_enforces_limits_4
     memory_monitor_enforces_limits_4 --> memory_monitor_enforces_limits_5
     memory_monitor_enforces_limits_5 --> memory_monitor_enforces_limits_6
     memory_monitor_enforces_limits_6 --> memory_monitor_enforces_limits_7
     memory_monitor_enforces_limits_7 --> memory_monitor_enforces_limits_8
     memory_monitor_enforces_limits_8 --> memory_monitor_enforces_limits_9
-    memory_monitor_enforces_limits_9 --> memory_monitor_enforces_limits_10
-    memory_monitor_enforces_limits_10 --> memory_monitor_enforces_limits_11
 ```
 
 ## Function: `multi_thread_10m_deltas_per_sec`
@@ -495,95 +413,69 @@ flowchart TD
 - File: MMSB/tests/stress_throughput.rs
 - Branches: 1
 - Loops: 0
-- Nodes: 8
-- Edges: 8
+- Nodes: 10
+- Edges: 10
 
 ```mermaid
 flowchart TD
     multi_thread_10m_deltas_per_sec_0["ENTRY"]
     multi_thread_10m_deltas_per_sec_1["if cfg ! (debug_assertions)"]
-    multi_thread_10m_deltas_per_sec_2["macro eprintln"]
-    multi_thread_10m_deltas_per_sec_3["return"]
-    multi_thread_10m_deltas_per_sec_4["if join"]
-    multi_thread_10m_deltas_per_sec_5["let allocator = prepare_allocator ()"]
-    multi_thread_10m_deltas_per_sec_6["run_throughput_benchmark (& allocator , 8 , MULTI_WORKER_TARGET)"]
-    multi_thread_10m_deltas_per_sec_7["EXIT"]
+    multi_thread_10m_deltas_per_sec_2["THEN BB"]
+    multi_thread_10m_deltas_per_sec_3["macro eprintln"]
+    multi_thread_10m_deltas_per_sec_4["return"]
+    multi_thread_10m_deltas_per_sec_5["EMPTY ELSE"]
+    multi_thread_10m_deltas_per_sec_6["IF JOIN"]
+    multi_thread_10m_deltas_per_sec_7["let allocator = prepare_allocator ()"]
+    multi_thread_10m_deltas_per_sec_8["run_throughput_benchmark (& allocator , 8 , MULTI_WORKER_TARGET)"]
+    multi_thread_10m_deltas_per_sec_9["EXIT"]
     multi_thread_10m_deltas_per_sec_0 --> multi_thread_10m_deltas_per_sec_1
     multi_thread_10m_deltas_per_sec_1 --> multi_thread_10m_deltas_per_sec_2
     multi_thread_10m_deltas_per_sec_2 --> multi_thread_10m_deltas_per_sec_3
     multi_thread_10m_deltas_per_sec_3 --> multi_thread_10m_deltas_per_sec_4
-    multi_thread_10m_deltas_per_sec_1 --> multi_thread_10m_deltas_per_sec_4
-    multi_thread_10m_deltas_per_sec_4 --> multi_thread_10m_deltas_per_sec_5
+    multi_thread_10m_deltas_per_sec_1 --> multi_thread_10m_deltas_per_sec_5
+    multi_thread_10m_deltas_per_sec_4 --> multi_thread_10m_deltas_per_sec_6
     multi_thread_10m_deltas_per_sec_5 --> multi_thread_10m_deltas_per_sec_6
     multi_thread_10m_deltas_per_sec_6 --> multi_thread_10m_deltas_per_sec_7
+    multi_thread_10m_deltas_per_sec_7 --> multi_thread_10m_deltas_per_sec_8
+    multi_thread_10m_deltas_per_sec_8 --> multi_thread_10m_deltas_per_sec_9
 ```
 
 ## Function: `mutate_graph`
 
 - File: MMSB/tests/stress_stability.rs
-- Branches: 3
-- Loops: 1
-- Nodes: 16
-- Edges: 19
+- Branches: 0
+- Loops: 0
+- Nodes: 3
+- Edges: 2
 
 ```mermaid
 flowchart TD
     mutate_graph_0["ENTRY"]
-    mutate_graph_1["for _ in 0 .. 4"]
-    mutate_graph_2["let mut from = PageID ((rng . next_u64 () % PAGE_COUNT) + 1)"]
-    mutate_graph_3["let mut to = PageID ((rng . next_u64 () % PAGE_COUNT) + 1)"]
-    mutate_graph_4["if from == to"]
-    mutate_graph_5["to = PageID (((to . 0 + 1) % PAGE_COUNT) + 1)"]
-    mutate_graph_6["if join"]
-    mutate_graph_7["if from . 0 > to . 0"]
-    mutate_graph_8["std :: mem :: swap (& mut from , & mut to)"]
-    mutate_graph_9["if join"]
-    mutate_graph_10["if rng . next_bool ()"]
-    mutate_graph_11["graph . add_edge (from , to , random_edge_type (rng))"]
-    mutate_graph_12["graph . remove_edge (from , to)"]
-    mutate_graph_13["if join"]
-    mutate_graph_14["after for"]
-    mutate_graph_15["EXIT"]
+    mutate_graph_1["for _ in 0 .. 4 { let mut from = PageID ((rng . next_u64 () % PAGE_COUNT) + 1..."]
+    mutate_graph_2["EXIT"]
     mutate_graph_0 --> mutate_graph_1
     mutate_graph_1 --> mutate_graph_2
-    mutate_graph_2 --> mutate_graph_3
-    mutate_graph_3 --> mutate_graph_4
-    mutate_graph_4 --> mutate_graph_5
-    mutate_graph_5 --> mutate_graph_6
-    mutate_graph_4 --> mutate_graph_6
-    mutate_graph_6 --> mutate_graph_7
-    mutate_graph_7 --> mutate_graph_8
-    mutate_graph_8 --> mutate_graph_9
-    mutate_graph_7 --> mutate_graph_9
-    mutate_graph_9 --> mutate_graph_10
-    mutate_graph_10 --> mutate_graph_11
-    mutate_graph_10 --> mutate_graph_12
-    mutate_graph_11 --> mutate_graph_13
-    mutate_graph_12 --> mutate_graph_13
-    mutate_graph_13 --> mutate_graph_1
-    mutate_graph_1 --> mutate_graph_14
-    mutate_graph_14 --> mutate_graph_15
 ```
 
 ## Function: `one_million_pages_under_1gb_full_run`
 
 - File: MMSB/tests/stress_memory.rs
 - Branches: 1
-- Loops: 1
+- Loops: 0
 - Nodes: 16
-- Edges: 17
+- Edges: 16
 
 ```mermaid
 flowchart TD
     one_million_pages_under_1gb_full_run_0["ENTRY"]
     one_million_pages_under_1gb_full_run_1["if cfg ! (debug_assertions)"]
-    one_million_pages_under_1gb_full_run_2["macro eprintln"]
-    one_million_pages_under_1gb_full_run_3["return"]
-    one_million_pages_under_1gb_full_run_4["if join"]
-    one_million_pages_under_1gb_full_run_5["let allocator = Arc :: new (PageAllocator :: new (PageAllocatorConfig :: default ()))"]
-    one_million_pages_under_1gb_full_run_6["for idx in 0 .. TARGET_PAGES"]
-    one_million_pages_under_1gb_full_run_7["allocator . allocate_raw (PageID (idx as u64 + 1) , PAGE_BYTES , Some (PageLo..."]
-    one_million_pages_under_1gb_full_run_8["after for"]
+    one_million_pages_under_1gb_full_run_2["THEN BB"]
+    one_million_pages_under_1gb_full_run_3["macro eprintln"]
+    one_million_pages_under_1gb_full_run_4["return"]
+    one_million_pages_under_1gb_full_run_5["EMPTY ELSE"]
+    one_million_pages_under_1gb_full_run_6["IF JOIN"]
+    one_million_pages_under_1gb_full_run_7["let allocator = Arc :: new (PageAllocator :: new (PageAllocatorConfig :: default ()))"]
+    one_million_pages_under_1gb_full_run_8["for idx in 0 .. TARGET_PAGES { allocator . allocate_raw (PageID (idx as u64 +..."]
     one_million_pages_under_1gb_full_run_9["let monitor = MemoryMonitor :: new (Arc :: clone (& allocator))"]
     one_million_pages_under_1gb_full_run_10["let snapshot = monitor . snapshot ()"]
     one_million_pages_under_1gb_full_run_11["macro assert_eq"]
@@ -595,12 +487,11 @@ flowchart TD
     one_million_pages_under_1gb_full_run_1 --> one_million_pages_under_1gb_full_run_2
     one_million_pages_under_1gb_full_run_2 --> one_million_pages_under_1gb_full_run_3
     one_million_pages_under_1gb_full_run_3 --> one_million_pages_under_1gb_full_run_4
-    one_million_pages_under_1gb_full_run_1 --> one_million_pages_under_1gb_full_run_4
-    one_million_pages_under_1gb_full_run_4 --> one_million_pages_under_1gb_full_run_5
+    one_million_pages_under_1gb_full_run_1 --> one_million_pages_under_1gb_full_run_5
+    one_million_pages_under_1gb_full_run_4 --> one_million_pages_under_1gb_full_run_6
     one_million_pages_under_1gb_full_run_5 --> one_million_pages_under_1gb_full_run_6
     one_million_pages_under_1gb_full_run_6 --> one_million_pages_under_1gb_full_run_7
-    one_million_pages_under_1gb_full_run_7 --> one_million_pages_under_1gb_full_run_6
-    one_million_pages_under_1gb_full_run_6 --> one_million_pages_under_1gb_full_run_8
+    one_million_pages_under_1gb_full_run_7 --> one_million_pages_under_1gb_full_run_8
     one_million_pages_under_1gb_full_run_8 --> one_million_pages_under_1gb_full_run_9
     one_million_pages_under_1gb_full_run_9 --> one_million_pages_under_1gb_full_run_10
     one_million_pages_under_1gb_full_run_10 --> one_million_pages_under_1gb_full_run_11
@@ -614,26 +505,21 @@ flowchart TD
 
 - File: MMSB/tests/stress_throughput.rs
 - Branches: 0
-- Loops: 1
-- Nodes: 7
-- Edges: 7
+- Loops: 0
+- Nodes: 5
+- Edges: 4
 
 ```mermaid
 flowchart TD
     prepare_allocator_0["ENTRY"]
     prepare_allocator_1["let allocator = Arc :: new (PageAllocator :: new (PageAllocatorConfig :: default ()))"]
-    prepare_allocator_2["for id in 0 .. PAGE_COUNT"]
-    prepare_allocator_3["allocator . allocate_raw (PageID (id + 1) , PAGE_SIZE , Some (PageLocation ::..."]
-    prepare_allocator_4["after for"]
-    prepare_allocator_5["allocator"]
-    prepare_allocator_6["EXIT"]
+    prepare_allocator_2["for id in 0 .. PAGE_COUNT { allocator . allocate_raw (PageID (id + 1) , PAGE_..."]
+    prepare_allocator_3["allocator"]
+    prepare_allocator_4["EXIT"]
     prepare_allocator_0 --> prepare_allocator_1
     prepare_allocator_1 --> prepare_allocator_2
     prepare_allocator_2 --> prepare_allocator_3
-    prepare_allocator_3 --> prepare_allocator_2
-    prepare_allocator_2 --> prepare_allocator_4
-    prepare_allocator_4 --> prepare_allocator_5
-    prepare_allocator_5 --> prepare_allocator_6
+    prepare_allocator_3 --> prepare_allocator_4
 ```
 
 ## Function: `provenance_tracker_resolves_with_cache`
@@ -699,39 +585,18 @@ flowchart TD
 ## Function: `random_edge_type`
 
 - File: MMSB/tests/stress_stability.rs
-- Branches: 4
+- Branches: 0
 - Loops: 0
-- Nodes: 12
-- Edges: 14
+- Nodes: 3
+- Edges: 2
 
 ```mermaid
 flowchart TD
     random_edge_type_0["ENTRY"]
-    random_edge_type_1["match rng . next_in_range (4)"]
-    random_edge_type_2["arm 0"]
-    random_edge_type_3["EdgeType :: Data"]
-    random_edge_type_4["arm 1"]
-    random_edge_type_5["EdgeType :: Control"]
-    random_edge_type_6["arm 2"]
-    random_edge_type_7["EdgeType :: Gpu"]
-    random_edge_type_8["arm _"]
-    random_edge_type_9["EdgeType :: Compiler"]
-    random_edge_type_10["match join"]
-    random_edge_type_11["EXIT"]
+    random_edge_type_1["match rng . next_in_range (4) { 0 => EdgeType :: Data , 1 => EdgeType :: Cont..."]
+    random_edge_type_2["EXIT"]
     random_edge_type_0 --> random_edge_type_1
     random_edge_type_1 --> random_edge_type_2
-    random_edge_type_2 --> random_edge_type_3
-    random_edge_type_1 --> random_edge_type_4
-    random_edge_type_4 --> random_edge_type_5
-    random_edge_type_1 --> random_edge_type_6
-    random_edge_type_6 --> random_edge_type_7
-    random_edge_type_1 --> random_edge_type_8
-    random_edge_type_8 --> random_edge_type_9
-    random_edge_type_3 --> random_edge_type_10
-    random_edge_type_5 --> random_edge_type_10
-    random_edge_type_7 --> random_edge_type_10
-    random_edge_type_9 --> random_edge_type_10
-    random_edge_type_10 --> random_edge_type_11
 ```
 
 ## Function: `read_page`
@@ -806,10 +671,10 @@ flowchart TD
 ## Function: `run_throughput_benchmark`
 
 - File: MMSB/tests/stress_throughput.rs
-- Branches: 2
-- Loops: 1
-- Nodes: 24
-- Edges: 26
+- Branches: 1
+- Loops: 0
+- Nodes: 14
+- Edges: 14
 
 ```mermaid
 flowchart TD
@@ -819,24 +684,14 @@ flowchart TD
     run_throughput_benchmark_3["let mut total_duration = Duration :: default ()"]
     run_throughput_benchmark_4["let mut next_delta = 0u64"]
     run_throughput_benchmark_5["let mut sample_checkpoint : Option < (usize , Duration) > = None"]
-    run_throughput_benchmark_6["while total_processed < TOTAL_DELTAS"]
-    run_throughput_benchmark_7["let remaining = TOTAL_DELTAS - total_processed"]
-    run_throughput_benchmark_8["let batch_size = remaining . min (CHUNK_SIZE)"]
-    run_throughput_benchmark_9["let deltas = generate_delta_batch (next_delta , batch_size , PAGE_COUNT)"]
-    run_throughput_benchmark_10["next_delta += batch_size as u64"]
-    run_throughput_benchmark_11["let metrics = engine . process_parallel (deltas) . expect ('throughput engine failed')"]
-    run_throughput_benchmark_12["macro assert_eq"]
-    run_throughput_benchmark_13["total_processed += metrics . processed"]
-    run_throughput_benchmark_14["total_duration += metrics . duration"]
-    run_throughput_benchmark_15["if sample_checkpoint . is_none () && total_processed >= MIN_SAMPLE"]
-    run_throughput_benchmark_16["sample_checkpoint = Some ((total_processed , total_duration))"]
-    run_throughput_benchmark_17["if join"]
-    run_throughput_benchmark_18["after while"]
-    run_throughput_benchmark_19["if let Some ((processed , duration)) = sample_checkpoint"]
-    run_throughput_benchmark_20["assert_throughput (processed , duration , min_target)"]
-    run_throughput_benchmark_21["if join"]
-    run_throughput_benchmark_22["assert_throughput (total_processed , total_duration , min_target)"]
-    run_throughput_benchmark_23["EXIT"]
+    run_throughput_benchmark_6["while total_processed < TOTAL_DELTAS { let remaining = TOTAL_DELTAS - total_p..."]
+    run_throughput_benchmark_7["if let Some ((processed , duration)) = sample_checkpoint"]
+    run_throughput_benchmark_8["THEN BB"]
+    run_throughput_benchmark_9["assert_throughput (processed , duration , min_target)"]
+    run_throughput_benchmark_10["EMPTY ELSE"]
+    run_throughput_benchmark_11["IF JOIN"]
+    run_throughput_benchmark_12["assert_throughput (total_processed , total_duration , min_target)"]
+    run_throughput_benchmark_13["EXIT"]
     run_throughput_benchmark_0 --> run_throughput_benchmark_1
     run_throughput_benchmark_1 --> run_throughput_benchmark_2
     run_throughput_benchmark_2 --> run_throughput_benchmark_3
@@ -846,61 +701,44 @@ flowchart TD
     run_throughput_benchmark_6 --> run_throughput_benchmark_7
     run_throughput_benchmark_7 --> run_throughput_benchmark_8
     run_throughput_benchmark_8 --> run_throughput_benchmark_9
-    run_throughput_benchmark_9 --> run_throughput_benchmark_10
+    run_throughput_benchmark_7 --> run_throughput_benchmark_10
+    run_throughput_benchmark_9 --> run_throughput_benchmark_11
     run_throughput_benchmark_10 --> run_throughput_benchmark_11
     run_throughput_benchmark_11 --> run_throughput_benchmark_12
     run_throughput_benchmark_12 --> run_throughput_benchmark_13
-    run_throughput_benchmark_13 --> run_throughput_benchmark_14
-    run_throughput_benchmark_14 --> run_throughput_benchmark_15
-    run_throughput_benchmark_15 --> run_throughput_benchmark_16
-    run_throughput_benchmark_16 --> run_throughput_benchmark_17
-    run_throughput_benchmark_15 --> run_throughput_benchmark_17
-    run_throughput_benchmark_17 --> run_throughput_benchmark_6
-    run_throughput_benchmark_6 --> run_throughput_benchmark_18
-    run_throughput_benchmark_18 --> run_throughput_benchmark_19
-    run_throughput_benchmark_19 --> run_throughput_benchmark_20
-    run_throughput_benchmark_20 --> run_throughput_benchmark_21
-    run_throughput_benchmark_19 --> run_throughput_benchmark_21
-    run_throughput_benchmark_21 --> run_throughput_benchmark_22
-    run_throughput_benchmark_22 --> run_throughput_benchmark_23
 ```
 
 ## Function: `sampled_allocation_projects_under_budget`
 
 - File: MMSB/tests/stress_memory.rs
 - Branches: 0
-- Loops: 1
-- Nodes: 13
-- Edges: 13
+- Loops: 0
+- Nodes: 11
+- Edges: 10
 
 ```mermaid
 flowchart TD
     sampled_allocation_projects_under_budget_0["ENTRY"]
     sampled_allocation_projects_under_budget_1["let allocator = Arc :: new (PageAllocator :: new (PageAllocatorConfig :: default ()))"]
     sampled_allocation_projects_under_budget_2["let monitor = MemoryMonitor :: new (Arc :: clone (& allocator))"]
-    sampled_allocation_projects_under_budget_3["for idx in 0 .. SAMPLE_PAGES"]
-    sampled_allocation_projects_under_budget_4["allocator . allocate_raw (PageID (idx as u64 + 1) , PAGE_BYTES , Some (PageLo..."]
-    sampled_allocation_projects_under_budget_5["after for"]
-    sampled_allocation_projects_under_budget_6["let snapshot = monitor . snapshot ()"]
-    sampled_allocation_projects_under_budget_7["macro assert"]
-    sampled_allocation_projects_under_budget_8["let projected_total = snapshot . avg_bytes_per_page . saturating_mul (TARGET_PAGES)"]
-    sampled_allocation_projects_under_budget_9["let one_gib = 1usize << 30"]
-    sampled_allocation_projects_under_budget_10["macro assert"]
-    sampled_allocation_projects_under_budget_11["macro println"]
-    sampled_allocation_projects_under_budget_12["EXIT"]
+    sampled_allocation_projects_under_budget_3["for idx in 0 .. SAMPLE_PAGES { allocator . allocate_raw (PageID (idx as u64 +..."]
+    sampled_allocation_projects_under_budget_4["let snapshot = monitor . snapshot ()"]
+    sampled_allocation_projects_under_budget_5["macro assert"]
+    sampled_allocation_projects_under_budget_6["let projected_total = snapshot . avg_bytes_per_page . saturating_mul (TARGET_PAGES)"]
+    sampled_allocation_projects_under_budget_7["let one_gib = 1usize << 30"]
+    sampled_allocation_projects_under_budget_8["macro assert"]
+    sampled_allocation_projects_under_budget_9["macro println"]
+    sampled_allocation_projects_under_budget_10["EXIT"]
     sampled_allocation_projects_under_budget_0 --> sampled_allocation_projects_under_budget_1
     sampled_allocation_projects_under_budget_1 --> sampled_allocation_projects_under_budget_2
     sampled_allocation_projects_under_budget_2 --> sampled_allocation_projects_under_budget_3
     sampled_allocation_projects_under_budget_3 --> sampled_allocation_projects_under_budget_4
-    sampled_allocation_projects_under_budget_4 --> sampled_allocation_projects_under_budget_3
-    sampled_allocation_projects_under_budget_3 --> sampled_allocation_projects_under_budget_5
+    sampled_allocation_projects_under_budget_4 --> sampled_allocation_projects_under_budget_5
     sampled_allocation_projects_under_budget_5 --> sampled_allocation_projects_under_budget_6
     sampled_allocation_projects_under_budget_6 --> sampled_allocation_projects_under_budget_7
     sampled_allocation_projects_under_budget_7 --> sampled_allocation_projects_under_budget_8
     sampled_allocation_projects_under_budget_8 --> sampled_allocation_projects_under_budget_9
     sampled_allocation_projects_under_budget_9 --> sampled_allocation_projects_under_budget_10
-    sampled_allocation_projects_under_budget_10 --> sampled_allocation_projects_under_budget_11
-    sampled_allocation_projects_under_budget_11 --> sampled_allocation_projects_under_budget_12
 ```
 
 ## Function: `simulate`
@@ -925,36 +763,40 @@ flowchart TD
 - File: MMSB/tests/stress_throughput.rs
 - Branches: 1
 - Loops: 0
-- Nodes: 8
-- Edges: 8
+- Nodes: 10
+- Edges: 10
 
 ```mermaid
 flowchart TD
     single_thread_1m_deltas_per_sec_0["ENTRY"]
     single_thread_1m_deltas_per_sec_1["if cfg ! (debug_assertions)"]
-    single_thread_1m_deltas_per_sec_2["macro eprintln"]
-    single_thread_1m_deltas_per_sec_3["return"]
-    single_thread_1m_deltas_per_sec_4["if join"]
-    single_thread_1m_deltas_per_sec_5["let allocator = prepare_allocator ()"]
-    single_thread_1m_deltas_per_sec_6["run_throughput_benchmark (& allocator , 1 , 1_000_000.0)"]
-    single_thread_1m_deltas_per_sec_7["EXIT"]
+    single_thread_1m_deltas_per_sec_2["THEN BB"]
+    single_thread_1m_deltas_per_sec_3["macro eprintln"]
+    single_thread_1m_deltas_per_sec_4["return"]
+    single_thread_1m_deltas_per_sec_5["EMPTY ELSE"]
+    single_thread_1m_deltas_per_sec_6["IF JOIN"]
+    single_thread_1m_deltas_per_sec_7["let allocator = prepare_allocator ()"]
+    single_thread_1m_deltas_per_sec_8["run_throughput_benchmark (& allocator , 1 , 1_000_000.0)"]
+    single_thread_1m_deltas_per_sec_9["EXIT"]
     single_thread_1m_deltas_per_sec_0 --> single_thread_1m_deltas_per_sec_1
     single_thread_1m_deltas_per_sec_1 --> single_thread_1m_deltas_per_sec_2
     single_thread_1m_deltas_per_sec_2 --> single_thread_1m_deltas_per_sec_3
     single_thread_1m_deltas_per_sec_3 --> single_thread_1m_deltas_per_sec_4
-    single_thread_1m_deltas_per_sec_1 --> single_thread_1m_deltas_per_sec_4
-    single_thread_1m_deltas_per_sec_4 --> single_thread_1m_deltas_per_sec_5
+    single_thread_1m_deltas_per_sec_1 --> single_thread_1m_deltas_per_sec_5
+    single_thread_1m_deltas_per_sec_4 --> single_thread_1m_deltas_per_sec_6
     single_thread_1m_deltas_per_sec_5 --> single_thread_1m_deltas_per_sec_6
     single_thread_1m_deltas_per_sec_6 --> single_thread_1m_deltas_per_sec_7
+    single_thread_1m_deltas_per_sec_7 --> single_thread_1m_deltas_per_sec_8
+    single_thread_1m_deltas_per_sec_8 --> single_thread_1m_deltas_per_sec_9
 ```
 
 ## Function: `stability_resists_small_noise`
 
 - File: MMSB/tests/benchmark_09_stability.rs
 - Branches: 0
-- Loops: 1
-- Nodes: 15
-- Edges: 15
+- Loops: 0
+- Nodes: 8
+- Edges: 7
 
 ```mermaid
 flowchart TD
@@ -963,16 +805,9 @@ flowchart TD
     stability_resists_small_noise_2["let mut baseline = vec ! [0.0 ; 64]"]
     stability_resists_small_noise_3["let mut perturbed = baseline . clone ()"]
     stability_resists_small_noise_4["let mut max_divergence : f64 = 0.0"]
-    stability_resists_small_noise_5["for _ in 0 .. 128"]
-    stability_resists_small_noise_6["baseline = simulate (& baseline , 0.0)"]
-    stability_resists_small_noise_7["let noise = rng . gaussian (0.005)"]
-    stability_resists_small_noise_8["perturbed = simulate (& perturbed , noise)"]
-    stability_resists_small_noise_9["let div = divergence (& baseline , & perturbed)"]
-    stability_resists_small_noise_10["macro assert"]
-    stability_resists_small_noise_11["max_divergence = max_divergence . max (div)"]
-    stability_resists_small_noise_12["after for"]
-    stability_resists_small_noise_13["macro assert"]
-    stability_resists_small_noise_14["EXIT"]
+    stability_resists_small_noise_5["for _ in 0 .. 128 { baseline = simulate (& baseline , 0.0) ; let noise = rng ..."]
+    stability_resists_small_noise_6["macro assert"]
+    stability_resists_small_noise_7["EXIT"]
     stability_resists_small_noise_0 --> stability_resists_small_noise_1
     stability_resists_small_noise_1 --> stability_resists_small_noise_2
     stability_resists_small_noise_2 --> stability_resists_small_noise_3
@@ -980,14 +815,6 @@ flowchart TD
     stability_resists_small_noise_4 --> stability_resists_small_noise_5
     stability_resists_small_noise_5 --> stability_resists_small_noise_6
     stability_resists_small_noise_6 --> stability_resists_small_noise_7
-    stability_resists_small_noise_7 --> stability_resists_small_noise_8
-    stability_resists_small_noise_8 --> stability_resists_small_noise_9
-    stability_resists_small_noise_9 --> stability_resists_small_noise_10
-    stability_resists_small_noise_10 --> stability_resists_small_noise_11
-    stability_resists_small_noise_11 --> stability_resists_small_noise_5
-    stability_resists_small_noise_5 --> stability_resists_small_noise_12
-    stability_resists_small_noise_12 --> stability_resists_small_noise_13
-    stability_resists_small_noise_13 --> stability_resists_small_noise_14
 ```
 
 ## Function: `temp_log_path`
@@ -1014,43 +841,29 @@ flowchart TD
 ## Function: `ten_thousand_cycles_no_violations`
 
 - File: MMSB/tests/stress_stability.rs
-- Branches: 1
-- Loops: 3
-- Nodes: 25
-- Edges: 28
+- Branches: 0
+- Loops: 0
+- Nodes: 12
+- Edges: 11
 
 ```mermaid
 flowchart TD
     ten_thousand_cycles_no_violations_0["ENTRY"]
     ten_thousand_cycles_no_violations_1["let allocator = Arc :: new (PageAllocator :: new (PageAllocatorConfig :: default ()))"]
-    ten_thousand_cycles_no_violations_2["for id in 0 .. PAGE_COUNT"]
-    ten_thousand_cycles_no_violations_3["allocator . allocate_raw (PageID (id + 1) , PAGE_SIZE , Some (PageLocation ::..."]
-    ten_thousand_cycles_no_violations_4["after for"]
-    ten_thousand_cycles_no_violations_5["let graph = ShadowPageGraph :: default ()"]
-    ten_thousand_cycles_no_violations_6["let registry = DeviceBufferRegistry :: default ()"]
-    ten_thousand_cycles_no_violations_7["let checker = InvariantChecker :: with_builtins ()"]
-    ten_thousand_cycles_no_violations_8["let mut rng = Lcg :: new (0x5eed_cafe_d00d_f001)"]
-    ten_thousand_cycles_no_violations_9["let mut delta_id = 0u64"]
-    ten_thousand_cycles_no_violations_10["let mut probe = SignalProbe :: new (DELTA_WIDTH , 0.5)"]
-    ten_thousand_cycles_no_violations_11["for cycle in 0 .. CYCLES"]
-    ten_thousand_cycles_no_violations_12["apply_random_deltas (& allocator , & mut rng , DELTAS_PER_CYCLE , & mut delta..."]
-    ten_thousand_cycles_no_violations_13["mutate_graph (& graph , & mut rng)"]
-    ten_thousand_cycles_no_violations_14["probe . step (& mut rng)"]
-    ten_thousand_cycles_no_violations_15["probe . assert_within_bounds ()"]
-    ten_thousand_cycles_no_violations_16["if cycle % CHECK_INTERVAL == 0"]
-    ten_thousand_cycles_no_violations_17["let ctx = InvariantContext { allocator : Some (& allocator) , graph : Some (& graph) , ..."]
-    ten_thousand_cycles_no_violations_18["for result in checker . run (& ctx)"]
-    ten_thousand_cycles_no_violations_19["macro assert"]
-    ten_thousand_cycles_no_violations_20["after for"]
-    ten_thousand_cycles_no_violations_21["if join"]
-    ten_thousand_cycles_no_violations_22["after for"]
-    ten_thousand_cycles_no_violations_23["macro println"]
-    ten_thousand_cycles_no_violations_24["EXIT"]
+    ten_thousand_cycles_no_violations_2["for id in 0 .. PAGE_COUNT { allocator . allocate_raw (PageID (id + 1) , PAGE_..."]
+    ten_thousand_cycles_no_violations_3["let graph = ShadowPageGraph :: default ()"]
+    ten_thousand_cycles_no_violations_4["let registry = DeviceBufferRegistry :: default ()"]
+    ten_thousand_cycles_no_violations_5["let checker = InvariantChecker :: with_builtins ()"]
+    ten_thousand_cycles_no_violations_6["let mut rng = Lcg :: new (0x5eed_cafe_d00d_f001)"]
+    ten_thousand_cycles_no_violations_7["let mut delta_id = 0u64"]
+    ten_thousand_cycles_no_violations_8["let mut probe = SignalProbe :: new (DELTA_WIDTH , 0.5)"]
+    ten_thousand_cycles_no_violations_9["for cycle in 0 .. CYCLES { apply_random_deltas (& allocator , & mut rng , DEL..."]
+    ten_thousand_cycles_no_violations_10["macro println"]
+    ten_thousand_cycles_no_violations_11["EXIT"]
     ten_thousand_cycles_no_violations_0 --> ten_thousand_cycles_no_violations_1
     ten_thousand_cycles_no_violations_1 --> ten_thousand_cycles_no_violations_2
     ten_thousand_cycles_no_violations_2 --> ten_thousand_cycles_no_violations_3
-    ten_thousand_cycles_no_violations_3 --> ten_thousand_cycles_no_violations_2
-    ten_thousand_cycles_no_violations_2 --> ten_thousand_cycles_no_violations_4
+    ten_thousand_cycles_no_violations_3 --> ten_thousand_cycles_no_violations_4
     ten_thousand_cycles_no_violations_4 --> ten_thousand_cycles_no_violations_5
     ten_thousand_cycles_no_violations_5 --> ten_thousand_cycles_no_violations_6
     ten_thousand_cycles_no_violations_6 --> ten_thousand_cycles_no_violations_7
@@ -1058,22 +871,6 @@ flowchart TD
     ten_thousand_cycles_no_violations_8 --> ten_thousand_cycles_no_violations_9
     ten_thousand_cycles_no_violations_9 --> ten_thousand_cycles_no_violations_10
     ten_thousand_cycles_no_violations_10 --> ten_thousand_cycles_no_violations_11
-    ten_thousand_cycles_no_violations_11 --> ten_thousand_cycles_no_violations_12
-    ten_thousand_cycles_no_violations_12 --> ten_thousand_cycles_no_violations_13
-    ten_thousand_cycles_no_violations_13 --> ten_thousand_cycles_no_violations_14
-    ten_thousand_cycles_no_violations_14 --> ten_thousand_cycles_no_violations_15
-    ten_thousand_cycles_no_violations_15 --> ten_thousand_cycles_no_violations_16
-    ten_thousand_cycles_no_violations_16 --> ten_thousand_cycles_no_violations_17
-    ten_thousand_cycles_no_violations_17 --> ten_thousand_cycles_no_violations_18
-    ten_thousand_cycles_no_violations_18 --> ten_thousand_cycles_no_violations_19
-    ten_thousand_cycles_no_violations_19 --> ten_thousand_cycles_no_violations_18
-    ten_thousand_cycles_no_violations_18 --> ten_thousand_cycles_no_violations_20
-    ten_thousand_cycles_no_violations_20 --> ten_thousand_cycles_no_violations_21
-    ten_thousand_cycles_no_violations_16 --> ten_thousand_cycles_no_violations_21
-    ten_thousand_cycles_no_violations_21 --> ten_thousand_cycles_no_violations_11
-    ten_thousand_cycles_no_violations_11 --> ten_thousand_cycles_no_violations_22
-    ten_thousand_cycles_no_violations_22 --> ten_thousand_cycles_no_violations_23
-    ten_thousand_cycles_no_violations_23 --> ten_thousand_cycles_no_violations_24
 ```
 
 ## Function: `test_allocator_cpu_gpu_latency`
@@ -1466,94 +1263,81 @@ flowchart TD
 
 - File: MMSB/tests/mmsb_tests.rs
 - Branches: 0
-- Loops: 1
-- Nodes: 8
-- Edges: 8
+- Loops: 0
+- Nodes: 6
+- Edges: 5
 
 ```mermaid
 flowchart TD
     test_thread_safe_allocator_0["ENTRY"]
     test_thread_safe_allocator_1["let allocator = Arc :: new (PageAllocator :: new (PageAllocatorConfig :: default ()))"]
     test_thread_safe_allocator_2["let handles : Vec < _ > = (0 .. 16) . map (| i | { let alloc = Arc :: clone (& allocator) ; std :: thre..."]
-    test_thread_safe_allocator_3["for h in handles"]
-    test_thread_safe_allocator_4["h . join () . unwrap ()"]
-    test_thread_safe_allocator_5["after for"]
-    test_thread_safe_allocator_6["macro assert_eq"]
-    test_thread_safe_allocator_7["EXIT"]
+    test_thread_safe_allocator_3["for h in handles { h . join () . unwrap () ; }"]
+    test_thread_safe_allocator_4["macro assert_eq"]
+    test_thread_safe_allocator_5["EXIT"]
     test_thread_safe_allocator_0 --> test_thread_safe_allocator_1
     test_thread_safe_allocator_1 --> test_thread_safe_allocator_2
     test_thread_safe_allocator_2 --> test_thread_safe_allocator_3
     test_thread_safe_allocator_3 --> test_thread_safe_allocator_4
-    test_thread_safe_allocator_4 --> test_thread_safe_allocator_3
-    test_thread_safe_allocator_3 --> test_thread_safe_allocator_5
-    test_thread_safe_allocator_5 --> test_thread_safe_allocator_6
-    test_thread_safe_allocator_6 --> test_thread_safe_allocator_7
+    test_thread_safe_allocator_4 --> test_thread_safe_allocator_5
 ```
 
 ## Function: `throughput_engine_exceeds_minimum_rate`
 
 - File: MMSB/tests/benchmark_05_throughput.rs
 - Branches: 0
-- Loops: 1
-- Nodes: 11
-- Edges: 11
+- Loops: 0
+- Nodes: 9
+- Edges: 8
 
 ```mermaid
 flowchart TD
     throughput_engine_exceeds_minimum_rate_0["ENTRY"]
     throughput_engine_exceeds_minimum_rate_1["let allocator = Arc :: new (PageAllocator :: new (PageAllocatorConfig :: default ()))"]
-    throughput_engine_exceeds_minimum_rate_2["for id in 1 ..= 8"]
-    throughput_engine_exceeds_minimum_rate_3["allocator . allocate_raw (PageID (id) , 16 , Some (PageLocation :: Cpu)) . un..."]
-    throughput_engine_exceeds_minimum_rate_4["after for"]
-    throughput_engine_exceeds_minimum_rate_5["let engine = ThroughputEngine :: new (Arc :: clone (& allocator) , 2 , 32)"]
-    throughput_engine_exceeds_minimum_rate_6["let deltas : Vec < _ > = (0 .. 512) . map (| idx | make_delta (idx , (idx % 8) + 1)) . collect ()"]
-    throughput_engine_exceeds_minimum_rate_7["let metrics = engine . process_parallel (deltas) . unwrap ()"]
-    throughput_engine_exceeds_minimum_rate_8["macro assert_eq"]
-    throughput_engine_exceeds_minimum_rate_9["macro assert"]
-    throughput_engine_exceeds_minimum_rate_10["EXIT"]
+    throughput_engine_exceeds_minimum_rate_2["for id in 1 ..= 8 { allocator . allocate_raw (PageID (id) , 16 , Some (PageLo..."]
+    throughput_engine_exceeds_minimum_rate_3["let engine = ThroughputEngine :: new (Arc :: clone (& allocator) , 2 , 32)"]
+    throughput_engine_exceeds_minimum_rate_4["let deltas : Vec < _ > = (0 .. 512) . map (| idx | make_delta (idx , (idx % 8) + 1)) . collect ()"]
+    throughput_engine_exceeds_minimum_rate_5["let metrics = engine . process_parallel (deltas) . unwrap ()"]
+    throughput_engine_exceeds_minimum_rate_6["macro assert_eq"]
+    throughput_engine_exceeds_minimum_rate_7["macro assert"]
+    throughput_engine_exceeds_minimum_rate_8["EXIT"]
     throughput_engine_exceeds_minimum_rate_0 --> throughput_engine_exceeds_minimum_rate_1
     throughput_engine_exceeds_minimum_rate_1 --> throughput_engine_exceeds_minimum_rate_2
     throughput_engine_exceeds_minimum_rate_2 --> throughput_engine_exceeds_minimum_rate_3
-    throughput_engine_exceeds_minimum_rate_3 --> throughput_engine_exceeds_minimum_rate_2
-    throughput_engine_exceeds_minimum_rate_2 --> throughput_engine_exceeds_minimum_rate_4
+    throughput_engine_exceeds_minimum_rate_3 --> throughput_engine_exceeds_minimum_rate_4
     throughput_engine_exceeds_minimum_rate_4 --> throughput_engine_exceeds_minimum_rate_5
     throughput_engine_exceeds_minimum_rate_5 --> throughput_engine_exceeds_minimum_rate_6
     throughput_engine_exceeds_minimum_rate_6 --> throughput_engine_exceeds_minimum_rate_7
     throughput_engine_exceeds_minimum_rate_7 --> throughput_engine_exceeds_minimum_rate_8
-    throughput_engine_exceeds_minimum_rate_8 --> throughput_engine_exceeds_minimum_rate_9
-    throughput_engine_exceeds_minimum_rate_9 --> throughput_engine_exceeds_minimum_rate_10
 ```
 
 ## Function: `tick_latency_stays_within_budget`
 
 - File: MMSB/tests/benchmark_06_tick_latency.rs
 - Branches: 0
-- Loops: 1
-- Nodes: 15
-- Edges: 15
+- Loops: 0
+- Nodes: 13
+- Edges: 12
 
 ```mermaid
 flowchart TD
     tick_latency_stays_within_budget_0["ENTRY"]
     tick_latency_stays_within_budget_1["let allocator = Arc :: new (PageAllocator :: new (PageAllocatorConfig :: default ()))"]
-    tick_latency_stays_within_budget_2["for id in 1 ..= 4"]
-    tick_latency_stays_within_budget_3["allocator . allocate_raw (PageID (id) , 8 , Some (PageLocation :: Cpu)) . unw..."]
-    tick_latency_stays_within_budget_4["after for"]
-    tick_latency_stays_within_budget_5["let throughput = ThroughputEngine :: new (Arc :: clone (& allocator) , 2 , 16)"]
-    tick_latency_stays_within_budget_6["let graph = Arc :: new (ShadowPageGraph :: default ())"]
-    tick_latency_stays_within_budget_7["graph . add_edge (PageID (1) , PageID (2) , EdgeType :: Data)"]
-    tick_latency_stays_within_budget_8["graph . add_edge (PageID (2) , PageID (3) , EdgeType :: Data)"]
-    tick_latency_stays_within_budget_9["let memory = Arc :: new (MemoryMonitor :: with_config (Arc :: clone (& allocator) , Memory..."]
-    tick_latency_stays_within_budget_10["let orchestrator = TickOrchestrator :: new (throughput , graph , memory)"]
-    tick_latency_stays_within_budget_11["let deltas : Vec < _ > = (0 .. 64) . map (| idx | delta (idx , (idx % 4) + 1)) . collect ()"]
-    tick_latency_stays_within_budget_12["let metrics = orchestrator . execute_tick (deltas) . unwrap ()"]
-    tick_latency_stays_within_budget_13["macro assert"]
-    tick_latency_stays_within_budget_14["EXIT"]
+    tick_latency_stays_within_budget_2["for id in 1 ..= 4 { allocator . allocate_raw (PageID (id) , 8 , Some (PageLoc..."]
+    tick_latency_stays_within_budget_3["let throughput = ThroughputEngine :: new (Arc :: clone (& allocator) , 2 , 16)"]
+    tick_latency_stays_within_budget_4["let graph = Arc :: new (ShadowPageGraph :: default ())"]
+    tick_latency_stays_within_budget_5["graph . add_edge (PageID (1) , PageID (2) , EdgeType :: Data)"]
+    tick_latency_stays_within_budget_6["graph . add_edge (PageID (2) , PageID (3) , EdgeType :: Data)"]
+    tick_latency_stays_within_budget_7["let memory = Arc :: new (MemoryMonitor :: with_config (Arc :: clone (& allocator) , Memory..."]
+    tick_latency_stays_within_budget_8["let orchestrator = TickOrchestrator :: new (throughput , graph , memory)"]
+    tick_latency_stays_within_budget_9["let deltas : Vec < _ > = (0 .. 64) . map (| idx | delta (idx , (idx % 4) + 1)) . collect ()"]
+    tick_latency_stays_within_budget_10["let metrics = orchestrator . execute_tick (deltas) . unwrap ()"]
+    tick_latency_stays_within_budget_11["macro assert"]
+    tick_latency_stays_within_budget_12["EXIT"]
     tick_latency_stays_within_budget_0 --> tick_latency_stays_within_budget_1
     tick_latency_stays_within_budget_1 --> tick_latency_stays_within_budget_2
     tick_latency_stays_within_budget_2 --> tick_latency_stays_within_budget_3
-    tick_latency_stays_within_budget_3 --> tick_latency_stays_within_budget_2
-    tick_latency_stays_within_budget_2 --> tick_latency_stays_within_budget_4
+    tick_latency_stays_within_budget_3 --> tick_latency_stays_within_budget_4
     tick_latency_stays_within_budget_4 --> tick_latency_stays_within_budget_5
     tick_latency_stays_within_budget_5 --> tick_latency_stays_within_budget_6
     tick_latency_stays_within_budget_6 --> tick_latency_stays_within_budget_7
@@ -1562,8 +1346,6 @@ flowchart TD
     tick_latency_stays_within_budget_9 --> tick_latency_stays_within_budget_10
     tick_latency_stays_within_budget_10 --> tick_latency_stays_within_budget_11
     tick_latency_stays_within_budget_11 --> tick_latency_stays_within_budget_12
-    tick_latency_stays_within_budget_12 --> tick_latency_stays_within_budget_13
-    tick_latency_stays_within_budget_13 --> tick_latency_stays_within_budget_14
 ```
 
 ## Function: `validates_dense_lengths`

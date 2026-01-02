@@ -1,0 +1,3996 @@
+{
+  "policies": [
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/030_is_cfg_test_item.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/040_is_cfg_test_item.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/040_classify_symbol.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/050_classify_symbol.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/040_refactor_constraints.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/060_refactor_constraints.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/050_scc_compressor.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/070_scc_compressor.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/060_module_resolution.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/080_module_resolution.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/070_layer_inference.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/090_layer_inference.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/080_cluster_011.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/100_cluster_011.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/090_fixpoint_solver.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/110_fixpoint_solver.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/100_dependency.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/120_dependency.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/110_structural_detector.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/130_structural_detector.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/120_cluster_006.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/140_cluster_006.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/130_semantic_detector.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/150_semantic_detector.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/140_layer_core.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/160_layer_core.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/150_path_detector.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/170_path_detector.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/160_invariant_integrator.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/180_invariant_integrator.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/170_layer_utilities.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_layer_utilities.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/180_invariant_reporter.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_invariant_reporter.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_conscience_graph.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/210_conscience_graph.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_action_validator.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/220_action_validator.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/210_agent_conscience.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/230_agent_conscience.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/211_dead_code_doc_comment_scanner.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/240_dead_code_doc_comment_scanner.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/220_utilities.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/250_utilities.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/230_dead_code_attribute_parser.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/260_dead_code_attribute_parser.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/240_types.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/270_types.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/250_cohesion_analyzer.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/280_cohesion_analyzer.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/260_directory_analyzer.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/290_directory_analyzer.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/270_control_flow.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/300_control_flow.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/280_file_ordering.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/310_file_ordering.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/290_julia_parser.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/320_julia_parser.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/300_rust_parser.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/330_rust_parser.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/310_dot_exporter.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/340_dot_exporter.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/320_file_gathering.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/350_file_gathering.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/330_markdown_report.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/360_markdown_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/340_main.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/370_main.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/350_agent_cli.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/380_agent_cli.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/360_lib.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/390_lib.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/370_dead_code_types.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/400_dead_code_types.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/380_dead_code_doc_comment_parser.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/410_dead_code_doc_comment_parser.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/390_dead_code_call_graph.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/420_dead_code_call_graph.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/400_dead_code_intent.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/430_dead_code_intent.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/410_dead_code_test_boundaries.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/440_dead_code_test_boundaries.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/420_dead_code_entrypoints.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/450_dead_code_entrypoints.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/430_dead_code_classifier.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/460_dead_code_classifier.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/440_dead_code_confidence.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/470_dead_code_confidence.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/450_dead_code_actions.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/480_dead_code_actions.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/460_correction_plan_types.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/490_correction_plan_types.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/470_dead_code_report.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/500_dead_code_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/480_dead_code_filter.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/510_dead_code_filter.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/490_verification_policy_types.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/520_verification_policy_types.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/500_dead_code_cli.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/530_dead_code_cli.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/510_quality_delta_types.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/540_quality_delta_types.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/520_dead_code_policy.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/550_dead_code_policy.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/530_violation_predictor.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/560_violation_predictor.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/540_dead_code_report_split.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/570_dead_code_report_split.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/550_tier_classifier.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/580_tier_classifier.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/560_confidence_scorer.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/590_confidence_scorer.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/570_correction_plan_generator.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/600_correction_plan_generator.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/580_verification_scope_planner.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/610_verification_scope_planner.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/590_rollback_criteria_builder.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/620_rollback_criteria_builder.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/600_quality_delta_calculator.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/630_quality_delta_calculator.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/610_action_impact_estimator.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/640_action_impact_estimator.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/620_correction_plan_serializer.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/650_correction_plan_serializer.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/630_verification_policy_emitter.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/660_verification_policy_emitter.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/640_correction_intelligence_report.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/670_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/admission_composition_artifact.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/680_admission_composition_artifact.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/batch_admission.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/690_batch_admission.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/composition_rule.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/700_composition_rule.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/effect_signature_schema.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/710_effect_signature_schema.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 180,
+      "incremental": false,
+      "scope": {
+        "type": "FullWorkspace"
+      }
+    },
+    {
+      "action_id": "create_file_src/420_dead_code_entrypoints.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/420_dead_code_entrypoints.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "create_file_src/230_dead_code_attribute_parser.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/230_dead_code_attribute_parser.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "create_file_src/230_dead_code_attribute_parser.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/230_dead_code_attribute_parser.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "create_file_src/010_layer_utilities.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/010_layer_utilities.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "move_gather_rust_files_to_src/000_dependency_analysis.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/020_gather_rust_files.rs",
+          "src/000_dependency_analysis.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "move_is_cfg_test_item_to_src/230_dead_code_attribute_parser.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/030_is_cfg_test_item.rs",
+          "src/230_dead_code_attribute_parser.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "move_classify_symbol_to_src/170_layer_utilities.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/040_classify_symbol.rs",
+          "src/170_layer_utilities.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "move_scan_doc_comments_to_src/230_dead_code_attribute_parser.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/211_dead_code_doc_comment_scanner.rs",
+          "src/230_dead_code_attribute_parser.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "move_scan_intent_tags_to_src/211_dead_code_doc_comment_scanner.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/211_dead_code_doc_comment_scanner.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_detect_intent_signals_to_src/211_dead_code_doc_comment_scanner.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/211_dead_code_doc_comment_scanner.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_detect_test_modules_to_src/030_is_cfg_test_item.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/030_is_cfg_test_item.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_detect_test_symbols_to_src/030_is_cfg_test_item.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/030_is_cfg_test_item.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_find_private_dependencies_to_src/250_cohesion_analyzer.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/250_cohesion_analyzer.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_generate_artifact_in_src/admission_composition_artifact.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/admission_composition_artifact.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_write_artifact_in_src/admission_composition_artifact.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/admission_composition_artifact.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_read_artifact_in_src/admission_composition_artifact.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/admission_composition_artifact.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_compose_batch_in_src/composition_rule.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/composition_rule.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_build_directory_entry_map_in_src/000_dependency_analysis.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/000_dependency_analysis.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_collect_naming_warnings_in_src/000_dependency_analysis.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/000_dependency_analysis.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_layer_constrained_sort_in_src/000_dependency_analysis.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/000_dependency_analysis.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_topo_sort_within_in_src/000_dependency_analysis.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/000_dependency_analysis.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_detect_layer_in_src/000_dependency_analysis.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/000_dependency_analysis.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_rust_entry_paths_in_src/000_dependency_analysis.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/000_dependency_analysis.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_order_rust_files_by_dependency_in_src/000_dependency_analysis.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/000_dependency_analysis.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_collect_julia_dependencies_in_src/000_dependency_analysis.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/000_dependency_analysis.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_julia_entry_paths_in_src/000_dependency_analysis.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/000_dependency_analysis.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_build_file_layers_in_src/000_dependency_analysis.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/000_dependency_analysis.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_gather_julia_files_in_src/000_dependency_analysis.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/000_dependency_analysis.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_topological_sort_in_src/000_dependency_analysis.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/000_dependency_analysis.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_ordered_by_name_in_src/000_dependency_analysis.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/000_dependency_analysis.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_build_entries_in_src/000_dependency_analysis.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/000_dependency_analysis.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_analyze_file_ordering_in_src/000_dependency_analysis.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/000_dependency_analysis.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_naming_score_for_file_in_src/000_dependency_analysis.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/000_dependency_analysis.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_detect_cycles_in_src/000_dependency_analysis.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/000_dependency_analysis.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_detect_violations_in_src/000_dependency_analysis.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/000_dependency_analysis.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_export_complete_program_dot_in_src/000_dependency_analysis.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/000_dependency_analysis.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_order_julia_files_by_dependency_in_src/000_dependency_analysis.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/000_dependency_analysis.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_run_analysis_in_src/000_dependency_analysis.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/000_dependency_analysis.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_build_result_in_src/010_layer_utilities.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/010_layer_utilities.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_is_layer_violation_in_src/010_layer_utilities.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/010_layer_utilities.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_compare_dir_layers_in_src/010_layer_utilities.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/010_layer_utilities.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_compare_path_components_in_src/010_layer_utilities.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/010_layer_utilities.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_layer_adheres_in_src/010_layer_utilities.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/010_layer_utilities.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_structural_layer_value_in_src/010_layer_utilities.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/010_layer_utilities.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_detect_layer_violation_in_src/010_layer_utilities.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/010_layer_utilities.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_parse_cluster_members_in_src/010_layer_utilities.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/010_layer_utilities.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_is_core_module_path_in_src/010_layer_utilities.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/010_layer_utilities.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_cluster_target_path_in_src/010_layer_utilities.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/010_layer_utilities.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_collect_cluster_plans_in_src/010_layer_utilities.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/010_layer_utilities.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_node_style_in_src/010_layer_utilities.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/010_layer_utilities.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_cyclomatic_complexity_in_src/010_layer_utilities.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/010_layer_utilities.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_structural_cmp_in_src/010_layer_utilities.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/010_layer_utilities.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_sort_structural_items_in_src/010_layer_utilities.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/010_layer_utilities.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_gather_rust_files_in_src/020_gather_rust_files.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/020_gather_rust_files.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_classify_symbol_in_src/040_classify_symbol.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/040_classify_symbol.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_generate_constraints_in_src/040_refactor_constraints.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/040_refactor_constraints.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_normalize_module_name_in_src/060_module_resolution.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/060_module_resolution.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_resolve_module_in_src/060_module_resolution.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/060_module_resolution.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_contains_tools_in_src/060_module_resolution.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/060_module_resolution.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_build_module_root_map_in_src/060_module_resolution.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/060_module_resolution.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_extract_rust_dependencies_in_src/060_module_resolution.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/060_module_resolution.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_extract_julia_dependencies_in_src/060_module_resolution.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/060_module_resolution.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_build_dependency_map_in_src/060_module_resolution.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/060_module_resolution.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_extract_dependencies_in_src/060_module_resolution.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/060_module_resolution.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_build_module_map_in_src/080_cluster_011.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/080_cluster_011.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_resolve_path_in_src/080_cluster_011.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/080_cluster_011.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_build_directory_dag_in_src/080_cluster_011.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/080_cluster_011.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_build_file_dependency_graph_in_src/080_cluster_011.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/080_cluster_011.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_export_program_cfg_to_path_in_src/080_cluster_011.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/080_cluster_011.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_build_file_dag_in_src/080_cluster_011.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/080_cluster_011.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_collect_roots_in_src/100_dependency.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/100_dependency.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_layer_prefix_value_in_src/120_cluster_006.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/120_cluster_006.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_order_directories_in_src/120_cluster_006.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/120_cluster_006.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_common_root_in_src/120_cluster_006.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/120_cluster_006.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_strip_numeric_prefix_in_src/120_cluster_006.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/120_cluster_006.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_compute_cohesion_score_in_src/120_cluster_006.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/120_cluster_006.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_resolve_source_root_in_src/170_layer_utilities.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/170_layer_utilities.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_allow_analysis_dir_in_src/170_layer_utilities.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/170_layer_utilities.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_run_dead_code_pipeline_in_src/170_layer_utilities.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/170_layer_utilities.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_export_json_in_src/180_invariant_reporter.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/180_invariant_reporter.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_export_constraints_json_in_src/180_invariant_reporter.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/180_invariant_reporter.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_generate_conscience_map_in_src/190_conscience_graph.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/190_conscience_graph.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_validate_action_in_src/200_action_validator.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/200_action_validator.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_scan_doc_comments_in_src/211_dead_code_doc_comment_scanner.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/211_dead_code_doc_comment_scanner.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_parse_mmsb_latent_attr_in_src/230_dead_code_attribute_parser.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/230_dead_code_attribute_parser.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_scan_file_attributes_in_src/230_dead_code_attribute_parser.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/230_dead_code_attribute_parser.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_extract_attribute_value_in_src/230_dead_code_attribute_parser.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/230_dead_code_attribute_parser.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_scan_intent_tags_in_src/230_dead_code_attribute_parser.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/230_dead_code_attribute_parser.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_detect_intent_signals_in_src/230_dead_code_attribute_parser.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/230_dead_code_attribute_parser.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_detect_test_modules_in_src/230_dead_code_attribute_parser.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/230_dead_code_attribute_parser.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_detect_test_symbols_in_src/230_dead_code_attribute_parser.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/230_dead_code_attribute_parser.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_parallel_build_file_dag_in_src/280_file_ordering.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/280_file_ordering.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_compress_path_in_src/330_markdown_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/330_markdown_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_collect_directory_files_in_src/330_markdown_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/330_markdown_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_path_common_prefix_len_in_src/330_markdown_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/330_markdown_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_compute_move_metrics_in_src/330_markdown_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/330_markdown_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_generate_canonical_name_in_src/330_markdown_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/330_markdown_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_collect_directory_moves_in_src/330_markdown_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/330_markdown_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_write_structural_batches_in_src/330_markdown_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/330_markdown_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_write_cluster_batches_in_src/330_markdown_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/330_markdown_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_resolve_required_layer_path_in_src/330_markdown_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/330_markdown_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_collect_move_items_in_src/330_markdown_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/330_markdown_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_run_agent_cli_in_src/350_agent_cli.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/350_agent_cli.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_detect_latent_markers_in_src/380_dead_code_doc_comment_parser.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/380_dead_code_doc_comment_parser.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_merge_doc_intent_in_src/380_dead_code_doc_comment_parser.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/380_dead_code_doc_comment_parser.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_extract_doc_markers_in_src/380_dead_code_doc_comment_parser.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/380_dead_code_doc_comment_parser.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_item_name_in_src/380_dead_code_doc_comment_parser.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/380_dead_code_doc_comment_parser.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_item_attrs_in_src/380_dead_code_doc_comment_parser.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/380_dead_code_doc_comment_parser.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_build_call_graph_in_src/390_dead_code_call_graph.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/390_dead_code_call_graph.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_build_reverse_call_graph_in_src/390_dead_code_call_graph.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/390_dead_code_call_graph.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_compute_reachability_in_src/390_dead_code_call_graph.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/390_dead_code_call_graph.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_is_reachable_in_src/390_dead_code_call_graph.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/390_dead_code_call_graph.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_is_test_only_in_src/390_dead_code_call_graph.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/390_dead_code_call_graph.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_check_planned_directory_in_src/400_dead_code_intent.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/400_dead_code_intent.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_merge_intent_sources_in_src/400_dead_code_intent.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/400_dead_code_intent.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_planned_directory_intent_in_src/400_dead_code_intent.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/400_dead_code_intent.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_collect_symbols_in_src/400_dead_code_intent.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/400_dead_code_intent.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_collect_entrypoints_in_src/420_dead_code_entrypoints.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/420_dead_code_entrypoints.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_collect_exports_in_src/420_dead_code_entrypoints.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/420_dead_code_entrypoints.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_is_public_api_in_src/420_dead_code_entrypoints.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/420_dead_code_entrypoints.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_is_reachable_in_src/430_dead_code_classifier.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/430_dead_code_classifier.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_assign_confidence_in_src/440_dead_code_confidence.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/440_dead_code_confidence.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_recommend_action_in_src/450_dead_code_actions.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/450_dead_code_actions.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_build_report_in_src/470_dead_code_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/470_dead_code_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_write_report_in_src/470_dead_code_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/470_dead_code_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_build_basic_report_in_src/470_dead_code_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/470_dead_code_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_write_outputs_in_src/470_dead_code_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/470_dead_code_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_filter_dead_code_elements_in_src/480_dead_code_filter.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/480_dead_code_filter.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_should_exclude_from_analysis_in_src/480_dead_code_filter.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/480_dead_code_filter.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_merge_intent_map_in_src/500_dead_code_cli.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/500_dead_code_cli.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_reason_for_category_in_src/500_dead_code_cli.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/500_dead_code_cli.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_is_test_path_in_src/500_dead_code_cli.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/500_dead_code_cli.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_load_policy_in_src/520_dead_code_policy.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/520_dead_code_policy.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_parse_policy_in_src/520_dead_code_policy.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/520_dead_code_policy.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_write_summary_markdown_in_src/540_dead_code_report_split.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/540_dead_code_report_split.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_write_plan_markdown_in_src/540_dead_code_report_split.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/540_dead_code_report_split.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_classify_tier_in_src/550_tier_classifier.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/550_tier_classifier.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_compute_confidence_in_src/560_confidence_scorer.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/560_confidence_scorer.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_serialize_correction_plan_in_src/620_correction_plan_serializer.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/620_correction_plan_serializer.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_serialize_correction_plans_in_src/620_correction_plan_serializer.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/620_correction_plan_serializer.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_write_intelligence_outputs_at_in_src/620_correction_plan_serializer.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/620_correction_plan_serializer.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_write_intelligence_outputs_in_src/620_correction_plan_serializer.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/620_correction_plan_serializer.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_emit_verification_policy_in_src/630_verification_policy_emitter.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/630_verification_policy_emitter.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_build_state_in_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/640_correction_intelligence_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_filter_path_coherence_report_in_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/640_correction_intelligence_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_write_admission_preflight_report_in_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/640_correction_intelligence_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_filter_visibility_report_in_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/640_correction_intelligence_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_generate_phase2_cluster_slice_in_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/640_correction_intelligence_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_augment_path_coherence_strategies_in_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/640_correction_intelligence_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_compute_summary_in_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/640_correction_intelligence_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_fill_prediction_confidence_in_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/640_correction_intelligence_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_calculate_quality_delta_in_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/640_correction_intelligence_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_action_function_in_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/640_correction_intelligence_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_find_element_file_in_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/640_correction_intelligence_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_symbol_exists_in_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/640_correction_intelligence_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_move_violates_invariant_in_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/640_correction_intelligence_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_average_confidence_in_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/640_correction_intelligence_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_estimate_fix_time_in_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/640_correction_intelligence_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_action_symbol_in_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/640_correction_intelligence_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_action_module_path_in_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/640_correction_intelligence_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_action_refs_in_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/640_correction_intelligence_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_action_target_layer_in_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/640_correction_intelligence_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_action_visibility_in_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/640_correction_intelligence_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_affected_files_in_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/640_correction_intelligence_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_action_module_in_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/640_correction_intelligence_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_estimate_verification_time_in_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/640_correction_intelligence_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_extract_critical_tests_in_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/640_correction_intelligence_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_find_callers_in_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/640_correction_intelligence_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_find_reference_files_in_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/640_correction_intelligence_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_simulate_action_in_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/640_correction_intelligence_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_predict_violations_in_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/640_correction_intelligence_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_generate_correction_plan_in_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/640_correction_intelligence_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_plan_verification_scope_in_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/640_correction_intelligence_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_build_rollback_criteria_in_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/640_correction_intelligence_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_estimate_impact_in_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/640_correction_intelligence_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "adjust_visibility_generate_intelligence_report_in_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/640_correction_intelligence_report.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    }
+  ],
+  "version": "1.0"
+}

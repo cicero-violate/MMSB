@@ -1,0 +1,24 @@
+{
+  "policies": [
+    {
+      "action_id": "move_action_function_to_src/640_correction_intelligence_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/640_correction_intelligence_report.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    }
+  ],
+  "version": "1.0"
+}

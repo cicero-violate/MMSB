@@ -1,0 +1,18 @@
+{
+  "version": "1.0",
+  "timestamp": "2025-12-31T07:09:31.604488256+00:00",
+  "actions": [
+    {
+      "action_id": "move_detect_test_modules_to_src/211_dead_code_attribute_parser.rs",
+      "diffs": []
+    },
+    {
+      "action_id": "move_detect_test_symbols_to_src/211_dead_code_attribute_parser.rs",
+      "diffs": []
+    },
+    {
+      "action_id": "move_write_intelligence_outputs_at_to_src/231_correction_plan_serializer.rs",
+      "diffs": []
+    }
+  ]
+}

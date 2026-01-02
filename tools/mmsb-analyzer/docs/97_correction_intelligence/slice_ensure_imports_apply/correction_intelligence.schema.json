@@ -1,0 +1,198 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "mmsb://schemas/correction_intelligence.schema.json",
+  "title": "Correction Intelligence Report",
+  "type": "object",
+  "required": [
+    "version",
+    "timestamp",
+    "project_root",
+    "actions_analyzed",
+    "correction_plans",
+    "quality_deltas",
+    "summary"
+  ],
+  "properties": {
+    "version": { "type": "string" },
+    "timestamp": { "type": "string" },
+    "project_root": { "type": "string" },
+    "actions_analyzed": { "type": "integer", "minimum": 0 },
+    "correction_plans": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/correction_plan" }
+    },
+    "quality_deltas": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/quality_delta" }
+    },
+    "summary": { "$ref": "#/$defs/summary" }
+  },
+  "$defs": {
+    "correction_plan": {
+      "type": "object",
+      "required": [
+        "action_id",
+        "tier",
+        "confidence",
+        "estimated_fix_time_seconds",
+        "predicted_violations",
+        "correction_strategies",
+        "verification_policy",
+        "rollback_criteria"
+      ],
+      "properties": {
+        "action_id": { "type": "string" },
+        "tier": { "type": "string", "enum": ["Trivial", "Moderate", "Complex"] },
+        "confidence": { "type": "number" },
+        "estimated_fix_time_seconds": { "type": "integer", "minimum": 0 },
+        "predicted_violations": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/violation" }
+        },
+        "correction_strategies": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/strategy" }
+        },
+        "verification_policy": { "$ref": "#/$defs/verification_policy" },
+        "rollback_criteria": { "$ref": "#/$defs/rollback_criteria" }
+      }
+    },
+    "violation": {
+      "type": "object",
+      "required": ["type", "severity", "affected_files", "confidence"],
+      "properties": {
+        "type": { "type": "string" },
+        "severity": { "type": "string" },
+        "affected_files": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "confidence": { "type": "number" }
+      }
+    },
+    "strategy": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": { "type": "string" },
+        "module_path": { "type": "string" },
+        "symbol": { "type": "string" },
+        "old_path": { "type": "string" },
+        "new_path": { "type": "string" },
+        "from_module": { "type": "string" },
+        "original": { "type": "string" },
+        "suffix": { "type": "string" },
+        "function": { "type": "string" },
+        "target_layer": { "type": "string" },
+        "caller_file": { "type": "string" },
+        "old_ref": { "type": "string" },
+        "new_ref": { "type": "string" },
+        "reason": { "type": "string" },
+        "context": { "type": "string" }
+      }
+    },
+    "verification_policy": {
+      "type": "object",
+      "required": ["scope", "required_checks", "incremental_eligible", "estimated_time_seconds"],
+      "properties": {
+        "scope": { "$ref": "#/$defs/scope" },
+        "required_checks": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/check" }
+        },
+        "incremental_eligible": { "type": "boolean" },
+        "estimated_time_seconds": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "scope": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["SyntaxOnly", "ModuleLocal", "CallerChain", "FullWorkspace"]
+        },
+        "files": { "type": "array", "items": { "type": "string" } },
+        "module": { "type": "string" },
+        "transitive_depth": { "type": "integer", "minimum": 0 },
+        "root_function": { "type": "string" }
+      }
+    },
+    "check": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "CargoCheck",
+            "CargoTest",
+            "InvariantValidation",
+            "QualityMetrics",
+            "ManualInspection"
+          ]
+        },
+        "filter": { "type": ["string", "null"] },
+        "invariant_ids": { "type": "array", "items": { "type": "string" } },
+        "thresholds": { "$ref": "#/$defs/thresholds" },
+        "reason": { "type": "string" }
+      }
+    },
+    "thresholds": {
+      "type": "object",
+      "properties": {
+        "min_cohesion_delta": { "type": "number" },
+        "max_violation_delta": { "type": "integer" },
+        "max_complexity_delta": { "type": "number" }
+      }
+    },
+    "rollback_criteria": {
+      "type": "object",
+      "required": ["mandatory", "suggested"],
+      "properties": {
+        "mandatory": { "type": "array", "items": { "type": "string" } },
+        "suggested": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "quality_delta": {
+      "type": "object",
+      "required": [
+        "action_id",
+        "cohesion_delta",
+        "violation_delta",
+        "complexity_delta",
+        "overall_score_delta",
+        "acceptable",
+        "reason"
+      ],
+      "properties": {
+        "action_id": { "type": "string" },
+        "cohesion_delta": { "type": "number" },
+        "violation_delta": { "type": "integer" },
+        "complexity_delta": { "type": "number" },
+        "overall_score_delta": { "type": "number" },
+        "acceptable": { "type": "boolean" },
+        "reason": { "type": "string" }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "required": [
+        "trivial_count",
+        "moderate_count",
+        "complex_count",
+        "total_predicted_violations",
+        "average_confidence",
+        "estimated_total_fix_time_seconds"
+      ],
+      "properties": {
+        "trivial_count": { "type": "integer", "minimum": 0 },
+        "moderate_count": { "type": "integer", "minimum": 0 },
+        "complex_count": { "type": "integer", "minimum": 0 },
+        "total_predicted_violations": { "type": "integer", "minimum": 0 },
+        "average_confidence": { "type": "number" },
+        "estimated_total_fix_time_seconds": { "type": "integer", "minimum": 0 }
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "version": "1.0",
+  "timestamp": "2026-01-01T04:05:50.359308878+00:00",
+  "actions": [
+    {
+      "action_id": "move_action_function_to_src/640_correction_intelligence_report.rs",
+      "diffs": [
+        {
+          "path": "tools/mmsb-analyzer/src/570_correction_plan_generator.rs",
+          "diff": "--- original\n+++ modified\n@@ -6,6 +6,7 @@\n     ViolationType, VisibilityPlanOption,\n };\n use crate::tier_classifier::classify_tier;\n+use crate::correction_intelligence_report::action_function;\n\n pub fn generate_correction_plan(\n     action: &RefactorAction,\n@@ -160,13 +161,8 @@\n     }\n }\n\n-fn action_function(action: &RefactorAction) -> Option<String> {\n-    match action {\n-        RefactorAction::MoveFunction { function, .. } => Some(function.clone()),\n-        _ => None,\n-    }\n-}\n\n+\n fn action_module_path(action: &RefactorAction) -> String {\n     match action {\n         RefactorAction::MoveFunction { to, .. } => to.display().to_string(),\n"
+        },
+        {
+          "path": "tools/mmsb-analyzer/src/640_correction_intelligence_report.rs",
+          "diff": "--- original\n+++ modified\n@@ -534,3 +534,10 @@\n         reason,\n     }\n }\n+\n+pub(crate) fn action_function(action: &RefactorAction) -> Option<String> {\n+    match action {\n+        RefactorAction::MoveFunction { function, .. } => Some(function.clone()),\n+        _ => None,\n+    }\n+}\n"
+        },
+        {
+          "path": "tools/mmsb-analyzer/src/600_quality_delta_calculator.rs",
+          "diff": "--- original\n+++ modified\n@@ -19,6 +19,4 @@\n     calculate_quality_delta(action, &current_state.metrics, &simulated.metrics)\n }\n\n-#[path = \"640_correction_intelligence_report.rs\"]\n-mod moved_calculate_quality_delta;\n-pub use moved_calculate_quality_delta::calculate_quality_delta;\n+pub use crate::correction_intelligence_report::calculate_quality_delta;\n"
+        }
+      ]
+    }
+  ]
+}

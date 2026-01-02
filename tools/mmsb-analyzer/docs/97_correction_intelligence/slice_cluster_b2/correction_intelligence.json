@@ -1,0 +1,150 @@
+{
+  "actions_analyzed": 2,
+  "correction_plans": [
+    {
+      "action_id": "move_emit_verification_policy_to_src/620_correction_plan_serializer.rs",
+      "confidence": 0.6,
+      "correction_strategies": [
+        {
+          "function": "emit_verification_policy",
+          "target_layer": "src/620_correction_plan_serializer.rs",
+          "type": "MoveToLayer"
+        },
+        {
+          "function": "emit_verification_policy",
+          "target_layer": "src/620_correction_plan_serializer.rs",
+          "type": "EnsureImports"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/630_verification_policy_emitter.rs",
+            "src/620_correction_plan_serializer.rs"
+          ],
+          "confidence": 0.6,
+          "severity": "Medium",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/620_correction_plan_serializer.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_write_intelligence_outputs_to_src/620_correction_plan_serializer.rs",
+      "confidence": 0.6,
+      "correction_strategies": [
+        {
+          "function": "write_intelligence_outputs",
+          "target_layer": "src/620_correction_plan_serializer.rs",
+          "type": "MoveToLayer"
+        },
+        {
+          "function": "write_intelligence_outputs",
+          "target_layer": "src/620_correction_plan_serializer.rs",
+          "type": "EnsureImports"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/640_correction_intelligence_report.rs",
+            "src/620_correction_plan_serializer.rs"
+          ],
+          "confidence": 0.6,
+          "severity": "Medium",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/620_correction_plan_serializer.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    }
+  ],
+  "project_root": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer",
+  "quality_deltas": [
+    {
+      "acceptable": true,
+      "action_id": "move_emit_verification_policy_to_src/620_correction_plan_serializer.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Not estimated for cluster slice",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_write_intelligence_outputs_to_src/620_correction_plan_serializer.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Not estimated for cluster slice",
+      "violation_delta": 0
+    }
+  ],
+  "summary": {
+    "average_confidence": 0.6,
+    "complex_count": 0,
+    "estimated_total_fix_time_seconds": 30,
+    "moderate_count": 2,
+    "total_predicted_violations": 2,
+    "trivial_count": 0
+  },
+  "timestamp": "2026-01-01T03:17:21.757222232+00:00",
+  "version": "1.0"
+}

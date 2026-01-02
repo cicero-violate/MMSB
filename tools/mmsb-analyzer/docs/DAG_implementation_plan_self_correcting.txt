@@ -1,0 +1,1293 @@
+# Self-Correcting Intelligence: Implementation Plan (Analyzer-Side)
+
+## Core Principle
+
+**MMSB-Analyzer produces intelligence, not mutations.**
+
+The analyzer emits:
+- Invariant-guided predictions
+- Correction plans (structured strategies)
+- Verification policies
+- Quality deltas
+- Rollback criteria
+
+**All execution happens in mmsb-executor.**
+
+---
+
+## Architecture Constraint
+
+$$A \\cap R = \\varnothing \\quad \	ext{(hard rule)}$$
+
+Where:
+- $A$ = Analyzer (detection, prediction, planning)
+- $R$ = Refactor execution (mutation, git ops, retry loops)
+
+**Separation preserves:**
+- Determinism ($D \\uparrow$)
+- Leverage ($L \\uparrow$)
+- Composability
+- Future agent integration
+
+---
+
+## Dependency Graph
+
+```
+Layer 0 (Foundations):
+    [A] Correction Plan Types
+    [B] Verification Policy Types
+    [C] Quality Delta Types
+
+Layer 1 (Prediction):
+    [D] Violation Predictor       (depends on A, existing invariants)
+    [E] Tier Classifier           (depends on A)
+    [F] Confidence Scorer         (depends on A, D)
+
+Layer 2 (Planning):
+    [G] Correction Plan Generator (depends on A, D, E, F)
+    [H] Verification Scope Planner (depends on B, existing call graph)
+    [I] Rollback Criteria Builder  (depends on E, F)
+
+Layer 3 (Quality Assessment):
+    [J] Quality Delta Calculator   (depends on C, existing metrics)
+    [K] Action Impact Estimator    (depends on J, existing cohesion)
+
+Layer 4 (Output Generation):
+    [L] Correction Plan Serializer (depends on A, G, H, I)
+    [M] Verification Policy Emitter (depends on B, H)
+    [N] JSON Report Generator       (depends on all)
+
+Layer 5 (Integration):
+    [O] Report Augmentation         (depends on existing 180_report.rs, L, M, N)
+```
+
+---
+
+## Implementation Order (Topological)
+
+### Phase 1: Foundations (Layer 0)
+
+**Task A: Correction Plan Types**
+File: `src/220_correction_plan_types.rs`
+Dependencies: None
+Estimated Lines: 200
+
+Data structures:
+```rust
+/// Classification of error severity
+#[derive(Clone, Debug, Serialize, Deserialize)]
+pub enum ErrorTier {
+    Trivial,    // Auto-fixable: imports, paths
+    Moderate,   // Fixable with verification
+    Complex,    // Manual review required
+}
+
+/// Correction strategy for a predicted violation
+#[derive(Clone, Debug, Serialize, Deserialize)]
+pub enum CorrectionStrategy {
+    AddImport { module_path: String, symbol: String },
+    UpdatePath { old_path: String, new_path: String },
+    ReExport { from_module: String, symbol: String },
+    RenameWithSuffix { original: String, suffix: String },
+    MoveToLayer { function: String, target_layer: String },
+    UpdateCaller { caller_file: PathBuf, old_ref: String, new_ref: String },
+    ManualReview { reason: String, context: String },
+}
+
+/// A single correction plan
+#[derive(Clone, Debug, Serialize, Deserialize)]
+pub struct CorrectionPlan {
+    pub action_id: String,
+    pub tier: ErrorTier,
+    pub predicted_violations: Vec<ViolationPrediction>,
+    pub strategies: Vec<CorrectionStrategy>,
+    pub confidence: f64,
+    pub estimated_fix_time_seconds: u32,
+}
+
+/// Predicted violation before action is applied
+#[derive(Clone, Debug, Serialize, Deserialize)]
+pub struct ViolationPrediction {
+    pub violation_type: ViolationType,
+    pub affected_files: Vec<PathBuf>,
+    pub severity: Severity,
+    pub confidence: f64,
+}
+
+#[derive(Clone, Debug, Serialize, Deserialize)]
+pub enum ViolationType {
+    UnresolvedImport,
+    BrokenReference,
+    NameCollision,
+    LayerViolation,
+    TypeMismatch,
+    OwnershipIssue,
+}
+
+#[derive(Clone, Debug, Serialize, Deserialize)]
+pub enum Severity {
+    Critical,  // Build-breaking
+    High,      // Test-breaking
+    Medium,    // Warning-level
+    Low,       // Style/convention
+}
+```
+
+**Task B: Verification Policy Types**
+File: `src/221_verification_policy_types.rs`
+Dependencies: None
+Estimated Lines: 150
+
+Data structures:
+```rust
+/// Defines what must be verified and at what scope
+#[derive(Clone, Debug, Serialize, Deserialize)]
+pub struct VerificationPolicy {
+    pub action_id: String,
+    pub scope: VerificationScope,
+    pub required_checks: Vec<VerificationCheck>,
+    pub incremental_eligible: bool,
+    pub estimated_time_seconds: u32,
+}
+
+#[derive(Clone, Debug, Serialize, Deserialize)]
+pub enum VerificationScope {
+    SyntaxOnly { files: Vec<PathBuf> },
+    ModuleLocal { module: String, transitive_depth: u32 },
+    CallerChain { root_function: String },
+    FullWorkspace,
+}
+
+#[derive(Clone, Debug, Serialize, Deserialize)]
+pub enum VerificationCheck {
+    CargoCheck,
+    CargoTest { filter: Option<String> },
+    InvariantValidation { invariant_ids: Vec<String> },
+    QualityMetrics { thresholds: QualityThresholds },
+    ManualInspection { reason: String },
+}
+
+#[derive(Clone, Debug, Serialize, Deserialize)]
+pub struct QualityThresholds {
+    pub min_cohesion_delta: f64,
+    pub max_violation_delta: i32,
+    pub max_complexity_delta: f64,
+}
+```
+
+**Task C: Quality Delta Types**
+File: `src/222_quality_delta_types.rs`
+Dependencies: None
+Estimated Lines: 100
+
+Data structures:
+```rust
+/// Quality metrics before and after an action
+#[derive(Clone, Debug, Serialize, Deserialize)]
+pub struct QualityDelta {
+    pub action_id: String,
+    pub cohesion_delta: f64,
+    pub violation_delta: i32,
+    pub complexity_delta: f64,
+    pub overall_score_delta: f64,
+    pub acceptable: bool,
+    pub reason: String,
+}
+
+/// Rollback criteria based on quality deltas
+#[derive(Clone, Debug, Serialize, Deserialize)]
+pub struct RollbackCriteria {
+    pub action_id: String,
+    pub mandatory_rollback_if: Vec<RollbackCondition>,
+    pub suggested_rollback_if: Vec<RollbackCondition>,
+}
+
+#[derive(Clone, Debug, Serialize, Deserialize)]
+pub enum RollbackCondition {
+    QualityDecreased { threshold: f64 },
+    BuildFailed,
+    TestsFailed { critical_tests: Vec<String> },
+    InvariantViolated { invariant_ids: Vec<String> },
+    Tier3Error { error_type: ViolationType },
+    ManualReviewRequired,
+}
+```
+
+---
+
+### Phase 2: Prediction (Layer 1)
+
+**Task D: Violation Predictor**
+File: `src/223_violation_predictor.rs`
+Dependencies: A, existing invariant system
+Estimated Lines: 250
+
+Core logic:
+```rust
+/// Predict violations before applying an action
+pub fn predict_violations(
+    action: &RefactorAction,
+    invariants: &InvariantAnalysisResult,
+    call_graph: &CallGraph,
+) -> Vec<ViolationPrediction> {
+    let mut predictions = Vec::new();
+    
+    match action {
+        RefactorAction::Move { function, from, to } => {
+            // Predict import issues
+            let callers = find_callers(function, call_graph);
+            for caller_file in callers {
+                predictions.push(ViolationPrediction {
+                    violation_type: ViolationType::UnresolvedImport,
+                    affected_files: vec![caller_file],
+                    severity: Severity::Critical,
+                    confidence: 0.95,
+                });
+            }
+            
+            // Check if move violates layer invariants
+            if violates_layer_constraint(from, to, invariants) {
+                predictions.push(ViolationPrediction {
+                    violation_type: ViolationType::LayerViolation,
+                    affected_files: vec![to.clone()],
+                    severity: Severity::High,
+                    confidence: 1.0,
+                });
+            }
+        }
+        
+        RefactorAction::Rename { old_name, new_name, file } => {
+            // Check for name collisions
+            if symbol_exists(new_name, file) {
+                predictions.push(ViolationPrediction {
+                    violation_type: ViolationType::NameCollision,
+                    affected_files: vec![file.clone()],
+                    severity: Severity::Critical,
+                    confidence: 1.0,
+                });
+            }
+            
+            // Predict broken references
+            let references = find_references(old_name, call_graph);
+            predictions.push(ViolationPrediction {
+                violation_type: ViolationType::BrokenReference,
+                affected_files: references,
+                severity: Severity::Critical,
+                confidence: 0.9,
+            });
+        }
+        
+        _ => {}
+    }
+    
+    predictions
+}
+```
+
+**Task E: Tier Classifier**
+File: `src/224_tier_classifier.rs`
+Dependencies: A
+Estimated Lines: 120
+
+Decision tree:
+```rust
+pub fn classify_tier(violation: &ViolationPrediction) -> ErrorTier {
+    match (&violation.violation_type, violation.severity) {
+        // Trivial: Auto-fixable
+        (ViolationType::UnresolvedImport, _) => ErrorTier::Trivial,
+        (ViolationType::BrokenReference, Severity::Low | Severity::Medium) => ErrorTier::Trivial,
+        
+        // Moderate: Fixable with verification
+        (ViolationType::NameCollision, _) => ErrorTier::Moderate,
+        (ViolationType::LayerViolation, _) => ErrorTier::Moderate,
+        
+        // Complex: Manual review
+        (ViolationType::TypeMismatch, _) => ErrorTier::Complex,
+        (ViolationType::OwnershipIssue, _) => ErrorTier::Complex,
+        (ViolationType::BrokenReference, Severity::Critical | Severity::High) => ErrorTier::Complex,
+        
+        _ => ErrorTier::Moderate,
+    }
+}
+```
+
+**Task F: Confidence Scorer**
+File: `src/225_confidence_scorer.rs`
+Dependencies: A, D
+Estimated Lines: 100
+
+Scoring model:
+```rust
+pub fn compute_confidence(
+    prediction: &ViolationPrediction,
+    context: &PredictionContext,
+) -> f64 {
+    let base_confidence = match prediction.violation_type {
+        ViolationType::UnresolvedImport => 0.95,  // High certainty
+        ViolationType::NameCollision => 1.0,      // Provable
+        ViolationType::LayerViolation => 1.0,     // Invariant-based
+        ViolationType::BrokenReference => 0.85,   // Call graph based
+        ViolationType::TypeMismatch => 0.6,       // Heuristic
+        ViolationType::OwnershipIssue => 0.5,     // Hard to predict
+    };
+    
+    // Adjust based on context
+    let context_multiplier = if context.has_test_coverage {
+        1.1
+    } else {
+        0.9
+    };
+    
+    (base_confidence * context_multiplier).min(1.0)
+}
+```
+
+---
+
+### Phase 3: Planning (Layer 2)
+
+**Task G: Correction Plan Generator**
+File: `src/226_correction_plan_generator.rs`
+Dependencies: A, D, E, F
+Estimated Lines: 300
+
+Core logic:
+```rust
+pub fn generate_correction_plan(
+    action: &RefactorAction,
+    predictions: &[ViolationPrediction],
+) -> CorrectionPlan {
+    let mut strategies = Vec::new();
+    
+    for prediction in predictions {
+        let strategy = match prediction.violation_type {
+            ViolationType::UnresolvedImport => {
+                // Strategy: Add import to affected files
+                for file in &prediction.affected_files {
+                    strategies.push(CorrectionStrategy::AddImport {
+                        module_path: extract_module_path(action),
+                        symbol: extract_symbol_name(action),
+                    });
+                }
+            }
+            
+            ViolationType::BrokenReference => {
+                // Strategy: Update callers
+                for file in &prediction.affected_files {
+                    strategies.push(CorrectionStrategy::UpdateCaller {
+                        caller_file: file.clone(),
+                        old_ref: extract_old_reference(action),
+                        new_ref: extract_new_reference(action),
+                    });
+                }
+            }
+            
+            ViolationType::NameCollision => {
+                // Strategy: Rename with suffix
+                strategies.push(CorrectionStrategy::RenameWithSuffix {
+                    original: extract_symbol_name(action),
+                    suffix: \"_v2\".to_string(),
+                });
+            }
+            
+            ViolationType::LayerViolation => {
+                // Strategy: Move to correct layer
+                strategies.push(CorrectionStrategy::MoveToLayer {
+                    function: extract_function_name(action),
+                    target_layer: infer_correct_layer(action),
+                });
+            }
+            
+            ViolationType::TypeMismatch | ViolationType::OwnershipIssue => {
+                // Strategy: Manual review
+                strategies.push(CorrectionStrategy::ManualReview {
+                    reason: format!(\"{:?} requires semantic analysis\", prediction.violation_type),
+                    context: format!(\"{:?}\", action),
+                });
+            }
+        };
+    }
+    
+    let tier = predictions.iter()
+        .map(|p| classify_tier(p))
+        .max()
+        .unwrap_or(ErrorTier::Trivial);
+    
+    CorrectionPlan {
+        action_id: generate_action_id(action),
+        tier,
+        predicted_violations: predictions.to_vec(),
+        strategies,
+        confidence: average_confidence(predictions),
+        estimated_fix_time_seconds: estimate_fix_time(&strategies),
+    }
+}
+```
+
+**Task H: Verification Scope Planner**
+File: `src/227_verification_scope_planner.rs`
+Dependencies: B, existing call graph
+Estimated Lines: 200
+
+Scope selection:
+```rust
+pub fn plan_verification_scope(
+    action: &RefactorAction,
+    call_graph: &CallGraph,
+    correction_plan: &CorrectionPlan,
+) -> VerificationPolicy {
+    let scope = match &correction_plan.tier {
+        ErrorTier::Trivial if correction_plan.predicted_violations.len() <= 3 => {
+            // Incremental: only check affected files
+            VerificationScope::SyntaxOnly {
+                files: extract_affected_files(action),
+            }
+        }
+        
+        ErrorTier::Trivial | ErrorTier::Moderate => {
+            // Module-local: check transitive dependencies
+            VerificationScope::ModuleLocal {
+                module: extract_module(action),
+                transitive_depth: 2,
+            }
+        }
+        
+        ErrorTier::Complex => {
+            // Full workspace verification required
+            VerificationScope::FullWorkspace
+        }
+    };
+    
+    let required_checks = vec![
+        VerificationCheck::CargoCheck,
+        VerificationCheck::InvariantValidation {
+            invariant_ids: extract_relevant_invariants(action),
+        },
+    ];
+    
+    // Add test check for moderate/complex
+    let required_checks = if matches!(correction_plan.tier, ErrorTier::Moderate | ErrorTier::Complex) {
+        let mut checks = required_checks;
+        checks.push(VerificationCheck::CargoTest { filter: None });
+        checks
+    } else {
+        required_checks
+    };
+    
+    VerificationPolicy {
+        action_id: correction_plan.action_id.clone(),
+        scope,
+        required_checks,
+        incremental_eligible: matches!(correction_plan.tier, ErrorTier::Trivial),
+        estimated_time_seconds: estimate_verification_time(&scope),
+    }
+}
+```
+
+**Task I: Rollback Criteria Builder**
+File: `src/228_rollback_criteria_builder.rs`
+Dependencies: E, F
+Estimated Lines: 150
+
+Criteria definition:
+```rust
+pub fn build_rollback_criteria(
+    action: &RefactorAction,
+    correction_plan: &CorrectionPlan,
+) -> RollbackCriteria {
+    let mut mandatory = vec![
+        RollbackCondition::BuildFailed,
+    ];
+    
+    let mut suggested = vec![
+        RollbackCondition::QualityDecreased { threshold: 0.05 },
+    ];
+    
+    // Tier-based rules
+    match correction_plan.tier {
+        ErrorTier::Complex => {
+            mandatory.push(RollbackCondition::Tier3Error {
+                error_type: ViolationType::TypeMismatch,
+            });
+            mandatory.push(RollbackCondition::ManualReviewRequired);
+        }
+        
+        ErrorTier::Moderate => {
+            suggested.push(RollbackCondition::TestsFailed {
+                critical_tests: extract_critical_tests(action),
+            });
+        }
+        
+        ErrorTier::Trivial => {
+            // Trivial fixes should rarely rollback
+        }
+    }
+    
+    // Add invariant-based rollback
+    for prediction in &correction_plan.predicted_violations {
+        if prediction.violation_type == ViolationType::LayerViolation {
+            mandatory.push(RollbackCondition::InvariantViolated {
+                invariant_ids: vec![\"layer_ordering\".to_string()],
+            });
+        }
+    }
+    
+    RollbackCriteria {
+        action_id: correction_plan.action_id.clone(),
+        mandatory_rollback_if: mandatory,
+        suggested_rollback_if: suggested,
+    }
+}
+```
+
+---
+
+### Phase 4: Quality Assessment (Layer 3)
+
+**Task J: Quality Delta Calculator**
+File: `src/229_quality_delta_calculator.rs`
+Dependencies: C, existing metrics
+Estimated Lines: 180
+
+Calculation:
+```rust
+pub fn calculate_quality_delta(
+    action: &RefactorAction,
+    current_metrics: &Metrics,
+    simulated_metrics: &Metrics,
+) -> QualityDelta {
+    let cohesion_delta = simulated_metrics.cohesion - current_metrics.cohesion;
+    let violation_delta = simulated_metrics.violations as i32 - current_metrics.violations as i32;
+    let complexity_delta = simulated_metrics.complexity - current_metrics.complexity;
+    
+    // Overall score: weighted sum
+    let overall = 0.5 * cohesion_delta 
+                - 0.3 * violation_delta as f64 
+                - 0.2 * complexity_delta;
+    
+    let acceptable = overall > -0.05 && violation_delta <= 0;
+    
+    let reason = if !acceptable {
+        if overall < -0.1 {
+            \"Quality degradation exceeds threshold\".to_string()
+        } else if violation_delta > 0 {
+            format!(\"Introduced {} new violations\", violation_delta)
+        } else {
+            \"Quality barely acceptable\".to_string()
+        }
+    } else {
+        \"Quality improved or maintained\".to_string()
+    };
+    
+    QualityDelta {
+        action_id: generate_action_id(action),
+        cohesion_delta,
+        violation_delta,
+        complexity_delta,
+        overall_score_delta: overall,
+        acceptable,
+        reason,
+    }
+}
+```
+
+**Task K: Action Impact Estimator**
+File: `src/230_action_impact_estimator.rs`
+Dependencies: J, existing cohesion analyzer
+Estimated Lines: 150
+
+Impact estimation (without executing):
+```rust
+pub fn estimate_impact(
+    action: &RefactorAction,
+    current_state: &AnalysisState,
+) -> QualityDelta {
+    // Simulate the action's effects
+    let simulated_state = simulate_action(action, current_state);
+    
+    // Compute metrics on simulated state
+    let current_metrics = extract_metrics(current_state);
+    let simulated_metrics = extract_metrics(&simulated_state);
+    
+    calculate_quality_delta(action, &current_metrics, &simulated_metrics)
+}
+
+fn simulate_action(action: &RefactorAction, state: &AnalysisState) -> AnalysisState {
+    let mut simulated = state.clone();
+    
+    match action {
+        RefactorAction::Move { function, from, to } => {
+            // Update call graph edges
+            simulated.move_function(function, from, to);
+            
+            // Recalculate cohesion for affected files
+            simulated.recalculate_cohesion(from);
+            simulated.recalculate_cohesion(to);
+        }
+        
+        RefactorAction::Rename { .. } => {
+            // Renaming doesn't affect cohesion
+        }
+        
+        _ => {}
+    }
+    
+    simulated
+}
+```
+
+---
+
+### Phase 5: Output Generation (Layer 4)
+
+**Task L: Correction Plan Serializer**
+File: `src/231_correction_plan_serializer.rs`
+Dependencies: A, G, H, I
+Estimated Lines: 120
+
+JSON output:
+```rust
+pub fn serialize_correction_plan(
+    plan: &CorrectionPlan,
+    verification: &VerificationPolicy,
+    rollback: &RollbackCriteria,
+) -> serde_json::Value {
+    json!({
+        \"action_id\": plan.action_id,
+        \"tier\": format!(\"{:?}\", plan.tier),
+        \"confidence\": plan.confidence,
+        \"estimated_fix_time_seconds\": plan.estimated_fix_time_seconds,
+        \"predicted_violations\": plan.predicted_violations.iter().map(|v| json!({
+            \"type\": format!(\"{:?}\", v.violation_type),
+            \"severity\": format!(\"{:?}\", v.severity),
+            \"affected_files\": v.affected_files,
+            \"confidence\": v.confidence,
+        })).collect::<Vec<_>>(),
+        \"correction_strategies\": plan.strategies.iter().map(|s| {
+            serialize_strategy(s)
+        }).collect::<Vec<_>>(),
+        \"verification_policy\": {
+            \"scope\": format!(\"{:?}\", verification.scope),
+            \"required_checks\": verification.required_checks.iter()
+                .map(|c| format!(\"{:?}\", c))
+                .collect::<Vec<_>>(),
+            \"incremental_eligible\": verification.incremental_eligible,
+        },
+        \"rollback_criteria\": {
+            \"mandatory\": rollback.mandatory_rollback_if.iter()
+                .map(|c| format!(\"{:?}\", c))
+                .collect::<Vec<_>>(),
+            \"suggested\": rollback.suggested_rollback_if.iter()
+                .map(|c| format!(\"{:?}\", c))
+                .collect::<Vec<_>>(),
+        }
+    })
+}
+```
+
+**Task M: Verification Policy Emitter**
+File: `src/232_verification_policy_emitter.rs`
+Dependencies: B, H
+Estimated Lines: 80
+
+Policy file generation:
+```rust
+pub fn emit_verification_policy(
+    policies: &[VerificationPolicy],
+    output_path: &Path,
+) -> Result<()> {
+    let policy_file = json!({
+        \"version\": \"1.0\",
+        \"policies\": policies.iter().map(|p| json!({
+            \"action_id\": p.action_id,
+            \"scope\": describe_scope(&p.scope),
+            \"checks\": p.required_checks.iter()
+                .map(|c| describe_check(c))
+                .collect::<Vec<_>>(),
+            \"incremental\": p.incremental_eligible,
+        })).collect::<Vec<_>>()
+    });
+    
+    std::fs::write(output_path, serde_json::to_string_pretty(&policy_file)?)?;
+    Ok(())
+}
+```
+
+**Task N: JSON Report Generator**
+File: `src/233_correction_intelligence_report.rs`
+Dependencies: All
+Estimated Lines: 200
+
+Comprehensive report:
+```rust
+pub struct CorrectionIntelligenceReport {
+    pub timestamp: String,
+    pub project_root: PathBuf,
+    pub actions_analyzed: usize,
+    pub correction_plans: Vec<CorrectionPlan>,
+    pub verification_policies: Vec<VerificationPolicy>,
+    pub rollback_criteria: Vec<RollbackCriteria>,
+    pub quality_deltas: Vec<QualityDelta>,
+    pub summary: CorrectionSummary,
+}
+
+pub struct CorrectionSummary {
+    pub trivial_count: usize,
+    pub moderate_count: usize,
+    pub complex_count: usize,
+    pub total_predicted_violations: usize,
+    pub average_confidence: f64,
+    pub estimated_total_fix_time_seconds: u32,
+}
+
+pub fn generate_intelligence_report(
+    actions: &[RefactorAction],
+    analysis: &AnalysisState,
+) -> CorrectionIntelligenceReport {
+    let mut plans = Vec::new();
+    let mut policies = Vec::new();
+    let mut criteria = Vec::new();
+    let mut deltas = Vec::new();
+    
+    for action in actions {
+        // Predict violations
+        let predictions = predict_violations(action, &analysis.invariants, &analysis.call_graph);
+        
+        // Generate correction plan
+        let plan = generate_correction_plan(action, &predictions);
+        
+        // Plan verification
+        let policy = plan_verification_scope(action, &analysis.call_graph, &plan);
+        
+        // Build rollback criteria
+        let rollback = build_rollback_criteria(action, &plan);
+        
+        // Estimate quality impact
+        let delta = estimate_impact(action, analysis);
+        
+        plans.push(plan);
+        policies.push(policy);
+        criteria.push(rollback);
+        deltas.push(delta);
+    }
+    
+    let summary = compute_summary(&plans, &deltas);
+    
+    CorrectionIntelligenceReport {
+        timestamp: chrono::Utc::now().to_rfc3339(),
+        project_root: analysis.root.clone(),
+        actions_analyzed: actions.len(),
+        correction_plans: plans,
+        verification_policies: policies,
+        rollback_criteria: criteria,
+        quality_deltas: deltas,
+        summary,
+    }
+}
+```
+
+---
+
+### Phase 6: Integration (Layer 5)
+
+**Task O: Report Augmentation**
+File: Modify `src/180_report.rs`
+Dependencies: All above
+Estimated Lines: +150
+
+Integration points:
+```rust
+// Add to ReportGenerator
+impl ReportGenerator {
+    pub fn generate_with_correction_intelligence(
+        &self,
+        actions: &[RefactorAction],
+    ) -> Result<()> {
+        // Existing report generation
+        self.generate_report()?;
+        
+        // New: Generate correction intelligence
+        let intelligence = generate_intelligence_report(
+            actions,
+            &self.analysis_state,
+        );
+        
+        // Emit JSON
+        let json_path = self.output_dir.join(\"correction_intelligence.json\");
+        std::fs::write(
+            json_path,
+            serde_json::to_string_pretty(&intelligence)?,
+        )?;
+        
+        // Emit verification policies
+        emit_verification_policy(
+            &intelligence.verification_policies,
+            &self.output_dir.join(\"verification_policy.json\"),
+        )?;
+        
+        // Add section to markdown report
+        self.append_correction_intelligence_section(&intelligence)?;
+        
+        Ok(())
+    }
+    
+    fn append_correction_intelligence_section(
+        &self,
+        intelligence: &CorrectionIntelligenceReport,
+    ) -> Result<()> {
+        let mut section = String::from(\"\
+## Correction Intelligence\
+\
+\");
+        
+        section.push_str(&format!(
+            \"**Summary**: {} actions analyzed, {} trivial, {} moderate, {} complex\
+\
+\",
+            intelligence.actions_analyzed,
+            intelligence.summary.trivial_count,
+            intelligence.summary.moderate_count,
+            intelligence.summary.complex_count,
+        ));
+        
+        section.push_str(&format!(
+            \"**Confidence**: Average {:.1}% prediction confidence\
+\
+\",
+            intelligence.summary.average_confidence * 100.0,
+        ));
+        
+        section.push_str(\"### Correction Plans\
+\
+\");
+        
+        for plan in &intelligence.correction_plans {
+            section.push_str(&format!(
+                \"- **{}** ({:?}): {} predicted violations, {} strategies\
+\",
+                plan.action_id,
+                plan.tier,
+                plan.predicted_violations.len(),
+                plan.strategies.len(),
+            ));
+        }
+        
+        section.push_str(\"\
+**See `correction_intelligence.json` for machine-readable output.**\
+\");
+        
+        // Append to main report
+        let report_path = self.output_dir.join(\"00_refactoring_plan/index.md\");
+        let mut report = std::fs::read_to_string(&report_path)?;
+        report.push_str(&section);
+        std::fs::write(report_path, report)?;
+        
+        Ok(())
+    }
+}
+```
+
+---
+
+## CLI Integration
+
+Modify `src/070_layer_utilities.rs`:
+
+```rust
+#[derive(Parser)]
+struct Args {
+    // Existing args...
+    
+    /// Generate correction intelligence for refactoring plan
+    #[arg(long)]
+    correction_intelligence: bool,
+    
+    /// Output correction intelligence JSON
+    #[arg(long)]
+    correction_json: Option<PathBuf>,
+}
+
+pub fn run_analysis(...) {
+    // ... existing analysis ...
+    
+    if args.correction_intelligence {
+        let actions = extract_refactoring_actions(&analysis);
+        let intelligence = generate_intelligence_report(&actions, &analysis);
+        
+        if let Some(json_path) = args.correction_json {
+            std::fs::write(
+                json_path,
+                serde_json::to_string_pretty(&intelligence)?,
+            )?;
+        }
+    }
+}
+```
+
+---
+
+## File Count Summary
+
+**New files**: 14
+- 3 foundation types (220-222)
+- 3 prediction modules (223-225)
+- 3 planning modules (226-228)
+- 2 quality assessment (229-230)
+- 3 output generation (231-233)
+
+**Modified files**: 2
+- `src/180_report.rs` (integration)
+- `src/070_layer_utilities.rs` (CLI)
+
+**Total new code**: ~2,300 lines
+
+---
+
+## Success Criteria
+
+1. ✅ Analyzer emits structured correction plans (not mutations)
+2. ✅ Predictions based on invariants achieve >85% accuracy
+3. ✅ Tier classification correctly identifies trivial vs complex
+4. ✅ Quality deltas predict actual impact within 10% error
+5. ✅ JSON output is machine-parseable by mmsb-executor
+6. ✅ Analyzer remains pure (no file mutations)
+7. ✅ Verification`
+ policies can be consumed by external executors
+8. ✅ Rollback criteria are explicit and checkable
+
+---
+
+## Separation of Concerns Guarantee
+
+**What MMSB-Analyzer does:**
+- ✅ Detects invariants
+- ✅ Predicts violations
+- ✅ Generates correction strategies
+- ✅ Defines verification policies
+- ✅ Emits quality deltas
+- ✅ Outputs structured JSON
+
+**What MMSB-Analyzer does NOT do:**
+- ❌ Execute file mutations
+- ❌ Apply git operations
+- ❌ Retry loops
+- ❌ Rollback mechanisms
+- ❌ Build/test execution (only policy definition)
+
+**Boundary enforcement:**
+```rust
+// Allowed in analyzer
+pub fn generate_correction_plan(...) -> CorrectionPlan { ... }
+
+// NOT allowed in analyzer
+pub fn apply_correction_plan(...) -> Result<()> { 
+    panic!("Execution belongs in mmsb-executor")
+}
+```
+
+---
+
+## JSON Contract (Analyzer → Executor)
+
+The analyzer produces `correction_intelligence.json`:
+
+```json
+{
+  "version": "1.0",
+  "timestamp": "2025-12-31T00:00:00Z",
+  "project_root": "/path/to/project",
+  "actions_analyzed": 42,
+  "correction_plans": [
+    {
+      "action_id": "move_parse_config_utils_to_config",
+      "tier": "Trivial",
+      "confidence": 0.95,
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "type": "UnresolvedImport",
+          "severity": "Critical",
+          "affected_files": ["src/main.rs", "src/setup.rs"],
+          "confidence": 0.95
+        }
+      ],
+      "correction_strategies": [
+        {
+          "type": "AddImport",
+          "module_path": "crate::config",
+          "symbol": "parse_config"
+        },
+        {
+          "type": "UpdatePath",
+          "old_path": "utils::parse_config",
+          "new_path": "config::parse_config"
+        }
+      ],
+      "verification_policy": {
+        "scope": {
+          "type": "ModuleLocal",
+          "module": "config",
+          "transitive_depth": 2
+        },
+        "required_checks": ["CargoCheck", "InvariantValidation"],
+        "incremental_eligible": true,
+        "estimated_time_seconds": 5
+      },
+      "rollback_criteria": {
+        "mandatory": ["BuildFailed"],
+        "suggested": ["QualityDecreased"]
+      }
+    }
+  ],
+  "quality_deltas": [
+    {
+      "action_id": "move_parse_config_utils_to_config",
+      "cohesion_delta": 0.12,
+      "violation_delta": -1,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.08,
+      "acceptable": true,
+      "reason": "Quality improved"
+    }
+  ],
+  "summary": {
+    "trivial_count": 28,
+    "moderate_count": 12,
+    "complex_count": 2,
+    "total_predicted_violations": 67,
+    "average_confidence": 0.87,
+    "estimated_total_fix_time_seconds": 840
+  }
+}
+```
+
+**This JSON is the contract between analyzer and executor.**
+
+---
+
+## Implementation Timeline
+
+**Week 1-2**: Phase 1 (Foundation types)
+- Implement A, B, C
+- Define all data structures
+- Create JSON schema
+
+**Week 3-4**: Phase 2 (Prediction)
+- Implement D, E, F
+- Integrate with existing invariant system
+- Test prediction accuracy
+
+**Week 5-6**: Phase 3 (Planning)
+- Implement G, H, I
+- Generate correction strategies
+- Define verification policies
+
+**Week 7**: Phase 4 (Quality)
+- Implement J, K
+- Integrate with existing metrics
+- Test quality delta accuracy
+
+**Week 8**: Phase 5 (Output)
+- Implement L, M, N
+- Generate JSON reports
+- Emit verification policies
+
+**Week 9**: Phase 6 (Integration)
+- Modify existing report.rs
+- Add CLI flags
+- Integration testing
+
+**Week 10**: Validation & Documentation
+- End-to-end testing
+- Documentation
+- Handoff to executor team
+
+**Total**: 10 weeks, ~2,300 lines of pure intelligence code
+
+---
+
+## Critical Path
+
+```
+A → D → G → L → N → O (longest: 6 tasks)
+    ↓   ↓   ↓
+B → E → H → M
+    ↓   ↓
+C → F → I
+        ↓
+    J → K
+```
+
+**Parallelizable:**
+- B and C can be developed simultaneously
+- J and K independent of G/H/I
+- L, M can be developed in parallel
+
+---
+
+## Risk Mitigation
+
+### Risk 1: Prediction Accuracy
+**Risk**: Predicted violations don't match actual errors  
+**Mitigation**: 
+- Start with high-confidence predictions only (imports, paths)
+- Expand to moderate-confidence gradually
+- Collect feedback from executor runs
+
+**Validation**: Compare predictions against executor-reported actual errors
+
+### Risk 2: Over-Engineering
+**Risk**: Complex tier/confidence system doesn't add value  
+**Mitigation**:
+- Start with binary classification (trivial vs manual-review)
+- Add moderate tier only if data shows need
+- Keep confidence scores simple (0.0-1.0, no complex models)
+
+### Risk 3: JSON Contract Drift
+**Risk**: Executor and analyzer JSON schemas diverge  
+**Mitigation**:
+- Version the JSON schema explicitly ("version": "1.0")
+- Generate JSON schema definition file
+- Automated schema validation tests
+
+### Risk 4: Performance
+**Risk**: Prediction/planning adds significant analysis time  
+**Mitigation**:
+- Make correction intelligence opt-in via --correction-intelligence flag
+- Cache predictions for repeated analyses
+- Profile and optimize hot paths
+
+---
+
+## Post-Implementation Handoff
+
+**Deliverables to mmsb-executor team:**
+
+1. **JSON Schema**: `correction_intelligence.schema.json`
+2. **Example outputs**: 10+ real-world correction intelligence reports
+3. **Integration guide**: How to consume the JSON
+4. **Accuracy metrics**: Prediction accuracy on test corpus
+5. **API documentation**: All public types and functions
+
+**Handoff meeting agenda:**
+1. Demo: Show correction intelligence on real codebase
+2. Contract review: Walk through JSON schema
+3. Edge cases: Discuss complex/ambiguous scenarios
+4. Feedback loop: How executor reports back prediction accuracy
+
+---
+
+## Long-Term Evolution
+
+**Phase 2 (Future):**
+- Machine learning-based confidence scoring (if data available)
+- Cross-project pattern recognition
+- Integration with external tools (cargo-unused, clippy)
+
+**Phase 3 (Future):**
+- Real-time correction intelligence during coding
+- IDE integration
+- Collaborative filtering (learn from other projects)
+
+**But always:**
+- Analyzer remains pure
+- No execution in analyzer
+- JSON contract is stable and versioned
+
+---
+
+## Architecture Diagram
+
+```
+┌─────────────────────────────────────────┐
+│         MMSB-Analyzer (Pure)            │
+│                                         │
+│  ┌─────────────────────────────────┐   │
+│  │  Existing Analysis              │   │
+│  │  - Invariants                   │   │
+│  │  - Call Graph                   │   │
+│  │  - Cohesion                     │   │
+│  │  - Layer Detection              │   │
+│  └──────────────┬──────────────────┘   │
+│                 │                       │
+│  ┌──────────────▼──────────────────┐   │
+│  │  Correction Intelligence        │   │
+│  │  - Predict Violations           │   │
+│  │  - Generate Strategies          │   │
+│  │  - Plan Verification            │   │
+│  │  - Calculate Quality Deltas     │   │
+│  └──────────────┬──────────────────┘   │
+│                 │                       │
+│  ┌──────────────▼──────────────────┐   │
+│  │  JSON Emitter                   │   │
+│  │  - correction_intelligence.json │   │
+│  │  - verification_policy.json     │   │
+│  └─────────────────────────────────┘   │
+└────────────────┬────────────────────────┘
+                 │
+                 │ (JSON files)
+                 │
+                 ▼
+┌─────────────────────────────────────────┐
+│       MMSB-Executor (Impure)            │
+│                                         │
+│  ┌─────────────────────────────────┐   │
+│  │  JSON Parser                    │   │
+│  │  - Read correction plans        │   │
+│  │  - Load verification policies   │   │
+│  └──────────────┬──────────────────┘   │
+│                 │                       │
+│  ┌──────────────▼──────────────────┐   │
+│  │  Execution Engine               │   │
+│  │  - Apply file mutations         │   │
+│  │  - Run cargo check/test         │   │
+│  │  - VCV loop with retries        │   │
+│  └──────────────┬──────────────────┘   │
+│                 │                       │
+│  ┌──────────────▼──────────────────┐   │
+│  │  Rollback/Commit                │   │
+│  │  - Git operations               │   │
+│  │  - State management             │   │
+│  └─────────────────────────────────┘   │
+└─────────────────────────────────────────┘
+```
+
+**Key insight**: The boundary is the JSON file. Analyzer writes, executor reads. No direct coupling.
+
+---
+
+## Final Checklist
+
+Before declaring this phase complete:
+
+- [ ] All 14 new files implemented and tested
+- [ ] JSON schema documented and validated
+- [ ] Prediction accuracy measured (target: >85%)
+- [ ] Quality delta accuracy measured (target: <10% error)
+- [ ] Integration with existing report.rs complete
+- [ ] CLI flags functional (--correction-intelligence, --correction-json)
+- [ ] No file mutations anywhere in analyzer codebase
+- [ ] All public APIs documented
+- [ ] Example JSON outputs generated for 10+ real scenarios
+- [ ] Handoff documentation written
+- [ ] Executor team has reviewed JSON contract
+
+---
+
+## Conclusion
+
+This implementation adds **correction intelligence** to MMSB-Analyzer without compromising its purity.
+
+**Result:**
+- Analyzer becomes a compiler for refactorings
+- Executor becomes replaceable (script, agent, CI bot)
+- System gains composability and future-proofing
+
+**Leverage equation holds:**
+$$L = L_A \times L_E \quad \text{because} \quad A \cap R = \varnothing$$
+
+The analyzer predicts, plans, and guides.  
+The executor applies, verifies, and commits.
+
+**Clean separation = maximum leverage.**

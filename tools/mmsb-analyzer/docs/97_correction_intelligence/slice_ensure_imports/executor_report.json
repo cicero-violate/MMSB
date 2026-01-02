@@ -1,0 +1,60 @@
+{
+  "version": "1.0",
+  "timestamp": "2025-12-31T07:09:31.604340359+00:00",
+  "actions": [
+    {
+      "action_id": "move_detect_test_modules_to_src/211_dead_code_attribute_parser.rs",
+      "phase": 3,
+      "status": "failed",
+      "applied_strategies": [],
+      "errors": [
+        "EnsureImports: function detect_test_modules signature not found in target"
+      ],
+      "warnings": [],
+      "verification_results": [],
+      "rollback_applied": true,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_detect_test_symbols_to_src/211_dead_code_attribute_parser.rs",
+      "phase": 3,
+      "status": "failed",
+      "applied_strategies": [],
+      "errors": [
+        "EnsureImports: function detect_test_symbols signature not found in target"
+      ],
+      "warnings": [],
+      "verification_results": [],
+      "rollback_applied": true,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "move_write_intelligence_outputs_at_to_src/231_correction_plan_serializer.rs",
+      "phase": 3,
+      "status": "failed",
+      "applied_strategies": [],
+      "errors": [
+        "EnsureImports: function write_intelligence_outputs_at signature not found in target"
+      ],
+      "warnings": [],
+      "verification_results": [],
+      "rollback_applied": true,
+      "diffs": [],
+      "diff_count": 0
+    }
+  ],
+  "summary": {
+    "total_actions": 3,
+    "applied": 0,
+    "failed": 3,
+    "manual_review": 0,
+    "skipped": 0,
+    "total_diffs": 0
+  },
+  "verification_report": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/docs/97_correction_intelligence/slice_ensure_imports/executor_verification_results.json",
+  "rollback_log": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/docs/97_correction_intelligence/slice_ensure_imports/executor_rollback_log.json",
+  "diff_report": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/docs/97_correction_intelligence/slice_ensure_imports/executor_diff_report.json",
+  "input_report": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/docs/97_correction_intelligence/slice_ensure_imports/executor_input_report.json"
+}

@@ -1,0 +1,173 @@
+# Structure Group: src/640_correction_intelligence_report.rs
+
+## File: src/640_correction_intelligence_report.rs
+
+- Layer(s): 640_correction_intelligence_report.rs
+- Language coverage: Rust (58)
+- Element types: Function (48), Struct (10)
+- Total elements: 58
+
+### Elements
+
+- [Rust | Struct] `AdmissionDecision` (line 0, priv)
+  - Signature: `struct AdmissionDecision { admissible : bool , reasons : Vec < String > , }`
+- [Rust | Struct] `AdmissionPreflightEntry` (line 0, pub)
+  - Signature: `# [derive (Clone , Debug , Serialize , Deserialize)] pub struct AdmissionPreflightEntry { pub action_id : String , pu...`
+- [Rust | Struct] `AdmissionPreflightReport` (line 0, pub)
+  - Signature: `# [derive (Clone , Debug , Serialize , Deserialize)] pub struct AdmissionPreflightReport { pub version : String , pub...`
+- [Rust | Struct] `AdmissionPreflightSummary` (line 0, pub)
+  - Signature: `# [derive (Clone , Debug , Serialize , Deserialize)] pub struct AdmissionPreflightSummary { pub total_moves : usize ,...`
+- [Rust | Struct] `ClusterBatch` (line 0, priv)
+  - Signature: `# [derive (Clone , Debug)] struct ClusterBatch { target : PathBuf , moves : Vec < ClusterMove > , }`
+- [Rust | Struct] `ClusterMove` (line 0, priv)
+  - Signature: `# [derive (Clone , Debug)] struct ClusterMove { function : String , from : PathBuf , }`
+- [Rust | Struct] `CorrectionIntelligenceReport` (line 0, pub)
+  - Signature: `# [derive (Clone , Debug , Serialize , Deserialize)] pub struct CorrectionIntelligenceReport { pub version : String ,...`
+- [Rust | Struct] `CorrectionSummary` (line 0, pub)
+  - Signature: `# [derive (Clone , Debug , Serialize , Deserialize)] pub struct CorrectionSummary { pub trivial_count : usize , pub m...`
+- [Rust | Struct] `DependencyBlocker` (line 0, priv)
+  - Signature: `# [derive (Debug , Clone)] struct DependencyBlocker { name : String , kind : String , visibility : String , path : St...`
+- [Rust | Struct] `IntelligenceState` (line 0, pub)
+  - Signature: `# [derive (Clone , Debug)] pub struct IntelligenceState < 'a > { pub root : PathBuf , pub invariants : & 'a Invariant...`
+  - Generics: 'a
+- [Rust | Function] `action_function` (line 0, pub(crate))
+  - Signature: `pub (crate) fn action_function (action : & RefactorAction) -> Option < String > { match action { RefactorAction :: Mo...`
+  - Calls: Some, clone
+- [Rust | Function] `action_module` (line 0, pub(crate))
+  - Signature: `pub (crate) fn action_module (action : & RefactorAction) -> String { match action { RefactorAction :: MoveFunction { ...`
+  - Calls: to_string, display, to_string, display, to_string, display, to_string, display, to_string, display
+- [Rust | Function] `action_module_path` (line 0, pub(crate))
+  - Signature: `pub (crate) fn action_module_path (action : & RefactorAction) -> String { match action { RefactorAction :: MoveFuncti...`
+  - Calls: to_string, display, to_string, display, to_string, display, to_string, display, to_string
+- [Rust | Function] `action_refs` (line 0, pub(crate))
+  - Signature: `pub (crate) fn action_refs (action : & RefactorAction) -> Option < (String , String) > { match action { RefactorActio...`
+  - Calls: Some, clone, clone, Some, to_string, display, to_string, display
+- [Rust | Function] `action_symbol` (line 0, pub(crate))
+  - Signature: `pub (crate) fn action_symbol (action : & RefactorAction) -> Option < String > { match action { RefactorAction :: Move...`
+  - Calls: Some, clone, Some, clone, Some, clone
+- [Rust | Function] `action_target_layer` (line 0, pub(crate))
+  - Signature: `pub (crate) fn action_target_layer (action : & RefactorAction) -> Option < String > { match action { RefactorAction :...`
+  - Calls: clone
+- [Rust | Function] `action_visibility` (line 0, pub(crate))
+  - Signature: `pub (crate) fn action_visibility (action : & RefactorAction ,) -> Option < (String , std :: path :: PathBuf , crate :...`
+  - Calls: Some, clone, clone, clone, clone, clone
+- [Rust | Function] `affected_files` (line 0, pub(crate))
+  - Signature: `pub (crate) fn affected_files (action : & RefactorAction) -> Vec < std :: path :: PathBuf > { match action { Refactor...`
+- [Rust | Function] `augment_path_coherence_strategies` (line 0, pub(crate))
+  - Signature: `pub (crate) fn augment_path_coherence_strategies (plan : & mut CorrectionPlan , action : & RefactorAction , root : & ...`
+  - Calls: module_name_from_path, module_name_from_path, unwrap_or, and_then, file_name, to_str, unwrap_or, and_then, file_name, to_str, ok, Regex::new, ok, Regex::new, is_empty, is_empty, ok, Regex::new, Vec::new, HashSet::new, crate::cluster_010::gather_rust_files, fs::read_to_string, lines, is_match, replace, clone, to_string, clone, insert, clone, push, is_match, replace, clone, to_string, clone, insert, clone, push, is_match, contains, replace, clone, to_string, clone, insert, clone, push, sort_by, then_with, then_with, cmp, cmp, cmp, push
+- [Rust | Function] `average_confidence` (line 0, pub(crate))
+  - Signature: `pub (crate) fn average_confidence (predictions : & [ViolationPrediction]) -> f64 { if predictions . is_empty () { ret...`
+  - Calls: is_empty, sum, map, iter, len
+- [Rust | Function] `build_rollback_criteria` (line 0, pub)
+  - Signature: `pub fn build_rollback_criteria (action : & RefactorAction , correction_plan : & CorrectionPlan ,) -> RollbackCriteria...`
+  - Calls: push, push, push, extract_critical_tests, push, clone
+- [Rust | Function] `build_state` (line 0, pub)
+  - Signature: `pub fn build_state < 'a > (root : & 'a Path , analysis : & 'a AnalysisResult , metrics : Metrics ,) -> IntelligenceSt...`
+  - Generics: 'a
+  - Calls: to_path_buf
+- [Rust | Function] `calculate_quality_delta` (line 0, pub)
+  - Signature: `pub fn calculate_quality_delta (action : & RefactorAction , current : & Metrics , simulated : & Metrics ,) -> Quality...`
+  - Calls: to_string, to_string, to_string, action_id
+- [Rust | Function] `compute_summary` (line 0, pub(crate))
+  - Signature: `pub (crate) fn compute_summary (plans : & [CorrectionPlan] , deltas : & [QualityDelta]) -> CorrectionSummary { let mu...`
+  - Calls: len, is_empty, len
+- [Rust | Function] `default_confidence` (line 0, priv)
+  - Signature: `fn default_confidence (violation_type : & crate :: correction_plan_types :: ViolationType) -> f64 { match violation_t...`
+- [Rust | Function] `estimate_fix_time` (line 0, pub(crate))
+  - Signature: `pub (crate) fn estimate_fix_time (count : usize) -> u32 { 10 + (count as u32 * 5) } . sig`
+- [Rust | Function] `estimate_impact` (line 0, pub)
+  - Signature: `pub fn estimate_impact (action : & RefactorAction , current_state : & AnalysisState) -> QualityDelta { let simulated ...`
+  - Calls: simulate_action, calculate_quality_delta
+- [Rust | Function] `estimate_verification_time` (line 0, pub(crate))
+  - Signature: `pub (crate) fn estimate_verification_time (tier : & ErrorTier) -> u32 { match tier { ErrorTier :: Trivial => 10 , Err...`
+- [Rust | Function] `evaluate_move_admission` (line 0, priv)
+  - Signature: `fn evaluate_move_admission (root : & Path , function : & str , action_id : & str) -> AdmissionDecision { let mut reas...`
+  - Calls: Vec::new, find_function_definition_candidates, push, len, join, collect, map, iter, to_string, display, push, next, into_iter, push, fs::read_to_string, push, function_in_impl_block, push, is_test_scoped_function, push, push, find_private_dependencies, is_empty, join, collect, map, into_iter, push, push, push
+- [Rust | Function] `extract_critical_tests` (line 0, pub(crate))
+  - Signature: `pub (crate) fn extract_critical_tests (_action : & RefactorAction) -> Vec < String > { Vec :: new () } . sig`
+  - Calls: Vec::new
+- [Rust | Function] `extract_function_block_from_contents` (line 0, priv)
+  - Signature: `fn extract_function_block_from_contents (contents : & str , function : & str) -> Result < String , String > { let mut...`
+  - Calls: lines, len, is_function_signature_line, Some, ok_or_else, as_bytes, len, Some, ok_or_else, len, Some, ok_or_else, Ok, to_string
+- [Rust | Function] `extract_identifiers` (line 0, priv)
+  - Signature: `fn extract_identifiers (contents : & str) -> HashSet < String > { let mut idents = HashSet :: new () ; let mut curren...`
+  - Calls: HashSet::new, String::new, chars, is_alphanumeric, push, is_empty, is_identifier_candidate, insert, clone, clear, is_empty, is_identifier_candidate, insert
+- [Rust | Function] `fill_prediction_confidence` (line 0, pub(crate))
+  - Signature: `pub (crate) fn fill_prediction_confidence (predictions : & mut [ViolationPrediction]) { for prediction in predictions...`
+  - Calls: default_confidence
+- [Rust | Function] `filter_path_coherence_report` (line 0, pub)
+  - Signature: `pub fn filter_path_coherence_report (report : & CorrectionIntelligenceReport ,) -> CorrectionIntelligenceReport { let...`
+  - Calls: Vec::new, Vec::new, Vec::new, Vec::new, enumerate, iter, trim_start, starts_with, starts_with, starts_with, starts_with, starts_with, push, clone, get, push, clone, get, push, clone, get, push, clone, compute_summary, clone, clone, clone, len
+- [Rust | Function] `filter_visibility_report` (line 0, pub)
+  - Signature: `pub fn filter_visibility_report (report : & CorrectionIntelligenceReport ,) -> CorrectionIntelligenceReport { let mut...`
+  - Calls: Vec::new, Vec::new, Vec::new, Vec::new, enumerate, iter, starts_with, push, clone, get, push, clone, get, push, clone, get, push, clone, compute_summary, clone, clone, clone, len
+- [Rust | Function] `find_callers` (line 0, pub(crate))
+  - Signature: `pub (crate) fn find_callers (function : & str , call_graph : & HashMap < String , CallGraphNode > , elements : & [Cod...`
+  - Calls: HashSet::new, get, find_element_file, insert, collect, into_iter
+- [Rust | Function] `find_element_file` (line 0, pub(crate))
+  - Signature: `pub (crate) fn find_element_file (function : & str , elements : & [CodeElement]) -> Option < PathBuf > { elements . i...`
+  - Calls: map, find, iter, PathBuf::from
+- [Rust | Function] `find_function_definition_candidates` (line 0, priv)
+  - Signature: `fn find_function_definition_candidates (root : & Path , function : & str) -> Result < Vec < PathBuf > , String > { le...`
+  - Calls: is_dir, join, join, to_path_buf, Vec::new, pop, map_err, fs::read_dir, map_err, path, is_dir, and_then, file_name, to_str, push, and_then, extension, to_str, Some, map_err, fs::read_to_string, function_signature_found, function_in_impl_block, Err, push, is_empty, Err, Ok
+- [Rust | Function] `find_private_dependencies` (line 0, priv)
+  - Signature: `fn find_private_dependencies (contents : & str , function : & str , source_path : & Path ,) -> Result < Vec < Depende...`
+  - Calls: extract_function_block_from_contents, extract_identifiers, Vec::new, HashSet::new, lines, trim_start, starts_with, to_string, strip_prefix, to_string, to_string, strip_prefix, strip_prefix, strip_prefix, strip_prefix, strip_prefix, strip_prefix, unwrap_or, next, split, is_alphanumeric, is_empty, contains, starts_with, insert, to_string, push, to_string, to_string, to_string, display, Ok
+- [Rust | Function] `find_reference_files` (line 0, pub(crate))
+  - Signature: `pub (crate) fn find_reference_files (function : & str , call_graph : & HashMap < String , CallGraphNode > , elements ...`
+  - Calls: HashSet::new, any, iter, find_element_file, insert, collect, into_iter
+- [Rust | Function] `function_in_impl_block` (line 0, priv)
+  - Signature: `fn function_in_impl_block (contents : & str , function : & str) -> bool { let mut impl_depth = 0i32 ; for line in con...`
+  - Calls: lines, is_function_signature_line, trim_start, starts_with, starts_with, starts_with, contains, contains
+- [Rust | Function] `function_signature_found` (line 0, priv)
+  - Signature: `fn function_signature_found (contents : & str , function : & str) -> bool { contents . lines () . any (| line | is_fu...`
+  - Calls: any, lines, is_function_signature_line
+- [Rust | Function] `generate_admission_preflight` (line 0, priv)
+  - Signature: `fn generate_admission_preflight (report : & CorrectionIntelligenceReport , root : & Path ,) -> AdmissionPreflightRepo...`
+  - Calls: Vec::new, evaluate_move_admission, push, clone, clone, clone, count, filter, iter, len, saturating_sub, len, clone, clone, clone
+- [Rust | Function] `generate_correction_plan` (line 0, pub)
+  - Signature: `pub fn generate_correction_plan (action : & RefactorAction , predictions : & [ViolationPrediction] ,) -> CorrectionPl...`
+  - Calls: Vec::new, action_symbol, push, action_module_path, action_refs, push, action_refs, push, clone, clone, clone, action_symbol, push, to_string, action_target_layer, action_function, push, action_function, action_target_layer, push, action_visibility, starts_with, push, to_string, push, push, unwrap_or, max, map, iter, action_id, to_vec, average_confidence, estimate_fix_time, len
+- [Rust | Function] `generate_intelligence_report` (line 0, pub)
+  - Signature: `pub fn generate_intelligence_report (actions : & [RefactorAction] , state : & IntelligenceState < '_ > ,) -> Correcti...`
+  - Calls: Vec::new, Vec::new, Vec::new, Vec::new, predict_violations, fill_prediction_confidence, generate_correction_plan, augment_path_coherence_strategies, plan_verification_scope, build_rollback_criteria, estimate_impact, clone, push, push, push, push, compute_summary, to_string, to_rfc3339, chrono::Utc::now, clone, len
+- [Rust | Function] `generate_phase2_cluster_slice` (line 0, pub)
+  - Signature: `pub fn generate_phase2_cluster_slice (plan_path : & Path , batch_index : usize , root : & Path ,) -> std :: io :: Res...`
+  - Calls: parse_phase2_cluster_plan, ok_or_else, get, saturating_sub, std::io::Error::new, is_empty, Err, std::io::Error::new, Vec::new, Vec::new, Vec::new, Vec::new, clone, clone, clone, Some, to_string, display, generate_correction_plan, plan_verification_scope, build_rollback_criteria, clone, to_string, push, push, push, push, compute_summary, Ok, to_string, to_rfc3339, chrono::Utc::now, to_path_buf, len
+- [Rust | Function] `is_function_signature_line` (line 0, priv)
+  - Signature: `fn is_function_signature_line (line : & str , function : & str) -> bool { let trimmed = line . trim_start () ; if ! t...`
+  - Calls: trim_start, contains, any, iter, contains
+- [Rust | Function] `is_identifier_candidate` (line 0, priv)
+  - Signature: `fn is_identifier_candidate (value : & str) -> bool { if value . chars () . next () . map (| c | c . is_numeric ()) . ...`
+  - Calls: unwrap_or, map, next, chars, is_numeric, to_lowercase, contains, as_str, contains, as_str
+- [Rust | Function] `is_test_attribute_line` (line 0, priv)
+  - Signature: `fn is_test_attribute_line (trimmed : & str) -> bool { if ! trimmed . starts_with ("#[") { return false ; } let lower ...`
+  - Calls: starts_with, to_ascii_lowercase, contains, contains
+- [Rust | Function] `is_test_scoped_function` (line 0, priv)
+  - Signature: `fn is_test_scoped_function (contents : & str , function : & str) -> Result < bool , String > { let mut brace_depth : ...`
+  - Calls: Vec::new, lines, trim_start, starts_with, starts_with, contains, push, is_test_attribute_line, is_function_signature_line, is_empty, Ok, Ok, starts_with, is_empty, starts_with, count, filter, chars, count, filter, chars, last, pop, Ok
+- [Rust | Function] `module_name_from_path` (line 0, priv)
+  - Signature: `fn module_name_from_path (path : & Path) -> Option < String > { let stem = path . file_stem () . and_then (| s | s . ...`
+  - Calls: and_then, file_stem, to_str, to_string, and_then, and_then, parent, file_name, to_str, to_string, Some, crate::cluster_010::normalize_module_name
+- [Rust | Function] `move_violates_invariant` (line 0, pub(crate))
+  - Signature: `pub (crate) fn move_violates_invariant (_function : & str , _from : & PathBuf , _to : & PathBuf , _invariants : & Inv...`
+- [Rust | Function] `parse_phase2_cluster_plan` (line 0, priv)
+  - Signature: `fn parse_phase2_cluster_plan (plan_path : & Path) -> std :: io :: Result < Vec < ClusterBatch > > { let contents = fs...`
+  - Calls: fs::read_to_string, map_err, Regex::new, std::io::Error::new, to_string, map_err, Regex::new, std::io::Error::new, to_string, Vec::new, lines, captures, take, push, Some, PathBuf::from, Vec::new, captures, as_mut, push, to_string, PathBuf::from, push, Ok
+- [Rust | Function] `plan_verification_scope` (line 0, pub)
+  - Signature: `pub fn plan_verification_scope (action : & RefactorAction , correction_plan : & CorrectionPlan ,) -> VerificationPoli...`
+  - Calls: len, affected_files, action_module, push, clone, estimate_verification_time
+- [Rust | Function] `predict_violations` (line 0, pub)
+  - Signature: `pub fn predict_violations (action : & RefactorAction , invariants : & InvariantAnalysisResult , call_graph : & HashMa...`
+  - Calls: Vec::new, find_callers, is_empty, push, is_empty, push, move_violates_invariant, push, symbol_exists, push, find_reference_files, is_empty, push, push, push, push
+- [Rust | Function] `simulate_action` (line 0, pub(crate))
+  - Signature: `pub (crate) fn simulate_action (_action : & RefactorAction , state : & AnalysisState) -> AnalysisState { state . clon...`
+  - Calls: clone
+- [Rust | Function] `symbol_exists` (line 0, pub(crate))
+  - Signature: `pub (crate) fn symbol_exists (symbol : & str , elements : & [CodeElement]) -> bool { elements . iter () . any (| el |...`
+  - Calls: any, iter
+- [Rust | Function] `write_admission_preflight_report` (line 0, pub)
+  - Signature: `pub fn write_admission_preflight_report (report : & CorrectionIntelligenceReport , root : & Path , output_dir : & Pat...`
+  - Calls: generate_admission_preflight, std::fs::create_dir_all, join, std::fs::write, serde_json::to_string_pretty, Ok
+

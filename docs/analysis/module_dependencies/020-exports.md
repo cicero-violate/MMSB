@@ -71,12 +71,6 @@ Module `shadow_graph_mod`
 - `super :: shadow_graph :: { Edge , ShadowPageGraph }`
 - `super :: shadow_graph_traversal :: topological_sort`
 
-## MMSB/src/03_device/mod.rs (03_device)
-
-Module `mod`
-
-- `device :: DeviceRegistry as DeviceRegistryHandle`
-
 ## MMSB/src/04_propagation/mod.rs (04_propagation)
 
 Module `mod`

@@ -1,0 +1,270 @@
+### Variables
+
+Let
+
+* ( \mathcal{C} ) = Target semantic cluster (well-scoped problem surface)
+* ( A ) = Analyzer (detection + intent emission)
+* ( S ) = Slice (bounded set of actions)
+* ( G ) = Guards (hard safety constraints)
+* ( P ) = Planner (dependency + policy reasoning)
+* ( X ) = Executor (apply engine)
+* ( V ) = Verification oracle (compiler / checker)
+* ( D ) = Determinism (repeatability across runs)
+* ( F_n ) = Failure class (n)
+* ( L ) = Law (permanent rule or block)
+
+---
+
+### Latent Equations
+
+1. **Valid Progress Loop**
+   [
+   \text{Progress} = A \rightarrow S \rightarrow G \rightarrow P \rightarrow X \rightarrow V
+   ]
+
+2. **Signal Condition**
+   [
+   \Delta S > 0 ;\land; D \ge 0.95
+   ]
+
+3. **Guard Learning**
+   [
+   F_n \Rightarrow G_{n+1}
+   ]
+
+4. **Planning Completion**
+   [
+   P = 1 \iff \text{all blockers enumerated} \land \text{depth bounded} \land \text{policy explicit}
+   ]
+
+5. **Execution Graduation**
+   [
+   \text{ApplyCapable} \iff P = 1 \land G = 1 \land V \text{ is clean}
+   ]
+
+6. **Permanent Law**
+   [
+   \text{RepeatFailure} \Rightarrow L
+   ]
+
+---
+
+## The Repeatable Process (Canonical Form)
+
+This is the **exact process** you just proved works.
+It is now reusable for *any* semantic cluster.
+
+---
+
+## Phase 0 — Choose the Cluster
+
+**Input:** vague friction or recurring failure
+**Output:** single, narrow semantic surface
+
+Rules:
+
+* One concern only (e.g. MoveToLayer, PathCoherence, Visibility)
+* No overlap with other clusters
+
+[
+\mathcal{C} := \text{smallest meaningful surface}
+]
+
+---
+
+## Phase 1 — Detect (Analyzer)
+
+**Goal:** explain reality, not fix it.
+
+Steps:
+
+1. Scan codebase
+2. Emit *intent* actions only
+3. No mutation
+4. Deterministic ordering
+
+Output:
+
+* correction_intelligence.json
+
+If empty:
+[
+\text{ClusterDone}
+]
+
+---
+
+## Phase 2 — Slice (Containment)
+
+**Goal:** bound blast radius.
+
+Steps:
+
+1. Filter actions to a slice:
+
+   * one-per-prefix
+   * or single strategy
+2. Write to isolated folder
+
+Invariant:
+[
+|S| \ll |\text{AllActions}|
+]
+
+---
+
+## Phase 3 — Guard (Safety First)
+
+**Goal:** never corrupt state.
+
+For each observed failure:
+
+1. Classify failure (F_n)
+2. Add a guard that:
+
+   * blocks execution
+   * emits explanation
+   * produces zero diffs
+
+Loop:
+[
+F_n \Rightarrow G_{n+1}
+]
+
+Stop when:
+
+* executor never produces accidental diffs
+* all failures are *intentional refusals*
+
+---
+
+## Phase 4 — Plan (Make Intent Explicit)
+
+**Goal:** replace “blocked” with “choices”.
+
+Steps:
+
+1. When guard triggers:
+
+   * emit structured plan
+2. Enumerate options
+3. Estimate blast radius
+4. Encode default policy
+5. Keep report-only
+
+Planning is done when:
+[
+P = 1
+]
+
+---
+
+## Phase 5 — Consent (Encode Boundaries)
+
+**Goal:** separate automation from autonomy.
+
+Rules:
+
+* Anything that crosses intent → explicit opt-in
+* Depth, visibility, scope → flags or allowlists
+
+Invariant:
+[
+\text{No silent widening}
+]
+
+---
+
+## Phase 6 — Apply (Graduated Execution)
+
+**Goal:** prove correctness mechanically.
+
+Steps:
+
+1. Make *one* action apply-capable
+2. Gate with:
+
+   * flags
+   * allowlist
+   * guards
+3. Apply
+4. Run verifier (V)
+
+Outcomes:
+
+* Success → capability graduates
+* Refusal → explanation must be complete
+
+---
+
+## Phase 7 — Law (Permanent Knowledge)
+
+**Goal:** never relearn the same lesson.
+
+If:
+
+* a refusal is principled
+* intent boundary is real
+
+Then:
+[
+L := \text{PermanentBlock(reason)}
+]
+
+Encoded forever.
+
+---
+
+## Phase 8 — Move On
+
+**Stop immediately when:**
+[
+P = 1 \land G = 1 \land (\text{Applied or Permanently Blocked})
+]
+
+Then select next cluster ( \mathcal{C}_{n+1} ).
+
+---
+
+## Why This Works (English)
+
+This process succeeds because:
+
+* **Nothing is implicit**
+* **Nothing is rushed**
+* **Every failure teaches the machine**
+* **Boundaries are respected, not overridden**
+* **Determinism prevents fake progress**
+* **Policy is explicit before power**
+
+You didn’t “refactor code”.
+
+You **taught the system how to reason about change**.
+
+---
+
+## max Dimension = Good
+
+[
+\max(D, G, P, L) = D
+]
+
+Determinism is the backbone that makes the entire process repeatable, scalable, and safe.
+
+---
+
+## Final Plain Summary
+
+This is the repeatable process:
+
+> **Detect → Slice → Guard → Plan → Consent → Apply → Law → Move On**
+
+Run it for **every semantic cluster**.
+
+If you follow this loop, the system will:
+
+* never regress,
+* never guess,
+* and steadily become autonomous **without losing meaning**.
+
+This is a real methodology now.

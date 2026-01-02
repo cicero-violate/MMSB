@@ -1,0 +1,18 @@
+{
+  "version": "1.0",
+  "timestamp": "2026-01-01T03:03:50.555196230+00:00",
+  "results": [
+    {
+      "action_id": "move_scan_doc_comments_to_src/211_dead_code_attribute_parser.rs",
+      "check": "CargoCheck",
+      "status": "passed",
+      "error": null
+    },
+    {
+      "action_id": "move_scan_doc_comments_to_src/211_dead_code_attribute_parser.rs",
+      "check": "CargoTest",
+      "status": "passed",
+      "error": null
+    }
+  ]
+}

@@ -1,0 +1,3941 @@
+//! Markdown report generation
+
+use crate::cluster_008::collect_cluster_plans;
+use crate::layer_core::{sort_structural_items};
+use crate::control_flow::ControlFlowAnalyzer;
+use crate::dependency::{LayerGraph, build_directory_entry_map, build_file_dependency_graph, collect_naming_warnings};
+use crate::file_ordering::DirectoryMove;
+use crate::types::{
+    AnalysisResult,
+    CallGraphNode,
+    CodeElement,
+    DirectoryAnalysis,
+    ElementType,
+    FileOrderingResult,
+    FunctionCfg,
+    FunctionCluster,
+    FunctionPlacement,
+    Language,
+    PlacementStatus,
+    Visibility,
+};
+use std::cmp::Ordering;
+use std::collections::{BTreeMap, BTreeSet, HashMap, HashSet};
+use std::fs;
+use std::path::{Path, PathBuf};
+use walkdir::WalkDir;
+use crate::cluster_006::strip_numeric_prefix;
+
+type Result<T> = anyhow::Result<T>;
+fn display_path(path: &Path, root_path: &Path) -> String {
+    let relative = path.strip_prefix(root_path).unwrap_or(path);
+    relative.to_string_lossy().to_string()
+}
+
+fn placement_status_label(status: &PlacementStatus) -> String {
+    match status {
+        PlacementStatus::Correct => "ok".to_string(),
+        PlacementStatus::ShouldMove { .. } => "move".to_string(),
+        PlacementStatus::Orphaned { .. } => "orphaned".to_string(),
+        PlacementStatus::LayerViolation { .. } => "layer violation".to_string(),
+    }
+}
+
+fn placement_status_notes(status: &PlacementStatus) -> String {
+    match status {
+        PlacementStatus::Correct => String::new(),
+        PlacementStatus::ShouldMove { reason, impact } => {
+            format!("{} (impact {:.2})", reason, impact)
+        }
+        PlacementStatus::Orphaned { suggested_module } => {
+            format!("suggest module {}", suggested_module)
+        }
+        PlacementStatus::LayerViolation {
+            current_layer,
+            required_layer,
+        } => format!("{} -> {}", current_layer, required_layer),
+    }
+}
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd)]
+pub enum Priority {
+    Critical,
+    High,
+    Medium,
+    Low,
+}
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub enum ActionKind {
+    Cluster,
+    Structural,
+    Cohesion,
+    Ordering,
+}
+
+#[derive(Clone)]
+pub struct PlanItem {
+    pub kind: ActionKind,
+    pub priority: Priority,
+    pub description: String,
+    pub command: String,
+    pub current_layer: Option<String>,
+    pub required_layer: Option<String>,
+    pub is_utility: bool,
+    pub impact_weight: usize,
+    pub benefit: usize,
+    pub cost: usize,
+    pub callers: usize,
+    pub caller_files: Vec<PathBuf>,
+    pub current_file: Option<PathBuf>,
+    pub target_file: Option<PathBuf>,
+    pub outgoing_files: Vec<PathBuf>,
+    pub name: Option<String>,
+    pub cluster_cohesion: f64,
+    pub member_count: usize,
+}
+
+#[derive(Clone)]
+pub struct ClusterMember {
+    pub file: PathBuf,
+    pub name: String,
+}
+
+#[derive(Clone)]
+pub struct ClusterPlan {
+    pub target: PathBuf,
+    pub cohesion: f64,
+    pub members: Vec<ClusterMember>,
+}
+
+fn collect_rename_items(ordering: &FileOrderingResult, label: &str) -> Vec<PlanItem> {
+    let mut layer_violation_files = BTreeSet::new();
+    for violation in &ordering.layer_violations {
+        layer_violation_files.insert(violation.to.clone());
+    }
+
+    ordering
+        .ordered_files
+        .iter()
+        .filter(|entry| entry.needs_rename)
+        .map(|entry| {
+            let from = entry.current_path.clone();
+            let to = entry
+                .current_path
+                .parent()
+                .map(|p| p.join(&entry.suggested_name))
+                .unwrap_or_else(|| PathBuf::from(&entry.suggested_name));
+            let priority = if layer_violation_files.contains(&entry.current_path) {
+                Priority::Critical
+            } else {
+                Priority::Medium
+            };
+            PlanItem {
+                kind: ActionKind::Ordering,
+                priority,
+                description: format!(
+                    "[{}] `{}` -> `{}`",
+                    label,
+                    compress_path(from.to_string_lossy().as_ref()),
+                    compress_path(to.to_string_lossy().as_ref())
+                ),
+                command: format!(
+                    "git mv \"{}\" \"{}\"",
+                    from.to_string_lossy(),
+                    to.to_string_lossy()
+                ),
+                current_layer: None,
+                required_layer: None,
+                is_utility: false,
+                impact_weight: 0,
+                benefit: 0,
+                cost: 1,
+                callers: 0,
+                caller_files: Vec::new(),
+                current_file: Some(from.clone()),
+                target_file: Some(to.clone()),
+                outgoing_files: Vec::new(),
+                name: None,
+                cluster_cohesion: 0.0,
+                member_count: 0,
+            }
+        })
+        .collect()
+}
+
+fn collect_utility_candidates(placements: &[FunctionPlacement]) -> Vec<String> {
+    let mut candidates = BTreeSet::new();
+    for placement in placements {
+        let external_files = placement.call_analysis.calls_from_other_files.len();
+        if external_files >= 3 {
+            candidates.insert(format!(
+                "`{}` called by {} files (suggest `utilities`)",
+                placement.name, external_files
+            ));
+        }
+    }
+    candidates.into_iter().collect()
+}
+
+fn directory_moves_to_plan(label: &str, moves: Vec<DirectoryMove>) -> Vec<PlanItem> {
+    moves
+        .into_iter()
+        .map(|item| PlanItem {
+            kind: ActionKind::Ordering,
+            priority: Priority::Medium,
+            description: format!(
+                "[{}] dir `{}` -> `{}`",
+                label,
+                compress_path(item.from.to_string_lossy().as_ref()),
+                compress_path(item.to.to_string_lossy().as_ref())
+            ),
+            command: format!(
+                "git mv \"{}\" \"{}\"",
+                item.from.to_string_lossy(),
+                item.to.to_string_lossy()
+            ),
+            current_layer: None,
+            required_layer: None,
+            is_utility: false,
+            impact_weight: 0,
+            benefit: 0,
+            cost: 1,
+            callers: 0,
+            caller_files: Vec::new(),
+            current_file: Some(item.from.clone()),
+            target_file: Some(item.to.clone()),
+            outgoing_files: Vec::new(),
+            name: None,
+            cluster_cohesion: 0.0,
+            member_count: 0,
+        })
+        .collect()
+}
+
+fn write_priority_section(content: &mut String, title: &str, items: &[PlanItem]) {
+    content.push_str(&format!("## {}\n\n", title));
+    let (action, note) = match title {
+        "Phase 1: Correctness Blockers" => (
+            "fix these first; they block correctness or builds.",
+            "empty means no critical blockers detected.",
+        ),
+        "Phase 2: Cluster Extraction" => (
+            "create the listed cluster files and move the grouped functions.",
+            "use the batches below to keep changes small.",
+        ),
+        "Phase 3: Structural Constraints" => (
+            "resolve the layer violations by moving functions to target modules.",
+            "follow batch order to avoid cascading dependency churn.",
+        ),
+        "Phase 4: Cohesion Improvements" => (
+            "optional: improve cohesion by moving functions to better-fit modules.",
+            "safe to defer unless you are actively refactoring.",
+        ),
+        "Phase 5: Ordering & Renames" => (
+            "optional: rename files to match ordering conventions.",
+            "update module paths and imports after renames.",
+        ),
+        _ => ("review items", "no additional guidance available."),
+    };
+    content.push_str(&format!("Action: {}\n", action));
+    content.push_str(&format!("Note: {}\n\n", note));
+    if items.is_empty() {
+        content.push_str("- None.\n\n");
+        return;
+    }
+
+    let mut commands = Vec::new();
+    for item in items {
+        content.push_str(&format!("- {}\n", item.description));
+        if !item.command.is_empty() {
+            commands.push(item.command.clone());
+        }
+    }
+    content.push('\n');
+
+    if !commands.is_empty() {
+        content.push_str("```bash\n");
+        for cmd in commands {
+            content.push_str(&format!("{}\n", cmd));
+        }
+        content.push_str("```\n\n");
+    }
+}
+
+fn write_structural_tips(content: &mut String, items: &[PlanItem]) {
+    if items.is_empty() {
+        return;
+    }
+    content.push_str("### Phase 3 Tips\n\n");
+    content.push_str("Action: apply these guidelines while executing Phase 3 batches.\n");
+    content.push_str("Note: these are advisory, not checklist items.\n\n");
+    content.push_str("- Move lowest-layer helpers first; higher layers should depend on stable primitives.\n");
+    content.push_str("- Keep moves small: move one function + update imports + rerun tests.\n");
+    content.push_str("- If a target module is missing, create it before moving functions.\n");
+    content.push_str("- Prefer consolidating shared utilities into their destination layer once.\n");
+    content.push_str("- Avoid touching `_old/` unless explicitly refactoring archives.\n\n");
+}
+
+fn write_cluster_tips(content: &mut String, plans: &[ClusterPlan]) {
+    if plans.is_empty() {
+        return;
+    }
+    content.push_str("### Phase 2 Tips\n\n");
+    content.push_str("Action: apply these guidelines while executing Phase 2 batches.\n");
+    content.push_str("Note: these are advisory, not checklist items.\n\n");
+    content.push_str("- Extract clusters as a unit; avoid splitting a cluster across files.\n");
+    content.push_str("- Prefer creating new files before moving functions to keep diffs small.\n");
+    content.push_str("- After each batch, update imports and run tests to lock in behavior.\n\n");
+}
+
+fn sort_plan_items(items: &mut Vec<PlanItem>) {
+    items.sort_by(|a, b| {
+        a.priority
+            .cmp(&b.priority)
+            .then_with(|| a.description.cmp(&b.description))
+    });
+}
+
+fn sort_cluster_items(items: &mut Vec<PlanItem>) {
+    items.sort_by(|a, b| {
+        b.cluster_cohesion
+            .partial_cmp(&a.cluster_cohesion)
+            .unwrap_or(Ordering::Equal)
+            .then_with(|| b.member_count.cmp(&a.member_count))
+            .then_with(|| a.description.cmp(&b.description))
+    });
+}
+
+fn cluster_priority(cohesion: f64) -> Priority {
+    if cohesion >= 0.8 {
+        Priority::Critical
+    } else if cohesion >= 0.6 {
+        Priority::High
+    } else if cohesion >= 0.4 {
+        Priority::Medium
+    } else {
+        Priority::Low
+    }
+}
+
+fn collect_cluster_items(plans: &[ClusterPlan]) -> Vec<PlanItem> {
+    plans
+        .iter()
+        .map(|plan| PlanItem {
+            kind: ActionKind::Cluster,
+            priority: cluster_priority(plan.cohesion),
+            description: format!(
+                "Create cluster file `{}` with {} functions (cohesion {:.2})",
+                compress_path(plan.target.to_string_lossy().as_ref()),
+                plan.members.len(),
+                plan.cohesion
+            ),
+            command: format!("touch \"{}\"", plan.target.to_string_lossy()),
+            current_layer: None,
+            required_layer: None,
+            is_utility: false,
+            impact_weight: 0,
+            benefit: 0,
+            cost: 1,
+            callers: 0,
+            caller_files: Vec::new(),
+            current_file: None,
+            target_file: Some(plan.target.clone()),
+            outgoing_files: Vec::new(),
+            name: None,
+            cluster_cohesion: plan.cohesion,
+            member_count: plan.members.len(),
+        })
+        .collect()
+}
+
+fn collect_refactor_actions(
+    result: &AnalysisResult,
+    rust_ordering: &FileOrderingResult,
+    julia_ordering: &FileOrderingResult,
+    placements: &[FunctionPlacement],
+    clusters: &[FunctionCluster],
+    directory: &DirectoryAnalysis,
+    root_path: &Path,
+) -> Vec<crate::correction_plan_types::RefactorAction> {
+    let mut actions = Vec::new();
+
+    let mut renames = collect_rename_items(rust_ordering, "Rust")
+        .into_iter()
+        .chain(collect_rename_items(julia_ordering, "Julia"))
+        .collect::<Vec<_>>();
+    renames.extend(directory_moves_to_plan(
+        "Rust",
+        collect_directory_moves(rust_ordering, root_path),
+    ));
+    renames.extend(directory_moves_to_plan(
+        "Julia",
+        collect_directory_moves(julia_ordering, root_path),
+    ));
+
+    let cluster_plans = collect_cluster_plans(clusters, root_path);
+    let cluster_items = collect_cluster_items(&cluster_plans);
+
+    let mut utility_names = BTreeSet::new();
+    for placement in placements {
+        if placement.call_analysis.calls_from_other_files.len() >= 3 {
+            utility_names.insert(placement.name.clone());
+        }
+    }
+    let moves = collect_move_items(placements, &utility_names, directory, root_path);
+
+    for item in renames {
+        if let (Some(from), Some(to)) = (item.current_file, item.target_file) {
+            if !from.exists() {
+                continue;
+            }
+            actions.push(crate::correction_plan_types::RefactorAction::RenameFile { from, to });
+        }
+    }
+    for item in cluster_items {
+        if let Some(path) = item.target_file {
+            actions.push(crate::correction_plan_types::RefactorAction::CreateFile { path });
+        }
+    }
+    for item in moves {
+        if let (Some(name), Some(from), Some(to)) =
+            (item.name.clone(), item.current_file, item.target_file)
+        {
+            actions.push(crate::correction_plan_types::RefactorAction::MoveFunction {
+                function: name,
+                from,
+                to,
+                required_layer: item.required_layer.clone(),
+            });
+        }
+    }
+
+    actions.extend(collect_visibility_actions(result));
+    actions
+}
+
+fn collect_visibility_actions(
+    result: &AnalysisResult,
+) -> Vec<crate::correction_plan_types::RefactorAction> {
+    use crate::types::{ElementType, Language, Visibility};
+    use std::collections::HashMap;
+    use std::path::PathBuf;
+
+    let mut actions = Vec::new();
+    let mut element_files: HashMap<String, PathBuf> = HashMap::new();
+    for element in &result.elements {
+        if element.element_type == ElementType::Function && element.language == Language::Rust {
+            element_files.insert(element.name.clone(), PathBuf::from(&element.file_path));
+        }
+    }
+
+    for element in &result.elements {
+        if element.element_type != ElementType::Function || element.language != Language::Rust {
+            continue;
+        }
+        if matches!(element.visibility, Visibility::Private) {
+            continue;
+        }
+        if element.name == "main" || element.name.starts_with("test_") {
+            continue;
+        }
+        let file_path = PathBuf::from(&element.file_path);
+        if is_test_file(&file_path) {
+            continue;
+        }
+        let callers = caller_files(&element.name, &result.call_graph, &element_files);
+        if callers.is_empty() {
+            actions.push(crate::correction_plan_types::RefactorAction::AdjustVisibility {
+                symbol: element.name.clone(),
+                file: file_path.clone(),
+                from: element.visibility.clone(),
+                to: element.visibility.clone(),
+                reason: "review: public symbol with zero callers (possible external API)"
+                    .to_string(),
+            });
+            continue;
+        }
+        let mut external = false;
+        for caller in &callers {
+            if *caller != file_path {
+                external = true;
+                break;
+            }
+        }
+        if external {
+            continue;
+        }
+
+        let target_visibility = match element.visibility {
+            Visibility::Public => Visibility::Crate,
+            Visibility::Crate => Visibility::Private,
+            Visibility::Private => continue,
+        };
+        if target_visibility == element.visibility {
+            continue;
+        }
+        actions.push(crate::correction_plan_types::RefactorAction::AdjustVisibility {
+            symbol: element.name.clone(),
+            file: file_path.clone(),
+            from: element.visibility.clone(),
+            to: target_visibility,
+            reason: "only used within file".to_string(),
+        });
+    }
+
+    actions
+}
+
+fn caller_files(
+    function: &str,
+    call_graph: &std::collections::HashMap<String, CallGraphNode>,
+    element_files: &std::collections::HashMap<String, std::path::PathBuf>,
+) -> std::collections::HashSet<std::path::PathBuf> {
+    let mut files = std::collections::HashSet::new();
+    if let Some(node) = call_graph.get(function) {
+        for caller in &node.called_by {
+            if let Some(file) = element_files.get(caller) {
+                files.insert(file.clone());
+            }
+        }
+    }
+    files
+}
+
+fn is_test_file(path: &std::path::Path) -> bool {
+    if path.components().any(|c| c.as_os_str() == "tests") {
+        return true;
+    }
+    path.file_name()
+        .and_then(|n| n.to_str())
+        .map(|name| name.contains("_test") || name.starts_with("test_"))
+        .unwrap_or(false)
+}
+
+
+
+fn build_correction_metrics(
+    placements: &[FunctionPlacement],
+    _directory: &DirectoryAnalysis,
+) -> crate::quality_delta_calculator::Metrics {
+    let cohesion = compute_directory_cohesion(placements);
+    let violations = placements
+        .iter()
+        .filter(|p| matches!(p.placement_status, PlacementStatus::LayerViolation { .. }))
+        .count();
+    crate::quality_delta_calculator::Metrics {
+        cohesion,
+        violations,
+        complexity: 0.0,
+    }
+}
+
+fn load_cargo_warnings(output_dir: &str) -> Option<String> {
+    let path = Path::new(output_dir).join("cargo_warnings.txt");
+    if !path.exists() {
+        return None;
+    }
+    fs::read_to_string(path).ok()
+}
+
+fn parse_dead_code_warnings(warnings: &str) -> HashMap<String, HashSet<PathBuf>> {
+    let mut dead_code = HashMap::new();
+    let mut lines = warnings.lines().peekable();
+    while let Some(line) = lines.next() {
+        let trimmed = line.trim();
+        if !trimmed.starts_with("warning:") {
+            continue;
+        }
+        let Some(name_start) = trimmed.find("function `") else {
+            continue;
+        };
+        let rest = &trimmed[name_start + "function `".len()..];
+        let Some(name_end) = rest.find('`') else {
+            continue;
+        };
+        let name = &rest[..name_end];
+        if !trimmed.contains("is never used") {
+            continue;
+        }
+
+        let mut warn_path: Option<PathBuf> = None;
+        if let Some(next) = lines.peek() {
+            let next_trimmed = next.trim();
+            if let Some(path_start) = next_trimmed.find("--> ") {
+                let path_part = &next_trimmed[path_start + 4..];
+                if let Some(path_end) = path_part.find(':') {
+                    warn_path = Some(PathBuf::from(&path_part[..path_end]));
+                }
+            }
+        }
+
+        dead_code
+            .entry(name.to_string())
+            .or_insert_with(HashSet::new)
+            .extend(warn_path);
+    }
+    dead_code
+}
+
+fn parse_use_symbols(line: &str) -> Vec<String> {
+    let mut symbols = Vec::new();
+    let Some(use_idx) = line.find("use ") else {
+        return symbols;
+    };
+    let mut clause = line[use_idx + 4..].trim();
+    if let Some(end_idx) = clause.find(';') {
+        clause = clause[..end_idx].trim();
+    }
+    clause = clause.strip_prefix("crate::").unwrap_or(clause);
+    clause = clause.strip_prefix("self::").unwrap_or(clause);
+
+    if let Some(brace_start) = clause.find('{') {
+        let brace_end = clause.rfind('}').unwrap_or(clause.len());
+        let inner = &clause[brace_start + 1..brace_end];
+        for item in inner.split(',') {
+            let item = item.trim();
+            if item.is_empty() || item == "*" || item == "self" || item == "super" {
+                continue;
+            }
+            let item = item.split(" as ").next().unwrap_or(item).trim();
+            let last = item.rsplit("::").next().unwrap_or(item);
+            if !last.is_empty() {
+                symbols.push(last.to_string());
+            }
+        }
+    } else {
+        let last = clause.rsplit("::").next().unwrap_or(clause).trim();
+        if !last.is_empty() && last != "*" && last != "self" && last != "super" {
+            symbols.push(last.to_string());
+        }
+    }
+
+    symbols
+}
+
+fn scan_crate_paths(line: &str) -> Vec<String> {
+    let mut symbols = Vec::new();
+    let mut idx = 0;
+    while let Some(found) = line[idx..].find("crate::") {
+        let start = idx + found + "crate::".len();
+        let mut end = start;
+        for ch in line[start..].chars() {
+            if ch.is_ascii_alphanumeric() || ch == '_' || ch == ':' {
+                end += ch.len_utf8();
+            } else {
+                break;
+            }
+        }
+        if end > start {
+            let path = &line[start..end];
+            if let Some(last) = path.rsplit("::").next() {
+                if !last.is_empty() {
+                    symbols.push(last.to_string());
+                }
+            }
+        }
+        idx = end;
+    }
+    symbols
+}
+
+fn collect_symbol_references(root_path: &Path) -> HashMap<String, HashSet<PathBuf>> {
+    let mut references: HashMap<String, HashSet<PathBuf>> = HashMap::new();
+    let src_dir = root_path.join("src");
+    for entry in WalkDir::new(&src_dir).into_iter().filter_map(|e| e.ok()) {
+        let path = entry.path();
+        if !path.is_file() || path.extension().and_then(|e| e.to_str()) != Some("rs") {
+            continue;
+        }
+        let Ok(contents) = fs::read_to_string(path) else {
+            continue;
+        };
+        for line in contents.lines() {
+            if line.contains("use crate::") {
+                for symbol in parse_use_symbols(line) {
+                    references
+                        .entry(symbol)
+                        .or_insert_with(HashSet::new)
+                        .insert(path.to_path_buf());
+                }
+            }
+            if line.contains("crate::") {
+                for symbol in scan_crate_paths(line) {
+                    references
+                        .entry(symbol)
+                        .or_insert_with(HashSet::new)
+                        .insert(path.to_path_buf());
+                }
+            }
+        }
+    }
+    references
+}
+
+fn is_public_function(file_path: &Path, name: &str) -> Option<bool> {
+    let Ok(contents) = fs::read_to_string(file_path) else {
+        return None;
+    };
+    let needle = format!("fn {}", name);
+    for line in contents.lines() {
+        if let Some(pos) = line.find(&needle) {
+            let prefix = line[..pos].trim_start();
+            return Some(prefix.starts_with("pub"));
+        }
+    }
+    None
+}
+
+fn path_matches(entry_path: &Path, candidate: &Path) -> bool {
+    entry_path == candidate || entry_path.ends_with(candidate) || candidate.ends_with(entry_path)
+}
+
+fn is_entrypoint_main(entry: &FunctionPlacement) -> bool {
+    entry.name == "main"
+        && entry
+            .current_file
+            .ends_with(Path::new("src/190_main.rs"))
+}
+
+fn referenced_elsewhere(
+    entry: &FunctionPlacement,
+    references: &HashMap<String, HashSet<PathBuf>>,
+) -> bool {
+    let Some(files) = references.get(&entry.name) else {
+        return false;
+    };
+    files
+        .iter()
+        .any(|path| !path_matches(&entry.current_file, path))
+}
+
+fn is_dead_code_candidate(
+    entry: &FunctionPlacement,
+    dead_code: &HashMap<String, HashSet<PathBuf>>,
+) -> bool {
+    let Some(paths) = dead_code.get(&entry.name) else {
+        return false;
+    };
+    if paths.is_empty() {
+        return true;
+    }
+    paths.iter().any(|path| path_matches(&entry.current_file, path))
+}
+
+fn filter_orphaned<'a>(
+    placements: &'a [FunctionPlacement],
+    root_path: &Path,
+    output_dir: &str,
+) -> (Vec<&'a FunctionPlacement>, Vec<&'a FunctionPlacement>) {
+    let references = collect_symbol_references(root_path);
+    let dead_code = load_cargo_warnings(output_dir)
+        .as_deref()
+        .map(parse_dead_code_warnings)
+        .unwrap_or_default();
+
+    let mut orphaned = Vec::new();
+    let mut delete_candidates = Vec::new();
+    for entry in placements
+        .iter()
+        .filter(|p| matches!(p.placement_status, PlacementStatus::Orphaned { .. }))
+    {
+        if is_entrypoint_main(entry) {
+            continue;
+        }
+        if let Some(true) = is_public_function(&entry.current_file, &entry.name) {
+            if referenced_elsewhere(entry, &references) {
+                continue;
+            }
+        }
+        let is_delete_candidate = is_dead_code_candidate(entry, &dead_code);
+        if is_delete_candidate {
+            delete_candidates.push(entry);
+        }
+        orphaned.push(entry);
+    }
+    (orphaned, delete_candidates)
+}
+
+#[derive(Clone, Debug)]
+pub struct ReportConfig {
+    pub file_line_warning: usize,
+    pub dir_file_warning: usize,
+    pub naming_score_warning: f64,
+    pub baseline_path: String,
+}
+
+impl ReportConfig {
+    fn defaults() -> Self {
+        Self {
+            file_line_warning: 800,
+            dir_file_warning: 30,
+            naming_score_warning: 70.0,
+            baseline_path: "metrics_baseline.txt".to_string(),
+        }
+    }
+}
+
+fn load_report_config(output_dir: &str) -> ReportConfig {
+    let path = Path::new(output_dir).join("analyzer_config.toml");
+    let mut config = ReportConfig::defaults();
+    let Ok(contents) = fs::read_to_string(path) else {
+        return config;
+    };
+    for line in contents.lines() {
+        let trimmed = line.trim();
+        if trimmed.is_empty() || trimmed.starts_with('#') {
+            continue;
+        }
+        let Some((key, value)) = trimmed.split_once('=') else {
+            continue;
+        };
+        let key = key.trim();
+        let value = value.trim().trim_matches('"');
+        match key {
+            "file_line_warning" => {
+                if let Ok(parsed) = value.parse::<usize>() {
+                    config.file_line_warning = parsed;
+                }
+            }
+            "dir_file_warning" => {
+                if let Ok(parsed) = value.parse::<usize>() {
+                    config.dir_file_warning = parsed;
+                }
+            }
+            "baseline_path" => {
+                if !value.is_empty() {
+                    config.baseline_path = value.to_string();
+                }
+            }
+            "naming_score_warning" => {
+                if let Ok(parsed) = value.parse::<f64>() {
+                    config.naming_score_warning = parsed;
+                }
+            }
+            _ => {}
+        }
+    }
+    config
+}
+
+fn collect_size_warnings(
+    directory: &DirectoryAnalysis,
+    config: &ReportConfig,
+    warnings: &mut Vec<String>,
+) {
+    if directory.files.len() >= config.dir_file_warning {
+        warnings.push(format!(
+            "Directory `{}` has {} files; consider splitting into submodules.",
+            compress_path(directory.path.to_string_lossy().as_ref()),
+            directory.files.len()
+        ));
+    }
+
+    for file in &directory.files {
+        if let Ok(contents) = fs::read_to_string(file) {
+            let lines = contents.lines().count();
+            if lines >= config.file_line_warning {
+                warnings.push(format!(
+                    "File `{}` has {} lines; consider extracting helpers.",
+                    compress_path(file.to_string_lossy().as_ref()),
+                    lines
+                ));
+            }
+        }
+    }
+
+    for child in &directory.subdirectories {
+        collect_size_warnings(child, config, warnings);
+    }
+}
+
+fn load_baseline_metrics(config: &ReportConfig, output_dir: &str) -> Option<HashMap<String, f64>> {
+    let path = Path::new(output_dir).join(&config.baseline_path);
+    let Ok(contents) = fs::read_to_string(path) else {
+        return None;
+    };
+    let mut metrics = HashMap::new();
+    for line in contents.lines() {
+        let trimmed = line.trim();
+        if trimmed.is_empty() || trimmed.starts_with('#') {
+            continue;
+        }
+        let Some((key, value)) = trimmed.split_once('=') else {
+            continue;
+        };
+        let key = key.trim().to_string();
+        let value = value.trim();
+        if let Ok(parsed) = value.parse::<f64>() {
+            metrics.insert(key, parsed);
+        }
+    }
+    Some(metrics)
+}
+
+fn baseline_deltas(
+    baseline: &HashMap<String, f64>,
+    dir_cohesion: f64,
+    ordering_correctness: f64,
+    avg_cohesion: f64,
+    renames_len: usize,
+    relocations: usize,
+) -> Vec<String> {
+    let mut deltas = Vec::new();
+    if let Some(prev) = baseline.get("directory_cohesion") {
+        deltas.push(format!(
+            "directory_cohesion: {:.2} -> {:.2} (delta {:+.2})",
+            prev,
+            dir_cohesion,
+            dir_cohesion - prev
+        ));
+    }
+    if let Some(prev) = baseline.get("ordering_correctness") {
+        let current = ordering_correctness * 100.0;
+        deltas.push(format!(
+            "ordering_correctness: {:.1}% -> {:.1}% (delta {:+.1}%)",
+            prev,
+            current,
+            current - prev
+        ));
+    }
+    if let Some(prev) = baseline.get("avg_function_cohesion") {
+        deltas.push(format!(
+            "avg_function_cohesion: {:.2} -> {:.2} (delta {:+.2})",
+            prev,
+            avg_cohesion,
+            avg_cohesion - prev
+        ));
+    }
+    if let Some(prev) = baseline.get("rename_ops_needed") {
+        let current = renames_len as f64;
+        deltas.push(format!(
+            "rename_ops_needed: {:.0} -> {} (delta {:+.0})",
+            prev,
+            renames_len,
+            current - prev
+        ));
+    }
+    if let Some(prev) = baseline.get("function_relocations") {
+        let current = relocations as f64;
+        deltas.push(format!(
+            "function_relocations: {:.0} -> {} (delta {:+.0})",
+            prev,
+            relocations,
+            current - prev
+        ));
+    }
+    deltas
+}
+
+fn write_baseline_metrics(
+    config: &ReportConfig,
+    output_dir: &str,
+    dir_cohesion: f64,
+    ordering_correctness: f64,
+    avg_cohesion: f64,
+    renames_len: usize,
+    relocations: usize,
+) {
+    let path = Path::new(output_dir).join(&config.baseline_path);
+    if path.exists() {
+        return;
+    }
+    let content = format!(
+        "directory_cohesion={:.2}\nordering_correctness={:.1}\navg_function_cohesion={:.2}\nrename_ops_needed={}\nfunction_relocations={}\n",
+        dir_cohesion,
+        ordering_correctness * 100.0,
+        avg_cohesion,
+        renames_len,
+        relocations
+    );
+    let _ = fs::write(path, content);
+}
+
+fn collect_directories<'a>(node: &'a DirectoryAnalysis, acc: &mut Vec<&'a DirectoryAnalysis>) {
+    acc.push(node);
+    for child in &node.subdirectories {
+        collect_directories(child, acc);
+    }
+}
+
+fn slugify_path(path: &Path) -> String {
+    let mut slug = String::new();
+    for component in path.components() {
+        if !slug.is_empty() {
+            slug.push_str("__");
+        }
+        slug.push_str(&component.as_os_str().to_string_lossy().replace('/', "_"));
+    }
+    if slug.is_empty() {
+        "root".to_string()
+    } else {
+        slug
+    }
+}
+
+fn render_mermaid_graph(graph: &petgraph::graph::DiGraph<PathBuf, ()>) -> String {
+    let mut output = String::from("```mermaid\ngraph TD\n");
+    let mut node_ids: HashMap<usize, String> = HashMap::new();
+    let mut idx = 0usize;
+    for node in graph.node_indices() {
+        let node_name = graph[node]
+            .file_name()
+            .and_then(|n| n.to_str())
+            .unwrap_or("file");
+        let safe_id = format!("F{}", idx);
+        idx += 1;
+        node_ids.insert(node.index(), safe_id.clone());
+        output.push_str(&format!("    {}[\"{}\"]\n", safe_id, node_name));
+    }
+    for edge in graph.edge_indices() {
+        if let Some((src, dst)) = graph.edge_endpoints(edge) {
+            if let (Some(from), Some(to)) = (node_ids.get(&src.index()), node_ids.get(&dst.index()))
+            {
+                output.push_str(&format!("    {} --> {}\n", from, to));
+            }
+        }
+    }
+    output.push_str("```\n");
+    output
+}
+
+fn compute_ordering_correctness(
+    rust_ordering: &FileOrderingResult,
+    julia_ordering: &FileOrderingResult,
+) -> f64 {
+    let mut total = 0usize;
+    let mut correct = 0usize;
+    for ordering in [rust_ordering, julia_ordering] {
+        total += ordering.ordered_files.len();
+        correct += ordering.ordered_files.len().saturating_sub(ordering.violations.len());
+    }
+    if total == 0 {
+        1.0
+    } else {
+        correct as f64 / total as f64
+    }
+}
+
+fn compute_directory_cohesion(placements: &[FunctionPlacement]) -> f64 {
+    let mut intra = 0usize;
+    let mut inter = 0usize;
+    for placement in placements {
+        let current_dir = placement.current_file.parent().map(|p| p.to_path_buf());
+        intra += placement.call_analysis.intra_file_calls;
+        for (file, count) in &placement.call_analysis.inter_file_calls {
+            let same_dir = current_dir
+                .as_ref()
+                .and_then(|dir| file.parent().map(|p| p == dir))
+                .unwrap_or(false);
+            if same_dir {
+                intra += count;
+            } else {
+                inter += count;
+            }
+        }
+    }
+    let total = intra + inter;
+    if total == 0 {
+        1.0
+    } else {
+        intra as f64 / total as f64
+    }
+}
+
+pub struct ReportGenerator {
+    output_dir: String,
+}
+
+impl ReportGenerator {
+    pub fn new(output_dir: String) -> Self {
+        Self { output_dir }
+    }
+
+    pub fn generate_all(
+        &self,
+        result: &AnalysisResult,
+        cf_analyzer: &ControlFlowAnalyzer,
+        rust_layers: &LayerGraph,
+        julia_layers: &LayerGraph,
+        rust_ordering: &FileOrderingResult,
+        julia_ordering: &FileOrderingResult,
+        function_placements: &[FunctionPlacement],
+        function_clusters: &[FunctionCluster],
+        directory_structure: &DirectoryAnalysis,
+        root_path: &Path,
+        correction_intelligence: bool,
+        correction_json: Option<PathBuf>,
+        verification_policy_json: Option<PathBuf>,
+        correction_path_slice: bool,
+        correction_path_slice_dir: Option<PathBuf>,
+        correction_visibility_slice: bool,
+        correction_visibility_slice_dir: Option<PathBuf>,
+        correction_cluster_slice: Option<usize>,
+        correction_cluster_slice_dir: Option<PathBuf>,
+        correction_cluster_plan: Option<PathBuf>,
+    ) -> Result<()> {
+        fs::create_dir_all(&self.output_dir)?;
+        self.cleanup_legacy_reports()?;
+        let correction_root = Path::new(&self.output_dir).join("97_correction_intelligence");
+
+        println!("  Report: structure");
+        self.generate_structure_report(result)?;
+        println!("  Report: call_graph");
+        self.generate_call_graph_report(cf_analyzer)?;
+        println!("  Report: cfg");
+        self.generate_cfg_report(cf_analyzer)?;
+        println!("  Report: module_dependencies");
+        self.generate_module_dependencies(result)?;
+        println!("  Report: module_map_mismatch");
+        self.generate_module_map_mismatch(root_path)?;
+        println!("  Report: test_topology");
+        self.generate_test_topology(root_path)?;
+        println!("  Report: warning_hygiene");
+        self.generate_warning_hygiene(root_path)?;
+        println!("  Report: function_analysis");
+        self.generate_function_analysis(result)?;
+        println!("  Report: layer_dependencies");
+        self.generate_layer_dependency_report(rust_layers, julia_layers, root_path)?;
+        println!("  Report: file_ordering");
+        self.generate_file_ordering_report(rust_ordering, julia_ordering, root_path)?;
+        println!("  Report: cohesion_analysis");
+        self.generate_cohesion_report(function_placements, function_clusters, root_path)?;
+        println!("  Report: refactoring_plan");
+        let correction_report = if correction_intelligence {
+            let actions = collect_refactor_actions(
+                result,
+                rust_ordering,
+                julia_ordering,
+                function_placements,
+                function_clusters,
+                directory_structure,
+                root_path,
+            );
+            let metrics = build_correction_metrics(function_placements, directory_structure);
+            let state = crate::correction_intelligence_report::build_state(root_path, result, metrics);
+            let report = crate::correction_intelligence_report::generate_intelligence_report(&actions, &state);
+            let output_dir = correction_root.clone();
+            crate::correction_intelligence_report::write_intelligence_outputs_at(
+                &report,
+                &output_dir,
+                correction_json.as_deref(),
+                verification_policy_json.as_deref(),
+            )?;
+            crate::correction_intelligence_report::write_admission_preflight_report(
+                &report,
+                root_path,
+                &output_dir,
+            )?;
+            if correction_path_slice {
+                println!("  Report: correction_intelligence_path_coherence");
+                let path_report =
+                    crate::correction_intelligence_report::filter_path_coherence_report(&report);
+                let slice_dir = correction_path_slice_dir.unwrap_or_else(|| {
+                    output_dir.join("slice_path_coherence")
+                });
+                crate::correction_intelligence_report::write_intelligence_outputs_at(
+                    &path_report,
+                    &slice_dir,
+                    None,
+                    None,
+                )?;
+            }
+            if correction_visibility_slice {
+                println!("  Report: correction_intelligence_visibility");
+                let visibility_report =
+                    crate::correction_intelligence_report::filter_visibility_report(&report);
+                let slice_dir = correction_visibility_slice_dir.unwrap_or_else(|| {
+                    output_dir.join("slice_visibility")
+                });
+                crate::correction_intelligence_report::write_intelligence_outputs_at(
+                    &visibility_report,
+                    &slice_dir,
+                    None,
+                    None,
+                )?;
+            }
+            Some(report)
+        } else {
+            None
+        };
+        if let Some(batch_index) = correction_cluster_slice {
+            println!("  Report: correction_intelligence_cluster_slice");
+            let default_plan = root_path.join("docs/00_refactoring_plan/04_phase2_clusters.md");
+            let fallback_plan =
+                root_path.join("../mmsb-executor/docs/00_refactoring_plan/04_phase2_clusters.md");
+            let plan_path = correction_cluster_plan.unwrap_or_else(|| {
+                if default_plan.exists() {
+                    default_plan
+                } else {
+                    fallback_plan
+                }
+            });
+            let slice_dir = correction_cluster_slice_dir.unwrap_or_else(|| {
+                correction_root.join(format!("slice_cluster_b{}", batch_index))
+            });
+            let report = crate::correction_intelligence_report::generate_phase2_cluster_slice(
+                &plan_path,
+                batch_index,
+                root_path,
+            )?;
+            crate::correction_intelligence_report::write_intelligence_outputs_at(
+                &report,
+                &slice_dir,
+                None,
+                None,
+            )?;
+        }
+        self.generate_refactoring_plan(
+            rust_ordering,
+            julia_ordering,
+            function_placements,
+            function_clusters,
+            directory_structure,
+            root_path,
+            correction_report.as_ref(),
+        )?;
+        println!("  Report: file_organization");
+        self.generate_file_organization_report(
+            directory_structure,
+            rust_ordering,
+            julia_ordering,
+            root_path,
+        )?;
+
+        Ok(())
+    }
+
+    fn cleanup_legacy_reports(&self) -> Result<()> {
+        let legacy_files = [
+            "structure.md",
+            "call_graph.md",
+            "cfg.md",
+            "module_dependencies.md",
+            "function_analysis.md",
+            "layer_dependencies.md",
+            "file_ordering.md",
+            "cohesion_analysis.md",
+            "refactoring_plan.md",
+            "file_organization.md",
+        ];
+        for file in legacy_files {
+            let path = Path::new(&self.output_dir).join(file);
+            if path.exists() {
+                fs::remove_file(path)?;
+            }
+        }
+        let report_dirs = [
+            "structure",
+            "call_graph",
+            "cfg",
+            "module_dependencies",
+            "function_analysis",
+            "layer_dependencies",
+            "file_ordering",
+            "cohesion_analysis",
+            "refactoring_plan",
+            "file_organization",
+            "10_structure",
+            "20_call_graph",
+            "30_cfg",
+            "40_module_dependencies",
+            "41_module_map_mismatch",
+            "42_test_topology",
+            "43_warning_hygiene",
+            "50_function_analysis",
+            "60_layer_dependencies",
+            "70_file_ordering",
+            "80_cohesion_analysis",
+            "90_file_organization",
+        ];
+        for dir in report_dirs {
+            let path = Path::new(&self.output_dir).join(dir);
+            if !path.exists() {
+                continue;
+            }
+            for entry in fs::read_dir(&path)? {
+                let entry = entry?;
+                let entry_path = entry.path();
+                if entry_path.is_dir() {
+                    if dir == "30_cfg" && entry_path.file_name().map_or(false, |n| n == "dots") {
+                        continue;
+                    }
+                    fs::remove_dir_all(entry_path)?;
+                } else {
+                    fs::remove_file(entry_path)?;
+                }
+            }
+        }
+        Ok(())
+    }
+
+    fn prepare_report_dir(&self, name: &str) -> Result<PathBuf> {
+        let dir = Path::new(&self.output_dir).join(name);
+        fs::create_dir_all(&dir)?;
+        Ok(dir)
+    }
+
+    fn generate_structure_report(&self, result: &AnalysisResult) -> Result<()> {
+        let dir = self.prepare_report_dir("10_structure")?;
+        let generated_at = chrono::Local::now().format("%Y-%m-%d %H:%M:%S");
+
+        let mut files: BTreeMap<String, Vec<&CodeElement>> = BTreeMap::new();
+        for elem in &result.elements {
+            files
+                .entry(elem.file_path.clone())
+                .or_insert_with(Vec::new)
+                .push(elem);
+        }
+
+        let mut grouped: BTreeMap<String, Vec<(String, Vec<&CodeElement>)>> = BTreeMap::new();
+        for (file_path, elements) in files {
+            let compressed = compress_path(&file_path);
+            let key = prefix_key_from_path(&compressed);
+            grouped
+                .entry(key)
+                .or_insert_with(Vec::new)
+                .push((compressed, elements));
+        }
+
+        let mut grouped: Vec<_> = grouped.into_iter().collect();
+        grouped.sort_by(|a, b| group_key_cmp(&a.0, &b.0));
+
+        let mut index = String::from("# MMSB Code Structure Overview\n\n");
+        index.push_str(&format!("Generated: {}\n\n", generated_at));
+        index.push_str(
+            "Each numbered file groups source files by MMSB prefix so a simple `ls 10_structure/` \
+shows the traversal order.\n\n",
+        );
+
+        if grouped.is_empty() {
+            index.push_str("No code elements were recorded.\n");
+        } else {
+            index.push_str("## Group Files\n\n");
+            for (idx, (group_key, _)) in grouped.iter().enumerate() {
+                let slug = slugify_key(group_key);
+                let file_name = format!("{:03}-{}.md", idx * 10, slug);
+                index.push_str(&format!("- `{}` → `{}`\n", group_key, file_name));
+            }
+        }
+
+        for (idx, (group_key, mut entries)) in grouped.into_iter().enumerate() {
+            entries.sort_by(|a, b| a.0.cmp(&b.0));
+            let slug = slugify_key(&group_key);
+            let file_name = format!("{:03}-{}.md", idx * 10, slug);
+            let mut content = format!("# Structure Group: {}\n\n", group_key);
+
+            for (file_path, mut elements) in entries {
+                content.push_str(&format!("## File: {}\n\n", file_path));
+
+                let layers: BTreeSet<String> = elements.iter().map(|e| e.layer.clone()).collect();
+                let layer_summary = if layers.is_empty() {
+                    "root".to_string()
+                } else {
+                    layers.iter().cloned().collect::<Vec<_>>().join(", ")
+                };
+
+                let mut language_counts: BTreeMap<String, usize> = BTreeMap::new();
+                let mut type_counts: BTreeMap<String, usize> = BTreeMap::new();
+                for elem in &elements {
+                    *language_counts
+                        .entry(language_label(&elem.language).to_string())
+                        .or_insert(0) += 1;
+                    *type_counts
+                        .entry(format!("{:?}", elem.element_type))
+                        .or_insert(0) += 1;
+                }
+
+                let lang_summary = if language_counts.is_empty() {
+                    "n/a".to_string()
+                } else {
+                    language_counts
+                        .iter()
+                        .map(|(lang, count)| format!("{} ({})", lang, count))
+                        .collect::<Vec<_>>()
+                        .join(", ")
+                };
+
+                let type_summary = if type_counts.is_empty() {
+                    "n/a".to_string()
+                } else {
+                    type_counts
+                        .iter()
+                        .map(|(ty, count)| format!("{} ({})", ty, count))
+                        .collect::<Vec<_>>()
+                        .join(", ")
+                };
+
+                content.push_str(&format!("- Layer(s): {}\n", layer_summary));
+                content.push_str(&format!("- Language coverage: {}\n", lang_summary));
+                content.push_str(&format!("- Element types: {}\n", type_summary));
+                content.push_str(&format!("- Total elements: {}\n\n", elements.len()));
+
+                content.push_str("### Elements\n\n");
+                elements.sort_by(|a, b| {
+                    a.line_number
+                        .cmp(&b.line_number)
+                        .then_with(|| a.name.cmp(&b.name))
+                });
+                for elem in elements {
+                    content.push_str(&self.format_element_entry(elem));
+                }
+                content.push('\n');
+            }
+
+            fs::write(dir.join(file_name), content)?;
+        }
+
+        // Summary statistics
+        index.push_str("\n## Summary Statistics\n\n");
+        index.push_str(&format!("- Total elements: {}\n", result.elements.len()));
+        index.push_str(&format!(
+            "- Rust elements: {}\n",
+            result
+                .elements
+                .iter()
+                .filter(|e| matches!(e.language, Language::Rust))
+                .count()
+        ));
+        index.push_str(&format!(
+            "- Julia elements: {}\n",
+            result
+                .elements
+                .iter()
+                .filter(|e| matches!(e.language, Language::Julia))
+                .count()
+        ));
+
+        let mut type_counts: HashMap<String, usize> = HashMap::new();
+        for elem in &result.elements {
+            let key = format!("{:?}_{:?}", elem.language, elem.element_type);
+            *type_counts.entry(key).or_insert(0) += 1;
+        }
+
+        index.push_str("\n### Elements by Type\n\n");
+        let mut sorted_types: Vec<_> = type_counts.iter().collect();
+        sorted_types.sort_by_key(|(k, _)| k.as_str());
+        for (type_name, count) in sorted_types {
+            index.push_str(&format!("- {}: {}\n", type_name, count));
+        }
+
+        fs::write(dir.join("index.md"), index)?;
+        Ok(())
+    }
+
+    fn format_element_entry(&self, elem: &CodeElement) -> String {
+        let mut entry = format!(
+            "- [{} | {:?}] `{}` (line {}, {})\n",
+            language_label(&elem.language),
+            elem.element_type,
+            elem.name,
+            elem.line_number,
+            visibility_label(&elem.visibility),
+        );
+
+        if !elem.signature.is_empty()
+            && matches!(
+                elem.element_type,
+                ElementType::Function | ElementType::Struct
+            )
+        {
+            entry.push_str(&format!(
+                "  - Signature: `{}`\n",
+                short_signature(&elem.signature)
+            ));
+        }
+
+        if !elem.generic_params.is_empty() {
+            entry.push_str(&format!(
+                "  - Generics: {}\n",
+                elem.generic_params.join(", ")
+            ));
+        }
+
+        if matches!(elem.element_type, ElementType::Function) && !elem.calls.is_empty() {
+            entry.push_str(&format!("  - Calls: {}\n", elem.calls.join(", ")));
+        }
+
+        entry
+    }
+
+    fn generate_call_graph_report(&self, cf_analyzer: &ControlFlowAnalyzer) -> Result<()> {
+        let dir = self.prepare_report_dir("20_call_graph")?;
+        let path = dir.join("index.md");
+        let mut content = String::from("# Call Graph Analysis\n\n");
+        content.push_str("This document shows the **interprocedural call graph** - which functions call which other functions.\n\n");
+        content.push_str("> **Note:** This is NOT a control flow graph (CFG). CFG shows intraprocedural control flow (branches, loops) within individual functions.\n\n");
+
+        let stats = cf_analyzer.get_statistics();
+
+        content.push_str("## Call Graph Statistics\n\n");
+        content.push_str(&format!("- Total functions: {}\n", stats.total_functions));
+        content.push_str(&format!("- Total function calls: {}\n", stats.total_calls));
+        content.push_str(&format!("- Maximum call depth: {}\n", stats.max_depth));
+        content.push_str(&format!(
+            "- Leaf functions (no outgoing calls): {}\n\n",
+            stats.leaf_functions
+        ));
+
+        content.push_str("## Call Graph Visualization\n\n");
+        content.push_str(&cf_analyzer.generate_mermaid());
+
+        fs::write(path, content)?;
+        Ok(())
+    }
+
+    fn generate_cfg_report(&self, cf_analyzer: &ControlFlowAnalyzer) -> Result<()> {
+        let dir = self.prepare_report_dir("30_cfg")?;
+        let mut index = String::from("# Control Flow Graphs (CFG)\n\n");
+        index.push_str(&format!(
+            "Generated: {}\n\n",
+            chrono::Local::now().format("%Y-%m-%d %H:%M:%S")
+        ));
+
+        if cf_analyzer.cfgs().is_empty() {
+            index.push_str("No control flow graphs were captured.\n");
+            fs::write(dir.join("index.md"), index)?;
+            return Ok(());
+        }
+
+        let mut grouped: BTreeMap<String, Vec<(String, &FunctionCfg)>> = BTreeMap::new();
+        for cfg in cf_analyzer.cfgs() {
+            let compressed = compress_path(&cfg.file_path);
+            let key = prefix_key_from_path(&compressed);
+            grouped
+                .entry(key)
+                .or_insert_with(Vec::new)
+                .push((compressed, cfg));
+        }
+
+        let mut grouped: Vec<_> = grouped.into_iter().collect();
+        grouped.sort_by(|a, b| group_key_cmp(&a.0, &b.0));
+
+        index.push_str(&format!("- Total CFGs: {}\n", cf_analyzer.cfgs().len()));
+        index.push_str(
+            "- Files are grouped by MMSB directory prefix; numeric prefixes match lexical ordering.\n\n",
+        );
+
+        index.push_str("## Group Files\n\n");
+        for (idx, (group_key, _)) in grouped.iter().enumerate() {
+            let file_name = format!("{:03}-{}.md", idx * 10, slugify_key(group_key));
+            index.push_str(&format!("- `{}` → `{}`\n", group_key, file_name));
+        }
+
+        for (idx, (group_key, mut entries)) in grouped.into_iter().enumerate() {
+            entries.sort_by(|a, b| a.1.function.cmp(&b.1.function));
+            let slug = slugify_key(&group_key);
+            let file_name = format!("{:03}-{}.md", idx * 10, slug);
+            let mut content = format!("# CFG Group: {}\n\n", group_key);
+
+            for (compressed, cfg) in entries {
+                content.push_str(&format!("## Function: `{}`\n\n", cfg.function));
+                content.push_str(&format!(
+                    "- File: {}\n- Branches: {}\n- Loops: {}\n- Nodes: {}\n- Edges: {}\n\n",
+                    compressed,
+                    cfg.branch_count,
+                    cfg.loop_count,
+                    cfg.nodes.len(),
+                    cfg.edges.len(),
+                ));
+                if let Some(dot_rel) = self.dot_path_for(&compressed) {
+                    content.push_str(&format!("- DOT call graph: `{}`\n\n", dot_rel));
+                }
+
+                content.push_str("```mermaid\nflowchart TD\n");
+                let mut id_map = HashMap::new();
+                let prefix = sanitize_mermaid_id(&cfg.function);
+                for node in &cfg.nodes {
+                    let raw_id = format!("{}_{}", prefix, node.id);
+                    let safe_id = sanitize_mermaid_id(&raw_id);
+                    id_map.insert(node.id, safe_id.clone());
+                    content.push_str(&format!(
+                        "    {}[\"{}\"]\n",
+                        safe_id,
+                        sanitize_mermaid_label(&node.label)
+                    ));
+                }
+                for edge in &cfg.edges {
+                    if let (Some(src), Some(dst)) = (id_map.get(&edge.from), id_map.get(&edge.to)) {
+                        content.push_str(&format!("    {} --> {}\n", src, dst));
+                    }
+                }
+                content.push_str("```\n\n");
+            }
+
+            fs::write(dir.join(file_name), content)?;
+        }
+
+        fs::write(dir.join("index.md"), index)?;
+        Ok(())
+    }
+
+    fn generate_layer_dependency_report(
+        &self,
+        rust_layers: &LayerGraph,
+        julia_layers: &LayerGraph,
+        root_path: &Path,
+    ) -> Result<()> {
+        let dir = self.prepare_report_dir("60_layer_dependencies")?;
+        let path = dir.join("index.md");
+        let mut content = String::from("# Layer Dependency Report\n\n");
+        content.push_str(&format!(
+            "Generated: {}\n\n",
+            chrono::Local::now().format("%Y-%m-%d %H:%M:%S")
+        ));
+
+        self.write_layer_section(&mut content, "Rust", rust_layers, root_path);
+        self.write_layer_section(&mut content, "Julia", julia_layers, root_path);
+
+        fs::write(path, content)?;
+        Ok(())
+    }
+
+    fn generate_file_ordering_report(
+        &self,
+        rust_ordering: &FileOrderingResult,
+        julia_ordering: &FileOrderingResult,
+        root_path: &Path,
+    ) -> Result<()> {
+        let dir = self.prepare_report_dir("70_file_ordering")?;
+        let path = dir.join("index.md");
+        let mut content = String::from("# File Ordering Report\n\n");
+        content.push_str(&format!(
+            "Generated: {}\n\n",
+            chrono::Local::now().format("%Y-%m-%d %H:%M:%S")
+        ));
+
+        self.write_ordering_section(&mut content, "Rust", rust_ordering, root_path);
+        self.write_ordering_section(&mut content, "Julia", julia_ordering, root_path);
+
+        fs::write(path, content)?;
+        Ok(())
+    }
+
+    fn write_ordering_section(
+        &self,
+        content: &mut String,
+        label: &str,
+        ordering: &FileOrderingResult,
+        root_path: &Path,
+    ) {
+        content.push_str(&format!("## {} File Ordering\n\n", label));
+        if ordering.ordered_files.is_empty() {
+            content.push_str("No files analyzed.\n\n");
+            return;
+        }
+
+        let rename_count = ordering
+            .ordered_files
+            .iter()
+            .filter(|entry| entry.needs_rename)
+            .count();
+        content.push_str("### Metrics\n\n");
+        content.push_str(&format!(
+            "- Total files: {}\n- Rename suggestions: {}\n- Ordering violations: {}\n- Layer violations: {}\n- Directories: {}\n\n",
+            ordering.ordered_files.len(),
+            rename_count,
+            ordering.violations.len(),
+            ordering.layer_violations.len(),
+            ordering.ordered_directories.len()
+        ));
+
+        if !ordering.cycles.is_empty() {
+            content.push_str("### Cycles Detected\n");
+            for cycle in &ordering.cycles {
+                let listing = cycle
+                    .iter()
+                    .map(|p| compress_path(p.to_string_lossy().as_ref()))
+                    .collect::<Vec<_>>()
+                    .join(", ");
+                content.push_str(&format!("- {}\n", listing));
+            }
+            content.push('\n');
+        }
+
+        content.push_str("### Canonical Order\n\n");
+        content.push_str("| Order | Current | Suggested | Rename |\n");
+        content.push_str("| --- | --- | --- | --- |\n");
+        for entry in &ordering.ordered_files {
+            let current = display_path(&entry.current_path, root_path);
+            let rename = if entry.needs_rename { "yes" } else { "no" };
+            content.push_str(&format!(
+                "| {} | `{}` | `{}` | {} |\n",
+                entry.canonical_order, current, entry.suggested_name, rename
+            ));
+        }
+        content.push('\n');
+
+        content.push_str("### Ordering Violations\n");
+        if ordering.violations.is_empty() {
+            content.push_str("- None detected.\n\n");
+        } else {
+            for violation in &ordering.violations {
+                let file = display_path(&violation.file, root_path);
+                content.push_str(&format!(
+                    "- `{}`: alphabetical position {}, required position {}\n",
+                    file, violation.current_position, violation.required_position
+                ));
+                if !violation.blocking_dependencies.is_empty() {
+                    for dep in &violation.blocking_dependencies {
+                        let dep_path = display_path(dep, root_path);
+                        content.push_str(&format!("  - depends on `{}`\n", dep_path));
+                    }
+                }
+            }
+            content.push('\n');
+        }
+
+        content.push_str("### Layer Violations\n");
+        if ordering.layer_violations.is_empty() {
+            content.push_str("- None detected.\n\n");
+        } else {
+            for violation in &ordering.layer_violations {
+                let from = display_path(&violation.from, root_path);
+                let to = display_path(&violation.to, root_path);
+                content.push_str(&format!(
+                    "- `{}` ({}) depends on `{}` ({})\n",
+                    to, violation.to_layer, from, violation.from_layer
+                ));
+            }
+            content.push('\n');
+        }
+
+        content.push_str("### Directory Order\n");
+        if ordering.ordered_directories.is_empty() {
+            content.push_str("- None detected.\n\n");
+        } else {
+            for dir in &ordering.ordered_directories {
+                let path = display_path(dir, root_path);
+                content.push_str(&format!("- `{}`\n", path));
+            }
+            content.push('\n');
+        }
+    }
+
+    fn generate_cohesion_report(
+        &self,
+        placements: &[FunctionPlacement],
+        clusters: &[FunctionCluster],
+        root_path: &Path,
+    ) -> Result<()> {
+        let dir = self.prepare_report_dir("80_cohesion_analysis")?;
+        let path = dir.join("index.md");
+        let mut content = String::from("# Function Cohesion Analysis\n\n");
+        content.push_str(&format!(
+            "Generated: {}\n\n",
+            chrono::Local::now().format("%Y-%m-%d %H:%M:%S")
+        ));
+
+        if placements.is_empty() {
+            content.push_str("No function placement data recorded.\n");
+            fs::write(path, content)?;
+            return Ok(());
+        }
+
+        let mut by_file: BTreeMap<String, Vec<&FunctionPlacement>> = BTreeMap::new();
+        let avg_cohesion = if placements.is_empty() {
+            0.0
+        } else {
+            placements
+                .iter()
+                .map(|p| p.cohesion_score)
+                .sum::<f64>()
+                / placements.len() as f64
+        };
+        let move_count = placements
+            .iter()
+            .filter(|p| matches!(p.placement_status, PlacementStatus::ShouldMove { .. }))
+            .count();
+        let (orphaned, delete_candidates) =
+            filter_orphaned(placements, root_path, &self.output_dir);
+        let orphaned_count = orphaned.len();
+        let layer_violation_count = placements
+            .iter()
+            .filter(|p| matches!(p.placement_status, PlacementStatus::LayerViolation { .. }))
+            .count();
+        content.push_str("## Metrics\n\n");
+        content.push_str(&format!(
+            "- Avg cohesion: {:.2}\n- Move suggestions: {}\n- Orphaned functions: {}\n- Layer violations: {}\n\n",
+            avg_cohesion, move_count, orphaned_count, layer_violation_count
+        ));
+        for placement in placements {
+            by_file
+                .entry(placement.current_file.to_string_lossy().to_string())
+                .or_default()
+                .push(placement);
+        }
+
+        for (file, mut entries) in by_file {
+            entries.sort_by(|a, b| {
+                a.cohesion_score
+                    .partial_cmp(&b.cohesion_score)
+                    .unwrap_or(Ordering::Equal)
+            });
+            let compressed = compress_path(&file);
+            content.push_str(&format!("## File: {}\n\n", compressed));
+            content.push_str("| Function | Signature | Cohesion | Calls | Type refs | Status | Suggestion |\n");
+            content.push_str("| --- | --- | --- | --- | --- | --- | --- |\n");
+            for entry in entries {
+                let status = placement_status_label(&entry.placement_status);
+                let mut suggestion = entry
+                    .suggested_file
+                    .as_ref()
+                    .map(|p| compress_path(p.to_string_lossy().as_ref()))
+                    .unwrap_or_else(|| "-".to_string());
+                let notes = placement_status_notes(&entry.placement_status);
+                if !notes.is_empty() {
+                    suggestion = format!("{} ({})", suggestion, notes);
+                }
+                let call_summary = format!(
+                    "intra {}, inter {}",
+                    entry.call_analysis.intra_file_calls,
+                    entry.call_analysis.inter_file_calls.len()
+                );
+                let type_summary = format!(
+                    "same {}, other {}",
+                    entry.call_analysis.same_file_type_refs,
+                    entry.call_analysis.other_file_type_refs
+                );
+                content.push_str(&format!(
+                    "| `{}` | `{}` | {:.2} | {} | {} | {} | {} |\n",
+                    entry.name,
+                    entry.signature.replace('|', "\\|"),
+                    entry.cohesion_score,
+                    call_summary,
+                    type_summary,
+                    status,
+                    suggestion
+                ));
+            }
+            content.push('\n');
+        }
+
+        content.push_str("## Orphaned Functions (Review Only)\n\n");
+        content.push_str("Action: review each item for expected usage. Delete only if it also appears under \"Delete Candidates (Orphaned + Dead Code)\".\n");
+        content.push_str("Note: excludes public symbols referenced by other modules and entry points. Delete candidates require dead_code warnings.\n\n");
+        if orphaned.is_empty() {
+            content.push_str("- None detected.\n");
+        } else {
+            for entry in orphaned {
+                let file = compress_path(entry.current_file.to_string_lossy().as_ref());
+                content.push_str(&format!("- `{}` in `{}`\n", entry.name, file));
+            }
+        }
+        content.push('\n');
+        content.push_str("## Delete Candidates (Orphaned + Dead Code)\n\n");
+        if delete_candidates.is_empty() {
+            content.push_str("- None detected.\n");
+        } else {
+            for entry in delete_candidates {
+                let file = compress_path(entry.current_file.to_string_lossy().as_ref());
+                content.push_str(&format!("- `{}` in `{}`\n", entry.name, file));
+            }
+        }
+        content.push('\n');
+
+        let utility_candidates = collect_utility_candidates(placements);
+        content.push_str("## Utility Module Candidates\n\n");
+        if utility_candidates.is_empty() {
+            content.push_str("- None detected.\n\n");
+        } else {
+            for candidate in utility_candidates {
+                content.push_str(&format!("- {}\n", candidate));
+            }
+            content.push('\n');
+        }
+
+        content.push_str("## Function Clusters\n\n");
+        if clusters.is_empty() {
+            content.push_str("- None detected.\n");
+        } else {
+            for cluster in clusters {
+                let suggested = cluster
+                    .suggested_file
+                    .as_ref()
+                    .map(|p| compress_path(p.to_string_lossy().as_ref()))
+                    .unwrap_or_else(|| "-".to_string());
+                let members = cluster
+                    .members
+                    .iter()
+                    .map(|m| compress_path(m))
+                    .collect::<Vec<_>>()
+                    .join(", ");
+                content.push_str(&format!(
+                    "- cohesion {:.2}, suggested `{}`\n  - {}\n",
+                    cluster.cohesion, suggested, members
+                ));
+            }
+        }
+        content.push('\n');
+
+        fs::write(path, content)?;
+        Ok(())
+    }
+
+    fn generate_refactoring_plan(
+        &self,
+        rust_ordering: &FileOrderingResult,
+        julia_ordering: &FileOrderingResult,
+        placements: &[FunctionPlacement],
+        clusters: &[FunctionCluster],
+        directory: &DirectoryAnalysis,
+        root_path: &Path,
+        correction_report: Option<&crate::correction_intelligence_report::CorrectionIntelligenceReport>,
+    ) -> Result<()> {
+        let dir = self.prepare_report_dir("00_refactoring_plan")?;
+        let generated_at = chrono::Local::now().format("%Y-%m-%d %H:%M:%S").to_string();
+
+        let mut renames = collect_rename_items(rust_ordering, "Rust")
+            .into_iter()
+            .chain(collect_rename_items(julia_ordering, "Julia"))
+            .collect::<Vec<_>>();
+        renames.extend(directory_moves_to_plan(
+            "Rust",
+            collect_directory_moves(rust_ordering, root_path),
+        ));
+        renames.extend(directory_moves_to_plan(
+            "Julia",
+            collect_directory_moves(julia_ordering, root_path),
+        ));
+        let cluster_plans = collect_cluster_plans(clusters, root_path);
+        let cluster_items = collect_cluster_items(&cluster_plans);
+        let mut utility_names = BTreeSet::new();
+        for placement in placements {
+            if placement.call_analysis.calls_from_other_files.len() >= 3 {
+                utility_names.insert(placement.name.clone());
+            }
+        }
+        let mut moves = collect_move_items(placements, &utility_names, directory, root_path);
+
+        // MECHANICAL CONSTRAINT ENFORCEMENT
+        // Filter moves by invariant constraints to prevent unsafe refactorings
+        if let Ok(constraints_json) = std::fs::read_to_string(
+            std::path::Path::new(&self.output_dir).join("96_constraints/refactor_constraints.json")
+        ) {
+            use crate::refactor_constraints::RefactorConstraint;
+            if let Ok(constraints) = serde_json::from_str::<Vec<RefactorConstraint>>(&constraints_json) {
+                let mut blocked_count = 0;
+
+                moves.retain(|m| {
+                    // Check if this move violates any constraint
+                    use crate::action_validator::check_move_allowed;
+
+                    // Skip items without name or current/target file paths
+                    let name = match &m.name {
+                        Some(n) => n.clone(),
+                        None => return true, // Keep if no name to check
+                    };
+
+                    let from = match &m.current_file {
+                        Some(f) => f.clone(),
+                        None => return true,
+                    };
+
+                    let to = match &m.target_file {
+                        Some(t) => t.clone(),
+                        None => return true,
+                    };
+
+                    match check_move_allowed(&name, &from, &to, &constraints) {
+                        Ok(_) => true,  // Allowed
+                        Err(reason) => {
+                            // Log rejection (only in verbose mode to avoid clutter)
+                            if std::env::var("VERBOSE").is_ok() {
+                                eprintln!("⚠️  BLOCKED: {} - {}", name, reason);
+                            }
+                            blocked_count += 1;
+                            false  // Filtered out
+                        }
+                    }
+                });
+
+                if blocked_count > 0 {
+                    println!("✅ Constraint enforcement: {} moves allowed, {} blocked by invariants",
+                             moves.len(), blocked_count);
+                }
+            }
+        }
+
+        let (orphaned, delete_candidates) =
+            filter_orphaned(placements, root_path, &self.output_dir);
+
+        let mut all_items = Vec::new();
+        all_items.extend(cluster_items.iter().cloned());
+        all_items.extend(renames.iter().cloned());
+        all_items.extend(moves.iter().cloned());
+
+        let mut correctness: Vec<PlanItem> = Vec::new();
+        let mut clusters_phase = Vec::new();
+        let mut structural = Vec::new();
+        let mut cohesion = Vec::new();
+        let mut ordering = Vec::new();
+
+        for item in all_items {
+            match item.kind {
+                ActionKind::Cluster => clusters_phase.push(item),
+                ActionKind::Structural => structural.push(item),
+                ActionKind::Cohesion => cohesion.push(item),
+                ActionKind::Ordering => ordering.push(item),
+            }
+        }
+
+        sort_plan_items(&mut correctness);
+        sort_cluster_items(&mut clusters_phase);
+        sort_structural_items(&mut structural);
+        sort_plan_items(&mut cohesion);
+        sort_plan_items(&mut ordering);
+
+        let config = load_report_config(&self.output_dir);
+        let dir_cohesion = compute_directory_cohesion(placements);
+        let avg_cohesion = if placements.is_empty() {
+            0.0
+        } else {
+            placements
+                .iter()
+                .map(|p| p.cohesion_score)
+                .sum::<f64>()
+                / placements.len() as f64
+        };
+        let ordering_correctness = compute_ordering_correctness(rust_ordering, julia_ordering);
+        let relocations = placements
+            .iter()
+            .filter(|p| matches!(p.placement_status, PlacementStatus::ShouldMove { .. }
+                | PlacementStatus::LayerViolation { .. }))
+            .count();
+
+        write_baseline_metrics(
+            &config,
+            &self.output_dir,
+            dir_cohesion,
+            ordering_correctness,
+            avg_cohesion,
+            renames.len(),
+            relocations,
+        );
+
+        let mut summary = String::from("# Refactoring Plan\n\n");
+        summary.push_str(&format!("Generated: {}\n\n", generated_at));
+        summary.push_str("## Summary\n\n");
+        summary.push_str("Action: use this as the quick status snapshot for planning work.\n");
+        summary.push_str("Note: counts are derived from current analysis output.\n\n");
+        summary.push_str(&format!(
+            "- File/dir renames: {}\n- Function moves: {}\n- Orphaned functions: {}\n- Clusters: {}\n\n",
+            renames.len(),
+            moves.len(),
+            orphaned.len(),
+            clusters.len()
+        ));
+
+        let mut metrics = String::new();
+        metrics.push_str("## Metrics\n\n");
+        metrics.push_str("Action: monitor trends and regressions across runs.\n");
+        metrics.push_str("Note: compare against baseline metrics when available.\n\n");
+        metrics.push_str(&format!(
+            "- Directory cohesion: {:.2}\n- Ordering correctness: {:.1}%\n- Avg function cohesion: {:.2}\n- Rename ops needed: {}\n- Function relocations suggested: {}\n\n",
+            dir_cohesion,
+            ordering_correctness * 100.0,
+            avg_cohesion,
+            renames.len(),
+            relocations
+        ));
+
+        let mut baseline_section = String::new();
+        if let Some(baseline) = load_baseline_metrics(&config, &self.output_dir) {
+            let mut regression_warnings = Vec::new();
+            let epsilon = 0.005;
+            if let Some(prev) = baseline.get("directory_cohesion") {
+                if dir_cohesion + epsilon < *prev {
+                    regression_warnings.push(format!(
+                        "Directory cohesion dropped from {:.2} to {:.2}.",
+                        prev, dir_cohesion
+                    ));
+                }
+            }
+            if let Some(prev) = baseline.get("ordering_correctness") {
+                let current = ordering_correctness * 100.0;
+                if current + epsilon < *prev {
+                    regression_warnings.push(format!(
+                        "Ordering correctness dropped from {:.1}% to {:.1}%.",
+                        prev, current
+                    ));
+                }
+            }
+            if let Some(prev) = baseline.get("avg_function_cohesion") {
+                if avg_cohesion + epsilon < *prev {
+                    regression_warnings.push(format!(
+                        "Avg function cohesion dropped from {:.2} to {:.2}.",
+                        prev, avg_cohesion
+                    ));
+                }
+            }
+            if let Some(prev) = baseline.get("rename_ops_needed") {
+                if (renames.len() as f64) > *prev + epsilon {
+                    regression_warnings.push(format!(
+                        "Rename ops needed increased from {:.0} to {}.",
+                        prev,
+                        renames.len()
+                    ));
+                }
+            }
+            if let Some(prev) = baseline.get("function_relocations") {
+                if (relocations as f64) > *prev + epsilon {
+                    regression_warnings.push(format!(
+                        "Function relocations suggested increased from {:.0} to {}.",
+                        prev,
+                        relocations
+                    ));
+                }
+            }
+
+            let deltas = baseline_deltas(
+                &baseline,
+                dir_cohesion,
+                ordering_correctness,
+                avg_cohesion,
+                renames.len(),
+                relocations,
+            );
+            if !deltas.is_empty() {
+                println!("Baseline deltas:");
+                for line in &deltas {
+                    println!("  {}", line);
+                }
+            }
+
+            baseline_section.push_str("## Baseline Regression Warnings\n\n");
+            baseline_section
+                .push_str("Action: investigate any regressions before proceeding with refactors.\n");
+            baseline_section.push_str("Note: derived from the last saved baseline metrics.\n\n");
+            if regression_warnings.is_empty() {
+                baseline_section.push_str("- None.\n\n");
+            } else {
+                for warning in regression_warnings {
+                    baseline_section.push_str(&format!("- {}\n", warning));
+                }
+                baseline_section.push('\n');
+            }
+        } else {
+            baseline_section.push_str("## Baseline Regression Warnings\n\n");
+            baseline_section
+                .push_str("Action: save a baseline to enable regression tracking.\n");
+            baseline_section
+                .push_str("Note: baseline metrics file not found for this output directory.\n\n");
+            baseline_section.push_str("- None.\n\n");
+        }
+
+        let mut phase1 = String::new();
+        write_priority_section(&mut phase1, "Phase 1: Correctness Blockers", &correctness);
+
+        let mut phase2 = String::new();
+        write_priority_section(&mut phase2, "Phase 2: Cluster Extraction", &clusters_phase);
+        write_cluster_tips(&mut phase2, &cluster_plans);
+        write_cluster_batches(&mut phase2, &cluster_plans, root_path);
+
+        let mut phase3 = String::new();
+        write_priority_section(&mut phase3, "Phase 3: Structural Constraints", &structural);
+        write_structural_tips(&mut phase3, &structural);
+        write_structural_batches(&mut phase3, &structural);
+
+        let mut phase4 = String::new();
+        write_priority_section(&mut phase4, "Phase 4: Cohesion Improvements", &cohesion);
+
+        let mut phase5 = String::new();
+        write_priority_section(&mut phase5, "Phase 5: Ordering & Renames", &ordering);
+
+        let mut orphaned_section = String::new();
+        orphaned_section.push_str("## Orphaned Functions (Review Only)\n\n");
+        orphaned_section.push_str("Action: review each item for expected usage. Delete only if it also appears under \"Delete Candidates (Orphaned + Dead Code)\".\n");
+        orphaned_section.push_str("Note: excludes public symbols referenced by other modules and entry points. Delete candidates require dead_code warnings.\n\n");
+        if orphaned.is_empty() {
+            orphaned_section.push_str("- None detected.\n\n");
+        } else {
+            for entry in &orphaned {
+                let file = compress_path(entry.current_file.to_string_lossy().as_ref());
+                orphaned_section.push_str(&format!("- `{}` in `{}`\n", entry.name, file));
+            }
+            orphaned_section.push('\n');
+        }
+
+        let mut delete_section = String::new();
+        delete_section.push_str("## Delete Candidates (Orphaned + Dead Code)\n\n");
+        delete_section.push_str("Action: consider removal after confirming behavior and running tests.\n");
+        delete_section.push_str("Note: derived from orphaned list plus compiler dead_code warnings.\n\n");
+        if delete_candidates.is_empty() {
+            delete_section.push_str("- None detected.\n\n");
+        } else {
+            for entry in &delete_candidates {
+                let file = compress_path(entry.current_file.to_string_lossy().as_ref());
+                delete_section.push_str(&format!("- `{}` in `{}`\n", entry.name, file));
+            }
+            delete_section.push('\n');
+        }
+
+        let mut cluster_suggestions = String::new();
+        cluster_suggestions.push_str("## Suggested New Files (Clusters)\n\n");
+        cluster_suggestions.push_str("Action: consider creating these files to improve cohesion.\n");
+        cluster_suggestions.push_str("Note: suggestions are heuristic and should be validated.\n\n");
+        if clusters.is_empty() {
+            cluster_suggestions.push_str("- None detected.\n\n");
+        } else {
+            for cluster in clusters {
+                let suggested = cluster
+                    .suggested_file
+                    .as_ref()
+                    .map(|p| compress_path(p.to_string_lossy().as_ref()))
+                    .unwrap_or_else(|| "new module".to_string());
+                let members = cluster
+                    .members
+                    .iter()
+                    .map(|m| compress_path(m))
+                    .collect::<Vec<_>>()
+                    .join(", ");
+                cluster_suggestions.push_str(&format!(
+                    "- cohesion {:.2}, suggested `{}`\n  - {}\n",
+                    cluster.cohesion, suggested, members
+                ));
+            }
+            cluster_suggestions.push('\n');
+        }
+
+        let utility_candidates = collect_utility_candidates(placements);
+        let mut utility_section = String::new();
+        utility_section.push_str("## Utility Module Candidates\n\n");
+        utility_section.push_str("Action: consider consolidating these into a shared utilities module.\n");
+        utility_section.push_str("Note: candidates are based on cross-file usage frequency.\n\n");
+        if utility_candidates.is_empty() {
+            utility_section.push_str("- None detected.\n\n");
+        } else {
+            for candidate in utility_candidates {
+                utility_section.push_str(&format!("- {}\n", candidate));
+            }
+            utility_section.push('\n');
+        }
+
+        let mut naming_warnings = Vec::new();
+        let _ = collect_naming_warnings(directory, &config, &mut naming_warnings);
+        let mut naming_section = String::new();
+        naming_section.push_str("## Naming Warnings\n\n");
+        naming_section.push_str("Action: rename files if the suggested name improves ordering clarity.\n");
+        naming_section.push_str("Note: `_old` paths are excluded from naming warnings.\n\n");
+        if naming_warnings.is_empty() {
+            naming_section.push_str("- None.\n\n");
+        } else {
+            for warning in naming_warnings {
+                naming_section.push_str(&format!("- {}\n", warning));
+            }
+            naming_section.push('\n');
+        }
+
+        let mut size_warnings = Vec::new();
+        collect_size_warnings(directory, &config, &mut size_warnings);
+        let mut size_section = String::new();
+        size_section.push_str("## Size Warnings\n\n");
+        size_section.push_str("Action: consider extracting helpers to reduce file size.\n");
+        size_section.push_str("Note: thresholds come from report configuration.\n\n");
+        if size_warnings.is_empty() {
+            size_section.push_str("- None.\n\n");
+        } else {
+            for warning in size_warnings {
+                size_section.push_str(&format!("- {}\n", warning));
+            }
+            size_section.push('\n');
+        }
+
+        let mut cargo_section = String::new();
+        if let Some(warnings) = load_cargo_warnings(&self.output_dir) {
+            cargo_section.push_str("## Cargo Warnings\n\n");
+            cargo_section.push_str("Action: address compiler warnings before major refactors.\n");
+            cargo_section.push_str("Note: captured from cargo check/test outputs.\n\n");
+            if warnings.trim().is_empty() {
+                cargo_section.push_str("- None.\n\n");
+            } else {
+                cargo_section.push_str("```text\n");
+                cargo_section.push_str(warnings.trim());
+                cargo_section.push_str("\n```\n\n");
+            }
+        } else {
+            cargo_section.push_str("## Cargo Warnings\n\n");
+            cargo_section.push_str("Action: address compiler warnings before major refactors.\n");
+            cargo_section.push_str("Note: no cargo warnings captured in this run.\n\n");
+            cargo_section.push_str("- None.\n\n");
+        }
+
+        let mut correction_section = String::new();
+        if let Some(report) = correction_report {
+            correction_section.push_str("## Correction Intelligence\n\n");
+            correction_section.push_str("Action: review correction plans and verification policies before execution.\n");
+            correction_section.push_str("Note: generated for mmsb-executor ingestion; analyzer does not mutate code.\n\n");
+            correction_section.push_str(&format!(
+                "- Actions analyzed: {}\n- Trivial: {}\n- Moderate: {}\n- Complex: {}\n- Avg confidence: {:.1}%\n\n",
+                report.actions_analyzed,
+                report.summary.trivial_count,
+                report.summary.moderate_count,
+                report.summary.complex_count,
+                report.summary.average_confidence * 100.0
+            ));
+            correction_section.push_str(
+                "- JSON: `97_correction_intelligence/correction_intelligence.json`\n",
+            );
+            correction_section.push_str(
+                "- Verification policy: `97_correction_intelligence/verification_policy.json`\n\n",
+            );
+        }
+
+        let mut files = Vec::new();
+        files.push(("00_summary.md", summary));
+        files.push(("01_metrics.md", metrics));
+        files.push(("02_baseline_regressions.md", baseline_section));
+        files.push(("03_phase1_correctness.md", phase1));
+        files.push(("04_phase2_clusters.md", phase2));
+        files.push(("05_phase3_structural.md", phase3));
+        files.push(("06_phase4_cohesion.md", phase4));
+        files.push(("07_phase5_ordering_renames.md", phase5));
+        files.push(("08_orphaned_functions.md", orphaned_section));
+        files.push(("09_delete_candidates.md", delete_section));
+        files.push(("10_suggested_new_files.md", cluster_suggestions));
+        files.push(("11_utility_module_candidates.md", utility_section));
+        files.push(("12_naming_warnings.md", naming_section));
+        files.push(("13_size_warnings.md", size_section));
+        files.push(("14_cargo_warnings.md", cargo_section));
+        if correction_report.is_some() {
+            files.push(("15_correction_intelligence.md", correction_section));
+        }
+
+        let mut index = String::from("# Refactoring Plan Index\n\n");
+        index.push_str(&format!("Generated: {}\n\n", generated_at));
+        for (name, _) in &files {
+            index.push_str(&format!("- `{}`\n", name));
+        }
+        fs::write(dir.join("index.md"), index)?;
+        for (name, content) in files {
+            fs::write(dir.join(name), content)?;
+        }
+        Ok(())
+    }
+
+    fn generate_file_organization_report(
+        &self,
+        directory: &DirectoryAnalysis,
+        _rust_ordering: &FileOrderingResult,
+        _julia_ordering: &FileOrderingResult,
+        root_path: &Path,
+    ) -> Result<()> {
+        let dir = self.prepare_report_dir("90_file_organization")?;
+        let mut index = String::from("# File Organization Report\n\n");
+        index.push_str(&format!(
+            "Generated: {}\n\n",
+            chrono::Local::now().format("%Y-%m-%d %H:%M:%S")
+        ));
+
+        let mut entries = Vec::new();
+        collect_directories(directory, &mut entries);
+        for entry in &entries {
+            if entry.files.is_empty() {
+                continue;
+            }
+            let file_map = build_directory_entry_map(&entry.files)?;
+            let relative = entry
+                .path
+                .strip_prefix(root_path)
+                .unwrap_or(&entry.path)
+                .to_path_buf();
+            let slug = slugify_path(&relative);
+            let file_name = format!("{}.md", slug);
+            index.push_str(&format!(
+                "- `{}` → `{}`\n",
+                compress_path(entry.path.to_string_lossy().as_ref()),
+                file_name
+            ));
+
+            let mut content = format!(
+                "# Directory: {}\n\n",
+                compress_path(entry.path.to_string_lossy().as_ref())
+            );
+            content.push_str(&format!("- Layer: `{}`\n\n", entry.layer));
+            content.push_str("## Files\n\n");
+            content.push_str("| File | Suggested | Rename |\n");
+            content.push_str("| --- | --- | --- |\n");
+            let mut files = entry.files.clone();
+            files.sort();
+            for file in files {
+                let entry_info = file_map.get(&file);
+                let suggested = entry_info
+                    .map(|info| info.suggested_name.as_str())
+                    .unwrap_or("-");
+                let rename = entry_info
+                    .map(|info| if info.needs_rename { "yes" } else { "no" })
+                    .unwrap_or("no");
+                content.push_str(&format!(
+                    "| `{}` | `{}` | {} |\n",
+                    compress_path(file.to_string_lossy().as_ref()),
+                    suggested,
+                    rename
+                ));
+            }
+            content.push('\n');
+
+            content.push_str("## Dependency Graph\n\n");
+            if entry.files.is_empty() {
+                content.push_str("No source files.\n\n");
+            } else {
+                let graph = build_file_dependency_graph(&entry.files)?;
+                content.push_str(&render_mermaid_graph(&graph));
+                content.push('\n');
+            }
+
+            fs::write(dir.join(file_name), content)?;
+        }
+
+        fs::write(dir.join("index.md"), index)?;
+        Ok(())
+    }
+
+    fn write_layer_section(
+        &self,
+        content: &mut String,
+        label: &str,
+        graph: &LayerGraph,
+        root_path: &Path,
+    ) {
+        content.push_str(&format!("## {} Layer Graph\n\n", label));
+
+        if graph.ordered_layers.is_empty() {
+            content.push_str("No layers discovered.\n\n");
+            return;
+        }
+
+        content.push_str("### Layer Order\n");
+        for (idx, layer) in graph.ordered_layers.iter().enumerate() {
+            let cycle_tag = if graph.cycles.contains(layer) {
+                " (cycle)"
+            } else {
+                ""
+            };
+            content.push_str(&format!("{}. `{}`{}\n", idx + 1, layer, cycle_tag));
+        }
+        content.push('\n');
+
+        if !graph.cycles.is_empty() {
+            content.push_str("### Cycles Detected\n");
+            for cycle in &graph.cycles {
+                content.push_str(&format!("- `{}`\n", cycle));
+            }
+            content.push('\n');
+        }
+
+        let violations: Vec<_> = graph.edges.iter().filter(|e| e.violation).collect();
+        content.push_str("### Layer Violations\n");
+        if violations.is_empty() {
+            content.push_str("- None detected.\n\n");
+        } else {
+            for edge in violations {
+                content.push_str(&format!(
+                    "- `{}` depends on `{}` ({} references)\n",
+                    edge.to,
+                    edge.from,
+                    edge.references.len()
+                ));
+                for reference in &edge.references {
+                    let compressed = display_path(&reference.file, root_path);
+                    content.push_str(&format!("  - {} :: {}\n", compressed, reference.reference));
+                }
+            }
+            content.push('\n');
+        }
+
+        content.push_str("### Dependency Edges\n");
+        if graph.edges.is_empty() {
+            content.push_str("- No cross-layer dependencies recorded.\n\n");
+        } else {
+            for edge in &graph.edges {
+                content.push_str(&format!(
+                    "- `{}` → `{}` ({} references{})\n",
+                    edge.from,
+                    edge.to,
+                    edge.references.len(),
+                    if edge.violation { ", VIOLATION" } else { "" }
+                ));
+                for reference in &edge.references {
+                    let compressed = display_path(&reference.file, root_path);
+                    content.push_str(&format!("  - {} :: {}\n", compressed, reference.reference));
+                }
+            }
+            content.push('\n');
+        }
+
+        content.push_str("### Unresolved References\n");
+        if graph.unresolved.is_empty() {
+            content.push_str("- None.\n\n");
+        } else {
+            for unresolved in &graph.unresolved {
+                let compressed = display_path(&unresolved.file, root_path);
+                content.push_str(&format!("- {} → `{}`\n", compressed, unresolved.reference));
+            }
+            content.push('\n');
+        }
+    }
+
+    fn generate_module_dependencies(&self, result: &AnalysisResult) -> Result<()> {
+        let dir = self.prepare_report_dir("40_module_dependencies")?;
+        let index_path = dir.join("index.md");
+        let mut index = String::from("# Module Dependencies\n\n");
+
+        if result.modules.is_empty() {
+            index.push_str("No module metadata captured yet.\n");
+            fs::write(index_path, index)?;
+            return Ok(());
+        }
+
+        let mut modules_by_file: BTreeMap<String, ModuleAggregate> = BTreeMap::new();
+        for module in &result.modules {
+            let layer = self.extract_layer_from_path(&module.file_path);
+            let entry = modules_by_file
+                .entry(module.file_path.clone())
+                .or_insert_with(|| ModuleAggregate::new(module.name.clone(), layer.clone()));
+
+            if entry.name == "unknown" && !module.name.is_empty() {
+                entry.name = module.name.clone();
+            }
+
+            entry.layer = layer;
+            for import in &module.imports {
+                entry.imports.insert(normalize_use_stmt(import));
+            }
+            for export in &module.exports {
+                entry.exports.insert(normalize_use_stmt(export));
+            }
+            for sub in &module.submodules {
+                entry.submodules.insert(sub.clone());
+            }
+        }
+
+        let total_imports: usize = modules_by_file.values().map(|m| m.imports.len()).sum();
+        let total_exports: usize = modules_by_file.values().map(|m| m.exports.len()).sum();
+        let total_submodules: usize = modules_by_file.values().map(|m| m.submodules.len()).sum();
+
+        let mut modules: Vec<_> = modules_by_file.into_iter().collect();
+        modules.sort_by(|a, b| a.0.cmp(&b.0));
+
+        index.push_str(&format!("- Module files analyzed: {}\n", modules.len()));
+        index.push_str(&format!("- Unique imports captured: {}\n", total_imports));
+        index.push_str(&format!("- Unique exports captured: {}\n", total_exports));
+        index.push_str(&format!(
+            "- Submodule declarations captured: {}\n\n",
+            total_submodules
+        ));
+        index.push_str("## Per-file Summary\n\n");
+        for (file_path, module) in &modules {
+            let compressed = compress_path(file_path);
+            index.push_str(&format!(
+                "- `{}` → module `{}` (layer {}, {} imports / {} exports / {} submodules)\n",
+                compressed,
+                module.name,
+                module.layer,
+                module.imports.len(),
+                module.exports.len(),
+                module.submodules.len()
+            ));
+        }
+        index.push_str(
+            "\n## Detailed Files\n\n- `010-imports.md` – expanded import lists\n- `020-exports.md` – export statements\n- `030-submodules.md` – nested module declarations\n- `040-violations.md` – placeholder for future per-module violations\n",
+        );
+        fs::write(&index_path, index)?;
+
+        let mut imports_doc = String::from("# Module Imports\n\n");
+        let mut has_imports = false;
+        for (file_path, module) in &modules {
+            if module.imports.is_empty() {
+                continue;
+            }
+            has_imports = true;
+            let compressed = compress_path(file_path);
+            imports_doc.push_str(&format!("## {} ({})\n\n", compressed, module.layer));
+            imports_doc.push_str(&format!("Module `{}`\n\n", module.name));
+            for import in &module.imports {
+                imports_doc.push_str(&format!("- `{}`\n", import));
+            }
+            imports_doc.push('\n');
+        }
+        if !has_imports {
+            imports_doc.push_str("No imports captured across modules.\n");
+        }
+        fs::write(dir.join("010-imports.md"), imports_doc)?;
+
+        let mut exports_doc = String::from("# Module Exports\n\n");
+        let mut has_exports = false;
+        for (file_path, module) in &modules {
+            if module.exports.is_empty() {
+                continue;
+            }
+            has_exports = true;
+            let compressed = compress_path(file_path);
+            exports_doc.push_str(&format!("## {} ({})\n\n", compressed, module.layer));
+            exports_doc.push_str(&format!("Module `{}`\n\n", module.name));
+            for export in &module.exports {
+                exports_doc.push_str(&format!("- `{}`\n", export));
+            }
+            exports_doc.push('\n');
+        }
+        if !has_exports {
+            exports_doc.push_str("No exports captured across modules.\n");
+        }
+        fs::write(dir.join("020-exports.md"), exports_doc)?;
+
+        let mut subs_doc = String::from("# Submodules\n\n");
+        let mut has_submodules = false;
+        for (file_path, module) in &modules {
+            if module.submodules.is_empty() {
+                continue;
+            }
+            has_submodules = true;
+            let compressed = compress_path(file_path);
+            subs_doc.push_str(&format!("## {} ({})\n\n", compressed, module.layer));
+            subs_doc.push_str(&format!("Module `{}`\n\n", module.name));
+            for sub in &module.submodules {
+                subs_doc.push_str(&format!("- `{}`\n", sub));
+            }
+            subs_doc.push('\n');
+        }
+        if !has_submodules {
+            subs_doc.push_str("No nested modules recorded.\n");
+        }
+        fs::write(dir.join("030-submodules.md"), subs_doc)?;
+
+        let mut violations_doc = String::from("# Module Violations\n\n");
+        violations_doc.push_str(
+            "Per-module import/export violations are not computed yet.\n\
+Refer to `60_layer_dependencies/index.md` for cross-layer problems.\n",
+        );
+        fs::write(dir.join("040-violations.md"), violations_doc)?;
+
+        Ok(())
+    }
+
+    fn generate_module_map_mismatch(&self, root_path: &Path) -> Result<()> {
+        let dir = self.prepare_report_dir("41_module_map_mismatch")?;
+        let index_path = dir.join("index.md");
+        let src_root = crate::layer_utilities::resolve_source_root(root_path);
+        let rust_files = crate::cluster_010::gather_rust_files(root_path)
+            .into_iter()
+            .filter(|path| path.starts_with(&src_root))
+            .collect::<Vec<_>>();
+
+        let mut missing_modules = Vec::new();
+        let mut ambiguous_modules = Vec::new();
+        let mut outside_root = Vec::new();
+        let mut mod_decl_count = 0usize;
+
+        for file in &rust_files {
+            let Ok(content) = fs::read_to_string(file) else {
+                continue;
+            };
+            let parent_dir = file.parent().unwrap_or(&src_root);
+            let mut pending_path: Option<String> = None;
+
+            for (idx, line) in content.lines().enumerate() {
+                let trimmed = line.trim();
+                if let Some(path_attr) = extract_path_attr(trimmed) {
+                    pending_path = Some(path_attr);
+                    continue;
+                }
+
+                if trimmed.starts_with("#[") || trimmed.is_empty() || trimmed.starts_with("//") {
+                    continue;
+                }
+
+                if let Some(module) = parse_mod_decl(trimmed) {
+                    mod_decl_count += 1;
+                    let line_no = idx + 1;
+                    let path_attr = pending_path.take();
+
+                    if let Some(attr) = path_attr {
+                        let resolved = resolve_path_attr(parent_dir, &attr);
+                        if !resolved.starts_with(&src_root) {
+                            outside_root.push(ModuleIssue {
+                                parent_file: file.clone(),
+                                module: module.clone(),
+                                line: line_no,
+                                details: vec![resolved],
+                                note: format!("path attribute `{}` resolves outside src root", attr),
+                                kind: ModuleIssueKind::PathOutsideRoot,
+                            });
+                            continue;
+                        }
+                        if !resolved.is_file() {
+                            missing_modules.push(ModuleIssue {
+                                parent_file: file.clone(),
+                                module,
+                                line: line_no,
+                                details: vec![resolved],
+                                note: format!("path attribute `{}` missing", attr),
+                                kind: ModuleIssueKind::MissingPathAttr,
+                            });
+                        }
+                        continue;
+                    }
+
+                    let direct = parent_dir.join(format!("{}.rs", module));
+                    let nested = parent_dir.join(&module).join("mod.rs");
+                    let direct_exists = direct.is_file();
+                    let nested_exists = nested.is_file();
+
+                    if direct_exists && nested_exists {
+                        ambiguous_modules.push(ModuleIssue {
+                            parent_file: file.clone(),
+                            module,
+                            line: line_no,
+                            details: vec![direct, nested],
+                            note: "both module paths exist".to_string(),
+                            kind: ModuleIssueKind::AmbiguousModulePaths,
+                        });
+                    } else if !direct_exists && !nested_exists {
+                        missing_modules.push(ModuleIssue {
+                            parent_file: file.clone(),
+                            module,
+                            line: line_no,
+                            details: vec![direct, nested],
+                            note: "no module file found".to_string(),
+                            kind: ModuleIssueKind::MissingModuleFile,
+                        });
+                    }
+                } else {
+                    pending_path = None;
+                }
+            }
+        }
+
+        missing_modules.sort_by(|a, b| (a.parent_file.cmp(&b.parent_file)).then(a.module.cmp(&b.module)));
+        ambiguous_modules.sort_by(|a, b| (a.parent_file.cmp(&b.parent_file)).then(a.module.cmp(&b.module)));
+        outside_root.sort_by(|a, b| (a.parent_file.cmp(&b.parent_file)).then(a.module.cmp(&b.module)));
+
+        let mut index = String::from("# Module Map Mismatch\n\n");
+        index.push_str("Action: Review only. Detection-only report.\n\n");
+        index.push_str(&format!(
+            "- Rust files scanned: {}\n",
+            rust_files.len()
+        ));
+        index.push_str(&format!(
+            "- mod declarations scanned: {}\n",
+            mod_decl_count
+        ));
+        index.push_str(&format!(
+            "- Missing module files: {}\n",
+            missing_modules.len()
+        ));
+        index.push_str(&format!(
+            "- Ambiguous module paths: {}\n",
+            ambiguous_modules.len()
+        ));
+        index.push_str(&format!(
+            "- #[path] outside src root: {}\n\n",
+            outside_root.len()
+        ));
+
+        if missing_modules.is_empty() && ambiguous_modules.is_empty() && outside_root.is_empty() {
+            index.push_str("No module map mismatches detected.\n");
+            fs::write(index_path, index)?;
+            return Ok(());
+        }
+
+        if !missing_modules.is_empty() {
+            index.push_str("## Missing Module Files\n\n");
+            for issue in &missing_modules {
+                let parent = compress_path(issue.parent_file.to_string_lossy().as_ref());
+                index.push_str(&format!(
+                    "- `{}`:{} `mod {}` → {} ({})\n",
+                    parent,
+                    issue.line,
+                    issue.module,
+                    format_paths(&issue.details),
+                    issue.note
+                ));
+                index.push_str(&format!("  Plan: {}\n", issue_plan_summary(issue)));
+            }
+            index.push('\n');
+        }
+
+        if !ambiguous_modules.is_empty() {
+            index.push_str("## Ambiguous Module Paths\n\n");
+            for issue in &ambiguous_modules {
+                let parent = compress_path(issue.parent_file.to_string_lossy().as_ref());
+                index.push_str(&format!(
+                    "- `{}`:{} `mod {}` → {} ({})\n",
+                    parent,
+                    issue.line,
+                    issue.module,
+                    format_paths(&issue.details),
+                    issue.note
+                ));
+                index.push_str(&format!("  Plan: {}\n", issue_plan_summary(issue)));
+            }
+            index.push('\n');
+        }
+
+        if !outside_root.is_empty() {
+            index.push_str("## #[path] Outside Source Root\n\n");
+            for issue in &outside_root {
+                let parent = compress_path(issue.parent_file.to_string_lossy().as_ref());
+                index.push_str(&format!(
+                    "- `{}`:{} `mod {}` → {} ({})\n",
+                    parent,
+                    issue.line,
+                    issue.module,
+                    format_paths(&issue.details),
+                    issue.note
+                ));
+                index.push_str(&format!("  Plan: {}\n", issue_plan_summary(issue)));
+            }
+            index.push('\n');
+        }
+
+        fs::write(index_path, index)?;
+        Ok(())
+    }
+
+    fn generate_test_topology(&self, root_path: &Path) -> Result<()> {
+        let dir = self.prepare_report_dir("42_test_topology")?;
+        let index_path = dir.join("index.md");
+        let src_root = crate::layer_utilities::resolve_source_root(root_path);
+
+        let rust_files = crate::cluster_010::gather_rust_files(root_path)
+            .into_iter()
+            .filter(|path| path.starts_with(&src_root))
+            .collect::<Vec<_>>();
+        let test_files = gather_test_files(root_path);
+
+        let mut issues = Vec::new();
+
+        for file in &rust_files {
+            let Ok(content) = fs::read_to_string(file) else {
+                continue;
+            };
+            let mut pending_attrs: Vec<String> = Vec::new();
+            let mut file_has_submodules = false;
+            let mut file_has_cfg_tests = false;
+
+            for (idx, line) in content.lines().enumerate() {
+                let trimmed = line.trim();
+                if trimmed.is_empty() || trimmed.starts_with("//") {
+                    continue;
+                }
+                if trimmed.starts_with("#[") {
+                    pending_attrs.push(trimmed.to_string());
+                    continue;
+                }
+
+                if let Some(mod_name) = parse_mod_decl(trimmed) {
+                    if mod_name != "tests" {
+                        file_has_submodules = true;
+                    }
+                }
+
+                if is_mod_tests_decl(trimmed) {
+                    let line_no = idx + 1;
+                    if !has_cfg_test_attr(&pending_attrs) {
+                        issues.push(TestTopologyIssue {
+                            file: file.clone(),
+                            line: line_no,
+                            kind: TestIssueKind::TestsWithoutCfg,
+                            note: "mod tests without #[cfg(test)]".to_string(),
+                        });
+                    } else {
+                        file_has_cfg_tests = true;
+                    }
+                }
+
+                pending_attrs.clear();
+            }
+
+            if file_has_cfg_tests && file_has_submodules {
+                issues.push(TestTopologyIssue {
+                    file: file.clone(),
+                    line: 0,
+                    kind: TestIssueKind::CfgTestsInNonLeaf,
+                    note: "cfg(test) block in module with submodules".to_string(),
+                });
+            }
+        }
+
+        for file in &test_files {
+            let Ok(content) = fs::read_to_string(file) else {
+                continue;
+            };
+            for (idx, line) in content.lines().enumerate() {
+                let trimmed = line.trim();
+                if trimmed.starts_with("use crate::") {
+                    issues.push(TestTopologyIssue {
+                        file: file.clone(),
+                        line: idx + 1,
+                        kind: TestIssueKind::IntegrationUsesCratePath,
+                        note: "integration test uses crate:: path (check crate name)".to_string(),
+                    });
+                }
+                if trimmed.starts_with("use super::") {
+                    issues.push(TestTopologyIssue {
+                        file: file.clone(),
+                        line: idx + 1,
+                        kind: TestIssueKind::IntegrationUsesSuper,
+                        note: "integration test uses super:: (invalid module path)".to_string(),
+                    });
+                }
+            }
+        }
+
+        issues.sort_by(|a, b| {
+            a.file
+                .cmp(&b.file)
+                .then(a.line.cmp(&b.line))
+                .then(a.kind.cmp(&b.kind))
+        });
+
+        let mut index = String::from("# Test Topology\n\n");
+        index.push_str("Action: Review only. Detection-only report.\n\n");
+        index.push_str(&format!(
+            "- Rust source files scanned: {}\n",
+            rust_files.len()
+        ));
+        index.push_str(&format!(
+            "- Integration test files scanned: {}\n",
+            test_files.len()
+        ));
+        index.push_str(&format!("- Issues detected: {}\n\n", issues.len()));
+
+        if issues.is_empty() {
+            index.push_str("No test topology issues detected.\n");
+            fs::write(index_path, index)?;
+            return Ok(());
+        }
+
+        let mut grouped: BTreeMap<TestIssueKind, Vec<&TestTopologyIssue>> = BTreeMap::new();
+        for issue in &issues {
+            grouped.entry(issue.kind).or_default().push(issue);
+        }
+
+        for (kind, entries) in grouped {
+            index.push_str(&format!("## {}\n\n", kind.label()));
+            for issue in entries {
+                let file = compress_path(issue.file.to_string_lossy().as_ref());
+                if issue.line == 0 {
+                    index.push_str(&format!(
+                        "- `{}` → {} (review_only)\n",
+                        file, issue.note
+                    ));
+                } else {
+                    index.push_str(&format!(
+                        "- `{}`:{} → {} (review_only)\n",
+                        file, issue.line, issue.note
+                    ));
+                }
+            }
+            index.push('\n');
+        }
+
+        fs::write(index_path, index)?;
+        Ok(())
+    }
+
+    fn generate_warning_hygiene(&self, root_path: &Path) -> Result<()> {
+        let dir = self.prepare_report_dir("43_warning_hygiene")?;
+        let index_path = dir.join("index.md");
+        let output_dir = Path::new(&self.output_dir);
+        let candidates = [
+            output_dir.join("cargo_warnings.txt"),
+            root_path.join("cargo_warnings.txt"),
+        ];
+        let warnings_path = candidates.iter().find(|p| p.exists());
+
+        let mut index = String::from("# Warning Hygiene\n\n");
+        index.push_str("Action: Review only. Detection-only report.\n\n");
+
+        let Some(path) = warnings_path else {
+            index.push_str("No cargo_warnings.txt found.\n");
+            fs::write(index_path, index)?;
+            return Ok(());
+        };
+
+        let content = fs::read_to_string(path).unwrap_or_default();
+        let warnings = parse_cargo_warnings(&content);
+
+        index.push_str(&format!("- Source: `{}`\n", compress_path(path.to_string_lossy().as_ref())));
+        index.push_str(&format!("- Warnings parsed: {}\n\n", warnings.len()));
+
+        if warnings.is_empty() {
+            index.push_str("No warnings detected.\n");
+            fs::write(index_path, index)?;
+            return Ok(());
+        }
+
+        let mut by_message: BTreeMap<String, usize> = BTreeMap::new();
+        for warning in &warnings {
+            *by_message.entry(warning.message.clone()).or_insert(0) += 1;
+        }
+
+        index.push_str("## Warning Types\n\n");
+        for (message, count) in &by_message {
+            index.push_str(&format!("- {} ({} occurrences)\n", message, count));
+        }
+        index.push('\n');
+
+        index.push_str("## Warning Details\n\n");
+        for warning in &warnings {
+            let location = if let Some(loc) = warning.location.as_ref() {
+                format!("{}:{}", compress_path(loc.file.to_string_lossy().as_ref()), loc.line)
+            } else {
+                "unknown".to_string()
+            };
+            index.push_str(&format!(
+                "- `{}` → {}\n",
+                location, warning.message
+            ));
+        }
+        index.push('\n');
+
+        fs::write(index_path, index)?;
+        Ok(())
+    }
+
+    fn generate_function_analysis(&self, result: &AnalysisResult) -> Result<()> {
+        let dir = self.prepare_report_dir("50_function_analysis")?;
+        let mut index = String::from("# Function Analysis\n\n");
+
+        let functions: Vec<_> = result
+            .elements
+            .iter()
+            .filter(|e| matches!(e.element_type, ElementType::Function))
+            .collect();
+
+        index.push_str(&format!("## Total Functions: {}\n\n", functions.len()));
+        index.push_str(
+            "Functions are bucketed alphabetically so `ls 50_function_analysis/` advertises the range.\n\n",
+        );
+
+        if functions.is_empty() {
+            fs::write(dir.join("index.md"), index)?;
+            return Ok(());
+        }
+
+        let bucket_labels = ["A-F", "G-M", "N-S", "T-Z", "Other"];
+        let mut buckets: HashMap<&'static str, Vec<&CodeElement>> = HashMap::new();
+        for label in bucket_labels {
+            buckets.insert(label, Vec::new());
+        }
+
+        for func in &functions {
+            let label = function_bucket_label(&func.name);
+            buckets.entry(label).or_insert_with(Vec::new).push(func);
+        }
+
+        index.push_str("## Bucket Files\n\n");
+        for (idx, label) in bucket_labels.iter().enumerate() {
+            let file_name = format!("{:03}-functions_{}.md", (idx + 1) * 10, label);
+            let count = buckets.get(label).map(|v| v.len()).unwrap_or(0);
+            index.push_str(&format!(
+                "- `{}` → `{}` ({} functions)\n",
+                label, file_name, count
+            ));
+        }
+        fs::write(dir.join("index.md"), index)?;
+
+        for (idx, label) in bucket_labels.iter().enumerate() {
+            let mut funcs = buckets.remove(label).unwrap_or_default();
+            funcs.sort_by_key(|f| (&f.layer, &f.name));
+            let file_name = format!("{:03}-functions_{}.md", (idx + 1) * 10, label);
+            let mut content = format!("# Functions {}\n\n", label);
+
+            if funcs.is_empty() {
+                content.push_str("No functions fell into this range.\n");
+                fs::write(dir.join(file_name), content)?;
+                continue;
+            }
+
+            let mut layer_map: BTreeMap<String, Vec<&CodeElement>> = BTreeMap::new();
+            for func in funcs {
+                layer_map
+                    .entry(func.layer.clone())
+                    .or_insert_with(Vec::new)
+                    .push(func);
+            }
+
+            for (layer, entries) in layer_map {
+                content.push_str(&format!("## Layer: {}\n\n", layer));
+
+                let mut rust_funcs: Vec<_> = entries
+                    .iter()
+                    .filter(|f| matches!(f.language, Language::Rust))
+                    .collect();
+                let mut julia_funcs: Vec<_> = entries
+                    .iter()
+                    .filter(|f| matches!(f.language, Language::Julia))
+                    .collect();
+
+                rust_funcs.sort_by_key(|f| &f.name);
+                julia_funcs.sort_by_key(|f| &f.name);
+
+                if !rust_funcs.is_empty() {
+                    content.push_str("### Rust Functions\n\n");
+                    for func in rust_funcs {
+                        content.push_str(&format!("#### `{}`\n\n", func.name));
+                        let compressed = compress_path(&func.file_path);
+                        content.push_str(&format!(
+                            "- **File:** {}:{}\n",
+                            compressed, func.line_number
+                        ));
+                        content.push_str(&format!("- **Visibility:** {:?}\n", func.visibility));
+
+                        if !func.generic_params.is_empty() {
+                            content.push_str(&format!(
+                                "- **Generics:** {}\n",
+                                func.generic_params.join(", ")
+                            ));
+                        }
+
+                        if !func.calls.is_empty() {
+                            content.push_str("- **Calls:**\n");
+                            for call in &func.calls {
+                                content.push_str(&format!("  - `{}`\n", call));
+                            }
+                        }
+                        content.push_str("\n");
+                    }
+                }
+
+                if !julia_funcs.is_empty() {
+                    content.push_str("### Julia Functions\n\n");
+                    for func in julia_funcs {
+                        content.push_str(&format!("#### `{}`\n\n", func.name));
+                        let compressed = compress_path(&func.file_path);
+                        content.push_str(&format!(
+                            "- **File:** {}:{}\n",
+                            compressed, func.line_number
+                        ));
+                        content.push_str(&format!("- **Signature:** `{}`\n", func.signature));
+
+                        if !func.calls.is_empty() {
+                            content.push_str("- **Calls:**\n");
+                            for call in &func.calls {
+                                content.push_str(&format!("  - `{}`\n", call));
+                            }
+                        }
+                        content.push_str("\n");
+                    }
+                }
+            }
+
+            fs::write(dir.join(file_name), content)?;
+        }
+
+        Ok(())
+    }
+
+    fn extract_layer_from_path(&self, path: &str) -> String {
+        for component in path.split('/') {
+            if component
+                .chars()
+                .next()
+                .map_or(false, |c| c.is_ascii_digit())
+            {
+                if let Some(pos) = component.find('_') {
+                    if component[..pos].chars().all(|c| c.is_ascii_digit()) {
+                        return component.to_string();
+                    }
+                }
+            }
+        }
+        "root".to_string()
+    }
+
+    fn dot_path_for(&self, compressed_path: &str) -> Option<String> {
+        let slug = slugify_file_path(compressed_path);
+        let rel = format!("30_cfg/dots/{}/call_graph.dot", slug);
+        let absolute = Path::new(&self.output_dir).join(&rel);
+        if absolute.exists() {
+            Some(rel)
+        } else {
+            None
+        }
+    }
+}
+
+fn prefix_key_from_path(path: &str) -> String {
+    let relative = path.strip_prefix("MMSB/").unwrap_or(path);
+    if relative.is_empty() {
+        return "root".to_string();
+    }
+    let parts: Vec<&str> = relative.split('/').collect();
+    if parts.len() == 1 {
+        return "root".to_string();
+    }
+    if parts[0] == "src" && parts.len() >= 2 {
+        return format!("{}/{}", parts[0], parts[1]);
+    }
+    parts[0].to_string()
+}
+
+fn slugify_key(input: &str) -> String {
+    input
+        .chars()
+        .map(|c| match c {
+            '/' => '-',
+            ' ' => '_',
+            _ if c.is_ascii_alphanumeric() || c == '-' => c.to_ascii_lowercase(),
+            _ => '_',
+        })
+        .collect()
+}
+
+fn group_key_cmp(a: &str, b: &str) -> Ordering {
+    match (a == "root", b == "root") {
+        (true, true) => Ordering::Equal,
+        (true, false) => Ordering::Less,
+        (false, true) => Ordering::Greater,
+        _ => a.cmp(b),
+    }
+}
+
+fn function_bucket_label(name: &str) -> &'static str {
+    let first = name
+        .chars()
+        .find(|c| c.is_ascii_alphabetic())
+        .map(|c| c.to_ascii_uppercase())
+        .unwrap_or('#');
+
+    match first {
+        'A'..='F' => "A-F",
+        'G'..='M' => "G-M",
+        'N'..='S' => "N-S",
+        'T'..='Z' => "T-Z",
+        _ => "Other",
+    }
+}
+
+fn slugify_file_path(path: &str) -> String {
+    path.trim_start_matches("MMSB/")
+        .replace('/', "-")
+        .replace('.', "_")
+        .to_lowercase()
+}
+
+fn language_label(language: &Language) -> &'static str {
+    match language {
+        Language::Rust => "Rust",
+        Language::Julia => "Julia",
+    }
+}
+
+fn visibility_label(vis: &Visibility) -> &'static str {
+    match vis {
+        Visibility::Public => "pub",
+        Visibility::Crate => "pub(crate)",
+        Visibility::Private => "priv",
+    }
+}
+
+fn short_signature(input: &str) -> String {
+    let collapsed = input.split_whitespace().collect::<Vec<_>>().join(" ");
+    if collapsed.len() > 120 {
+        let mut truncated = collapsed.chars().take(117).collect::<String>();
+        truncated.push_str("...");
+        truncated
+    } else {
+        collapsed
+    }
+}
+
+struct ModuleAggregate {
+    name: String,
+    layer: String,
+    imports: BTreeSet<String>,
+    exports: BTreeSet<String>,
+    submodules: BTreeSet<String>,
+}
+
+impl ModuleAggregate {
+    fn new(name: String, layer: String) -> Self {
+        Self {
+            name: if name.is_empty() {
+                "unknown".to_string()
+            } else {
+                name
+            },
+            layer,
+            imports: BTreeSet::new(),
+            exports: BTreeSet::new(),
+            submodules: BTreeSet::new(),
+        }
+    }
+}
+
+#[derive(Clone)]
+struct ModuleIssue {
+    parent_file: PathBuf,
+    module: String,
+    line: usize,
+    details: Vec<PathBuf>,
+    note: String,
+    kind: ModuleIssueKind,
+}
+
+#[derive(Clone, Copy)]
+enum ModuleIssueKind {
+    MissingModuleFile,
+    MissingPathAttr,
+    AmbiguousModulePaths,
+    PathOutsideRoot,
+}
+
+fn extract_path_attr(line: &str) -> Option<String> {
+    if !line.trim_start().starts_with("#[path") {
+        return None;
+    }
+    let start = line.find('"')?;
+    let rest = &line[start + 1..];
+    let end = rest.find('"')?;
+    Some(rest[..end].to_string())
+}
+
+fn parse_mod_decl(line: &str) -> Option<String> {
+    let mut rest = line.trim_start();
+    if rest.starts_with("pub ") {
+        rest = rest.trim_start_matches("pub ").trim_start();
+    } else if rest.starts_with("pub(") {
+        let end = rest.find(')')?;
+        rest = rest[end + 1..].trim_start();
+    }
+    if !rest.starts_with("mod ") {
+        return None;
+    }
+    rest = rest.trim_start_matches("mod ").trim_start();
+    let name: String = rest
+        .chars()
+        .take_while(|c| c.is_alphanumeric() || *c == '_')
+        .collect();
+    if name.is_empty() {
+        return None;
+    }
+    let semicolon = rest.find(';');
+    let brace = rest.find('{');
+    if brace.is_some() && (semicolon.is_none() || brace.unwrap() < semicolon.unwrap()) {
+        return None;
+    }
+    if semicolon.is_none() {
+        return None;
+    }
+    Some(name)
+}
+
+fn resolve_path_attr(parent_dir: &Path, attr: &str) -> PathBuf {
+    let candidate = PathBuf::from(attr);
+    if candidate.is_absolute() {
+        candidate
+    } else {
+        parent_dir.join(candidate)
+    }
+}
+
+fn format_paths(paths: &[PathBuf]) -> String {
+    let mut items = paths
+        .iter()
+        .map(|p| compress_path(p.to_string_lossy().as_ref()))
+        .collect::<Vec<_>>();
+    items.sort();
+    items.join(", ")
+}
+
+fn issue_plan_summary(issue: &ModuleIssue) -> String {
+    match issue.kind {
+        ModuleIssueKind::MissingModuleFile => {
+            "review_only. options: keep_as_is | add_mod_declaration | add_module_file".to_string()
+        }
+        ModuleIssueKind::MissingPathAttr => {
+            "review_only. options: keep_as_is | update_path_attr | remove_mod_decl".to_string()
+        }
+        ModuleIssueKind::AmbiguousModulePaths => {
+            "review_only. options: keep_as_is | choose_flat_file | choose_nested_mod".to_string()
+        }
+        ModuleIssueKind::PathOutsideRoot => {
+            "review_only. options: keep_as_is | relocate_module | update_path_attr".to_string()
+        }
+    }
+}
+
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+enum TestIssueKind {
+    TestsWithoutCfg,
+    CfgTestsInNonLeaf,
+    IntegrationUsesCratePath,
+    IntegrationUsesSuper,
+}
+
+impl TestIssueKind {
+    fn label(self) -> &'static str {
+        match self {
+            TestIssueKind::TestsWithoutCfg => "Inline tests missing #[cfg(test)]",
+            TestIssueKind::CfgTestsInNonLeaf => "cfg(test) in non-leaf module",
+            TestIssueKind::IntegrationUsesCratePath => "Integration tests using crate::",
+            TestIssueKind::IntegrationUsesSuper => "Integration tests using super::",
+        }
+    }
+}
+
+struct TestTopologyIssue {
+    file: PathBuf,
+    line: usize,
+    kind: TestIssueKind,
+    note: String,
+}
+
+fn has_cfg_test_attr(attrs: &[String]) -> bool {
+    attrs.iter().any(|attr| attr.contains("cfg(test)"))
+}
+
+fn is_mod_tests_decl(line: &str) -> bool {
+    let trimmed = line.trim_start();
+    if trimmed.starts_with("mod tests") {
+        return trimmed.contains(';') || trimmed.contains('{');
+    }
+    if trimmed.starts_with("pub mod tests") {
+        return trimmed.contains(';') || trimmed.contains('{');
+    }
+    false
+}
+
+fn gather_test_files(root_path: &Path) -> Vec<PathBuf> {
+    let tests_dir = root_path.join("tests");
+    if !tests_dir.is_dir() {
+        return Vec::new();
+    }
+    WalkDir::new(&tests_dir)
+        .into_iter()
+        .filter_map(|entry| entry.ok())
+        .filter(|entry| entry.path().extension().map_or(false, |ext| ext == "rs"))
+        .map(|entry| entry.into_path())
+        .collect()
+}
+
+struct WarningLocation {
+    file: PathBuf,
+    line: usize,
+}
+
+struct WarningEntry {
+    message: String,
+    location: Option<WarningLocation>,
+}
+
+fn parse_cargo_warnings(content: &str) -> Vec<WarningEntry> {
+    let mut warnings = Vec::new();
+    let mut pending_message: Option<String> = None;
+
+    for line in content.lines() {
+        let trimmed = line.trim_start();
+        if let Some(msg) = trimmed.strip_prefix("warning:") {
+            let message = msg.trim().to_string();
+            pending_message = Some(message);
+            continue;
+        }
+
+        if let Some(rest) = trimmed.strip_prefix("-->") {
+            if let Some(message) = pending_message.take() {
+                if let Some(location) = parse_location(rest.trim()) {
+                    warnings.push(WarningEntry {
+                        message,
+                        location: Some(location),
+                    });
+                } else {
+                    warnings.push(WarningEntry {
+                        message,
+                        location: None,
+                    });
+                }
+            }
+            continue;
+        }
+
+        if trimmed.is_empty() && pending_message.is_some() {
+            let message = pending_message.take().unwrap_or_default();
+            warnings.push(WarningEntry {
+                message,
+                location: None,
+            });
+        }
+    }
+
+    if let Some(message) = pending_message.take() {
+        warnings.push(WarningEntry {
+            message,
+            location: None,
+        });
+    }
+
+    warnings
+}
+
+fn parse_location(raw: &str) -> Option<WarningLocation> {
+    let parts: Vec<&str> = raw.split(':').collect();
+    if parts.len() < 3 {
+        return None;
+    }
+    let file = parts[0].trim();
+    let line = parts[1].trim().parse::<usize>().ok()?;
+    Some(WarningLocation {
+        file: PathBuf::from(file),
+        line,
+    })
+}
+
+fn normalize_use_stmt(stmt: &str) -> String {
+    let collapsed = stmt.replace('\n', " ");
+    let mut cleaned = collapsed.split_whitespace().collect::<Vec<_>>().join(" ");
+    if let Some(idx) = cleaned.find(';') {
+        cleaned.truncate(idx);
+    }
+    cleaned = cleaned.trim().to_string();
+    if cleaned.starts_with("pub") {
+        if let Some(pos) = cleaned.find(' ') {
+            cleaned = cleaned[pos + 1..].trim().to_string();
+        }
+    }
+    if let Some(stripped) = cleaned.strip_prefix("use ") {
+        cleaned = stripped.trim().to_string();
+    }
+    cleaned
+}
+
+fn sanitize_mermaid_id(input: &str) -> String {
+    input
+        .chars()
+        .map(|c| if c.is_ascii_alphanumeric() { c } else { '_' })
+        .collect()
+}
+
+fn sanitize_mermaid_label(label: &str) -> String {
+    label.replace('"', "'").replace('`', "'")
+}
+
+pub fn compress_path(path: &str) -> String {
+    // Find MMSB in the path and return everything from there
+    if let Some(idx) = path.find("/MMSB/") {
+        return format!("MMSB{}", &path[idx + 5..]);
+    }
+    // If already starts with MMSB/, return as-is
+    if path.starts_with("MMSB/") {
+        return path.to_string();
+    }
+    // Fallback: try to find src/ or other common markers
+    if let Some(idx) = path.rfind("/src/") {
+        return format!("MMSB/src{}", &path[idx + 4..]);
+    }
+    // Last resort: return original
+    path.to_string()
+}
+
+pub fn collect_directory_files(directory: &DirectoryAnalysis, out: &mut Vec<PathBuf>) {
+    out.extend(directory.files.iter().cloned());
+    for sub in &directory.subdirectories {
+        collect_directory_files(sub, out);
+    }
+}
+
+pub fn path_common_prefix_len(a: &Path, b: &Path) -> isize {
+    let mut count = 0isize;
+    for (a_comp, b_comp) in a.components().zip(b.components()) {
+        if a_comp == b_comp {
+            count += 1;
+        } else {
+            break;
+        }
+    }
+    count
+}
+
+pub fn compute_move_metrics(
+    placement: &FunctionPlacement,
+) -> (usize, usize, usize, usize, Vec<PathBuf>, Vec<PathBuf>) {
+    let incoming_calls = placement
+        .call_analysis
+        .calls_from_other_files
+        .iter()
+        .map(|(_, count)| *count)
+        .sum::<usize>();
+    let callers = placement.call_analysis.calls_from_other_files.len();
+    let mut touched = BTreeSet::new();
+    touched.insert(placement.current_file.clone());
+    let mut outgoing_files = Vec::new();
+    for (path, _) in &placement.call_analysis.inter_file_calls {
+        touched.insert(path.clone());
+        outgoing_files.push(path.clone());
+    }
+    let mut caller_files = Vec::new();
+    for (path, _) in &placement.call_analysis.calls_from_other_files {
+        touched.insert(path.clone());
+        caller_files.push(path.clone());
+    }
+    let cost = touched.len().max(1);
+    let benefit = 1 + callers;
+    (incoming_calls, benefit, cost, callers, caller_files, outgoing_files)
+}
+
+pub fn generate_canonical_name(path: &Path, number: usize) -> String {
+    let stem = path
+        .file_stem()
+        .and_then(|s| s.to_str())
+        .unwrap_or("unknown");
+    let ext = path
+        .extension()
+        .and_then(|s| s.to_str())
+        .unwrap_or("");
+    let clean_stem = strip_numeric_prefix(stem);
+    if ext.is_empty() {
+        format!("{:03}_{}", number, clean_stem)
+    } else {
+        format!("{:03}_{}.{}", number, clean_stem, ext)
+    }
+}
+
+pub fn collect_directory_moves(
+    ordering: &crate::types::FileOrderingResult,
+    root_path: &Path,
+) -> Vec<crate::file_ordering::DirectoryMove> {
+    let mut moves = Vec::new();
+    let mut by_parent: BTreeMap<PathBuf, Vec<PathBuf>> = BTreeMap::new();
+    let src_dir = root_path.join("src");
+
+    for dir in &ordering.ordered_directories {
+        if dir == root_path {
+            continue;
+        }
+        if dir == &src_dir {
+            continue;
+        }
+        if let Some(parent) = dir.parent() {
+            by_parent
+                .entry(parent.to_path_buf())
+                .or_default()
+                .push(dir.clone());
+        }
+    }
+
+    for (parent, mut dirs) in by_parent {
+        dirs.sort_by(|a, b| crate::cluster_008::compare_dir_layers(a, b));
+        for (idx, dir) in dirs.iter().enumerate() {
+            let Some(name) = dir.file_name().and_then(|n| n.to_str()) else {
+                continue;
+            };
+            let clean = strip_numeric_prefix(name);
+            let suggested = format!("{:03}_{}", idx * 10, clean);
+            if name == suggested {
+                continue;
+            }
+            let to = parent.join(&suggested);
+            moves.push(crate::file_ordering::DirectoryMove {
+                from: dir.clone(),
+                to,
+            });
+        }
+    }
+
+    moves
+}
+
+pub fn write_structural_batches(content: &mut String, items: &[PlanItem]) {
+    if items.is_empty() {
+        return;
+    }
+
+    let mut ordered_targets = Vec::new();
+    let mut batches: HashMap<PathBuf, Vec<&PlanItem>> = HashMap::new();
+    for item in items {
+        let Some(target) = &item.target_file else {
+            continue;
+        };
+        let entry = batches.entry(target.clone()).or_default();
+        if entry.is_empty() {
+            ordered_targets.push(target.clone());
+        }
+        entry.push(item);
+    }
+
+    content.push_str("### Phase 3 Batches\n\n");
+    content.push_str("Action: execute batches in order and verify after each batch.\n");
+    content.push_str("Note: each batch targets one destination module.\n\n");
+    for (idx, target) in ordered_targets.iter().enumerate() {
+        let empty: Vec<&PlanItem> = Vec::new();
+        let items = batches.get(target).unwrap_or(&empty);
+        content.push_str(&format!(
+            "#### Batch {}: target `{}`\n\n",
+            idx + 1,
+            compress_path(target.to_string_lossy().as_ref())
+        ));
+        content.push_str("Action: move the listed functions into the target module.\n");
+        content.push_str("Note: use the rg commands to locate definitions and callers.\n\n");
+        let mut commands: Vec<String> = Vec::new();
+        if !target.exists() {
+            let target_label = compress_path(target.to_string_lossy().as_ref());
+            content.push_str(&format!(
+                "- Create target file: `{}`\n",
+                target_label
+            ));
+            commands.push(format!("touch \"{}\"", target.to_string_lossy()));
+        }
+        for item in items {
+            let name = item.name.as_deref().unwrap_or("function");
+            let current = item
+                .current_file
+                .as_ref()
+                .map(|p| compress_path(p.to_string_lossy().as_ref()))
+                .unwrap_or_else(|| "-".to_string());
+            let ratio = if item.cost == 0 {
+                0.0
+            } else {
+                item.benefit as f64 / item.cost as f64
+            };
+            let caller_hint = if item.callers == 0 {
+                "no external callers".to_string()
+            } else {
+                format!("update {} caller files", item.callers)
+            };
+            content.push_str(&format!(
+                "- Move `{}` from `{}` (impact {}, benefit/cost {:.2}, touches {} files; {})\n",
+                name,
+                current,
+                item.impact_weight,
+                ratio,
+                item.cost,
+                caller_hint
+            ));
+            if let Some(current_file) = &item.current_file {
+                commands.push(format!(
+                    "rg -n \"{}\" \"{}\"",
+                    name,
+                    current_file.to_string_lossy()
+                ));
+            }
+            let mut callers = item.caller_files.clone();
+            callers.sort();
+            callers.dedup();
+            if !callers.is_empty() {
+                content.push_str("- Update imports in:\n");
+                for caller in callers {
+                    content.push_str(&format!(
+                        "  - `{}`\n",
+                        compress_path(caller.to_string_lossy().as_ref())
+                    ));
+                    commands.push(format!(
+                        "rg -n \"{}\" \"{}\"",
+                        name,
+                        caller.to_string_lossy()
+                    ));
+                }
+            }
+        }
+        content.push_str("- Verification gate: `cargo test`\n");
+        if !commands.is_empty() {
+            content.push_str("\n```bash\n");
+            for command in commands {
+                content.push_str(&format!("{}\n", command));
+            }
+            content.push_str("```\n");
+        }
+        content.push('\n');
+    }
+}
+
+pub fn write_cluster_batches(content: &mut String, plans: &[ClusterPlan], root_path: &Path) {
+    if plans.is_empty() {
+        return;
+    }
+    content.push_str("### Phase 2 Batches\n\n");
+    content.push_str("Action: execute batches in order and verify after each batch.\n");
+    content.push_str("Note: each batch creates or fills a cluster file.\n\n");
+    for (idx, plan) in plans.iter().enumerate() {
+        content.push_str(&format!(
+            "#### Batch {}: target `{}`\n\n",
+            idx + 1,
+            compress_path(plan.target.to_string_lossy().as_ref())
+        ));
+        content.push_str("Action: move the listed functions into the target module.\n");
+        content.push_str("Note: use the rg commands to locate definitions and callers.\n\n");
+        let mut commands = Vec::new();
+        if !plan.target.exists() {
+            content.push_str(&format!(
+                "- Create target file: `{}`\n",
+                compress_path(plan.target.to_string_lossy().as_ref())
+            ));
+            commands.push(format!("touch \"{}\"", plan.target.to_string_lossy()));
+        }
+        content.push_str(&format!(
+            "- Cluster cohesion {:.2}, {} functions\n",
+            plan.cohesion,
+            plan.members.len()
+        ));
+        for member in &plan.members {
+            let file = compress_path(member.file.to_string_lossy().as_ref());
+            content.push_str(&format!("- Move `{}` from `{}`\n", member.name, file));
+            commands.push(format!(
+                "rg -n \"{}\" \"{}\"",
+                member.name,
+                member.file.to_string_lossy()
+            ));
+            commands.push(format!(
+                "rg -n \"{}\" \"{}\"",
+                member.name,
+                root_path.to_string_lossy()
+            ));
+        }
+        content.push_str("- Verification gate: `cargo test`\n");
+        if !commands.is_empty() {
+            content.push_str("\n```bash\n");
+            for command in commands {
+                content.push_str(&format!("{}\n", command));
+            }
+            content.push_str("```\n");
+        }
+        content.push('\n');
+    }
+}
+
+pub fn resolve_required_layer_path(
+    required_layer: &str,
+    current_file: &Path,
+    directory: &DirectoryAnalysis,
+    root_path: &Path,
+) -> PathBuf {
+    let mut files = Vec::new();
+    collect_directory_files(directory, &mut files);
+    let candidates = files
+        .into_iter()
+        .filter(|path| {
+            path.file_name()
+                .and_then(|name| name.to_str())
+                .map(|name| name == required_layer)
+                .unwrap_or(false)
+        })
+        .collect::<Vec<_>>();
+    if candidates.is_empty() {
+        return current_file
+            .parent()
+            .unwrap_or(root_path)
+            .join(required_layer);
+    }
+
+    let current_dir = current_file.parent().unwrap_or(root_path);
+    let mut best = None;
+    let mut best_score = -1isize;
+    for candidate in candidates {
+        let candidate_dir = candidate.parent().unwrap_or(root_path);
+        let score = path_common_prefix_len(current_dir, candidate_dir);
+        let length = candidate.components().count() as isize;
+        let combined = score * 1000 - length;
+        if combined > best_score {
+            best_score = combined;
+            best = Some(candidate);
+        }
+    }
+    best.unwrap_or_else(|| {
+        current_file
+            .parent()
+            .unwrap_or(root_path)
+            .join(required_layer)
+    })
+}
+
+pub fn collect_move_items(
+    placements: &[FunctionPlacement],
+    utility_names: &BTreeSet<String>,
+    directory: &DirectoryAnalysis,
+    root_path: &Path,
+) -> Vec<PlanItem> {
+    let mut items = Vec::new();
+    for placement in placements {
+        match &placement.placement_status {
+            PlacementStatus::ShouldMove { reason, impact } => {
+                let priority = if *impact >= 0.5 {
+                    Priority::Critical
+                } else if *impact >= 0.2 {
+                    Priority::High
+                } else if *impact >= 0.1 {
+                    Priority::Medium
+                } else {
+                    Priority::Low
+                };
+                let (impact_weight, benefit, cost, callers, caller_files, outgoing_files) =
+                    compute_move_metrics(placement);
+                let to = placement
+                    .suggested_file
+                    .as_ref()
+                    .map(|p| compress_path(p.to_string_lossy().as_ref()))
+                    .unwrap_or_else(|| "-".to_string());
+                items.push(PlanItem {
+                    kind: ActionKind::Cohesion,
+                    priority,
+                    description: format!(
+                        "`{}` from `{}` to `{}`: {} (impact {:.2})",
+                        placement.name,
+                        compress_path(placement.current_file.to_string_lossy().as_ref()),
+                        to,
+                        reason,
+                        impact
+                    ),
+                    command: String::new(),
+                    current_layer: None,
+                    required_layer: None,
+                    is_utility: utility_names.contains(&placement.name),
+                    impact_weight,
+                    benefit,
+                    cost,
+                    callers,
+                    caller_files,
+                    current_file: Some(placement.current_file.clone()),
+                    target_file: placement.suggested_file.clone(),
+                    outgoing_files,
+                    name: Some(placement.name.clone()),
+                    cluster_cohesion: 0.0,
+                    member_count: 0,
+                });
+            }
+            PlacementStatus::LayerViolation {
+                current_layer,
+                required_layer,
+            } => {
+                let target_path = resolve_required_layer_path(
+                    required_layer,
+                    &placement.current_file,
+                    directory,
+                    root_path,
+                );
+                let to = compress_path(target_path.to_string_lossy().as_ref());
+                let (impact_weight, benefit, cost, callers, caller_files, outgoing_files) =
+                    compute_move_metrics(placement);
+                items.push(PlanItem {
+                    kind: ActionKind::Structural,
+                    priority: Priority::Critical,
+                    description: format!(
+                        "`{}` from `{}` to `{}`: layer violation {} -> {}",
+                        placement.name,
+                        compress_path(placement.current_file.to_string_lossy().as_ref()),
+                        to,
+                        current_layer,
+                        required_layer
+                    ),
+                    command: String::new(),
+                    current_layer: Some(current_layer.clone()),
+                    required_layer: Some(required_layer.clone()),
+                    is_utility: utility_names.contains(&placement.name),
+                    impact_weight,
+                    benefit,
+                    cost,
+                    callers,
+                    caller_files,
+                    current_file: Some(placement.current_file.clone()),
+                    target_file: Some(target_path),
+                    outgoing_files,
+                    name: Some(placement.name.clone()),
+                    cluster_cohesion: 0.0,
+                    member_count: 0,
+                });
+            }
+            _ => {}
+        }
+    }
+    items
+}

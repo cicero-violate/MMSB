@@ -1,0 +1,3599 @@
+{
+  "timestamp": "2026-01-01T02:49:49.754396975-05:00",
+  "summary": {
+    "unreachable": 103,
+    "reachable_unused": 214,
+    "test_only": 81,
+    "latent_planned": 0,
+    "total_analyzed": 398
+  },
+  "items": [
+    {
+      "symbol": "generate_artifact",
+      "file": "src/admission_composition_artifact.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "write_artifact",
+      "file": "src/admission_composition_artifact.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "read_artifact",
+      "file": "src/admission_composition_artifact.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "project_invariants_touched",
+      "file": "src/admission_composition_artifact.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "project_conflict_reason",
+      "file": "src/admission_composition_artifact.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "project_state",
+      "file": "src/admission_composition_artifact.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "create_test_signature",
+      "file": "src/admission_composition_artifact.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_admissible_batch_artifact",
+      "file": "src/admission_composition_artifact.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_inadmissible_batch_artifact",
+      "file": "src/admission_composition_artifact.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_determinism",
+      "file": "src/admission_composition_artifact.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "admit_batch",
+      "file": "src/batch_admission.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Defined in test-only module"
+    },
+    {
+      "symbol": "create_test_signature",
+      "file": "src/batch_admission.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_admissible_batch",
+      "file": "src/batch_admission.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_inadmissible_batch",
+      "file": "src/batch_admission.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "compose_batch",
+      "file": "src/composition_rule.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "check_conflicts",
+      "file": "src/composition_rule.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "compose_into_state",
+      "file": "src/composition_rule.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "collect_invariants_touched",
+      "file": "src/composition_rule.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "create_test_signature",
+      "file": "src/composition_rule.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_empty_batch_is_admissible",
+      "file": "src/composition_rule.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_single_action_is_admissible",
+      "file": "src/composition_rule.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_non_overlapping_actions_are_admissible",
+      "file": "src/composition_rule.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_file_write_conflict_aborts",
+      "file": "src/composition_rule.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_invariant_overlap_aborts",
+      "file": "src/composition_rule.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_read_after_write_aborts",
+      "file": "src/composition_rule.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_order_sensitivity",
+      "file": "src/composition_rule.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_executor_surface_accumulation",
+      "file": "src/composition_rule.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_abort_happens_at_first_conflict",
+      "file": "src/composition_rule.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_signature_validation",
+      "file": "src/effect_signature_schema.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_signature_conflict_detection",
+      "file": "src/effect_signature_schema.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "create_test_signature",
+      "file": "src/effect_signature_schema.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "build_directory_entry_map",
+      "file": "src/000_dependency_analysis.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "collect_naming_warnings",
+      "file": "src/000_dependency_analysis.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "temp_dir",
+      "file": "src/000_dependency_analysis.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "detects_cycles",
+      "file": "src/000_dependency_analysis.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Defined in test-only module"
+    },
+    {
+      "symbol": "generates_canonical_names_and_violations",
+      "file": "src/000_dependency_analysis.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Defined in test-only module"
+    },
+    {
+      "symbol": "topo_sort_orders_dependencies",
+      "file": "src/000_dependency_analysis.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "layer_constrained_sort",
+      "file": "src/000_dependency_analysis.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "topo_sort_within",
+      "file": "src/000_dependency_analysis.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "detect_layer",
+      "file": "src/000_dependency_analysis.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "rust_entry_paths",
+      "file": "src/000_dependency_analysis.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "collect_rust_dependencies",
+      "file": "src/000_dependency_analysis.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "collect_roots_from_crate",
+      "file": "src/000_dependency_analysis.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "order_rust_files_by_dependency",
+      "file": "src/000_dependency_analysis.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "collect_julia_dependencies",
+      "file": "src/000_dependency_analysis.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "julia_entry_paths",
+      "file": "src/000_dependency_analysis.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "build_file_layers",
+      "file": "src/000_dependency_analysis.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "gather_julia_files",
+      "file": "src/000_dependency_analysis.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "topological_sort",
+      "file": "src/000_dependency_analysis.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "ordered_by_name",
+      "file": "src/000_dependency_analysis.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "build_entries",
+      "file": "src/000_dependency_analysis.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "analyze_file_ordering",
+      "file": "src/000_dependency_analysis.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "naming_score_for_file",
+      "file": "src/000_dependency_analysis.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "detect_cycles",
+      "file": "src/000_dependency_analysis.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "detect_violations",
+      "file": "src/000_dependency_analysis.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "export_complete_program_dot",
+      "file": "src/000_dependency_analysis.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "escape_dot",
+      "file": "src/000_dependency_analysis.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "test_detects_cycles",
+      "file": "src/000_dependency_analysis.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_generates_canonical_names_and_violations",
+      "file": "src/000_dependency_analysis.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "order_julia_files_by_dependency",
+      "file": "src/000_dependency_analysis.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "run_analysis",
+      "file": "src/000_dependency_analysis.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "build_result",
+      "file": "src/010_layer_utilities.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "adjacency_from_edges",
+      "file": "src/010_layer_utilities.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "topo_sort",
+      "file": "src/010_layer_utilities.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "layer_rank_map",
+      "file": "src/010_layer_utilities.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "insert_sorted",
+      "file": "src/010_layer_utilities.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "is_mmsb_main",
+      "file": "src/010_layer_utilities.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "is_layer_violation",
+      "file": "src/010_layer_utilities.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "layer_prefix_value",
+      "file": "src/010_layer_utilities.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "compare_dir_layers",
+      "file": "src/010_layer_utilities.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "compare_path_components",
+      "file": "src/010_layer_utilities.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "layer_adheres",
+      "file": "src/010_layer_utilities.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "structural_layer_value",
+      "file": "src/010_layer_utilities.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "detect_layer_violations",
+      "file": "src/010_layer_utilities.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Defined in test-only module"
+    },
+    {
+      "symbol": "detect_layer_violation",
+      "file": "src/010_layer_utilities.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "parse_cluster_members",
+      "file": "src/010_layer_utilities.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "is_core_module_path",
+      "file": "src/010_layer_utilities.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "cluster_target_path",
+      "file": "src/010_layer_utilities.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "collect_cluster_plans",
+      "file": "src/010_layer_utilities.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "node_style",
+      "file": "src/010_layer_utilities.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "cyclomatic_complexity",
+      "file": "src/010_layer_utilities.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "structural_cmp",
+      "file": "src/010_layer_utilities.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "sort_structural_items",
+      "file": "src/010_layer_utilities.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "gather_rust_files",
+      "file": "src/020_gather_rust_files.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "test_confidence_from_strength",
+      "file": "src/030_invariant_types.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_is_blocking",
+      "file": "src/030_invariant_types.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_stats_calculation",
+      "file": "src/030_invariant_types.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "is_cfg_test_item",
+      "file": "src/030_is_cfg_test_item.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "classify_symbol",
+      "file": "src/040_classify_symbol.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "from_invariant",
+      "file": "src/040_refactor_constraints.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Defined in test-only module"
+    },
+    {
+      "symbol": "check_move_allowed",
+      "file": "src/040_refactor_constraints.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Defined in test-only module"
+    },
+    {
+      "symbol": "generate_constraints",
+      "file": "src/040_refactor_constraints.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "test_from_invariant_layer_fixed",
+      "file": "src/040_refactor_constraints.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_check_move_allowed_blocking",
+      "file": "src/040_refactor_constraints.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_check_move_allowed_non_blocking",
+      "file": "src/040_refactor_constraints.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_constraint_is_blocking",
+      "file": "src/040_refactor_constraints.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_check_move_allowed",
+      "file": "src/040_refactor_constraints.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_scc_compression_dag",
+      "file": "src/050_scc_compressor.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_scc_compression_cycle",
+      "file": "src/050_scc_compressor.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_scc_compression_mixed",
+      "file": "src/050_scc_compressor.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "normalize_module_name",
+      "file": "src/060_module_resolution.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "resolve_module",
+      "file": "src/060_module_resolution.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "contains_tools",
+      "file": "src/060_module_resolution.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "build_module_root_map",
+      "file": "src/060_module_resolution.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "extract_rust_dependencies",
+      "file": "src/060_module_resolution.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "extract_julia_dependencies",
+      "file": "src/060_module_resolution.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "resolve_module_name",
+      "file": "src/060_module_resolution.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "build_dependency_map",
+      "file": "src/060_module_resolution.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "extract_dependencies",
+      "file": "src/060_module_resolution.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "infer_layers",
+      "file": "src/070_layer_inference.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Defined in test-only module"
+    },
+    {
+      "symbol": "detect_layer_violations",
+      "file": "src/070_layer_inference.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Defined in test-only module"
+    },
+    {
+      "symbol": "test_layer_inference_simple_dag",
+      "file": "src/070_layer_inference.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_layer_inference_diamond",
+      "file": "src/070_layer_inference.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_detect_layer_violations_none",
+      "file": "src/070_layer_inference.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "build_module_map",
+      "file": "src/080_cluster_011.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "resolve_path",
+      "file": "src/080_cluster_011.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "build_directory_dag",
+      "file": "src/080_cluster_011.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "build_file_dependency_graph",
+      "file": "src/080_cluster_011.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "export_program_cfg_to_path",
+      "file": "src/080_cluster_011.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "build_file_dag",
+      "file": "src/080_cluster_011.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "propagate_to_fixpoint",
+      "file": "src/090_fixpoint_solver.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Defined in test-only module"
+    },
+    {
+      "symbol": "test_symbolic_abstraction_merge",
+      "file": "src/090_fixpoint_solver.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_fixpoint_simple",
+      "file": "src/090_fixpoint_solver.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_fixpoint_convergence",
+      "file": "src/090_fixpoint_solver.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "collect_roots",
+      "file": "src/100_dependency.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "test_detect_leaf_root",
+      "file": "src/110_structural_detector.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_detect_degree_stable",
+      "file": "src/110_structural_detector.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_all_structural_invariants_proven",
+      "file": "src/110_structural_detector.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "layer_prefix_value",
+      "file": "src/120_cluster_006.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "order_directories",
+      "file": "src/120_cluster_006.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "common_root",
+      "file": "src/120_cluster_006.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "strip_numeric_prefix",
+      "file": "src/120_cluster_006.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "compute_cohesion_score",
+      "file": "src/120_cluster_006.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "make_function",
+      "file": "src/130_semantic_detector.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_detect_type_stable",
+      "file": "src/130_semantic_detector.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_detect_pure_function_heuristic",
+      "file": "src/130_semantic_detector.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_detect_idempotent_heuristic",
+      "file": "src/130_semantic_detector.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_no_pure_for_mutable",
+      "file": "src/130_semantic_detector.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_path_detector_simple",
+      "file": "src/150_path_detector.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_path_detector_diamond",
+      "file": "src/150_path_detector.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_extract_facts_from_path",
+      "file": "src/150_path_detector.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_path_stats",
+      "file": "src/150_path_detector.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "make_simple_analysis",
+      "file": "src/160_invariant_integrator.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_invariant_detector_creation",
+      "file": "src/160_invariant_integrator.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_detect_all",
+      "file": "src/160_invariant_integrator.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "resolve_source_root",
+      "file": "src/170_layer_utilities.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "allow_analysis_dir",
+      "file": "src/170_layer_utilities.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "main",
+      "file": "src/170_layer_utilities.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "run_dead_code_pipeline",
+      "file": "src/170_layer_utilities.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "generate_invariant_report",
+      "file": "src/180_invariant_reporter.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Defined in test-only module"
+    },
+    {
+      "symbol": "export_json",
+      "file": "src/180_invariant_reporter.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "export_constraints_json",
+      "file": "src/180_invariant_reporter.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "test_generate_report",
+      "file": "src/180_invariant_reporter.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "generate_conscience_map",
+      "file": "src/190_conscience_graph.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "strength_emoji",
+      "file": "src/190_conscience_graph.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "kind_name",
+      "file": "src/190_conscience_graph.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "generate_conscience_stats",
+      "file": "src/190_conscience_graph.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Defined in test-only module"
+    },
+    {
+      "symbol": "make_test_invariant",
+      "file": "src/190_conscience_graph.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_generate_stats",
+      "file": "src/190_conscience_graph.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_strength_emoji",
+      "file": "src/190_conscience_graph.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "extract_layer",
+      "file": "src/200_action_validator.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "validate_action",
+      "file": "src/200_action_validator.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "check_move_allowed",
+      "file": "src/200_action_validator.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Defined in test-only module"
+    },
+    {
+      "symbol": "test_extract_layer",
+      "file": "src/200_action_validator.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_validate_no_move_constraint",
+      "file": "src/200_action_validator.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_validate_layer_fixed_constraint",
+      "file": "src/200_action_validator.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_validate_preserve_signature",
+      "file": "src/200_action_validator.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_validate_allowed_action",
+      "file": "src/200_action_validator.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "make_test_invariant",
+      "file": "src/210_agent_conscience.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_conscience_blocks_invalid_move",
+      "file": "src/210_agent_conscience.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_conscience_allows_valid_action",
+      "file": "src/210_agent_conscience.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_query_allowed_actions",
+      "file": "src/210_agent_conscience.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "test_conscience_stats",
+      "file": "src/210_agent_conscience.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "scan_doc_comments",
+      "file": "src/211_dead_code_doc_comment_scanner.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "parse_mmsb_latent_attr",
+      "file": "src/230_dead_code_attribute_parser.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "scan_file_attributes",
+      "file": "src/230_dead_code_attribute_parser.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "extract_attribute_value",
+      "file": "src/230_dead_code_attribute_parser.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "collect_latent_attrs",
+      "file": "src/230_dead_code_attribute_parser.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "marker_from_str",
+      "file": "src/230_dead_code_attribute_parser.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "scan_intent_tags",
+      "file": "src/230_dead_code_attribute_parser.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "detect_intent_signals",
+      "file": "src/230_dead_code_attribute_parser.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "detect_test_modules",
+      "file": "src/230_dead_code_attribute_parser.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "detect_test_symbols",
+      "file": "src/230_dead_code_attribute_parser.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "collect_functions",
+      "file": "src/250_cohesion_analyzer.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "build_call_edges",
+      "file": "src/250_cohesion_analyzer.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "build_function_layers",
+      "file": "src/250_cohesion_analyzer.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "build_type_maps",
+      "file": "src/250_cohesion_analyzer.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "build_name_map",
+      "file": "src/250_cohesion_analyzer.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "build_call_analysis",
+      "file": "src/250_cohesion_analyzer.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "determine_status",
+      "file": "src/250_cohesion_analyzer.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "suggest_file",
+      "file": "src/250_cohesion_analyzer.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "compute_cluster_cohesion",
+      "file": "src/250_cohesion_analyzer.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "suggest_cluster_file",
+      "file": "src/250_cohesion_analyzer.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "compute_type_coupling",
+      "file": "src/250_cohesion_analyzer.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "extract_identifiers",
+      "file": "src/250_cohesion_analyzer.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "louvain_communities",
+      "file": "src/250_cohesion_analyzer.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "build_undirected_graph",
+      "file": "src/250_cohesion_analyzer.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "is_source_file",
+      "file": "src/260_directory_analyzer.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "should_skip_path",
+      "file": "src/260_directory_analyzer.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "sanitize_identifier",
+      "file": "src/270_control_flow.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "parallel_build_file_dag",
+      "file": "src/280_file_ordering.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "slugify_relative",
+      "file": "src/290_julia_parser.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "resolve_julia_binary",
+      "file": "src/290_julia_parser.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "find_julia_project_dir",
+      "file": "src/290_julia_parser.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "parse_module_name",
+      "file": "src/290_julia_parser.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "parse_struct_name",
+      "file": "src/290_julia_parser.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "relativize_path",
+      "file": "src/290_julia_parser.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "extract_calls_from_lines",
+      "file": "src/290_julia_parser.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "extract_calls_from_text",
+      "file": "src/290_julia_parser.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "is_reserved",
+      "file": "src/290_julia_parser.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "paren_balance",
+      "file": "src/290_julia_parser.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "relativize_path",
+      "file": "src/300_rust_parser.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "expr_snippet",
+      "file": "src/300_rust_parser.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "pat_snippet",
+      "file": "src/300_rust_parser.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "truncate_label",
+      "file": "src/300_rust_parser.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "display_path",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "placement_status_label",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "placement_status_notes",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "collect_rename_items",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "collect_utility_candidates",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "directory_moves_to_plan",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "write_priority_section",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "write_structural_tips",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "write_cluster_tips",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "sort_plan_items",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "sort_cluster_items",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "cluster_priority",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "collect_cluster_items",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "collect_refactor_actions",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "collect_visibility_actions",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "caller_files",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "is_test_file",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "build_correction_metrics",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "load_cargo_warnings",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "parse_dead_code_warnings",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "parse_use_symbols",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "scan_crate_paths",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "collect_symbol_references",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "is_public_function",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "path_matches",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "is_entrypoint_main",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "referenced_elsewhere",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "is_dead_code_candidate",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "filter_orphaned",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "load_report_config",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "collect_size_warnings",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "load_baseline_metrics",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "baseline_deltas",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "write_baseline_metrics",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "collect_directories",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "slugify_path",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "render_mermaid_graph",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "compute_ordering_correctness",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "compute_directory_cohesion",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "prefix_key_from_path",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "slugify_key",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "group_key_cmp",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "function_bucket_label",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "slugify_file_path",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "language_label",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "visibility_label",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "short_signature",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "extract_path_attr",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "parse_mod_decl",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "resolve_path_attr",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "format_paths",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "issue_plan_summary",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "has_cfg_test_attr",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "is_mod_tests_decl",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "gather_test_files",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "parse_cargo_warnings",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "parse_location",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "normalize_use_stmt",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "sanitize_mermaid_id",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "sanitize_mermaid_label",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "compress_path",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "collect_directory_files",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "path_common_prefix_len",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "compute_move_metrics",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "generate_canonical_name",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "collect_directory_moves",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "write_structural_batches",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "write_cluster_batches",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "resolve_required_layer_path",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "collect_move_items",
+      "file": "src/330_markdown_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "main",
+      "file": "src/340_main.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "run_agent_cli",
+      "file": "src/350_agent_cli.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "check_action",
+      "file": "src/350_agent_cli.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "query_function",
+      "file": "src/350_agent_cli.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "list_invariants",
+      "file": "src/350_agent_cli.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "show_stats",
+      "file": "src/350_agent_cli.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "load_invariants",
+      "file": "src/350_agent_cli.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "test_load_invariants_empty",
+      "file": "src/350_agent_cli.rs",
+      "line": 0,
+      "category": "TestOnly",
+      "confidence": "TestReference",
+      "action": "RelocateTests",
+      "reason": "Called only by test symbols"
+    },
+    {
+      "symbol": "detect_latent_markers",
+      "file": "src/380_dead_code_doc_comment_parser.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "merge_doc_intent",
+      "file": "src/380_dead_code_doc_comment_parser.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "extract_doc_markers",
+      "file": "src/380_dead_code_doc_comment_parser.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "item_name",
+      "file": "src/380_dead_code_doc_comment_parser.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "item_attrs",
+      "file": "src/380_dead_code_doc_comment_parser.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "build_call_graph",
+      "file": "src/390_dead_code_call_graph.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "build_reverse_call_graph",
+      "file": "src/390_dead_code_call_graph.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "compute_reachability",
+      "file": "src/390_dead_code_call_graph.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "is_reachable",
+      "file": "src/390_dead_code_call_graph.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "is_test_only",
+      "file": "src/390_dead_code_call_graph.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "check_planned_directory",
+      "file": "src/400_dead_code_intent.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "merge_intent_sources",
+      "file": "src/400_dead_code_intent.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "planned_directory_intent",
+      "file": "src/400_dead_code_intent.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "collect_symbols",
+      "file": "src/400_dead_code_intent.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "find_test_callers",
+      "file": "src/410_dead_code_test_boundaries.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "has_test_attr",
+      "file": "src/410_dead_code_test_boundaries.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "item_attrs",
+      "file": "src/410_dead_code_test_boundaries.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "collect_entrypoints",
+      "file": "src/420_dead_code_entrypoints.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "collect_exports",
+      "file": "src/420_dead_code_entrypoints.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "is_public_api",
+      "file": "src/420_dead_code_entrypoints.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "collect_use_tree_idents",
+      "file": "src/420_dead_code_entrypoints.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "treat_public_as_entrypoint",
+      "file": "src/420_dead_code_entrypoints.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "is_reachable",
+      "file": "src/430_dead_code_classifier.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "assign_confidence",
+      "file": "src/440_dead_code_confidence.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "recommend_action",
+      "file": "src/450_dead_code_actions.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "build_report",
+      "file": "src/470_dead_code_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "write_report",
+      "file": "src/470_dead_code_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "build_basic_report",
+      "file": "src/470_dead_code_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "write_outputs",
+      "file": "src/470_dead_code_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "filter_dead_code_elements",
+      "file": "src/480_dead_code_filter.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "should_exclude_from_analysis",
+      "file": "src/480_dead_code_filter.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "collect_excluded_symbols",
+      "file": "src/480_dead_code_filter.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "merge_intent_map",
+      "file": "src/500_dead_code_cli.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "reason_for_category",
+      "file": "src/500_dead_code_cli.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "is_test_path",
+      "file": "src/500_dead_code_cli.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "load_policy",
+      "file": "src/520_dead_code_policy.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "parse_policy",
+      "file": "src/520_dead_code_policy.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "parse_list",
+      "file": "src/520_dead_code_policy.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "parse_bool",
+      "file": "src/520_dead_code_policy.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "write_summary_markdown",
+      "file": "src/540_dead_code_report_split.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "write_plan_markdown",
+      "file": "src/540_dead_code_report_split.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "top_items",
+      "file": "src/540_dead_code_report_split.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "plan_options",
+      "file": "src/540_dead_code_report_split.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "classify_tier",
+      "file": "src/550_tier_classifier.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "compute_confidence",
+      "file": "src/560_confidence_scorer.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "serialize_correction_plan",
+      "file": "src/620_correction_plan_serializer.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "serialize_scope",
+      "file": "src/620_correction_plan_serializer.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "serialize_check",
+      "file": "src/620_correction_plan_serializer.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "serialize_thresholds",
+      "file": "src/620_correction_plan_serializer.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "serialize_strategy",
+      "file": "src/620_correction_plan_serializer.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "serialize_correction_plans",
+      "file": "src/620_correction_plan_serializer.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "write_intelligence_outputs_at",
+      "file": "src/620_correction_plan_serializer.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "write_intelligence_outputs",
+      "file": "src/620_correction_plan_serializer.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "emit_verification_policy",
+      "file": "src/630_verification_policy_emitter.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "serialize_scope",
+      "file": "src/630_verification_policy_emitter.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "serialize_check",
+      "file": "src/630_verification_policy_emitter.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "serialize_thresholds",
+      "file": "src/630_verification_policy_emitter.rs",
+      "line": 0,
+      "category": "Unreachable",
+      "confidence": "CallGraph",
+      "action": "DeleteSafe",
+      "reason": "No callers reachable from entrypoints"
+    },
+    {
+      "symbol": "build_state",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "filter_path_coherence_report",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "write_admission_preflight_report",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "generate_admission_preflight",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "evaluate_move_admission",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "find_private_dependencies",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "extract_function_block_from_contents",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "extract_identifiers",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "is_identifier_candidate",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "find_function_definition_candidates",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "function_signature_found",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "is_function_signature_line",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "function_in_impl_block",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "is_test_attribute_line",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "is_test_scoped_function",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "filter_visibility_report",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "parse_phase2_cluster_plan",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "generate_phase2_cluster_slice",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "augment_path_coherence_strategies",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "module_name_from_path",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "compute_summary",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "fill_prediction_confidence",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "default_confidence",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "calculate_quality_delta",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "action_function",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "find_element_file",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "symbol_exists",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "move_violates_invariant",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "average_confidence",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "estimate_fix_time",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "action_symbol",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "action_module_path",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "action_refs",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "action_target_layer",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "action_visibility",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "affected_files",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "action_module",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "estimate_verification_time",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "extract_critical_tests",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "find_callers",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "find_reference_files",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "simulate_action",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "predict_violations",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "generate_correction_plan",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "plan_verification_scope",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "build_rollback_criteria",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "estimate_impact",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    },
+    {
+      "symbol": "generate_intelligence_report",
+      "file": "src/640_correction_intelligence_report.rs",
+      "line": 0,
+      "category": "ReachableUnused",
+      "confidence": "Heuristic",
+      "action": "Quarantine",
+      "reason": "Reachable but unused in execution"
+    }
+  ],
+  "metadata": {
+    "analyzer_version": "0.1.0",
+    "project_root": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer",
+    "entrypoints_found": 136
+  }
+}

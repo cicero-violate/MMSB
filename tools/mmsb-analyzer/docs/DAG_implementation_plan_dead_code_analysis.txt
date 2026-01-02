@@ -1,0 +1,497 @@
+# Dead Code Analysis: Implementation Plan (DAG-Ordered)
+
+## Dependency Graph
+
+```
+Layer 0 (Foundations):
+    [A] Data Types
+    [B] Attribute Parser
+    [C] Doc Comment Parser
+
+Layer 1 (Detection):
+    [D] Call Graph Builder      (depends on A)
+    [E] Intent Detector         (depends on A, B, C)
+    [F] Test Boundary Detector  (depends on A)
+    [G] Entrypoint & Export Resolver (depends on A, D, F)
+
+Layer 2 (Classification):
+    [H] Category Classifier     (depends on A, D, E, F, G)
+    [I] Confidence Scorer       (depends on A, D, E, F, G, H)
+
+Layer 3 (Action Planning):
+    [J] Action Recommender      (depends on A, H, I)
+    [K] JSON Report Generator   (depends on A, H, I, J)
+
+Layer 4 (Integration):
+    [L] Pipeline Filter         (depends on A, H)
+    [M] CLI Interface           (depends on A, H, I, J, K)
+    [N] Policy File Support     (depends on A, E, G)
+    [O] Report Splitter (summary vs full) (depends on K)
+
+Layer 5 (Validation):
+    [P] Integration Tests       (depends on all)
+```
+
+## Implementation Order (Topological)
+
+### Phase 1: Foundations (Layer 0)
+
+**Task A: Data Types**
+File: `src/210_dead_code_types.rs`
+Dependencies: None
+Estimated Lines: 150
+
+Data structures:
+```rust
+pub enum DeadCodeCategory {
+    Unreachable,          // U
+    ReachableUnused,      // R
+    TestOnly,             // T
+    LatentPlanned,        // H
+}
+
+pub enum ConfidenceLevel {
+    CallGraph,
+    TestReference,
+    IntentTag,
+    Heuristic,
+}
+
+pub enum RecommendedAction {
+    DeleteSafe,
+    Quarantine,
+    RelocateTests,
+    Keep,
+    ManualReview,
+}
+
+pub struct DeadCodeItem {
+    pub symbol: String,
+    pub file: PathBuf,
+    pub line: usize,
+    pub category: DeadCodeCategory,
+    pub confidence: ConfidenceLevel,
+    pub action: RecommendedAction,
+    pub reason: String,
+}
+
+pub struct DeadCodeReport {
+    pub summary: DeadCodeSummary,
+    pub items: Vec<DeadCodeItem>,
+}
+
+pub struct DeadCodeSummary {
+    pub unreachable: usize,
+    pub reachable_unused: usize,
+    pub test_only: usize,
+    pub latent_planned: usize,
+}
+```
+
+**Task B: Attribute Parser**
+File: `src/211_dead_code_attribute_parser.rs`
+Dependencies: A
+Estimated Lines: 100
+
+Functions:
+- `parse_mmsb_latent_attr(file: &Path) -> HashMap<String, IntentMetadata>`
+- `extract_attribute_value(attr: &syn::Attribute, key: &str) -> Option<String>`
+- `scan_file_attributes(path: &Path) -> Vec<IntentTag>`
+
+**Task C: Doc Comment Parser**
+File: `src/212_dead_code_doc_comment_parser.rs`
+Dependencies: A
+Estimated Lines: 80
+
+Functions:
+- `scan_doc_comments(file: &Path) -> HashMap<String, Vec<IntentMarker>>`
+- `detect_latent_markers(comment: &str) -> Option<IntentMarker>`
+- Patterns: `@latent`, `@planned`, `@future`, `@deprecated-planned`
+
+---
+
+### Phase 2: Detection (Layer 1)
+
+**Task D: Call Graph Builder**
+File: `src/213_dead_code_call_graph.rs`
+Dependencies: A
+Estimated Lines: 200
+
+Functions:
+- `build_call_graph(elements: &[CodeElement]) -> CallGraph`
+- `compute_reachability(graph: &CallGraph, entrypoints: &[String]) -> HashSet<String>`
+- `find_entrypoints(elements: &[CodeElement]) -> Vec<String>`
+- Entrypoint detection: `main`, `#[test]`, `pub fn`, exported symbols
+
+**Task E: Intent Detector**
+File: `src/214_dead_code_intent.rs`
+Dependencies: A, B, C
+Estimated Lines: 120
+
+Functions:
+- `detect_intent_signals(file: &Path) -> HashMap<String, IntentSignal>`
+- `check_planned_directory(path: &Path, policy: &Policy) -> bool`
+- `merge_intent_sources(attrs: IntentMap, docs: IntentMap, dir: DirPolicy) -> IntentMap`
+
+**Task F: Test Boundary Detector**
+File: `src/215_dead_code_test_boundaries.rs`
+Dependencies: A
+Estimated Lines: 100
+
+Functions:
+- `detect_test_modules(file: &Path) -> HashSet<String>`
+- `is_cfg_test_item(item: &syn::Item) -> bool`
+- `find_test_callers(symbol: &str, call_graph: &CallGraph) -> Vec<String>`
+
+**Task G: Entrypoint & Export Resolver**
+File: `src/216_dead_code_entrypoints.rs`
+Dependencies: A, D, F
+Estimated Lines: 140
+
+Functions:
+- `collect_entrypoints(elements: &[CodeElement], policy: &Policy) -> HashSet<String>`
+- `collect_exports(root: &Path) -> HashSet<String>` (includes `pub use` and module exports)
+- `is_public_api(symbol: &str, exports: &HashSet<String>) -> bool`
+
+Entrypoint registry:
+- `main`, `#[test]`, `#[tokio::main]`, `#[proc_macro]`, `#[no_mangle]`
+
+Notes:
+- Establishes the reachability seed set.
+- Public API symbols default to reachable unless explicitly tagged as dead.
+
+---
+
+### Phase 3: Classification (Layer 2)
+
+**Task H: Category Classifier**
+File: `src/217_dead_code_classifier.rs`
+Dependencies: A, D, E, F, G
+Estimated Lines: 150
+
+Core logic:
+```rust
+pub fn classify_symbol(
+    symbol: &str,
+    call_graph: &CallGraph,
+    intent_map: &IntentMap,
+    test_boundaries: &TestBoundaries,
+    entrypoints: &HashSet<String>,
+) -> DeadCodeCategory {
+    // Priority order:
+    // 1. Check intent signals (highest priority)
+    if intent_map.contains_key(symbol) {
+        return DeadCodeCategory::LatentPlanned;
+    }
+    
+    // 2. Check test-only usage
+    if is_test_only(symbol, call_graph, test_boundaries) {
+        return DeadCodeCategory::TestOnly;
+    }
+    
+    // 3. Check reachability
+    if !is_reachable(symbol, call_graph, entrypoints) {
+        return DeadCodeCategory::Unreachable;
+    }
+    
+    // 4. Reachable but never executed (requires coverage)
+    DeadCodeCategory::ReachableUnused
+}
+```
+
+**Task I: Confidence Scorer**
+File: `src/218_dead_code_confidence.rs`
+Dependencies: A, D, E, F, G, H
+Estimated Lines: 80
+
+Functions:
+- `assign_confidence(item: &DeadCodeItem, evidence: &Evidence) -> ConfidenceLevel`
+- Scoring rules:
+  - `IntentTag` if explicit attribute/doc marker
+  - `CallGraph` if topologically proven unreachable
+  - `TestReference` if all callers in test modules
+  - `Heuristic` otherwise
+
+---
+
+### Phase 4: Action Planning (Layer 3)
+
+**Task J: Action Recommender**
+File: `src/219_dead_code_actions.rs`
+Dependencies: A, H, I
+Estimated Lines: 100
+
+Decision tree:
+```rust
+pub fn recommend_action(
+    category: DeadCodeCategory,
+    confidence: ConfidenceLevel,
+    is_public_api: bool,
+) -> RecommendedAction {
+    match (category, confidence) {
+        (Unreachable, CallGraph) if !is_public_api => DeleteSafe,
+        (Unreachable, _) => ManualReview,
+        (ReachableUnused, _) => Quarantine,
+        (TestOnly, _) => RelocateTests,
+        (LatentPlanned, _) => Keep,
+    }
+}
+```
+
+**Task K: JSON Report Generator**
+File: `src/220_dead_code_report.rs`
+Dependencies: A, H, I, J
+Estimated Lines: 120
+
+Output format:
+```json
+{
+  "timestamp": "2025-12-30T23:00:00Z",
+  "summary": {
+    "unreachable": 42,
+    "reachable_unused": 17,
+    "test_only": 8,
+    "latent_planned": 12,
+    "total_analyzed": 1543
+  },
+  "items": [
+    {
+      "symbol": "unused_helper",
+      "file": "src/utils.rs",
+      "line": 245,
+      "category": "unreachable",
+      "confidence": "call_graph",
+      "recommended_action": "delete_safe",
+      "reason": "No callers in call graph; not exported; not in tests"
+    }
+  ],
+  "metadata": {
+    "analyzer_version": "0.1.0",
+    "project_root": "/path/to/project",
+    "entrypoints_found": 15
+  }
+}
+```
+
+---
+
+### Phase 5: Integration (Layer 4)
+
+**Task L: Pipeline Filter**
+File: `src/221_dead_code_filter.rs`
+Dependencies: A, H
+Estimated Lines: 60
+
+Functions:
+- `filter_dead_code(elements: &[CodeElement], report: &DeadCodeReport) -> Vec<CodeElement>`
+- `should_exclude_from_analysis(symbol: &str, category: DeadCodeCategory) -> bool`
+- Integration points:
+  - Cohesion analyzer input filter
+  - Cluster extraction input filter
+  - Layer enforcement input filter
+
+**Task M: CLI Interface**
+File: `src/222_dead_code_cli.rs`
+Dependencies: A, H, I, J, K
+Estimated Lines: 100
+
+CLI flags:
+```
+--dead-code              Run dead code analysis
+--dead-code-json <path>  Export JSON report to path
+--dead-code-filter       Filter dead code from main analysis
+--dead-code-apply        Auto-delete items marked delete_safe (dangerous)
+```
+
+Integration with `070_layer_utilities.rs`:
+```rust
+#[arg(long)]
+dead_code: bool,
+
+#[arg(long)]
+dead_code_json: Option<PathBuf>,
+
+#[arg(long)]
+dead_code_filter: bool,
+```
+
+**Task N: Policy File Support**
+File: `src/223_dead_code_policy.rs`
+Dependencies: A, E, G
+Estimated Lines: 80
+
+Policy file format (`docs/dead_code_policy.toml`):
+```toml
+[intent_directories]
+planned = ["src/planned", "src/experimental"]
+protected = ["src/core", "src/public_api"]
+
+[aging_rules]
+quarantine_days = 90
+warning_days = 30
+
+[protection_scopes]
+prefixes = ["public_", "api_"]
+suffixes = ["_interface", "_contract"]
+```
+
+---
+
+**Task O: Report Splitter (summary vs full)**
+File: `src/224_dead_code_report_split.rs`
+Dependencies: K
+Estimated Lines: 60
+
+Notes:
+- Write `dead_code_summary.md` + `dead_code_full.json`.
+- Summary contains counts + top N items (configurable).
+
+---
+
+### Phase 6: Validation (Layer 5)
+
+**Task P: Integration Tests**
+File: `test/dead_code_test.rs`
+Dependencies: All
+Estimated Lines: 300
+
+Test cases:
+1. **Intent preservation test**:
+   - Code with `#[mmsb_latent]` → category = LatentPlanned
+   - Code with `@latent` doc comment → category = LatentPlanned
+   - Code in `src/planned/` → category = LatentPlanned
+
+2. **Unreachable detection test**:
+   - Function with no callers → category = Unreachable
+   - Function called only by unreachable → category = Unreachable
+   - Public function exported → NOT Unreachable
+
+3. **Test-only detection test**:
+   - Function in `#[cfg(test)]` module → category = TestOnly
+   - Function called only by `#[test]` functions → category = TestOnly
+   - Test helper in production file → category = TestOnly
+
+4. **Confidence test**:
+   - Topologically proven unreachable → confidence = CallGraph
+   - Attribute-tagged latent → confidence = IntentTag
+   - Orphaned heuristic → confidence = Heuristic
+
+5. **Pipeline isolation test**:
+   - Verify dead code excluded from cohesion analysis
+   - Verify dead code excluded from cluster extraction
+   - Verify dead code excluded from layer enforcement
+
+6. **JSON output test**:
+   - Validate schema compliance
+   - Verify summary counts match items
+   - Test machine parseability
+
+---
+
+## Implementation Schedule
+
+**Week 1**: Phase 1 (A, B, C)
+**Week 2**: Phase 2 (D, E, F, G)
+**Week 3**: Phase 3 (H, I)
+**Week 4**: Phase 4 (J, K)
+**Week 5**: Phase 5 (L, M, N, O)
+**Week 6**: Phase 6 (P) + Integration
+
+Total estimated lines: ~1,840
+Total estimated time: 6 weeks
+
+---
+
+## Critical Path
+
+```
+A → D → H → J → K → M → P
+    ↓   ↓   ↓
+A → E → H → L → P
+    ↓   ↓
+A → F → G → H
+```
+
+Longest path: A → D → H → J → K → M → P (7 tasks)
+
+---
+
+## Risk Mitigation
+
+1. **Intent detection accuracy**:
+   - Risk: False negatives destroy latent code
+   - Mitigation: Conservative defaults; manual review for Unreachable
+   - Validation: Test with known latent functions
+
+2. **Call graph completeness**:
+   - Risk: Indirect calls via traits/closures missed
+   - Mitigation: Trait impl scanning; closure capture analysis
+   - Validation: Compare with cargo-unused output
+
+3. **Test boundary accuracy**:
+   - Risk: Test helpers misclassified as production code
+   - Mitigation: Scan for `#[test]`, `#[cfg(test)]`, `tests/` directory
+   - Validation: Manual review of TestOnly category
+
+4. **Pipeline contamination**:
+   - Risk: Downstream analysis still uses dead code
+   - Mitigation: Explicit filter gates in each analyzer
+   - Validation: Verify metrics unchanged with/without filter
+
+5. **Public API false positives**:
+   - Risk: Exported symbols marked Unreachable
+   - Mitigation: Entrypoint/export resolver with re-export scan
+   - Validation: Add tests for `pub use` and crate public modules
+
+---
+
+## Most Intelligent Course of Action
+
+1. Implement entrypoint/export resolution + policy first to define the reachability seed set.
+2. Add intent detection and test-boundary detection to reduce false positives early.
+3. Implement classification + confidence with delete-safe guard (non-public + call_graph only).
+4. Emit JSON report and keep it isolated from refactor plan inputs.
+5. Gate downstream analysis after dead-code report generation (filter by category).
+6. Add integration tests for public API exports, macros, and test-only helpers.
+
+---
+
+## Success Criteria
+
+1. ✅ 100% of code with intent tags → LatentPlanned category
+2. ✅ 0% false positives in DeleteSafe recommendations
+3. ✅ JSON output validates against schema
+4. ✅ Dead code excluded from cohesion/cluster/layer analysis
+5. ✅ CLI flags functional and documented
+6. ✅ Policy file parsing works correctly
+7. ✅ Integration tests pass at 100%
+8. ✅ Public API exports never marked DeleteSafe
+9. ✅ Summary + full reports generated consistently
+
+---
+
+## File Count Summary
+
+New files created: 16
+- 3 foundation files (210-212)
+- 4 detection files (213-216)
+- 2 classification files (217-218)
+- 2 action planning files (219-220)
+- 4 integration files (221-224)
+- 1 test file
+
+Modified files: 3
+- `src/070_layer_utilities.rs` (CLI flags)
+- `src/190_main.rs` (module imports)
+- `src/200_lib.rs` (public exports)
+
+---
+
+## Post-Implementation Tasks
+
+1. Update `docs/Requirements.txt` to mark FR10.* as [x]
+2. Add dead code section to `docs/conscience_map.md`
+3. Create example policy file in `docs/dead_code_policy.toml`
+4. Document CLI usage in README
+5. Add dead code report to xtask workflows
+6. Integrate with CI/CD for automated checks

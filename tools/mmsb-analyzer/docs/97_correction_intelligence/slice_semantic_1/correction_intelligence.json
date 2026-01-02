@@ -1,0 +1,1056 @@
+{
+  "actions_analyzed": 6,
+  "correction_plans": [
+    {
+      "action_id": "move_test_detect_layer_violations_none_to_src/010_cluster_008.rs",
+      "confidence": 1.0,
+      "correction_strategies": [
+        {
+          "function": "test_detect_layer_violations_none",
+          "target_layer": "010_cluster_008.rs",
+          "type": "MoveToLayer"
+        },
+        {
+          "function": "test_detect_layer_violations_none",
+          "target_layer": "010_cluster_008.rs",
+          "type": "EnsureImports"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/010_cluster_008.rs"
+          ],
+          "confidence": 1.0,
+          "severity": "High",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/010_cluster_008.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_test_check_move_allowed_to_src/010_refactor_constraints.rs",
+      "confidence": 1.0,
+      "correction_strategies": [
+        {
+          "function": "test_check_move_allowed",
+          "target_layer": "010_refactor_constraints.rs",
+          "type": "MoveToLayer"
+        },
+        {
+          "function": "test_check_move_allowed",
+          "target_layer": "010_refactor_constraints.rs",
+          "type": "EnsureImports"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/010_refactor_constraints.rs"
+          ],
+          "confidence": 1.0,
+          "severity": "High",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/010_refactor_constraints.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_test_conscience_blocks_invalid_move_to_src/082_conscience_graph.rs",
+      "confidence": 1.0,
+      "correction_strategies": [
+        {
+          "function": "test_conscience_blocks_invalid_move",
+          "target_layer": "082_conscience_graph.rs",
+          "type": "MoveToLayer"
+        },
+        {
+          "function": "test_conscience_blocks_invalid_move",
+          "target_layer": "082_conscience_graph.rs",
+          "type": "EnsureImports"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/082_conscience_graph.rs"
+          ],
+          "confidence": 1.0,
+          "severity": "High",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/082_conscience_graph.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_test_conscience_allows_valid_action_to_src/082_conscience_graph.rs",
+      "confidence": 1.0,
+      "correction_strategies": [
+        {
+          "function": "test_conscience_allows_valid_action",
+          "target_layer": "082_conscience_graph.rs",
+          "type": "MoveToLayer"
+        },
+        {
+          "function": "test_conscience_allows_valid_action",
+          "target_layer": "082_conscience_graph.rs",
+          "type": "EnsureImports"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/082_conscience_graph.rs"
+          ],
+          "confidence": 1.0,
+          "severity": "High",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/082_conscience_graph.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_test_query_allowed_actions_to_src/082_conscience_graph.rs",
+      "confidence": 1.0,
+      "correction_strategies": [
+        {
+          "function": "test_query_allowed_actions",
+          "target_layer": "082_conscience_graph.rs",
+          "type": "MoveToLayer"
+        },
+        {
+          "function": "test_query_allowed_actions",
+          "target_layer": "082_conscience_graph.rs",
+          "type": "EnsureImports"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/082_conscience_graph.rs"
+          ],
+          "confidence": 1.0,
+          "severity": "High",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/082_conscience_graph.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_collect_refactor_actions_to_src/010_cluster_008.rs",
+      "confidence": 1.0,
+      "correction_strategies": [
+        {
+          "function": "collect_refactor_actions",
+          "target_layer": "010_cluster_008.rs",
+          "type": "MoveToLayer"
+        },
+        {
+          "function": "collect_refactor_actions",
+          "target_layer": "010_cluster_008.rs",
+          "type": "EnsureImports"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/010_cluster_008.rs"
+          ],
+          "confidence": 1.0,
+          "severity": "High",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/010_cluster_008.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    }
+  ],
+  "project_root": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer",
+  "quality_deltas": [
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/010_invariant_types.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/020_invariant_types.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/010_refactor_constraints.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/030_refactor_constraints.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/010_scc_compressor.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/040_scc_compressor.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/020_cluster_010.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/050_cluster_010.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/020_layer_inference.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/060_layer_inference.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/030_cluster_011.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/070_cluster_011.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/030_fixpoint_solver.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/080_fixpoint_solver.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/040_dependency.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/090_dependency.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/040_structural_detector.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/100_structural_detector.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/050_cluster_006.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/110_cluster_006.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/050_semantic_detector.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/120_semantic_detector.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/060_layer_core.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/130_layer_core.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/060_path_detector.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/140_path_detector.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/070_invariant_integrator.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/150_invariant_integrator.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/070_layer_utilities.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/160_layer_utilities.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/080_invariant_reporter.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/170_invariant_reporter.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/082_conscience_graph.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/180_conscience_graph.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/083_action_validator.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_action_validator.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/085_agent_conscience.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_agent_conscience.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/090_utilities.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/210_utilities.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/100_types.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/220_types.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/110_cohesion_analyzer.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/230_cohesion_analyzer.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/120_directory_analyzer.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/240_directory_analyzer.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/130_control_flow.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/250_control_flow.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/140_file_ordering.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/260_file_ordering.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/150_julia_parser.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/270_julia_parser.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/160_rust_parser.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/280_rust_parser.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/170_dot_exporter.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/290_dot_exporter.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/170_file_gathering.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/300_file_gathering.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/180_report.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/310_report.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/320_main.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/191_agent_cli.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/330_agent_cli.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/340_lib.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/210_dead_code_types.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/350_dead_code_types.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/211_dead_code_attribute_parser.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/360_dead_code_attribute_parser.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/212_dead_code_doc_comment_parser.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/370_dead_code_doc_comment_parser.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/213_dead_code_call_graph.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/380_dead_code_call_graph.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/214_dead_code_intent.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/390_dead_code_intent.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/215_dead_code_test_boundaries.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/400_dead_code_test_boundaries.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/216_dead_code_entrypoints.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/410_dead_code_entrypoints.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/217_dead_code_classifier.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/420_dead_code_classifier.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/218_dead_code_confidence.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/430_dead_code_confidence.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/219_dead_code_actions.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/440_dead_code_actions.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/220_correction_plan_types.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/450_correction_plan_types.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/220_dead_code_report.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/460_dead_code_report.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/221_dead_code_filter.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/470_dead_code_filter.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/221_verification_policy_types.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/480_verification_policy_types.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/222_dead_code_cli.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/490_dead_code_cli.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/222_quality_delta_types.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/500_quality_delta_types.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/223_dead_code_policy.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/510_dead_code_policy.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/223_violation_predictor.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/520_violation_predictor.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/224_dead_code_report_split.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/530_dead_code_report_split.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/224_tier_classifier.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/540_tier_classifier.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/225_confidence_scorer.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/550_confidence_scorer.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/226_correction_plan_generator.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/560_correction_plan_generator.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/227_verification_scope_planner.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/570_verification_scope_planner.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/228_rollback_criteria_builder.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/580_rollback_criteria_builder.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/229_quality_delta_calculator.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/590_quality_delta_calculator.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/230_action_impact_estimator.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/600_action_impact_estimator.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/231_correction_plan_serializer.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/610_correction_plan_serializer.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/232_verification_policy_emitter.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/620_verification_policy_emitter.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/233_correction_intelligence_report.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/630_correction_intelligence_report.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "create_file_src/226_correction_plan_generator.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "create_file_src/231_correction_plan_serializer.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "create_file_src/216_dead_code_entrypoints.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "create_file_src/213_dead_code_call_graph.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "create_file_src/211_dead_code_attribute_parser.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "create_file_src/010_cluster_008.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "create_file_src/090_utilities.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "create_file_src/000_cluster_001.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "create_file_src/083_action_validator.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "create_file_src/000_cluster_001.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_test_detect_layer_violations_none_to_src/010_cluster_008.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_test_check_move_allowed_to_src/010_refactor_constraints.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_test_conscience_blocks_invalid_move_to_src/082_conscience_graph.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_test_conscience_allows_valid_action_to_src/082_conscience_graph.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_test_query_allowed_actions_to_src/082_conscience_graph.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_collect_refactor_actions_to_src/010_cluster_008.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    }
+  ],
+  "summary": {
+    "average_confidence": 0.6974358974358977,
+    "complex_count": 62,
+    "estimated_total_fix_time_seconds": 1170,
+    "moderate_count": 6,
+    "total_predicted_violations": 78,
+    "trivial_count": 10
+  },
+  "timestamp": "2025-12-31T07:27:59.233164204+00:00",
+  "version": "1.0"
+}

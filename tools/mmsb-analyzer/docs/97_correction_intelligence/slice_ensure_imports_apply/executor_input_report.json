@@ -1,0 +1,148 @@
+{
+  "version": "1.0",
+  "timestamp": "2025-12-31T07:10:25.045480085+00:00",
+  "correction_summary": {
+    "trivial_count": 9,
+    "moderate_count": 3,
+    "complex_count": 63,
+    "total_predicted_violations": 74,
+    "average_confidence": 0.6946666666666671,
+    "estimated_total_fix_time_seconds": 1120
+  },
+  "plans": [
+    {
+      "action_id": "move_detect_test_modules_to_src/211_dead_code_attribute_parser.rs",
+      "tier": "Moderate",
+      "confidence": 1.0,
+      "estimated_fix_time_seconds": 15,
+      "violations": [
+        {
+          "kind": "LayerViolation",
+          "severity": "High",
+          "confidence": 1.0,
+          "affected_files": 1
+        }
+      ],
+      "verification": {
+        "scope": "ModuleLocal",
+        "scope_details": [
+          "module:src/211_dead_code_attribute_parser.rs",
+          "transitive_depth:2"
+        ],
+        "incremental_eligible": false,
+        "estimated_time_seconds": 60
+      },
+      "strategies": [
+        {
+          "kind": "MoveToLayer",
+          "context": null
+        },
+        {
+          "kind": "EnsureImports",
+          "context": null
+        }
+      ]
+    },
+    {
+      "action_id": "move_detect_test_symbols_to_src/211_dead_code_attribute_parser.rs",
+      "tier": "Moderate",
+      "confidence": 1.0,
+      "estimated_fix_time_seconds": 15,
+      "violations": [
+        {
+          "kind": "LayerViolation",
+          "severity": "High",
+          "confidence": 1.0,
+          "affected_files": 1
+        }
+      ],
+      "verification": {
+        "scope": "ModuleLocal",
+        "scope_details": [
+          "module:src/211_dead_code_attribute_parser.rs",
+          "transitive_depth:2"
+        ],
+        "incremental_eligible": false,
+        "estimated_time_seconds": 60
+      },
+      "strategies": [
+        {
+          "kind": "MoveToLayer",
+          "context": null
+        },
+        {
+          "kind": "EnsureImports",
+          "context": null
+        }
+      ]
+    },
+    {
+      "action_id": "move_write_intelligence_outputs_at_to_src/231_correction_plan_serializer.rs",
+      "tier": "Moderate",
+      "confidence": 1.0,
+      "estimated_fix_time_seconds": 15,
+      "violations": [
+        {
+          "kind": "LayerViolation",
+          "severity": "High",
+          "confidence": 1.0,
+          "affected_files": 1
+        }
+      ],
+      "verification": {
+        "scope": "ModuleLocal",
+        "scope_details": [
+          "module:src/231_correction_plan_serializer.rs",
+          "transitive_depth:2"
+        ],
+        "incremental_eligible": false,
+        "estimated_time_seconds": 60
+      },
+      "strategies": [
+        {
+          "kind": "MoveToLayer",
+          "context": null
+        },
+        {
+          "kind": "EnsureImports",
+          "context": null
+        }
+      ]
+    }
+  ],
+  "policies": [
+    {
+      "action_id": "move_detect_test_modules_to_src/211_dead_code_attribute_parser.rs",
+      "scope": "ModuleLocal",
+      "scope_details": [
+        "module:src/211_dead_code_attribute_parser.rs",
+        "transitive_depth:2"
+      ],
+      "incremental": false,
+      "estimated_time_seconds": 60,
+      "checks": 2
+    },
+    {
+      "action_id": "move_detect_test_symbols_to_src/211_dead_code_attribute_parser.rs",
+      "scope": "ModuleLocal",
+      "scope_details": [
+        "module:src/211_dead_code_attribute_parser.rs",
+        "transitive_depth:2"
+      ],
+      "incremental": false,
+      "estimated_time_seconds": 60,
+      "checks": 2
+    },
+    {
+      "action_id": "move_write_intelligence_outputs_at_to_src/231_correction_plan_serializer.rs",
+      "scope": "ModuleLocal",
+      "scope_details": [
+        "module:src/231_correction_plan_serializer.rs",
+        "transitive_depth:2"
+      ],
+      "incremental": false,
+      "estimated_time_seconds": 60,
+      "checks": 2
+    }
+  ]
+}

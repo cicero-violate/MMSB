@@ -1,0 +1,252 @@
+{
+  "version": "1.0",
+  "policies": [
+    {
+      "action_id": "move_emit_verification_policy_to_src/620_correction_plan_serializer.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "type": "CargoTest",
+          "filter": null
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/620_correction_plan_serializer.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_write_intelligence_outputs_to_src/620_correction_plan_serializer.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "type": "CargoTest",
+          "filter": null
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/620_correction_plan_serializer.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_strip_numeric_prefix_to_src/330_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "type": "CargoTest",
+          "filter": null
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/330_report.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_generate_canonical_name_to_src/330_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "type": "CargoTest",
+          "filter": null
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/330_report.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_collect_directory_moves_to_src/330_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "type": "CargoTest",
+          "filter": null
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/330_report.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_compress_path_to_src/330_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "type": "CargoTest",
+          "filter": null
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/330_report.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_collect_directory_files_to_src/330_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "type": "CargoTest",
+          "filter": null
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/330_report.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_path_common_prefix_len_to_src/330_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "type": "CargoTest",
+          "filter": null
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/330_report.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_resolve_required_layer_path_to_src/330_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "type": "CargoTest",
+          "filter": null
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/330_report.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_compute_move_metrics_to_src/330_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "type": "CargoTest",
+          "filter": null
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/330_report.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_collect_move_items_to_src/330_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "type": "CargoTest",
+          "filter": null
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/330_report.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_write_structural_batches_to_src/330_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "type": "CargoTest",
+          "filter": null
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/330_report.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_write_cluster_batches_to_src/330_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "type": "CargoTest",
+          "filter": null
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/330_report.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    }
+  ]
+}

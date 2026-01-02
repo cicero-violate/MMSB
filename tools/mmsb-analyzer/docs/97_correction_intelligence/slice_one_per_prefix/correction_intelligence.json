@@ -1,0 +1,1128 @@
+{
+  "actions_analyzed": 19,
+  "correction_plans": [
+    {
+      "action_id": "create_file_src/226_correction_plan_generator.rs",
+      "confidence": 0.5,
+      "correction_strategies": [],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/226_correction_plan_generator.rs"
+          ],
+          "confidence": 0.5,
+          "severity": "Low",
+          "type": "UnresolvedImport"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }"
+        ]
+      },
+      "tier": "Trivial",
+      "verification_policy": {
+        "estimated_time_seconds": 10,
+        "incremental_eligible": true,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          }
+        ],
+        "scope": {
+          "files": [
+            "src/226_correction_plan_generator.rs"
+          ],
+          "type": "SyntaxOnly"
+        }
+      }
+    },
+    {
+      "action_id": "move_order_julia_files_by_dependency_to_src/000_cluster_001.rs",
+      "confidence": 1.0,
+      "correction_strategies": [
+        {
+          "function": "order_julia_files_by_dependency",
+          "target_layer": "000_cluster_001.rs",
+          "type": "MoveToLayer"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/000_cluster_001.rs"
+          ],
+          "confidence": 1.0,
+          "severity": "High",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/000_cluster_001.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_structural_cmp_to_src/010_cluster_008.rs",
+      "confidence": 1.0,
+      "correction_strategies": [
+        {
+          "function": "structural_cmp",
+          "target_layer": "010_cluster_008.rs",
+          "type": "MoveToLayer"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/010_cluster_008.rs"
+          ],
+          "confidence": 1.0,
+          "severity": "High",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/010_cluster_008.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_sort_structural_items_to_src/010_cluster_008.rs",
+      "confidence": 1.0,
+      "correction_strategies": [
+        {
+          "function": "sort_structural_items",
+          "target_layer": "010_cluster_008.rs",
+          "type": "MoveToLayer"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/010_cluster_008.rs"
+          ],
+          "confidence": 1.0,
+          "severity": "High",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/010_cluster_008.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_gather_rust_files_to_src/020_cluster_010.rs",
+      "confidence": 1.0,
+      "correction_strategies": [
+        {
+          "function": "gather_rust_files",
+          "target_layer": "020_cluster_010.rs",
+          "type": "MoveToLayer"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/020_cluster_010.rs"
+          ],
+          "confidence": 1.0,
+          "severity": "High",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/020_cluster_010.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_run_analysis_to_src/000_cluster_001.rs",
+      "confidence": 1.0,
+      "correction_strategies": [
+        {
+          "function": "run_analysis",
+          "target_layer": "000_cluster_001.rs",
+          "type": "MoveToLayer"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/000_cluster_001.rs"
+          ],
+          "confidence": 1.0,
+          "severity": "High",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/000_cluster_001.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_parse_mmsb_latent_attr_to_src/214_dead_code_intent.rs",
+      "confidence": 1.0,
+      "correction_strategies": [],
+      "estimated_fix_time_seconds": 10,
+      "predicted_violations": [],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }"
+        ]
+      },
+      "tier": "Trivial",
+      "verification_policy": {
+        "estimated_time_seconds": 10,
+        "incremental_eligible": true,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          }
+        ],
+        "scope": {
+          "files": [
+            "src/211_dead_code_attribute_parser.rs",
+            "src/214_dead_code_intent.rs"
+          ],
+          "type": "SyntaxOnly"
+        }
+      }
+    },
+    {
+      "action_id": "move_scan_doc_comments_to_src/211_dead_code_attribute_parser.rs",
+      "confidence": 1.0,
+      "correction_strategies": [
+        {
+          "function": "scan_doc_comments",
+          "target_layer": "211_dead_code_attribute_parser.rs",
+          "type": "MoveToLayer"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/211_dead_code_attribute_parser.rs"
+          ],
+          "confidence": 1.0,
+          "severity": "High",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/211_dead_code_attribute_parser.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_detect_intent_signals_to_src/211_dead_code_attribute_parser.rs",
+      "confidence": 1.0,
+      "correction_strategies": [
+        {
+          "function": "detect_intent_signals",
+          "target_layer": "211_dead_code_attribute_parser.rs",
+          "type": "MoveToLayer"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/211_dead_code_attribute_parser.rs"
+          ],
+          "confidence": 1.0,
+          "severity": "High",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/211_dead_code_attribute_parser.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_scan_intent_tags_to_src/211_dead_code_attribute_parser.rs",
+      "confidence": 1.0,
+      "correction_strategies": [
+        {
+          "function": "scan_intent_tags",
+          "target_layer": "211_dead_code_attribute_parser.rs",
+          "type": "MoveToLayer"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/211_dead_code_attribute_parser.rs"
+          ],
+          "confidence": 1.0,
+          "severity": "High",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/211_dead_code_attribute_parser.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_is_cfg_test_item_to_src/211_dead_code_attribute_parser.rs",
+      "confidence": 1.0,
+      "correction_strategies": [
+        {
+          "function": "is_cfg_test_item",
+          "target_layer": "211_dead_code_attribute_parser.rs",
+          "type": "MoveToLayer"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/211_dead_code_attribute_parser.rs"
+          ],
+          "confidence": 1.0,
+          "severity": "High",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/211_dead_code_attribute_parser.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_classify_symbol_to_src/213_dead_code_call_graph.rs",
+      "confidence": 1.0,
+      "correction_strategies": [
+        {
+          "function": "classify_symbol",
+          "target_layer": "213_dead_code_call_graph.rs",
+          "type": "MoveToLayer"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/213_dead_code_call_graph.rs"
+          ],
+          "confidence": 1.0,
+          "severity": "High",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/213_dead_code_call_graph.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_is_test_only_to_src/213_dead_code_call_graph.rs",
+      "confidence": 1.0,
+      "correction_strategies": [
+        {
+          "function": "is_test_only",
+          "target_layer": "213_dead_code_call_graph.rs",
+          "type": "MoveToLayer"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/213_dead_code_call_graph.rs"
+          ],
+          "confidence": 1.0,
+          "severity": "High",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/213_dead_code_call_graph.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_run_dead_code_pipeline_to_src/070_layer_utilities.rs",
+      "confidence": 1.0,
+      "correction_strategies": [
+        {
+          "function": "run_dead_code_pipeline",
+          "target_layer": "070_layer_utilities.rs",
+          "type": "MoveToLayer"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/070_layer_utilities.rs"
+          ],
+          "confidence": 1.0,
+          "severity": "High",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/070_layer_utilities.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_write_outputs_to_src/220_dead_code_report.rs",
+      "confidence": 1.0,
+      "correction_strategies": [
+        {
+          "function": "write_outputs",
+          "target_layer": "220_dead_code_report.rs",
+          "type": "MoveToLayer"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/220_dead_code_report.rs"
+          ],
+          "confidence": 1.0,
+          "severity": "High",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/220_dead_code_report.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_estimate_impact_to_src/229_quality_delta_calculator.rs",
+      "confidence": 1.0,
+      "correction_strategies": [
+        {
+          "function": "estimate_impact",
+          "target_layer": "229_quality_delta_calculator.rs",
+          "type": "MoveToLayer"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/229_quality_delta_calculator.rs"
+          ],
+          "confidence": 1.0,
+          "severity": "High",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/229_quality_delta_calculator.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_generate_intelligence_report_to_src/223_violation_predictor.rs",
+      "confidence": 1.0,
+      "correction_strategies": [
+        {
+          "function": "generate_intelligence_report",
+          "target_layer": "223_violation_predictor.rs",
+          "type": "MoveToLayer"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/223_violation_predictor.rs"
+          ],
+          "confidence": 1.0,
+          "severity": "High",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/223_violation_predictor.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_write_intelligence_outputs_at_to_src/232_verification_policy_emitter.rs",
+      "confidence": 1.0,
+      "correction_strategies": [
+        {
+          "function": "write_intelligence_outputs_at",
+          "target_layer": "232_verification_policy_emitter.rs",
+          "type": "MoveToLayer"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/232_verification_policy_emitter.rs"
+          ],
+          "confidence": 1.0,
+          "severity": "High",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/232_verification_policy_emitter.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_serialize_correction_plans_to_src/231_correction_plan_serializer.rs",
+      "confidence": 1.0,
+      "correction_strategies": [
+        {
+          "function": "serialize_correction_plans",
+          "target_layer": "231_correction_plan_serializer.rs",
+          "type": "MoveToLayer"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/231_correction_plan_serializer.rs"
+          ],
+          "confidence": 1.0,
+          "severity": "High",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "filter": null,
+            "type": "CargoTest"
+          }
+        ],
+        "scope": {
+          "module": "src/231_correction_plan_serializer.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    }
+  ],
+  "project_root": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer",
+  "quality_deltas": [
+    {
+      "acceptable": true,
+      "action_id": "create_file_src/226_correction_plan_generator.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_order_julia_files_by_dependency_to_src/000_cluster_001.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_structural_cmp_to_src/010_cluster_008.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_sort_structural_items_to_src/010_cluster_008.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_gather_rust_files_to_src/020_cluster_010.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_run_analysis_to_src/000_cluster_001.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_parse_mmsb_latent_attr_to_src/214_dead_code_intent.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_scan_doc_comments_to_src/211_dead_code_attribute_parser.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_detect_intent_signals_to_src/211_dead_code_attribute_parser.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_scan_intent_tags_to_src/211_dead_code_attribute_parser.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_is_cfg_test_item_to_src/211_dead_code_attribute_parser.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_classify_symbol_to_src/213_dead_code_call_graph.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_is_test_only_to_src/213_dead_code_call_graph.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_run_dead_code_pipeline_to_src/070_layer_utilities.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_write_outputs_to_src/220_dead_code_report.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_estimate_impact_to_src/229_quality_delta_calculator.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_generate_intelligence_report_to_src/223_violation_predictor.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_write_intelligence_outputs_at_to_src/232_verification_policy_emitter.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    },
+    {
+      "acceptable": true,
+      "action_id": "move_serialize_correction_plans_to_src/231_correction_plan_serializer.rs",
+      "cohesion_delta": 0.0,
+      "complexity_delta": 0.0,
+      "overall_score_delta": 0.0,
+      "reason": "Quality improved or maintained",
+      "violation_delta": 0
+    }
+  ],
+  "summary": {
+    "trivial_count": 2,
+    "moderate_count": 17,
+    "complex_count": 0,
+    "total_predicted_violations": 18,
+    "average_confidence": 0.9736842105263158,
+    "estimated_total_fix_time_seconds": 280
+  },
+  "timestamp": "2025-12-31T06:24:51.362249451+00:00",
+  "version": "1.0"
+}

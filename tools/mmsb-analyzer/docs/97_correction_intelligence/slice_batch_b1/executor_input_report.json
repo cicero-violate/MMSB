@@ -1,0 +1,56 @@
+{
+  "version": "1.0",
+  "timestamp": "2026-01-01T03:03:50.555419751+00:00",
+  "correction_summary": {
+    "trivial_count": 0,
+    "moderate_count": 1,
+    "complex_count": 0,
+    "total_predicted_violations": 1,
+    "average_confidence": 1.0,
+    "estimated_total_fix_time_seconds": 15
+  },
+  "plans": [
+    {
+      "action_id": "move_scan_doc_comments_to_src/211_dead_code_attribute_parser.rs",
+      "tier": "Moderate",
+      "confidence": 1.0,
+      "estimated_fix_time_seconds": 15,
+      "violations": [
+        {
+          "kind": "LayerViolation",
+          "severity": "High",
+          "confidence": 1.0,
+          "affected_files": 1
+        }
+      ],
+      "verification": {
+        "scope": "ModuleLocal",
+        "scope_details": [
+          "module:src/211_dead_code_attribute_parser.rs",
+          "transitive_depth:2"
+        ],
+        "incremental_eligible": false,
+        "estimated_time_seconds": 60
+      },
+      "strategies": [
+        {
+          "kind": "MoveToLayer",
+          "context": null
+        }
+      ]
+    }
+  ],
+  "policies": [
+    {
+      "action_id": "move_scan_doc_comments_to_src/211_dead_code_attribute_parser.rs",
+      "scope": "ModuleLocal",
+      "scope_details": [
+        "module:src/211_dead_code_attribute_parser.rs",
+        "transitive_depth:2"
+      ],
+      "incremental": false,
+      "estimated_time_seconds": 60,
+      "checks": 2
+    }
+  ]
+}

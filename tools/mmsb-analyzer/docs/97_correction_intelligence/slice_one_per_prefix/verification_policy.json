@@ -1,0 +1,361 @@
+{
+  "policies": [
+    {
+      "action_id": "create_file_src/226_correction_plan_generator.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/226_correction_plan_generator.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "move_order_julia_files_by_dependency_to_src/000_cluster_001.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/000_cluster_001.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_structural_cmp_to_src/010_cluster_008.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/010_cluster_008.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_sort_structural_items_to_src/010_cluster_008.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/010_cluster_008.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_gather_rust_files_to_src/020_cluster_010.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/020_cluster_010.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_run_analysis_to_src/000_cluster_001.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/000_cluster_001.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_parse_mmsb_latent_attr_to_src/214_dead_code_intent.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        }
+      ],
+      "estimated_time_seconds": 10,
+      "incremental": true,
+      "scope": {
+        "files": [
+          "src/211_dead_code_attribute_parser.rs",
+          "src/214_dead_code_intent.rs"
+        ],
+        "type": "SyntaxOnly"
+      }
+    },
+    {
+      "action_id": "move_scan_doc_comments_to_src/211_dead_code_attribute_parser.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/211_dead_code_attribute_parser.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_detect_intent_signals_to_src/211_dead_code_attribute_parser.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/211_dead_code_attribute_parser.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_scan_intent_tags_to_src/211_dead_code_attribute_parser.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/211_dead_code_attribute_parser.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_is_cfg_test_item_to_src/211_dead_code_attribute_parser.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/211_dead_code_attribute_parser.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_classify_symbol_to_src/213_dead_code_call_graph.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/213_dead_code_call_graph.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_is_test_only_to_src/213_dead_code_call_graph.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/213_dead_code_call_graph.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_run_dead_code_pipeline_to_src/070_layer_utilities.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/070_layer_utilities.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_write_outputs_to_src/220_dead_code_report.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/220_dead_code_report.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_estimate_impact_to_src/229_quality_delta_calculator.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/229_quality_delta_calculator.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_generate_intelligence_report_to_src/223_violation_predictor.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/223_violation_predictor.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_write_intelligence_outputs_at_to_src/232_verification_policy_emitter.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/232_verification_policy_emitter.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    },
+    {
+      "action_id": "move_serialize_correction_plans_to_src/231_correction_plan_serializer.rs",
+      "checks": [
+        {
+          "type": "CargoCheck"
+        },
+        {
+          "filter": null,
+          "type": "CargoTest"
+        }
+      ],
+      "estimated_time_seconds": 60,
+      "incremental": false,
+      "scope": {
+        "module": "src/231_correction_plan_serializer.rs",
+        "transitive_depth": 2,
+        "type": "ModuleLocal"
+      }
+    }
+  ],
+  "version": "1.0"
+}

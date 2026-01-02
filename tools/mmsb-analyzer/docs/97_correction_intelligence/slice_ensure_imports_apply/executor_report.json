@@ -1,0 +1,104 @@
+{
+  "version": "1.0",
+  "timestamp": "2025-12-31T07:10:25.040432303+00:00",
+  "actions": [
+    {
+      "action_id": "move_detect_test_modules_to_src/211_dead_code_attribute_parser.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [
+        "MoveToLayer detect_test_modules -> 211_dead_code_attribute_parser.rs",
+        "EnsureImports detect_test_modules -> 211_dead_code_attribute_parser.rs"
+      ],
+      "errors": [],
+      "warnings": [
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "verification_results": [],
+      "rollback_applied": false,
+      "diffs": [
+        {
+          "path": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/215_dead_code_test_boundaries.rs",
+          "diff": "--- original\n+++ modified\n@@ -14,23 +14,8 @@\n     pub test_files: HashSet<PathBuf>,\n }\n\n-pub fn detect_test_modules(file: &Path) -> HashSet<String> {\n-    let contents = std::fs::read_to_string(file).unwrap_or_default();\n-    let parsed = match syn::parse_file(&contents) {\n-        Ok(file) => file,\n-        Err(_) => return HashSet::new(),\n-    };\n-    let mut modules = HashSet::new();\n-    for item in &parsed.items {\n-        if let Item::Mod(item_mod) = item {\n-            if is_cfg_test_item(item) {\n-                modules.insert(item_mod.ident.to_string());\n-            }\n-        }\n-    }\n-    modules\n-}\n\n+\n pub fn detect_test_symbols(file: &Path) -> HashSet<String> {\n     let contents = std::fs::read_to_string(file).unwrap_or_default();\n     let parsed = match syn::parse_file(&contents) {\n"
+        },
+        {
+          "path": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/211_dead_code_attribute_parser.rs",
+          "diff": "--- original\n+++ modified\n@@ -1,4 +1,6 @@\n #![allow(dead_code)]\n+use crate::dead_code_attribute_parser::is_cfg_test_item;\n+use std::collections::HashSet;\n //! Attribute parsing for dead code intent markers.\n\n use crate::dead_code_doc_comment_parser::{extract_doc_markers, merge_doc_intent};\n@@ -243,3 +245,20 @@\n         found\n     })\n }\n+\n+pub fn detect_test_modules(file: &Path) -> HashSet<String> {\n+    let contents = std::fs::read_to_string(file).unwrap_or_default();\n+    let parsed = match syn::parse_file(&contents) {\n+        Ok(file) => file,\n+        Err(_) => return HashSet::new(),\n+    };\n+    let mut modules = HashSet::new();\n+    for item in &parsed.items {\n+        if let Item::Mod(item_mod) = item {\n+            if is_cfg_test_item(item) {\n+                modules.insert(item_mod.ident.to_string());\n+            }\n+        }\n+    }\n+    modules\n+}\n"
+        },
+        {
+          "path": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/211_dead_code_attribute_parser.rs",
+          "diff": "--- original\n+++ modified\n@@ -1,4 +1,6 @@\n #![allow(dead_code)]\n+use crate::dead_code_attribute_parser::is_cfg_test_item;\n+use std::collections::HashSet;\n //! Attribute parsing for dead code intent markers.\n\n use crate::dead_code_doc_comment_parser::{extract_doc_markers, merge_doc_intent};\n"
+        }
+      ],
+      "diff_count": 3
+    },
+    {
+      "action_id": "move_detect_test_symbols_to_src/211_dead_code_attribute_parser.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [
+        "MoveToLayer detect_test_symbols -> 211_dead_code_attribute_parser.rs"
+      ],
+      "errors": [],
+      "warnings": [
+        "EnsureImports found no missing imports for detect_test_symbols",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "verification_results": [],
+      "rollback_applied": false,
+      "diffs": [
+        {
+          "path": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/215_dead_code_test_boundaries.rs",
+          "diff": "--- original\n+++ modified\n@@ -16,37 +16,10 @@\n\n\n\n-pub fn detect_test_symbols(file: &Path) -> HashSet<String> {\n-    let contents = std::fs::read_to_string(file).unwrap_or_default();\n-    let parsed = match syn::parse_file(&contents) {\n-        Ok(file) => file,\n-        Err(_) => return HashSet::new(),\n-    };\n-    let mut symbols = HashSet::new();\n-    for item in &parsed.items {\n-        if let Item::Fn(item_fn) = item {\n-            if has_test_attr(&item_fn.attrs) {\n-                symbols.insert(item_fn.sig.ident.to_string());\n-            }\n-        }\n-        if let Item::Mod(item_mod) = item {\n-            if is_cfg_test_item(item) {\n-                symbols.insert(item_mod.ident.to_string());\n-                if let Some((_, items)) = &item_mod.content {\n-                    for nested in items {\n-                        if let Item::Fn(nested_fn) = nested {\n-                            symbols.insert(nested_fn.sig.ident.to_string());\n-                        }\n-                    }\n-                }\n-            }\n-        }\n-    }\n-    symbols\n-}\n\n\n\n+\n pub fn find_test_callers(\n     symbol: &str,\n     call_graph: &CallGraph,\n"
+        },
+        {
+          "path": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/211_dead_code_attribute_parser.rs",
+          "diff": "--- original\n+++ modified\n@@ -262,3 +262,32 @@\n     }\n     modules\n }\n+\n+pub fn detect_test_symbols(file: &Path) -> HashSet<String> {\n+    let contents = std::fs::read_to_string(file).unwrap_or_default();\n+    let parsed = match syn::parse_file(&contents) {\n+        Ok(file) => file,\n+        Err(_) => return HashSet::new(),\n+    };\n+    let mut symbols = HashSet::new();\n+    for item in &parsed.items {\n+        if let Item::Fn(item_fn) = item {\n+            if has_test_attr(&item_fn.attrs) {\n+                symbols.insert(item_fn.sig.ident.to_string());\n+            }\n+        }\n+        if let Item::Mod(item_mod) = item {\n+            if is_cfg_test_item(item) {\n+                symbols.insert(item_mod.ident.to_string());\n+                if let Some((_, items)) = &item_mod.content {\n+                    for nested in items {\n+                        if let Item::Fn(nested_fn) = nested {\n+                            symbols.insert(nested_fn.sig.ident.to_string());\n+                        }\n+                    }\n+                }\n+            }\n+        }\n+    }\n+    symbols\n+}\n"
+        }
+      ],
+      "diff_count": 2
+    },
+    {
+      "action_id": "move_write_intelligence_outputs_at_to_src/231_correction_plan_serializer.rs",
+      "phase": 3,
+      "status": "applied",
+      "applied_strategies": [
+        "MoveToLayer write_intelligence_outputs_at -> 231_correction_plan_serializer.rs",
+        "EnsureImports write_intelligence_outputs_at -> 231_correction_plan_serializer.rs"
+      ],
+      "errors": [],
+      "warnings": [
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }, TestsFailed { critical_tests: [] }"
+      ],
+      "verification_results": [],
+      "rollback_applied": false,
+      "diffs": [
+        {
+          "path": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/232_verification_policy_emitter.rs",
+          "diff": "--- original\n+++ modified\n@@ -80,28 +80,4 @@\n     })\n }\n\n-pub fn write_intelligence_outputs_at(\n-    report: &CorrectionIntelligenceReport,\n-    output_dir: &Path,\n-    correction_json: Option<&Path>,\n-    verification_policy_json: Option<&Path>,\n-) -> std::io::Result<()> {\n-    std::fs::create_dir_all(output_dir)?;\n-    let json_path = correction_json\n-        .map(|p| p.to_path_buf())\n-        .unwrap_or_else(|| output_dir.join(\"correction_intelligence.json\"));\n-    if let Some(parent) = json_path.parent() {\n-        std::fs::create_dir_all(parent)?;\n-    }\n-    let contract = serialize_correction_plans(report);\n-    std::fs::write(&json_path, serde_json::to_string_pretty(&contract)?)?;\n\n-    let policy_path = verification_policy_json\n-        .map(|p| p.to_path_buf())\n-        .unwrap_or_else(|| output_dir.join(\"verification_policy.json\"));\n-    if let Some(parent) = policy_path.parent() {\n-        std::fs::create_dir_all(parent)?;\n-    }\n-    emit_verification_policy(&report.verification_policies, &policy_path)?;\n-    Ok(())\n-}\n"
+        },
+        {
+          "path": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/231_correction_plan_serializer.rs",
+          "diff": "--- original\n+++ modified\n@@ -1,4 +1,6 @@\n #![allow(dead_code)]\n+use crate::correction_plan_serializer::serialize_correction_plans;\n+use std::path::Path;\n //! Serialize correction plans to JSON values.\n\n use crate::correction_intelligence_report::CorrectionIntelligenceReport;\n@@ -160,3 +162,29 @@\n         \"summary\": report.summary,\n     })\n }\n+\n+pub fn write_intelligence_outputs_at(\n+    report: &CorrectionIntelligenceReport,\n+    output_dir: &Path,\n+    correction_json: Option<&Path>,\n+    verification_policy_json: Option<&Path>,\n+) -> std::io::Result<()> {\n+    std::fs::create_dir_all(output_dir)?;\n+    let json_path = correction_json\n+        .map(|p| p.to_path_buf())\n+        .unwrap_or_else(|| output_dir.join(\"correction_intelligence.json\"));\n+    if let Some(parent) = json_path.parent() {\n+        std::fs::create_dir_all(parent)?;\n+    }\n+    let contract = serialize_correction_plans(report);\n+    std::fs::write(&json_path, serde_json::to_string_pretty(&contract)?)?;\n+\n+    let policy_path = verification_policy_json\n+        .map(|p| p.to_path_buf())\n+        .unwrap_or_else(|| output_dir.join(\"verification_policy.json\"));\n+    if let Some(parent) = policy_path.parent() {\n+        std::fs::create_dir_all(parent)?;\n+    }\n+    emit_verification_policy(&report.verification_policies, &policy_path)?;\n+    Ok(())\n+}\n"
+        },
+        {
+          "path": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/231_correction_plan_serializer.rs",
+          "diff": "--- original\n+++ modified\n@@ -1,4 +1,6 @@\n #![allow(dead_code)]\n+use crate::correction_plan_serializer::serialize_correction_plans;\n+use std::path::Path;\n //! Serialize correction plans to JSON values.\n\n use crate::correction_intelligence_report::CorrectionIntelligenceReport;\n"
+        }
+      ],
+      "diff_count": 3
+    }
+  ],
+  "summary": {
+    "total_actions": 3,
+    "applied": 3,
+    "failed": 0,
+    "manual_review": 0,
+    "skipped": 0,
+    "total_diffs": 8
+  },
+  "verification_report": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/docs/97_correction_intelligence/slice_ensure_imports_apply/executor_verification_results.json",
+  "rollback_log": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/docs/97_correction_intelligence/slice_ensure_imports_apply/executor_rollback_log.json",
+  "diff_report": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/docs/97_correction_intelligence/slice_ensure_imports_apply/executor_diff_report.json",
+  "input_report": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/docs/97_correction_intelligence/slice_ensure_imports_apply/executor_input_report.json"
+}

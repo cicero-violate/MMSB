@@ -1,0 +1,758 @@
+{
+  "version": "1.0",
+  "timestamp": "2026-01-01T05:25:02.815458Z",
+  "project_root": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer",
+  "actions_analyzed": 13,
+  "correction_plans": [
+    {
+      "action_id": "move_emit_verification_policy_to_src/620_correction_plan_serializer.rs",
+      "confidence": 0.6,
+      "correction_strategies": [
+        {
+          "type": "MoveToLayer",
+          "function": "emit_verification_policy",
+          "target_layer": "src/620_correction_plan_serializer.rs"
+        },
+        {
+          "type": "EnsureImports",
+          "function": "emit_verification_policy",
+          "target_layer": "src/620_correction_plan_serializer.rs"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/630_verification_policy_emitter.rs",
+            "src/620_correction_plan_serializer.rs"
+          ],
+          "confidence": 0.6,
+          "severity": "Medium",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "type": "CargoTest",
+            "filter": null
+          }
+        ],
+        "scope": {
+          "module": "src/620_correction_plan_serializer.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_write_intelligence_outputs_to_src/620_correction_plan_serializer.rs",
+      "confidence": 0.6,
+      "correction_strategies": [
+        {
+          "type": "MoveToLayer",
+          "function": "write_intelligence_outputs",
+          "target_layer": "src/620_correction_plan_serializer.rs"
+        },
+        {
+          "type": "EnsureImports",
+          "function": "write_intelligence_outputs",
+          "target_layer": "src/620_correction_plan_serializer.rs"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/640_correction_intelligence_report.rs",
+            "src/620_correction_plan_serializer.rs"
+          ],
+          "confidence": 0.6,
+          "severity": "Medium",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "type": "CargoTest",
+            "filter": null
+          }
+        ],
+        "scope": {
+          "module": "src/620_correction_plan_serializer.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_strip_numeric_prefix_to_src/330_report.rs",
+      "confidence": 0.6,
+      "correction_strategies": [
+        {
+          "type": "MoveToLayer",
+          "function": "strip_numeric_prefix",
+          "target_layer": "src/330_report.rs"
+        },
+        {
+          "type": "EnsureImports",
+          "function": "strip_numeric_prefix",
+          "target_layer": "src/330_report.rs"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/120_cluster_006.rs",
+            "src/330_report.rs"
+          ],
+          "confidence": 0.6,
+          "severity": "Medium",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "type": "CargoTest",
+            "filter": null
+          }
+        ],
+        "scope": {
+          "module": "src/330_report.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_generate_canonical_name_to_src/330_report.rs",
+      "confidence": 0.6,
+      "correction_strategies": [
+        {
+          "type": "MoveToLayer",
+          "function": "generate_canonical_name",
+          "target_layer": "src/330_report.rs"
+        },
+        {
+          "type": "EnsureImports",
+          "function": "generate_canonical_name",
+          "target_layer": "src/330_report.rs"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/120_cluster_006.rs",
+            "src/330_report.rs"
+          ],
+          "confidence": 0.6,
+          "severity": "Medium",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "type": "CargoTest",
+            "filter": null
+          }
+        ],
+        "scope": {
+          "module": "src/330_report.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_collect_directory_moves_to_src/330_report.rs",
+      "confidence": 0.6,
+      "correction_strategies": [
+        {
+          "type": "MoveToLayer",
+          "function": "collect_directory_moves",
+          "target_layer": "src/330_report.rs"
+        },
+        {
+          "type": "EnsureImports",
+          "function": "collect_directory_moves",
+          "target_layer": "src/330_report.rs"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/120_cluster_006.rs",
+            "src/330_report.rs"
+          ],
+          "confidence": 0.6,
+          "severity": "Medium",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "type": "CargoTest",
+            "filter": null
+          }
+        ],
+        "scope": {
+          "module": "src/330_report.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_compress_path_to_src/330_report.rs",
+      "confidence": 0.6,
+      "correction_strategies": [
+        {
+          "type": "MoveToLayer",
+          "function": "compress_path",
+          "target_layer": "src/330_report.rs"
+        },
+        {
+          "type": "EnsureImports",
+          "function": "compress_path",
+          "target_layer": "src/330_report.rs"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/220_utilities.rs",
+            "src/330_report.rs"
+          ],
+          "confidence": 0.6,
+          "severity": "Medium",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "type": "CargoTest",
+            "filter": null
+          }
+        ],
+        "scope": {
+          "module": "src/330_report.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_collect_directory_files_to_src/330_report.rs",
+      "confidence": 0.6,
+      "correction_strategies": [
+        {
+          "type": "MoveToLayer",
+          "function": "collect_directory_files",
+          "target_layer": "src/330_report.rs"
+        },
+        {
+          "type": "EnsureImports",
+          "function": "collect_directory_files",
+          "target_layer": "src/330_report.rs"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/220_utilities.rs",
+            "src/330_report.rs"
+          ],
+          "confidence": 0.6,
+          "severity": "Medium",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "type": "CargoTest",
+            "filter": null
+          }
+        ],
+        "scope": {
+          "module": "src/330_report.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_path_common_prefix_len_to_src/330_report.rs",
+      "confidence": 0.6,
+      "correction_strategies": [
+        {
+          "type": "MoveToLayer",
+          "function": "path_common_prefix_len",
+          "target_layer": "src/330_report.rs"
+        },
+        {
+          "type": "EnsureImports",
+          "function": "path_common_prefix_len",
+          "target_layer": "src/330_report.rs"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/220_utilities.rs",
+            "src/330_report.rs"
+          ],
+          "confidence": 0.6,
+          "severity": "Medium",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "type": "CargoTest",
+            "filter": null
+          }
+        ],
+        "scope": {
+          "module": "src/330_report.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_resolve_required_layer_path_to_src/330_report.rs",
+      "confidence": 0.6,
+      "correction_strategies": [
+        {
+          "type": "MoveToLayer",
+          "function": "resolve_required_layer_path",
+          "target_layer": "src/330_report.rs"
+        },
+        {
+          "type": "EnsureImports",
+          "function": "resolve_required_layer_path",
+          "target_layer": "src/330_report.rs"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/220_utilities.rs",
+            "src/330_report.rs"
+          ],
+          "confidence": 0.6,
+          "severity": "Medium",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "type": "CargoTest",
+            "filter": null
+          }
+        ],
+        "scope": {
+          "module": "src/330_report.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_compute_move_metrics_to_src/330_report.rs",
+      "confidence": 0.6,
+      "correction_strategies": [
+        {
+          "type": "MoveToLayer",
+          "function": "compute_move_metrics",
+          "target_layer": "src/330_report.rs"
+        },
+        {
+          "type": "EnsureImports",
+          "function": "compute_move_metrics",
+          "target_layer": "src/330_report.rs"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/220_utilities.rs",
+            "src/330_report.rs"
+          ],
+          "confidence": 0.6,
+          "severity": "Medium",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "type": "CargoTest",
+            "filter": null
+          }
+        ],
+        "scope": {
+          "module": "src/330_report.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_collect_move_items_to_src/330_report.rs",
+      "confidence": 0.6,
+      "correction_strategies": [
+        {
+          "type": "MoveToLayer",
+          "function": "collect_move_items",
+          "target_layer": "src/330_report.rs"
+        },
+        {
+          "type": "EnsureImports",
+          "function": "collect_move_items",
+          "target_layer": "src/330_report.rs"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/220_utilities.rs",
+            "src/330_report.rs"
+          ],
+          "confidence": 0.6,
+          "severity": "Medium",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "type": "CargoTest",
+            "filter": null
+          }
+        ],
+        "scope": {
+          "module": "src/330_report.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_write_structural_batches_to_src/330_report.rs",
+      "confidence": 0.6,
+      "correction_strategies": [
+        {
+          "type": "MoveToLayer",
+          "function": "write_structural_batches",
+          "target_layer": "src/330_report.rs"
+        },
+        {
+          "type": "EnsureImports",
+          "function": "write_structural_batches",
+          "target_layer": "src/330_report.rs"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/220_utilities.rs",
+            "src/330_report.rs"
+          ],
+          "confidence": 0.6,
+          "severity": "Medium",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "type": "CargoTest",
+            "filter": null
+          }
+        ],
+        "scope": {
+          "module": "src/330_report.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    },
+    {
+      "action_id": "move_write_cluster_batches_to_src/330_report.rs",
+      "confidence": 0.6,
+      "correction_strategies": [
+        {
+          "type": "MoveToLayer",
+          "function": "write_cluster_batches",
+          "target_layer": "src/330_report.rs"
+        },
+        {
+          "type": "EnsureImports",
+          "function": "write_cluster_batches",
+          "target_layer": "src/330_report.rs"
+        }
+      ],
+      "estimated_fix_time_seconds": 15,
+      "predicted_violations": [
+        {
+          "affected_files": [
+            "src/220_utilities.rs",
+            "src/330_report.rs"
+          ],
+          "confidence": 0.6,
+          "severity": "Medium",
+          "type": "LayerViolation"
+        }
+      ],
+      "rollback_criteria": {
+        "mandatory": [
+          "BuildFailed",
+          "InvariantViolated { invariant_ids: [\"layer_ordering\"] }"
+        ],
+        "suggested": [
+          "QualityDecreased { threshold: 0.05 }",
+          "TestsFailed { critical_tests: [] }"
+        ]
+      },
+      "tier": "Moderate",
+      "verification_policy": {
+        "estimated_time_seconds": 60,
+        "incremental_eligible": false,
+        "required_checks": [
+          {
+            "type": "CargoCheck"
+          },
+          {
+            "type": "CargoTest",
+            "filter": null
+          }
+        ],
+        "scope": {
+          "module": "src/330_report.rs",
+          "transitive_depth": 2,
+          "type": "ModuleLocal"
+        }
+      }
+    }
+  ],
+  "quality_deltas": [],
+  "summary": {
+    "average_confidence": 0.6,
+    "complex_count": 0,
+    "estimated_total_fix_time_seconds": 195,
+    "moderate_count": 13,
+    "total_predicted_violations": 13,
+    "trivial_count": 0
+  }
+}

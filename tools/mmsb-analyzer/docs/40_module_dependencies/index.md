@@ -1,0 +1,87 @@
+# Module Dependencies
+
+- Module files analyzed: 71
+- Unique imports captured: 383
+- Unique exports captured: 63
+- Submodule declarations captured: 150
+
+## Per-file Summary
+
+- `src/000_dependency_analysis.rs` → module `000_dependency_analysis` (layer 000_dependency_analysis.rs, 41 imports / 0 exports / 1 submodules)
+- `src/010_layer_utilities.rs` → module `010_layer_utilities` (layer 010_layer_utilities.rs, 10 imports / 0 exports / 0 submodules)
+- `src/020_gather_rust_files.rs` → module `020_gather_rust_files` (layer 020_gather_rust_files.rs, 5 imports / 0 exports / 0 submodules)
+- `src/030_invariant_types.rs` → module `030_invariant_types` (layer 030_invariant_types.rs, 4 imports / 0 exports / 1 submodules)
+- `src/030_is_cfg_test_item.rs` → module `030_is_cfg_test_item` (layer 030_is_cfg_test_item.rs, 2 imports / 0 exports / 0 submodules)
+- `src/040_classify_symbol.rs` → module `040_classify_symbol` (layer 040_classify_symbol.rs, 5 imports / 0 exports / 0 submodules)
+- `src/040_refactor_constraints.rs` → module `040_refactor_constraints` (layer 040_refactor_constraints.rs, 4 imports / 0 exports / 1 submodules)
+- `src/050_scc_compressor.rs` → module `050_scc_compressor` (layer 050_scc_compressor.rs, 5 imports / 0 exports / 1 submodules)
+- `src/060_module_resolution.rs` → module `060_module_resolution` (layer 060_module_resolution.rs, 11 imports / 2 exports / 1 submodules)
+- `src/070_layer_inference.rs` → module `070_layer_inference` (layer 070_layer_inference.rs, 6 imports / 0 exports / 1 submodules)
+- `src/080_cluster_011.rs` → module `080_cluster_011` (layer 080_cluster_011.rs, 5 imports / 0 exports / 0 submodules)
+- `src/090_fixpoint_solver.rs` → module `090_fixpoint_solver` (layer 090_fixpoint_solver.rs, 4 imports / 0 exports / 1 submodules)
+- `src/100_dependency.rs` → module `100_dependency` (layer 100_dependency.rs, 3 imports / 7 exports / 0 submodules)
+- `src/110_structural_detector.rs` → module `110_structural_detector` (layer 110_structural_detector.rs, 8 imports / 0 exports / 1 submodules)
+- `src/120_cluster_006.rs` → module `120_cluster_006` (layer 120_cluster_006.rs, 5 imports / 2 exports / 0 submodules)
+- `src/130_semantic_detector.rs` → module `130_semantic_detector` (layer 130_semantic_detector.rs, 5 imports / 0 exports / 1 submodules)
+- `src/140_layer_core.rs` → module `140_layer_core` (layer 140_layer_core.rs, 0 imports / 4 exports / 0 submodules)
+- `src/150_path_detector.rs` → module `150_path_detector` (layer 150_path_detector.rs, 7 imports / 0 exports / 1 submodules)
+- `src/160_invariant_integrator.rs` → module `160_invariant_integrator` (layer 160_invariant_integrator.rs, 11 imports / 0 exports / 1 submodules)
+- `src/170_layer_utilities.rs` → module `170_layer_utilities` (layer 170_layer_utilities.rs, 17 imports / 2 exports / 0 submodules)
+- `src/180_invariant_reporter.rs` → module `180_invariant_reporter` (layer 180_invariant_reporter.rs, 7 imports / 0 exports / 1 submodules)
+- `src/190_conscience_graph.rs` → module `190_conscience_graph` (layer 190_conscience_graph.rs, 4 imports / 0 exports / 1 submodules)
+- `src/200_action_validator.rs` → module `200_action_validator` (layer 200_action_validator.rs, 5 imports / 0 exports / 1 submodules)
+- `src/210_agent_conscience.rs` → module `210_agent_conscience` (layer 210_agent_conscience.rs, 8 imports / 0 exports / 1 submodules)
+- `src/211_dead_code_doc_comment_scanner.rs` → module `211_dead_code_doc_comment_scanner` (layer 211_dead_code_doc_comment_scanner.rs, 6 imports / 0 exports / 0 submodules)
+- `src/220_utilities.rs` → module `220_utilities` (layer 220_utilities.rs, 0 imports / 8 exports / 0 submodules)
+- `src/230_dead_code_attribute_parser.rs` → module `230_dead_code_attribute_parser` (layer 230_dead_code_attribute_parser.rs, 7 imports / 2 exports / 2 submodules)
+- `src/240_types.rs` → module `240_types` (layer 240_types.rs, 5 imports / 0 exports / 0 submodules)
+- `src/250_cohesion_analyzer.rs` → module `250_cohesion_analyzer` (layer 250_cohesion_analyzer.rs, 7 imports / 0 exports / 0 submodules)
+- `src/260_directory_analyzer.rs` → module `260_directory_analyzer` (layer 260_directory_analyzer.rs, 6 imports / 0 exports / 0 submodules)
+- `src/270_control_flow.rs` → module `270_control_flow` (layer 270_control_flow.rs, 5 imports / 0 exports / 0 submodules)
+- `src/280_file_ordering.rs` → module `280_file_ordering` (layer 280_file_ordering.rs, 13 imports / 2 exports / 0 submodules)
+- `src/290_julia_parser.rs` → module `290_julia_parser` (layer 290_julia_parser.rs, 9 imports / 0 exports / 0 submodules)
+- `src/300_rust_parser.rs` → module `300_rust_parser` (layer 300_rust_parser.rs, 6 imports / 0 exports / 0 submodules)
+- `src/310_dot_exporter.rs` → module `310_dot_exporter` (layer 310_dot_exporter.rs, 0 imports / 2 exports / 0 submodules)
+- `src/330_markdown_report.rs` → module `330_markdown_report` (layer 330_markdown_report.rs, 17 imports / 0 exports / 0 submodules)
+- `src/340_main.rs` → module `340_main` (layer 340_main.rs, 1 imports / 0 exports / 61 submodules)
+- `src/350_agent_cli.rs` → module `350_agent_cli` (layer 350_agent_cli.rs, 7 imports / 0 exports / 1 submodules)
+- `src/360_lib.rs` → module `360_lib` (layer 360_lib.rs, 0 imports / 19 exports / 66 submodules)
+- `src/370_dead_code_types.rs` → module `370_dead_code_types` (layer 370_dead_code_types.rs, 3 imports / 0 exports / 0 submodules)
+- `src/380_dead_code_doc_comment_parser.rs` → module `380_dead_code_doc_comment_parser` (layer 380_dead_code_doc_comment_parser.rs, 3 imports / 0 exports / 0 submodules)
+- `src/390_dead_code_call_graph.rs` → module `390_dead_code_call_graph` (layer 390_dead_code_call_graph.rs, 3 imports / 1 exports / 1 submodules)
+- `src/400_dead_code_intent.rs` → module `400_dead_code_intent` (layer 400_dead_code_intent.rs, 4 imports / 1 exports / 0 submodules)
+- `src/410_dead_code_test_boundaries.rs` → module `410_dead_code_test_boundaries` (layer 410_dead_code_test_boundaries.rs, 4 imports / 0 exports / 0 submodules)
+- `src/420_dead_code_entrypoints.rs` → module `420_dead_code_entrypoints` (layer 420_dead_code_entrypoints.rs, 5 imports / 0 exports / 0 submodules)
+- `src/430_dead_code_classifier.rs` → module `430_dead_code_classifier` (layer 430_dead_code_classifier.rs, 2 imports / 0 exports / 0 submodules)
+- `src/440_dead_code_confidence.rs` → module `440_dead_code_confidence` (layer 440_dead_code_confidence.rs, 1 imports / 0 exports / 0 submodules)
+- `src/450_dead_code_actions.rs` → module `450_dead_code_actions` (layer 450_dead_code_actions.rs, 1 imports / 0 exports / 0 submodules)
+- `src/460_correction_plan_types.rs` → module `460_correction_plan_types` (layer 460_correction_plan_types.rs, 3 imports / 0 exports / 0 submodules)
+- `src/470_dead_code_report.rs` → module `470_dead_code_report` (layer 470_dead_code_report.rs, 6 imports / 0 exports / 0 submodules)
+- `src/480_dead_code_filter.rs` → module `480_dead_code_filter` (layer 480_dead_code_filter.rs, 4 imports / 0 exports / 0 submodules)
+- `src/490_verification_policy_types.rs` → module `490_verification_policy_types` (layer 490_verification_policy_types.rs, 2 imports / 0 exports / 0 submodules)
+- `src/500_dead_code_cli.rs` → module `500_dead_code_cli` (layer 500_dead_code_cli.rs, 4 imports / 1 exports / 0 submodules)
+- `src/510_quality_delta_types.rs` → module `510_quality_delta_types` (layer 510_quality_delta_types.rs, 2 imports / 0 exports / 0 submodules)
+- `src/520_dead_code_policy.rs` → module `520_dead_code_policy` (layer 520_dead_code_policy.rs, 2 imports / 0 exports / 0 submodules)
+- `src/530_violation_predictor.rs` → module `530_violation_predictor` (layer 530_violation_predictor.rs, 0 imports / 2 exports / 0 submodules)
+- `src/540_dead_code_report_split.rs` → module `540_dead_code_report_split` (layer 540_dead_code_report_split.rs, 3 imports / 0 exports / 0 submodules)
+- `src/550_tier_classifier.rs` → module `550_tier_classifier` (layer 550_tier_classifier.rs, 1 imports / 0 exports / 0 submodules)
+- `src/560_confidence_scorer.rs` → module `560_confidence_scorer` (layer 560_confidence_scorer.rs, 1 imports / 0 exports / 0 submodules)
+- `src/570_correction_plan_generator.rs` → module `570_correction_plan_generator` (layer 570_correction_plan_generator.rs, 0 imports / 1 exports / 0 submodules)
+- `src/580_verification_scope_planner.rs` → module `580_verification_scope_planner` (layer 580_verification_scope_planner.rs, 0 imports / 1 exports / 0 submodules)
+- `src/590_rollback_criteria_builder.rs` → module `590_rollback_criteria_builder` (layer 590_rollback_criteria_builder.rs, 0 imports / 1 exports / 0 submodules)
+- `src/600_quality_delta_calculator.rs` → module `600_quality_delta_calculator` (layer 600_quality_delta_calculator.rs, 0 imports / 2 exports / 0 submodules)
+- `src/610_action_impact_estimator.rs` → module `610_action_impact_estimator` (layer 610_action_impact_estimator.rs, 2 imports / 1 exports / 0 submodules)
+- `src/620_correction_plan_serializer.rs` → module `620_correction_plan_serializer` (layer 620_correction_plan_serializer.rs, 7 imports / 0 exports / 0 submodules)
+- `src/630_verification_policy_emitter.rs` → module `630_verification_policy_emitter` (layer 630_verification_policy_emitter.rs, 3 imports / 0 exports / 0 submodules)
+- `src/640_correction_intelligence_report.rs` → module `640_correction_intelligence_report` (layer 640_correction_intelligence_report.rs, 18 imports / 2 exports / 0 submodules)
+- `src/admission_composition_artifact.rs` → module `admission_composition_artifact` (layer root, 10 imports / 0 exports / 1 submodules)
+- `src/batch_admission.rs` → module `batch_admission` (layer root, 9 imports / 0 exports / 1 submodules)
+- `src/composition_rule.rs` → module `composition_rule` (layer root, 5 imports / 0 exports / 1 submodules)
+- `src/effect_signature_schema.rs` → module `effect_signature_schema` (layer root, 4 imports / 0 exports / 1 submodules)
+
+## Detailed Files
+
+- `010-imports.md` – expanded import lists
+- `020-exports.md` – export statements
+- `030-submodules.md` – nested module declarations
+- `040-violations.md` – placeholder for future per-module violations

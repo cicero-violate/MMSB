@@ -1,0 +1,1933 @@
+{
+  "version": "1.0",
+  "timestamp": "2025-12-31T09:04:05.144682445+00:00",
+  "actions": [
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/010_invariant_types.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/020_invariant_types.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/010_invariant_types.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/020_invariant_types.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/010_invariant_types.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/020_invariant_types.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/010_invariant_types.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/020_invariant_types.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/010_refactor_constraints.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/030_refactor_constraints.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/010_refactor_constraints.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/030_refactor_constraints.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/010_refactor_constraints.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/030_refactor_constraints.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/010_refactor_constraints.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/030_refactor_constraints.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/010_scc_compressor.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/040_scc_compressor.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/010_scc_compressor.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/040_scc_compressor.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/010_scc_compressor.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/040_scc_compressor.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/010_scc_compressor.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/040_scc_compressor.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/020_cluster_010.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/050_cluster_010.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/020_cluster_010.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/050_cluster_010.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/020_cluster_010.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/050_cluster_010.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/020_cluster_010.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/050_cluster_010.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/020_layer_inference.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/060_layer_inference.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/020_layer_inference.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/060_layer_inference.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/020_layer_inference.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/060_layer_inference.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/020_layer_inference.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/060_layer_inference.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/030_cluster_011.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/070_cluster_011.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/030_cluster_011.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/070_cluster_011.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/030_cluster_011.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/070_cluster_011.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/030_cluster_011.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/070_cluster_011.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/030_fixpoint_solver.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/080_fixpoint_solver.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/030_fixpoint_solver.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/080_fixpoint_solver.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/030_fixpoint_solver.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/080_fixpoint_solver.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/030_fixpoint_solver.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/080_fixpoint_solver.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/040_dependency.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/090_dependency.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/040_dependency.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/090_dependency.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/040_dependency.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/090_dependency.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/040_dependency.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/090_dependency.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/040_structural_detector.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/100_structural_detector.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/040_structural_detector.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/100_structural_detector.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/040_structural_detector.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/100_structural_detector.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/040_structural_detector.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/100_structural_detector.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/050_cluster_006.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/110_cluster_006.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/050_cluster_006.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/110_cluster_006.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/050_cluster_006.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/110_cluster_006.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/050_cluster_006.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/110_cluster_006.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/050_semantic_detector.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/120_semantic_detector.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/050_semantic_detector.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/120_semantic_detector.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/050_semantic_detector.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/120_semantic_detector.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/050_semantic_detector.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/120_semantic_detector.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/060_layer_core.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/130_layer_core.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/060_layer_core.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/130_layer_core.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/060_layer_core.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/130_layer_core.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/060_layer_core.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/130_layer_core.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/060_path_detector.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/140_path_detector.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/060_path_detector.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/140_path_detector.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/060_path_detector.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/140_path_detector.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/060_path_detector.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/140_path_detector.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/070_invariant_integrator.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/150_invariant_integrator.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/070_invariant_integrator.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/150_invariant_integrator.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/070_invariant_integrator.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/150_invariant_integrator.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/070_invariant_integrator.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/150_invariant_integrator.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/070_layer_utilities.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/160_layer_utilities.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/070_layer_utilities.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/160_layer_utilities.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/070_layer_utilities.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/160_layer_utilities.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/070_layer_utilities.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/160_layer_utilities.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/080_invariant_reporter.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/170_invariant_reporter.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/080_invariant_reporter.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/170_invariant_reporter.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/080_invariant_reporter.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/170_invariant_reporter.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/080_invariant_reporter.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/170_invariant_reporter.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/082_conscience_graph.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/180_conscience_graph.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/082_conscience_graph.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/180_conscience_graph.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/082_conscience_graph.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/180_conscience_graph.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/082_conscience_graph.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/180_conscience_graph.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/083_action_validator.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_action_validator.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/083_action_validator.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_action_validator.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/083_action_validator.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_action_validator.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/083_action_validator.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_action_validator.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/085_agent_conscience.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_agent_conscience.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/085_agent_conscience.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_agent_conscience.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/085_agent_conscience.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_agent_conscience.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/085_agent_conscience.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_agent_conscience.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/090_utilities.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/210_utilities.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/090_utilities.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/210_utilities.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/090_utilities.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/210_utilities.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/090_utilities.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/210_utilities.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/100_types.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/220_types.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/100_types.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/220_types.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/100_types.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/220_types.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/100_types.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/220_types.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/110_cohesion_analyzer.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/230_cohesion_analyzer.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/110_cohesion_analyzer.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/230_cohesion_analyzer.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/110_cohesion_analyzer.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/230_cohesion_analyzer.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/110_cohesion_analyzer.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/230_cohesion_analyzer.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/120_directory_analyzer.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/240_directory_analyzer.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/120_directory_analyzer.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/240_directory_analyzer.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/120_directory_analyzer.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/240_directory_analyzer.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/120_directory_analyzer.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/240_directory_analyzer.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/130_control_flow.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/250_control_flow.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/130_control_flow.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/250_control_flow.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/130_control_flow.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/250_control_flow.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/130_control_flow.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/250_control_flow.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/140_file_ordering.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/260_file_ordering.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/140_file_ordering.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/260_file_ordering.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/140_file_ordering.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/260_file_ordering.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/140_file_ordering.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/260_file_ordering.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/150_julia_parser.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/270_julia_parser.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/150_julia_parser.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/270_julia_parser.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/150_julia_parser.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/270_julia_parser.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/150_julia_parser.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/270_julia_parser.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/160_rust_parser.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/280_rust_parser.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/160_rust_parser.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/280_rust_parser.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/160_rust_parser.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/280_rust_parser.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/160_rust_parser.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/280_rust_parser.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/170_dot_exporter.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/290_dot_exporter.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/170_dot_exporter.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/290_dot_exporter.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/170_dot_exporter.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/290_dot_exporter.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/170_dot_exporter.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/290_dot_exporter.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/170_file_gathering.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/300_file_gathering.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/170_file_gathering.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/300_file_gathering.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/170_file_gathering.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/300_file_gathering.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/170_file_gathering.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/300_file_gathering.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/180_report.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/310_report.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/180_report.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/310_report.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/180_report.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/310_report.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/180_report.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/310_report.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/320_main.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/320_main.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/320_main.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/320_main.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/191_agent_cli.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/330_agent_cli.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/191_agent_cli.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/330_agent_cli.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/191_agent_cli.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/330_agent_cli.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/191_agent_cli.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/330_agent_cli.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/340_lib.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/340_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/340_lib.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/340_lib.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/210_dead_code_types.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/350_dead_code_types.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/210_dead_code_types.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/350_dead_code_types.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/210_dead_code_types.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/350_dead_code_types.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/210_dead_code_types.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/350_dead_code_types.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/211_dead_code_attribute_parser.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/360_dead_code_attribute_parser.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/211_dead_code_attribute_parser.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/360_dead_code_attribute_parser.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/211_dead_code_attribute_parser.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/360_dead_code_attribute_parser.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/211_dead_code_attribute_parser.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/360_dead_code_attribute_parser.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/212_dead_code_doc_comment_parser.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/370_dead_code_doc_comment_parser.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/212_dead_code_doc_comment_parser.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/370_dead_code_doc_comment_parser.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/212_dead_code_doc_comment_parser.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/370_dead_code_doc_comment_parser.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/212_dead_code_doc_comment_parser.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/370_dead_code_doc_comment_parser.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/213_dead_code_call_graph.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/380_dead_code_call_graph.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/213_dead_code_call_graph.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/380_dead_code_call_graph.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/213_dead_code_call_graph.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/380_dead_code_call_graph.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/213_dead_code_call_graph.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/380_dead_code_call_graph.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/214_dead_code_intent.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/390_dead_code_intent.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/214_dead_code_intent.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/390_dead_code_intent.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/214_dead_code_intent.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/390_dead_code_intent.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/214_dead_code_intent.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/390_dead_code_intent.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/215_dead_code_test_boundaries.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/400_dead_code_test_boundaries.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/215_dead_code_test_boundaries.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/400_dead_code_test_boundaries.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/215_dead_code_test_boundaries.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/400_dead_code_test_boundaries.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/215_dead_code_test_boundaries.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/400_dead_code_test_boundaries.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/216_dead_code_entrypoints.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/410_dead_code_entrypoints.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/216_dead_code_entrypoints.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/410_dead_code_entrypoints.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/216_dead_code_entrypoints.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/410_dead_code_entrypoints.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/216_dead_code_entrypoints.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/410_dead_code_entrypoints.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/217_dead_code_classifier.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/420_dead_code_classifier.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/217_dead_code_classifier.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/420_dead_code_classifier.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/217_dead_code_classifier.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/420_dead_code_classifier.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/217_dead_code_classifier.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/420_dead_code_classifier.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/218_dead_code_confidence.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/430_dead_code_confidence.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/218_dead_code_confidence.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/430_dead_code_confidence.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/218_dead_code_confidence.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/430_dead_code_confidence.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/218_dead_code_confidence.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/430_dead_code_confidence.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/219_dead_code_actions.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/440_dead_code_actions.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/219_dead_code_actions.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/440_dead_code_actions.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/219_dead_code_actions.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/440_dead_code_actions.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/219_dead_code_actions.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/440_dead_code_actions.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/220_correction_plan_types.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/450_correction_plan_types.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/220_correction_plan_types.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/450_correction_plan_types.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/220_correction_plan_types.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/450_correction_plan_types.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/220_correction_plan_types.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/450_correction_plan_types.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/220_dead_code_report.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/460_dead_code_report.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/220_dead_code_report.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/460_dead_code_report.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/220_dead_code_report.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/460_dead_code_report.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/220_dead_code_report.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/460_dead_code_report.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/221_dead_code_filter.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/470_dead_code_filter.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/221_dead_code_filter.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/470_dead_code_filter.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/221_dead_code_filter.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/470_dead_code_filter.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/221_dead_code_filter.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/470_dead_code_filter.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/221_verification_policy_types.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/480_verification_policy_types.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/221_verification_policy_types.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/480_verification_policy_types.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/221_verification_policy_types.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/480_verification_policy_types.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/221_verification_policy_types.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/480_verification_policy_types.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/222_dead_code_cli.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/490_dead_code_cli.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/222_dead_code_cli.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/490_dead_code_cli.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/222_dead_code_cli.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/490_dead_code_cli.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/222_dead_code_cli.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/490_dead_code_cli.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/222_quality_delta_types.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/500_quality_delta_types.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/222_quality_delta_types.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/500_quality_delta_types.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/222_quality_delta_types.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/500_quality_delta_types.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/222_quality_delta_types.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/500_quality_delta_types.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/223_dead_code_policy.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/510_dead_code_policy.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/223_dead_code_policy.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/510_dead_code_policy.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/223_dead_code_policy.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/510_dead_code_policy.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/223_dead_code_policy.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/510_dead_code_policy.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/223_violation_predictor.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/520_violation_predictor.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/223_violation_predictor.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/520_violation_predictor.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/223_violation_predictor.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/520_violation_predictor.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/223_violation_predictor.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/520_violation_predictor.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/224_dead_code_report_split.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/530_dead_code_report_split.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/224_dead_code_report_split.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/530_dead_code_report_split.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/224_dead_code_report_split.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/530_dead_code_report_split.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/224_dead_code_report_split.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/530_dead_code_report_split.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/224_tier_classifier.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/540_tier_classifier.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/224_tier_classifier.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/540_tier_classifier.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/224_tier_classifier.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/540_tier_classifier.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/224_tier_classifier.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/540_tier_classifier.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/225_confidence_scorer.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/550_confidence_scorer.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/225_confidence_scorer.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/550_confidence_scorer.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/225_confidence_scorer.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/550_confidence_scorer.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/225_confidence_scorer.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/550_confidence_scorer.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/226_correction_plan_generator.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/560_correction_plan_generator.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/226_correction_plan_generator.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/560_correction_plan_generator.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/226_correction_plan_generator.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/560_correction_plan_generator.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/226_correction_plan_generator.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/560_correction_plan_generator.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/227_verification_scope_planner.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/570_verification_scope_planner.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/227_verification_scope_planner.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/570_verification_scope_planner.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/227_verification_scope_planner.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/570_verification_scope_planner.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/227_verification_scope_planner.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/570_verification_scope_planner.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/228_rollback_criteria_builder.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/580_rollback_criteria_builder.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/228_rollback_criteria_builder.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/580_rollback_criteria_builder.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/228_rollback_criteria_builder.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/580_rollback_criteria_builder.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/228_rollback_criteria_builder.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/580_rollback_criteria_builder.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/229_quality_delta_calculator.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/590_quality_delta_calculator.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/229_quality_delta_calculator.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/590_quality_delta_calculator.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/229_quality_delta_calculator.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/590_quality_delta_calculator.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/229_quality_delta_calculator.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/590_quality_delta_calculator.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/230_action_impact_estimator.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/600_action_impact_estimator.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/230_action_impact_estimator.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/600_action_impact_estimator.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/230_action_impact_estimator.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/600_action_impact_estimator.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/230_action_impact_estimator.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/600_action_impact_estimator.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/231_correction_plan_serializer.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/610_correction_plan_serializer.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/231_correction_plan_serializer.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/610_correction_plan_serializer.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/231_correction_plan_serializer.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/610_correction_plan_serializer.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/231_correction_plan_serializer.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/610_correction_plan_serializer.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/232_verification_policy_emitter.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/620_verification_policy_emitter.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/232_verification_policy_emitter.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/620_verification_policy_emitter.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/232_verification_policy_emitter.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/620_verification_policy_emitter.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/232_verification_policy_emitter.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/620_verification_policy_emitter.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    },
+    {
+      "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/233_correction_intelligence_report.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/630_correction_intelligence_report.rs",
+      "phase": 5,
+      "status": "applied",
+      "applied_strategies": [],
+      "errors": [],
+      "warnings": [
+        "UpdatePath skipped (already applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/233_correction_intelligence_report.rs -> /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/630_correction_intelligence_report.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/190_main.rs",
+        "UpdateCaller skipped (caller missing, assume applied): /home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/200_lib.rs",
+        "Suggested rollback criteria: QualityDecreased { threshold: 0.05 }"
+      ],
+      "dependency_plan": null,
+      "verification_results": [
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/233_correction_intelligence_report.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/630_correction_intelligence_report.rs",
+          "check": "CargoCheck",
+          "status": "passed",
+          "error": null
+        },
+        {
+          "action_id": "rename_file_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/233_correction_intelligence_report.rs_to_/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/src/630_correction_intelligence_report.rs",
+          "check": "CargoTest",
+          "status": "passed",
+          "error": null
+        }
+      ],
+      "rollback_applied": false,
+      "diffs": [],
+      "diff_count": 0
+    }
+  ],
+  "summary": {
+    "total_actions": 62,
+    "applied": 62,
+    "failed": 0,
+    "manual_review": 0,
+    "skipped": 0,
+    "total_diffs": 0
+  },
+  "verification_report": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/docs/97_correction_intelligence/slice_path_coherence/executor_verification_results.json",
+  "rollback_log": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/docs/97_correction_intelligence/slice_path_coherence/executor_rollback_log.json",
+  "diff_report": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/docs/97_correction_intelligence/slice_path_coherence/executor_diff_report.json",
+  "input_report": "/home/cicero-arch-omen/ai_sandbox/codex-agent/codex_sse/server-tools/MMSB/tools/mmsb-analyzer/docs/97_correction_intelligence/slice_path_coherence/executor_input_report.json"
+}

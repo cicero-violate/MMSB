@@ -97,14 +97,6 @@ Module `mod`
 - `shadow_graph_mod`
 - `shadow_graph_traversal`
 
-## MMSB/src/03_device/mod.rs (03_device)
-
-Module `mod`
-
-- `device`
-- `device_registry`
-- `host_device_sync`
-
 ## MMSB/src/04_propagation/mod.rs (04_propagation)
 
 Module `mod`

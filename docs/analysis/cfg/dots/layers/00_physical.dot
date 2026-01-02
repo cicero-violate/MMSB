@@ -15,7 +15,7 @@ digraph LayerCFG {
 
     f1_n1 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
     f1_n2 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
-    f1_n3 [label="BB1 L11", shape=box, fillcolor=lightblue, style="filled"];
+    f1_n3 [label="BB1 L16", shape=box, fillcolor=lightblue, style="filled"];
 
     f1_n1 -> f1_n3;
     f1_n3 -> f1_n2;
@@ -207,7 +207,7 @@ digraph LayerCFG {
 
     f13_n46 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
     f13_n47 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
-    f13_n48 [label="BB1 L12", shape=box, fillcolor=lightblue, style="filled"];
+    f13_n48 [label="BB1 L17", shape=box, fillcolor=lightblue, style="filled"];
 
     f13_n46 -> f13_n48;
     f13_n48 -> f13_n47;
@@ -221,7 +221,7 @@ digraph LayerCFG {
 
     f14_n49 [label="ENTRY", shape=ellipse, fillcolor=lightgreen, style="filled,bold"];
     f14_n50 [label="EXIT", shape=doubleoctagon, fillcolor=lightcoral, style="filled,bold"];
-    f14_n51 [label="BB1 L7", shape=box, fillcolor=lightblue, style="filled"];
+    f14_n51 [label="BB1 L10", shape=box, fillcolor=lightblue, style="filled"];
 
     f14_n49 -> f14_n51;
     f14_n51 -> f14_n50;

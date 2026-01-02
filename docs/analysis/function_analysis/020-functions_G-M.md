@@ -490,6 +490,15 @@
   - `set_last_error`
   - `PageHandle::null`
 
+#### `mmsb_allocator_clear`
+
+- **File:** MMSB/src/ffi.rs:0
+- **Visibility:** Public
+- **Calls:**
+  - `is_null`
+  - `set_last_error`
+  - `clear`
+
 #### `mmsb_allocator_free`
 
 - **File:** MMSB/src/ffi.rs:0
@@ -964,6 +973,15 @@
   - `clone`
   - `set_last_error`
   - `log_error_code`
+
+#### `mmsb_tlog_clear_entries`
+
+- **File:** MMSB/src/ffi.rs:0
+- **Visibility:** Public
+- **Calls:**
+  - `is_null`
+  - `set_last_error`
+  - `clear_entries`
 
 #### `mmsb_tlog_free`
 

@@ -1,0 +1,1116 @@
+{
+  "version": "1.0",
+  "timestamp": "2026-01-01T05:00:53.936729445+00:00",
+  "correction_summary": {
+    "trivial_count": 0,
+    "moderate_count": 25,
+    "complex_count": 0,
+    "total_predicted_violations": 25,
+    "average_confidence": 0.5999999999999998,
+    "estimated_total_fix_time_seconds": 375
+  },
+  "plans": [
+    {
+      "action_id": "move_predict_violations_to_src/640_correction_intelligence_report.rs",
+      "tier": "Moderate",
+      "confidence": 0.6,
+      "estimated_fix_time_seconds": 15,
+      "violations": [
+        {
+          "kind": "LayerViolation",
+          "severity": "Medium",
+          "confidence": 0.6,
+          "affected_files": 2
+        }
+      ],
+      "verification": {
+        "scope": "ModuleLocal",
+        "scope_details": [
+          "module:src/640_correction_intelligence_report.rs",
+          "transitive_depth:2"
+        ],
+        "incremental_eligible": false,
+        "estimated_time_seconds": 60
+      },
+      "strategies": [
+        {
+          "kind": "MoveToLayer",
+          "context": null
+        },
+        {
+          "kind": "EnsureImports",
+          "context": null
+        }
+      ]
+    },
+    {
+      "action_id": "move_find_callers_to_src/640_correction_intelligence_report.rs",
+      "tier": "Moderate",
+      "confidence": 0.6,
+      "estimated_fix_time_seconds": 15,
+      "violations": [
+        {
+          "kind": "LayerViolation",
+          "severity": "Medium",
+          "confidence": 0.6,
+          "affected_files": 2
+        }
+      ],
+      "verification": {
+        "scope": "ModuleLocal",
+        "scope_details": [
+          "module:src/640_correction_intelligence_report.rs",
+          "transitive_depth:2"
+        ],
+        "incremental_eligible": false,
+        "estimated_time_seconds": 60
+      },
+      "strategies": [
+        {
+          "kind": "MoveToLayer",
+          "context": null
+        },
+        {
+          "kind": "EnsureImports",
+          "context": null
+        }
+      ]
+    },
+    {
+      "action_id": "move_find_reference_files_to_src/640_correction_intelligence_report.rs",
+      "tier": "Moderate",
+      "confidence": 0.6,
+      "estimated_fix_time_seconds": 15,
+      "violations": [
+        {
+          "kind": "LayerViolation",
+          "severity": "Medium",
+          "confidence": 0.6,
+          "affected_files": 2
+        }
+      ],
+      "verification": {
+        "scope": "ModuleLocal",
+        "scope_details": [
+          "module:src/640_correction_intelligence_report.rs",
+          "transitive_depth:2"
+        ],
+        "incremental_eligible": false,
+        "estimated_time_seconds": 60
+      },
+      "strategies": [
+        {
+          "kind": "MoveToLayer",
+          "context": null
+        },
+        {
+          "kind": "EnsureImports",
+          "context": null
+        }
+      ]
+    },
+    {
+      "action_id": "move_find_element_file_to_src/640_correction_intelligence_report.rs",
+      "tier": "Moderate",
+      "confidence": 0.6,
+      "estimated_fix_time_seconds": 15,
+      "violations": [
+        {
+          "kind": "LayerViolation",
+          "severity": "Medium",
+          "confidence": 0.6,
+          "affected_files": 2
+        }
+      ],
+      "verification": {
+        "scope": "ModuleLocal",
+        "scope_details": [
+          "module:src/640_correction_intelligence_report.rs",
+          "transitive_depth:2"
+        ],
+        "incremental_eligible": false,
+        "estimated_time_seconds": 60
+      },
+      "strategies": [
+        {
+          "kind": "MoveToLayer",
+          "context": null
+        },
+        {
+          "kind": "EnsureImports",
+          "context": null
+        }
+      ]
+    },
+    {
+      "action_id": "move_symbol_exists_to_src/640_correction_intelligence_report.rs",
+      "tier": "Moderate",
+      "confidence": 0.6,
+      "estimated_fix_time_seconds": 15,
+      "violations": [
+        {
+          "kind": "LayerViolation",
+          "severity": "Medium",
+          "confidence": 0.6,
+          "affected_files": 2
+        }
+      ],
+      "verification": {
+        "scope": "ModuleLocal",
+        "scope_details": [
+          "module:src/640_correction_intelligence_report.rs",
+          "transitive_depth:2"
+        ],
+        "incremental_eligible": false,
+        "estimated_time_seconds": 60
+      },
+      "strategies": [
+        {
+          "kind": "MoveToLayer",
+          "context": null
+        },
+        {
+          "kind": "EnsureImports",
+          "context": null
+        }
+      ]
+    },
+    {
+      "action_id": "move_move_violates_invariant_to_src/640_correction_intelligence_report.rs",
+      "tier": "Moderate",
+      "confidence": 0.6,
+      "estimated_fix_time_seconds": 15,
+      "violations": [
+        {
+          "kind": "LayerViolation",
+          "severity": "Medium",
+          "confidence": 0.6,
+          "affected_files": 2
+        }
+      ],
+      "verification": {
+        "scope": "ModuleLocal",
+        "scope_details": [
+          "module:src/640_correction_intelligence_report.rs",
+          "transitive_depth:2"
+        ],
+        "incremental_eligible": false,
+        "estimated_time_seconds": 60
+      },
+      "strategies": [
+        {
+          "kind": "MoveToLayer",
+          "context": null
+        },
+        {
+          "kind": "EnsureImports",
+          "context": null
+        }
+      ]
+    },
+    {
+      "action_id": "move_generate_intelligence_report_to_src/640_correction_intelligence_report.rs",
+      "tier": "Moderate",
+      "confidence": 0.6,
+      "estimated_fix_time_seconds": 15,
+      "violations": [
+        {
+          "kind": "LayerViolation",
+          "severity": "Medium",
+          "confidence": 0.6,
+          "affected_files": 2
+        }
+      ],
+      "verification": {
+        "scope": "ModuleLocal",
+        "scope_details": [
+          "module:src/640_correction_intelligence_report.rs",
+          "transitive_depth:2"
+        ],
+        "incremental_eligible": false,
+        "estimated_time_seconds": 60
+      },
+      "strategies": [
+        {
+          "kind": "MoveToLayer",
+          "context": null
+        },
+        {
+          "kind": "EnsureImports",
+          "context": null
+        }
+      ]
+    },
+    {
+      "action_id": "move_generate_correction_plan_to_src/640_correction_intelligence_report.rs",
+      "tier": "Moderate",
+      "confidence": 0.6,
+      "estimated_fix_time_seconds": 15,
+      "violations": [
+        {
+          "kind": "LayerViolation",
+          "severity": "Medium",
+          "confidence": 0.6,
+          "affected_files": 2
+        }
+      ],
+      "verification": {
+        "scope": "ModuleLocal",
+        "scope_details": [
+          "module:src/640_correction_intelligence_report.rs",
+          "transitive_depth:2"
+        ],
+        "incremental_eligible": false,
+        "estimated_time_seconds": 60
+      },
+      "strategies": [
+        {
+          "kind": "MoveToLayer",
+          "context": null
+        },
+        {
+          "kind": "EnsureImports",
+          "context": null
+        }
+      ]
+    },
+    {
+      "action_id": "move_average_confidence_to_src/640_correction_intelligence_report.rs",
+      "tier": "Moderate",
+      "confidence": 0.6,
+      "estimated_fix_time_seconds": 15,
+      "violations": [
+        {
+          "kind": "LayerViolation",
+          "severity": "Medium",
+          "confidence": 0.6,
+          "affected_files": 2
+        }
+      ],
+      "verification": {
+        "scope": "ModuleLocal",
+        "scope_details": [
+          "module:src/640_correction_intelligence_report.rs",
+          "transitive_depth:2"
+        ],
+        "incremental_eligible": false,
+        "estimated_time_seconds": 60
+      },
+      "strategies": [
+        {
+          "kind": "MoveToLayer",
+          "context": null
+        },
+        {
+          "kind": "EnsureImports",
+          "context": null
+        }
+      ]
+    },
+    {
+      "action_id": "move_estimate_fix_time_to_src/640_correction_intelligence_report.rs",
+      "tier": "Moderate",
+      "confidence": 0.6,
+      "estimated_fix_time_seconds": 15,
+      "violations": [
+        {
+          "kind": "LayerViolation",
+          "severity": "Medium",
+          "confidence": 0.6,
+          "affected_files": 2
+        }
+      ],
+      "verification": {
+        "scope": "ModuleLocal",
+        "scope_details": [
+          "module:src/640_correction_intelligence_report.rs",
+          "transitive_depth:2"
+        ],
+        "incremental_eligible": false,
+        "estimated_time_seconds": 60
+      },
+      "strategies": [
+        {
+          "kind": "MoveToLayer",
+          "context": null
+        },
+        {
+          "kind": "EnsureImports",
+          "context": null
+        }
+      ]
+    },
+    {
+      "action_id": "move_action_symbol_to_src/640_correction_intelligence_report.rs",
+      "tier": "Moderate",
+      "confidence": 0.6,
+      "estimated_fix_time_seconds": 15,
+      "violations": [
+        {
+          "kind": "LayerViolation",
+          "severity": "Medium",
+          "confidence": 0.6,
+          "affected_files": 2
+        }
+      ],
+      "verification": {
+        "scope": "ModuleLocal",
+        "scope_details": [
+          "module:src/640_correction_intelligence_report.rs",
+          "transitive_depth:2"
+        ],
+        "incremental_eligible": false,
+        "estimated_time_seconds": 60
+      },
+      "strategies": [
+        {
+          "kind": "MoveToLayer",
+          "context": null
+        },
+        {
+          "kind": "EnsureImports",
+          "context": null
+        }
+      ]
+    },
+    {
+      "action_id": "move_action_function_to_src/640_correction_intelligence_report.rs",
+      "tier": "Moderate",
+      "confidence": 0.6,
+      "estimated_fix_time_seconds": 15,
+      "violations": [
+        {
+          "kind": "LayerViolation",
+          "severity": "Medium",
+          "confidence": 0.6,
+          "affected_files": 2
+        }
+      ],
+      "verification": {
+        "scope": "ModuleLocal",
+        "scope_details": [
+          "module:src/640_correction_intelligence_report.rs",
+          "transitive_depth:2"
+        ],
+        "incremental_eligible": false,
+        "estimated_time_seconds": 60
+      },
+      "strategies": [
+        {
+          "kind": "MoveToLayer",
+          "context": null
+        },
+        {
+          "kind": "EnsureImports",
+          "context": null
+        }
+      ]
+    },
+    {
+      "action_id": "move_action_module_path_to_src/640_correction_intelligence_report.rs",
+      "tier": "Moderate",
+      "confidence": 0.6,
+      "estimated_fix_time_seconds": 15,
+      "violations": [
+        {
+          "kind": "LayerViolation",
+          "severity": "Medium",
+          "confidence": 0.6,
+          "affected_files": 2
+        }
+      ],
+      "verification": {
+        "scope": "ModuleLocal",
+        "scope_details": [
+          "module:src/640_correction_intelligence_report.rs",
+          "transitive_depth:2"
+        ],
+        "incremental_eligible": false,
+        "estimated_time_seconds": 60
+      },
+      "strategies": [
+        {
+          "kind": "MoveToLayer",
+          "context": null
+        },
+        {
+          "kind": "EnsureImports",
+          "context": null
+        }
+      ]
+    },
+    {
+      "action_id": "move_action_refs_to_src/640_correction_intelligence_report.rs",
+      "tier": "Moderate",
+      "confidence": 0.6,
+      "estimated_fix_time_seconds": 15,
+      "violations": [
+        {
+          "kind": "LayerViolation",
+          "severity": "Medium",
+          "confidence": 0.6,
+          "affected_files": 2
+        }
+      ],
+      "verification": {
+        "scope": "ModuleLocal",
+        "scope_details": [
+          "module:src/640_correction_intelligence_report.rs",
+          "transitive_depth:2"
+        ],
+        "incremental_eligible": false,
+        "estimated_time_seconds": 60
+      },
+      "strategies": [
+        {
+          "kind": "MoveToLayer",
+          "context": null
+        },
+        {
+          "kind": "EnsureImports",
+          "context": null
+        }
+      ]
+    },
+    {
+      "action_id": "move_action_target_layer_to_src/640_correction_intelligence_report.rs",
+      "tier": "Moderate",
+      "confidence": 0.6,
+      "estimated_fix_time_seconds": 15,
+      "violations": [
+        {
+          "kind": "LayerViolation",
+          "severity": "Medium",
+          "confidence": 0.6,
+          "affected_files": 2
+        }
+      ],
+      "verification": {
+        "scope": "ModuleLocal",
+        "scope_details": [
+          "module:src/640_correction_intelligence_report.rs",
+          "transitive_depth:2"
+        ],
+        "incremental_eligible": false,
+        "estimated_time_seconds": 60
+      },
+      "strategies": [
+        {
+          "kind": "MoveToLayer",
+          "context": null
+        },
+        {
+          "kind": "EnsureImports",
+          "context": null
+        }
+      ]
+    },
+    {
+      "action_id": "move_action_visibility_to_src/640_correction_intelligence_report.rs",
+      "tier": "Moderate",
+      "confidence": 0.6,
+      "estimated_fix_time_seconds": 15,
+      "violations": [
+        {
+          "kind": "LayerViolation",
+          "severity": "Medium",
+          "confidence": 0.6,
+          "affected_files": 2
+        }
+      ],
+      "verification": {
+        "scope": "ModuleLocal",
+        "scope_details": [
+          "module:src/640_correction_intelligence_report.rs",
+          "transitive_depth:2"
+        ],
+        "incremental_eligible": false,
+        "estimated_time_seconds": 60
+      },
+      "strategies": [
+        {
+          "kind": "MoveToLayer",
+          "context": null
+        },
+        {
+          "kind": "EnsureImports",
+          "context": null
+        }
+      ]
+    },
+    {
+      "action_id": "move_plan_verification_scope_to_src/640_correction_intelligence_report.rs",
+      "tier": "Moderate",
+      "confidence": 0.6,
+      "estimated_fix_time_seconds": 15,
+      "violations": [
+        {
+          "kind": "LayerViolation",
+          "severity": "Medium",
+          "confidence": 0.6,
+          "affected_files": 2
+        }
+      ],
+      "verification": {
+        "scope": "ModuleLocal",
+        "scope_details": [
+          "module:src/640_correction_intelligence_report.rs",
+          "transitive_depth:2"
+        ],
+        "incremental_eligible": false,
+        "estimated_time_seconds": 60
+      },
+      "strategies": [
+        {
+          "kind": "MoveToLayer",
+          "context": null
+        },
+        {
+          "kind": "EnsureImports",
+          "context": null
+        }
+      ]
+    },
+    {
+      "action_id": "move_affected_files_to_src/640_correction_intelligence_report.rs",
+      "tier": "Moderate",
+      "confidence": 0.6,
+      "estimated_fix_time_seconds": 15,
+      "violations": [
+        {
+          "kind": "LayerViolation",
+          "severity": "Medium",
+          "confidence": 0.6,
+          "affected_files": 2
+        }
+      ],
+      "verification": {
+        "scope": "ModuleLocal",
+        "scope_details": [
+          "module:src/640_correction_intelligence_report.rs",
+          "transitive_depth:2"
+        ],
+        "incremental_eligible": false,
+        "estimated_time_seconds": 60
+      },
+      "strategies": [
+        {
+          "kind": "MoveToLayer",
+          "context": null
+        },
+        {
+          "kind": "EnsureImports",
+          "context": null
+        }
+      ]
+    },
+    {
+      "action_id": "move_action_module_to_src/640_correction_intelligence_report.rs",
+      "tier": "Moderate",
+      "confidence": 0.6,
+      "estimated_fix_time_seconds": 15,
+      "violations": [
+        {
+          "kind": "LayerViolation",
+          "severity": "Medium",
+          "confidence": 0.6,
+          "affected_files": 2
+        }
+      ],
+      "verification": {
+        "scope": "ModuleLocal",
+        "scope_details": [
+          "module:src/640_correction_intelligence_report.rs",
+          "transitive_depth:2"
+        ],
+        "incremental_eligible": false,
+        "estimated_time_seconds": 60
+      },
+      "strategies": [
+        {
+          "kind": "MoveToLayer",
+          "context": null
+        },
+        {
+          "kind": "EnsureImports",
+          "context": null
+        }
+      ]
+    },
+    {
+      "action_id": "move_estimate_verification_time_to_src/640_correction_intelligence_report.rs",
+      "tier": "Moderate",
+      "confidence": 0.6,
+      "estimated_fix_time_seconds": 15,
+      "violations": [
+        {
+          "kind": "LayerViolation",
+          "severity": "Medium",
+          "confidence": 0.6,
+          "affected_files": 2
+        }
+      ],
+      "verification": {
+        "scope": "ModuleLocal",
+        "scope_details": [
+          "module:src/640_correction_intelligence_report.rs",
+          "transitive_depth:2"
+        ],
+        "incremental_eligible": false,
+        "estimated_time_seconds": 60
+      },
+      "strategies": [
+        {
+          "kind": "MoveToLayer",
+          "context": null
+        },
+        {
+          "kind": "EnsureImports",
+          "context": null
+        }
+      ]
+    },
+    {
+      "action_id": "move_build_rollback_criteria_to_src/640_correction_intelligence_report.rs",
+      "tier": "Moderate",
+      "confidence": 0.6,
+      "estimated_fix_time_seconds": 15,
+      "violations": [
+        {
+          "kind": "LayerViolation",
+          "severity": "Medium",
+          "confidence": 0.6,
+          "affected_files": 2
+        }
+      ],
+      "verification": {
+        "scope": "ModuleLocal",
+        "scope_details": [
+          "module:src/640_correction_intelligence_report.rs",
+          "transitive_depth:2"
+        ],
+        "incremental_eligible": false,
+        "estimated_time_seconds": 60
+      },
+      "strategies": [
+        {
+          "kind": "MoveToLayer",
+          "context": null
+        },
+        {
+          "kind": "EnsureImports",
+          "context": null
+        }
+      ]
+    },
+    {
+      "action_id": "move_extract_critical_tests_to_src/640_correction_intelligence_report.rs",
+      "tier": "Moderate",
+      "confidence": 0.6,
+      "estimated_fix_time_seconds": 15,
+      "violations": [
+        {
+          "kind": "LayerViolation",
+          "severity": "Medium",
+          "confidence": 0.6,
+          "affected_files": 2
+        }
+      ],
+      "verification": {
+        "scope": "ModuleLocal",
+        "scope_details": [
+          "module:src/640_correction_intelligence_report.rs",
+          "transitive_depth:2"
+        ],
+        "incremental_eligible": false,
+        "estimated_time_seconds": 60
+      },
+      "strategies": [
+        {
+          "kind": "MoveToLayer",
+          "context": null
+        },
+        {
+          "kind": "EnsureImports",
+          "context": null
+        }
+      ]
+    },
+    {
+      "action_id": "move_calculate_quality_delta_to_src/640_correction_intelligence_report.rs",
+      "tier": "Moderate",
+      "confidence": 0.6,
+      "estimated_fix_time_seconds": 15,
+      "violations": [
+        {
+          "kind": "LayerViolation",
+          "severity": "Medium",
+          "confidence": 0.6,
+          "affected_files": 2
+        }
+      ],
+      "verification": {
+        "scope": "ModuleLocal",
+        "scope_details": [
+          "module:src/640_correction_intelligence_report.rs",
+          "transitive_depth:2"
+        ],
+        "incremental_eligible": false,
+        "estimated_time_seconds": 60
+      },
+      "strategies": [
+        {
+          "kind": "MoveToLayer",
+          "context": null
+        },
+        {
+          "kind": "EnsureImports",
+          "context": null
+        }
+      ]
+    },
+    {
+      "action_id": "move_estimate_impact_to_src/640_correction_intelligence_report.rs",
+      "tier": "Moderate",
+      "confidence": 0.6,
+      "estimated_fix_time_seconds": 15,
+      "violations": [
+        {
+          "kind": "LayerViolation",
+          "severity": "Medium",
+          "confidence": 0.6,
+          "affected_files": 2
+        }
+      ],
+      "verification": {
+        "scope": "ModuleLocal",
+        "scope_details": [
+          "module:src/640_correction_intelligence_report.rs",
+          "transitive_depth:2"
+        ],
+        "incremental_eligible": false,
+        "estimated_time_seconds": 60
+      },
+      "strategies": [
+        {
+          "kind": "MoveToLayer",
+          "context": null
+        },
+        {
+          "kind": "EnsureImports",
+          "context": null
+        }
+      ]
+    },
+    {
+      "action_id": "move_simulate_action_to_src/640_correction_intelligence_report.rs",
+      "tier": "Moderate",
+      "confidence": 0.6,
+      "estimated_fix_time_seconds": 15,
+      "violations": [
+        {
+          "kind": "LayerViolation",
+          "severity": "Medium",
+          "confidence": 0.6,
+          "affected_files": 2
+        }
+      ],
+      "verification": {
+        "scope": "ModuleLocal",
+        "scope_details": [
+          "module:src/640_correction_intelligence_report.rs",
+          "transitive_depth:2"
+        ],
+        "incremental_eligible": false,
+        "estimated_time_seconds": 60
+      },
+      "strategies": [
+        {
+          "kind": "MoveToLayer",
+          "context": null
+        },
+        {
+          "kind": "EnsureImports",
+          "context": null
+        }
+      ]
+    }
+  ],
+  "policies": [
+    {
+      "action_id": "move_predict_violations_to_src/640_correction_intelligence_report.rs",
+      "scope": "ModuleLocal",
+      "scope_details": [
+        "module:src/640_correction_intelligence_report.rs",
+        "transitive_depth:2"
+      ],
+      "incremental": false,
+      "estimated_time_seconds": 60,
+      "checks": 2
+    },
+    {
+      "action_id": "move_find_callers_to_src/640_correction_intelligence_report.rs",
+      "scope": "ModuleLocal",
+      "scope_details": [
+        "module:src/640_correction_intelligence_report.rs",
+        "transitive_depth:2"
+      ],
+      "incremental": false,
+      "estimated_time_seconds": 60,
+      "checks": 2
+    },
+    {
+      "action_id": "move_find_reference_files_to_src/640_correction_intelligence_report.rs",
+      "scope": "ModuleLocal",
+      "scope_details": [
+        "module:src/640_correction_intelligence_report.rs",
+        "transitive_depth:2"
+      ],
+      "incremental": false,
+      "estimated_time_seconds": 60,
+      "checks": 2
+    },
+    {
+      "action_id": "move_find_element_file_to_src/640_correction_intelligence_report.rs",
+      "scope": "ModuleLocal",
+      "scope_details": [
+        "module:src/640_correction_intelligence_report.rs",
+        "transitive_depth:2"
+      ],
+      "incremental": false,
+      "estimated_time_seconds": 60,
+      "checks": 2
+    },
+    {
+      "action_id": "move_symbol_exists_to_src/640_correction_intelligence_report.rs",
+      "scope": "ModuleLocal",
+      "scope_details": [
+        "module:src/640_correction_intelligence_report.rs",
+        "transitive_depth:2"
+      ],
+      "incremental": false,
+      "estimated_time_seconds": 60,
+      "checks": 2
+    },
+    {
+      "action_id": "move_move_violates_invariant_to_src/640_correction_intelligence_report.rs",
+      "scope": "ModuleLocal",
+      "scope_details": [
+        "module:src/640_correction_intelligence_report.rs",
+        "transitive_depth:2"
+      ],
+      "incremental": false,
+      "estimated_time_seconds": 60,
+      "checks": 2
+    },
+    {
+      "action_id": "move_generate_intelligence_report_to_src/640_correction_intelligence_report.rs",
+      "scope": "ModuleLocal",
+      "scope_details": [
+        "module:src/640_correction_intelligence_report.rs",
+        "transitive_depth:2"
+      ],
+      "incremental": false,
+      "estimated_time_seconds": 60,
+      "checks": 2
+    },
+    {
+      "action_id": "move_generate_correction_plan_to_src/640_correction_intelligence_report.rs",
+      "scope": "ModuleLocal",
+      "scope_details": [
+        "module:src/640_correction_intelligence_report.rs",
+        "transitive_depth:2"
+      ],
+      "incremental": false,
+      "estimated_time_seconds": 60,
+      "checks": 2
+    },
+    {
+      "action_id": "move_average_confidence_to_src/640_correction_intelligence_report.rs",
+      "scope": "ModuleLocal",
+      "scope_details": [
+        "module:src/640_correction_intelligence_report.rs",
+        "transitive_depth:2"
+      ],
+      "incremental": false,
+      "estimated_time_seconds": 60,
+      "checks": 2
+    },
+    {
+      "action_id": "move_estimate_fix_time_to_src/640_correction_intelligence_report.rs",
+      "scope": "ModuleLocal",
+      "scope_details": [
+        "module:src/640_correction_intelligence_report.rs",
+        "transitive_depth:2"
+      ],
+      "incremental": false,
+      "estimated_time_seconds": 60,
+      "checks": 2
+    },
+    {
+      "action_id": "move_action_symbol_to_src/640_correction_intelligence_report.rs",
+      "scope": "ModuleLocal",
+      "scope_details": [
+        "module:src/640_correction_intelligence_report.rs",
+        "transitive_depth:2"
+      ],
+      "incremental": false,
+      "estimated_time_seconds": 60,
+      "checks": 2
+    },
+    {
+      "action_id": "move_action_function_to_src/640_correction_intelligence_report.rs",
+      "scope": "ModuleLocal",
+      "scope_details": [
+        "module:src/640_correction_intelligence_report.rs",
+        "transitive_depth:2"
+      ],
+      "incremental": false,
+      "estimated_time_seconds": 60,
+      "checks": 2
+    },
+    {
+      "action_id": "move_action_module_path_to_src/640_correction_intelligence_report.rs",
+      "scope": "ModuleLocal",
+      "scope_details": [
+        "module:src/640_correction_intelligence_report.rs",
+        "transitive_depth:2"
+      ],
+      "incremental": false,
+      "estimated_time_seconds": 60,
+      "checks": 2
+    },
+    {
+      "action_id": "move_action_refs_to_src/640_correction_intelligence_report.rs",
+      "scope": "ModuleLocal",
+      "scope_details": [
+        "module:src/640_correction_intelligence_report.rs",
+        "transitive_depth:2"
+      ],
+      "incremental": false,
+      "estimated_time_seconds": 60,
+      "checks": 2
+    },
+    {
+      "action_id": "move_action_target_layer_to_src/640_correction_intelligence_report.rs",
+      "scope": "ModuleLocal",
+      "scope_details": [
+        "module:src/640_correction_intelligence_report.rs",
+        "transitive_depth:2"
+      ],
+      "incremental": false,
+      "estimated_time_seconds": 60,
+      "checks": 2
+    },
+    {
+      "action_id": "move_action_visibility_to_src/640_correction_intelligence_report.rs",
+      "scope": "ModuleLocal",
+      "scope_details": [
+        "module:src/640_correction_intelligence_report.rs",
+        "transitive_depth:2"
+      ],
+      "incremental": false,
+      "estimated_time_seconds": 60,
+      "checks": 2
+    },
+    {
+      "action_id": "move_plan_verification_scope_to_src/640_correction_intelligence_report.rs",
+      "scope": "ModuleLocal",
+      "scope_details": [
+        "module:src/640_correction_intelligence_report.rs",
+        "transitive_depth:2"
+      ],
+      "incremental": false,
+      "estimated_time_seconds": 60,
+      "checks": 2
+    },
+    {
+      "action_id": "move_affected_files_to_src/640_correction_intelligence_report.rs",
+      "scope": "ModuleLocal",
+      "scope_details": [
+        "module:src/640_correction_intelligence_report.rs",
+        "transitive_depth:2"
+      ],
+      "incremental": false,
+      "estimated_time_seconds": 60,
+      "checks": 2
+    },
+    {
+      "action_id": "move_action_module_to_src/640_correction_intelligence_report.rs",
+      "scope": "ModuleLocal",
+      "scope_details": [
+        "module:src/640_correction_intelligence_report.rs",
+        "transitive_depth:2"
+      ],
+      "incremental": false,
+      "estimated_time_seconds": 60,
+      "checks": 2
+    },
+    {
+      "action_id": "move_estimate_verification_time_to_src/640_correction_intelligence_report.rs",
+      "scope": "ModuleLocal",
+      "scope_details": [
+        "module:src/640_correction_intelligence_report.rs",
+        "transitive_depth:2"
+      ],
+      "incremental": false,
+      "estimated_time_seconds": 60,
+      "checks": 2
+    },
+    {
+      "action_id": "move_build_rollback_criteria_to_src/640_correction_intelligence_report.rs",
+      "scope": "ModuleLocal",
+      "scope_details": [
+        "module:src/640_correction_intelligence_report.rs",
+        "transitive_depth:2"
+      ],
+      "incremental": false,
+      "estimated_time_seconds": 60,
+      "checks": 2
+    },
+    {
+      "action_id": "move_extract_critical_tests_to_src/640_correction_intelligence_report.rs",
+      "scope": "ModuleLocal",
+      "scope_details": [
+        "module:src/640_correction_intelligence_report.rs",
+        "transitive_depth:2"
+      ],
+      "incremental": false,
+      "estimated_time_seconds": 60,
+      "checks": 2
+    },
+    {
+      "action_id": "move_calculate_quality_delta_to_src/640_correction_intelligence_report.rs",
+      "scope": "ModuleLocal",
+      "scope_details": [
+        "module:src/640_correction_intelligence_report.rs",
+        "transitive_depth:2"
+      ],
+      "incremental": false,
+      "estimated_time_seconds": 60,
+      "checks": 2
+    },
+    {
+      "action_id": "move_estimate_impact_to_src/640_correction_intelligence_report.rs",
+      "scope": "ModuleLocal",
+      "scope_details": [
+        "module:src/640_correction_intelligence_report.rs",
+        "transitive_depth:2"
+      ],
+      "incremental": false,
+      "estimated_time_seconds": 60,
+      "checks": 2
+    },
+    {
+      "action_id": "move_simulate_action_to_src/640_correction_intelligence_report.rs",
+      "scope": "ModuleLocal",
+      "scope_details": [
+        "module:src/640_correction_intelligence_report.rs",
+        "transitive_depth:2"
+      ],
+      "incremental": false,
+      "estimated_time_seconds": 60,
+      "checks": 2
+    }
+  ]
+}

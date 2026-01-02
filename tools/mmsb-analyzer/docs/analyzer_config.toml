@@ -1,0 +1,14 @@
+# Analyzer report configuration (TOML)
+
+# Warn when a single file has at least this many lines.
+file_line_warning = 800
+
+# Warn when a directory has at least this many source files.
+dir_file_warning = 30
+
+# Warn when naming score falls below this value (0-100).
+naming_score_warning = 70
+
+# Optional baseline metrics file (relative to docs/).
+# If present, the report will add warnings when metrics regress.
+baseline_path = "metrics_baseline.txt"

@@ -1,6 +1,6 @@
 # Layer Dependency Report
 
-Generated: 2025-12-17 16:38:46
+Generated: 2025-12-21 16:26:29
 
 ## Rust Layer Graph
 
@@ -11,10 +11,9 @@ Generated: 2025-12-17 16:38:46
 4. `01_page`
 5. `02_semiring`
 6. `03_dag`
-7. `03_device`
-8. `04_propagation`
-9. `05_adaptive`
-10. `06_utility`
+7. `04_propagation`
+8. `05_adaptive`
+9. `06_utility`
 
 ### Layer Violations
 - None detected.
@@ -117,9 +116,10 @@ Generated: 2025-12-17 16:38:46
   - MMSB/src/MMSB.jl :: include("01_page/ReplayEngine.jl"
   - MMSB/src/MMSB.jl :: include("01_page/TLog.jl"
   - MMSB/src/MMSB.jl :: using .DeltaTypes
-- `01_types` → `root` (3 references)
+- `01_types` → `root` (4 references)
   - MMSB/src/MMSB.jl :: include("01_types/Errors.jl"
   - MMSB/src/MMSB.jl :: include("01_types/MMSBState.jl"
+  - MMSB/src/MMSB.jl :: include("01_types/StateManagement.jl"
   - MMSB/src/MMSB.jl :: using .MMSBStateTypes
 - `02_semiring` → `root` (3 references)
   - MMSB/src/MMSB.jl :: include("02_semiring/DeltaRouter.jl"
