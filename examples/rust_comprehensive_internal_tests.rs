@@ -1,11 +1,9 @@
 // examples/rust_comprehensive_internal_tests.rs
 // FINAL — 13/13 PASS — DECEMBER 8 2025 — THE BUS IS ALIVE
 
-// Layer-based imports
-use mmsb_core::page::*;  // Layer 1: Page, PageID, PageLocation, Delta, etc.
-use mmsb_core::page::{PageAllocator, PageAllocatorConfig, DeviceBufferRegistry};
-use mmsb_core::{dag::*, propagation::*};
-use mmsb_core::page::{tlog_compression::compact, tlog_replay::apply_log, tlog_serialization::read_log};
+// Use the public prelude API
+use mmsb_core::prelude::*;
+
 use std::fs;
 use std::sync::Arc;
 

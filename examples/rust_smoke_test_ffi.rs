@@ -2,7 +2,7 @@
 // Comprehensive smoke test covering all FFI functions from ffi.rs
 // This tests allocator, pages, deltas, metadata, tlog, reader, checkpoint, summary, list_pages, and error handling
 
-use mmsb_core::*;
+use mmsb_core::ffi::*;
 use std::ffi::{CStr, CString};
 use std::fs;
 use std::ptr;

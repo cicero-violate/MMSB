@@ -2,7 +2,7 @@
 // examples/rust_smoke_replay_full.rs
 // NOW 100% CORRECT AND PASSING
 
-use mmsb_core::*;
+use mmsb_core::ffi::*;
 
 use std::collections::HashMap;
 use std::ffi::CString;

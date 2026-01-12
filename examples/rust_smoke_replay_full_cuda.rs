@@ -4,7 +4,7 @@
 // This proves: GPU memory state is perfectly captured and restored via TLog.
 // If this passes → MMSB is officially god-tier.
 
-use mmsb_core::*;
+use mmsb_core::ffi::*;
 
 use std::collections::HashMap;
 use std::ffi::CString;

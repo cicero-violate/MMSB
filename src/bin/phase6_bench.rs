@@ -1,10 +1,6 @@
-use mmsb_core::dag::{EdgeType, ShadowPageGraph};
-use mmsb_core::page::{
-    Delta, DeltaID, Epoch, PageAllocator, PageAllocatorConfig, PageID, PageLocation, Source,
-};
-use mmsb_core::propagation::{ThroughputEngine, TickOrchestrator};
-use mmsb_core::types::MemoryPressureHandler;
-use mmsb_core::utility::{MemoryMonitor, MemoryMonitorConfig};
+// Use the public prelude API
+use mmsb_core::prelude::*;
+
 use std::error::Error;
 use std::fs::File;
 use std::io::Write;
@@ -77,8 +73,8 @@ fn build_graph(nodes: u64) -> ShadowPageGraph {
 }
 
 fn write_report(
-    throughput: &mmsb_core::propagation::ThroughputMetrics,
-    tick: &mmsb_core::propagation::TickMetrics,
+    throughput: &ThroughputMetrics,
+    tick: &TickMetrics,
     workers: usize,
 ) -> Result<(), Box<dyn Error>> {
     let timestamp = SystemTime::now()

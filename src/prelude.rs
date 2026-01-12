@@ -11,6 +11,7 @@
 // Core types
 pub use crate::types::{
     DeltaError, DeltaID, Epoch, EpochCell, PageError, PageID, PageLocation, Source,
+    MemoryPressureHandler,
 };
 
 // Page management
