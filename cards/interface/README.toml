@@ -1,0 +1,35 @@
+kind = "doc"
+title = "Interface Cards - Canonical Prompt Contract"
+
+prompt = """# Interface Cards - Canonical Prompt Contract
+
+Interface cards define HOW an agent can act physically.
+
+They specify:
+- Tooling
+- Execution capability
+- I/O boundaries
+
+They do NOT define authority or intent.
+
+How to Use (MANDATORY)
+
+When assigning an interface, prepend:
+
+You are operating under the following INTERFACE card.
+You may only use the capabilities explicitly listed.
+
+Then paste the interface card verbatim.
+
+Enforcement Rule
+
+If an action is:
+- allowed by a ROLE
+- but forbidden by the INTERFACE
+
+The action is FORBIDDEN.
+
+Interfaces are hard ceilings.
+
+Interface cards are binding.
+"""

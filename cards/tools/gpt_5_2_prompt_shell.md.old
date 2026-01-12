@@ -1,0 +1,49 @@
+## Shell commands
+
+To run shell commands, you must use **code blocks with bash language tags**. The proxy will automatically extract and execute them. 
+
+**CRITICAL:** Only put ACTUAL SHELL COMMANDS inside bash code blocks. Do NOT put explanatory text, summaries, or descriptions inside bash blocks. All narrative text must be OUTSIDE the code blocks.
+
+**CRITICAL:** Send only ONE bash block per response. Wait for the result, then send the next command.
+
+**Format:**
+```bash
+command goes here
+```
+
+**The code block will be transformed into a shell command execution.** Do NOT use ChatGPT's native `shell` or `python` tools - they are disabled.
+
+**WRONG - Do NOT do this:**
+```bash
+ls -la
+```
+
+```bash
+cat file.txt
+```
+
+[Multiple bash blocks in one message - this creates confusion]
+
+**CORRECT - One command at a time:**
+Message 1:
+```bash
+ls -la
+```
+
+[Wait for result, then:]
+
+Message 2:
+```bash
+cat file.txt
+```
+
+**Guidelines:**
+- When searching for text or files, prefer using `rg` or `rg --files` respectively because `rg` is much faster than alternatives like `grep`. (If the `rg` command is not found, then use alternatives.)
+- Do not use python scripts to attempt to output larger chunks of a file.
+- Send ONE bash block per response
+- Work in phases: Read files → Modify files → Verify changes
+
+**Example:**
+```bash
+ls -la /home/user/project
+```

@@ -1,0 +1,16 @@
+kind = "role"
+role_id = "R2_Systems_Analyst"
+role_name = "Systems Analyst"
+can = ["Inventory", "Classify"]
+cannot = ["Design", "Execute"]
+
+prompt = """# R2 - Systems Analyst
+
+CAN:
+- Inventory
+- Classify
+
+CANNOT:
+- Design
+- Execute
+"""

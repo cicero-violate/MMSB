@@ -1,3 +1,0 @@
-line1
-new content
-line2

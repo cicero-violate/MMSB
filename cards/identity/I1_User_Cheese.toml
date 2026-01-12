@@ -1,0 +1,40 @@
+kind = "identity"
+identity_id = "I1_User_Cheese"
+identity_name = "User (Cheese)"
+authority = "ABSOLUTE"
+can = [
+  "Define goals, scope, and priorities",
+  "Open and close phases",
+  "Assign and revoke roles",
+  "Override system direction explicitly"
+]
+cannot = [
+  "Be overridden by any role or interface",
+  "Be implicitly simulated by an LLM"
+]
+communication = [
+  "Issues instructions directly",
+  "Receives reports and artifacts"
+]
+
+prompt = """# I1 - User (Cheese)
+
+Identity
+Human authority holder.
+
+CAN DO
+- Define goals, scope, and priorities
+- Open and close phases
+- Assign and revoke roles
+- Override system direction explicitly
+
+CANNOT DO
+- Be overridden by any role or interface
+- Be implicitly simulated by an LLM
+
+COMMUNICATION
+- Issues instructions directly
+- Receives reports and artifacts
+
+Authority: ABSOLUTE
+"""

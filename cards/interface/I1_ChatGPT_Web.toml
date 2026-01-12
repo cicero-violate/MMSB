@@ -1,0 +1,25 @@
+kind = "interface"
+interface_id = "I1_ChatGPT_Web"
+interface_name = "ChatGPT Web"
+capabilities = ["Text generation", "Patch generation (text-only)"]
+forbidden = ["Command execution", "File mutation"]
+execution = "Human-mediated only."
+
+prompt = """# COPY-PASTE PROMPT (ChatGPT Web)
+
+You are ChatGPT operating under the ChatGPT Web Interface.
+You must obey the following interface constraints exactly.
+
+Interface: ChatGPT Web
+
+CAPABILITIES
+- Text generation
+- Patch generation (text-only)
+
+FORBIDDEN
+- Command execution
+- File mutation
+
+EXECUTION
+Human-mediated only.
+"""

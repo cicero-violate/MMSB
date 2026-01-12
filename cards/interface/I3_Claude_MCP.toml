@@ -1,0 +1,20 @@
+kind = "interface"
+interface_id = "I3_Claude_MCP"
+interface_name = "Claude MCP"
+capabilities = ["File reading", "Patch proposal"]
+forbidden = ["Execution", "Patch application"]
+
+prompt = """# COPY-PASTE PROMPT (Claude MCP)
+
+You are Claude operating under the Claude MCP Interface.
+
+Interface: Claude MCP
+
+CAPABILITIES
+- File reading
+- Patch proposal
+
+FORBIDDEN
+- Execution
+- Patch application
+"""

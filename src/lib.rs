@@ -1,15 +1,22 @@
 // src/lib.rs
 #![allow(dead_code)]
 
-pub mod logging;
-#[path = "01_types/mod.rs"]     pub mod types;
-#[path = "00_physical/mod.rs"]  pub mod physical;
-#[path = "01_page/mod.rs"]      pub mod page;
-#[path = "02_semiring/mod.rs"]  pub mod semiring;
-#[path = "03_dag/mod.rs"]       pub mod dag;
-#[path = "04_propagation/mod.rs"] pub mod propagation;
-#[path = "05_adaptive/mod.rs"]  pub mod adaptive;
-#[path = "06_utility/mod.rs"]   pub mod utility;
+// Internal modules - not part of public API
+mod logging;
+#[path = "01_types/mod.rs"]     mod types;
+#[path = "00_physical/mod.rs"]  mod physical;
+#[path = "01_page/mod.rs"]      mod page;
+#[path = "02_semiring/mod.rs"]  mod semiring;
+#[path = "03_dag/mod.rs"]       mod dag;
+#[path = "04_propagation/mod.rs"] mod propagation;
+#[path = "05_adaptive/mod.rs"]  mod adaptive;
+#[path = "06_utility/mod.rs"]   mod utility;
 
+// FFI layer - C-compatible interface
 pub mod ffi;
-pub use ffi::*;
+
+// Public prelude - official stable API surface
+pub mod prelude;
+
+// Re-export prelude at crate root for convenience
+pub use prelude::*;
