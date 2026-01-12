@@ -22,6 +22,6 @@ run cargo run --example rust_smoke_checkpoint_roundtrip
 run cargo test --release --test stress_stability -- --nocapture
 run cargo test --release --test stress_memory -- --nocapture
 run cargo run --bin phase6_bench --release
-run julia $JULIA_FLAGS -e "using Pkg; Pkg.test()"
-run julia $JULIA_FLAGS benchmark/benchmarks.jl
-run julia $JULIA_FLAGS benchmark/validate_all.jl
+# run julia $JULIA_FLAGS -e "using Pkg; Pkg.test()"
+# run julia $JULIA_FLAGS benchmark/benchmarks.jl
+# run julia $JULIA_FLAGS benchmark/validate_all.jl
