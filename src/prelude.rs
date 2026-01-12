@@ -1,60 +1,105 @@
 // src/prelude.rs
+
 //! MMSB Core Prelude
 //!
-//! The prelude module re-exports the primary types, traits, and functions
-//! that users need when working with mmsb-core.
+//! Layered, agent-readable entrypoint into MMSB.
 //!
+//! Prefer importing specific layers:
 //! ```rust
-//! use mmsb_core::prelude::*;
+//! use mmsb_core::prelude::page::*;
 //! ```
 
-// Core types
-pub use crate::types::{
-    DeltaError, DeltaID, Epoch, EpochCell, PageError, PageID, PageLocation, Source,
-    MemoryPressureHandler,
-};
+pub mod types {
+    pub use crate::types::*;
+}
 
-// Page management
-pub use crate::page::{
-    load_checkpoint, merge_deltas, validate_delta, write_checkpoint, ColumnarDeltaBatch, Delta,
-    DeltaIntegrityChecker, HostDeviceSync, IntegrityReport, IntegrityViolation,
-    IntegrityViolationKind, LogSummary, Metadata, Page, PageAllocator, PageAllocatorConfig,
-    PageInfo, PageSnapshotData, ReplayCheckpoint, ReplayReport, ReplayValidator, TransactionLog,
-    TransactionLogReader,
-};
+pub mod page {
+    pub use crate::page::{
+        load_checkpoint, merge_deltas, validate_delta, write_checkpoint,
+        ColumnarDeltaBatch, Delta, DeltaIntegrityChecker,
+        DeviceBufferRegistry, HostDeviceSync,
+        IntegrityReport, IntegrityViolation, IntegrityViolationKind,
+        LockFreeAllocator, LogSummary, Metadata,
+        Page, PageAllocator, PageAllocatorConfig,
+        PageInfo, PageSnapshotData,
+        ReplayCheckpoint, ReplayReport, ReplayValidator,
+        TransactionLog, TransactionLogReader,
+    };
+}
 
-// Semiring abstractions
-pub use crate::semiring::{
-    accumulate, fold_add, fold_mul, BooleanSemiring, PurityFailure, PurityReport,
-    PurityValidator, Semiring, TropicalSemiring,
-};
+pub mod semiring {
+    pub use crate::semiring::{
+        Semiring,
+        BooleanSemiring,
+        TropicalSemiring,
+        PurityFailure,
+        PurityReport,
+        PurityValidator,
+        accumulate,
+        fold_add,
+        fold_mul,
+    };
+}
 
-// Dependency graph
-pub use crate::dag::{
-    has_cycle, topological_sort, Edge, EdgeType, GraphValidationReport, GraphValidator,
-    ShadowPageGraph,
-};
+pub mod dag {
+    pub use crate::dag::{
+        Edge, EdgeType,
+        has_cycle, topological_sort,
+        GraphValidator, GraphValidationReport,
+        ShadowPageGraph,
+    };
+}
 
-// Propagation engine
-pub use crate::propagation::{
-    passthrough, PropagationCommand, PropagationEngine, PropagationQueue, TickMetrics,
-    TickOrchestrator, ThroughputEngine, ThroughputMetrics,
-};
+pub mod propagation {
+    pub use crate::propagation::{
+        PropagationCommand,
+        PropagationEngine,
+        PropagationQueue,
+        TickMetrics,
+        TickOrchestrator,
+        ThroughputEngine,
+        ThroughputMetrics,
+        passthrough,
+    };
+}
 
-// Adaptive memory
-pub use crate::adaptive::{
-    AccessPattern, LocalityOptimizer, MemoryLayout, PageCluster, PageClusterer, PhysAddr,
-};
+pub mod adaptive {
+    pub use crate::adaptive::{
+        AccessPattern,
+        LocalityOptimizer,
+        MemoryLayout,
+        PageCluster,
+        PageClusterer,
+        PhysAddr,
+    };
+}
 
-// Utility and monitoring
-pub use crate::utility::{
-    CpuFeatures, GCMetrics, Invariant, InvariantChecker, InvariantContext, InvariantResult,
-    MemoryMonitor, MemoryMonitorConfig, MemorySnapshot, ProvenanceResult, ProvenanceTracker,
-    Telemetry, TelemetrySnapshot,
-};
+pub mod utility {
+    pub use crate::utility::{
+        CpuFeatures,
+        GCMetrics,
+        Invariant,
+        InvariantChecker,
+        InvariantContext,
+        InvariantResult,
+        MemoryMonitor,
+        MemoryMonitorConfig,
+        MemorySnapshot,
+        ProvenanceResult,
+        ProvenanceTracker,
+        Telemetry,
+        TelemetrySnapshot,
+    };
+}
 
-// Physical layer (GPU/CUDA support)
-pub use crate::physical::{AllocatorStats, GPUMemoryPool, NCCLContext, PoolStats};
+pub mod physical {
+    pub use crate::physical::{
+        AllocatorStats,
+        GPUMemoryPool,
+        NCCLContext,
+        PoolStats,
+    };
 
-#[cfg(feature = "cuda")]
-pub use crate::physical::{NcclDataType, NcclRedOp};
+    #[cfg(feature = "cuda")]
+    pub use crate::physical::{NcclDataType, NcclRedOp};
+}
