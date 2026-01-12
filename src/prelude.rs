@@ -9,6 +9,8 @@
 //! use mmsb_core::prelude::page::*;
 //! ```
 
+// Rule: Root-level re-exports must be STABLE NOUNS ONLY
+
 // Re-export commonly used types at root level for convenience
 pub use crate::types::{
     DeltaID, Epoch, PageID, PageLocation, Source, MemoryPressureHandler,
