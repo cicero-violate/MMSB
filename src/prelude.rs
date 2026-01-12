@@ -9,6 +9,17 @@
 //! use mmsb_core::prelude::page::*;
 //! ```
 
+// Re-export commonly used types at root level for convenience
+pub use crate::types::{
+    DeltaID, Epoch, PageID, PageLocation, Source, MemoryPressureHandler,
+};
+pub use crate::page::{Delta, PageAllocator, PageAllocatorConfig};
+pub use crate::dag::{EdgeType, ShadowPageGraph};
+pub use crate::propagation::{
+    ThroughputEngine, ThroughputMetrics, TickOrchestrator, TickMetrics,
+};
+pub use crate::utility::{MemoryMonitor, MemoryMonitorConfig};
+
 pub mod types {
     pub use crate::types::*;
 }
