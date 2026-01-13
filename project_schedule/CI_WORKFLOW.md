@@ -13,12 +13,12 @@
 ---
 
 ## Pipeline Overview
-| Job | Runner | Steps | Artifacts |
-|-----|--------|-------|-----------|
-| `lint` | ubuntu-latest | `cargo fmt -- --check`, `cargo clippy -- -D warnings` | — |
-| `rust-tests` | ubuntu-latest | `cargo test --release --lib --tests`, `cargo test --release --test stress_* -- --nocapture` | `target/release` test logs |
-| `julia-bench` | ubuntu-latest | Install Julia, `benchmark/benchmarks.jl`, `benchmark/validate_all.jl` | `benchmark/results/julia_phase6.json`, validation log |
-| `phase6-bench` | ubuntu-latest | `cargo run --bin phase6_bench --release` | `benchmark/results/phase6.json` |
+| Job            | Runner        | Steps                                                                                       | Artifacts                                             |
+|----------------+---------------+---------------------------------------------------------------------------------------------+-------------------------------------------------------|
+| `lint`         | ubuntu-latest | `cargo fmt -- --check`, `cargo clippy -- -D warnings`                                       | —                                                     |
+| `rust-tests`   | ubuntu-latest | `cargo test --release --lib --tests`, `cargo test --release --test stress_* -- --nocapture` | `target/release` test logs                            |
+| `julia-bench`  | ubuntu-latest | Install Julia, `benchmark/benchmarks.jl`, `benchmark/validate_all.jl`                       | `benchmark/results/julia_phase6.json`, validation log |
+| `phase6-bench` | ubuntu-latest | `cargo run --bin phase6_bench --release`                                                    | `benchmark/results/phase6.json`                       |
 
 Jobs share a cargo cache keyed on `Cargo.lock` + toolchain hash. Julia job caches `~/.julia/artifacts`.
 
