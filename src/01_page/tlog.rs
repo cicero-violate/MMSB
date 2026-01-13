@@ -51,6 +51,7 @@ impl TransactionLog {
         self.entries.write().clear();
     }
 
+    /// Judgement boundary
     pub fn append(&self, delta: Delta) -> std::io::Result<()> {
         {
             self.entries.write().push_back(delta.clone());
