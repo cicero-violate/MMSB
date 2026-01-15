@@ -1,0 +1,141 @@
+STRUCTURAL CHANGE
+-----------------
+1. DAG (G)
+2. ShadowGraph (G')
+3. Validate
+4. Judgment
+5. Commit → DAG updated
+
+STATE CHANGE PIPELINE
+--------------------
+1. Page Delta ΔD produced
+2. Judgment approves ΔD
+3. commit_delta()
+4. Page Delta ΔD persisted
+5. SNAPSHOT DAG  ← here
+6. propagation runs using that snapshot
+7. Page updates (via applied deltas)
+
+
+This is the **authoritative picture**. Two pipelines. No overlap.
+
+---
+
+## PIPELINE 1 — **STRUCTURAL CHANGE (DAG TRUTH)**
+
+**Purpose:** change *causality*
+**Question:** “What depends on what?”
+
+```
+STRUCTURAL PIPELINE
+===================
+
+(1) Authoritative DAG (G)
+        |
+        |  propose structural ops (add/remove edges)
+        v
+(2) ShadowGraph (G′)
+        |
+        |  validate (acyclic, references exist)
+        v
+(3) VALIDATION PASSED
+        |
+        |  REQUIRE structural JudgmentToken
+        v
+(4) JUDGMENT (STRUCTURAL)
+        |
+        |  commit_structural_delta(...)
+        v
+(5) DAG UPDATED (G := G′)
+```
+
+### Properties
+
+* Mutates **DependencyGraph**
+* Uses **ShadowGraph**
+* Requires **JudgmentToken**
+* Is **irreversible**
+* Does **NOT** touch page data
+* Does **NOT** trigger propagation
+
+This is **changing the rules of the world**.
+
+---
+
+## PIPELINE 2 — **STATE CHANGE (PAGE DATA)**
+
+**Purpose:** change *content*
+**Question:** “What changed?”
+
+```
+STATE PIPELINE
+==============
+
+(1) Page Delta ΔD produced
+        |
+        |  admission proof + execution proof
+        v
+(2) JUDGMENT (STATE)
+        |
+        |  commit_delta(...)
+        v
+(3) ΔD persisted to TLog
+        |
+        |  SNAPSHOT DAG (read-only)
+        v
+(4) PROPAGATION
+        |
+        |  dag.descendants(page_id)
+        v
+(5) Derived Page Deltas
+        |
+        |  commit_delta(...)
+        v
+(6) Page state materialized on read
+```
+
+### Properties
+
+* Uses **DAG as read-only**
+* Does **NOT** mutate DAG
+* Uses **PropagationEngine**
+* Produces **more page deltas**
+* Judgment is about **writing state**, not structure
+
+This is **applying the rules of the world**.
+
+---
+
+## CRITICAL SEPARATION (THIS IS THE WHOLE POINT)
+
+| Aspect                 | Structural | State |
+| ---------------------- | ---------- | ----- |
+| Mutates DAG            | ✅          | ❌     |
+| Mutates Page Data      | ❌          | ✅     |
+| Uses ShadowGraph       | ✅          | ❌     |
+| Uses Propagation       | ❌          | ✅     |
+| Requires Judgment      | ✅          | ✅     |
+| Triggers Recalculation | ❌          | ✅     |
+
+---
+
+## ABSOLUTE RULE (NON-NEGOTIABLE)
+
+> **Propagation may NEVER change the DAG.**
+> **Structural commit may NEVER trigger propagation.**
+
+If you violate this:
+
+* determinism breaks
+* replay breaks
+* GPU breaks
+* reasoning breaks
+
+---
+
+## ONE-SENTENCE SUMMARY
+
+* **Structural pipeline** decides *what can affect what*
+* **State pipeline** computes *what effects happen*
+
+That is how the two pipelines are **supposed to be**.

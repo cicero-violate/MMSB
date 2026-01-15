@@ -25,6 +25,20 @@ typedef struct {
 } TLogHandle;
 
 typedef struct {
+    const void *ptr;
+} JudgmentTokenHandle;
+
+typedef struct {
+    const char *delta_hash;
+    uint32_t version;
+} AdmissionProofInput;
+
+typedef struct {
+    const char *delta_hash;
+    uint32_t version;
+} ExecutionProofInput;
+
+typedef struct {
     uint32_t value;
 } Epoch;
 
@@ -99,7 +113,11 @@ PageHandle mmsb_allocator_get_page(AllocatorHandle handle, uint64_t page_id);
 
 TLogHandle mmsb_tlog_new(const char *path);
 void mmsb_tlog_free(TLogHandle handle);
-int32_t mmsb_tlog_append(TLogHandle handle, DeltaHandle delta);
+int32_t mmsb_tlog_append(TLogHandle handle,
+                         JudgmentTokenHandle token,
+                         AdmissionProofInput admission,
+                         ExecutionProofInput execution,
+                         DeltaHandle delta);
 int32_t mmsb_checkpoint_write(AllocatorHandle allocator, TLogHandle log, const char *path);
 int32_t mmsb_checkpoint_load(AllocatorHandle allocator, TLogHandle log, const char *path);
 

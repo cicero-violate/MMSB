@@ -1,0 +1,28 @@
+{
+  "schema": "judgment_scope.v1",
+  "scope_id": "00000000-0000-0000-0000-000000000000",
+  "judgment_id": "00000000-0000-0000-0000-000000000000",
+  "intent_class": [
+    "rust_refactor",
+    "formatting",
+    "lint_fix"
+  ],
+  "allowed_paths": [
+    "src/",
+    "tests/"
+  ],
+  "forbidden_paths": [
+    "migrations/",
+    "infra/"
+  ],
+  "allowed_tools": [
+    "patch_runner"
+  ],
+  "forbidden_tools": [
+    "shell_runner"
+  ],
+  "max_files_touched": 50,
+  "max_diff_lines": 2000,
+  "issued_at": "1970-01-01T00:00:00Z",
+  "version": 1
+}

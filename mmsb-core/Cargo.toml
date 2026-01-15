@@ -1,0 +1,42 @@
+[package]
+name = "mmsb-core"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "mmsb_core"
+path = "src/lib.rs"
+crate-type = ["cdylib", "rlib", "staticlib"]
+
+[dependencies]
+mmsb-judgment = { path = "../mmsb-judgment" }
+parking_lot = "0.12"
+thiserror = "1.0"
+cuda-sys = { version = "0.2", optional = true }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+sha2 = "0.10"
+walkdir = "2.5"
+
+[dev-dependencies]
+mmsb-judgment = { path = "../mmsb-judgment", features = ["test-helpers"] }
+trybuild = "1.0"
+
+[features]
+default = ["cuda"]
+cuda = ["cuda-sys"]
+
+[[example]]
+name = "rust_smoke_test_ffi"
+
+[[example]]
+name = "rust_smoke_replay_full"
+
+[[example]]
+name = "rust_smoke_replay_full_cuda"
+
+[[example]]
+name = "rust_smoke_checkpoint_roundtrip"
+
+[[example]]
+name = "rust_comprehensive_internal_tests"

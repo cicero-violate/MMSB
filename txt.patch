@@ -1,0 +1,103 @@
+*** Begin Patch
+*** Update File: project_schedule/README.md
+@@
+-README
++# Project Schedule
++
++This directory defines the **planned sequencing and staging**
++of work within the MMSB system.
++
++It answers questions of:
++- Order
++- Dependency
++- Readiness
++
++It does **not** define authority, law, or invariants.
++Those live exclusively in `constitution/`.
++
++If any document in this directory conflicts with constitutional law,
++the constitution prevails.
++
++---
++
++## Scope of This Directory
++
++Documents here may:
++- Define DAGs for execution order
++- Describe future or pending work
++- Describe phase transitions (e.g. incarnation)
++
++Documents here may not:
++- Redefine judgment
++- Redefine invariants
++- Grant authority to agents or roles
++
++This directory is **planning**, not governance.
++
++---
++
++## DAG Plans
++
++The following DAGs define **non-authoritative execution structure**:
++
++1. **dag_audit_trails.md**  
++   Defines the sequence for introducing audit trails as
++   observational, append-only truth.
++
++2. **dag_formal_verification.md**  
++   Defines the sequence for introducing selective formal
++   verification at irreversible boundaries.
++
++3. **dag_judgment_roles.md**  
++   Defines the safe interaction pattern between:
++   - Judgment
++   - Proposer
++   - Challenger
++
++   This DAG introduces roles, not authority.
++
++---
++
++## Phase Documents
++
++### future_works.md
++
++Captures deliberately deferred upgrades.
++Items listed are pending by choice, not omission.
++
++---
++
++### incarnation.md
++
++Defines the transition from internal correctness
++to external reality contact.
++
++Incarnation is blocked until:
++- Audit DAG is complete
++- Formal Verification DAG is complete
++
++---
++
++## Ordering and Authority
++
++Recommended reading order:
++
++1. `constitution/` (law)
++2. `project_schedule/` (plan)
++3. `src/` (execution)
++
++Authority does not flow upward.
++
++Plans may change.
++Law may not.
++
++---
++
++## Final Note
++
++This directory exists to make execution deliberate.
++
++If execution feels urgent,
++this directory should slow it down.
++
+*** End Patch

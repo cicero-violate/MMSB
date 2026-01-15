@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MMSB Judgment Artifact v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "judgment_id",
+    "token",
+    "intent_path",
+    "delta_hash",
+    "acknowledged",
+    "issued_at",
+    "issuer",
+    "version"
+  ],
+  "properties": {
+    "schema": {
+      "const": "judgment.v1"
+    },
+    "judgment_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "token": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "intent_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "delta_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "acknowledged": {
+      "const": true
+    },
+    "issued_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "issuer": {
+      "const": "human"
+    },
+    "version": {
+      "const": 1
+    }
+  }
+}

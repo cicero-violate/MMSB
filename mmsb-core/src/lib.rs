@@ -1,0 +1,24 @@
+// src/lib.rs
+#![allow(dead_code)]
+#![allow(hidden_glob_reexports)]
+// mmsb-core MUST NEVER issue judgments. It only validates tokens.
+
+// Internal modules - not part of public API
+mod logging;
+#[path = "01_types/mod.rs"]     mod types;
+#[path = "00_physical/mod.rs"]  mod physical;
+#[path = "01_page/mod.rs"]      mod page;
+#[path = "02_semiring/mod.rs"]  mod semiring;
+#[path = "03_dag/mod.rs"]       mod dag;
+#[path = "04_propagation/mod.rs"] mod propagation;
+#[path = "05_adaptive/mod.rs"]  mod adaptive;
+#[path = "06_utility/mod.rs"]   mod utility;
+
+// FFI layer - C-compatible interface
+pub mod ffi;
+
+// Public prelude - official stable API surface
+pub mod prelude;
+
+// Re-export prelude at crate root for convenience
+pub use prelude::*;

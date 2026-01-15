@@ -1,0 +1,19 @@
+[package]
+name = "mmsb-judgment"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "mmsb_judgment"
+path = "src/lib.rs"
+
+[features]
+test-helpers = []
+
+[dependencies]
+chrono = "0.4"
+rand = "0.8"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+sha2 = "0.10"
+uuid = { version = "1.8", features = ["v4"] }
