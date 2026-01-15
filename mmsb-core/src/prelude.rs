@@ -34,7 +34,11 @@ pub use crate::utility::{
     InvariantChecker, InvariantContext,
     MemoryMonitor, MemoryMonitorConfig,
     ProvenanceTracker,
-    MmsbStructuralAdmissionProof, STRUCTURAL_PROOF_VERSION,
+};
+
+pub use crate::proof::{
+    MmsbAdmissionProof, MmsbStructuralAdmissionProof,
+    MmsbExecutionProof, ADMISSION_PROOF_VERSION, EXECUTION_PROOF_VERSION, STRUCTURAL_PROOF_VERSION,
 };
 
 pub use crate::materialization::{materialize_page_state, MaterializedPageView};
@@ -101,6 +105,14 @@ pub mod materialization {
     pub use crate::materialization::{materialize_page_state, MaterializedPageView};
 }
 
+pub mod proof {
+    pub use crate::proof::*;
+}
+
+pub mod utility {
+    pub use crate::utility::*;
+}
+
 pub mod adaptive {
     pub use crate::adaptive::{
         AccessPattern,
@@ -109,44 +121,6 @@ pub mod adaptive {
         PageCluster,
         PageClusterer,
         PhysAddr,
-    };
-}
-
-pub mod utility {
-    pub use crate::utility::{
-        ADMISSION_PROOF_VERSION,
-        CpuFeatures,
-        GCMetrics,
-        Invariant,
-        InvariantChecker,
-        InvariantContext,
-        InvariantResult,
-        MemoryMonitor,
-        MemoryMonitorConfig,
-        MemorySnapshot,
-        ProvenanceResult,
-        ProvenanceTracker,
-        Telemetry,
-        TelemetrySnapshot,
-        build_admission_proof_streams,
-        evaluate_admission,
-        load_shell_policy,
-        MmsbAdmission,
-        MmsbAdmissionProof,
-        MmsbAdmissionProofStream,
-        MmsbAdmissionProofError,
-        PolicyDecision,
-        PolicyError,
-        ShellPolicy,
-        build_delta_streams,
-        MmsbDelta,
-        MmsbDeltaStream,
-        MmsbDeltaStreamError,
-        build_execution_proof_stream,
-        MmsbExecutionProof,
-        MmsbExecutionProofStream,
-        MmsbExecutionProofError,
-        EXECUTION_PROOF_VERSION,
     };
 }
 

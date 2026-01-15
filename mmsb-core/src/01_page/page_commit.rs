@@ -1,6 +1,6 @@
 use mmsb_judgment::JudgmentToken;
 use crate::page::{tlog, Delta, TransactionLog};
-use crate::utility::{ADMISSION_PROOF_VERSION, MmsbAdmissionProof, MmsbExecutionProof};
+use crate::proof::{ADMISSION_PROOF_VERSION, MmsbAdmissionProof, MmsbExecutionProof, EXECUTION_PROOF_VERSION};
 use crate::dag::DependencyGraph;
 
 pub(crate) fn commit_delta(

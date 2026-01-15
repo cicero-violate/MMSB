@@ -1,4 +1,5 @@
-use crate::utility::{build_admission_proof_streams, build_delta_streams};
+use super::admission_proof::build_admission_proof_streams;
+use super::delta_stream::build_delta_streams;
 use serde::Deserialize;
 use serde_json::{json, Value};
 use std::path::{Path, PathBuf};
@@ -26,9 +27,9 @@ pub struct MmsbExecutionProofStream {
 #[derive(Debug, Error)]
 pub enum MmsbExecutionProofError {
     #[error("failed to build delta stream: {0}")]
-    DeltaStream(#[from] crate::utility::MmsbDeltaStreamError),
+    DeltaStream(#[from] super::delta_stream::MmsbDeltaStreamError),
     #[error("failed to build admission proofs: {0}")]
-    AdmissionStream(#[from] crate::utility::MmsbAdmissionProofError),
+    AdmissionStream(#[from] super::admission_proof::MmsbAdmissionProofError),
     #[error("failed to read file: {0}")]
     ReadFile(#[from] std::io::Error),
     #[error("failed to parse json: {0}")]

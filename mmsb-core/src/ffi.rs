@@ -5,7 +5,7 @@ use crate::page::{Delta, DeltaID, Epoch, Page, PageAllocator, PageAllocatorConfi
 use crate::semiring::{
     accumulate, fold_add, fold_mul, BooleanSemiring, Semiring, TropicalSemiring,
 };
-use crate::utility::{MmsbAdmissionProof, MmsbExecutionProof};
+use crate::proof::{MmsbAdmissionProof, MmsbExecutionProof};
 use mmsb_judgment::JudgmentToken;
 use serde_json::json;
 use std::cell::RefCell;

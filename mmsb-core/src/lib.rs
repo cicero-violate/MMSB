@@ -12,8 +12,9 @@ mod logging;
 #[path = "03_dag/mod.rs"]       mod dag;
 #[path = "03_materialization/mod.rs"] mod materialization;
 #[path = "04_propagation/mod.rs"] mod propagation;
-#[path = "05_adaptive/mod.rs"]  mod adaptive;
+#[path = "05_proof/mod.rs"]     mod proof;
 #[path = "06_utility/mod.rs"]   mod utility;
+#[path = "07_adaptive/mod.rs"]  mod adaptive;
 
 // FFI layer - C-compatible interface
 pub mod ffi;

@@ -23,7 +23,7 @@ pub mod tlog_serialization;
 mod page_commit;
 
 use mmsb_judgment::JudgmentToken;
-use crate::utility::{MmsbAdmissionProof, MmsbExecutionProof};
+use crate::proof::{MmsbAdmissionProof, MmsbExecutionProof};
 use crate::dag::DependencyGraph;
 
 pub use crate::types::{PageID, PageLocation, PageError, Epoch, EpochCell, DeltaID, Source, DeltaError};

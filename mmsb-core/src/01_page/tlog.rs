@@ -1,6 +1,6 @@
 use mmsb_judgment::JudgmentToken;
 use crate::page::{Delta, DeltaID, Epoch, PageID, Source};
-use crate::utility::{EXECUTION_PROOF_VERSION, MmsbExecutionProof};
+use crate::proof::{EXECUTION_PROOF_VERSION, MmsbExecutionProof};
 use parking_lot::RwLock;
 use sha2::{Digest, Sha256};
 use std::collections::VecDeque;

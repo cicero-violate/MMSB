@@ -2,7 +2,7 @@ use crate::dag::{
     DagCommitError, DependencyGraph, ShadowPageGraph, StructuralOp,
     has_cycle, GraphValidator,
 };
-use crate::utility::{MmsbStructuralAdmissionProof, STRUCTURAL_PROOF_VERSION};
+use crate::proof::{MmsbStructuralAdmissionProof, STRUCTURAL_PROOF_VERSION};
 use mmsb_judgment::JudgmentToken;
 
 pub fn commit_structural_delta(
