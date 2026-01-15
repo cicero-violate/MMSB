@@ -11,14 +11,18 @@
    * Legacy proofs without hash trigger warning
 
 2. **Replace propagation graph source**
-   🔄 IN PROGRESS
+   ✅ DONE: Propagation wired to authoritative DependencyGraph
    * Propagation must read `DependencyGraph`, not shadow graphs
-   * NEXT: Wire propagation engine to authoritative DependencyGraph
+   * TickOrchestrator now holds Arc<DependencyGraph>
+   * request_commit accepts Option<&DependencyGraph> parameter
+   * dag_propagation module provides DAG-aware traversal
+   * Production paths ready for DAG binding (currently pass None for legacy compat)
 
 3. **Isolate materialization**
-   ⏳ PENDING
+   🔄 NEXT
    * Pull replay logic into a pure Phase 3 module
-   * BLOCKED: Wait for propagation wiring
+   * Create dedicated materialization interface
+   * Enforce read-only semantics
 
 ---
 
