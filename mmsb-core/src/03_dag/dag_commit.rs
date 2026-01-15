@@ -102,7 +102,7 @@ mod tests {
         let ops = vec![StructuralOp::AddEdge {
             from: PageID(1),
             to: PageID(2),
-            edge_type: EdgeType::Dependency,
+            edge_type: EdgeType::Data,
         }];
         let mut proof = MmsbStructuralAdmissionProof::new(
             &ops,
@@ -127,7 +127,7 @@ mod tests {
         let ops = vec![StructuralOp::AddEdge {
             from: PageID(1),
             to: PageID(2),
-            edge_type: EdgeType::Dependency,
+            edge_type: EdgeType::Data,
         }];
         let proof = MmsbStructuralAdmissionProof::new(
             &ops,
