@@ -1,5 +1,5 @@
 // Use the public prelude API
-use mmsb_core::prelude::{EdgeType, ShadowPageGraph};
+use mmsb_core::prelude::{EdgeType, DependencyGraph, StructuralOp};
 use mmsb_core::prelude::{
     Delta, DeltaID, PageAllocator, PageAllocatorConfig, PageID, PageLocation, Source,
 };
@@ -31,9 +31,13 @@ fn tick_latency_stays_within_budget() {
             .unwrap();
     }
     let throughput = ThroughputEngine::new(Arc::clone(&allocator), 2, 16);
-    let graph = Arc::new(ShadowPageGraph::default());
-    graph.add_edge(PageID(1), PageID(2), EdgeType::Data);
-    graph.add_edge(PageID(2), PageID(3), EdgeType::Data);
+    let mut dag = DependencyGraph::new();
+    let ops = vec![
+        StructuralOp::AddEdge { from: PageID(1), to: PageID(2), edge_type: EdgeType::Data },
+        StructuralOp::AddEdge { from: PageID(2), to: PageID(3), edge_type: EdgeType::Data },
+    ];
+    dag.apply_ops(&ops);
+    let dag = Arc::new(dag);
     let memory = Arc::new(MemoryMonitor::with_config(
         Arc::clone(&allocator),
         MemoryMonitorConfig {
@@ -41,7 +45,7 @@ fn tick_latency_stays_within_budget() {
             ..MemoryMonitorConfig::default()
         },
     ));
-    let orchestrator = TickOrchestrator::new(throughput, graph, memory);
+    let orchestrator = TickOrchestrator::new(throughput, dag, memory);
     let deltas: Vec<_> = (0..64).map(|idx| delta(idx, (idx % 4) + 1)).collect();
     let metrics = orchestrator.execute_tick(deltas).unwrap();
     assert!(metrics.total.as_millis() < 16);

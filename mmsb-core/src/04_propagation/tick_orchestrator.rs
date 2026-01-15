@@ -122,6 +122,7 @@ mod judgment_commit_test {
         let admission_proof = MmsbAdmissionProof {
             version: ADMISSION_PROOF_VERSION,
             delta_hash: delta_hash.clone(),
+            dag_snapshot_hash: None,
             conversation_id: "test".to_string(),
             message_id: "test".to_string(),
             suffix: "0".to_string(),
@@ -150,7 +151,7 @@ mod judgment_commit_test {
 #[cfg(test)]
 mod tests {
     use super::TickOrchestrator;
-    use crate::dag::{EdgeType, ShadowPageGraph};
+    use crate::dag::{EdgeType, DependencyGraph, StructuralOp};
     use crate::page::{Delta, DeltaID, PageAllocator, PageAllocatorConfig, PageID, PageLocation, Source};
     use crate::types::{Epoch, GCMetrics, MemoryPressureHandler};
     use super::ThroughputEngine;
@@ -207,12 +208,18 @@ mod tests {
                 .unwrap();
         }
         let throughput = ThroughputEngine::new(Arc::clone(&allocator), 2, 64);
-        let graph = Arc::new(ShadowPageGraph::default());
-        graph.add_edge(PageID(1), PageID(2), EdgeType::Data);
+        let mut dag = DependencyGraph::new();
+        let ops = vec![StructuralOp::AddEdge {
+            from: PageID(1),
+            to: PageID(2),
+            edge_type: EdgeType::Data,
+        }];
+        dag.apply_ops(&ops);
+        let dag = Arc::new(dag);
         let memory: Arc<dyn MemoryPressureHandler> =
             Arc::new(TestMemoryHandler::new(32, threshold != usize::MAX));
         (
-            TickOrchestrator::new(throughput, graph, memory),
+            TickOrchestrator::new(throughput, dag, memory),
             allocator,
         )
     }

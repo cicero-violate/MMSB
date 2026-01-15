@@ -66,7 +66,7 @@ impl DependencyGraph {
             })
     }
 
-    pub(crate) fn apply_ops(&mut self, ops: &[StructuralOp]) {
+    pub fn apply_ops(&mut self, ops: &[StructuralOp]) {
         for op in ops {
             match op {
                 StructuralOp::AddEdge { from, to, edge_type } => {
