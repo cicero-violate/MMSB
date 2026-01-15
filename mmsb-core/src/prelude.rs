@@ -21,7 +21,10 @@ pub use crate::page::{
     LockFreeAllocator, Page, PageAllocator, PageAllocatorConfig,
     ReplayValidator, TransactionLog, TransactionLogReader,
 };
-pub use crate::dag::{EdgeType, GraphValidator, ShadowPageGraph};
+pub use crate::dag::{
+    EdgeType, GraphValidator, ShadowPageGraph,
+    DependencyGraph, StructuralOp, DagCommitError, commit_structural_delta,
+};
 pub use crate::propagation::{
     passthrough, PropagationCommand, PropagationEngine, PropagationQueue,
     ThroughputEngine, ThroughputMetrics, TickOrchestrator, TickMetrics,
@@ -31,6 +34,7 @@ pub use crate::utility::{
     InvariantChecker, InvariantContext,
     MemoryMonitor, MemoryMonitorConfig,
     ProvenanceTracker,
+    MmsbStructuralAdmissionProof, STRUCTURAL_PROOF_VERSION,
 };
 
 pub use crate::semiring::{BooleanSemiring, PurityValidator, TropicalSemiring, fold_add};
@@ -74,6 +78,7 @@ pub mod dag {
         has_cycle, topological_sort,
         GraphValidator, GraphValidationReport,
         ShadowPageGraph,
+        DependencyGraph, StructuralOp, DagCommitError, commit_structural_delta,
     };
 }
 
