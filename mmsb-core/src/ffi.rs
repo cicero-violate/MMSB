@@ -755,6 +755,7 @@ pub extern "C" fn mmsb_tlog_append(
         &admission_proof,
         &execution_proof,
         delta_ref.clone(),
+        None,
     ) {
         Ok(_) => 0,
         Err(err) => {

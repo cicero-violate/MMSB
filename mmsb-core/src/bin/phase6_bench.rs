@@ -32,7 +32,8 @@ fn main() -> Result<(), Box<dyn Error>> {
         },
     ));
     let tick_throughput = ThroughputEngine::new(Arc::clone(&allocator), worker_count, 1024);
-    let orchestrator = TickOrchestrator::new(tick_throughput, Arc::clone(&graph), memory_monitor);
+    let dag = Arc::new(DependencyGraph::new());
+    let orchestrator = TickOrchestrator::new(tick_throughput, Arc::clone(&graph), Arc::clone(&dag), memory_monitor);
     let tick_metrics = orchestrator.execute_tick(deltas)?;
 
     write_report(&throughput_metrics, &tick_metrics, worker_count)?;

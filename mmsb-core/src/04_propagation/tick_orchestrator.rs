@@ -1,5 +1,5 @@
 use super::throughput_engine::ThroughputEngine;
-use crate::dag::{GraphValidator, ShadowPageGraph};
+use crate::dag::{GraphValidator, ShadowPageGraph, DependencyGraph};
 use mmsb_judgment::JudgmentToken;
 use crate::page::{commit_delta, Delta, PageError, TransactionLog};
 use crate::utility::{MmsbAdmissionProof, MmsbExecutionProof};
@@ -22,6 +22,7 @@ pub struct TickMetrics {
 pub struct TickOrchestrator {
     throughput: ThroughputEngine,
     graph: Arc<ShadowPageGraph>,
+    dag: Arc<DependencyGraph>,
     memory_monitor: Arc<dyn MemoryPressureHandler>,
     tick_budget_ms: u64,
 }
@@ -30,11 +31,13 @@ impl TickOrchestrator {
     pub fn new(
         throughput: ThroughputEngine,
         graph: Arc<ShadowPageGraph>,
+        dag: Arc<DependencyGraph>,
         memory_monitor: Arc<dyn MemoryPressureHandler>,
     ) -> Self {
         Self {
             throughput,
             graph,
+            dag,
             memory_monitor,
             tick_budget_ms: 16,
         }
@@ -77,8 +80,9 @@ pub(crate) fn request_commit(
     admission_proof: &MmsbAdmissionProof,
     execution_proof: &MmsbExecutionProof,
     delta: Delta,
+    dag: Option<&DependencyGraph>,
 ) -> std::io::Result<()> {
-    commit_delta(log, token, admission_proof, execution_proof, delta, None)
+    commit_delta(log, token, admission_proof, execution_proof, delta, dag)
 }
 
 pub(crate) fn submit_intent(
@@ -140,7 +144,7 @@ mod judgment_commit_test {
             epoch: 0,
         };
         let token = JudgmentToken::test_only();
-        request_commit(&log, &token, &admission_proof, &execution_proof, delta)?;
+        request_commit(&log, &token, &admission_proof, &execution_proof, delta, None)?;
 
         Ok(())
     }
