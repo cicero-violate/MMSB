@@ -37,6 +37,8 @@ pub use crate::utility::{
     MmsbStructuralAdmissionProof, STRUCTURAL_PROOF_VERSION,
 };
 
+pub use crate::materialization::{materialize_page_state, MaterializedPageView};
+
 pub use crate::semiring::{BooleanSemiring, PurityValidator, TropicalSemiring, fold_add};
 
 pub mod types {
@@ -93,6 +95,10 @@ pub mod propagation {
         ThroughputMetrics,
         passthrough,
     };
+}
+
+pub mod materialization {
+    pub use crate::materialization::{materialize_page_state, MaterializedPageView};
 }
 
 pub mod adaptive {

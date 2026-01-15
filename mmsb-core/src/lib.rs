@@ -10,6 +10,7 @@ mod logging;
 #[path = "01_page/mod.rs"]      mod page;
 #[path = "02_semiring/mod.rs"]  mod semiring;
 #[path = "03_dag/mod.rs"]       mod dag;
+#[path = "03_materialization/mod.rs"] mod materialization;
 #[path = "04_propagation/mod.rs"] mod propagation;
 #[path = "05_adaptive/mod.rs"]  mod adaptive;
 #[path = "06_utility/mod.rs"]   mod utility;
