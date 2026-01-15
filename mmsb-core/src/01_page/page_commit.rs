@@ -1,6 +1,7 @@
 use mmsb_judgment::JudgmentToken;
 use crate::page::{tlog, Delta, TransactionLog};
 use crate::utility::{ADMISSION_PROOF_VERSION, MmsbAdmissionProof, MmsbExecutionProof};
+use crate::dag::DependencyGraph;
 
 pub(crate) fn commit_delta(
     log: &TransactionLog,
@@ -8,6 +9,7 @@ pub(crate) fn commit_delta(
     admission_proof: &MmsbAdmissionProof,
     execution_proof: &MmsbExecutionProof,
     delta: Delta,
+    active_dag: Option<&DependencyGraph>,
 ) -> std::io::Result<()> {
     if admission_proof.version != ADMISSION_PROOF_VERSION {
         return Err(std::io::Error::new(
@@ -22,6 +24,21 @@ pub(crate) fn commit_delta(
             "admission proof hash mismatch",
         ));
     }
+
+    if let Some(dag) = active_dag {
+        if let Some(proof_hash) = &admission_proof.dag_snapshot_hash {
+            let dag_hash = dag.compute_snapshot_hash();
+            if proof_hash != &dag_hash {
+                return Err(std::io::Error::new(
+                    std::io::ErrorKind::PermissionDenied,
+                    format!("DAG snapshot hash mismatch: proof={}, actual={}", proof_hash, dag_hash),
+                ));
+            }
+        } else {
+            eprintln!("WARNING: Legacy admission proof without DAG snapshot hash");
+        }
+    }
+
     log.append(token, execution_proof, delta)
 }
 
@@ -52,6 +69,7 @@ mod tests {
         MmsbAdmissionProof {
             version,
             delta_hash,
+            dag_snapshot_hash: None,
             conversation_id: "test".to_string(),
             message_id: "test".to_string(),
             suffix: "0".to_string(),
@@ -90,7 +108,7 @@ mod tests {
         let execution = execution_proof(delta_hash, EXECUTION_PROOF_VERSION);
         let token = JudgmentToken::test_only();
 
-        let err = commit_delta(&log, &token, &admission, &execution, delta)
+        let err = commit_delta(&log, &token, &admission, &execution, delta, None)
             .expect_err("expected admission proof failure");
         assert_eq!(err.kind(), std::io::ErrorKind::PermissionDenied);
     }
@@ -110,7 +128,7 @@ mod tests {
         let execution = execution_proof(delta_hash, EXECUTION_PROOF_VERSION);
         let token = JudgmentToken::test_only();
 
-        commit_delta(&log, &token, &admission, &execution, delta)
+        commit_delta(&log, &token, &admission, &execution, delta, None)
             .expect("commit succeeds");
     }
 }

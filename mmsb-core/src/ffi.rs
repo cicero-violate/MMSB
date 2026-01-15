@@ -729,6 +729,7 @@ pub extern "C" fn mmsb_tlog_append(
     let admission_proof = MmsbAdmissionProof {
         version: admission.version,
         delta_hash: admission_hash.clone(),
+        dag_snapshot_hash: None,
         conversation_id: "ffi".to_string(),
         message_id: "ffi".to_string(),
         suffix: "0".to_string(),

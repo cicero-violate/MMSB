@@ -15,6 +15,7 @@ pub const ADMISSION_PROOF_VERSION: u32 = 1;
 pub struct MmsbAdmissionProof {
     pub version: u32,
     pub delta_hash: String,
+    pub dag_snapshot_hash: Option<String>,
     pub conversation_id: String,
     pub message_id: String,
     pub suffix: String,
@@ -279,6 +280,7 @@ pub fn build_admission_proof_streams(
                 proofs.push(MmsbAdmissionProof {
                     version: ADMISSION_PROOF_VERSION,
                     delta_hash: intent.hash.clone(),
+                    dag_snapshot_hash: None,
                     conversation_id: entry.conversation_id.clone(),
                     message_id: entry.message_id.clone(),
                     suffix,

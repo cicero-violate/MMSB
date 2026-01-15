@@ -1,6 +1,7 @@
 use crate::types::PageID;
 use crate::dag::{EdgeType, StructuralOp};
 use std::collections::{HashMap, HashSet};
+use sha2::{Digest, Sha256};
 
 #[derive(Debug, Clone)]
 pub struct DependencyGraph {
@@ -86,5 +87,22 @@ impl DependencyGraph {
 
     pub fn snapshot(&self) -> Self {
         self.clone()
+    }
+
+    pub fn compute_snapshot_hash(&self) -> String {
+        let mut hasher = Sha256::new();
+        hasher.update(&self.version.to_le_bytes());
+        
+        let mut edges = self.edges();
+        edges.sort_by_key(|(from, to, _)| (from.0, to.0));
+        
+        for (from, to, edge_type) in edges {
+            hasher.update(&from.0.to_le_bytes());
+            hasher.update(&to.0.to_le_bytes());
+            let et = format!("{:?}", edge_type);
+            hasher.update(et.as_bytes());
+        }
+        
+        format!("{:x}", hasher.finalize())
     }
 }

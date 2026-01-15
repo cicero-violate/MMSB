@@ -24,6 +24,7 @@ mod page_commit;
 
 use mmsb_judgment::JudgmentToken;
 use crate::utility::{MmsbAdmissionProof, MmsbExecutionProof};
+use crate::dag::DependencyGraph;
 
 pub use crate::types::{PageID, PageLocation, PageError, Epoch, EpochCell, DeltaID, Source, DeltaError};
 pub use allocator::{PageAllocator, PageAllocatorConfig, PageInfo, PageSnapshotData};
@@ -51,6 +52,7 @@ pub(crate) fn commit_delta(
     admission_proof: &MmsbAdmissionProof,
     execution_proof: &MmsbExecutionProof,
     delta: Delta,
+    active_dag: Option<&DependencyGraph>,
 ) -> std::io::Result<()> {
-    page_commit::commit_delta(log, token, admission_proof, execution_proof, delta)
+    page_commit::commit_delta(log, token, admission_proof, execution_proof, delta, active_dag)
 }

@@ -82,6 +82,7 @@ mod tests {
         let ops = vec![];
         let proof = MmsbStructuralAdmissionProof::new(
             &ops,
+            None,
             "test_conv".to_string(),
             "test_msg".to_string(),
             "test_scope".to_string(),
@@ -106,6 +107,7 @@ mod tests {
         }];
         let mut proof = MmsbStructuralAdmissionProof::new(
             &ops,
+            None,
             "test_conv".to_string(),
             "test_msg".to_string(),
             "test_scope".to_string(),
@@ -131,6 +133,7 @@ mod tests {
         }];
         let proof = MmsbStructuralAdmissionProof::new(
             &ops,
+            None,
             "test_conv".to_string(),
             "test_msg".to_string(),
             "test_scope".to_string(),

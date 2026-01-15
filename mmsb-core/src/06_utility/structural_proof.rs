@@ -7,6 +7,7 @@ pub const STRUCTURAL_PROOF_VERSION: u32 = 1;
 pub struct MmsbStructuralAdmissionProof {
     pub version: u32,
     pub ops_hash: String,
+    pub dag_snapshot_hash: Option<String>,
     pub conversation_id: String,
     pub message_id: String,
     pub scope: String,
@@ -17,6 +18,7 @@ pub struct MmsbStructuralAdmissionProof {
 impl MmsbStructuralAdmissionProof {
     pub fn new(
         ops: &[StructuralOp],
+        dag_snapshot_hash: Option<String>,
         conversation_id: String,
         message_id: String,
         scope: String,
@@ -27,6 +29,7 @@ impl MmsbStructuralAdmissionProof {
         Self {
             version: STRUCTURAL_PROOF_VERSION,
             ops_hash,
+            dag_snapshot_hash,
             conversation_id,
             message_id,
             scope,

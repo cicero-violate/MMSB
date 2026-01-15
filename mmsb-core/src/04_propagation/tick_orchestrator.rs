@@ -78,7 +78,7 @@ pub(crate) fn request_commit(
     execution_proof: &MmsbExecutionProof,
     delta: Delta,
 ) -> std::io::Result<()> {
-    commit_delta(log, token, admission_proof, execution_proof, delta)
+    commit_delta(log, token, admission_proof, execution_proof, delta, None)
 }
 
 pub(crate) fn submit_intent(
