@@ -313,7 +313,7 @@ pub(crate) fn delta_hash(delta: &Delta) -> String {
 mod tests {
     use super::{delta_hash, TransactionLog};
     use crate::page::{Delta, DeltaID, Epoch, PageID, Source};
-    use crate::utility::{EXECUTION_PROOF_VERSION, MmsbExecutionProof};
+    use crate::proof::{EXECUTION_PROOF_VERSION, MmsbExecutionProof};
     use mmsb_judgment::JudgmentToken;
     use serde_json::json;
     use std::time::{SystemTime, UNIX_EPOCH};

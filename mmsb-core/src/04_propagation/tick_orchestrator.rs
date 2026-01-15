@@ -94,7 +94,7 @@ mod judgment_commit_test {
     use super::request_commit;
     use mmsb_judgment::JudgmentToken;
     use crate::page::{tlog, Delta, DeltaID, Epoch, PageID, Source, TransactionLog};
-    use crate::utility::{ADMISSION_PROOF_VERSION, EXECUTION_PROOF_VERSION, MmsbAdmissionProof, MmsbExecutionProof};
+    use crate::proof::{ADMISSION_PROOF_VERSION, EXECUTION_PROOF_VERSION, MmsbAdmissionProof, MmsbExecutionProof};
     use std::time::{SystemTime, UNIX_EPOCH};
 
     #[test]

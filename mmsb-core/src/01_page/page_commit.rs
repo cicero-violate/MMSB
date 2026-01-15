@@ -46,7 +46,7 @@ pub(crate) fn commit_delta(
 mod tests {
     use super::commit_delta;
     use crate::page::{tlog, Delta, DeltaID, Epoch, PageID, Source, TransactionLog};
-    use crate::utility::{ADMISSION_PROOF_VERSION, EXECUTION_PROOF_VERSION, MmsbAdmissionProof, MmsbExecutionProof};
+    use crate::proof::{ADMISSION_PROOF_VERSION, EXECUTION_PROOF_VERSION, MmsbAdmissionProof, MmsbExecutionProof};
     use mmsb_judgment::JudgmentToken;
     use serde_json::json;
     use std::time::{SystemTime, UNIX_EPOCH};
