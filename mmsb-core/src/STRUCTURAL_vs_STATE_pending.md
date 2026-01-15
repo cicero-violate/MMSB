@@ -19,18 +19,24 @@
    * Production paths ready for DAG binding (currently pass None for legacy compat)
 
 3. **Isolate materialization**
-   🔄 NEXT
+   ✅ DONE: Pure materialization module created
    * Pull replay logic into a pure Phase 3 module
-   * Create dedicated materialization interface
-   * Enforce read-only semantics
+   * MaterializedPageView provides immutable state representation
+   * materialize_page_state is pure function with no side effects
+   * No writes, no DAG reads, no judgment calls
+   * Deterministic replay from delta sequence
+   * Full test coverage included
+   * Legacy Page::apply_delta preserved for backward compatibility
 
 ---
 
 ### 🟠 IMPORTANT (next tier)
 
 4. **Delete shadow misuse**
-   ⏳ PENDING
+   🔄 NEXT
    * Any ShadowPageGraph used outside Phase 1 or Phase 0 is a bug
+   * Audit all ShadowPageGraph usage
+   * Replace with DependencyGraph or remove
    
 5. **Make phase boundaries explicit**
    ⏳ PENDING
