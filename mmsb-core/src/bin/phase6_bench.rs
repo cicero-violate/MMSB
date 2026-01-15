@@ -23,7 +23,6 @@ fn main() -> Result<(), Box<dyn Error>> {
     let throughput_engine = ThroughputEngine::new(Arc::clone(&allocator), worker_count, 1024);
     let throughput_metrics = throughput_engine.process_parallel(deltas.clone())?;
 
-    let graph = Arc::new(build_graph(page_count));
     let memory_monitor: Arc<dyn MemoryPressureHandler> = Arc::new(MemoryMonitor::with_config(
         Arc::clone(&allocator),
         MemoryMonitorConfig {
@@ -33,7 +32,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     ));
     let tick_throughput = ThroughputEngine::new(Arc::clone(&allocator), worker_count, 1024);
     let dag = Arc::new(DependencyGraph::new());
-    let orchestrator = TickOrchestrator::new(tick_throughput, Arc::clone(&graph), Arc::clone(&dag), memory_monitor);
+    let orchestrator = TickOrchestrator::new(tick_throughput, Arc::clone(&dag), memory_monitor);
     let tick_metrics = orchestrator.execute_tick(deltas)?;
 
     write_report(&throughput_metrics, &tick_metrics, worker_count)?;
@@ -63,14 +62,6 @@ fn build_deltas(count: usize, pages: u64) -> Vec<Delta> {
             }
         })
         .collect()
-}
-
-fn build_graph(nodes: u64) -> ShadowPageGraph {
-    let graph = ShadowPageGraph::default();
-    for id in 1..nodes {
-        graph.add_edge(PageID(id), PageID(id + 1), EdgeType::Data);
-    }
-    graph
 }
 
 fn write_report(

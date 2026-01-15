@@ -1,5 +1,5 @@
 use super::throughput_engine::ThroughputEngine;
-use crate::dag::{GraphValidator, ShadowPageGraph, DependencyGraph};
+use crate::dag::{DagValidator, DependencyGraph};
 use mmsb_judgment::JudgmentToken;
 use crate::page::{commit_delta, Delta, PageError, TransactionLog};
 use crate::utility::{MmsbAdmissionProof, MmsbExecutionProof};
@@ -21,7 +21,6 @@ pub struct TickMetrics {
 
 pub struct TickOrchestrator {
     throughput: ThroughputEngine,
-    graph: Arc<ShadowPageGraph>,
     dag: Arc<DependencyGraph>,
     memory_monitor: Arc<dyn MemoryPressureHandler>,
     tick_budget_ms: u64,
@@ -30,13 +29,11 @@ pub struct TickOrchestrator {
 impl TickOrchestrator {
     pub fn new(
         throughput: ThroughputEngine,
-        graph: Arc<ShadowPageGraph>,
         dag: Arc<DependencyGraph>,
         memory_monitor: Arc<dyn MemoryPressureHandler>,
     ) -> Self {
         Self {
             throughput,
-            graph,
             dag,
             memory_monitor,
             tick_budget_ms: 16,
@@ -48,7 +45,7 @@ impl TickOrchestrator {
         let throughput_metrics = self.throughput.process_parallel(deltas)?;
 
         let graph_report = {
-            let validator = GraphValidator::new(&self.graph);
+            let validator = DagValidator::new(&self.dag);
             validator.detect_cycles()
         };
 

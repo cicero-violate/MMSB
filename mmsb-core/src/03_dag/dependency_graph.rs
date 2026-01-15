@@ -89,6 +89,10 @@ impl DependencyGraph {
         self.clone()
     }
 
+    pub fn get_adjacency(&self) -> &HashMap<PageID, Vec<(PageID, EdgeType)>> {
+        &self.adjacency
+    }
+
     pub fn compute_snapshot_hash(&self) -> String {
         let mut hasher = Sha256::new();
         hasher.update(&self.version.to_le_bytes());
