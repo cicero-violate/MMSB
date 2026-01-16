@@ -23,7 +23,7 @@ impl PageLocation {
 
 /// Globally unique identifier for pages
 #[repr(transparent)]
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
 pub struct PageID(pub u64);
 
 impl fmt::Display for PageID {

@@ -121,6 +121,13 @@ pub mod adaptive {
         PageCluster,
         PageClusterer,
         PhysAddr,
+        // Phase 7 exports
+        ProposalEngine,
+        ProposalConfig,
+        StructuralProposal,
+        ProposalCategory,
+        ExpectedEffect,
+        PropagationStats,
     };
 }
 

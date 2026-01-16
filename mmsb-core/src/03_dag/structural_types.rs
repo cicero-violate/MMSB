@@ -1,7 +1,7 @@
 use crate::types::PageID;
 use crate::dag::EdgeType;
 
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
 pub enum StructuralOp {
     AddEdge {
         from: PageID,

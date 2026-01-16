@@ -1,5 +1,5 @@
 use mmsb_core::prelude::{Delta, DeltaID, Epoch, PageID, Source, TransactionLog};
-use mmsb_core::prelude::utility::{EXECUTION_PROOF_VERSION, MmsbExecutionProof};
+use mmsb_core::prelude::proof::{EXECUTION_PROOF_VERSION, MmsbExecutionProof};
 use mmsb_judgment::issue::issue_judgment;
 use sha2::{Digest, Sha256};
 use std::time::{SystemTime, UNIX_EPOCH};

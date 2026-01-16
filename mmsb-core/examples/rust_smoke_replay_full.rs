@@ -3,7 +3,7 @@
 // NOW 100% CORRECT AND PASSING
 
 use mmsb_core::ffi::*;
-use mmsb_core::prelude::utility::{ADMISSION_PROOF_VERSION, EXECUTION_PROOF_VERSION};
+use mmsb_core::prelude::proof::{ADMISSION_PROOF_VERSION, EXECUTION_PROOF_VERSION};
 use mmsb_judgment::issue::issue_judgment;
 
 use std::collections::HashMap;

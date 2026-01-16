@@ -3,7 +3,7 @@ use mmsb_core::prelude::{
     PropagationEngine, Source, TransactionLog, TransactionLogReader, TropicalSemiring,
 };
 use mmsb_judgment::JudgmentToken;
-use mmsb_core::prelude::utility::{EXECUTION_PROOF_VERSION, MmsbExecutionProof};
+use mmsb_core::prelude::proof::{EXECUTION_PROOF_VERSION, MmsbExecutionProof};
 use sha2::{Digest, Sha256};
 use std::path::PathBuf;
 use std::sync::Arc;

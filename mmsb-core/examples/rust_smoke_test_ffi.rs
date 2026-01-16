@@ -3,7 +3,7 @@
 // This tests allocator, pages, deltas, metadata, tlog, reader, checkpoint, summary, list_pages, and error handling
 
 use mmsb_core::ffi::*;
-use mmsb_core::prelude::utility::{ADMISSION_PROOF_VERSION, EXECUTION_PROOF_VERSION};
+use mmsb_core::prelude::proof::{ADMISSION_PROOF_VERSION, EXECUTION_PROOF_VERSION};
 use mmsb_judgment::issue::issue_judgment;
 use sha2::{Digest, Sha256};
 use std::ffi::{CStr, CString};

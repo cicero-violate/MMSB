@@ -6,7 +6,7 @@ use mmsb_core::prelude::*;
 use mmsb_core::prelude::dag::topological_sort;
 use mmsb_core::prelude::page::{apply_log, compact, generate_mask, read_log, summary};
 use mmsb_core::prelude::types::EpochCell;
-use mmsb_core::prelude::utility::{MmsbExecutionProof, EXECUTION_PROOF_VERSION};
+use mmsb_core::prelude::proof::{MmsbExecutionProof, EXECUTION_PROOF_VERSION};
 use mmsb_judgment::issue::issue_judgment;
 use serde_json::json;
 use sha2::{Digest, Sha256};
