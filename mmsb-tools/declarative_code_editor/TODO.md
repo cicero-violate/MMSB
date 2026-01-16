@@ -24,9 +24,9 @@
 ## Query Enhancements
 
 ### Advanced Predicates
-- [ ] `VisibilityPredicate` - match pub/private/pub(crate)
+- [x] `VisibilityPredicate` - match pub/private/pub(crate)
 - [ ] `GenericPredicate` - match items with generics
-- [ ] `AttributePredicate` - match by #[derive], #[cfg], etc.
+- [x] `AttributePredicate` - match by #[derive], #[cfg], etc.
 - [ ] `SignaturePredicate` - match function signatures
 - [ ] `BodyPredicate` - pattern match in function bodies
 - [ ] `DocPredicate` - search doc comments
