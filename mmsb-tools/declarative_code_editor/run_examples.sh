@@ -44,9 +44,14 @@ echo "--- Example 8: Advanced Mutations ---"
 cargo run --example 08_advanced_mutations
 echo ""
 
-echo "--- Example 8: Query Combinators ---"
+echo "--- Example 9: Query Combinators ---"
 cargo run --example 09_query_combinators
 echo ""
+
+echo "--- Example 10: Mutation Safety ---"
+cargo run --example 10_mutation_safety
+echo ""
+
 
 
 echo "--- Bridge Example ---"
