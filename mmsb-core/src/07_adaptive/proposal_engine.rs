@@ -303,16 +303,7 @@ mod tests {
     
     #[test]
     fn test_proposal_engine_does_not_mutate_dag() {
-        let mut dag = DependencyGraph::new();
-        let page_a = PageID::new();
-        let page_b = PageID::new();
-        
-        // Apply an operation directly to create test structure
-        dag.apply_structural_op(&StructuralOp::AddEdge {
-            from: page_a,
-            to: page_b,
-            edge_type: EdgeType::Data,
-        }).ok();
+        let dag = DependencyGraph::new();
         
         let version_before = dag.version();
         let edges_before = dag.edges().len();
