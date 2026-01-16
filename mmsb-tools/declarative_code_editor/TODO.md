@@ -13,7 +13,7 @@
 - [x] Implement actual source transformation in `src/executor/mod.rs`
 - [x] Apply transformations and update SourceBuffer
 - [x] Handle partial replacements (field-level identifier replacement)
-- [ ] Handle param-level and body-level replacements
+- [x] Handle param-level and body-level replacements
 
 ### 3. Propagation Integration
 - [x] Connect to structural_code_editor propagation engine

@@ -26,6 +26,7 @@ pub mod propagation;
 
 pub use source::SourceBuffer;
 pub use query::{Predicate, KindPredicate, NamePredicate, CustomPredicate, QueryPlan};
+pub use query::ItemKind;
 pub use mutation::{MutationOp, ReplaceOp, WrapOp, DeleteOp, InsertOp, MutationPlan};
 pub use intent::{EditIntent, IntentCategory};
 pub use executor::{execute_query, apply_mutation};
