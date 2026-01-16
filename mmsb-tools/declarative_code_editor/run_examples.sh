@@ -1,3 +1,17 @@
+#!/bin/bash
+set -e
+
+echo "=== Building declarative_code_editor ==="
 cargo build
-cargo test -p brige_example
-cargo run -p bridge_example
+
+echo ""
+echo "=== Running tests ==="
+cargo test --lib
+
+echo ""
+echo "=== Running tests ==="
+cargo test 
+
+echo ""
+echo "=== Running bridge example ==="
+cargo run --example bridge_example
