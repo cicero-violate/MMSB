@@ -1,227 +1,261 @@
-# Bridge Layer Implementation - COMPLETE ✅
+# Bridge Layer Implementation - Status Report
 
 ## Summary
 
-The **Bridge Layer** has been successfully implemented, connecting the declarative code editor to the MMSB authority model with full pipeline separation.
+The **Bridge Layer** has been implemented with core architecture complete. Intent extraction and mutation application are stubs requiring implementation.
 
-## Variables
+## What's Implemented ✅
 
-Let $\mathcal{D}$ = Declarative Editor (query + mutate + upsert)
-Let $\mathcal{B}$ = Bridge Layer (intent + classify + propagate)
-Let $\mathcal{S}$ = Structural Pipeline (DAG changes)
-Let $\mathcal{P}$ = State Pipeline (page changes + propagation)
-Let $G$ = DependencyGraph (read-only for state pipeline)
-Let $J_s$ = JudgmentToken (structural authority)
-Let $J_p$ = JudgmentToken (state authority)
+### Core Architecture
+1. **SourceBuffer** (`src/source.rs`)
+   - In-memory source with cached AST
+   - Aligned with MMSB Pages (in-memory)
+   - Aligned with structural_code_indexer pattern
 
-## Architecture Equations
+2. **StructuralClassifier** (`src/bridge/structural_classifier.rs`)
+   - Builds Delta from source content
+   - Separates structural_ops from page_deltas
+   - Pipeline routing logic
 
-$$\text{Bridge Flow} = \mathcal{D} \xrightarrow{\text{extract}} \text{Intent} \xrightarrow{\text{classify}} (\mathcal{S}, \mathcal{P})$$
-$$\text{Structural Route} = \text{StructuralOp}[] \xrightarrow{J_s} \text{commit\_structural\_delta} \rightarrow G_{new}$$
-$$\text{State Route} = \Delta[] \xrightarrow{J_p} \text{commit\_delta} \rightarrow \text{TLog} \xrightarrow{G} \Pi \rightarrow \{\Delta'\}$$
-$$\text{Critical Invariant}: \Pi \cap \text{mutate}(G) = \emptyset$$
+3. **BridgeOrchestrator** (`src/bridge/orchestrator.rs`)
+   - Orchestration flow implemented
+   - Pure observation enforced
+   - Returns BridgedOutput
 
-## What Was Built
+4. **Output Types** (`src/bridge/output.rs`)
+   - BridgedOutput structure
+   - PipelineRoute enum
+   - Helper methods
 
-### 1. Intent Extraction (`src/bridge/intent_bridge.rs`)
+### MMSB Alignment
+✅ Pure observation (no commits in bridge)
+✅ Separate pipelines (structural vs state)
+✅ SourceBuffer in-memory like Pages
+✅ Delta generation from source
+✅ No propagation in bridge (happens in MMSB core)
 
-**Purpose**: Extract semantic intent from declarative mutations
+### Testing
+✅ 3 test modules passing
+- test_query.rs
+- test_mutation.rs
+- test_bridge.rs
 
-**Input**: `PlannedEdit[]`, `EditBuffer`
+✅ 6 examples working
+- 01_simple_rename
+- 02_multi_file_refactor
+- 03_structural_vs_state
+- 04_intent_extraction
+- 05_query_patterns
+- 06_delta_to_page
 
-**Output**: `EditIntent[]` (RenameSymbol, DeleteSymbol, SignatureChange, ImportChange)
+## What's TODO ⚠️
 
-**Algorithm**:
-```
-For each planned edit:
-  1. Get before state from buffer.tree
-  2. Parse after state from edit.new_text
-  3. Compare AST nodes
-  4. Extract semantic intent (rename, delete, etc.)
-```
+### Critical (Blocks Real Usage)
 
-### 2. Structural Classification (`src/bridge/structural_classifier.rs`)
+1. **Mutation Application** (`src/executor/mod.rs`)
+   ```rust
+   pub fn apply_mutation(buffer: &mut SourceBuffer, plan: &MutationPlan) 
+       -> Result<(), EditorError>
+   {
+       // TODO: Apply transformations and update buffer
+       Ok(())  // Currently no-op!
+   }
+   ```
+   **Status**: No-op, needs implementation
+   **Required**: Span-based source transformation, AST update
 
-**Purpose**: Separate structural vs state changes
+2. **Intent Extraction** (`src/intent/extraction.rs`)
+   ```rust
+   pub fn extract_intent(before: &Item, after: &Item) 
+       -> Result<Vec<EditIntent>, EditorError>
+   {
+       // Partial implementation - only basic cases
+   }
+   ```
+   **Status**: Stub, returns empty in orchestrator
+   **Required**: Full AST diffing algorithm
 
-**Input**: `EditIntent[]`, `Edit[]`, `PageID`, source
+3. **Import Detection** (`src/bridge/structural_classifier.rs`)
+   ```rust
+   fn intent_to_structural_op(...) -> Option<StructuralOp> {
+       // Only handles ImportChange intent
+       // But intent extraction doesn't detect imports yet!
+   }
+   ```
+   **Status**: Logic exists but no imports detected
+   **Required**: Parse use statements, detect module changes
 
-**Output**: `(Vec<Delta>, Vec<StructuralOp>)`
+### Medium Priority
 
-**Classification**:
-- RenameSymbol → Delta (state)
-- DeleteSymbol → Delta (state)
-- ImportChange → StructuralOp::AddEdge (structural)
-- ModuleChange → Both
+4. **Query Execution** - Works but limited
+   - Only kind and name predicates
+   - No advanced predicates (visibility, generics, etc.)
 
-### 3. Propagation Bridge (`src/bridge/propagation_bridge.rs`)
+5. **Error Handling** - Basic
+   - Simple error types
+   - No rich diagnostics
+   - No error recovery
 
-**Purpose**: Trigger propagation engine
+6. **Performance** - Not optimized
+   - Full reparse on every update
+   - No caching beyond initial parse
+   - Linear scan for queries
 
-**Input**: `PageID`, `EditIntent[]`, `DependencyGraph`, `JudgmentToken`
+## Current API
 
-**Output**: `Vec<Delta>` (propagated to dependents)
-
-**Integration**: Calls `structural_code_editor::propagate_edits()`
-
-### 4. Orchestrator (`src/bridge/orchestrator.rs`)
-
-**Purpose**: End-to-end flow coordination
-
-**API**:
-- `execute_and_bridge()` - Direct changes only
-- `execute_with_propagation()` - Direct + propagated changes
-
-**Output**: `BridgedOutput` with pipeline routing
-
-### 5. Output Types (`src/bridge/output.rs`)
-
-**BridgedOutput**:
 ```rust
-struct BridgedOutput {
-    intents: Vec<EditIntent>,
-    page_deltas: Vec<Delta>,
-    structural_ops: Vec<StructuralOp>,
-    route: PipelineRoute,
+// 1. Create in-memory buffer
+let buffer = SourceBuffer::new(path, content)?;
+
+// 2. Query the AST
+let items = execute_query(&buffer, &query);  // ✅ Works
+
+// 3. Apply mutation
+apply_mutation(&mut buffer, &mutation)?;      // ⚠️  No-op
+
+// 4. Bridge to MMSB
+let output = BridgeOrchestrator::execute_and_bridge(
+    &mut buffer,
+    &mutation,
+    page_id,
+)?;  // ✅ Works but intents=[], structural_ops=[]
+
+// 5. Commit (caller responsibility)
+commit_delta(&output.page_deltas[0], &judgment)?;  // ✅ Would work
+```
+
+## What Actually Works
+
+### Query System ✅
+```rust
+let query = QueryPlan::new()
+    .with_predicate(KindPredicate::new(ItemKind::Function))
+    .with_predicate(NamePredicate::new("foo"));
+
+let results = execute_query(&buffer, &query);
+// Returns matching items from AST
+```
+
+### Delta Generation ✅
+```rust
+let output = BridgeOrchestrator::execute_and_bridge(...)?;
+
+// output.page_deltas[0] contains valid Delta:
+// - delta_id: computed hash
+// - page_id: provided
+// - payload: source bytes
+// - mask: all true
+// - source: "declarative_editor"
+```
+
+### Pipeline Routing ✅
+```rust
+match output.route {
+    PipelineRoute::State => { /* commit_delta */ }
+    PipelineRoute::Structural => { /* commit_structural_delta */ }
+    PipelineRoute::Both => { /* both commits */ }
 }
 ```
 
-**PipelineRoute**: State | Structural | Both
+## What Doesn't Work Yet
 
-## Alignment with MMSB Model
-
-### ✅ Pipeline Separation
-
-| Aspect            | Structural | State |
-|-------------------+------------+-------|
-| Mutates DAG       | ✅         | ❌    |
-| Mutates Pages     | ❌         | ✅    |
-| Uses ShadowGraph  | ✅         | ❌    |
-| Uses Propagation  | ❌         | ✅    |
-| Requires Judgment | ✅         | ✅    |
-| Triggers Recalc   | ❌         | ✅    |
-
-### ✅ Critical Invariants
-
-1. **Propagation NEVER mutates DAG** ✅
-   - PropagationBridge uses `DependencyGraph` read-only
-   
-2. **Structural commit NEVER triggers propagation** ✅
-   - `StructuralOp[]` and `Delta[]` kept separate
-   - Caller controls commit order
-   
-3. **Pure observation until commit** ✅
-   - Bridge produces `BridgedOutput`
-   - No filesystem writes
-   - No authority mutations
-   
-4. **Judgment tokens required** ✅
-   - Bridge never issues tokens
-   - Caller provides $J_s$ and $J_p$
-
-## Usage Example
-
+### Actual Mutations ⚠️
 ```rust
-use declarative_code_editor::*;
-
-// Setup
-let source = "fn old_name() { }";
-let mut buffer = EditBuffer::new(source.to_string());
-
-// Declarative mutation
-let query = QueryPlan::new()
-    .with_predicate(ItemKind::Function)
-    .with_predicate(NamePredicate::new("old_name"));
-
+// This compiles but does NOTHING:
 let mutation = MutationPlan::new(query)
     .with_operation(ReplaceOp::new("sig.ident", "new_name"));
 
-// Execute through bridge
-let output = BridgeOrchestrator::execute_and_bridge(
-    &mutation,
-    &mut buffer,
-    page_id,
-    &file_path,
-    false,
-    false,
-)?;
-
-// Inspect results
-println!("Intents: {:?}", output.intents);
-println!("Route: {:?}", output.route);
-println!("Page deltas: {}", output.page_deltas.len());
-println!("Structural ops: {}", output.structural_ops.len());
-
-// Route to appropriate pipeline
-match output.route {
-    PipelineRoute::State => {
-        // STATE PIPELINE
-        let judgment = obtain_state_judgment()?;
-        commit_delta(&output.page_deltas[0], &judgment)?;
-        // Propagation triggers automatically via DAG snapshot
-    }
-    PipelineRoute::Structural => {
-        // STRUCTURAL PIPELINE
-        let judgment = obtain_structural_judgment()?;
-        commit_structural_delta(&output.structural_ops, &judgment)?;
-    }
-    PipelineRoute::Both => {
-        // STRUCTURAL first, then STATE
-        let s_judgment = obtain_structural_judgment()?;
-        commit_structural_delta(&output.structural_ops, &s_judgment)?;
-        
-        let p_judgment = obtain_state_judgment()?;
-        commit_delta(&output.page_deltas[0], &p_judgment)?;
-    }
-}
+apply_mutation(&mut buffer, &mutation)?;
+// buffer.content unchanged!
 ```
 
-## Files Created
+### Intent Extraction ⚠️
+```rust
+let output = BridgeOrchestrator::execute_and_bridge(...)?;
 
-### Code
-1. `src/bridge/mod.rs` - Bridge module root
-2. `src/bridge/output.rs` - Output types
-3. `src/bridge/intent_bridge.rs` - Intent extraction
-4. `src/bridge/structural_classifier.rs` - Classification
-5. `src/bridge/propagation_bridge.rs` - Propagation trigger
-6. `src/bridge/orchestrator.rs` - Orchestration
+println!("{:?}", output.intents);
+// Prints: []  (always empty!)
+```
 
-### Documentation
-1. `BRIDGE_ARCHITECTURE.md` - Complete architecture guide
-2. `INTEGRATION_SUMMARY.md` - Integration overview
-3. `examples/bridge_example.rs` - Working example
+### Structural Ops ⚠️
+```rust
+let output = BridgeOrchestrator::execute_and_bridge(...)?;
 
-### Dependencies
-- Added `structural_code_editor` to Cargo.toml
+println!("{:?}", output.structural_ops);
+// Prints: []  (always empty!)
+```
 
-## Build Status
-
-✅ **All files compile successfully**
-✅ **No errors**
-✅ **Ready for integration testing**
+## Build & Test Status
 
 ```bash
 cargo build --release
-# Finished `release` profile [optimized] target(s) in 0.38s
+# ✅ Compiles successfully
+
+cargo test
+# ✅ All 3 tests pass
+
+cargo run --example 05_query_patterns
+# ✅ Runs and shows correct query results
+
+cargo run --example 01_simple_rename
+# ✅ Runs but mutation is no-op
 ```
 
-## Next Steps (Caller Responsibility)
+## Integration Status
 
-1. **Obtain JudgmentTokens** from `mmsb-judgment`
-2. **Call commit functions** from `mmsb-core`
-3. **Handle propagation results** from state pipeline
-4. **Implement multi-file scenarios** (optional)
-5. **Add integration tests** (optional)
+### With MMSB Core
+- ✅ Produces valid Delta objects
+- ✅ Follows authority model (pure observation)
+- ✅ Separate structural/state pipelines
+- ⚠️  Can't actually modify source yet
+
+### With structural_code_editor
+- ✅ Uses same SourceFile pattern
+- ✅ EditIntent types compatible
+- ⚠️  No actual propagation integration (removed from bridge)
+
+## Roadmap to Production
+
+### Phase 1: Make It Work (Critical)
+1. Implement mutation application
+   - Span-based replacement
+   - Source text transformation
+   - AST re-parsing
+
+2. Implement intent extraction
+   - AST diffing algorithm
+   - Symbol rename detection
+   - Signature change detection
+
+3. Implement import detection
+   - Parse use statements
+   - Generate StructuralOp::AddEdge
+   - Module dependency tracking
+
+### Phase 2: Make It Right (Important)
+4. Error handling improvements
+5. Conflict detection
+6. Transaction rollback
+7. Performance optimization
+
+### Phase 3: Make It Fast (Nice-to-have)
+8. Incremental parsing
+9. Query indexing
+10. Result caching
+
+See TODO.md for complete feature list.
 
 ## Conclusion
 
-The bridge layer is **complete and functional**. It successfully:
+**Current State**: 
+- Architecture ✅ Complete
+- Integration ✅ Aligned with MMSB
+- Core types ✅ Implemented
+- **Functionality** ⚠️  **Incomplete** (mutations are no-ops)
 
-✅ Integrates declarative editor with MMSB authority model
-✅ Maintains strict pipeline separation
-✅ Enforces pure observation
-✅ Requires judgment for all authority operations
-✅ Routes to correct pipelines automatically
-✅ Preserves all MMSB invariants
+**To Use in Production**:
+1. Implement mutation application (src/executor/mod.rs)
+2. Implement intent extraction (src/intent/extraction.rs)  
+3. Implement import detection (src/bridge/structural_classifier.rs)
 
-The implementation provides an **ergonomic, declarative interface** while respecting the **rigorous authority boundaries** of the MMSB architecture.
+**Estimated Effort**: 3-5 days for critical path items.
