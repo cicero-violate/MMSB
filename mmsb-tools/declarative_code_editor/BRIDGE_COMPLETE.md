@@ -7,27 +7,18 @@ The **Bridge Layer** has been successfully implemented, connecting the declarati
 ## Variables
 
 Let $\mathcal{D}$ = Declarative Editor (query + mutate + upsert)
-
 Let $\mathcal{B}$ = Bridge Layer (intent + classify + propagate)
-
 Let $\mathcal{S}$ = Structural Pipeline (DAG changes)
-
 Let $\mathcal{P}$ = State Pipeline (page changes + propagation)
-
 Let $G$ = DependencyGraph (read-only for state pipeline)
-
 Let $J_s$ = JudgmentToken (structural authority)
-
 Let $J_p$ = JudgmentToken (state authority)
 
 ## Architecture Equations
 
 $$\text{Bridge Flow} = \mathcal{D} \xrightarrow{\text{extract}} \text{Intent} \xrightarrow{\text{classify}} (\mathcal{S}, \mathcal{P})$$
-
 $$\text{Structural Route} = \text{StructuralOp}[] \xrightarrow{J_s} \text{commit\_structural\_delta} \rightarrow G_{new}$$
-
 $$\text{State Route} = \Delta[] \xrightarrow{J_p} \text{commit\_delta} \rightarrow \text{TLog} \xrightarrow{G} \Pi \rightarrow \{\Delta'\}$$
-
 $$\text{Critical Invariant}: \Pi \cap \text{mutate}(G) = \emptyset$$
 
 ## What Was Built
@@ -101,14 +92,14 @@ struct BridgedOutput {
 
 ### ✅ Pipeline Separation
 
-| Aspect | Structural | State |
-|--------|-----------|-------|
-| Mutates DAG | ✅ | ❌ |
-| Mutates Pages | ❌ | ✅ |
-| Uses ShadowGraph | ✅ | ❌ |
-| Uses Propagation | ❌ | ✅ |
-| Requires Judgment | ✅ | ✅ |
-| Triggers Recalc | ❌ | ✅ |
+| Aspect            | Structural | State |
+|-------------------+------------+-------|
+| Mutates DAG       | ✅         | ❌    |
+| Mutates Pages     | ❌         | ✅    |
+| Uses ShadowGraph  | ✅         | ❌    |
+| Uses Propagation  | ❌         | ✅    |
+| Requires Judgment | ✅         | ✅    |
+| Triggers Recalc   | ❌         | ✅    |
 
 ### ✅ Critical Invariants
 
