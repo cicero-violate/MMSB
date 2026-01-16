@@ -5,7 +5,7 @@
 use crate::extract::{ExtractedRef, RefType};
 use crate::index::{PageIndex, SymbolIndex};
 use crate::graph::edge_types::ref_type_to_edge_type;
-use mmsb_core::dag::{DependencyGraph, StructuralOp};
+use mmsb_core::dag::{build_dependency_graph as build_dependency_graph_from_ops, DependencyGraph, StructuralOp};
 use std::collections::HashSet;
 
 /// Build dependency graph from extracted references
@@ -17,12 +17,11 @@ pub fn build_dependency_graph(
     page_index: &mut PageIndex,
     symbol_index: &mut SymbolIndex,
 ) -> DependencyGraph {
-    let mut graph = DependencyGraph::new();
     let mut edges_to_add = HashSet::new();
     
     // First pass: register all symbols
     for extracted_ref in refs {
-        let source_page = page_index.get_or_create_page(&extracted_ref.source_path);
+        let _source_page = page_index.get_or_create_page(&extracted_ref.source_path);
         
         // For module references, try to resolve to target page
         if extracted_ref.ref_type == RefType::Module {
@@ -81,9 +80,7 @@ pub fn build_dependency_graph(
         .map(|(from, to, edge_type)| StructuralOp::AddEdge { from, to, edge_type })
         .collect();
     
-    graph.apply_ops(&ops);
-    
-    graph
+    build_dependency_graph_from_ops(&ops)
 }
 
 /// Extract crate name from symbol path

@@ -1,0 +1,15 @@
+[package]
+name = "declarative_code_editor"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+mmsb-core = { path = "../../mmsb-core" }
+mmsb-judgment = { path = "../../mmsb-judgment" }
+structural_code_indexer = { path = "../structural_code_indexer" }
+structural_code_editor = { path = "../structural_code_editor" }
+syn = { version = "2", features = ["full", "visit", "extra-traits"] }
+quote = "1.0"
+proc-macro2 = "1.0"
+sha2 = "0.10"
+thiserror = "1.0"
