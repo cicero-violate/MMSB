@@ -1,48 +1,37 @@
 //! Query execution and mutation application
 
+use crate::source::SourceBuffer;
 use crate::query::QueryPlan;
 use crate::mutation::MutationPlan;
 use crate::error::EditorError;
+use syn::Item;
 
-/// Execute query against source text
-pub fn execute_query(source: &str, plan: &QueryPlan) -> Result<Vec<syn::Item>, EditorError> {
-    let file = syn::parse_file(source)
-        .map_err(|e| EditorError::ParseError(e.to_string()))?;
+/// Execute query against source buffer
+pub fn execute_query<'a>(buffer: &'a SourceBuffer, plan: &QueryPlan) -> Vec<&'a Item> {
+    let file = buffer.ast();
     
     let mut results = Vec::new();
     for item in &file.items {
         if plan.matches(item) {
-            results.push(item.clone());
+            results.push(item);
         }
     }
     
-    Ok(results)
+    results
 }
 
-/// Apply mutation to source text, producing new source
-pub fn apply_mutation(source: &str, plan: &MutationPlan) -> Result<String, EditorError> {
-    let _file = syn::parse_file(source)
-        .map_err(|e| EditorError::ParseError(e.to_string()))?;
-    
+/// Apply mutation to buffer (modifies in-place)
+pub fn apply_mutation(buffer: &mut SourceBuffer, plan: &MutationPlan) -> Result<(), EditorError> {
     // Find matches
-    let matches = execute_query(source, plan.query())?;
+    let matches: Vec<Item> = execute_query(buffer, plan.query())
+        .into_iter()
+        .cloned()
+        .collect();
     
     if matches.is_empty() {
         return Err(EditorError::NoMatches);
     }
     
-    // Apply operations to matched items
-    let mut new_source = source.to_string();
-    
-    for item in matches {
-        for op in plan.operations() {
-            let transformed = op.apply(&item);
-            // Replace in source
-            // Simplified: would use proper span-based replacement
-            let item_str = quote::quote!(#item).to_string();
-            new_source = new_source.replace(&item_str, &transformed);
-        }
-    }
-    
-    Ok(new_source)
+    // TODO: Apply transformations and update buffer
+    Ok(())
 }

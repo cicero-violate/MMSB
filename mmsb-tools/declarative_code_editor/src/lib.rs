@@ -15,6 +15,7 @@
 //!                                                    BridgedOutput
 //! ```
 
+pub mod source;
 pub mod query;
 pub mod mutation;
 pub mod intent;
@@ -22,6 +23,7 @@ pub mod executor;
 pub mod error;
 pub mod bridge;
 
+pub use source::SourceBuffer;
 pub use query::{Predicate, KindPredicate, NamePredicate, CustomPredicate, QueryPlan};
 pub use mutation::{MutationOp, ReplaceOp, WrapOp, DeleteOp, InsertOp, MutationPlan};
 pub use intent::{EditIntent, IntentCategory};

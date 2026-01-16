@@ -6,8 +6,8 @@ use std::path::PathBuf;
 #[test]
 fn test_bridge_execution() {
     let source = "fn old_name() {}";
+    let mut buffer = SourceBuffer::new(PathBuf::from("test.rs"), source.to_string()).unwrap();
     let page_id = PageID(12345);
-    let file_path = PathBuf::from("test.rs");
     
     let query = QueryPlan::new()
         .with_predicate(KindPredicate::new(ItemKind::Function));
@@ -16,10 +16,9 @@ fn test_bridge_execution() {
         .with_operation(ReplaceOp::new("sig.ident", "new_name"));
     
     let result = BridgeOrchestrator::execute_and_bridge(
-        source,
+        &mut buffer,
         &mutation,
         page_id,
-        &file_path,
     );
     
     assert!(result.is_ok());
@@ -28,8 +27,8 @@ fn test_bridge_execution() {
 #[test]
 fn test_bridge_output_has_delta() {
     let source = "fn test() {}";
+    let mut buffer = SourceBuffer::new(PathBuf::from("test.rs"), source.to_string()).unwrap();
     let page_id = PageID(12345);
-    let file_path = PathBuf::from("test.rs");
     
     let query = QueryPlan::new()
         .with_predicate(NamePredicate::new("test"));
@@ -38,10 +37,9 @@ fn test_bridge_output_has_delta() {
         .with_operation(ReplaceOp::new("sig.ident", "renamed"));
     
     let output = BridgeOrchestrator::execute_and_bridge(
-        source,
+        &mut buffer,
         &mutation,
         page_id,
-        &file_path,
     ).unwrap();
     
     assert!(!output.page_deltas.is_empty());

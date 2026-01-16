@@ -1,5 +1,6 @@
 use declarative_code_editor::*;
 use declarative_code_editor::query::ItemKind;
+use std::path::PathBuf;
 
 #[test]
 fn test_execute_query_function() {
@@ -8,10 +9,11 @@ fn test_function() {}
 struct TestStruct {}
 "#;
     
+    let buffer = SourceBuffer::new(PathBuf::from("test.rs"), source.to_string()).unwrap();
     let query = QueryPlan::new()
         .with_predicate(KindPredicate::new(ItemKind::Function));
     
-    let results = execute_query(source, &query).unwrap();
+    let results = execute_query(&buffer, &query);
     assert_eq!(results.len(), 1);
 }
 
@@ -22,10 +24,11 @@ fn foo() {}
 fn bar() {}
 "#;
     
+    let buffer = SourceBuffer::new(PathBuf::from("test.rs"), source.to_string()).unwrap();
     let query = QueryPlan::new()
         .with_predicate(NamePredicate::new("foo"));
     
-    let results = execute_query(source, &query).unwrap();
+    let results = execute_query(&buffer, &query);
     assert_eq!(results.len(), 1);
 }
 
@@ -36,10 +39,11 @@ fn target() {}
 struct target {}
 "#;
     
+    let buffer = SourceBuffer::new(PathBuf::from("test.rs"), source.to_string()).unwrap();
     let query = QueryPlan::new()
         .with_predicate(KindPredicate::new(ItemKind::Function))
         .with_predicate(NamePredicate::new("target"));
     
-    let results = execute_query(source, &query).unwrap();
+    let results = execute_query(&buffer, &query);
     assert_eq!(results.len(), 1);
 }

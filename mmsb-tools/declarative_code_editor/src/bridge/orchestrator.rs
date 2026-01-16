@@ -8,6 +8,7 @@
 //! 3. Classify into structural vs state changes
 //! 4. Route to appropriate pipelines
 
+use crate::source::SourceBuffer;
 use crate::error::EditorError;
 use crate::mutation::MutationPlan;
 use crate::executor::apply_mutation;
@@ -28,13 +29,15 @@ impl BridgeOrchestrator {
     /// 4. Build Delta and StructuralOps
     /// 5. Return output ready for MMSB commits
     pub fn execute_and_bridge(
-        source_before: &str,
+        buffer: &mut SourceBuffer,
         plan: &MutationPlan,
         page_id: PageID,
-        file_path: &PathBuf,
     ) -> Result<BridgedOutput, EditorError> {
-        // Step 1: Apply mutation to get new source
-        let source_after = apply_mutation(source_before, plan)?;
+        // Step 1: Apply mutation to buffer
+        apply_mutation(buffer, plan)?;
+        
+        let source_after = buffer.source();
+        let file_path = &buffer.path;
         
         // Step 2: Extract semantic intent (simplified for now)
         let intents = Vec::new(); // TODO: implement intent extraction from source diff
