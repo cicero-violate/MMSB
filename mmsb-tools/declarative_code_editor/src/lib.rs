@@ -27,10 +27,10 @@ pub mod propagation;
 pub use source::SourceBuffer;
 pub use query::{
     Predicate, KindPredicate, NamePredicate, CustomPredicate, QueryPlan,
-    ItemKind,
+   ItemKind,
     VisibilityPredicate, VisibilityLevel, AttributePredicate,
     AndPredicate, OrPredicate, NotPredicate, and, or, not,
-    GenericPredicate, SignaturePredicate,
+    GenericPredicate, SignaturePredicate, BodyPredicate, DocPredicate,
 };
 pub use mutation::{MutationOp, ReplaceOp, WrapOp, DeleteOp, InsertOp, MutationPlan};
 pub use intent::{EditIntent, IntentCategory};

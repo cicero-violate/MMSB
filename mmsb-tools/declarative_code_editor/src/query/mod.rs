@@ -9,4 +9,4 @@ pub use predicate::{
 };
 pub use plan::QueryPlan;
 pub use combinators::{AndPredicate, OrPredicate, NotPredicate, and, or, not};
-pub use advanced_predicates::{GenericPredicate, SignaturePredicate};
+pub use advanced_predicates::{GenericPredicate, SignaturePredicate, BodyPredicate, DocPredicate};

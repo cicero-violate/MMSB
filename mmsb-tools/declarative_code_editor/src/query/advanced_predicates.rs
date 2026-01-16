@@ -183,6 +183,121 @@ impl Predicate for SignaturePredicate {
             }
         }
         
-        true
+       true
     }
 }
+
+/// Match functions by body content (simple text matching)
+#[derive(Debug, Clone)]
+pub struct BodyPredicate {
+    /// Pattern to search for in function body
+    pub pattern: String,
+    /// If true, pattern is a regex; if false, simple substring match
+    pub is_regex: bool,
+}
+
+impl BodyPredicate {
+    pub fn new(pattern: impl Into<String>) -> Self {
+        Self {
+            pattern: pattern.into(),
+            is_regex: false,
+        }
+    }
+    
+    pub fn contains(pattern: impl Into<String>) -> Self {
+        Self::new(pattern)
+    }
+    
+    pub fn regex(pattern: impl Into<String>) -> Self {
+        Self {
+            pattern: pattern.into(),
+            is_regex: true,
+        }
+    }
+}
+
+impl Predicate for BodyPredicate {
+    fn matches(&self, item: &Item) -> bool {
+        let Item::Fn(func) = item else {
+            return false;
+        };
+        
+        // Convert body to string for pattern matching
+        let body_str = quote::quote!(#func.block).to_string();
+        
+        if self.is_regex {
+            // Simple regex matching (would need regex crate for full support)
+            // For now, just do substring matching
+            body_str.contains(&self.pattern)
+        } else {
+            body_str.contains(&self.pattern)
+        }
+    }
+}
+
+/// Match items by doc comment content
+#[derive(Debug, Clone)]
+pub struct DocPredicate {
+    /// Pattern to search for in doc comments
+    pub pattern: String,
+}
+
+impl DocPredicate {
+    pub fn new(pattern: impl Into<String>) -> Self {
+        Self {
+            pattern: pattern.into(),
+        }
+    }
+    
+    pub fn contains(pattern: impl Into<String>) -> Self {
+        Self::new(pattern)
+    }
+}
+
+impl Predicate for DocPredicate {
+    fn matches(&self, item: &Item) -> bool {
+        let attrs = match item {
+            Item::Fn(f) => &f.attrs,
+            Item::Struct(s) => &s.attrs,
+            Item::Enum(e) => &e.attrs,
+            Item::Trait(t) => &t.attrs,
+            Item::Impl(i) => &i.attrs,
+            Item::Mod(m) => &m.attrs,
+            Item::Const(c) => &c.attrs,
+            Item::Static(s) => &s.attrs,
+            Item::Type(t) => &t.attrs,
+            Item::Use(u) => &u.attrs,
+            _ => return false,
+        };
+        
+        // Check all doc attributes
+        for attr in attrs {
+            if is_doc_attribute(attr) {
+                let doc_content = extract_doc_content(attr);
+                if doc_content.contains(&self.pattern) {
+                    return true;
+                }
+            }
+        }
+        
+        false
+    }
+}
+
+fn is_doc_attribute(attr: &Attribute) -> bool {
+    attr.path().is_ident("doc")
+}
+
+fn extract_doc_content(attr: &Attribute) -> String {
+    // Extract doc comment text
+    // Doc attributes are like #[doc = "text"]
+    if let syn::Meta::NameValue(nv) = &attr.meta {
+        if let syn::Expr::Lit(lit) = &nv.value {
+            if let syn::Lit::Str(s) = &lit.lit {
+                return s.value();
+            }
+        }
+    }
+    String::new()
+}
+use syn::Attribute;

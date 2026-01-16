@@ -28,8 +28,8 @@
 - [x] `GenericPredicate` - match items with generics
 - [x] `AttributePredicate` - match by #[derive], #[cfg], etc.
 - [x] `SignaturePredicate` - match function signatures
-- [ ] `BodyPredicate` - pattern match in function bodies
-- [ ] `DocPredicate` - search doc comments
+- [x] `BodyPredicate` - pattern match in function bodies
+- [x] `DocPredicate` - search doc comments
 
 ### Query Combinators
 - [x] `and()` - combine predicates with AND
