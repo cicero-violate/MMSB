@@ -49,8 +49,6 @@ cargo run --example 09_query_combinators
 echo ""
 
 
-
-
 echo "--- Bridge Example ---"
 cargo run --example bridge_example
 
