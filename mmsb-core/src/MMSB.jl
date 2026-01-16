@@ -50,10 +50,10 @@ include("04_propagation/PropagationEngine.jl")
 include("04_propagation/PropagationScheduler.jl")
 
 # Layer 5: Adaptive Memory
-include("05_adaptive/AdaptiveLayout.jl")
-include("05_adaptive/GraphRewriting.jl")
-include("05_adaptive/EntropyReduction.jl")
-include("05_adaptive/LocalityAnalysis.jl")
+include("06_optimization/AdaptiveLayout.jl")
+include("06_optimization/GraphRewriting.jl")
+include("06_optimization/EntropyReduction.jl")
+include("06_optimization/LocalityAnalysis.jl")
 
 # Public API (load after all infrastructure)
 include("API.jl")

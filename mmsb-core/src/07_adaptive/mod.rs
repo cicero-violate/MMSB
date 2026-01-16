@@ -15,14 +15,8 @@
 pub mod types;
 pub mod propagation_stats;
 pub mod proposal_engine;
-
-// Legacy modules (to be deprecated)
-#[deprecated(note = "Legacy code, use proposal_engine instead")]
-pub mod memory_layout;
-#[deprecated(note = "Legacy code, use proposal_engine instead")]
-pub mod page_clustering;
-#[deprecated(note = "Legacy code, use proposal_engine instead")]
-pub mod locality_optimizer;
+pub mod proposal_validator;
+pub mod llm_proposal;
 
 // Phase 7 public API
 pub use types::{
@@ -32,9 +26,14 @@ pub use propagation_stats::PropagationStats;
 pub use proposal_engine::{ProposalConfig, ProposalEngine};
 
 // Legacy exports (deprecated)
-#[allow(deprecated)]
-pub use memory_layout::{MemoryLayout, AccessPattern, PageId, PhysAddr};
-#[allow(deprecated)]
-pub use page_clustering::{PageCluster, PageClusterer};
-#[allow(deprecated)]
-pub use locality_optimizer::LocalityOptimizer;
+#[deprecated(note = "Legacy code, use proposal_engine instead")]
+pub use crate::optimization::{AccessPattern, MemoryLayout, PageId, PhysAddr};
+#[deprecated(note = "Legacy code, use proposal_engine instead")]
+pub use crate::optimization::{PageCluster, PageClusterer};
+#[deprecated(note = "Legacy code, use proposal_engine instead")]
+pub use crate::optimization::LocalityOptimizer;
+pub use proposal_validator::{ProposalValidator, ValidationResult, ValidationViolation};
+pub use llm_proposal::{
+    LLMProposalEngine, LLMProposalRequest, LLMProposalResponse,
+    ProposalJSON, StructuralOpJSON, EvidenceJSON, ExpectedEffectJSON,
+};

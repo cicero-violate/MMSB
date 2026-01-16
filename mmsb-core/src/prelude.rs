@@ -113,14 +113,20 @@ pub mod utility {
     pub use crate::utility::*;
 }
 
-pub mod adaptive {
-    pub use crate::adaptive::{
+pub mod optimization {
+    pub use crate::optimization::{
         AccessPattern,
         LocalityOptimizer,
         MemoryLayout,
         PageCluster,
         PageClusterer,
+        PageId,
         PhysAddr,
+    };
+}
+
+pub mod adaptive {
+    pub use crate::adaptive::{
         // Phase 7 exports
         ProposalEngine,
         ProposalConfig,
