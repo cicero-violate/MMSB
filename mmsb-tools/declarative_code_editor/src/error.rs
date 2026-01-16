@@ -33,9 +33,9 @@ pub enum EditorError {
     #[error("Unsupported operation: {0}")]
     UnsupportedOperation(String),
 
-    #[error("Intent extraction failed: {0}")]
-    IntentExtractionError(String),
+   #[error("Intent extraction failed: {0}")]
+   IntentExtractionError(String),
 
-    #[error("Conflicting mutations detected (overlapping byte spans)")]
-    ConflictingMutations,
+    #[error("Conflict detected: {0}")]
+    Conflict(String),
 }

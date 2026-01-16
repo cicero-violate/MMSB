@@ -1,10 +1,14 @@
 //! Query execution and mutation application
 
+pub mod safety;
+
 use crate::source::SourceBuffer;
 use crate::query::QueryPlan;
 use crate::mutation::MutationPlan;
 use crate::error::EditorError;
 use syn::Item;
+
+pub use safety::{preview_mutation, MutationPreview, ConflictDetector};
 
 // TODO: Executor improvements
 // - Conflict detection (overlapping mutations)

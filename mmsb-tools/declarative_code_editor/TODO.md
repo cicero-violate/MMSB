@@ -25,16 +25,16 @@
 
 ### Advanced Predicates
 - [x] `VisibilityPredicate` - match pub/private/pub(crate)
-- [ ] `GenericPredicate` - match items with generics
+- [x] `GenericPredicate` - match items with generics
 - [x] `AttributePredicate` - match by #[derive], #[cfg], etc.
-- [ ] `SignaturePredicate` - match function signatures
+- [x] `SignaturePredicate` - match function signatures
 - [ ] `BodyPredicate` - pattern match in function bodies
 - [ ] `DocPredicate` - search doc comments
 
 ### Query Combinators
-- [ ] `and()` - combine predicates with AND
-- [ ] `or()` - combine predicates with OR
-- [ ] `not()` - negate predicate
+- [x] `and()` - combine predicates with AND
+- [x] `or()` - combine predicates with OR
+- [x] `not()` - negate predicate
 - [ ] Parent/child navigation (find impl for struct)
 - [ ] Sibling queries (all methods in impl)
 
@@ -56,10 +56,10 @@
 - [ ] `InlineOp` - inline function calls
 
 ### Safety
-- [ ] Conflict detection (overlapping edits)
+- [x] Conflict detection (overlapping edits)
 - [ ] Deterministic ordering strategy
 - [ ] Transaction rollback on error
-- [ ] Dry-run preview mode
+- [x] Dry-run preview mode
 
 ## Structural Classification
 
