@@ -15,3 +15,4 @@ cargo test
 echo ""
 echo "=== Running bridge example ==="
 cargo run --example bridge_example
+
