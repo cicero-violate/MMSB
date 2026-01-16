@@ -1,5 +1,15 @@
 use syn::Item;
 
+// TODO: Advanced mutation operations
+// - PartialReplaceOp (replace specific fields in struct, params in fn)
+// - TransformOp (apply function to matched items)
+// - ConditionalOp (apply mutation only if predicate holds)
+// - BatchOp (apply multiple operations atomically)
+// - InsertBeforeOp / InsertAfterOp (relative positioning)
+// - MergeOp (combine multiple items)
+// - ExtractOp (extract function/method from code block)
+// - InlineOp (inline function calls)
+
 /// Base trait for mutation operations
 pub trait MutationOp: std::fmt::Debug + MutationOpClone {
     fn apply(&self, item: &Item) -> String;

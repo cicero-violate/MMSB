@@ -1,6 +1,14 @@
 use super::predicate::Predicate;
 use syn::Item;
 
+// TODO: Advanced query features
+// - Combinators: and(), or(), not() for predicate composition
+// - Parent/child navigation (find impl blocks for a struct)
+// - Sibling queries (find all methods in same impl block)
+// - Scope-based queries (find all items in a module)
+// - Performance: index-based lookups instead of linear scan
+// - Query result caching with invalidation
+
 /// Query plan - declarative specification of what to find
 #[derive(Debug, Clone)]
 pub struct QueryPlan {

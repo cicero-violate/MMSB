@@ -6,6 +6,16 @@ use crate::mutation::MutationPlan;
 use crate::error::EditorError;
 use syn::Item;
 
+// TODO: Executor improvements
+// - Span-based replacement (use syn::spanned::Spanned for precise edits)
+// - Conflict detection (overlapping mutations)
+// - Ordering strategy (deterministic application order)
+// - Rollback support (transaction semantics)
+// - Dry-run mode (preview without applying)
+// - Diff generation (show before/after with context)
+// - Incremental updates (reparse only changed parts)
+// - Formatting preservation (keep original formatting where possible)
+
 /// Execute query against source buffer
 pub fn execute_query<'a>(buffer: &'a SourceBuffer, plan: &QueryPlan) -> Vec<&'a Item> {
     let file = buffer.ast();

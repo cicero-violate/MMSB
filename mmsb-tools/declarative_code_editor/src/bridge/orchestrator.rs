@@ -16,6 +16,16 @@ use crate::bridge::{StructuralClassifier, BridgedOutput};
 use mmsb_core::types::PageID;
 use std::path::PathBuf;
 
+// TODO: Orchestrator hardening
+// - Multi-file transaction support (all-or-nothing)
+// - Dependency ordering (topological sort for multi-file)
+// - Conflict resolution strategies
+// - Incremental intent extraction (avoid full reparse)
+// - Performance metrics (track time per stage)
+// - Error recovery (partial success handling)
+// - Audit trail (log all transformations)
+// - Preview mode (show all changes before commit)
+
 /// Orchestrates declarative edit → MMSB pipelines
 pub struct BridgeOrchestrator;
 

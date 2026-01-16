@@ -1,3 +1,13 @@
+// TODO: Error handling improvements
+// - Rich error messages with source spans
+// - Suggestion system (did you mean?)
+// - Error recovery strategies
+// - Warning system (non-fatal issues)
+// - Error aggregation (collect multiple errors)
+// - Diagnostic formatting (LSP-compatible)
+// - Error codes (for documentation lookup)
+// - Context tracking (error chain with context)
+
 use thiserror::Error;
 
 #[derive(Debug, Error)]

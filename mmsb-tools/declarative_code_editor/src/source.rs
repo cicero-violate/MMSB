@@ -7,6 +7,18 @@ use syn::File;
 use std::path::PathBuf;
 use crate::error::EditorError;
 
+// TODO: SourceBuffer enhancements
+// - Incremental parsing (reparse only changed regions)
+// - Syntax error recovery (partial AST for invalid code)
+// - Multiple language support (not just Rust)
+// - Comment preservation (track and restore comments)
+// - Formatting metadata (preserve original style)
+// - Span mapping (track source locations through edits)
+// - Undo/redo history
+// - Concurrent access (read-write locks for multi-threaded)
+// - Compression (for large files)
+// - Memory mapping (for very large codebases)
+
 /// In-memory source file
 #[derive(Debug, Clone)]
 pub struct SourceBuffer {

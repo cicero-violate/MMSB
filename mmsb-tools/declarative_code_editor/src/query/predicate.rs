@@ -1,5 +1,13 @@
 use syn::{Item, Ident as SynIdent};
 
+// TODO: Advanced query predicates
+// - VisibilityPredicate (pub vs private)
+// - GenericPredicate (has generics, specific type params)
+// - AttributePredicate (has #[derive], #[cfg], etc.)
+// - SignaturePredicate (param count, return type matching)
+// - BodyPredicate (AST pattern matching in function bodies)
+// - DocPredicate (doc comment content matching)
+
 /// Base trait for all query predicates
 pub trait Predicate: std::fmt::Debug + PredicateClone {
     fn matches(&self, item: &Item) -> bool;

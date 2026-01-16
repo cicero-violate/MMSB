@@ -2,6 +2,17 @@ use super::category::EditIntent;
 use crate::error::EditorError;
 use syn::{Item, ItemFn, ItemStruct, ItemEnum, ItemUse};
 
+// TODO: Advanced intent extraction
+// - Detect cascading renames (struct + all its methods)
+// - Track visibility changes (pub → private impacts)
+// - Lifetime changes (affects borrowing semantics)
+// - Generic parameter changes (affects monomorphization)
+// - Trait bound additions/removals (affects implementation)
+// - Macro invocation changes (may expand differently)
+// - Unsafe block additions (requires verification)
+// - Derive changes (affects generated code)
+// - Semantic analysis (type-level changes)
+
 /// Extract semantic intent from AST comparison
 pub fn extract_intent(before: &Item, after: &Item) -> Result<Vec<EditIntent>, EditorError> {
     let mut intents = Vec::new();

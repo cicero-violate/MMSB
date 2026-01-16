@@ -6,6 +6,16 @@ use mmsb_core::types::{DeltaID, Epoch, PageID, Source};
 use sha2::{Digest, Sha256};
 use std::path::PathBuf;
 
+// TODO: Structural classification improvements
+// - Import analysis (detect use statements)
+// - Module boundary detection (mod declarations)
+// - Re-export tracking (pub use)
+// - Macro expansion tracking (affects structure)
+// - Feature gate analysis (#[cfg] conditions)
+// - Semantic versioning impact (breaking vs non-breaking)
+// - Cross-crate dependency tracking
+// - Trait implementation detection (orphan rules)
+
 /// Classify edits into structural vs state changes
 pub struct StructuralClassifier;
 
