@@ -58,10 +58,10 @@ fn passthrough_preserves_invariants_and_state() {
         dst.set_metadata(vec![("target".to_string(), vec![4, 5, 6])]);
     }
 
-    let graph = ShadowPageGraph::default();
+    let dag = DependencyGraph::new();
     let ctx = InvariantContext {
         allocator: Some(&allocator),
-        graph: Some(&graph),
+        graph: Some(&dag),
         registry: None,
     };
     let checker = InvariantChecker::with_builtins();

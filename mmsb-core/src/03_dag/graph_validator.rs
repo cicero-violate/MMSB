@@ -11,20 +11,20 @@ pub struct GraphValidationReport {
     pub duration: Duration,
 }
 
-pub struct GraphValidator<'a> {
+pub(crate) struct GraphValidator<'a> {
     graph: &'a ShadowPageGraph,
 }
 
 impl<'a> GraphValidator<'a> {
-    pub fn new(graph: &'a ShadowPageGraph) -> Self {
+    pub(crate) fn new(graph: &'a ShadowPageGraph) -> Self {
         Self { graph }
     }
 
-    pub fn detect_cycles(&self) -> GraphValidationReport {
+    pub(crate) fn detect_cycles(&self) -> GraphValidationReport {
         self.run(None)
     }
 
-    pub fn validate_page(&self, root: PageID) -> GraphValidationReport {
+    pub(crate) fn validate_page(&self, root: PageID) -> GraphValidationReport {
         self.run(Some(root))
     }
 
@@ -166,15 +166,31 @@ fn is_self_loop(
 #[cfg(test)]
 mod tests {
     use super::GraphValidator;
-    use crate::dag::{EdgeType, ShadowPageGraph};
+    use crate::dag::{build_dependency_graph, EdgeType, StructuralOp};
+    use crate::dag::shadow_graph::ShadowPageGraph;
     use crate::types::PageID;
 
     #[test]
     fn detects_cycle() {
-        let graph = ShadowPageGraph::default();
-        graph.add_edge(PageID(1), PageID(2), EdgeType::Data);
-        graph.add_edge(PageID(2), PageID(3), EdgeType::Data);
-        graph.add_edge(PageID(3), PageID(1), EdgeType::Data);
+        let ops = vec![
+            StructuralOp::AddEdge {
+                from: PageID(1),
+                to: PageID(2),
+                edge_type: EdgeType::Data,
+            },
+            StructuralOp::AddEdge {
+                from: PageID(2),
+                to: PageID(3),
+                edge_type: EdgeType::Data,
+            },
+            StructuralOp::AddEdge {
+                from: PageID(3),
+                to: PageID(1),
+                edge_type: EdgeType::Data,
+            },
+        ];
+        let dag = build_dependency_graph(&ops);
+        let graph = ShadowPageGraph::from_dag_and_ops(&dag, &[]);
         let validator = GraphValidator::new(&graph);
         let report = validator.detect_cycles();
         assert!(report.has_cycle);
@@ -183,9 +199,20 @@ mod tests {
 
     #[test]
     fn per_page_validation() {
-        let graph = ShadowPageGraph::default();
-        graph.add_edge(PageID(1), PageID(2), EdgeType::Data);
-        graph.add_edge(PageID(2), PageID(3), EdgeType::Data);
+        let ops = vec![
+            StructuralOp::AddEdge {
+                from: PageID(1),
+                to: PageID(2),
+                edge_type: EdgeType::Data,
+            },
+            StructuralOp::AddEdge {
+                from: PageID(2),
+                to: PageID(3),
+                edge_type: EdgeType::Data,
+            },
+        ];
+        let dag = build_dependency_graph(&ops);
+        let graph = ShadowPageGraph::from_dag_and_ops(&dag, &[]);
         let validator = GraphValidator::new(&graph);
         let report = validator.validate_page(PageID(1));
         assert!(!report.has_cycle);

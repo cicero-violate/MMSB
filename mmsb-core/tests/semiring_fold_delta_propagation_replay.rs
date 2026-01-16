@@ -2,6 +2,7 @@ use mmsb_core::prelude::{
     fold_add, Delta, DeltaID, Epoch, Page, PageID, PageLocation, PropagationCommand,
     PropagationEngine, Source, TransactionLog, TransactionLogReader, TropicalSemiring,
 };
+use mmsb_core::dag::DependencyGraph;
 use mmsb_judgment::JudgmentToken;
 use mmsb_core::prelude::proof::{EXECUTION_PROOF_VERSION, MmsbExecutionProof};
 use sha2::{Digest, Sha256};
@@ -86,7 +87,8 @@ fn integration_semiring_fold_delta_propagation_replay() {
         page: Arc::clone(&child_arc),
         dependencies: vec![Arc::clone(&parent_arc)],
     });
-    engine.drain();
+    let dag = DependencyGraph::new();
+    engine.drain(&dag);
 
     assert_eq!(log.len(), 1);
 

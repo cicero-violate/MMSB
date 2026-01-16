@@ -1,0 +1,12 @@
+[package]
+name = "structural_code_editor"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+mmsb-core = { path = "../../mmsb-core" }
+structural_code_indexer = { path = "../structural_code_indexer" }
+sha2 = "0.10"
+thiserror = "1.0"
+syn = { version = "2", features = ["full", "visit"] }
+mmsb-judgment = { path = "../../mmsb-judgment" }

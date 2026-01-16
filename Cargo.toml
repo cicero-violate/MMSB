@@ -2,5 +2,7 @@
 resolver = "2"
 members = [
     "mmsb-core",
-    "mmsb-judgment", "mmsb-tools/structural_code_indexer",
+    "mmsb-judgment",
+    "mmsb-tools/structural_code_indexer",
+    "mmsb-tools/structural_code_editor", "mmsb-tools/declarative_code_editor",
 ]

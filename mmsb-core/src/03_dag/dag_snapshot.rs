@@ -86,10 +86,7 @@ pub fn load_dag_snapshot(path: impl AsRef<Path>) -> io::Result<DependencyGraph> 
         ops.push(StructuralOp::AddEdge { from, to, edge_type });
     }
 
-    let mut dag = DependencyGraph::new();
-    dag.apply_ops(&ops);
-
-    Ok(dag)
+    Ok(crate::dag::build_dependency_graph(&ops))
 }
 
 fn edge_type_to_byte(edge_type: crate::dag::EdgeType) -> u8 {
@@ -125,7 +122,6 @@ mod tests {
 
     #[test]
     fn snapshot_roundtrip() {
-        let mut dag = DependencyGraph::new();
         let ops = vec![
             StructuralOp::AddEdge {
                 from: PageID(1),
@@ -138,7 +134,7 @@ mod tests {
                 edge_type: EdgeType::Data,
             },
         ];
-        dag.apply_ops(&ops);
+        let dag = crate::dag::build_dependency_graph(&ops);
 
         let temp_path = env::temp_dir().join("test_dag_snapshot.bin");
         write_dag_snapshot(&dag, &temp_path).expect("write failed");

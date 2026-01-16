@@ -1,5 +1,6 @@
 use super::propagation_command_buffer::PropagationCommand;
 use super::propagation_queue::PropagationQueue;
+use crate::dag::DependencyGraph;
 use crate::page::{Page, PageID};
 use parking_lot::RwLock;
 use std::collections::HashMap;
@@ -30,11 +31,25 @@ impl PropagationEngine {
         self.queue.push(command);
     }
 
-    pub fn drain(&self) {
-        while let Some(command) = self.queue.pop() {
-            if let Some(cb) = self.callbacks.read().get(&command.page_id) {
-                (*cb)(&command.page, &command.dependencies);
+    pub fn drain(&self, dag: &DependencyGraph) {
+        let roots = self.queue.drain_all();
+        if roots.is_empty() {
+            return;
+        }
+        self.queue.push_batch(roots.clone());
+
+        loop {
+            let version_start = dag.version();
+            while let Some(command) = self.queue.pop() {
+                if let Some(cb) = self.callbacks.read().get(&command.page_id) {
+                    (*cb)(&command.page, &command.dependencies);
+                }
             }
+            if dag.version() == version_start {
+                break;
+            }
+            self.queue.clear();
+            self.queue.push_batch(roots.clone());
         }
     }
 }

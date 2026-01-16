@@ -1,4 +1,6 @@
 use super::edge_types::EdgeType;
+use super::structural_types::StructuralOp;
+use crate::dag::DependencyGraph;
 use crate::page::PageID;
 use parking_lot::RwLock;
 use std::collections::{HashMap, HashSet};
@@ -16,6 +18,29 @@ pub struct ShadowPageGraph {
 }
 
 impl ShadowPageGraph {
+    pub(crate) fn from_dag_and_ops(dag: &DependencyGraph, ops: &[StructuralOp]) -> Self {
+        let shadow = ShadowPageGraph::default();
+        {
+            let mut adj = shadow.adjacency.write();
+            for (from, to, edge_type) in dag.edges() {
+                adj.entry(from).or_default().push((to, edge_type));
+            }
+            for op in ops {
+                match op {
+                    StructuralOp::AddEdge { from, to, edge_type } => {
+                        adj.entry(*from).or_default().push((*to, *edge_type));
+                    }
+                    StructuralOp::RemoveEdge { from, to } => {
+                        if let Some(edges) = adj.get_mut(from) {
+                            edges.retain(|(target, _)| target != to);
+                        }
+                    }
+                }
+            }
+        }
+        shadow
+    }
+
     pub fn add_edge(&self, from: PageID, to: PageID, edge_type: EdgeType) {
         let mut guard = self.adjacency.write();
         guard.entry(from).or_default().push((to, edge_type));

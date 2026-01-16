@@ -68,6 +68,23 @@ impl PropagationQueue {
         drained
     }
 
+    pub fn drain_all(&self) -> Vec<PropagationCommand> {
+        let mut drained = Vec::new();
+        loop {
+            let batch = self.ring.pop_batch(self.ring.capacity());
+            if batch.is_empty() {
+                break;
+            }
+            drained.extend(batch);
+        }
+        self.has_work.store(false, Ordering::Release);
+        drained
+    }
+
+    pub fn clear(&self) {
+        let _ = self.drain_all();
+    }
+
     pub fn is_empty(&self) -> bool {
         self.ring.is_empty()
     }

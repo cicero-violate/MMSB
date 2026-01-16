@@ -63,14 +63,11 @@ fn compute_snapshot_hash(dag: &DependencyGraph) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use mmsb_core::dag::{EdgeType, StructuralOp};
+    use mmsb_core::dag::{build_dependency_graph, EdgeType, StructuralOp};
     use mmsb_core::types::PageID;
     
     #[test]
     fn test_snapshot_hash_deterministic() {
-        let mut dag1 = DependencyGraph::new();
-        let mut dag2 = DependencyGraph::new();
-        
         let ops = vec![
             StructuralOp::AddEdge {
                 from: PageID(1),
@@ -78,9 +75,8 @@ mod tests {
                 edge_type: EdgeType::Data,
             },
         ];
-        
-        dag1.apply_ops(&ops);
-        dag2.apply_ops(&ops);
+        let dag1 = build_dependency_graph(&ops);
+        let dag2 = build_dependency_graph(&ops);
         
         let hash1 = compute_snapshot_hash(&dag1);
         let hash2 = compute_snapshot_hash(&dag2);

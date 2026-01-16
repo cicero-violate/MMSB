@@ -32,7 +32,6 @@ mod tests {
 
     #[test]
     fn compute_affected_includes_descendants() {
-        let mut dag = DependencyGraph::new();
         let ops = vec![
             StructuralOp::AddEdge {
                 from: PageID(1),
@@ -45,7 +44,7 @@ mod tests {
                 edge_type: EdgeType::Data,
             },
         ];
-        dag.apply_ops(&ops);
+        let dag = crate::dag::build_dependency_graph(&ops);
 
         let affected = compute_affected_pages(&dag, &[PageID(1)]);
         assert!(affected.contains(&PageID(1)));

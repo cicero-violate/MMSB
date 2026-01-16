@@ -3,10 +3,10 @@
 
 // Use the public prelude API
 use mmsb_core::prelude::*;
-use mmsb_core::prelude::dag::topological_sort;
 use mmsb_core::prelude::page::{apply_log, compact, generate_mask, read_log, summary};
 use mmsb_core::prelude::types::EpochCell;
 use mmsb_core::prelude::proof::{MmsbExecutionProof, EXECUTION_PROOF_VERSION};
+use mmsb_core::dag::{build_dependency_graph, StructuralOp};
 use mmsb_judgment::issue::issue_judgment;
 use serde_json::json;
 use sha2::{Digest, Sha256};
@@ -161,11 +161,17 @@ fn test_compact() {
 }
 
 #[test]
-fn test_shadow_graph() {
-    let graph = ShadowPageGraph::default();
-    graph.add_edge(PageID(8001), PageID(8002), EdgeType::Data);
-    let order = topological_sort(&graph);
-    assert!(order.contains(&PageID(8001)));
+fn test_dependency_graph() {
+    let ops = vec![
+        StructuralOp::AddEdge {
+            from: PageID(8001),
+            to: PageID(8002),
+            edge_type: EdgeType::Data,
+        }
+    ];
+    let dag = build_dependency_graph(&ops);
+    let descendants = dag.descendants(PageID(8001));
+    assert!(descendants.contains(&PageID(8002)));
 }
 
 #[test]
@@ -258,7 +264,8 @@ fn test_propagation_engine_basics() {
     };
 
     engine.enqueue(command);
-    engine.drain();
+    let dag = DependencyGraph::new();
+    engine.drain(&dag);
 
     assert!(called.load(std::sync::atomic::Ordering::SeqCst));
     println!("[PASS] PropagationEngine: callback fired with real page");

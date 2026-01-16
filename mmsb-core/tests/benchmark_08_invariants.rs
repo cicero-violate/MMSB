@@ -1,7 +1,7 @@
 // Use the public prelude API
-use mmsb_core::prelude::ShadowPageGraph;
 use mmsb_core::prelude::{PageAllocator, PageAllocatorConfig, PageID, PageLocation};
 use mmsb_core::prelude::{InvariantChecker, InvariantContext};
+use mmsb_core::dag::DependencyGraph;
 use std::sync::Arc;
 
 #[test]
@@ -10,10 +10,10 @@ fn invariant_checker_reports_success() {
     allocator
         .allocate_raw(PageID(42), 256, Some(PageLocation::Cpu))
         .unwrap();
-    let graph = ShadowPageGraph::default();
+    let dag = DependencyGraph::new();
     let ctx = InvariantContext {
         allocator: Some(&allocator),
-        graph: Some(&graph),
+        graph: Some(&dag),
         registry: None,
     };
     let checker = InvariantChecker::with_builtins();

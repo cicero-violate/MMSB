@@ -1,13 +1,24 @@
 use crate::dag::{
-    DagCommitError, DependencyGraph, ShadowPageGraph, StructuralOp,
+    DagCommitError, DependencyGraph, StructuralOp,
     has_cycle, GraphValidator,
 };
+use super::shadow_graph::ShadowPageGraph;
+use crate::dag::dag_log::{append_structural_record, default_structural_log_path};
 use crate::proof::{MmsbStructuralAdmissionProof, STRUCTURAL_PROOF_VERSION};
 use mmsb_judgment::JudgmentToken;
 
+pub fn build_dependency_graph(ops: &[StructuralOp]) -> DependencyGraph {
+    let mut dag = DependencyGraph::new();
+    dag.apply_ops(ops);
+    dag
+}
+
+pub(crate) fn apply_ops_unchecked(dag: &mut DependencyGraph, ops: &[StructuralOp]) {
+    dag.apply_ops(ops);
+}
+
 pub fn commit_structural_delta(
     dag: &mut DependencyGraph,
-    shadow: &ShadowPageGraph,
     ops: &[StructuralOp],
     token: &JudgmentToken,
     proof: &MmsbStructuralAdmissionProof,
@@ -44,15 +55,20 @@ pub fn commit_structural_delta(
         }
     }
 
-    if has_cycle(shadow) {
+    let shadow = ShadowPageGraph::from_dag_and_ops(dag, ops);
+
+    if has_cycle(&shadow) {
         return Err(DagCommitError::CycleDetected);
     }
 
-    let validator = GraphValidator::new(shadow);
+    let validator = GraphValidator::new(&shadow);
     let report = validator.detect_cycles();
     if report.has_cycle {
         return Err(DagCommitError::CycleDetected);
     }
+
+    let log_path = default_structural_log_path()?;
+    append_structural_record(&log_path, ops, proof)?;
 
     dag.apply_ops(ops);
 
@@ -78,7 +94,6 @@ mod tests {
     #[test]
     fn commit_rejects_empty_ops() {
         let mut dag = DependencyGraph::new();
-        let shadow = ShadowPageGraph::default();
         let ops = vec![];
         let proof = MmsbStructuralAdmissionProof::new(
             &ops,
@@ -91,7 +106,7 @@ mod tests {
         );
         let token = JudgmentToken::test_only();
 
-        let err = commit_structural_delta(&mut dag, &shadow, &ops, &token, &proof)
+        let err = commit_structural_delta(&mut dag, &ops, &token, &proof)
             .expect_err("expected empty ops error");
         assert!(matches!(err, DagCommitError::EmptyOperations));
     }
@@ -99,7 +114,6 @@ mod tests {
     #[test]
     fn commit_rejects_invalid_proof_version() {
         let mut dag = DependencyGraph::new();
-        let shadow = ShadowPageGraph::default();
         let ops = vec![StructuralOp::AddEdge {
             from: PageID(1),
             to: PageID(2),
@@ -117,7 +131,7 @@ mod tests {
         proof.version = 999;
         let token = JudgmentToken::test_only();
 
-        let err = commit_structural_delta(&mut dag, &shadow, &ops, &token, &proof)
+        let err = commit_structural_delta(&mut dag, &ops, &token, &proof)
             .expect_err("expected version mismatch");
         assert!(matches!(err, DagCommitError::ProofVersionMismatch { .. }));
     }
@@ -125,7 +139,6 @@ mod tests {
     #[test]
     fn commit_rejects_unapproved_proof() {
         let mut dag = DependencyGraph::new();
-        let shadow = ShadowPageGraph::default();
         let ops = vec![StructuralOp::AddEdge {
             from: PageID(1),
             to: PageID(2),
@@ -142,7 +155,7 @@ mod tests {
         );
         let token = JudgmentToken::test_only();
 
-        let err = commit_structural_delta(&mut dag, &shadow, &ops, &token, &proof)
+        let err = commit_structural_delta(&mut dag, &ops, &token, &proof)
             .expect_err("expected proof not approved");
         assert!(matches!(err, DagCommitError::ProofNotApproved));
     }

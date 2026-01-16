@@ -1,11 +1,11 @@
 // Use the public prelude API
-use mmsb_core::prelude::{EdgeType, ShadowPageGraph};
 use mmsb_core::prelude::{
     Delta, DeltaID, DeviceBufferRegistry, PageAllocator, PageAllocatorConfig, PageID,
     PageLocation, Source,
 };
 use mmsb_core::prelude::Epoch;
 use mmsb_core::prelude::{InvariantChecker, InvariantContext};
+use mmsb_core::dag::DependencyGraph;
 use std::sync::Arc;
 
 const CYCLES: usize = 10_000;
@@ -23,23 +23,22 @@ fn ten_thousand_cycles_no_violations() {
             .allocate_raw(PageID(id + 1), PAGE_SIZE, Some(PageLocation::Cpu))
             .expect("failed to allocate stability page");
     }
-    let graph = ShadowPageGraph::default();
     let registry = DeviceBufferRegistry::default();
     let checker = InvariantChecker::with_builtins();
+    let dag = DependencyGraph::new();
     let mut rng = Lcg::new(0x5eed_cafe_d00d_f001);
     let mut delta_id = 0u64;
     let mut probe = SignalProbe::new(DELTA_WIDTH, 0.5);
 
     for cycle in 0..CYCLES {
         apply_random_deltas(&allocator, &mut rng, DELTAS_PER_CYCLE, &mut delta_id);
-        mutate_graph(&graph, &mut rng);
         probe.step(&mut rng);
         probe.assert_within_bounds();
 
         if cycle % CHECK_INTERVAL == 0 {
             let ctx = InvariantContext {
                 allocator: Some(&allocator),
-                graph: Some(&graph),
+                graph: Some(&dag),
                 registry: Some(&registry),
             };
             for result in checker.run(&ctx) {
@@ -98,33 +97,6 @@ fn apply_random_deltas(
                 .apply_delta(&delta)
                 .expect("delta application failed");
         }
-    }
-}
-
-fn mutate_graph(graph: &ShadowPageGraph, rng: &mut Lcg) {
-    for _ in 0..4 {
-        let mut from = PageID((rng.next_u64() % PAGE_COUNT) + 1);
-        let mut to = PageID((rng.next_u64() % PAGE_COUNT) + 1);
-        if from == to {
-            to = PageID(((to.0 + 1) % PAGE_COUNT) + 1);
-        }
-        if from.0 > to.0 {
-            std::mem::swap(&mut from, &mut to);
-        }
-        if rng.next_bool() {
-            graph.add_edge(from, to, random_edge_type(rng));
-        } else {
-            graph.remove_edge(from, to);
-        }
-    }
-}
-
-fn random_edge_type(rng: &mut Lcg) -> EdgeType {
-    match rng.next_in_range(4) {
-        0 => EdgeType::Data,
-        1 => EdgeType::Control,
-        2 => EdgeType::Gpu,
-        _ => EdgeType::Compiler,
     }
 }
 

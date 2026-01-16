@@ -13,8 +13,8 @@ use crate::error::EditorError;
 use crate::mutation::MutationPlan;
 use crate::executor::apply_mutation;
 use crate::bridge::{StructuralClassifier, BridgedOutput};
+use crate::intent::extraction::extract_intents_from_asts;
 use mmsb_core::types::PageID;
-use std::path::PathBuf;
 
 // TODO: Orchestrator hardening
 // - Multi-file transaction support (all-or-nothing)
@@ -43,21 +43,25 @@ impl BridgeOrchestrator {
         plan: &MutationPlan,
         page_id: PageID,
     ) -> Result<BridgedOutput, EditorError> {
-        // Step 1: Apply mutation to buffer
+        // Step 0: Capture before state
+        let ast_before = buffer.ast().clone();
+        
+        // Step 1: Apply mutation to buffer  
         apply_mutation(buffer, plan)?;
         
         let source_after = buffer.source();
         let file_path = &buffer.path;
+        let ast_after = buffer.ast();
         
-        // Step 2: Extract semantic intent (simplified for now)
-        let intents = Vec::new(); // TODO: implement intent extraction from source diff
+        // Step 2: Extract semantic intent from AST diff
+        let intents = extract_intents_from_asts(&ast_before, ast_after)?;
         
         // Step 3: Classify and build Delta + StructuralOps
         let (page_deltas, structural_ops) = StructuralClassifier::classify(
             &intents,
             page_id,
             file_path,
-            &source_after,
+            source_after,
         )?;
         
         // Step 4: Create bridged output

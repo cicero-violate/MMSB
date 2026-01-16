@@ -41,19 +41,17 @@ pub fn compute_propagation_stats(dag: &DependencyGraph) -> PropagationStats {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use mmsb_core::dag::{EdgeType, StructuralOp};
+    use mmsb_core::dag::{build_dependency_graph, EdgeType, StructuralOp};
     use mmsb_core::types::PageID;
     
     #[test]
     fn test_compute_stats() {
-        let mut dag = DependencyGraph::new();
-        
         let page_a = PageID(1);
         let page_b = PageID(2);
         let page_c = PageID(3);
         
         // A → B, A → C
-        dag.apply_ops(&[
+        let dag = build_dependency_graph(&[
             StructuralOp::AddEdge {
                 from: page_a,
                 to: page_b,

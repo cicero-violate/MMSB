@@ -1,4 +1,4 @@
-use crate::dag::ShadowPageGraph;
+use crate::dag::DependencyGraph;
 use crate::page::PageID;
 use std::collections::{HashMap, VecDeque};
 use std::sync::Arc;
@@ -12,7 +12,7 @@ pub struct ProvenanceResult {
 }
 
 pub struct ProvenanceTracker {
-    graph: Arc<ShadowPageGraph>,
+    graph: Arc<DependencyGraph>,
     cache: parking_lot::Mutex<HashMap<PageID, Vec<PageID>>>,
     order: parking_lot::Mutex<VecDeque<PageID>>,
     capacity: usize,
@@ -20,12 +20,12 @@ pub struct ProvenanceTracker {
 }
 
 impl ProvenanceTracker {
-    pub fn new(graph: Arc<ShadowPageGraph>) -> Self {
+    pub fn new(graph: Arc<DependencyGraph>) -> Self {
         Self::with_capacity(graph, 128, 32)
     }
 
     pub fn with_capacity(
-        graph: Arc<ShadowPageGraph>,
+        graph: Arc<DependencyGraph>,
         capacity: usize,
         depth_limit: usize,
     ) -> Self {
@@ -57,9 +57,8 @@ impl ProvenanceTracker {
     }
 
     fn resolve_uncached(&self, page_id: PageID) -> Vec<PageID> {
-        let adjacency = self.graph.adjacency.read().clone();
         let mut reverse: HashMap<PageID, Vec<PageID>> = HashMap::new();
-        for (from, edges) in adjacency.iter() {
+        for (from, edges) in self.graph.get_adjacency().iter() {
             for (to, _) in edges {
                 reverse.entry(*to).or_default().push(*from);
             }
@@ -101,17 +100,31 @@ impl ProvenanceTracker {
 #[cfg(test)]
 mod tests {
     use super::ProvenanceTracker;
-    use crate::dag::{EdgeType, ShadowPageGraph};
+    use crate::dag::{build_dependency_graph, EdgeType, StructuralOp};
     use crate::page::PageID;
     use std::sync::Arc;
 
     #[test]
     fn resolves_chain_with_depth_limit() {
-        let graph = Arc::new(ShadowPageGraph::default());
-        graph.add_edge(PageID(1), PageID(2), EdgeType::Data);
-        graph.add_edge(PageID(2), PageID(3), EdgeType::Data);
-        graph.add_edge(PageID(3), PageID(4), EdgeType::Data);
-        let tracker = ProvenanceTracker::with_capacity(Arc::clone(&graph), 16, 2);
+        let ops = vec![
+            StructuralOp::AddEdge {
+                from: PageID(1),
+                to: PageID(2),
+                edge_type: EdgeType::Data,
+            },
+            StructuralOp::AddEdge {
+                from: PageID(2),
+                to: PageID(3),
+                edge_type: EdgeType::Data,
+            },
+            StructuralOp::AddEdge {
+                from: PageID(3),
+                to: PageID(4),
+                edge_type: EdgeType::Data,
+            },
+        ];
+        let dag = Arc::new(build_dependency_graph(&ops));
+        let tracker = ProvenanceTracker::with_capacity(Arc::clone(&dag), 16, 2);
         let result = tracker.resolve(PageID(4));
         assert_eq!(result.chain.len(), 3); // 4 -> 3 -> 2 (depth limit)
         assert!(!result.from_cache);
@@ -121,11 +134,15 @@ mod tests {
 
     #[test]
     fn cache_does_not_grow_unbounded() {
-        let graph = Arc::new(ShadowPageGraph::default());
-        for id in 1..=10 {
-            graph.add_edge(PageID(id), PageID(id + 1), EdgeType::Data);
-        }
-        let tracker = ProvenanceTracker::with_capacity(Arc::clone(&graph), 4, 4);
+        let ops: Vec<StructuralOp> = (1..=10)
+            .map(|id| StructuralOp::AddEdge {
+                from: PageID(id),
+                to: PageID(id + 1),
+                edge_type: EdgeType::Data,
+            })
+            .collect();
+        let dag = Arc::new(build_dependency_graph(&ops));
+        let tracker = ProvenanceTracker::with_capacity(Arc::clone(&dag), 4, 4);
         for id in 5..=10 {
             tracker.resolve(PageID(id));
         }

@@ -1,5 +1,6 @@
 // Use the public prelude API
-use mmsb_core::prelude::{EdgeType, DependencyGraph, StructuralOp};
+use mmsb_core::prelude::{EdgeType, StructuralOp};
+use mmsb_core::dag::build_dependency_graph;
 use mmsb_core::prelude::{
     Delta, DeltaID, PageAllocator, PageAllocatorConfig, PageID, PageLocation, Source,
 };
@@ -31,13 +32,11 @@ fn tick_latency_stays_within_budget() {
             .unwrap();
     }
     let throughput = ThroughputEngine::new(Arc::clone(&allocator), 2, 16);
-    let mut dag = DependencyGraph::new();
     let ops = vec![
         StructuralOp::AddEdge { from: PageID(1), to: PageID(2), edge_type: EdgeType::Data },
         StructuralOp::AddEdge { from: PageID(2), to: PageID(3), edge_type: EdgeType::Data },
     ];
-    dag.apply_ops(&ops);
-    let dag = Arc::new(dag);
+    let dag = Arc::new(build_dependency_graph(&ops));
     let memory = Arc::new(MemoryMonitor::with_config(
         Arc::clone(&allocator),
         MemoryMonitorConfig {

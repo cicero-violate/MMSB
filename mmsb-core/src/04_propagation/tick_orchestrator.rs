@@ -208,14 +208,12 @@ mod tests {
                 .unwrap();
         }
         let throughput = ThroughputEngine::new(Arc::clone(&allocator), 2, 64);
-        let mut dag = DependencyGraph::new();
         let ops = vec![StructuralOp::AddEdge {
             from: PageID(1),
             to: PageID(2),
             edge_type: EdgeType::Data,
         }];
-        dag.apply_ops(&ops);
-        let dag = Arc::new(dag);
+        let dag = Arc::new(crate::dag::build_dependency_graph(&ops));
         let memory: Arc<dyn MemoryPressureHandler> =
             Arc::new(TestMemoryHandler::new(32, threshold != usize::MAX));
         (

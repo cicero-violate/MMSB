@@ -1,4 +1,4 @@
-use crate::dag::{GraphValidator, ShadowPageGraph};
+use crate::dag::{DagValidator, DependencyGraph};
 use crate::page::{DeviceBufferRegistry, PageAllocator, PageError, PageID};
 use crate::types::Epoch;
 use parking_lot::RwLock;
@@ -12,7 +12,7 @@ pub trait Invariant: Send + Sync {
 #[derive(Clone)]
 pub struct InvariantContext<'a> {
     pub allocator: Option<&'a PageAllocator>,
-    pub graph: Option<&'a ShadowPageGraph>,
+    pub graph: Option<&'a DependencyGraph>,
     pub registry: Option<&'a DeviceBufferRegistry>,
 }
 
@@ -166,11 +166,11 @@ impl Invariant for GraphAcyclicity {
     }
 
     fn check(&self, ctx: &InvariantContext) -> InvariantResult {
-        let graph = match ctx.graph {
-            Some(graph) => graph,
+        let dag = match ctx.graph {
+            Some(dag) => dag,
             None => return InvariantResult::fail(self.name(), "graph unavailable"),
         };
-        let validator = GraphValidator::new(graph);
+        let validator = DagValidator::new(dag);
         let report = validator.detect_cycles();
         if report.has_cycle {
             let ids: Vec<String> = report.cycle.iter().map(|id| id.0.to_string()).collect();
@@ -219,7 +219,7 @@ fn read_bytes(blob: &[u8], cursor: &mut usize, len: usize) -> Result<(), PageErr
 #[cfg(test)]
 mod tests {
     use super::{EpochMonotonicity, GraphAcyclicity, InvariantChecker, InvariantContext};
-    use crate::dag::{EdgeType, ShadowPageGraph};
+    use crate::dag::{build_dependency_graph, EdgeType, StructuralOp};
     use crate::page::{PageAllocator, PageAllocatorConfig, PageID, PageLocation};
     use crate::types::Epoch;
 
@@ -250,12 +250,22 @@ mod tests {
 
     #[test]
     fn graph_acyclicity_detects_cycles() {
-        let graph = ShadowPageGraph::default();
-        graph.add_edge(PageID(1), PageID(2), EdgeType::Data);
-        graph.add_edge(PageID(2), PageID(1), EdgeType::Data);
+        let ops = vec![
+            StructuralOp::AddEdge {
+                from: PageID(1),
+                to: PageID(2),
+                edge_type: EdgeType::Data,
+            },
+            StructuralOp::AddEdge {
+                from: PageID(2),
+                to: PageID(1),
+                edge_type: EdgeType::Data,
+            },
+        ];
+        let dag = build_dependency_graph(&ops);
         let ctx = InvariantContext {
             allocator: None,
-            graph: Some(&graph),
+            graph: Some(&dag),
             registry: None,
         };
         let mut checker = InvariantChecker::new();

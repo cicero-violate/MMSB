@@ -22,7 +22,7 @@ pub use crate::page::{
     ReplayValidator, TransactionLog, TransactionLogReader,
 };
 pub use crate::dag::{
-    EdgeType, GraphValidator, ShadowPageGraph,
+    EdgeType,
     DependencyGraph, StructuralOp, DagCommitError, commit_structural_delta,
 };
 pub use crate::propagation::{
@@ -80,10 +80,7 @@ pub mod semiring {
 
 pub mod dag {
     pub use crate::dag::{
-        Edge, EdgeType,
-        has_cycle, topological_sort,
-        GraphValidator, GraphValidationReport,
-        ShadowPageGraph,
+        EdgeType,
         DependencyGraph, StructuralOp, DagCommitError, commit_structural_delta,
     };
 }

@@ -99,6 +99,21 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b34be17513126fc87acdbb851bc430fdcdbfcd2945eb4e38171d4e1601cae6c3"
 
 [[package]]
+name = "declarative_code_editor"
+version = "0.1.0"
+dependencies = [
+ "mmsb-core",
+ "mmsb-judgment",
+ "proc-macro2",
+ "quote",
+ "sha2",
+ "structural_code_editor",
+ "structural_code_indexer",
+ "syn",
+ "thiserror",
+]
+
+[[package]]
 name = "digest"
 version = "0.10.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -510,6 +525,18 @@ name = "smallvec"
 version = "1.15.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "67b1b7a3b5fe4f1376887184045fcf45c69e92af734b7aaddc05fb777b6fbd03"
+
+[[package]]
+name = "structural_code_editor"
+version = "0.1.0"
+dependencies = [
+ "mmsb-core",
+ "mmsb-judgment",
+ "sha2",
+ "structural_code_indexer",
+ "syn",
+ "thiserror",
+]
 
 [[package]]
 name = "structural_code_indexer"
