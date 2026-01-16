@@ -28,12 +28,14 @@ impl Clone for Box<dyn MutationOp> {
 /// Replace entire item with new code
 #[derive(Debug, Clone)]
 pub struct ReplaceOp {
+    pub selector: String,
     pub replacement: String,
 }
 
 impl ReplaceOp {
-    pub fn new(replacement: impl Into<String>) -> Self {
+    pub fn new(selector: impl Into<String>, replacement: impl Into<String>) -> Self {
         Self {
+            selector: selector.into(),
             replacement: replacement.into(),
         }
     }

@@ -1,6 +1,5 @@
 use crate::intent::EditIntent;
 use crate::error::EditorError;
-use crate::types::Edit;
 use mmsb_core::prelude::Delta;
 use mmsb_core::dag::{StructuralOp, EdgeType};
 use mmsb_core::types::{DeltaID, Epoch, PageID, Source};
@@ -14,7 +13,6 @@ impl StructuralClassifier {
     /// Convert buffer edits to MMSB deltas and structural ops
     pub fn classify(
         intents: &[EditIntent],
-        edits: &[Edit],
         page_id: PageID,
         file_path: &PathBuf,
         source_after: &str,
@@ -22,11 +20,9 @@ impl StructuralClassifier {
         let mut page_deltas = Vec::new();
         let mut structural_ops = Vec::new();
         
-        // Build page delta from edits
-        if !edits.is_empty() {
-            let delta = Self::build_page_delta(page_id, source_after);
-            page_deltas.push(delta);
-        }
+        // Build page delta from new source
+        let delta = Self::build_page_delta(page_id, source_after);
+        page_deltas.push(delta);
         
         // Extract structural ops from intents
         for intent in intents {

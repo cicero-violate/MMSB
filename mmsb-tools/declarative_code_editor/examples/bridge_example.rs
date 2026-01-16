@@ -9,9 +9,9 @@
 //!    - Extracted semantic intents
 //!    - Page deltas (STATE PIPELINE)
 //!    - Structural ops (STRUCTURAL PIPELINE)
-//!    - Pipeline routing decision
 
 use declarative_code_editor::*;
+use declarative_code_editor::query::ItemKind;
 use mmsb_core::types::PageID;
 use std::path::PathBuf;
 
@@ -20,30 +20,24 @@ fn main() {
 
     // Sample Rust code
     let source = r#"
-fn old_function_name(x: i32) -> i32 {
+fn process_data(x: i32) -> i32 {
     x + 1
-}
-
-fn another_function() {
-    old_function_name(5);
 }
 "#;
 
-    // Create buffer
-    let mut buffer = EditBuffer::new(source.to_string());
     let page_id = PageID(12345);
     let file_path = PathBuf::from("src/example.rs");
 
-    // Build query: find function named "old_function_name"
+    // Build query: find function named "process_data"
     let query = QueryPlan::new()
-        .with_predicate(query::ItemKind::Function)
-        .with_predicate(NamePredicate::new("old_function_name"));
+        .with_predicate(KindPredicate::new(ItemKind::Function))
+        .with_predicate(NamePredicate::new("process_data"));
 
     // Build mutation: rename it
     let mutation = MutationPlan::new(query)
         .with_operation(ReplaceOp::new(
             "sig.ident",
-            "new_function_name",
+            "transform_value",
         ));
 
     println!("📝 Original source:");
@@ -52,12 +46,10 @@ fn another_function() {
 
     // Execute through bridge orchestrator
     match BridgeOrchestrator::execute_and_bridge(
+        source,
         &mutation,
-        &mut buffer,
         page_id,
         &file_path,
-        false, // allow_empty
-        false, // allow_multiple
     ) {
         Ok(output) => {
             println!("✅ Bridge execution successful!\n");
@@ -89,11 +81,6 @@ fn another_function() {
             }
             println!();
 
-            // Show final source
-            println!("📝 Modified source:");
-            println!("{}", buffer.render());
-            println!();
-
             // Next steps (conceptual)
             println!("📋 Next Steps (Authority Model):");
             println!("   1. If structural ops exist:");
@@ -105,10 +92,6 @@ fn another_function() {
             println!("   2. If page deltas exist:");
             println!("      → Require JudgmentToken (state)");
             println!("      → commit_delta(delta, judgment)");
-            println!("      → Persist to TLog");
-            println!("      → Snapshot DAG (read-only)");
-            println!("      → Trigger propagation engine");
-            println!("      → Emit derived deltas to dependents");
         }
         Err(e) => {
             eprintln!("❌ Bridge execution failed: {:?}", e);

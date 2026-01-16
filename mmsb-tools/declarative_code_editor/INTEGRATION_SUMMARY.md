@@ -113,13 +113,13 @@
 
 ### ✅ Separation Maintained
 
-| Requirement | Bridge Compliance |
-|-------------|-------------------|
-| Propagation NEVER changes DAG | ✅ PropagationBridge uses DAG read-only |
+| Requirement                                  | Bridge Compliance                                 |
+|----------------------------------------------+---------------------------------------------------|
+| Propagation NEVER changes DAG                | ✅ PropagationBridge uses DAG read-only           |
 | Structural commit NEVER triggers propagation | ✅ Separate structural_ops, caller controls order |
-| Pure observation until commit | ✅ Bridge produces output, doesn't commit |
-| Judgment tokens required | ✅ Caller provides tokens, bridge validates |
-| Dual commit boundaries | ✅ Structural ops and deltas separate |
+| Pure observation until commit                | ✅ Bridge produces output, doesn't commit         |
+| Judgment tokens required                     | ✅ Caller provides tokens, bridge validates       |
+| Dual commit boundaries                       | ✅ Structural ops and deltas separate             |
 
 ### ✅ Pipeline Isolation
 

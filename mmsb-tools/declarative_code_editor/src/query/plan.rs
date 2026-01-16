@@ -1,5 +1,4 @@
 use super::predicate::Predicate;
-use crate::buffer::EditBuffer;
 use syn::Item;
 
 /// Query plan - declarative specification of what to find
@@ -24,21 +23,7 @@ impl QueryPlan {
         &self.predicates
     }
 
-    /// Execute query against buffer's AST
-    pub fn execute<'a>(&self, buffer: &'a EditBuffer) -> Vec<&'a Item> {
-        let tree = buffer.tree();
-        let mut results = Vec::new();
-
-        for item in &tree.items {
-            if self.matches(item) {
-                results.push(item);
-            }
-        }
-
-        results
-    }
-
-    fn matches(&self, item: &Item) -> bool {
+    pub(crate) fn matches(&self, item: &Item) -> bool {
         self.predicates.iter().all(|pred| pred.matches(item))
     }
 }
