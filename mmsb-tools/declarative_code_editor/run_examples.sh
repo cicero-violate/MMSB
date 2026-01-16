@@ -40,8 +40,8 @@ echo "--- Example 7: Propagation Integration ---"
 cargo run --example 07_propagation_integration
 echo ""
 
-echo "--- Example 8: Advance Mutations ---"
-cargo run --example 08_advance_mutations
+echo "--- Example 8: Advanced Mutations ---"
+cargo run --example 08_advanced_mutations
 echo ""
 
 echo "--- Bridge Example ---"
