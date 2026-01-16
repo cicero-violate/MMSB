@@ -3,7 +3,7 @@ use crate::dag::{EdgeType, StructuralOp};
 use std::collections::{HashMap, HashSet};
 use sha2::{Digest, Sha256};
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct DependencyGraph {
     adjacency: HashMap<PageID, Vec<(PageID, EdgeType)>>,
     version: u64,

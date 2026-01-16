@@ -7,7 +7,7 @@ use crate::types::PageID;
 use std::collections::HashMap;
 
 /// Observed propagation behavior over a time window
-#[derive(Debug, Clone, Default)]
+#[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
 pub struct PropagationStats {
     /// Fanout count per page (how many downstream pages affected)
     pub fanout_per_page: HashMap<PageID, usize>,
