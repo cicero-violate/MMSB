@@ -3,17 +3,17 @@
 ## High Priority
 
 ### 1. Intent Extraction (Currently Stub)
-- [ ] Implement actual AST diffing in `src/intent/extraction.rs`
-- [ ] Detect RenameSymbol from before/after comparison
-- [ ] Detect SignatureChange (params, return type)
-- [ ] Detect ImportChange (use statement analysis)
-- [ ] Track cascading changes (struct rename → method renames)
+- [x] Implement actual AST diffing in `src/intent/extraction.rs`
+- [x] Detect RenameSymbol from before/after comparison
+- [x] Detect SignatureChange (params, return type)
+- [x] Detect ImportChange (use statement analysis)
+- [ ] Track cascading changes (struct rename → method renames) (noted in comments)
 
 ### 2. Mutation Application (Currently No-Op)
-- [ ] Implement actual source transformation in `src/executor/mod.rs`
-- [ ] Use syn::spanned::Spanned for precise byte ranges
-- [ ] Apply transformations and update SourceBuffer
-- [ ] Handle partial replacements (field-level, param-level)
+- [x] Implement actual source transformation in `src/executor/mod.rs`
+- [x] Apply transformations and update SourceBuffer
+- [x] Handle partial replacements (field-level identifier replacement)
+- [ ] Handle param-level and body-level replacements
 
 ### 3. Propagation Integration
 - [ ] Connect to structural_code_editor propagation engine

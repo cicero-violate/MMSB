@@ -7,7 +7,6 @@ use crate::error::EditorError;
 use syn::Item;
 
 // TODO: Executor improvements
-// - Span-based replacement (use syn::spanned::Spanned for precise edits)
 // - Conflict detection (overlapping mutations)
 // - Ordering strategy (deterministic application order)
 // - Rollback support (transaction semantics)
@@ -33,15 +32,46 @@ pub fn execute_query<'a>(buffer: &'a SourceBuffer, plan: &QueryPlan) -> Vec<&'a 
 /// Apply mutation to buffer (modifies in-place)
 pub fn apply_mutation(buffer: &mut SourceBuffer, plan: &MutationPlan) -> Result<(), EditorError> {
     // Find matches
-    let matches: Vec<Item> = execute_query(buffer, plan.query())
-        .into_iter()
-        .cloned()
-        .collect();
+    let match_indices: Vec<usize> = {
+        let file = buffer.ast();
+        let mut indices = Vec::new();
+        for (idx, item) in file.items.iter().enumerate() {
+            if plan.query().matches(item) {
+                indices.push(idx);
+            }
+        }
+        indices
+    };
     
-    if matches.is_empty() {
+    if match_indices.is_empty() {
         return Err(EditorError::NoMatches);
     }
     
-    // TODO: Apply transformations and update buffer
+    // Clone the AST file and apply transformations
+    let mut new_file = buffer.ast().clone();
+    
+    // Apply operations to matched items
+    for &idx in &match_indices {
+        let item = &new_file.items[idx];
+        
+        // Apply all operations to get replacement text
+        let mut replacement = String::new();
+        for op in plan.operations() {
+            replacement = op.apply(item);
+        }
+        
+        // Parse replacement as new item
+        let new_item = syn::parse_str::<Item>(&replacement)
+            .map_err(|e| EditorError::ParseError(format!("Invalid replacement: {}", e)))?;
+        
+        new_file.items[idx] = new_item;
+    }
+    
+    // Serialize the modified AST back to source
+    let new_source = quote::quote!(#new_file).to_string();
+    
+    // Update buffer with new source (this will re-parse)
+    buffer.update(new_source)?;
+    
     Ok(())
 }

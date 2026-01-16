@@ -35,4 +35,7 @@ pub enum EditorError {
 
     #[error("Intent extraction failed: {0}")]
     IntentExtractionError(String),
+
+    #[error("Conflicting mutations detected (overlapping byte spans)")]
+    ConflictingMutations,
 }

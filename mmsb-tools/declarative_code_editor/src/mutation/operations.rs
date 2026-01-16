@@ -53,7 +53,44 @@ impl ReplaceOp {
 
 impl MutationOp for ReplaceOp {
     fn apply(&self, _item: &Item) -> String {
-        self.replacement.clone()
+        // Check if selector specifies a field replacement
+        if self.selector.is_empty() || self.selector == "all" {
+            // Replace entire item
+            return self.replacement.clone();
+        }
+        
+        // Handle field-specific replacements
+        match _item {
+            Item::Fn(func) => {
+                let mut new_func = func.clone();
+                if self.selector == "ident" || self.selector == "name" {
+                    // Parse replacement as identifier
+                    let new_ident = syn::Ident::new(&self.replacement, func.sig.ident.span());
+                    new_func.sig.ident = new_ident;
+                }
+                quote::quote!(#new_func).to_string()
+            }
+            Item::Struct(strukt) => {
+                let mut new_struct = strukt.clone();
+                if self.selector == "ident" || self.selector == "name" {
+                    let new_ident = syn::Ident::new(&self.replacement, strukt.ident.span());
+                    new_struct.ident = new_ident;
+                }
+                quote::quote!(#new_struct).to_string()
+            }
+            Item::Enum(enumt) => {
+                let mut new_enum = enumt.clone();
+                if self.selector == "ident" || self.selector == "name" {
+                    let new_ident = syn::Ident::new(&self.replacement, enumt.ident.span());
+                    new_enum.ident = new_ident;
+                }
+                quote::quote!(#new_enum).to_string()
+            }
+            _ => {
+                // For other items, just do full replacement
+                self.replacement.clone()
+            }
+        }
     }
 }
 
