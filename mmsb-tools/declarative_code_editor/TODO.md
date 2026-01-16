@@ -16,9 +16,9 @@
 - [ ] Handle param-level and body-level replacements
 
 ### 3. Propagation Integration
-- [ ] Connect to structural_code_editor propagation engine
-- [ ] Build PageIndex from SourceBuffer
-- [ ] Implement source rewriting for dependent pages
+- [x] Connect to structural_code_editor propagation engine
+- [x] Build PageIndex from SourceBuffer
+- [x] Implement source rewriting for dependent pages
 - [ ] Test propagation with actual DAG
 
 ## Query Enhancements

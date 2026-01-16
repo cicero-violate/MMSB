@@ -22,6 +22,7 @@ pub mod intent;
 pub mod executor;
 pub mod error;
 pub mod bridge;
+pub mod propagation;
 
 pub use source::SourceBuffer;
 pub use query::{Predicate, KindPredicate, NamePredicate, CustomPredicate, QueryPlan};
@@ -30,5 +31,9 @@ pub use intent::{EditIntent, IntentCategory};
 pub use executor::{execute_query, apply_mutation};
 pub use error::EditorError;
 pub use bridge::{
-    BridgeOrchestrator, BridgedOutput, PipelineRoute,
+  BridgeOrchestrator, BridgedOutput, PipelineRoute,
+};
+pub use propagation::{
+    propagate_from_buffer, source_buffer_to_page_index, translate_intent,
+    propagator::PropagatedDelta,
 };
