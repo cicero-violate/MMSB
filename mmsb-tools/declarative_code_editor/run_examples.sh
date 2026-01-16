@@ -36,6 +36,10 @@ echo "--- Example 6: Delta to Page ---"
 cargo run --example 06_delta_to_page
 echo ""
 
+echo "--- Example 7: Delta to Page ---"
+cargo run --example 07_propagation_integration.rs
+echo ""
+
 echo "--- Bridge Example ---"
 cargo run --example bridge_example
 
