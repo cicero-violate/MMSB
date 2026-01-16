@@ -52,15 +52,12 @@ echo "--- Example 10: Mutation Safety ---"
 cargo run --example 10_mutation_safety
 echo ""
 
-11_body_doc_predicates
 echo "--- Example 11: Body Doc predicates ---"
 cargo run --example 11_body_doc_predicates
 echo ""
 
 echo "--- Bridge Example ---"
 cargo run --example bridge_example
-
-
 
 
 echo ""
