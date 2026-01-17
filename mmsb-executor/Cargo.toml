@@ -9,6 +9,7 @@ path = "src/lib.rs"
 
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
+parking_lot = "0.12"               # ← add this line (or latest version)
 
 mmsb-proof = { path = "../mmsb-proof" }
 mmsb-events = { path = "../mmsb-events" }
