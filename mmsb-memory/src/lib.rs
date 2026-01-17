@@ -2,6 +2,9 @@
 #![allow(dead_code)]
 #![allow(hidden_glob_reexports)]
 
+// Memory engine - canonical truth owner
+pub mod memory_engine;
+
 // Foundation layers
 pub mod physical;
 pub mod semiring;
@@ -15,7 +18,7 @@ pub mod tlog;
 // Graph and propagation
 pub mod dag;
 pub mod structural;
-pub mod propagation;
+// pub mod propagation;
 pub mod materialization;
 
 // Verification and optimization
