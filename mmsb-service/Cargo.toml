@@ -1,0 +1,8 @@
+[package]
+name = "mmsb-service"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+mmsb-proof = { path = "../mmsb-proof" }
+tokio = { version = "1", features = ["sync", "rt"] }

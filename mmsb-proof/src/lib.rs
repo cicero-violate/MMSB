@@ -315,3 +315,10 @@ impl Proof for KnowledgeProof {
         Some(self.outcome_proof_hash)
     }
 }
+
+// ============================================================================
+// Event System
+// ============================================================================
+
+pub mod events;
+pub use events::*;
