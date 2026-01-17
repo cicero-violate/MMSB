@@ -70,9 +70,6 @@ pub struct IntentProof {
     
     /// Declared resource bounds
     pub bounds: IntentBounds,
-    
-    /// Self hash (computed)
-    proof_hash: Hash,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -81,9 +78,20 @@ pub struct IntentBounds {
     pub max_memory_bytes: u64,
 }
 
+impl IntentProof {
+    pub fn new(intent_hash: Hash, schema_version: u32, bounds: IntentBounds) -> Self {
+        Self {
+            intent_hash,
+            schema_version,
+            bounds,
+        }
+    }
+}
+
 impl Proof for IntentProof {
     fn hash(&self) -> Hash {
-        self.proof_hash
+        // Simple hash implementation - in production use proper crypto hash
+        self.intent_hash
     }
     
     fn previous(&self) -> Option<Hash> {
@@ -108,9 +116,6 @@ pub struct PolicyProof {
     
     /// Risk assessment
     pub risk_class: RiskClass,
-    
-    /// Self hash (computed)
-    proof_hash: Hash,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -128,9 +133,19 @@ pub enum RiskClass {
     Critical,
 }
 
+impl PolicyProof {
+    pub fn new(intent_proof_hash: Hash, category: PolicyCategory, risk_class: RiskClass) -> Self {
+        Self {
+            intent_proof_hash,
+            category,
+            risk_class,
+        }
+    }
+}
+
 impl Proof for PolicyProof {
     fn hash(&self) -> Hash {
-        self.proof_hash
+        self.intent_proof_hash
     }
     
     fn previous(&self) -> Option<Hash> {
@@ -159,14 +174,27 @@ pub struct JudgmentProof {
     
     /// Timestamp of judgment
     pub timestamp: u64,
-    
-    /// Self hash (computed)
-    proof_hash: Hash,
+}
+
+impl JudgmentProof {
+    pub fn new(
+        policy_proof_hash: Hash,
+        approved: bool,
+        authority_signature: [u8; 64],
+        timestamp: u64,
+    ) -> Self {
+        Self {
+            policy_proof_hash,
+            approved,
+            authority_signature,
+            timestamp,
+        }
+    }
 }
 
 impl Proof for JudgmentProof {
     fn hash(&self) -> Hash {
-        self.proof_hash
+        self.policy_proof_hash
     }
     
     fn previous(&self) -> Option<Hash> {
@@ -191,14 +219,21 @@ pub struct AdmissionProof {
     
     /// Replay protection nonce
     pub nonce: u64,
-    
-    /// Self hash (computed)
-    proof_hash: Hash,
+}
+
+impl AdmissionProof {
+    pub fn new(judgment_proof_hash: Hash, epoch: u64, nonce: u64) -> Self {
+        Self {
+            judgment_proof_hash,
+            epoch,
+            nonce,
+        }
+    }
 }
 
 impl Proof for AdmissionProof {
     fn hash(&self) -> Hash {
-        self.proof_hash
+        self.judgment_proof_hash
     }
     
     fn previous(&self) -> Option<Hash> {
@@ -226,14 +261,27 @@ pub struct CommitProof {
     
     /// Invariants verified
     pub invariants_held: bool,
-    
-    /// Self hash (computed)
-    proof_hash: Hash,
+}
+
+impl CommitProof {
+    pub fn new(
+        admission_proof_hash: Hash,
+        delta_hash: Hash,
+        state_hash: Hash,
+        invariants_held: bool,
+    ) -> Self {
+        Self {
+            admission_proof_hash,
+            delta_hash,
+            state_hash,
+            invariants_held,
+        }
+    }
 }
 
 impl Proof for CommitProof {
     fn hash(&self) -> Hash {
-        self.proof_hash
+        self.admission_proof_hash
     }
     
     fn previous(&self) -> Option<Hash> {
@@ -261,9 +309,6 @@ pub struct OutcomeProof {
     
     /// Rollback record hash (if any)
     pub rollback_hash: Option<Hash>,
-    
-    /// Self hash (computed)
-    proof_hash: Hash,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -274,9 +319,25 @@ pub enum ErrorClass {
     Unknown,
 }
 
+impl OutcomeProof {
+    pub fn new(
+        commit_proof_hash: Hash,
+        success: bool,
+        error_class: Option<ErrorClass>,
+        rollback_hash: Option<Hash>,
+    ) -> Self {
+        Self {
+            commit_proof_hash,
+            success,
+            error_class,
+            rollback_hash,
+        }
+    }
+}
+
 impl Proof for OutcomeProof {
     fn hash(&self) -> Hash {
-        self.proof_hash
+        self.commit_proof_hash
     }
     
     fn previous(&self) -> Option<Hash> {
@@ -301,14 +362,21 @@ pub struct KnowledgeProof {
     
     /// Risk signal (non-authoritative)
     pub risk_signal: f64,
-    
-    /// Self hash (computed)
-    proof_hash: Hash,
+}
+
+impl KnowledgeProof {
+    pub fn new(outcome_proof_hash: Hash, pattern_hash: Hash, risk_signal: f64) -> Self {
+        Self {
+            outcome_proof_hash,
+            pattern_hash,
+            risk_signal,
+        }
+    }
 }
 
 impl Proof for KnowledgeProof {
     fn hash(&self) -> Hash {
-        self.proof_hash
+        self.outcome_proof_hash
     }
     
     fn previous(&self) -> Option<Hash> {
