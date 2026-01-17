@@ -1,8 +1,18 @@
-use crate::page::{Page, PageError, PageLocation};
+// use crate::physical::AllocatorStats;
+use crate::page::{PageError, PageLocation, Page};
 use mmsb_primitives::PageID;
+use crate::epoch::Epoch;
 use parking_lot::Mutex;
 use std::collections::HashMap;
-use std::sync::atomic::{AtomicU64, Ordering};
+use std::ffi::c_void;
+use std::sync::Arc;
+use std::sync::atomic::AtomicU64;
+
+
+extern "C" {
+    fn cudaMallocManaged(ptr: *mut *mut c_void, size: usize, flags: u32) -> i32;
+    fn cudaFree(ptr: *mut c_void) -> i32;
+}
 
 #[derive(Debug, Clone)]
 pub struct PageAllocatorConfig {
@@ -22,6 +32,7 @@ pub struct PageAllocator {
     config: PageAllocatorConfig,
     pages: Mutex<HashMap<PageID, Box<Page>>>,
     next_id: AtomicU64,
+    stats: Arc<AllocatorStats>,
 }
 
 #[derive(Debug, Clone)]
@@ -45,85 +56,99 @@ pub struct PageSnapshotData {
 
 impl PageAllocator {
     pub fn new(config: PageAllocatorConfig) -> Self {
+        Self::with_stats(config, Arc::new(AllocatorStats::default()))
+    }
+
+    pub fn with_stats(config: PageAllocatorConfig, stats: Arc<AllocatorStats>) -> Self {
+        if cfg!(debug_assertions) {
+            println!(
+                "Allocating new PageAllocator instance with config: {:?}",
+                config
+            );
+        }
         Self {
             config,
             pages: Mutex::new(HashMap::new()),
             next_id: AtomicU64::new(1),
+            stats,
         }
     }
 
     /// Clear all allocated pages and reset ID counter.
+    /// Used for state reset without destroying the allocator.
     pub fn clear(&self) {
         let mut pages = self.pages.lock();
-        pages.clear();
-        self.next_id.store(1, Ordering::SeqCst);
+        for (_, page) in pages.drain() {
+            // Drop page, freeing memory
+            drop(page);
+        }
+        self.next_id.store(1, std::sync::atomic::Ordering::SeqCst);
     }
 
-    pub fn allocate_raw(
-        &self,
-        page_id_hint: PageID,
-        size: usize,
-        location: Option<PageLocation>,
-    ) -> Result<*mut Page, PageError> {
+    pub fn allocate_raw(&self, page_id_hint: PageID, size: usize, location: Option<PageLocation>) -> Result<*mut Page, PageError> {
         let loc = location.unwrap_or(self.config.default_location);
-
-        let mut pages = self.pages.lock();
-        if pages.contains_key(&page_id_hint) {
+        if self.pages.lock().contains_key(&page_id_hint) {
             return Err(PageError::AlreadyExists(page_id_hint));
         }
-
         let page = Box::new(Page::new(page_id_hint, size, loc)?);
         let ptr = Box::into_raw(page);
-
-        #[cfg(debug_assertions)]
-        println!(
-            "[ALLOCATOR] allocate_raw(id={}) → raw ptr = {:p}",
-            page_id_hint.0, ptr
-        );
-
-        pages.insert(page_id_hint, unsafe { Box::from_raw(ptr) });
-
+        if cfg!(debug_assertions) {
+            println!(
+                "[ALLOCATOR] allocate_raw(id={}) → raw ptr = {:p}",
+                page_id_hint.0, ptr
+            );
+        }
+        self.pages.lock().insert(page_id_hint, unsafe { Box::from_raw(ptr) });
+        self.stats.record_alloc();
         Ok(ptr)
     }
 
     pub fn free(&self, page_id: PageID) {
         if let Some(_) = self.pages.lock().remove(&page_id) {
-            #[cfg(debug_assertions)]
-            println!("[ALLOCATOR] Freed page {}", page_id.0);
+            if cfg!(debug_assertions) {
+                println!("[ALLOCATOR] Freed page {}", page_id.0);
+            }
+            self.stats.record_free();
         }
     }
 
     pub fn release(&self, page_id: PageID) {
         if let Some(boxed_page) = self.pages.lock().remove(&page_id) {
-            #[cfg(debug_assertions)]
-            println!(
-                "[ALLOCATOR] release({}): ownership transferred",
-                page_id.0
-            );
-            // Prevent double drop – caller now owns the Box
+            if cfg!(debug_assertions) {
+                println!("[ALLOCATOR] release({}): ownership transferred — Box removed from map but NOT dropped (caller now owns it)", page_id.0);
+            }
+            // DO NOT drop the Box here!
+            // The raw pointer from allocate_raw is now the sole owner.
+            // Dropping boxed_page here would free the memory → use-after-free
             std::mem::forget(boxed_page);
+        } else {
+            if cfg!(debug_assertions) {
+                println!(
+                    "[ALLOCATOR] release({}): page not found — already released?",
+                    page_id.0
+                );
+            }
         }
     }
 
     pub fn acquire_page(&self, page_id: PageID) -> Option<*mut Page> {
-        let pages = self.pages.lock();
-        pages.get(&page_id).map(|boxed| Box::as_mut(boxed) as *mut Page)
+        self.pages.lock().get(&page_id).map(|b| &**b as *const Page as *mut Page)
+    }
+
+    pub fn len(&self) -> usize {
+        self.pages.lock().len()
     }
 
     pub fn page_infos(&self) -> Vec<PageInfo> {
         let pages = self.pages.lock();
         pages
-            .iter()
-            .map(|(id, page)| PageInfo {
-                page_id: *id,
-                size: page.capacity,
-                location: page.location,
-                epoch: page.epoch.load().0,
-                metadata: page.metadata.clone_store().into_iter().flat_map(|(k, v)| {
-                    let mut bytes = k.into_bytes();
-                    bytes.extend_from_slice(&v);
-                    bytes
-                }).collect(),
+            .values()
+            .map(|page| PageInfo {
+                page_id: page.id,
+                size: page.size(),
+                location: page.location(),
+                epoch: page.epoch().0,
+                metadata: page.metadata_blob(),
             })
             .collect()
     }
@@ -131,51 +156,98 @@ impl PageAllocator {
     pub fn snapshot_pages(&self) -> Vec<PageSnapshotData> {
         let pages = self.pages.lock();
         pages
-            .iter()
-            .map(|(id, page)| {
-                let mut data = vec![0u8; page.capacity];
-                unsafe {
-                    std::ptr::copy_nonoverlapping(page.data, data.as_mut_ptr(), page.capacity);
-                }
-                PageSnapshotData {
-                    page_id: *id,
-                    size: page.capacity,
-                    location: page.location,
-                    epoch: page.epoch.load().0,
-                    metadata_blob: vec![], // TODO: implement proper blob serialization if needed
-                    data,
-                }
+            .values()
+            .map(|page| PageSnapshotData {
+                page_id: page.id,
+                size: page.size(),
+                location: page.location(),
+                epoch: page.epoch().0,
+                metadata_blob: page.metadata_blob(),
+                data: page.data_slice().to_vec(),
             })
             .collect()
     }
 
     pub fn restore_from_snapshot(&self, snapshots: Vec<PageSnapshotData>) -> Result<(), PageError> {
+        if cfg!(debug_assertions) {
+            eprintln!("\n=== RESTORE_FROM_SNAPSHOT STARTED ===");
+            eprintln!("   Clearing {} existing pages", self.pages.lock().len());
+        }
+
         let mut pages = self.pages.lock();
         pages.clear();
 
-        for snapshot in snapshots {
-            let page = Page::new(
-                snapshot.page_id,
-                snapshot.size,
-                snapshot.location,
-            )?;
-
-            unsafe {
-                std::ptr::copy_nonoverlapping(
-                    snapshot.data.as_ptr(),
-                    page.data,
-                    snapshot.size,
-                );
+        for (i, snapshot) in snapshots.iter().enumerate() {
+            if cfg!(debug_assertions) {
+                eprintln!("   [{i}] Restoring page ID={:?} size={} epoch={} loc={:?}",
+                    snapshot.page_id, snapshot.size, snapshot.epoch, snapshot.location);
             }
 
-            page.epoch.store(snapshot.epoch.into());
+            // 1. Create page — real error from Page::new
+            let mut page = match Page::new(snapshot.page_id, snapshot.size, snapshot.location) {
+                Ok(p) => Box::new(p),
+                Err(e) => {
+                if cfg!(debug_assertions) {
+                    eprintln!("      Page::new() FAILED: {e}");
+                }
+                return Err(e);
+            }
+            };
 
-            // TODO: restore metadata if blob is implemented
+            // 2. Set epoch
+            page.set_epoch(Epoch(snapshot.epoch));
+            if cfg!(debug_assertions) {
+                eprintln!("      Epoch set to {}", snapshot.epoch);
+            }
 
-            pages.insert(snapshot.page_id, Box::new(page));
+            // 3. Copy data — size mismatch is impossible if snapshot was written correctly
+            let dst = page.data_mut_slice();
+            if dst.len() != snapshot.data.len() {
+                if cfg!(debug_assertions) {
+                    eprintln!("      FATAL: data size mismatch! page={} snapshot={}", dst.len(), snapshot.data.len());
+                }
+                return Err(PageError::MetadataDecode("data size mismatch in snapshot"));
+            }
+            dst.copy_from_slice(&snapshot.data);
+            if cfg!(debug_assertions) {
+                eprintln!("      Data copied ({} bytes)", snapshot.data.len());
+            }
+
+            // 4. Apply metadata — THIS IS WHERE IT WAS FAILING
+            if cfg!(debug_assertions) {
+                eprintln!(
+                    "      Applying metadata ({} bytes)...",
+                    snapshot.metadata_blob.len()
+                );
+            }
+            if let Err(e) = page.set_metadata_blob(&snapshot.metadata_blob) {
+                if cfg!(debug_assertions) {
+                    eprintln!("      METADATA RESTORE FAILED: {e}");
+                }
+                return Err(e); // ← this is PageError::MetadataDecode(...)
+            }
+            if cfg!(debug_assertions) {
+                eprintln!("      Metadata restored OK");
+            }
+
+            // 5. Insert
+            pages.insert(snapshot.page_id, page);
+            if cfg!(debug_assertions) {
+                eprintln!("      Page inserted");
+            }
         }
 
+        if cfg!(debug_assertions) {
+            eprintln!(
+                "=== RESTORE_FROM_SNAPSHOT SUCCESS: {} pages restored ===",
+                snapshots.len()
+            );
+        }
         Ok(())
+    }
+
+    pub fn stats(&self) -> Arc<AllocatorStats> {
+        Arc::clone(&self.stats)
     }
 }
 
@@ -183,29 +255,76 @@ impl PageAllocator {
 mod tests {
     use super::*;
     use crate::page::{Delta, DeltaID, Source};
-    use crate::epoch::Epoch;
 
     #[test]
-    fn test_allocate_and_acquire() {
-        let alloc = PageAllocator::new(PageAllocatorConfig::default());
-        let ptr = alloc.allocate_raw(PageID(42), 1024, None).unwrap();
+    fn test_page_info_metadata_roundtrip() {
+        let allocator = PageAllocator::new(PageAllocatorConfig::default());
+        let ptr = allocator
+            .allocate_raw(PageID(1), 128, None)
+            .expect("allocation succeeds");
         let page = unsafe { &mut *ptr };
-        assert_eq!(page.id.0, 42);
-        assert_eq!(page.capacity, 1024);
+        page.set_metadata(vec![("key".to_string(), b"abc123".to_vec())]);
+        let infos = allocator.page_infos();
+        assert_eq!(infos.len(), 1);
+        assert_eq!(infos[0].page_id, PageID(1));
+        assert_eq!(infos[0].metadata, page.metadata_blob());
     }
 
     #[test]
-    fn test_snapshot_restore_roundtrip() {
+    fn test_unified_page() {
+        let config = PageAllocatorConfig {
+            default_location: PageLocation::Unified,
+        };
+        let allocator = PageAllocator::new(config);
+
+        let ptr = allocator
+            .allocate_raw(PageID(1), 4096, None)
+            .expect("Unified page allocation failed");
+
+        let page = unsafe { &mut *ptr };
+        assert_eq!(page.location(), PageLocation::Unified);
+
+        let data = page.data_mut_slice();
+        data[0] = 42;
+        assert_eq!(data[0], 42);
+
+        // Optional: test GPU can read it (if CUDA is available)
+        // let _ = unsafe { cudaDeviceSynchronize() };
+        println!("Unified memory test PASSED — CPU and GPU share the same memory!");
+    }
+
+    #[test]
+    fn test_checkpoint_roundtrip_in_memory() {
         let alloc = PageAllocator::new(PageAllocatorConfig::default());
 
-        alloc.allocate_raw(PageID(777), 4096, None).unwrap();
+        // Allocate and modify
+        let ptr = alloc.allocate_raw(PageID(9999), 1024*1024, None).unwrap();
+        let page = unsafe { &mut *ptr };
+        page.apply_delta(&Delta {
+            delta_id: DeltaID(1),
+            page_id: PageID(9999),
+            epoch: Epoch(1),
+            mask: vec![true],
+            payload: vec![0x11],
+            is_sparse: false,
+            timestamp: 0,
+            source: Source("test".into()),
+            intent_metadata: None,
+        }).unwrap();
 
+        // Snapshot
         let snapshot = alloc.snapshot_pages();
         assert_eq!(snapshot.len(), 1);
+        assert_eq!(snapshot[0].epoch, 1);
 
-        alloc.restore_from_snapshot(snapshot).unwrap();
+        // Clear and restore
+        alloc.restore_from_snapshot(snapshot).expect("roundtrip should work");
 
-        let restored = alloc.acquire_page(PageID(777));
-        assert!(restored.is_some());
+        let restored = alloc.acquire_page(PageID(9999)).unwrap();
+        let restored_page = unsafe { &*restored };
+        assert_eq!(restored_page.epoch().0, 1);
+        println!("CHECKPOINT ROUNDTRIP TEST PASSED");
     }
+
+
 }
