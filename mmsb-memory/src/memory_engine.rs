@@ -204,19 +204,21 @@ impl MemoryEngine {
     ) -> Result<MemoryCommitted, MemoryEngineError> {
         let judgment_proof = &event.judgment_proof;
 
+        // Stage D: Admission
         let admission_proof = self.admit_execution(judgment_proof)?;
 
-        // CRITICAL: Fetch real Delta from storage/tlog using some identifier
-        // Right now: placeholder panic — implement this!
-        let delta = self.fetch_delta_for_event(&event)
-            .ok_or(MemoryEngineError::DeltaNotFound)?;
+        // Stage E: Commit - use the attached delta directly (no fetch needed!)
+        let delta = &event.delta;  // ← This is the key change
+        let commit_proof = self.commit_delta(&admission_proof, delta)?;
 
-        let commit_proof = self.commit_delta(&admission_proof, &delta)?;
-
+        // Stage F: Outcome
         let outcome_proof = self.record_outcome(&commit_proof)?;
 
         let current_epoch = self.epoch.load();
         let event_id = self.compute_event_hash(&admission_proof, &commit_proof, &outcome_proof);
+
+        // Compute affected pages from delta (or use provided list if available)
+        let affected_page_ids = event.affected_page_ids.unwrap_or_else(|| vec![delta.page_id]);
 
         Ok(MemoryCommitted {
             event_id,
@@ -224,12 +226,13 @@ impl MemoryEngine {
                 .duration_since(UNIX_EPOCH)
                 .unwrap()
                 .as_secs(),
-            delta_hash: delta.hash(), // Use computed hash
+            delta_hash: delta.hash(),
             epoch: current_epoch.0 as u64,
             snapshot_ref: None,
             admission_proof,
             commit_proof,
             outcome_proof,
+            affected_page_ids,  // ← Now populated
         })
     }
 
