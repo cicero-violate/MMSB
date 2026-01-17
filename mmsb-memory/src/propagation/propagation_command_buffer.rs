@@ -1,4 +1,5 @@
-use crate::page::{Page, PageID};
+use crate::page::Page;
+use mmsb_primitives::PageID;
 use std::sync::Arc;
 
 #[derive(Debug, Clone)]
