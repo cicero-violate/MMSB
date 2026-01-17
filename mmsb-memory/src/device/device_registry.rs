@@ -1,4 +1,4 @@
-use crate::page::{Page, PageID};
+use crate::page::Page;
 use mmsb_primitives::PageID;
 use parking_lot::RwLock;
 use std::collections::HashMap;
