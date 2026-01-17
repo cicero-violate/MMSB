@@ -334,6 +334,8 @@ name = "mmsb-policy"
 version = "0.1.0"
 dependencies = [
  "glob",
+ "mmsb-proof",
+ "mmsb-service",
  "serde",
  "serde_json",
  "thiserror",

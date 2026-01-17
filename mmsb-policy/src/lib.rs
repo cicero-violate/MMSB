@@ -39,6 +39,7 @@ pub mod classifier;
 pub mod policy;
 pub mod scope;
 pub mod types;
+pub mod module;
 
 // Re-export commonly used types
 pub use classifier::IntentClassifier;
@@ -47,3 +48,4 @@ pub use scope::{ScopeManager, ScopePolicyV1};
 pub use types::{
     IntentClass, IntentMetadata, PolicyDecision, PolicyViolation, ScopePolicy,
 };
+pub use module::PolicyModule;
