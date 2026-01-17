@@ -280,6 +280,13 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f52b00d39961fc5b2736ea853c9cc86238e165017a493d1d5c8eac6bdc4cc273"
 
 [[package]]
+name = "mmsb-authenticate"
+version = "0.1.0"
+dependencies = [
+ "mmsb-proof",
+]
+
+[[package]]
 name = "mmsb-core"
 version = "0.1.0"
 dependencies = [
@@ -296,16 +303,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "mmsb-intent"
-version = "0.1.0"
-dependencies = [
- "glob",
- "serde",
- "serde_json",
- "thiserror",
-]
-
-[[package]]
 name = "mmsb-judgment"
 version = "0.1.0"
 dependencies = [
@@ -315,6 +312,24 @@ dependencies = [
  "serde_json",
  "sha2",
  "uuid",
+]
+
+[[package]]
+name = "mmsb-policy"
+version = "0.1.0"
+dependencies = [
+ "glob",
+ "serde",
+ "serde_json",
+ "thiserror",
+]
+
+[[package]]
+name = "mmsb-proof"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde-big-array",
 ]
 
 [[package]]
@@ -469,6 +484,15 @@ checksum = "9a8e94ea7f378bd32cbbd37198a4a91436180c5bb472411e48b5ec2e2124ae9e"
 dependencies = [
  "serde_core",
  "serde_derive",
+]
+
+[[package]]
+name = "serde-big-array"
+version = "0.5.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "11fc7cc2c76d73e0f27ee52abbd64eec84d46f370c88371120433196934e4b7f"
+dependencies = [
+ "serde",
 ]
 
 [[package]]

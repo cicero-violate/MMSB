@@ -1,0 +1,1 @@
+../mmsb-proof/mmsb-proof-chain-definitions.md

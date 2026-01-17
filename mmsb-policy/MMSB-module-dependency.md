@@ -1,0 +1,1 @@
+../docs/MMSB-module-dependency.md
