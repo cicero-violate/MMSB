@@ -1,0 +1,33 @@
+{
+  "schema": "intent_policy.v1",
+  "scope_id": "default_safe_operations",
+  "allowed_classes": [
+    "formatting",
+    "lint_fix",
+    "documentation"
+  ],
+  "allowed_paths": [
+    "src/**/*.rs",
+    "tests/**/*.rs",
+    "benches/**/*.rs"
+  ],
+  "forbidden_paths": [
+    "migrations/**",
+    "infra/**",
+    ".git/**",
+    "target/**"
+  ],
+  "allowed_tools": [
+    "rustfmt",
+    "clippy",
+    "cargo_fmt",
+    "patch_runner"
+  ],
+  "forbidden_tools": [
+    "shell_runner",
+    "arbitrary_exec"
+  ],
+  "max_files_touched": 50,
+  "max_diff_lines": 2000,
+  "version": 1
+}

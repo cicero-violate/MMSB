@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MMSB Intent Policy v1",
+  "description": "Defines scope policies that determine which operations require judgment",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "scope_id",
+    "allowed_classes",
+    "allowed_paths",
+    "forbidden_paths",
+    "allowed_tools",
+    "forbidden_tools",
+    "version"
+  ],
+  "properties": {
+    "schema": {
+      "const": "intent_policy.v1"
+    },
+    "scope_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique identifier for this scope policy"
+    },
+    "allowed_classes": {
+      "type": "array",
+      "description": "Intent classes that can bypass judgment",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "enum": [
+          "rust_refactor",
+          "formatting",
+          "lint_fix",
+          "documentation",
+          "structural_change",
+          "state_change",
+          "unknown"
+        ]
+      }
+    },
+    "allowed_paths": {
+      "type": "array",
+      "description": "Path patterns that are allowed (glob patterns supported)",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "forbidden_paths": {
+      "type": "array",
+      "description": "Path patterns that are forbidden (glob patterns supported)",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "allowed_tools": {
+      "type": "array",
+      "description": "Tools that are allowed to be used",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "forbidden_tools": {
+      "type": "array",
+      "description": "Tools that are forbidden",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "max_files_touched": {
+      "type": ["integer", "null"],
+      "minimum": 1,
+      "description": "Maximum number of files that can be modified"
+    },
+    "max_diff_lines": {
+      "type": ["integer", "null"],
+      "minimum": 1,
+      "description": "Maximum number of diff lines allowed"
+    },
+    "version": {
+      "const": 1
+    }
+  }
+}

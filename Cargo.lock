@@ -296,6 +296,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "mmsb-intent"
+version = "0.1.0"
+dependencies = [
+ "glob",
+ "serde",
+ "serde_json",
+ "thiserror",
+]
+
+[[package]]
 name = "mmsb-judgment"
 version = "0.1.0"
 dependencies = [
