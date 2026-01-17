@@ -6,8 +6,8 @@
 pub mod memory_engine;
 
 // Foundation layers
-pub mod physical;
-pub mod semiring;
+// pub mod physical;          // ← Substrate: MOVE to mmsb-executor
+// pub mod semiring;          // ← Keep if semantic invariants, but check
 
 // Core data structures
 pub mod page;
@@ -18,15 +18,15 @@ pub mod tlog;
 // Graph and propagation
 pub mod dag;
 pub mod structural;
-pub mod propagation;
+// pub mod propagation; // ← Substrate: MOVE to mmsb-executor
 pub mod materialization;
 
 // Verification and optimization
 pub mod proofs;
-pub mod optimization;
+// pub mod optimization; // ← Substrate: MOVE to mmsb-executor
 
 // System layers
-pub mod device;
+// pub mod device; // ← Substrate: MOVE to mmsb-executor
 pub mod commit;
 pub mod replay;
 
