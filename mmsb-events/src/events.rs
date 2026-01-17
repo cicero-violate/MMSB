@@ -124,30 +124,33 @@ impl Event for JudgmentApproved {
 // ============================================================================
 
 /// ExecutionRequested - emitted by mmsb-executor when ready to apply an approved plan
-// In mmsb-events/src/events.rs
-
-// ExecutionRequested — what executor sends to trigger commit
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ExecutionRequested {
     pub event_id: EventId,
     pub timestamp: Timestamp,
     
-    pub judgment_proof: JudgmentProof,          // from mmsb-proof (already allowed)
+    pub judgment_proof: JudgmentProof,  // from mmsb-proof
     
-    // Instead of full Delta:
-    pub delta_hash: Hash,                       // hash of the delta to apply
-    pub delta_size_hint: Option<u64>,           // optional, helps memory estimate resources
+    // NEW: Hash of the delta to apply (memory fetches full delta by hash)
+    pub delta_hash: Hash,
     
-    // Minimal info for propagation (small, serializable)
-    pub affected_page_ids: Vec<PageID>,         // ← still needed, but PageID must be defined in mmsb-proof or a shared primitive crate
+    // NEW: Minimal propagation info (executor pre-computes this)
+    pub affected_page_ids: Vec<PageID>,
+    
+    // Optional: resource hints
+    pub delta_size_hint_bytes: Option<u64>,
 }
 
-
-
 impl Event for ExecutionRequested {
-    fn event_type(&self) -> EventType { EventType::ExecutionRequested }
-    fn event_id(&self) -> EventId { self.event_id }
-    fn timestamp(&self) -> Timestamp { self.timestamp }
+    fn event_type(&self) -> EventType {
+        EventType::ExecutionRequested
+    }
+    fn event_id(&self) -> EventId {
+        self.event_id
+    }
+    fn timestamp(&self) -> Timestamp {
+        self.timestamp
+    }
 }
 
 // ============================================================================
