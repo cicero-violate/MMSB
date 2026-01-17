@@ -85,7 +85,7 @@ impl<S: EventSink> ProduceProof for MemoryEngine<S> {
 
 impl<S: EventSink> AdmissionStage for MemoryEngine<S> {}
 
-// Simplified commit/outcome implementations (full impl needs more infrastructure)
+// Simplified commit/outcome implementations
 pub struct CommitStageImpl;
 
 impl ProduceProof for CommitStageImpl {
@@ -121,47 +121,27 @@ impl OutcomeStage for OutcomeStageImpl {}
 
 impl<S: EventSink> MemoryEngine<S> {
     pub fn handle_execution_requested(&mut self, event: ExecutionRequested) {
-        // Verify judgment proof through admission gate
+        // TODO(Phase B): restore full commit logic
         match self.admission_gate.admit(&event.judgment_proof) {
             Ok(()) => {
-                // Produce AdmissionProof (D)
-                let admission_input = AdmissionInput {
+                let admission_proof = Self::produce_proof(&AdmissionInput {
                     judgment_proof_hash: event.judgment_proof.hash(),
                     epoch: self.time.epoch(),
-                };
-                let admission_proof = Self::produce_proof(&admission_input);
-
-                // Simplified: produce CommitProof (E)
-                let commit_input = CommitInput {
-                    admission_proof_hash: admission_proof.hash(),
-                    delta_hash: [0u8; 32], // Placeholder
-                };
-                let commit_proof = CommitStageImpl::produce_proof(&commit_input);
-
-                // Produce OutcomeProof (F)
-                let outcome_input = OutcomeInput {
-                    commit_proof_hash: commit_proof.hash(),
-                    success: true,
-                    error: None,
-                };
-                let outcome_proof = OutcomeStageImpl::produce_proof(&outcome_input);
-
-                // Emit MemoryCommitted event
-                let memory_event = MemoryCommitted {
-                    event_id: event.event_id,
-                    timestamp: self.time.next(),
-                    admission_proof,
-                    commit_proof,
-                    outcome_proof,
-                };
-
+                });
+                
+                // Stub: full logic in Phase B
                 if let Some(sink) = &self.sink {
+                    let memory_event = MemoryCommitted {
+                        event_id: event.event_id,
+                        timestamp: self.time.next(),
+                        admission_proof,
+                        commit_proof: CommitProofBuilder::new([0; 32], [0; 32]),
+                        outcome_proof: OutcomeProofBuilder::new([0; 32], true),
+                    };
                     sink.emit(mmsb_events::AnyEvent::MemoryCommitted(memory_event));
                 }
             }
-            Err(_err) => {
-                // Admission failed - do not commit
-            }
+            Err(_) => { /* Admission failed */ }
         }
     }
 }

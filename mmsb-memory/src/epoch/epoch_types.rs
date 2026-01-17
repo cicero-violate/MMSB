@@ -7,28 +7,18 @@ use crate::types::Epoch;
 pub struct EpochCell {
     inner: AtomicU64,
 }
-
 impl EpochCell {
     pub fn new(value: u64) -> Self {
         Self {
             inner: AtomicU64::new(value),
         }
     }
-
     #[inline]
     pub fn load(&self) -> Epoch {
         Epoch(self.inner.load(Ordering::Acquire))
-    }
-
-    #[inline]
     pub fn store(&self, value: Epoch) {
         self.inner.store(value.0, Ordering::Release);
-    }
-
-    #[inline]
     pub fn increment(&self) -> Epoch {
         let old = self.inner.fetch_add(1, Ordering::AcqRel);
         println!("EPOCH_INCREMENT: was {} → now {}", old, old + 1);
         Epoch(old)
-    }
-}

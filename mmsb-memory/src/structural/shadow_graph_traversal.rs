@@ -7,7 +7,6 @@ pub fn topological_sort(graph: &ShadowPageGraph) -> Vec<PageID> {
     let mut result = Vec::new();
     let mut in_degree = HashMap::new();
     let mut adjacency = HashMap::new();
-
     {
         // Build adjacency snapshots
         for (node, edges) in graph.adjacency.read().iter() {
@@ -18,12 +17,10 @@ pub fn topological_sort(graph: &ShadowPageGraph) -> Vec<PageID> {
             }
         }
     }
-
     let mut queue: VecDeque<PageID> = in_degree
         .iter()
         .filter_map(|(&node, &deg)| if deg == 0 { Some(node) } else { None })
         .collect();
-
     while let Some(node) = queue.pop_front() {
         result.push(node);
         if let Some(children) = adjacency.get(&node) {
@@ -34,9 +31,5 @@ pub fn topological_sort(graph: &ShadowPageGraph) -> Vec<PageID> {
                         queue.push_back(*child);
                     }
                 }
-            }
-        }
-    }
-
     result
 }

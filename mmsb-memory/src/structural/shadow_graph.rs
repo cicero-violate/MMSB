@@ -1,6 +1,6 @@
-use super::edge_types::EdgeType;
+use crate::types::EdgeType;
 use super::structural_types::StructuralOp;
-use crate::dag::DependencyGraph;
+use crate::dag::dependency_graph::DependencyGraph;
 use crate::types::PageID;
 use std::sync::RwLock;
 use std::collections::{HashMap, HashSet};
@@ -11,12 +11,9 @@ pub struct Edge {
     pub to: PageID,
     pub edge_type: EdgeType,
 }
-
 #[derive(Debug, Default)]
 pub struct ShadowPageGraph {
     pub(crate) adjacency: RwLock<HashMap<PageID, Vec<(PageID, EdgeType)>>>,
-}
-
 impl ShadowPageGraph {
     pub(crate) fn from_dag_and_ops(dag: &DependencyGraph, ops: &[StructuralOp]) -> Self {
         let shadow = ShadowPageGraph::default();
@@ -34,24 +31,16 @@ impl ShadowPageGraph {
                         if let Some(edges) = adj.get_mut(from) {
                             edges.retain(|(target, _)| target != to);
                         }
-                    }
                 }
-            }
         }
         shadow
     }
-
     pub fn add_edge(&self, from: PageID, to: PageID, edge_type: EdgeType) {
         let mut guard = self.adjacency.write();
         guard.entry(from).or_default().push((to, edge_type));
-    }
-
     pub fn remove_edge(&self, from: PageID, to: PageID) {
         if let Some(edges) = self.adjacency.write().get_mut(&from) {
             edges.retain(|(target, _)| target != &to);
-        }
-    }
-
     pub fn descendants(&self, root: PageID) -> HashSet<PageID> {
         let graph = self.adjacency.read();
         let mut seen = HashSet::new();
@@ -61,11 +50,4 @@ impl ShadowPageGraph {
                 if let Some(children) = graph.get(&node) {
                     for (child, _) in children {
                         stack.push(*child);
-                    }
-                }
-            }
-        }
         seen
-    }
-}
-use crate::types::EdgeType;

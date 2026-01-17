@@ -4,7 +4,6 @@
 //! Produces AdmissionProof (D), CommitProof (E), OutcomeProof (F).
 
 #![allow(dead_code)]
-
 pub mod memory_engine;
 pub mod admission;
 pub mod truth;
@@ -20,7 +19,5 @@ pub mod outcome;
 pub mod materialization;
 pub mod semiring;
 pub mod proofs;
-
 pub mod types;
-
 pub use memory_engine::MemoryEngine;

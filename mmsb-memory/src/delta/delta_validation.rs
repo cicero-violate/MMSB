@@ -1,4 +1,4 @@
-use crate::page::{Delta, DeltaError};
+use crate::types::{Delta, DeltaError};
 
 /// Validate structural consistency of a delta before application.
 pub fn validate_delta(delta: &Delta) -> Result<(), DeltaError> {
@@ -16,7 +16,6 @@ pub fn validate_delta(delta: &Delta) -> Result<(), DeltaError> {
             payload_len: delta.payload.len(),
         });
     }
-
     Ok(())
 }
 use crate::delta::delta::Delta;

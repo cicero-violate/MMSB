@@ -1,10 +1,9 @@
 //! Columnar delta batch representation optimized for SIMD scans.
 
-use super::delta::Delta;
-use super::page::Page;
+use crate::delta::delta::Delta;
+use crate::types::page::Page;
 use crate::types::{DeltaID, Epoch, PageError, PageID, Source};
 use std::collections::HashMap;
-
 #[derive(Debug, Clone)]
 pub struct ColumnarDeltaBatch {
     count: usize,
@@ -20,7 +19,6 @@ pub struct ColumnarDeltaBatch {
     sources: Vec<Source>,
     metadata: Vec<Option<String>>,
 }
-
 impl ColumnarDeltaBatch {
     pub fn new() -> Self {
         Self {
@@ -38,25 +36,16 @@ impl ColumnarDeltaBatch {
             metadata: Vec::new(),
         }
     }
-
     pub fn from_rows(deltas: Vec<Delta>) -> Self {
         let mut batch = Self::new();
         batch.extend(deltas);
         batch
-    }
-
     pub fn len(&self) -> usize {
         self.count
-    }
-
     pub fn is_empty(&self) -> bool {
         self.count == 0
-    }
-
     pub fn iter(&self) -> impl Iterator<Item = Delta> + '_ {
         (0..self.count).map(move |idx| self.delta_at(idx).expect("index in range"))
-    }
-
     pub fn extend<I>(&mut self, deltas: I)
     where
         I: IntoIterator<Item = Delta>,
@@ -66,12 +55,10 @@ impl ColumnarDeltaBatch {
             self.mask_pool
                 .extend(delta.mask.iter().map(|flag| if *flag { 1 } else { 0 }));
             self.mask_offsets.push((mask_start, delta.mask.len()));
-
             let payload_start = self.payload_pool.len();
             self.payload_pool.extend(&delta.payload);
             self.payload_offsets
                 .push((payload_start, delta.payload.len()));
-
             self.delta_ids.push(delta.delta_id);
             self.page_ids.push(delta.page_id);
             self.epochs.push(delta.epoch);
@@ -80,13 +67,8 @@ impl ColumnarDeltaBatch {
             self.sources.push(delta.source);
             self.metadata.push(delta.intent_metadata);
             self.count += 1;
-        }
-    }
-
     pub fn to_vec(&self) -> Vec<Delta> {
         self.iter().collect()
-    }
-
     pub fn filter_epoch_eq(&self, epoch: Epoch) -> Vec<usize> {
         let mut matches = Vec::new();
         let words = self.epoch_words();
@@ -104,47 +86,18 @@ impl ColumnarDeltaBatch {
                     if (lane_mask >> lane) & 1 == 1 {
                         matches.push(idx + lane);
                     }
-                }
-            }
             idx += LANES;
-        }
         for (offset, value) in words[idx..].iter().enumerate() {
             if *value == epoch.0 {
                 matches.push(idx + offset);
-            }
-        }
         matches
-    }
-
     pub fn scan_page_id(&self, target: PageID) -> Vec<usize> {
-        let mut matches = Vec::new();
         let ids = self.page_words();
-        let mut idx = 0usize;
         const LANES: usize = 4;
         while idx + LANES <= ids.len() {
-            let mut lane_mask = 0u8;
-            for lane in 0..LANES {
                 if ids[idx + lane] == target.0 {
-                    lane_mask |= 1 << lane;
-                }
-            }
-            if lane_mask != 0 {
-                for lane in 0..LANES {
-                    if (lane_mask >> lane) & 1 == 1 {
-                        matches.push(idx + lane);
-                    }
-                }
-            }
-            idx += LANES;
-        }
         for (offset, value) in ids[idx..].iter().enumerate() {
             if *value == target.0 {
-                matches.push(idx + offset);
-            }
-        }
-        matches
-    }
-
     pub fn apply_to_pages(
         &self,
         pages: &mut HashMap<PageID, Page>,
@@ -155,19 +108,11 @@ impl ColumnarDeltaBatch {
                 page.apply_delta(&delta)?;
             } else {
                 return Err(PageError::PageNotFound(delta.page_id));
-            }
-        }
         Ok(())
-    }
-
     pub fn delta_at(&self, idx: usize) -> Option<Delta> {
         (idx < self.count).then(|| self.build_delta(idx))
-    }
-
     pub fn page_id_at(&self, idx: usize) -> Option<PageID> {
         self.page_ids.get(idx).copied()
-    }
-
     fn build_delta(&self, idx: usize) -> Delta {
         let (mask_start, mask_len) = self.mask_offsets[idx];
         let mask = self.mask_pool[mask_start..mask_start + mask_len]
@@ -186,39 +131,23 @@ impl ColumnarDeltaBatch {
             timestamp: self.timestamps[idx],
             source: self.sources[idx].clone(),
             intent_metadata: self.metadata[idx].clone(),
-        }
-    }
-
     fn epoch_words(&self) -> &[u32] {
         unsafe { std::slice::from_raw_parts(self.epochs.as_ptr() as *const u32, self.epochs.len()) }
-    }
-
     fn page_words(&self) -> &[u64] {
         unsafe { std::slice::from_raw_parts(self.page_ids.as_ptr() as *const u64, self.page_ids.len()) }
-    }
-}
-
 impl Default for ColumnarDeltaBatch {
     fn default() -> Self {
         Self::new()
-    }
-}
-
 impl From<Vec<Delta>> for ColumnarDeltaBatch {
     fn from(value: Vec<Delta>) -> Self {
         Self::from_rows(value)
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::ColumnarDeltaBatch;
-    use crate::page::{Delta, DeltaID, Page, PageID, PageLocation, Source};
+    use crate::types::{Delta, DeltaID, Page, PageID, PageLocation, Source};
     use crate::types::Epoch;
     use std::collections::HashMap;
-
     fn make_delta(id: u64, page: u64, epoch: u32, payload: &[u8]) -> Delta {
-        Delta {
             delta_id: DeltaID(id),
             page_id: PageID(page),
             epoch: Epoch(epoch),
@@ -228,9 +157,6 @@ mod tests {
             timestamp: id,
             source: Source(format!("src-{id}")),
             intent_metadata: None,
-        }
-    }
-
     #[test]
     fn test_roundtrip() {
         let deltas = vec![
@@ -243,24 +169,15 @@ mod tests {
         let back = batch.to_vec();
         assert_eq!(back[0].delta_id.0, 1);
         assert_eq!(back[1].payload, b"def");
-    }
-
-    #[test]
     fn test_epoch_filter() {
-        let deltas = vec![
             make_delta(1, 1, 1, b"a"),
             make_delta(2, 2, 2, b"b"),
             make_delta(3, 3, 1, b"c"),
-        ];
         let batch = ColumnarDeltaBatch::from_rows(deltas);
         let matches = batch.filter_epoch_eq(Epoch(1));
         assert_eq!(matches, vec![0, 2]);
-    }
-
-    #[test]
     fn test_apply_to_pages() {
         let deltas = vec![make_delta(1, 1, 1, b"\x01\x02"), make_delta(2, 2, 2, b"\xFF\xEE")];
-        let batch = ColumnarDeltaBatch::from_rows(deltas);
         let mut pages = HashMap::new();
         let mut page1 = Page::new(PageID(1), 2, PageLocation::Cpu).unwrap();
         let mut page2 = Page::new(PageID(2), 2, PageLocation::Cpu).unwrap();
@@ -271,6 +188,3 @@ mod tests {
         page2 = pages.remove(&PageID(2)).unwrap();
         assert_eq!(page1.data_slice(), b"\x01\x02");
         assert_eq!(page2.data_slice(), b"\xFF\xEE");
-    }
-}
-use crate::page::page::Page;

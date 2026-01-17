@@ -1,4 +1,4 @@
-use crate::page::{Delta, Page};
+use crate::types::{Delta, Page};
 
 pub fn apply_log(pages: &mut [Page], deltas: &[Delta]) {
     for delta in deltas {

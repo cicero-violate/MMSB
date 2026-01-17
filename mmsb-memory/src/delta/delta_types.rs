@@ -1,2 +1,2 @@
-use super::page_types::PageID;
+use crate::types::PageID;
 // All types now in crate::types
