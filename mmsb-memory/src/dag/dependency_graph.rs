@@ -1,7 +1,6 @@
 use crate::types::PageID;
 use crate::dag::{EdgeType, StructuralOp};
 use std::collections::{HashMap, HashSet};
-use sha2::{Digest, Sha256};
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct DependencyGraph {

@@ -19,3 +19,5 @@ pub fn validate_delta(delta: &Delta) -> Result<(), DeltaError> {
 
     Ok(())
 }
+use crate::delta::delta::Delta;
+use crate::types::DeltaError;

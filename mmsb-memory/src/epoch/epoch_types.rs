@@ -1,5 +1,5 @@
 use std::sync::atomic::{AtomicU32, Ordering};
-use std::sync::atomic::{AtomicU64, Ordering};
+use std::sync::atomic::AtomicU64;
 use crate::types::Epoch;
 
 /// Thread-safe epoch cell reused inside the Rust Page structure.

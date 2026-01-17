@@ -37,3 +37,4 @@ impl StructuralOp {
         matches!(self, StructuralOp::RemoveEdge { .. })
     }
 }
+use crate::types::EdgeType;

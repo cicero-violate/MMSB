@@ -143,3 +143,4 @@ mod tests {
         assert_eq!(loaded.edges().len(), 2);
     }
 }
+use crate::types::EdgeType;

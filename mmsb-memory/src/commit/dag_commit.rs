@@ -4,8 +4,7 @@ use crate::dag::{
 };
 use super::shadow_graph::ShadowPageGraph;
 use crate::dag::dag_log::{append_structural_record, default_structural_log_path};
-use crate::proof::{MmsbStructuralAdmissionProof, STRUCTURAL_PROOF_VERSION};
-use mmsb_judgment::JudgmentToken;
+use mmsb_proof::{MmsbStructuralAdmissionProof, STRUCTURAL_PROOF_VERSION};
 
 pub fn build_dependency_graph(ops: &[StructuralOp]) -> DependencyGraph {
     let mut dag = DependencyGraph::new();
@@ -76,7 +75,6 @@ pub fn commit_structural_delta(
 }
 
 fn compute_ops_hash_local(ops: &[StructuralOp]) -> String {
-    use sha2::{Digest, Sha256};
     let mut hasher = Sha256::new();
     for op in ops {
         let s = format!("{:?}", op);
@@ -160,3 +158,5 @@ mod tests {
         assert!(matches!(err, DagCommitError::ProofNotApproved));
     }
 }
+use crate::types::EdgeType;
+use crate::structural::structural_types::StructuralOp;

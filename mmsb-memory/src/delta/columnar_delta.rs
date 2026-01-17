@@ -273,3 +273,4 @@ mod tests {
         assert_eq!(page2.data_slice(), b"\xFF\xEE");
     }
 }
+use crate::page::page::Page;

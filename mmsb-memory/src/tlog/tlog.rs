@@ -1,8 +1,6 @@
-use mmsb_judgment::JudgmentToken;
 use crate::page::{Delta, DeltaID, Epoch, PageID, Source};
-use crate::proof::{EXECUTION_PROOF_VERSION, MmsbExecutionProof};
-use parking_lot::RwLock;
-use sha2::{Digest, Sha256};
+use mmsb_proof::{EXECUTION_PROOF_VERSION, MmsbExecutionProof};
+use std::sync::RwLock;
 use std::collections::VecDeque;
 use std::fs::{File, OpenOptions};
 use std::io::{BufReader, BufWriter, Read, Seek, SeekFrom, Write};
@@ -313,8 +311,7 @@ pub(crate) fn delta_hash(delta: &Delta) -> String {
 mod tests {
     use super::{delta_hash, TransactionLog};
     use crate::page::{Delta, DeltaID, Epoch, PageID, Source};
-    use crate::proof::{EXECUTION_PROOF_VERSION, MmsbExecutionProof};
-    use mmsb_judgment::JudgmentToken;
+    use mmsb_proof::{EXECUTION_PROOF_VERSION, MmsbExecutionProof};
     use serde_json::json;
     use std::time::{SystemTime, UNIX_EPOCH};
 

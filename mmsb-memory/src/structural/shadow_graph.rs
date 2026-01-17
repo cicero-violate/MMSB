@@ -2,7 +2,7 @@ use super::edge_types::EdgeType;
 use super::structural_types::StructuralOp;
 use crate::dag::DependencyGraph;
 use crate::types::PageID;
-use parking_lot::RwLock;
+use std::sync::RwLock;
 use std::collections::{HashMap, HashSet};
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
@@ -68,3 +68,4 @@ impl ShadowPageGraph {
         seen
     }
 }
+use crate::types::EdgeType;

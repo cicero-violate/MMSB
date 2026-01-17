@@ -1,5 +1,5 @@
 use crate::dag::{DependencyGraph, StructuralOp, EdgeType};
-use crate::proof::MmsbStructuralAdmissionProof;
+use mmsb_proof::MmsbStructuralAdmissionProof;
 use crate::types::PageID;
 use std::fs::{File, OpenOptions};
 use std::io::{self, Read, Write, Seek, SeekFrom};
@@ -262,7 +262,7 @@ fn byte_to_edge_type(byte: u8) -> io::Result<EdgeType> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::proof::MmsbStructuralAdmissionProof;
+    use mmsb_proof::MmsbStructuralAdmissionProof;
     use crate::types::PageID;
     use std::env;
 

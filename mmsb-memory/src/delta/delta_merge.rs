@@ -158,3 +158,5 @@ pub fn merge_dense_simd(
         }
     }
 }
+use crate::delta::delta::Delta;
+use crate::types::DeltaError;

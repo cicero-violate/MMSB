@@ -1,5 +1,4 @@
 use super::tlog::TransactionLog;
-use crate::ffi_debug;
 use crate::page::{PageAllocator, PageSnapshotData, PageID, PageLocation};
 use std::fs::File;
 use std::io::{BufReader, BufWriter, Read, Write};

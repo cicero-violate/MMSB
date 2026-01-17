@@ -1,6 +1,5 @@
-use mmsb_judgment::JudgmentToken;
 use crate::page::{tlog, Delta, TransactionLog};
-use crate::proof::{ADMISSION_PROOF_VERSION, MmsbAdmissionProof, MmsbExecutionProof, EXECUTION_PROOF_VERSION};
+use mmsb_proof::{ADMISSION_PROOF_VERSION, MmsbAdmissionProof, MmsbExecutionProof, EXECUTION_PROOF_VERSION};
 use crate::dag::DependencyGraph;
 
 pub(crate) fn commit_delta(
@@ -46,8 +45,7 @@ pub(crate) fn commit_delta(
 mod tests {
     use super::commit_delta;
     use crate::page::{tlog, Delta, DeltaID, Epoch, PageID, Source, TransactionLog};
-    use crate::proof::{ADMISSION_PROOF_VERSION, EXECUTION_PROOF_VERSION, MmsbAdmissionProof, MmsbExecutionProof};
-    use mmsb_judgment::JudgmentToken;
+    use mmsb_proof::{ADMISSION_PROOF_VERSION, EXECUTION_PROOF_VERSION, MmsbAdmissionProof, MmsbExecutionProof};
     use serde_json::json;
     use std::time::{SystemTime, UNIX_EPOCH};
 

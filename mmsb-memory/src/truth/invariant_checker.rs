@@ -2,7 +2,7 @@ use crate::dag::{DagValidator, DependencyGraph};
 use crate::outcome::dag_validator::DagValidator;
 use crate::dag::dependency_graph::DependencyGraph;
 use crate::types::{PageID, PageError, Epoch};
-use parking_lot::RwLock;
+use std::sync::RwLock;
 use std::collections::HashMap;
 
 pub trait Invariant: Send + Sync {
@@ -12,9 +12,7 @@ pub trait Invariant: Send + Sync {
 
 #[derive(Clone)]
 pub struct InvariantContext<'a> {
-    pub allocator: Option<&'a PageAllocator>,
     pub graph: Option<&'a DependencyGraph>,
-    pub registry: Option<&'a DeviceBufferRegistry>,
 }
 
 #[derive(Debug, Clone)]
