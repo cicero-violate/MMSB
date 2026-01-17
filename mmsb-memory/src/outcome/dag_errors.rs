@@ -1,4 +1,4 @@
-use crate::page::PageID;
+use mmsb_primitives::PageID;
 use thiserror::Error;
 
 #[derive(Debug, Error)]
