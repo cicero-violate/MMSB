@@ -309,11 +309,28 @@ dependencies = [
 ]
 
 [[package]]
-name = "mmsb-intent"
+name = "mmsb-events"
 version = "0.1.0"
 dependencies = [
  "mmsb-proof",
- "mmsb-service",
+ "serde",
+]
+
+[[package]]
+name = "mmsb-executor"
+version = "0.1.0"
+dependencies = [
+ "mmsb-events",
+ "mmsb-proof",
+ "serde",
+]
+
+[[package]]
+name = "mmsb-intent"
+version = "0.1.0"
+dependencies = [
+ "mmsb-events",
+ "mmsb-proof",
  "serde",
 ]
 
@@ -323,8 +340,9 @@ version = "0.1.0"
 dependencies = [
  "chrono",
  "mmsb-authenticate",
+ "mmsb-events",
+ "mmsb-policy",
  "mmsb-proof",
- "mmsb-service",
  "rand",
  "serde",
  "serde_json",
@@ -333,15 +351,26 @@ dependencies = [
 ]
 
 [[package]]
+name = "mmsb-memory"
+version = "0.1.0"
+dependencies = [
+ "mmsb-authenticate",
+ "mmsb-events",
+ "mmsb-proof",
+ "mmsb-storage",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "mmsb-policy"
 version = "0.1.0"
 dependencies = [
- "glob",
+ "mmsb-events",
+ "mmsb-intent",
  "mmsb-proof",
- "mmsb-service",
  "serde",
  "serde_json",
- "thiserror",
 ]
 
 [[package]]
@@ -356,7 +385,7 @@ dependencies = [
 name = "mmsb-service"
 version = "0.1.0"
 dependencies = [
- "mmsb-proof",
+ "mmsb-events",
  "tokio",
 ]
 
@@ -365,7 +394,6 @@ name = "mmsb-storage"
 version = "0.1.0"
 dependencies = [
  "hex",
- "mmsb-proof",
  "serde",
  "serde_json",
 ]

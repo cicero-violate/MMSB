@@ -1,8 +1,8 @@
 [package]
 name = "mmsb-service"
 version = "0.1.0"
-edition = "2024"
+edition = "2021"
 
 [dependencies]
-mmsb-proof = { path = "../mmsb-proof" }
+mmsb-events = { path = "../mmsb-events" }
 tokio = { version = "1", features = ["sync", "rt"] }

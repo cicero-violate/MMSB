@@ -1,30 +1,29 @@
 //! MMSB Policy Module - implements PolicyStage trait
 
-use mmsb_proof::{
-    Hash, IntentCreated, IntentProof, PolicyCategory, PolicyEvaluated, PolicyProof, PolicyStage,
-    Proof, ProduceProof, RiskClass,
-};
-use mmsb_service::{EventBus, EventHandler, Module};
-
-use crate::{IntentClassifier, IntentMetadata};
+use mmsb_events::{EventSink, IntentCreated, PolicyEvaluated};
+use mmsb_proof::{Hash, IntentProof, PolicyCategory, PolicyProof, PolicyStage, Proof, ProduceProof, RiskClass};
 
 pub struct PolicyInput {
     pub intent_hash: Hash,
     pub intent_proof: IntentProof,
-    pub metadata: IntentMetadata,
 }
 
-pub struct PolicyModule {
-    event_bus: Option<EventBus>,
+pub struct PolicyModule<S: EventSink> {
+    sink: Option<S>,
     logical_time: u64,
 }
 
-impl PolicyModule {
+impl<S: EventSink> PolicyModule<S> {
     pub fn new() -> Self {
         Self {
-            event_bus: None,
+            sink: None,
             logical_time: 0,
         }
+    }
+
+    pub fn with_sink(mut self, sink: S) -> Self {
+        self.sink = Some(sink);
+        self
     }
 
     fn next_time(&mut self) -> u64 {
@@ -32,55 +31,47 @@ impl PolicyModule {
         self.logical_time
     }
 
-    fn classify_risk(metadata: &IntentMetadata) -> RiskClass {
-        // Simple risk classification based on metadata
-        if metadata.files_touched > 10 {
-            RiskClass::High
-        } else if metadata.diff_lines > 100 {
-            RiskClass::Medium
-        } else {
-            RiskClass::Low
-        }
+    fn classify_risk(_intent_hash: &Hash) -> RiskClass {
+        // Simple risk classification - in production, analyze intent content
+        RiskClass::Low
     }
 
-    fn determine_category(metadata: &IntentMetadata) -> PolicyCategory {
-        let risk = Self::classify_risk(metadata);
+    fn determine_category(risk: RiskClass) -> PolicyCategory {
         match risk {
             RiskClass::Low => PolicyCategory::AutoApprove,
-            RiskClass::Medium | RiskClass::High | RiskClass::Critical => {
+            RiskClass::Medium => PolicyCategory::RequiresReview,
+            RiskClass::High
+            | RiskClass::Critical => {
                 PolicyCategory::RequiresReview
             }
         }
     }
 }
 
-impl Default for PolicyModule {
+impl<S: EventSink> Default for PolicyModule<S> {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl ProduceProof for PolicyModule {
+impl<S: EventSink> ProduceProof for PolicyModule<S> {
     type Input = PolicyInput;
     type Proof = PolicyProof;
 
     fn produce_proof(input: &Self::Input) -> Self::Proof {
-        let category = Self::determine_category(&input.metadata);
-        let risk_class = Self::classify_risk(&input.metadata);
+        let risk_class = Self::classify_risk(&input.intent_hash);
+        let category = Self::determine_category(risk_class.clone());
         PolicyProof::new(input.intent_proof.hash(), category, risk_class)
     }
 }
 
-impl PolicyStage for PolicyModule {}
+impl<S: EventSink> PolicyStage for PolicyModule<S> {}
 
-impl EventHandler<IntentCreated> for PolicyModule {
-    fn on_event(&mut self, event: IntentCreated) {
-        let metadata = IntentClassifier::classify("");
-
+impl<S: EventSink> PolicyModule<S> {
+    pub fn handle_intent_created(&mut self, event: IntentCreated) {
         let input = PolicyInput {
             intent_hash: event.intent_hash,
             intent_proof: event.intent_proof.clone(),
-            metadata,
         };
 
         let proof = Self::produce_proof(&input);
@@ -93,22 +84,8 @@ impl EventHandler<IntentCreated> for PolicyModule {
             policy_proof: proof,
         };
 
-        if let Some(bus) = &self.event_bus {
-            let _ = bus.emit(mmsb_proof::AnyEvent::PolicyEvaluated(policy_event));
+        if let Some(sink) = &self.sink {
+            sink.emit(mmsb_events::AnyEvent::PolicyEvaluated(policy_event));
         }
-    }
-}
-
-impl Module for PolicyModule {
-    fn name(&self) -> &str {
-        "mmsb-policy"
-    }
-
-    fn initialize(&mut self, bus: EventBus) {
-        self.event_bus = Some(bus);
-    }
-
-    fn shutdown(&mut self) {
-        self.event_bus = None;
     }
 }

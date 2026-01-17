@@ -19,5 +19,6 @@ sha2 = "0.10"
 uuid = { version = "1.8", features = ["v4"] }
 
 mmsb-proof = { path = "../mmsb-proof" }
-mmsb-service = { path = "../mmsb-service" }
+mmsb-events = { path = "../mmsb-events" }
+mmsb-policy = { path = "../mmsb-policy" }
 mmsb-authenticate = { path = "../mmsb-authenticate" }

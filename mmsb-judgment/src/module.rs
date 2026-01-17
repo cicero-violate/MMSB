@@ -3,11 +3,8 @@
 //! This module holds SOLE AUTHORITY in the MMSB system.
 //! It exercises explicit approval authority over execution.
 
-use mmsb_proof::{
-    Hash, JudgmentProof, JudgmentStage, PolicyEvaluated, PolicyProof, Proof, ProduceProof,
-    JudgmentApproved,
-};
-use mmsb_service::{EventBus, EventHandler, Module};
+use mmsb_events::{EventSink, JudgmentApproved, PolicyEvaluated};
+use mmsb_proof::{Hash, JudgmentProof, JudgmentStage, PolicyProof, Proof, ProduceProof};
 
 /// Input required to produce JudgmentProof
 pub struct JudgmentInput {
@@ -27,17 +24,22 @@ pub struct ExecutionPlan {
 /// 
 /// This module is the only component that can approve execution.
 /// It produces JudgmentProof (C) witnessing explicit approval.
-pub struct JudgmentModule {
-    event_bus: Option<EventBus>,
+pub struct JudgmentModule<S: EventSink> {
+    sink: Option<S>,
     logical_time: u64,
 }
 
-impl JudgmentModule {
+impl<S: EventSink> JudgmentModule<S> {
     pub fn new() -> Self {
         Self {
-            event_bus: None,
+            sink: None,
             logical_time: 0,
         }
+    }
+
+    pub fn with_sink(mut self, sink: S) -> Self {
+        self.sink = Some(sink);
+        self
     }
 
     fn next_time(&mut self) -> u64 {
@@ -69,13 +71,13 @@ impl JudgmentModule {
     }
 }
 
-impl Default for JudgmentModule {
+impl<S: EventSink> Default for JudgmentModule<S> {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl ProduceProof for JudgmentModule {
+impl<S: EventSink> ProduceProof for JudgmentModule<S> {
     type Input = JudgmentInput;
     type Proof = JudgmentProof;
 
@@ -98,10 +100,10 @@ impl ProduceProof for JudgmentModule {
     }
 }
 
-impl JudgmentStage for JudgmentModule {}
+impl<S: EventSink> JudgmentStage for JudgmentModule<S> {}
 
-impl EventHandler<PolicyEvaluated> for JudgmentModule {
-    fn on_event(&mut self, event: PolicyEvaluated) {
+impl<S: EventSink> JudgmentModule<S> {
+    pub fn handle_policy_evaluated(&mut self, event: PolicyEvaluated) {
         let input = JudgmentInput {
             intent_hash: event.intent_hash,
             policy_proof: event.policy_proof.clone(),
@@ -119,23 +121,9 @@ impl EventHandler<PolicyEvaluated> for JudgmentModule {
                 judgment_proof,
             };
 
-            if let Some(bus) = &self.event_bus {
-                let _ = bus.emit(mmsb_proof::AnyEvent::JudgmentApproved(judgment_event));
+            if let Some(sink) = &self.sink {
+                sink.emit(mmsb_events::AnyEvent::JudgmentApproved(judgment_event));
             }
         }
-    }
-}
-
-impl Module for JudgmentModule {
-    fn name(&self) -> &str {
-        "mmsb-judgment"
-    }
-
-    fn initialize(&mut self, bus: EventBus) {
-        self.event_bus = Some(bus);
-    }
-
-    fn shutdown(&mut self) {
-        self.event_bus = None;
     }
 }

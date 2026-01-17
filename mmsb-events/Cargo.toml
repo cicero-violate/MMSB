@@ -1,0 +1,13 @@
+[package]
+name = "mmsb-events"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "mmsb_events"
+path = "src/lib.rs"
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+
+mmsb-proof = { path = "../mmsb-proof" }

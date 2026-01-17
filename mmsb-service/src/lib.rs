@@ -1,20 +1,10 @@
 //! MMSB Service Runtime
 //!
-//! Provides event bus, module loader, and replay mechanism.
+//! Provides event bus and module wiring.
 //! This runtime has ZERO authority - it only routes events.
 
-use mmsb_proof::{AnyEvent, Event};
+use mmsb_events::{AnyEvent, EventSink, Module};
 use tokio::sync::broadcast;
-
-/// Event handler trait - modules implement this to react to events
-pub trait EventHandler<E: Event>: Send + Sync {
-    fn on_event(&mut self, event: E);
-}
-
-/// Event emitter trait - modules use this to emit events
-pub trait EmitEvent<E: Event> {
-    fn emit(&self, event: E);
-}
 
 /// Event bus for routing events between modules
 #[derive(Clone)]
@@ -45,16 +35,10 @@ impl EventBus {
     }
 }
 
-/// Module loader trait - modules implement this for initialization
-pub trait Module: Send + Sync {
-    /// Module name for identification
-    fn name(&self) -> &str;
-    
-    /// Initialize the module with the event bus
-    fn initialize(&mut self, bus: EventBus);
-    
-    /// Shutdown the module gracefully
-    fn shutdown(&mut self);
+impl EventSink for EventBus {
+    fn emit(&self, event: AnyEvent) {
+        let _ = self.sender.send(event);
+    }
 }
 
 /// MMSB Service Runtime
@@ -79,7 +63,7 @@ impl Runtime {
     
     /// Register a module with the runtime
     pub fn register_module(&mut self, mut module: Box<dyn Module>) {
-        module.initialize(self.event_bus.clone());
+        module.attach(Box::new(self.event_bus.clone()));
         self.modules.push(module);
     }
     
@@ -91,57 +75,12 @@ impl Runtime {
     /// Shutdown all modules
     pub fn shutdown(&mut self) {
         for module in &mut self.modules {
-            module.shutdown();
+            module.detach();
         }
     }
 }
 
 impl Default for Runtime {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-/// Replay engine for reconstructing state from events
-pub struct ReplayEngine {
-    events: Vec<AnyEvent>,
-}
-
-impl ReplayEngine {
-    /// Create a new replay engine
-    pub fn new() -> Self {
-        Self {
-            events: Vec::new(),
-        }
-    }
-    
-    /// Add an event to the replay log
-    pub fn record(&mut self, event: AnyEvent) {
-        self.events.push(event);
-    }
-    
-    /// Replay all events through the provided event bus
-    pub fn replay(&self, bus: &EventBus) -> Result<usize, broadcast::error::SendError<AnyEvent>> {
-        let mut count = 0;
-        for event in &self.events {
-            bus.emit(event.clone())?;
-            count += 1;
-        }
-        Ok(count)
-    }
-    
-    /// Get the number of recorded events
-    pub fn event_count(&self) -> usize {
-        self.events.len()
-    }
-    
-    /// Clear all recorded events
-    pub fn clear(&mut self) {
-        self.events.clear();
-    }
-}
-
-impl Default for ReplayEngine {
     fn default() -> Self {
         Self::new()
     }

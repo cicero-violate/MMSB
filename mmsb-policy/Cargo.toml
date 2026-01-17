@@ -14,9 +14,9 @@ test-helpers = []
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
-thiserror = "1.0"
-glob = "0.3"
+
 mmsb-proof = { path = "../mmsb-proof" }
-mmsb-service = { path = "../mmsb-service" }
+mmsb-intent = { path = "../mmsb-intent" }
+mmsb-events = { path = "../mmsb-events" }
 
 [dev-dependencies]

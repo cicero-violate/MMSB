@@ -1,0 +1,1 @@
+../docs/MMSB-Canonical-Module-dependency.md
