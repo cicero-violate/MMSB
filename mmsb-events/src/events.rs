@@ -5,6 +5,7 @@
 
 use serde::{Deserialize, Serialize};
 use std::fmt;
+use mmsb_primitives::{Hash, PageID, Timestamp, EventId};
 
 use mmsb_proof::{
     AdmissionProof, CommitProof, Hash, IntentProof, JudgmentProof,
