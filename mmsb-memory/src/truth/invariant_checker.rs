@@ -1,6 +1,6 @@
 use crate::dag::DependencyGraph;
 use crate::outcome::DagValidator;
-use crate::device::DeviceRegistry;
+// use crate::device::DeviceRegistry;
 use crate::page::{PageAllocator, PageError};
 use mmsb_primitives::PageID;
 use crate::epoch::Epoch;
