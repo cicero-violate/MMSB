@@ -82,7 +82,6 @@ impl DependencyGraph {
         self.version += 1;
     }
 
-
     pub(crate) fn apply_ops(&mut self, ops: &[StructuralOp]) {
         for op in ops {
             match op {
