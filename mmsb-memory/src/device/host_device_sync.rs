@@ -1,4 +1,5 @@
 use crate::page::PageID;
+use mmsb_primitives::PageID;
 
 #[derive(Debug, Default)]
 pub struct HostDeviceSync {
