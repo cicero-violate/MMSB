@@ -13,10 +13,10 @@ use mmsb_proof::{
 };
 
 /// Event ID - content-addressed unique identifier
-pub type EventId = Hash;
+// pub type EventId = Hash;
 
 /// Logical timestamp (not wall-clock authority)
-pub type Timestamp = u64;
+// pub type Timestamp = u64;
 
 /// Marker trait for all events in MMSB
 pub trait Event: fmt::Debug + Clone + Send + Sync {
