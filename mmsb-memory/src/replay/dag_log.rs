@@ -29,7 +29,7 @@ pub fn append_structural_record(
                 file.write_all(&[0])?;
                 write_u64(&mut file, from.0)?;
                 write_u64(&mut file, to.0)?;
-                write_u8(&mut file, *edge_type as u8)?;  // Fixed cast
+                write_u8(&mut file, *edge_type as u8)?;  // Fixed: deref enum
             }
             StructuralOp::RemoveEdge { from, to } => {
                 file.write_all(&[1])?;
@@ -124,13 +124,14 @@ pub fn replay_structural_log(path: impl AsRef<Path>) -> io::Result<DependencyGra
                     let from = PageID(read_u64(&mut file)?);
                     let to = PageID(read_u64(&mut file)?);
                     let edge_type_raw = read_u8(&mut file)?;
-                    let edge_type = EdgeType::try_from(edge_type_raw).unwrap_or(EdgeType::Data); // Add try_from if needed
-                    dag.add_edge(from, to, edge_type);  // Assume method exists or add it
+                    let edge_type = EdgeType::try_from(edge_type_raw)
+                        .unwrap_or(EdgeType::Data); // Add EdgeType::try_from if needed
+                    dag.add_edge(from, to, edge_type);  // Implement this in DependencyGraph
                 }
                 1 => {
                     let from = PageID(read_u64(&mut file)?);
                     let to = PageID(read_u64(&mut file)?);
-                    dag.remove_edge(from, to);  // Assume method exists or add it
+                    dag.remove_edge(from, to);  // Implement this in DependencyGraph
                 }
                 other => return Err(io::Error::new(
                     io::ErrorKind::InvalidData,
