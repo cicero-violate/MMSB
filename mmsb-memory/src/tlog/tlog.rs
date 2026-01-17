@@ -6,7 +6,7 @@
 use crate::delta::{Delta, DeltaID, Source};
 use crate::epoch::Epoch;
 use crate::page::PageID;
-use crate::proofs::AdmissionProof;  // Add this import
+use mmsb_proof::AdmissionProof;  // ← CORRECT (from the shared proof crate)
 use parking_lot::RwLock;
 use sha2::{Digest, Sha256};
 use std::collections::VecDeque;
