@@ -8,6 +8,7 @@ name = "mmsb_events"
 path = "src/lib.rs"
 
 [dependencies]
+mmsb-primitives = { path = "../mmsb-primitives" }
 serde = { version = "1.0", features = ["derive"] }
 
 mmsb-proof = { path = "../mmsb-proof" }
