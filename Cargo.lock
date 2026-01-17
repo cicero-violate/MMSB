@@ -358,8 +358,10 @@ dependencies = [
  "mmsb-events",
  "mmsb-proof",
  "mmsb-storage",
+ "parking_lot",
  "serde",
  "serde_json",
+ "thiserror",
 ]
 
 [[package]]
