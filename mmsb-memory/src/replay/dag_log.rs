@@ -1,7 +1,7 @@
 use crate::dag::{DependencyGraph, EdgeType};
 use crate::structural::StructuralOp;
 use crate::proofs::MmsbStructuralAdmissionProof;
-use crate::page::PageID;
+use mmsb_primitives::PageID;
 use std::fs::{File, OpenOptions};
 use std::io::{self, Read, Write, Seek, SeekFrom};
 use std::path::{Path, PathBuf};
