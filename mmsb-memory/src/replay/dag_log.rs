@@ -1,4 +1,5 @@
-use crate::dag::{DependencyGraph, StructuralOp, EdgeType};
+use crate::dag::{DependencyGraph, EdgeType};
+use crate::structural::StructuralOp;
 use crate::proofs::MmsbStructuralAdmissionProof;
 use crate::page::PageID;
 use std::fs::{File, OpenOptions};
@@ -114,7 +115,7 @@ pub fn replay_structural_log(path: impl AsRef<Path>) -> io::Result<DependencyGra
         all_ops.extend(ops);
     }
 
-    Ok(crate::dag::build_dependency_graph(&all_ops))
+    Ok(crate::commit::build_dependency_graph(&all_ops))
 }
 
 pub fn default_structural_log_path() -> io::Result<PathBuf> {

@@ -1,12 +1,13 @@
 use super::throughput_engine::ThroughputEngine;
-use crate::dag::{DagValidator, DependencyGraph};
+use crate::dag::DependencyGraph;
+use crate::outcome::DagValidator;
 use mmsb_judgment::JudgmentToken;
 use crate::delta::Delta;
 use crate::page::PageError;
 use crate::tlog::TransactionLog;
 use crate::commit::commit_delta;
 use crate::proofs::{MmsbAdmissionProof, MmsbExecutionProof, ADMISSION_PROOF_VERSION, EXECUTION_PROOF_VERSION};
-use crate::page::MemoryPressureHandler;
+use crate::epoch::MemoryPressureHandler;
 use std::sync::Arc;
 use std::time::{Duration, Instant};
 

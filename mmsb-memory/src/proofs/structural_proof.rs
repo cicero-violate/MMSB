@@ -1,5 +1,5 @@
 use sha2::{Digest, Sha256};
-use crate::dag::StructuralOp;
+use crate::structural::StructuralOp;
 
 pub const STRUCTURAL_PROOF_VERSION: u32 = 1;
 

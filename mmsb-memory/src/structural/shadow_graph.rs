@@ -1,4 +1,4 @@
-use super::edge_types::EdgeType;
+use crate::dag::edge_types::EdgeType;
 use super::structural_types::StructuralOp;
 use crate::dag::DependencyGraph;
 use crate::page::PageID;

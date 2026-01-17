@@ -1,26 +1,8 @@
-pub(crate) mod cycle_detection;
 pub mod edge_types;
-pub(crate) mod graph_validator;
-pub mod structural_types;
-pub mod dag_errors;
 pub mod dependency_graph;
-pub mod dag_commit;
-pub mod dag_log;
+pub mod graph_trait;
 pub mod dag_snapshot;
-pub mod dag_validator;
-pub(crate) mod shadow_graph;
-pub(crate) mod shadow_graph_mod;
-pub(crate) mod shadow_graph_traversal;
 
-pub(crate) use cycle_detection::has_cycle;
 pub use edge_types::EdgeType;
-pub use graph_validator::GraphValidationReport;
-pub(crate) use graph_validator::GraphValidator;
-pub use structural_types::StructuralOp;
-pub use dag_errors::DagCommitError;
 pub use dependency_graph::DependencyGraph;
-pub use dag_commit::commit_structural_delta;
-pub use dag_commit::build_dependency_graph;
-pub use dag_log::{append_structural_record, replay_structural_log};
 pub use dag_snapshot::{write_dag_snapshot, load_dag_snapshot};
-pub use dag_validator::DagValidator;

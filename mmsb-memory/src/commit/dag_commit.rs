@@ -1,9 +1,8 @@
-use crate::dag::{
-    DagCommitError, DependencyGraph, StructuralOp,
-    has_cycle, GraphValidator,
-};
-use super::shadow_graph::ShadowPageGraph;
-use crate::dag::dag_log::{append_structural_record, default_structural_log_path};
+use crate::dag::DependencyGraph;
+use crate::structural::{StructuralOp, has_cycle, GraphValidator};
+use crate::outcome::DagCommitError;
+use crate::structural::shadow_graph::ShadowPageGraph;
+use crate::replay::dag_log::{append_structural_record, default_structural_log_path};
 use crate::proofs::{MmsbStructuralAdmissionProof, STRUCTURAL_PROOF_VERSION};
 use mmsb_judgment::JudgmentToken;
 

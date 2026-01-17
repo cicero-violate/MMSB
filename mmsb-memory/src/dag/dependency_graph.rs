@@ -1,5 +1,6 @@
 use crate::page::PageID;
-use crate::dag::{EdgeType, StructuralOp};
+use crate::dag::EdgeType;
+use crate::structural::StructuralOp;
 use std::collections::{HashMap, HashSet};
 use sha2::{Digest, Sha256};
 

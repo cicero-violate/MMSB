@@ -67,7 +67,7 @@ pub fn load_dag_snapshot(path: impl AsRef<Path>) -> io::Result<DependencyGraph> 
     let edge_count = u64::from_le_bytes(edge_count_bytes);
 
     use crate::page::PageID;
-    use crate::dag::StructuralOp;
+    use crate::structural::StructuralOp;
     let mut ops = Vec::new();
 
     for _ in 0..edge_count {
@@ -86,7 +86,7 @@ pub fn load_dag_snapshot(path: impl AsRef<Path>) -> io::Result<DependencyGraph> 
         ops.push(StructuralOp::AddEdge { from, to, edge_type });
     }
 
-    Ok(crate::dag::build_dependency_graph(&ops))
+    Ok(crate::commit::build_dependency_graph(&ops))
 }
 
 fn edge_type_to_byte(edge_type: crate::dag::EdgeType) -> u8 {

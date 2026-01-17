@@ -1,5 +1,5 @@
-use super::dependency_graph::DependencyGraph;
-use super::graph_validator::GraphValidationReport;
+use crate::dag::DependencyGraph;
+use crate::structural::GraphValidationReport;
 use crate::page::PageID;
 use std::collections::{HashMap, HashSet};
 use std::time::Instant;

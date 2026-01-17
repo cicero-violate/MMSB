@@ -1,5 +1,5 @@
 pub mod replay_validator;
-pub mod integrity_checker;
+pub mod dag_log;
 
 pub use replay_validator::ReplayValidator;
-pub use integrity_checker::{DeltaIntegrityChecker, IntegrityReport, IntegrityViolation};
+pub use dag_log::{append_structural_record, replay_structural_log};

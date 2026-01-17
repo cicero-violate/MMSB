@@ -1,4 +1,4 @@
-use super::shadow_graph::ShadowPageGraph;
+use crate::structural::shadow_graph::ShadowPageGraph;
 use crate::page::PageID;
 use std::collections::HashMap;
 
