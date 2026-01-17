@@ -110,12 +110,12 @@ This is **applying the rules of the world**.
 
 | Aspect                 | Structural | State |
 | ---------------------- | ---------- | ----- |
-| Mutates DAG            | ✅          | ❌     |
-| Mutates Page Data      | ❌          | ✅     |
-| Uses ShadowGraph       | ✅          | ❌     |
-| Uses Propagation       | ❌          | ✅     |
-| Requires Judgment      | ✅          | ✅     |
-| Triggers Recalculation | ❌          | ✅     |
+| Mutates DAG            | ✅         | ❌    |
+| Mutates Page Data      | ❌         | ✅    |
+| Uses ShadowGraph       | ✅         | ❌    |
+| Uses Propagation       | ❌         | ✅    |
+| Requires Judgment      | ✅         | ✅    |
+| Triggers Recalculation | ❌         | ✅    |
 
 ---
 
