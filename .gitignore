@@ -18,7 +18,7 @@ tools/mmsb-analyzer/src/.julia-depot/
 *.d
 *.pdb
 *.o
-*.docs
+/docs/
 
 
 # Editor / OS garbage
