@@ -356,11 +356,13 @@ version = "0.1.0"
 dependencies = [
  "mmsb-authenticate",
  "mmsb-events",
+ "mmsb-judgment",
  "mmsb-proof",
  "mmsb-storage",
  "parking_lot",
  "serde",
  "serde_json",
+ "sha2",
  "thiserror",
 ]
 

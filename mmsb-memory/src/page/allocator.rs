@@ -1,6 +1,6 @@
 use crate::physical::AllocatorStats;
-use crate::types::{PageError, PageID, PageLocation};
-use crate::page::{Page, Epoch};
+use crate::page::{PageError, PageID, PageLocation, Page};
+use crate::epoch::Epoch;
 use parking_lot::Mutex;
 use std::collections::HashMap;
 use std::ffi::c_void;
