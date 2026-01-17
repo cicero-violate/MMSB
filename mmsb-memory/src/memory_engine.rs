@@ -3,18 +3,6 @@
 //! Authority: Truth ownership only
 //! Produces: AdmissionProof (D), CommitProof (E), OutcomeProof (F)
 //! Consumes: JudgmentProof (C) — via event or minimal witness
-//!
-//! The MemoryEngine is the SOLE TRUTH AUTHORITY in MMSB.
-//! It owns canonical time (epochs), structural invariants, mutation semantics,
-//! replay protection, and the dependency graph (DAG).
-//!
-//! It does NOT know about:
-//! - Execution runtime details
-//! - Hardware allocation details (only logical page management)
-//! - Scheduling / propagation
-//!
-//! Proof Chain:
-//! C (JudgmentProof) → D (AdmissionProof) → E (CommitProof) → F (OutcomeProof)
 
 use crate::dag::DependencyGraph;
 use crate::delta::Delta;
@@ -53,8 +41,12 @@ pub enum MemoryEngineError {
 
     #[error("Outcome failed: {0}")]
     Outcome(#[from] OutcomeError),
+
+    #[error("Delta not found for hash")]
+    DeltaNotFound,
 }
 
+/// Admission-specific errors
 #[derive(Debug, thiserror::Error)]
 pub enum AdmissionError {
     #[error("Invalid JudgmentProof")]
@@ -65,12 +57,14 @@ pub enum AdmissionError {
     AlreadyAdmitted,
 }
 
+/// Commit-specific errors
 #[derive(Debug, thiserror::Error)]
 pub enum CommitError {
     #[error("Failed to write to transaction log: {0}")]
     TlogWrite(#[source] std::io::Error),
 }
 
+/// Outcome-specific errors
 #[derive(Debug, thiserror::Error)]
 pub enum OutcomeError {
     #[error("Cycle detected in dependency graph")]
@@ -79,24 +73,17 @@ pub enum OutcomeError {
 
 /// Canonical Memory Engine — owns truth and produces proofs D, E, F
 pub struct MemoryEngine {
-    /// Logical page allocator (interface level, not physical)
     allocator: Arc<PageAllocator>,
-
-    /// Canonical dependency graph (structural truth)
     dag: Arc<RwLock<DependencyGraph>>,
-
-    /// Append-only transaction log
     tlog: Arc<RwLock<TransactionLog>>,
-
-    /// Current canonical epoch
     epoch: Arc<EpochCell>,
-
-    /// Replay protection — hashes of already admitted judgments
     admitted: Arc<RwLock<HashSet<Hash>>>,
+
+    // Simple counter for deterministic nonce (replace with rand later if needed)
+    nonce_counter: std::sync::atomic::AtomicU64,
 }
 
 impl MemoryEngine {
-    /// Creates a new MemoryEngine instance
     pub fn new(config: MemoryEngineConfig) -> Result<Self, MemoryEngineError> {
         let allocator = Arc::new(PageAllocator::new(PageAllocatorConfig {
             default_location: config.default_location,
@@ -117,6 +104,7 @@ impl MemoryEngine {
             tlog,
             epoch,
             admitted,
+            nonce_counter: std::sync::atomic::AtomicU64::new(0),
         })
     }
 
@@ -125,7 +113,6 @@ impl MemoryEngine {
     // ────────────────────────────────────────────────────────────────────────────
 
     fn admit_execution(&self, judgment_proof: &JudgmentProof) -> Result<AdmissionProof, AdmissionError> {
-        // Verify JudgmentProof (should delegate to mmsb-authenticate in full impl)
         if !self.verify_judgment_proof(judgment_proof) {
             return Err(AdmissionError::InvalidJudgmentProof);
         }
@@ -135,7 +122,6 @@ impl MemoryEngine {
             return Err(AdmissionError::StaleEpoch);
         }
 
-        // Replay protection
         let judgment_hash = judgment_proof.hash();
         let mut admitted = self.admitted.write();
         if admitted.contains(&judgment_hash) {
@@ -143,15 +129,17 @@ impl MemoryEngine {
         }
         admitted.insert(judgment_hash);
 
+        let nonce = self.nonce_counter.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+
         Ok(AdmissionProof {
             judgment_proof_hash: judgment_hash,
             epoch: current_epoch.0 as u64,
-            nonce: rand::random::<u64>(), // better nonce generation in production
+            nonce,
         })
     }
 
     fn verify_judgment_proof(&self, judgment_proof: &JudgmentProof) -> bool {
-        // Placeholder — in real implementation call mmsb-authenticate::VerifyProof
+        // Placeholder — delegate to mmsb-authenticate in production
         judgment_proof.approved && judgment_proof.hash() != Hash::default()
     }
 
@@ -164,12 +152,12 @@ impl MemoryEngine {
         admission_proof: &AdmissionProof,
         delta: &Delta,
     ) -> Result<CommitProof, CommitError> {
-        // Apply delta logically (real impl would coordinate with allocator)
-        // For now: simulate successful application
+        // Logical application of delta (real impl interacts with allocator)
 
         let new_epoch = self.epoch.increment();
 
-        // Record in transaction log (no JudgmentToken needed anymore)
+        // Append to tlog — adjust signature to match your real tlog.append
+        // (this assumes it takes admission_proof as witness instead of token)
         self.tlog
             .write()
             .append(admission_proof, delta.clone())
@@ -179,9 +167,9 @@ impl MemoryEngine {
 
         Ok(CommitProof {
             admission_proof_hash: admission_proof.hash(),
-            delta_hash: delta.hash(),
+            delta_hash: delta.hash(), // Now works after Delta::hash impl
             state_hash,
-            invariants_held: true, // real validation would happen here
+            invariants_held: true,
         })
     }
 
@@ -207,32 +195,26 @@ impl MemoryEngine {
     }
 
     // ────────────────────────────────────────────────────────────────────────────
-    // Main public interface — event driven entry point
+    // Main entry point — should be called by event handler
     // ────────────────────────────────────────────────────────────────────────────
 
-    /// Primary entry point: handle ExecutionRequested event
-    /// In full event-bus system this would be called by the event handler
     pub fn handle_execution_requested(
         &mut self,
         event: ExecutionRequested,
     ) -> Result<MemoryCommitted, MemoryEngineError> {
-        // Extract needed information from event
-        let judgment_proof = event.judgment_proof;
+        let judgment_proof = &event.judgment_proof;
 
-        // Stage D: Admission
-        let admission_proof = self.admit_execution(&judgment_proof)?;
+        let admission_proof = self.admit_execution(judgment_proof)?;
 
-        // TODO: In real system → fetch delta from storage using event.delta_hash
-        // For now: this is a placeholder — full version needs delta retrieval
-        let delta = Delta::placeholder_from_hash(event.delta_hash); // ← MUST BE REPLACED
+        // CRITICAL: Fetch real Delta from storage/tlog using some identifier
+        // Right now: placeholder panic — implement this!
+        let delta = self.fetch_delta_for_event(&event)
+            .ok_or(MemoryEngineError::DeltaNotFound)?;
 
-        // Stage E: Commit
         let commit_proof = self.commit_delta(&admission_proof, &delta)?;
 
-        // Stage F: Outcome
         let outcome_proof = self.record_outcome(&commit_proof)?;
 
-        // Create MemoryCommitted event
         let current_epoch = self.epoch.load();
         let event_id = self.compute_event_hash(&admission_proof, &commit_proof, &outcome_proof);
 
@@ -242,15 +224,19 @@ impl MemoryEngine {
                 .duration_since(UNIX_EPOCH)
                 .unwrap()
                 .as_secs(),
-            delta_hash: event.delta_hash,
+            delta_hash: delta.hash(), // Use computed hash
             epoch: current_epoch.0 as u64,
             snapshot_ref: None,
             admission_proof,
             commit_proof,
             outcome_proof,
-            // Crucial for executor propagation:
-            affected_page_ids: event.affected_page_ids.unwrap_or_default(),
         })
+    }
+
+    // TODO: Implement real delta fetching (from storage, tlog, etc.)
+    fn fetch_delta_for_event(&self, _event: &ExecutionRequested) -> Option<Delta> {
+        // Placeholder — replace with actual lookup
+        None
     }
 
     fn compute_event_hash(
@@ -267,14 +253,22 @@ impl MemoryEngine {
     }
 
     fn compute_state_hash(&self) -> Hash {
-        // Placeholder — real impl would hash relevant state (DAG + pages)
+        // Placeholder — hash real state in production
         [0u8; 32]
     }
 }
 
-// Placeholder until real delta retrieval is implemented
+// ────────────────────────────────────────────────────────────────────────────────
+// Temporary extension to Delta (move this to delta.rs when ready)
+// ────────────────────────────────────────────────────────────────────────────────
+
 impl Delta {
-    pub fn placeholder_from_hash(_hash: Hash) -> Self {
-        Delta::default() // ← REPLACE WITH ACTUAL STORAGE LOOKUP
+    pub fn hash(&self) -> Hash {
+        // Simple content-based hash — improve with proper serialization + salt
+        let mut hasher = Sha256::new();
+        hasher.update(&self.page_id.0.to_be_bytes());
+        hasher.update(&self.epoch.0.to_be_bytes());
+        hasher.update(&self.payload);
+        hasher.finalize().into()
     }
 }
