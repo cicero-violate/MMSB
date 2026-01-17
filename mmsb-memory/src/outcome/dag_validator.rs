@@ -1,6 +1,6 @@
 use crate::dag::DependencyGraph;
 use crate::structural::GraphValidationReport;
-use crate::page::PageID;
+use mmsb_primitives::PageID;
 use std::collections::{HashMap, HashSet};
 use std::time::Instant;
 
