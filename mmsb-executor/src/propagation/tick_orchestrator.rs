@@ -1,6 +1,5 @@
 use super::throughput_engine::ThroughputEngine;
 use crate::dag::{DagValidator, DependencyGraph};
-use mmsb_judgment::JudgmentToken;
 use crate::page::{commit_delta, Delta, PageError, TransactionLog};
 use crate::proof::{MmsbAdmissionProof, MmsbExecutionProof, ADMISSION_PROOF_VERSION, EXECUTION_PROOF_VERSION};
 use crate::types::{MemoryPressureHandler};
