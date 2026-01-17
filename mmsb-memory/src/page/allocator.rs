@@ -1,5 +1,6 @@
 use crate::physical::AllocatorStats;
-use crate::page::{PageError, PageID, PageLocation, Page};
+use crate::page::{PageError, PageLocation, Page};
+use mmsb_primitives::PageID;
 use crate::epoch::Epoch;
 use parking_lot::Mutex;
 use std::collections::HashMap;
