@@ -3,7 +3,6 @@
 //! Durable persistence layer for MMSB artifacts.
 //! ONLY mmsb-memory and mmsb-knowledge may write to storage.
 
-use mmsb_proof::Hash;
 use std::path::PathBuf;
 
 /// Storage error types
