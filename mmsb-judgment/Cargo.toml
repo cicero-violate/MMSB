@@ -17,3 +17,7 @@ serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 sha2 = "0.10"
 uuid = { version = "1.8", features = ["v4"] }
+
+mmsb-proof = { path = "../mmsb-proof" }
+mmsb-service = { path = "../mmsb-service" }
+mmsb-authenticate = { path = "../mmsb-authenticate" }

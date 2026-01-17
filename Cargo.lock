@@ -322,6 +322,9 @@ name = "mmsb-judgment"
 version = "0.1.0"
 dependencies = [
  "chrono",
+ "mmsb-authenticate",
+ "mmsb-proof",
+ "mmsb-service",
  "rand",
  "serde",
  "serde_json",
