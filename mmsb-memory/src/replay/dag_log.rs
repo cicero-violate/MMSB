@@ -1,4 +1,3 @@
-<DOCUMENT filename="dag_log.rs">
 use crate::dag::{DependencyGraph, EdgeType};
 use crate::structural::StructuralOp;
 use mmsb_primitives::PageID;
