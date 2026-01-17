@@ -1,26 +1,35 @@
 use super::throughput_engine::ThroughputEngine;
-use crate::dag::{DagValidator, DependencyGraph};
-use crate::page::{commit_delta, Delta, PageError, TransactionLog};
-use crate::proof::{MmsbAdmissionProof, MmsbExecutionProof, ADMISSION_PROOF_VERSION, EXECUTION_PROOF_VERSION};
-use crate::types::{MemoryPressureHandler};
+use mmsb_events::{Event, MemoryCommitted};  // Import from mmsb-events crate
 use std::sync::Arc;
 use std::time::{Duration, Instant};
+
+// Assuming MemoryPressureHandler is a substrate-only trait (hardware monitoring).
+// If it's semantic, move it to mmsb-memory and expose via events.
+pub trait MemoryPressureHandler: Send + Sync {
+    fn incremental_batch_pages(&self) -> usize;
+    fn run_gc(&self, budget_pages: usize) -> Option<GCMetrics>;
+}
+
+// Minimal GCMetrics (keep if needed; otherwise derive from events)
+#[derive(Debug, Clone)]
+pub struct GCMetrics {
+    pub reclaimed_pages: usize,
+    pub reclaimed_bytes: usize,
+    pub duration: Duration,
+}
 
 #[derive(Debug, Clone)]
 pub struct TickMetrics {
     pub propagation: Duration,
-    pub graph_validation: Duration,
     pub gc: Duration,
     pub total: Duration,
     pub throughput: f64,
     pub gc_invoked: bool,
-    pub graph_has_cycle: bool,
-    pub processed: usize,
+    pub processed: usize,  // Now: number of affected page IDs from event
 }
 
 pub struct TickOrchestrator {
     throughput: ThroughputEngine,
-    dag: Arc<DependencyGraph>,
     memory_monitor: Arc<dyn MemoryPressureHandler>,
     tick_budget_ms: u64,
 }
@@ -28,26 +37,29 @@ pub struct TickOrchestrator {
 impl TickOrchestrator {
     pub fn new(
         throughput: ThroughputEngine,
-        dag: Arc<DependencyGraph>,
         memory_monitor: Arc<dyn MemoryPressureHandler>,
     ) -> Self {
         Self {
             throughput,
-            dag,
             memory_monitor,
             tick_budget_ms: 16,
         }
     }
 
-    pub fn execute_tick(&self, deltas: Vec<Delta>) -> Result<TickMetrics, PageError> {
+    // Now event-driven: Reacts to MemoryCommitted event from the bus.
+    // Processes only affected page IDs (physical propagation, no semantic logic).
+    pub fn execute_tick(&self, event: &MemoryCommitted) -> Result<TickMetrics, PageError> {
         let tick_start = Instant::now();
-        let throughput_metrics = self.throughput.process_parallel(deltas)?;
 
-        let graph_report = {
-            let validator = DagValidator::new(&self.dag);
-            validator.detect_cycles()
-        };
+        // Extract minimal payload from event (no full Deltas or graphs)
+        let affected_pages = &event.affected_page_ids;  // Assuming we add this field to MemoryCommitted (see below)
 
+        // Physical propagation only (best-effort hardware scheduling)
+        let throughput_metrics = self.throughput.process_parallel(affected_pages)?;
+
+        // No graph validation or commit – that's memory's job
+
+        // GC is substrate (hardware pressure), so keep it
         let gc_metrics = self
             .memory_monitor
             .run_gc(self.memory_monitor.incremental_batch_pages());
@@ -55,13 +67,11 @@ impl TickOrchestrator {
         let total = tick_start.elapsed();
         Ok(TickMetrics {
             propagation: throughput_metrics.duration,
-            graph_validation: graph_report.duration,
             gc: gc_metrics.map(|m| m.duration).unwrap_or_default(),
             total,
             throughput: throughput_metrics.throughput,
             gc_invoked: gc_metrics.is_some(),
-            graph_has_cycle: graph_report.has_cycle,
-            processed: throughput_metrics.processed,
+            processed: affected_pages.len(),
         })
     }
 
@@ -70,102 +80,18 @@ impl TickOrchestrator {
     }
 }
 
-pub(crate) fn request_commit(
-    log: &TransactionLog,
-    token: &JudgmentToken,
-    admission_proof: &MmsbAdmissionProof,
-    execution_proof: &MmsbExecutionProof,
-    delta: Delta,
-    dag: Option<&DependencyGraph>,
-) -> std::io::Result<()> {
-    commit_delta(log, token, admission_proof, execution_proof, delta, dag)
-}
-
-pub(crate) fn submit_intent(
-    _log: &TransactionLog,
-    _delta: Delta,
-) -> std::io::Result<()> {
-    Ok(())
-}
-
-#[cfg(test)]
-mod judgment_commit_test {
-    use super::request_commit;
-    use mmsb_judgment::JudgmentToken;
-    use crate::page::{tlog, Delta, DeltaID, Epoch, PageID, Source, TransactionLog};
-    use crate::proof::{ADMISSION_PROOF_VERSION, EXECUTION_PROOF_VERSION, MmsbAdmissionProof, MmsbExecutionProof};
-    use std::time::{SystemTime, UNIX_EPOCH};
-
-    #[test]
-    fn human_judgment_commit_once() -> std::io::Result<()> {
-        let nanos = SystemTime::now()
-            .duration_since(UNIX_EPOCH)
-            .unwrap()
-            .as_nanos();
-        let path = std::env::temp_dir().join(format!("mmsb_judgment_commit_{nanos}.tlog"));
-        let log = TransactionLog::new(path)?;
-
-        let delta = Delta {
-            delta_id: DeltaID(1),
-            page_id: PageID(1),
-            epoch: Epoch(1),
-            mask: vec![true; 4],
-            payload: vec![0xAB; 4],
-            is_sparse: false,
-            timestamp: 1,
-            source: Source("human-test".to_string()),
-            intent_metadata: Some("human-approved commit".to_string()),
-        };
-
-        let delta_hash = tlog::delta_hash(&delta);
-        let admission_proof = MmsbAdmissionProof {
-            version: ADMISSION_PROOF_VERSION,
-            delta_hash: delta_hash.clone(),
-            dag_snapshot_hash: None,
-            conversation_id: "test".to_string(),
-            message_id: "test".to_string(),
-            suffix: "0".to_string(),
-            intent_hash: "test".to_string(),
-            approved: true,
-            command: Vec::new(),
-            cwd: None,
-            env: None,
-            epoch: 0,
-        };
-        let execution_proof = MmsbExecutionProof {
-            version: EXECUTION_PROOF_VERSION,
-            delta_hash,
-            tool_call_id: "test".to_string(),
-            tool_name: "test".to_string(),
-            output: serde_json::json!({}),
-            epoch: 0,
-        };
-        let token = JudgmentToken::test_only();
-        request_commit(&log, &token, &admission_proof, &execution_proof, delta, None)?;
-
-        Ok(())
-    }
-}
-
 #[cfg(test)]
 mod tests {
-    use super::TickOrchestrator;
-    use crate::dag::{EdgeType, DependencyGraph, StructuralOp};
-    use crate::page::{Delta, DeltaID, PageAllocator, PageAllocatorConfig, PageID, PageLocation, Source};
-    use crate::types::{Epoch, GCMetrics, MemoryPressureHandler};
-    use super::ThroughputEngine;
+    use super::{GCMetrics, MemoryPressureHandler, TickOrchestrator, TickMetrics};
+    use mmsb_events::MemoryCommitted;  // Use real event struct
+    use mmsb_proof::Hash;  // Only hashes/IDs allowed
     use std::sync::Arc;
     use std::time::Duration;
 
+    // Mock impl for testing (hardware-only)
     struct TestMemoryHandler {
         batch: usize,
         collect: bool,
-    }
-
-    impl TestMemoryHandler {
-        fn new(batch: usize, collect: bool) -> Self {
-            Self { batch, collect }
-        }
     }
 
     impl MemoryPressureHandler for TestMemoryHandler {
@@ -185,38 +111,29 @@ mod tests {
         }
     }
 
-    fn sample_delta(id: u64, page: u64, value: u8) -> Delta {
-        Delta {
-            delta_id: DeltaID(id),
-            page_id: PageID(page),
-            epoch: Epoch(id as u32),
-            mask: vec![true; 32],
-            payload: vec![value; 32],
-            is_sparse: false,
-            timestamp: id,
-            source: Source(format!("delta-{id}")),
-            intent_metadata: None,
+    // Helper to create mock MemoryCommitted event
+    fn mock_event(affected_count: usize) -> MemoryCommitted {
+        MemoryCommitted {
+            event_id: Hash::default(),  // Dummy hash
+            timestamp: 0,
+            delta_hash: Hash::default(),
+            epoch: 1,
+            snapshot_ref: None,
+            admission_proof: Default::default(),  // Minimal or mocked
+            commit_proof: Default::default(),
+            outcome_proof: Default::default(),
+            affected_page_ids: (1..=affected_count).map(|id| PageID(id as u64)).collect(),  // Assuming PageID is a simple type; expose minimally from mmsb-memory if needed
         }
     }
 
-    fn orchestrator(threshold: usize) -> (TickOrchestrator, Arc<PageAllocator>) {
+    fn orchestrator(threshold: usize) -> (TickOrchestrator, Arc<PageAllocator>) {  // Assuming PageAllocator is substrate-only
+        // ... (keep similar, but remove DAG/ops – no graph here)
         let allocator = Arc::new(PageAllocator::new(PageAllocatorConfig::default()));
-        for id in 1..=4 {
-            allocator
-                .allocate_raw(PageID(id), 32, Some(PageLocation::Cpu))
-                .unwrap();
-        }
         let throughput = ThroughputEngine::new(Arc::clone(&allocator), 2, 64);
-        let ops = vec![StructuralOp::AddEdge {
-            from: PageID(1),
-            to: PageID(2),
-            edge_type: EdgeType::Data,
-        }];
-        let dag = Arc::new(crate::dag::build_dependency_graph(&ops));
         let memory: Arc<dyn MemoryPressureHandler> =
             Arc::new(TestMemoryHandler::new(32, threshold != usize::MAX));
         (
-            TickOrchestrator::new(throughput, dag, memory),
+            TickOrchestrator::new(throughput, memory),
             allocator,
         )
     }
@@ -224,8 +141,8 @@ mod tests {
     #[test]
     fn tick_metrics_capture_all_phases() {
         let (orchestrator, _) = orchestrator(usize::MAX);
-        let deltas = vec![sample_delta(1, 1, 0xAA); 64];
-        let metrics = orchestrator.execute_tick(deltas).unwrap();
+        let event = mock_event(64);  // Simulate event with 64 affected pages
+        let metrics = orchestrator.execute_tick(&event).unwrap();
         assert!(metrics.total >= metrics.propagation);
         assert!(!metrics.gc_invoked);
         assert_eq!(metrics.processed, 64);
@@ -234,8 +151,8 @@ mod tests {
     #[test]
     fn gc_invoked_when_threshold_low() {
         let (orchestrator, _) = orchestrator(1);
-        let deltas = vec![sample_delta(1, 1, 0xAA); 8];
-        let metrics = orchestrator.execute_tick(deltas).unwrap();
+        let event = mock_event(8);  // Simulate event with 8 affected pages
+        let metrics = orchestrator.execute_tick(&event).unwrap();
         assert!(metrics.gc_invoked);
     }
 }
