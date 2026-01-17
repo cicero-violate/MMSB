@@ -4,9 +4,9 @@ use crate::epoch::Epoch;
 use crate::page::{PageError, PageID};
 use std::time::{SystemTime, UNIX_EPOCH};
 
-use serde::{Serialize, Deserialize};  // Add for bincode
+use serde::{Serialize, Deserialize};  // Required for bincode
 
-#[derive(Debug, Clone, Serialize, Deserialize)]  // ← Added
+#[derive(Debug, Clone, Serialize, Deserialize)]  // ← Added derives
 pub struct Delta {
     pub delta_id: DeltaID,
     pub page_id: PageID,
