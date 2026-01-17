@@ -73,7 +73,7 @@ impl TransactionLog {
         self.entries.write().clear();
     }
 
-    /// Append a delta with proof witness (no JudgmentToken)
+    /// Append a delta with proof witness (no JudgmentToken) canonical
     pub fn append(
         &self,
         admission_proof: &AdmissionProof,  // ← NEW: canonical witness
