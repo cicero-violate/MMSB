@@ -82,7 +82,7 @@ mod tests {
     use crate::structural::{EdgeType, StructuralOp};
     use crate::outcome::DagCommitError;
     use crate::proofs::MmsbStructuralAdmissionProof;
-    use crate::page::PageID;
+    use mmsb_primitives::PageID;
 
     #[test]
     fn commit_rejects_empty_ops() {
