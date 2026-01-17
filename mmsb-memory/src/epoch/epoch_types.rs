@@ -1,8 +1,21 @@
 use std::sync::atomic::{AtomicU32, Ordering};
 
+use serde::{Serialize, Deserialize};  // ← Added for bincode in tlog
+
 /// Page epoch (monotonic counter)
 #[repr(transparent)]
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Default)]
+#[derive(
+    Debug, 
+    Clone, 
+    Copy, 
+    PartialEq, 
+    Eq, 
+    PartialOrd, 
+    Ord, 
+    Default, 
+    Serialize, 
+    Deserialize   // ← Added derives
+)]
 pub struct Epoch(pub u32);
 
 impl Epoch {
