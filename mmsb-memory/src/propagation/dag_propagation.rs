@@ -1,5 +1,6 @@
 use crate::dag::DependencyGraph;
-use crate::page::{Delta, PageID};
+use crate::page::Delta;
+use mmsb_primitives::PageID;
 use std::collections::HashSet;
 
 pub fn compute_affected_pages(
