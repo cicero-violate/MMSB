@@ -1,7 +1,8 @@
 use crate::dag::DependencyGraph;
 use crate::outcome::DagValidator;
 use crate::device::DeviceRegistry;
-use crate::page::{PageAllocator, PageError, PageID};
+use crate::page::{PageAllocator, PageError};
+use mmsb_primitives::PageID;
 use crate::epoch::Epoch;
 use parking_lot::RwLock;
 use std::collections::HashMap;
