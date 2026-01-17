@@ -18,7 +18,7 @@ pub mod tlog;
 // Graph and propagation
 pub mod dag;
 pub mod structural;
-// pub mod propagation;
+pub mod propagation;
 pub mod materialization;
 
 // Verification and optimization
