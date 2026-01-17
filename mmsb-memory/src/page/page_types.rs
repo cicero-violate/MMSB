@@ -26,11 +26,11 @@ impl PageLocation {
 // Re-export shared PageID — no re-definition
 pub use mmsb_primitives::PageID;
 
-impl fmt::Display for PageID {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}", self.0)
-    }
-}
+// impl fmt::Display for PageID {
+//     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+//         write!(f, "{}", self.0)
+//     }
+// }
 
 #[derive(Debug, Error)]
 pub enum PageError {
