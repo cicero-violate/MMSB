@@ -4,7 +4,6 @@ use crate::outcome::DagCommitError;
 use crate::structural::shadow_graph::ShadowPageGraph;
 use crate::replay::dag_log::{append_structural_record, default_structural_log_path};
 use crate::proofs::{MmsbStructuralAdmissionProof, STRUCTURAL_PROOF_VERSION};
-use mmsb_judgment::JudgmentToken;
 
 pub fn build_dependency_graph(ops: &[StructuralOp]) -> DependencyGraph {
     let mut dag = DependencyGraph::new();
@@ -19,11 +18,8 @@ pub(crate) fn apply_ops_unchecked(dag: &mut DependencyGraph, ops: &[StructuralOp
 pub fn commit_structural_delta(
     dag: &mut DependencyGraph,
     ops: &[StructuralOp],
-    token: &JudgmentToken,
     proof: &MmsbStructuralAdmissionProof,
 ) -> Result<(), DagCommitError> {
-    let _ = token;
-
     if ops.is_empty() {
         return Err(DagCommitError::EmptyOperations);
     }
@@ -66,29 +62,27 @@ pub fn commit_structural_delta(
         return Err(DagCommitError::CycleDetected);
     }
 
-    let log_path = default_structural_log_path()?;
-    append_structural_record(&log_path, ops, proof)?;
+    apply_ops_unchecked(dag, ops);
 
-    dag.apply_ops(ops);
-
-    Ok(())
+    let path = default_structural_log_path();
+    append_structural_record(&path, ops, proof)
 }
 
 fn compute_ops_hash_local(ops: &[StructuralOp]) -> String {
-    use sha2::{Digest, Sha256};
     let mut hasher = Sha256::new();
     for op in ops {
-        let s = format!("{:?}", op);
-        hasher.update(s.as_bytes());
+        hasher.update(op.to_string().as_bytes());
     }
     format!("{:x}", hasher.finalize())
 }
 
 #[cfg(test)]
 mod tests {
-    use super::*;
+    use super::{commit_structural_delta, compute_ops_hash_local};
+    use crate::structural::{EdgeType, StructuralOp};
+    use crate::outcome::DagCommitError;
+    use crate::proofs::MmsbStructuralAdmissionProof;
     use crate::page::PageID;
-    use crate::dag::EdgeType;
 
     #[test]
     fn commit_rejects_empty_ops() {
@@ -103,9 +97,8 @@ mod tests {
             true,
             0,
         );
-        let token = JudgmentToken::test_only();
 
-        let err = commit_structural_delta(&mut dag, &ops, &token, &proof)
+        let err = commit_structural_delta(&mut dag, &ops, &proof)
             .expect_err("expected empty ops error");
         assert!(matches!(err, DagCommitError::EmptyOperations));
     }
@@ -128,9 +121,8 @@ mod tests {
             0,
         );
         proof.version = 999;
-        let token = JudgmentToken::test_only();
 
-        let err = commit_structural_delta(&mut dag, &ops, &token, &proof)
+        let err = commit_structural_delta(&mut dag, &ops, &proof)
             .expect_err("expected version mismatch");
         assert!(matches!(err, DagCommitError::ProofVersionMismatch { .. }));
     }
@@ -152,10 +144,10 @@ mod tests {
             false,
             0,
         );
-        let token = JudgmentToken::test_only();
 
-        let err = commit_structural_delta(&mut dag, &ops, &token, &proof)
+        let err = commit_structural_delta(&mut dag, &ops, &proof)
             .expect_err("expected proof not approved");
         assert!(matches!(err, DagCommitError::ProofNotApproved));
     }
 }
+
