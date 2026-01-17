@@ -1,4 +1,4 @@
-use crate::page::PageID;
+use mmsb_primitives::PageID;
 use crate::dag::EdgeType;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
