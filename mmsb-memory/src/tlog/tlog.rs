@@ -6,7 +6,7 @@
 // Keep only what's used
 use crate::delta::Delta;
 use crate::epoch::Epoch;
-use crate::page::PageID;
+use mmsb_primitives::PageID;
 use mmsb_proof::AdmissionProof;  // ← CORRECT (from the shared proof crate)
 use parking_lot::RwLock;
 use sha2::{Digest, Sha256};
