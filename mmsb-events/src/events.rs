@@ -119,61 +119,57 @@ impl Event for JudgmentApproved {
 }
 
 // ============================================================================
-// Event 4: ExecutionRequested
+// Event 4: ExecutionRequested (updated)
 // ============================================================================
 
-/// ExecutionRequested - emitted by mmsb-executor
+/// ExecutionRequested - emitted by mmsb-executor when ready to apply an approved plan
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ExecutionRequested {
     pub event_id: EventId,
     pub timestamp: Timestamp,
+    
     pub judgment_proof: JudgmentProof,
+    
+    // NEW: Full delta to apply (temporary bridge - later replace with delta_hash + fetch)
+    pub delta: Delta,
+    
+    // NEW (optional): Pages this delta affects (helps executor start propagation immediately)
+    // If not provided, executor can compute from delta, but better to have it explicit
+    pub affected_page_ids: Vec<PageID>,
 }
 
 impl Event for ExecutionRequested {
-    fn event_type(&self) -> EventType {
-        EventType::ExecutionRequested
-    }
-    
-    fn event_id(&self) -> EventId {
-        self.event_id
-    }
-    
-    fn timestamp(&self) -> Timestamp {
-        self.timestamp
-    }
+    fn event_type(&self) -> EventType { EventType::ExecutionRequested }
+    fn event_id(&self) -> EventId { self.event_id }
+    fn timestamp(&self) -> Timestamp { self.timestamp }
 }
 
 // ============================================================================
-// Event 5: MemoryCommitted (PERSISTED)
+// Event 5: MemoryCommitted (updated)
 // ============================================================================
 
-/// MemoryCommitted - emitted by mmsb-memory
-/// This is the FIRST event persisted to storage
+/// MemoryCommitted - emitted by mmsb-memory after successful D→E→F
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct MemoryCommitted {
     pub event_id: EventId,
     pub timestamp: Timestamp,
+    
     pub delta_hash: Hash,
     pub epoch: u64,
     pub snapshot_ref: Option<Hash>,
+    
     pub admission_proof: AdmissionProof,
     pub commit_proof: CommitProof,
     pub outcome_proof: OutcomeProof,
+    
+    // NEW: Critical for executor - tells it which pages to propagate physically
+    pub affected_page_ids: Vec<PageID>,
 }
 
 impl Event for MemoryCommitted {
-    fn event_type(&self) -> EventType {
-        EventType::MemoryCommitted
-    }
-    
-    fn event_id(&self) -> EventId {
-        self.event_id
-    }
-    
-    fn timestamp(&self) -> Timestamp {
-        self.timestamp
-    }
+    fn event_type(&self) -> EventType { EventType::MemoryCommitted }
+    fn event_id(&self) -> EventId { self.event_id }
+    fn timestamp(&self) -> Timestamp { self.timestamp }
 }
 
 // ============================================================================
