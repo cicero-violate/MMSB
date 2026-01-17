@@ -1,20 +1,27 @@
-pub mod admission_proof;
-pub mod execution_proof;
-pub mod structural_proof;
-pub mod delta_stream;
+//! Proofs Module - Re-exports canonical proofs from mmsb-proof
+//!
+//! Only A–G proofs from the canonical spec are allowed here.
+//! No legacy Mmsb* types, no file I/O, no streams.
 
-pub use admission_proof::{
-    build_admission_proof_streams, evaluate_admission, load_shell_policy,
-    ADMISSION_PROOF_VERSION,
-    MmsbAdmission, MmsbAdmissionProof, MmsbAdmissionProofStream,
-    MmsbAdmissionProofError, PolicyDecision, PolicyError, ShellPolicy,
+pub use mmsb_proof::{
+    AdmissionProof,
+    CommitProof,
+    Hash,
+    IntentProof,
+    JudgmentProof,
+    OutcomeProof,
+    PolicyProof,
+    KnowledgeProof,
+    Proof,
+    ProduceProof,
+    IntentStage,
+    PolicyStage,
+    JudgmentStage,
+    AdmissionStage,
+    CommitStage,
+    OutcomeStage,
+    KnowledgeStage,
 };
 
-pub use execution_proof::{
-    build_execution_proof_stream, MmsbExecutionProof, MmsbExecutionProofStream,
-    EXECUTION_PROOF_VERSION, MmsbExecutionProofError,
-};
-
-pub use structural_proof::{MmsbStructuralAdmissionProof, STRUCTURAL_PROOF_VERSION};
-
-pub use delta_stream::{build_delta_streams, MmsbDelta, MmsbDeltaStream, MmsbDeltaStreamError};
+// NO legacy re-exports — remove all MmsbAdmissionProof, MmsbExecutionProof, etc.
+// If you need custom admission logic, implement it using canonical AdmissionProof
