@@ -10,6 +10,18 @@ use std::fs::{File, OpenOptions};
 use std::io::{BufReader, BufWriter, Read, Seek, SeekFrom, Write};
 use std::path::{Path, PathBuf};
 
+pub fn delta_hash(delta: &Delta) -> String {
+    let mut hasher = Sha256::new();
+    hasher.update(&delta.delta_id.0.to_le_bytes());
+    hasher.update(&delta.page_id.0.to_le_bytes());
+    hasher.update(&delta.epoch.0.to_le_bytes());
+    for &bit in &delta.mask {
+        hasher.update(&[if bit { 1 } else { 0 }]);
+    }
+    hasher.update(&delta.payload);
+    format!("{:x}", hasher.finalize())
+}
+
 const MAGIC: &[u8] = b"MMSBLOG1";
 const VERSION: u32 = 2;
 
@@ -285,31 +297,6 @@ fn validate_header(reader: &mut BufReader<File>) -> std::io::Result<u32> {
     Ok(version)
 }
 
-pub(crate) fn delta_hash(delta: &Delta) -> String {
-    let mut hasher = Sha256::new();
-    hasher.update(delta.delta_id.0.to_le_bytes());
-    hasher.update(delta.page_id.0.to_le_bytes());
-    hasher.update(delta.epoch.0.to_le_bytes());
-    hasher.update([delta.is_sparse as u8]);
-    hasher.update(delta.timestamp.to_le_bytes());
-    hasher.update(delta.mask.len().to_le_bytes());
-    for flag in &delta.mask {
-        hasher.update([*flag as u8]);
-    }
-    hasher.update(delta.payload.len().to_le_bytes());
-    hasher.update(&delta.payload);
-    let source_bytes = delta.source.0.as_bytes();
-    hasher.update(source_bytes.len().to_le_bytes());
-    hasher.update(source_bytes);
-    if let Some(metadata) = &delta.intent_metadata {
-        let meta_bytes = metadata.as_bytes();
-        hasher.update(meta_bytes.len().to_le_bytes());
-        hasher.update(meta_bytes);
-    } else {
-        hasher.update(0usize.to_le_bytes());
-    }
-    format!("{:x}", hasher.finalize())
-}
 
 #[cfg(test)]
 mod tests {

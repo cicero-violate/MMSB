@@ -6,3 +6,4 @@ pub mod tlog_replay;
 pub use tlog::TransactionLog;
 pub use tlog_replay::apply_log;
 pub use tlog_serialization::read_log;
+pub use tlog::delta_hash;

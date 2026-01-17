@@ -6,4 +6,7 @@ pub mod allocator;
 pub use gc::{GCMetrics, MemoryPressureHandler};
 pub use page_types::{PageError, PageID, PageLocation};
 pub use page::{Page, Metadata};
-pub use allocator::{PageAllocator, PageSnapshotData};
+pub use allocator::{PageAllocator, PageSnapshotData, PageAllocatorConfig};
+
+// Re-export Delta for convenience
+pub use crate::delta::Delta;

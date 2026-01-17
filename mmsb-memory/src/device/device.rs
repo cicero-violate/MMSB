@@ -21,4 +21,8 @@ impl DeviceRegistry {
     pub fn get(&self, page_id: PageID) -> Option<Arc<Page>> {
         self.pages.read().get(&page_id).cloned()
     }
+
+    pub fn contains(&self, page_id: PageID) -> bool {
+        self.pages.read().contains_key(&page_id)
+    }
 }

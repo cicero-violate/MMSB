@@ -34,12 +34,12 @@ impl IntegrityReport {
 }
 
 pub struct DeltaIntegrityChecker {
-    registry: Arc<DeviceBufferRegistry>,
+    registry: Arc<DeviceRegistry>,
     last_epoch: HashMap<PageID, Epoch>,
 }
 
 impl DeltaIntegrityChecker {
-    pub fn new(registry: Arc<DeviceBufferRegistry>) -> Self {
+    pub fn new(registry: Arc<DeviceRegistry>) -> Self {
         Self {
             registry,
             last_epoch: HashMap::new(),
@@ -108,7 +108,7 @@ fn schema_valid(delta: &Delta) -> bool {
 #[cfg(test)]
 mod tests {
     use super::{DeltaIntegrityChecker, IntegrityViolationKind};
-    use crate::page::{Delta, DeltaID, DeviceBufferRegistry, Page, PageID, PageLocation, Source};
+    use crate::page::{Delta, DeltaID, DeviceRegistry, Page, PageID, PageLocation, Source};
     use crate::types::Epoch;
     use std::sync::Arc;
 
@@ -132,7 +132,7 @@ mod tests {
 
     #[test]
     fn detects_orphan_and_epoch_errors() {
-        let registry = Arc::new(DeviceBufferRegistry::default());
+        let registry = Arc::new(DeviceRegistry::default());
         registry.insert(page(1));
         let mut checker = DeltaIntegrityChecker::new(Arc::clone(&registry));
         let deltas = vec![
