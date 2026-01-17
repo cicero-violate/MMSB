@@ -1,6 +1,7 @@
 use crate::delta::{DeltaID, Source};
 use crate::epoch::Epoch;
-use crate::page::{Delta, PageAllocator, PageAllocatorConfig, PageID};
+use crate::page::{Delta, PageAllocator, PageAllocatorConfig};
+use mmsb_primitives::PageID;
 use serde::Deserialize;
 use serde_json::Value;
 use sha2::{Digest, Sha256};
