@@ -67,6 +67,22 @@ impl DependencyGraph {
             })
     }
 
+    pub fn add_edge(&mut self, from: PageID, to: PageID, edge_type: EdgeType) {
+        self.adjacency
+            .entry(from)
+            .or_default()
+            .push((to, edge_type));
+        self.version += 1;
+    }
+
+    pub fn remove_edge(&mut self, from: PageID, to: PageID) {
+        if let Some(edges) = self.adjacency.get_mut(&from) {
+            edges.retain(|(target, _)| *target != to);
+        }
+        self.version += 1;
+    }
+
+
     pub(crate) fn apply_ops(&mut self, ops: &[StructuralOp]) {
         for op in ops {
             match op {
