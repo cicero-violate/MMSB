@@ -1,7 +1,8 @@
 use crate::page::Page;
 use crate::delta::{DeltaError, DeltaID, Source};
 use crate::epoch::Epoch;
-use crate::page::{PageError, PageID};
+use crate::page::PageError;
+use mmsb_primitives::PageID;
 use std::time::{SystemTime, UNIX_EPOCH};
 
 use serde::{Serialize, Deserialize};  // Required for bincode
