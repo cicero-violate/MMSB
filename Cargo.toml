@@ -6,5 +6,5 @@ members = [
     "mmsb-judgment",
     "mmsb-tools/structural_code_indexer",
     "mmsb-tools/structural_code_editor",
-    "mmsb-tools/declarative_code_editor", "mmsb-proof", "mmsb-authenticate", "mmsb-service", "mmsb-storage",
+    "mmsb-tools/declarative_code_editor", "mmsb-proof", "mmsb-authenticate", "mmsb-service", "mmsb-storage", "mmsb-intent",
 ]
