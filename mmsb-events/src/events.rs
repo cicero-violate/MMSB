@@ -8,7 +8,7 @@ use std::fmt;
 use mmsb_primitives::{Hash, PageID, Timestamp, EventId};
 
 use mmsb_proof::{
-    AdmissionProof, CommitProof, Hash, IntentProof, JudgmentProof,
+    AdmissionProof, CommitProof, IntentProof, JudgmentProof,
     KnowledgeProof, OutcomeProof, PolicyProof,
 };
 
