@@ -156,29 +156,34 @@ impl Event for ExecutionRequested {
 // ============================================================================
 // Event 5: MemoryCommitted (updated)
 // ============================================================================
-// MemoryCommitted — what memory emits after successful commit
+/// MemoryCommitted - emitted by mmsb-memory after successful D→E→F
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct MemoryCommitted {
     pub event_id: EventId,
     pub timestamp: Timestamp,
     
     pub delta_hash: Hash,
-    pub epoch: u64,
+    pub epoch: u64,  // or use Epoch(pub u32) if you want structured
     pub snapshot_ref: Option<Hash>,
     
     pub admission_proof: AdmissionProof,
     pub commit_proof: CommitProof,
     pub outcome_proof: OutcomeProof,
     
-    // What executor needs for physical propagation
+    // NEW: For executor propagation (minimal & serializable)
     pub affected_page_ids: Vec<PageID>,
 }
 
-
 impl Event for MemoryCommitted {
-    fn event_type(&self) -> EventType { EventType::MemoryCommitted }
-    fn event_id(&self) -> EventId { self.event_id }
-    fn timestamp(&self) -> Timestamp { self.timestamp }
+    fn event_type(&self) -> EventType {
+        EventType::MemoryCommitted
+    }
+    fn event_id(&self) -> EventId {
+        self.event_id
+    }
+    fn timestamp(&self) -> Timestamp {
+        self.timestamp
+    }
 }
 
 // ============================================================================
