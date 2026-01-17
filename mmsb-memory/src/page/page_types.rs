@@ -24,7 +24,8 @@ impl PageLocation {
 /// Globally unique identifier for pages
 #[repr(transparent)]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
-pub struct PageID(pub u64);
+use mmsb_primitives::PageID;  // ← re-export or alias
+
 
 impl fmt::Display for PageID {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
