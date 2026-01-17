@@ -1,5 +1,5 @@
 use crate::structural::shadow_graph::ShadowPageGraph;
-use crate::page::PageID;
+use mmsb_primitives::PageID;
 use std::collections::{HashMap, HashSet};
 use std::time::{Duration, Instant};
 
