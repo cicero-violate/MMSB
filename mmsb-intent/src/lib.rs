@@ -11,7 +11,7 @@ This library provides:
 ## Usage
 
 ```rust
-use mmsb_intent::{IntentClassifier, PolicyEvaluator, ScopePolicy, IntentClass};
+use mmsb_intent::{IntentClassifier, PolicyEvaluator, ScopePolicy, IntentClass, PolicyDecision};
 
 // Classify an intent
 let metadata = IntentClassifier::classify("cargo fmt");

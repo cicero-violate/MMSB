@@ -88,22 +88,31 @@ impl PolicyEvaluator {
         }
 
         self.policy.allowed_paths.iter().any(|pattern| {
-            if let Ok(glob) = Pattern::new(pattern) {
-                glob.matches(path)
-            } else {
-                path.starts_with(pattern)
-            }
+            Self::matches_pattern(pattern, path)
         })
     }
 
     fn is_path_forbidden(&self, path: &str) -> bool {
         self.policy.forbidden_paths.iter().any(|pattern| {
-            if let Ok(glob) = Pattern::new(pattern) {
-                glob.matches(path)
-            } else {
-                path.starts_with(pattern)
-            }
+            Self::matches_pattern(pattern, path)
         })
+    }
+
+    fn matches_pattern(pattern: &str, path: &str) -> bool {
+        // If pattern ends with /, treat as prefix match (directory)
+        if pattern.ends_with('/') {
+            return path.starts_with(pattern);
+        }
+        
+        // If pattern contains glob characters, use glob matching
+        if pattern.contains('*') || pattern.contains('?') || pattern.contains('[') {
+            if let Ok(glob) = Pattern::new(pattern) {
+                return glob.matches(path);
+            }
+        }
+        
+        // Otherwise, use prefix matching
+        path.starts_with(pattern)
     }
 
     pub fn policy(&self) -> &ScopePolicy {
