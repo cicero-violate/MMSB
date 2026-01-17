@@ -1,4 +1,5 @@
 use crate::page::Delta;
+use crate::delta::delta::Delta;
 use crate::types::{PageID, Epoch};
 
 #[derive(Debug, Clone)]

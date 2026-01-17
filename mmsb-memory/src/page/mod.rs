@@ -1,6 +1,8 @@
 #![allow(dead_code)]
+
+//! Logical page definitions only
+//! Physical allocation moved to mmsb-executor/allocation
+
 pub mod page_types;
 pub mod page;
-pub mod allocator;
-pub mod lockfree_allocator;
-pub mod device_registry;
+pub mod page_commit;

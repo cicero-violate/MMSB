@@ -1,6 +1,7 @@
 use crate::dag::{DagValidator, DependencyGraph};
-use crate::page::{DeviceBufferRegistry, PageAllocator, PageError, PageID};
-use crate::types::Epoch;
+use crate::outcome::dag_validator::DagValidator;
+use crate::dag::dependency_graph::DependencyGraph;
+use crate::types::{PageID, PageError, Epoch};
 use parking_lot::RwLock;
 use std::collections::HashMap;
 

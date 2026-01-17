@@ -1,5 +1,6 @@
 use crate::dag::DependencyGraph;
-use crate::page::PageID;
+use crate::dag::dependency_graph::DependencyGraph;
+use crate::types::PageID;
 use std::collections::{HashMap, VecDeque};
 use std::sync::Arc;
 use std::time::Instant;

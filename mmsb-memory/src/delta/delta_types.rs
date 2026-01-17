@@ -1,5 +1,6 @@
 use super::page_types::PageID;
-use thiserror::Error;
+use crate::types::PageID;
+use std::fmt;
 
 #[repr(transparent)]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
@@ -8,14 +9,24 @@ pub struct DeltaID(pub u64);
 #[derive(Debug, Clone)]
 pub struct Source(pub String);
 
-#[derive(Debug, Error)]
+#[derive(Debug, Clone)]
 pub enum DeltaError {
-    #[error("Mask/payload size mismatch mask={mask_len} payload={payload_len}")]
     SizeMismatch { mask_len: usize, payload_len: usize },
-
-    #[error("PageID mismatch: expected {expected:?}, found {found:?}")]
     PageIDMismatch { expected: PageID, found: PageID },
-
-    #[error("Mask size mismatch: expected {expected}, found {found}")]
     MaskSizeMismatch { expected: usize, found: usize },
 }
+
+impl fmt::Display for DeltaError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            DeltaError::SizeMismatch { mask_len, payload_len } =>
+                write!(f, "Mask/payload size mismatch mask={} payload={}", mask_len, payload_len),
+            DeltaError::PageIDMismatch { expected, found } =>
+                write!(f, "PageID mismatch: expected {:?}, found {:?}", expected, found),
+            DeltaError::MaskSizeMismatch { expected, found } =>
+                write!(f, "Mask size mismatch: expected {}, found {}", expected, found),
+        }
+    }
+}
+
+impl std::error::Error for DeltaError {}

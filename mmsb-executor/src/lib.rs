@@ -1,8 +1,13 @@
 //! MMSB Executor Module
 //! 
-//! Mechanical-only execution module with ZERO authority.
-//! Consumes JudgmentApproved events and prepares ExecutionRequests.
+//! Execution substrate with ZERO authority.
+//! Hardware management, scheduling, performance optimization.
 
 pub mod module;
+pub mod physical;
+pub mod device;
+pub mod propagation;
+pub mod optimization;
+pub mod allocation;
 
 pub use module::ExecutorModule;

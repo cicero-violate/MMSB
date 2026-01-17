@@ -1,5 +1,4 @@
 use std::fmt;
-use thiserror::Error;
 
 /// Possible backing locations for a page
 #[repr(i32)]
@@ -32,41 +31,25 @@ impl fmt::Display for PageID {
     }
 }
 
-#[derive(Debug, Error)]
+#[derive(Debug, Clone)]
 pub enum PageError {
-    #[error("Invalid page size: {0}")]
     InvalidSize(usize),
-
-    #[error("Invalid location tag: {0}")]
     InvalidLocation(i32),
-
-    #[error("CUDA error code: {0}")]
     CudaError(i32),
-
-    #[error("Page already freed")]
     AlreadyFreed,
-
-    #[error("Invalid pointer")]
     InvalidPointer,
-
-    #[error("Mask/payload size mismatch: expected {expected}, found {found}")]
-    MaskSizeMismatch { expected: usize, found: usize },
-
-    #[error("PageID mismatch: expected {expected:?}, found {found:?}")]
-    PageIDMismatch { expected: PageID, found: PageID },
-
-    #[error("Page not found: {0:?}")]
-    PageNotFound(PageID),
-
-    #[error("Page with ID {0} already exists")]
-    AlreadyExists(PageID),
-
-    #[error("Metadata decode error: {0}")]
-    MetadataDecode(&'static str),
-
-    #[error("Allocation failed")]
-    AllocationFailed,
-
-    #[error("Allocation error: code {0}")]
-    AllocError(i32),
 }
+
+impl fmt::Display for PageError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            PageError::InvalidSize(s) => write!(f, "Invalid page size: {}", s),
+            PageError::InvalidLocation(t) => write!(f, "Invalid location tag: {}", t),
+            PageError::CudaError(c) => write!(f, "CUDA error code: {}", c),
+            PageError::AlreadyFreed => write!(f, "Page already freed"),
+            PageError::InvalidPointer => write!(f, "Invalid pointer"),
+        }
+    }
+}
+
+impl std::error::Error for PageError {}

@@ -17,12 +17,10 @@ pub mod epoch;
 pub mod tlog;
 pub mod replay;
 pub mod outcome;
-pub mod propagation;
 pub mod materialization;
 pub mod semiring;
-pub mod physical;
-pub mod optimization;
-pub mod device;
 pub mod proofs;
+
+pub mod types;
 
 pub use memory_engine::MemoryEngine;
