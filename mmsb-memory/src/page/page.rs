@@ -5,7 +5,8 @@
 use crate::delta::Delta;
 use crate::delta::delta_validation;
 use crate::epoch::{Epoch, EpochCell};
-use crate::page::{PageError, PageID, PageLocation};
+use crate::page::{PageError, PageLocation};
+use mmsb_primitives::PageID;
 use crate::delta::DeltaError;
 use parking_lot::RwLock;
 use std::convert::TryInto;
