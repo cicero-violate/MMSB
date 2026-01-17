@@ -1,5 +1,6 @@
 use crate::tlog::TransactionLog;
-use crate::page::{PageAllocator, PageSnapshotData, PageID, PageLocation};
+use crate::page::{PageAllocator, PageSnapshotData, PageLocation};
+use mmsb_primitives::PageID;
 use std::fs::File;
 use std::io::{BufReader, BufWriter, Read, Write};
 use std::path::Path;
