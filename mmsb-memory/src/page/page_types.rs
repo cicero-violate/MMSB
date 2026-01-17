@@ -20,7 +20,6 @@ other => Err(PageError::InvalidLocation(other)),
 }
 }
 // Re-export the shared PageID — avoid duplicate imports
-pub use mmsb_primitives::PageID;
 // Remove impl Display (orphan rule violation on foreign type)
 // Use {0:?} in errors or add a method if needed
 // impl fmt::Display for PageID {
