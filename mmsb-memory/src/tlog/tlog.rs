@@ -145,6 +145,11 @@ fn check_log_version(reader: &mut BufReader<File>) -> std::io::Result<u32> {
     Ok(version)
 }
 
+pub fn current_offset(&self) -> std::io::Result<u64> {
+    let file = File::open(&self.path)?;
+    let metadata = file.metadata()?;
+    Ok(metadata.len())
+}
 
 #[cfg(test)]
 mod tests {
