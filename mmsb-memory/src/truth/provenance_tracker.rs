@@ -1,5 +1,5 @@
 use crate::dag::DependencyGraph;
-use crate::page::PageID;
+use mmsb_primitives::PageID;
 use std::collections::{HashMap, VecDeque};
 use std::sync::Arc;
 use std::time::Instant;
