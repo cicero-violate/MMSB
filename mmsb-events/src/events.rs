@@ -123,20 +123,25 @@ impl Event for JudgmentApproved {
 // ============================================================================
 
 /// ExecutionRequested - emitted by mmsb-executor when ready to apply an approved plan
+// In mmsb-events/src/events.rs
+
+// ExecutionRequested — what executor sends to trigger commit
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ExecutionRequested {
     pub event_id: EventId,
     pub timestamp: Timestamp,
     
-    pub judgment_proof: JudgmentProof,
+    pub judgment_proof: JudgmentProof,          // from mmsb-proof (already allowed)
     
-    // NEW: Full delta to apply (temporary bridge - later replace with delta_hash + fetch)
-    pub delta: Delta,
+    // Instead of full Delta:
+    pub delta_hash: Hash,                       // hash of the delta to apply
+    pub delta_size_hint: Option<u64>,           // optional, helps memory estimate resources
     
-    // NEW (optional): Pages this delta affects (helps executor start propagation immediately)
-    // If not provided, executor can compute from delta, but better to have it explicit
-    pub affected_page_ids: Vec<PageID>,
+    // Minimal info for propagation (small, serializable)
+    pub affected_page_ids: Vec<PageID>,         // ← still needed, but PageID must be defined in mmsb-proof or a shared primitive crate
 }
+
+
 
 impl Event for ExecutionRequested {
     fn event_type(&self) -> EventType { EventType::ExecutionRequested }
@@ -147,8 +152,7 @@ impl Event for ExecutionRequested {
 // ============================================================================
 // Event 5: MemoryCommitted (updated)
 // ============================================================================
-
-/// MemoryCommitted - emitted by mmsb-memory after successful D→E→F
+// MemoryCommitted — what memory emits after successful commit
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct MemoryCommitted {
     pub event_id: EventId,
@@ -162,9 +166,10 @@ pub struct MemoryCommitted {
     pub commit_proof: CommitProof,
     pub outcome_proof: OutcomeProof,
     
-    // NEW: Critical for executor - tells it which pages to propagate physically
+    // What executor needs for physical propagation
     pub affected_page_ids: Vec<PageID>,
 }
+
 
 impl Event for MemoryCommitted {
     fn event_type(&self) -> EventType { EventType::MemoryCommitted }
