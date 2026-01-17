@@ -1,7 +1,7 @@
 use std::fmt;
 use thiserror::Error;
 
-use mmsb_primitives::PageID;  // Use shared primitives PageID
+use mmsb_primitives::PageID;  // Use the shared primitive PageID
 
 /// Possible backing locations for a page
 #[repr(i32)]
@@ -23,9 +23,11 @@ impl PageLocation {
     }
 }
 
-// Re-export shared PageID — no re-definition
+// Re-export the shared PageID — no local definition, no duplicate name
 pub use mmsb_primitives::PageID;
 
+// Remove or comment out the Display impl (orphan rule violation)
+// If you need custom formatting, use a newtype wrapper or implement a trait
 // impl fmt::Display for PageID {
 //     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
 //         write!(f, "{}", self.0)
