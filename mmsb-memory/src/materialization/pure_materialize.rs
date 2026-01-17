@@ -1,5 +1,5 @@
 use crate::delta::Delta;
-use crate::page::PageID;
+use mmsb_primitives::PageID;
 use crate::epoch::Epoch;
 
 #[derive(Debug, Clone)]
