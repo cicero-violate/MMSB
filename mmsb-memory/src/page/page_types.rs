@@ -1,6 +1,8 @@
 use std::fmt;
 use thiserror::Error;
 
+use mmsb_primitives::PageID;  // Use shared primitives PageID
+
 /// Possible backing locations for a page
 #[repr(i32)]
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -21,11 +23,8 @@ impl PageLocation {
     }
 }
 
-/// Globally unique identifier for pages
-#[repr(transparent)]
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
-use mmsb_primitives::PageID;  // ← re-export or alias
-
+// Re-export shared PageID — no re-definition
+pub use mmsb_primitives::PageID;
 
 impl fmt::Display for PageID {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
