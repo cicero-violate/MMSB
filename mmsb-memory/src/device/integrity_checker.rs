@@ -4,6 +4,7 @@ use crate::device::DeviceRegistry;
 use crate::delta::{Delta, DeltaID};
 use crate::epoch::Epoch;
 use crate::page::PageID;
+use mmsb_primitives::PageID;
 use std::collections::HashMap;
 use std::sync::Arc;
 
