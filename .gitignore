@@ -18,7 +18,7 @@ tools/mmsb-analyzer/src/.julia-depot/
 *.d
 *.pdb
 *.o
-/docs/
+
 
 
 # Editor / OS garbage
@@ -44,6 +44,7 @@ benchmark/results/
 # Docs build
 /docs/build/
 /docs/site/
+/docs/
 
 # Temporary files
 *.tmp
