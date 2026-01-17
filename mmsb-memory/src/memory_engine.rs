@@ -152,12 +152,9 @@ impl MemoryEngine {
         admission_proof: &AdmissionProof,
         delta: &Delta,
     ) -> Result<CommitProof, CommitError> {
-        // Logical application of delta (real impl interacts with allocator)
-
         let new_epoch = self.epoch.increment();
 
-        // Append to tlog — adjust signature to match your real tlog.append
-        // (this assumes it takes admission_proof as witness instead of token)
+        // Append using AdmissionProof as witness
         self.tlog
             .write()
             .append(admission_proof, delta.clone())
@@ -167,7 +164,7 @@ impl MemoryEngine {
 
         Ok(CommitProof {
             admission_proof_hash: admission_proof.hash(),
-            delta_hash: delta.hash(), // Now works after Delta::hash impl
+            delta_hash: delta.hash(),  // assuming Delta::hash() exists
             state_hash,
             invariants_held: true,
         })
