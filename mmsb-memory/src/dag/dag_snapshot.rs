@@ -66,7 +66,7 @@ pub fn load_dag_snapshot(path: impl AsRef<Path>) -> io::Result<DependencyGraph> 
     file.read_exact(&mut edge_count_bytes)?;
     let edge_count = u64::from_le_bytes(edge_count_bytes);
 
-    use crate::page::PageID;
+    use mmsb_primitives::PageID;
     use crate::structural::StructuralOp;
     let mut ops = Vec::new();
 
