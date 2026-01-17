@@ -1,5 +1,6 @@
 use crate::delta::{ColumnarDeltaBatch, Delta, merge_deltas, DeltaError};
-use crate::page::{PageAllocator, PageError, PageID};
+use crate::page::{PageAllocator, PageError};
+use mmsb_primitives::PageID;
 use std::collections::HashMap;
 use std::sync::mpsc;
 use std::sync::{Arc, Mutex};
