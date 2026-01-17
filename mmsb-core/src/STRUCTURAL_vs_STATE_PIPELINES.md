@@ -3,6 +3,8 @@
 ### STRUCTURAL PIPELINE (to be implemented)
 
 ```
+StructuralIntent
+   ↓
 StructuralOps
    ↓
 ShadowPageGraph (apply ops)
@@ -19,6 +21,8 @@ DependencyGraph snapshot updated
 ### STATE PIPELINE (already implemented)
 
 ```
+StateIntent
+  ↓
 Delta
   ↓
 JudgmentToken + AdmissionProof
@@ -30,5 +34,4 @@ snapshot DependencyGraph
 propagation
 ```
 
----
 
