@@ -1,6 +1,0 @@
-//! Compatibility re-exports for legacy module paths.
-
-pub use crate::delta::delta_types::{DeltaError, DeltaID, Source};
-pub use crate::epoch::epoch_types::{Epoch, EpochCell};
-pub use crate::epoch::gc::{GCMetrics, MemoryPressureHandler};
-pub use crate::page::page_types::{PageError, PageID, PageLocation};

@@ -1,0 +1,15 @@
+error[E0061]: this method takes 3 arguments but 1 argument was supplied
+  --> tests/compile_fail/no_token.rs:18:9
+   |
+18 |     log.append(delta).unwrap();
+   |         ^^^^^^------- two arguments of type `&mmsb_judgment::types::JudgmentToken` and `&MmsbExecutionProof` are missing
+   |
+note: method defined here
+  --> src/01_page/tlog.rs
+   |
+   |     pub fn append(
+   |            ^^^^^^
+help: provide the arguments
+   |
+18 |     log.append(/* &mmsb_judgment::types::JudgmentToken */, /* &MmsbExecutionProof */, delta).unwrap();
+   |                ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

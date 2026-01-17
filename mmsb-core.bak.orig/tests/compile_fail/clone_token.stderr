@@ -1,0 +1,5 @@
+error[E0599]: no method named `clone` found for struct `JudgmentToken` in the current scope
+ --> tests/compile_fail/clone_token.rs:5:24
+  |
+5 |     let _clone = token.clone();
+  |                        ^^^^^ method not found in `JudgmentToken`

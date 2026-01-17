@@ -1,0 +1,31 @@
+FFI Function,Tested in rust_smoke_final.rs?,Notes
+mmsb_allocator_new					,Yes,Used everywhere
+mmsb_allocator_free					,Yes,
+mmsb_allocator_allocate					,Yes,Even 64 MiB unified
+mmsb_allocator_release					,Yes,
+mmsb_allocator_get_page					,Yes,
+mmsb_allocator_page_count				,Yes,
+mmsb_allocator_list_pages				,Yes,Full metadata test
+mmsb_page_read						,Yes,Multiple times
+mmsb_page_epoch						,Yes,
+mmsb_page_write_masked					,Yes,Full-page write
+mmsb_page_metadata_size					,Yes,
+mmsb_page_metadata_export				,Yes,
+mmsb_page_metadata_import				,Yes,
+mmsb_delta_new						,Yes,Full inspection
+mmsb_delta_free						,Yes,
+mmsb_delta_apply					,Yes,
+mmsb_delta_id / page_id / epoch / is_sparse / timestamp	,Yes,
+mmsb_delta_source_len / copy_source			,Yes,
+mmsb_delta_mask_len / copy_mask				,Yes,
+mmsb_delta_payload_len / copy_payload			,Yes,
+mmsb_tlog_new						,Yes,
+mmsb_tlog_free						,Yes,
+mmsb_tlog_append					,Yes,
+mmsb_checkpoint_write					,Yes,
+mmsb_checkpoint_load					,Yes,Full round-trip
+mmsb_tlog_reader_new					,Yes,
+mmsb_tlog_reader_free					,Yes,
+mmsb_tlog_reader_next					,Yes,
+mmsb_tlog_summary					,Yes,Even on bad path
+mmsb_get_last_error					,Yes,Invalid handle test
