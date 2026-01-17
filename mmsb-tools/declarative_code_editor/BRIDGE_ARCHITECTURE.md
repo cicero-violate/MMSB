@@ -8,32 +8,32 @@ The **Bridge Layer** connects `declarative_code_editor` (declarative query/mutat
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                    DECLARATIVE CODE EDITOR                       │
-│                                                                  │
-│  SourceBuffer (in-memory) → QueryPlan → MutationPlan           │
+│                    DECLARATIVE CODE EDITOR                      │
+│                                                                 │
+│  SourceBuffer (in-memory) → QueryPlan → MutationPlan            │
 │  { path, content, ast }                                         │
 └────────────────────────────┬────────────────────────────────────┘
                              │
                              ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│                        BRIDGE LAYER                              │
-│                                                                  │
+│                       BRIDGE LAYER                              │
+│                                                                 │
 │  ┌────────────────────┐                                         │
-│  │ StructuralClassifier│                                        │
+│  │StructuralClassifier│                                         │
 │  │                    │                                         │
 │  │ Separate:          │                                         │
 │  │ - Structural ops   │                                         │
 │  │ - Page deltas      │                                         │
 │  └────────────────────┘                                         │
-│            │                                                     │
-│            ▼                                                     │
+│            │                                                    │
+│            ▼                                                    │
 │   ┌─────────────────┐                                           │
 │   │  BridgedOutput  │                                           │
 │   │                 │                                           │
-│   │ - intents       │ (TODO: extract from AST diff)            │
-│   │ - page_deltas   │ ✅ Generated from source                │
-│   │ - structural_ops│ (TODO: detect imports)                   │
-│   │ - route         │ ✅ State/Structural/Both                │
+│   │ - intents       │ (TODO: extract from AST diff)             │
+│   │ - page_deltas   │ ✅ Generated from source                  │
+│   │ - structural_ops│ (TODO: detect imports)                    │
+│   │ - route         │ ✅ State/Structural/Both                  │
 │   └─────────────────┘                                           │
 └────────────────────────────┬────────────────────────────────────┘
                              │
