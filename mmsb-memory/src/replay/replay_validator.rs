@@ -1,6 +1,7 @@
 //! Deterministic replay validator built on top of checkpoint snapshots.
 
-use crate::page::{PageAllocator, PageSnapshotData, PageError, PageID};
+use crate::page::{PageAllocator, PageSnapshotData, PageError};
+use mmsb_primitives::PageID;
 use crate::tlog::TransactionLog;
 use std::collections::HashMap;
 
