@@ -1,5 +1,5 @@
 use super::shadow_graph::ShadowPageGraph;
-use crate::page::PageID;
+use crate::types::PageID;
 use std::collections::{HashMap, VecDeque};
 
 pub fn topological_sort(graph: &ShadowPageGraph) -> Vec<PageID> {

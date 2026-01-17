@@ -115,3 +115,5 @@ pub fn compact(deltas: &[Delta]) -> Vec<Delta> {
     }
     result
 }
+use crate::delta::delta::Delta;
+use crate::types::DeltaError;

@@ -1,26 +1,17 @@
 use std::sync::atomic::{AtomicU32, Ordering};
-
-/// Page epoch (monotonic counter)
-#[repr(transparent)]
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Default)]
-pub struct Epoch(pub u32);
-
-impl Epoch {
-    pub fn new(value: u32) -> Self {
-        Epoch(value)
-    }
-}
+use std::sync::atomic::{AtomicU64, Ordering};
+use crate::types::Epoch;
 
 /// Thread-safe epoch cell reused inside the Rust Page structure.
 #[derive(Debug)]
 pub struct EpochCell {
-    inner: AtomicU32,
+    inner: AtomicU64,
 }
 
 impl EpochCell {
-    pub fn new(value: u32) -> Self {
+    pub fn new(value: u64) -> Self {
         Self {
-            inner: AtomicU32::new(value),
+            inner: AtomicU64::new(value),
         }
     }
 

@@ -1,5 +1,5 @@
 use super::shadow_graph::ShadowPageGraph;
-use crate::page::PageID;
+use crate::types::PageID;
 use std::collections::HashMap;
 
 enum VisitState {

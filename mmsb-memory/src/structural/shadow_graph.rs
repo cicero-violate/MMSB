@@ -1,7 +1,7 @@
 use super::edge_types::EdgeType;
 use super::structural_types::StructuralOp;
 use crate::dag::DependencyGraph;
-use crate::page::PageID;
+use crate::types::PageID;
 use parking_lot::RwLock;
 use std::collections::{HashMap, HashSet};
 
