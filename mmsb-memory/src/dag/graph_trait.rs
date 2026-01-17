@@ -1,4 +1,5 @@
 use crate::page::PageID;
+use mmsb_primitives::PageID;
 use crate::dag::EdgeType;
 
 pub trait GraphStructure {
