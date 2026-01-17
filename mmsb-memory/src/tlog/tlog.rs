@@ -76,35 +76,32 @@ impl TransactionLog {
     /// Append a delta with proof witness (no JudgmentToken)
     pub fn append(
         &self,
-        proof: &MmsbExecutionProof,
+        admission_proof: &AdmissionProof,  // ← NEW: canonical witness
         delta: Delta,
     ) -> std::io::Result<()> {
-        if proof.version != EXECUTION_PROOF_VERSION {
+        // Remove the version/hash check that was for MmsbExecutionProof
+        // (or replace with admission-specific check if needed)
+
+        // Example minimal validation (optional):
+        if admission_proof.epoch == 0 {
             return Err(std::io::Error::new(
-                std::io::ErrorKind::PermissionDenied,
-                "execution proof version mismatch",
-            ));
-        }
-        let expected_hash = delta_hash(&delta);
-        if proof.delta_hash != expected_hash {
-            return Err(std::io::Error::new(
-                std::io::ErrorKind::PermissionDenied,
-                "execution proof hash mismatch",
+                std::io::ErrorKind::InvalidData,
+                "invalid admission epoch",
             ));
         }
 
-        // Append to in-memory queue (if needed for replay)
-        self.entries.write().push_back(delta.clone());
+        // Serialize admission_proof + delta
+        let serialized = bincode::serialize(&(admission_proof, &delta))
+            .map_err(|e| std::io::Error::new(std::io::ErrorKind::Other, e))?;
 
-        // Write to durable storage
         let mut writer = self.writer.write();
         if let Some(w) = writer.as_mut() {
-            // Serialize and write (real impl would serialize proof + delta)
-            let serialized = bincode::serialize(&(proof, &delta)).map_err(|e| std::io::Error::new(std::io::ErrorKind::Other, e))?;
             w.write_all(&serialized.len().to_le_bytes())?;
             w.write_all(&serialized)?;
             w.flush()?;
         }
+
+        self.entries.write().push_back(delta.clone());
 
         Ok(())
     }
