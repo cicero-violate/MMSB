@@ -3,151 +3,89 @@ use crate::structural::{StructuralOp, has_cycle, GraphValidator};
 use crate::outcome::DagCommitError;
 use crate::structural::shadow_graph::ShadowPageGraph;
 use crate::replay::dag_log::{append_structural_record, default_structural_log_path};
-use crate::proofs::{MmsbStructuralAdmissionProof, STRUCTURAL_PROOF_VERSION};
-
+use sha2::{Digest, Sha256};
 pub fn build_dependency_graph(ops: &[StructuralOp]) -> DependencyGraph {
-    let mut dag = DependencyGraph::new();
-    dag.apply_ops(ops);
-    dag
+let mut dag = DependencyGraph::new();
+dag.apply_ops(ops);
+dag
 }
-
 pub(crate) fn apply_ops_unchecked(dag: &mut DependencyGraph, ops: &[StructuralOp]) {
-    dag.apply_ops(ops);
+dag.apply_ops(ops);
 }
-
 pub fn commit_structural_delta(
-    dag: &mut DependencyGraph,
-    ops: &[StructuralOp],
-    proof: &MmsbStructuralAdmissionProof,
+dag: &mut DependencyGraph,
+ops: &[StructuralOp],
 ) -> Result<(), DagCommitError> {
-    if ops.is_empty() {
-        return Err(DagCommitError::EmptyOperations);
-    }
-
-    if proof.version != STRUCTURAL_PROOF_VERSION {
-        return Err(DagCommitError::ProofVersionMismatch {
-            expected: STRUCTURAL_PROOF_VERSION,
-            found: proof.version,
-        });
-    }
-
-    if !proof.verify_ops(ops) {
-        let expected = proof.ops_hash.clone();
-        let found = compute_ops_hash_local(ops);
-        return Err(DagCommitError::ProofHashMismatch { expected, found });
-    }
-
-    if !proof.approved {
-        return Err(DagCommitError::ProofNotApproved);
-    }
-
-    for op in ops {
-        if !dag.contains_page(op.from_page()) {
-            return Err(DagCommitError::InvalidPageReference(op.from_page()));
-        }
-        if !dag.contains_page(op.to_page()) {
-            return Err(DagCommitError::InvalidPageReference(op.to_page()));
-        }
-    }
-
-    let shadow = ShadowPageGraph::from_dag_and_ops(dag, ops);
-
-    if has_cycle(&shadow) {
-        return Err(DagCommitError::CycleDetected);
-    }
-
-    let validator = GraphValidator::new(&shadow);
-    let report = validator.detect_cycles();
-    if report.has_cycle {
-        return Err(DagCommitError::CycleDetected);
-    }
-
-    apply_ops_unchecked(dag, ops);
-
-    let path = default_structural_log_path();
-    append_structural_record(&path, ops, proof)
+if ops.is_empty() {
+return Err(DagCommitError::EmptyOperations);
 }
-
+for op in ops {
+if !dag.contains_page(op.from_page()) {
+return Err(DagCommitError::InvalidPageReference(op.from_page()));
+}
+if !dag.contains_page(op.to_page()) {
+return Err(DagCommitError::InvalidPageReference(op.to_page()));
+}
+}
+let shadow = ShadowPageGraph::from_dag_and_ops(dag, ops);
+if has_cycle(&shadow) {
+return Err(DagCommitError::CycleDetected);
+}
+let validator = GraphValidator::new(&shadow);
+let report = validator.detect_cycles();
+if report.has_cycle {
+return Err(DagCommitError::CycleDetected);
+}
+apply_ops_unchecked(dag, ops);
+let path = default_structural_log_path();
+append_structural_record(&path, ops)
+}
 fn compute_ops_hash_local(ops: &[StructuralOp]) -> String {
-    let mut hasher = Sha256::new();
-    for op in ops {
-        hasher.update(op.to_string().as_bytes());
-    }
-    format!("{:x}", hasher.finalize())
+let mut hasher = Sha256::new();
+for op in ops {
+hasher.update(format!("{:?}", op).as_bytes());  // Use Debug for hash
 }
-
+format!("{:x}", hasher.finalize())
+}
 #[cfg(test)]
 mod tests {
-    use super::{commit_structural_delta, compute_ops_hash_local};
-    use crate::structural::{EdgeType, StructuralOp};
-    use crate::outcome::DagCommitError;
-    use crate::proofs::MmsbStructuralAdmissionProof;
-    use mmsb_primitives::PageID;
-
-    #[test]
-    fn commit_rejects_empty_ops() {
-        let mut dag = DependencyGraph::new();
-        let ops = vec![];
-        let proof = MmsbStructuralAdmissionProof::new(
-            &ops,
-            None,
-            "test_conv".to_string(),
-            "test_msg".to_string(),
-            "test_scope".to_string(),
-            true,
-            0,
-        );
-
-        let err = commit_structural_delta(&mut dag, &ops, &proof)
-            .expect_err("expected empty ops error");
-        assert!(matches!(err, DagCommitError::EmptyOperations));
-    }
-
-    #[test]
-    fn commit_rejects_invalid_proof_version() {
-        let mut dag = DependencyGraph::new();
-        let ops = vec![StructuralOp::AddEdge {
-            from: PageID(1),
-            to: PageID(2),
-            edge_type: EdgeType::Data,
-        }];
-        let mut proof = MmsbStructuralAdmissionProof::new(
-            &ops,
-            None,
-            "test_conv".to_string(),
-            "test_msg".to_string(),
-            "test_scope".to_string(),
-            true,
-            0,
-        );
-        proof.version = 999;
-
-        let err = commit_structural_delta(&mut dag, &ops, &proof)
-            .expect_err("expected version mismatch");
-        assert!(matches!(err, DagCommitError::ProofVersionMismatch { .. }));
-    }
-
-    #[test]
-    fn commit_rejects_unapproved_proof() {
-        let mut dag = DependencyGraph::new();
-        let ops = vec![StructuralOp::AddEdge {
-            from: PageID(1),
-            to: PageID(2),
-            edge_type: EdgeType::Data,
-        }];
-        let proof = MmsbStructuralAdmissionProof::new(
-            &ops,
-            None,
-            "test_conv".to_string(),
-            "test_msg".to_string(),
-            "test_scope".to_string(),
-            false,
-            0,
-        );
-
-        let err = commit_structural_delta(&mut dag, &ops, &proof)
-            .expect_err("expected proof not approved");
-        assert!(matches!(err, DagCommitError::ProofNotApproved));
-    }
+use super::{commit_structural_delta, compute_ops_hash_local};
+use crate::structural::{EdgeType, StructuralOp};
+use crate::outcome::DagCommitError;
+use crate::page::PageID;
+#[test]
+fn commit_rejects_empty_ops() {
+let mut dag = DependencyGraph::new();
+let ops = vec![];
+let err = commit_structural_delta(&mut dag, &ops)
+.expect_err("expected empty ops error");
+assert!(matches!(err, DagCommitError::EmptyOperations));
 }
-
+#[test]
+fn commit_rejects_invalid_page_reference() {
+let mut dag = DependencyGraph::new();
+let ops = vec![StructuralOp::AddEdge {
+from: PageID(1),
+to: PageID(2),
+edge_type: EdgeType::Data,
+}];
+let err = commit_structural_delta(&mut dag, &ops)
+.expect_err("expected invalid page reference");
+assert!(matches!(err, DagCommitError::InvalidPageReference(_) ));
+}
+}
+</DOCUMENT>
+<DOCUMENT filename="commit_delta.rs">
+use crate::delta::Delta;
+use crate::dag::DependencyGraph;
+use crate::tlog::TransactionLog;
+use mmsb_proof::AdmissionProof;  // Canonical from mmsb-proof
+pub fn commit_delta(
+log: &TransactionLog,
+admission: &AdmissionProof,
+delta: &Delta,
+dag: Option<&DependencyGraph>,
+) -> Result<(), std::io::Error> {
+// Stub implementation (expand as needed)
+Ok(())
+}
