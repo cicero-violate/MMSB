@@ -1,7 +1,7 @@
 [package]
 name = "mmsb-propagation"
 version = "0.1.0"
-edition = "2024"
+edition = "2021"
 
 [lib]
 name = "mmsb_propagation"
@@ -9,3 +9,5 @@ path = "src/lib.rs"
 
 [dependencies]
 mmsb-primitives = { path = "../mmsb-primitives" }
+mmsb-physical = { path = "../mmsb-physical" }
+parking_lot = "0.12"
