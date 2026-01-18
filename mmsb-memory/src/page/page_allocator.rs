@@ -1,5 +1,6 @@
 use crate::page::page_types::{PageError, PageLocation};
 use mmsb_primitives::PageID;
+use mmsb_physical::AllocatorStats;
 use crate::page::Page;
 use crate::epoch::Epoch;
 use parking_lot::Mutex;
@@ -328,4 +329,4 @@ mod tests {
 
 
 }
-use mmsb_allocator::AllocatorStats;
+
