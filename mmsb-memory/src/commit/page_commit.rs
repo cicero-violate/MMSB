@@ -1,14 +1,14 @@
 //! Page Commit - Commit delta to page
-use crate::tlog::{self, TransactionLog};
+use crate::tlog::TransactionLog;
 use crate::delta::Delta;
 use mmsb_proof::AdmissionProof;  // Canonical from mmsb-proof
 use crate::dag::DependencyGraph;
 
 pub(crate) fn commit_delta(
-    log: &TransactionLog,
-    admission_proof: &AdmissionProof,
-    delta: Delta,
-    active_dag: Option<&DependencyGraph>,
+   log: &TransactionLog,
+   admission_proof: &AdmissionProof,
+   delta: Delta,
+    _active_dag: Option<&DependencyGraph>,
 ) -> std::io::Result<()> {
     // Basic validation (expand as needed)
     log.append(admission_proof, delta)

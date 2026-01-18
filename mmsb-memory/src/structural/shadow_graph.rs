@@ -30,10 +30,10 @@ impl ShadowPageGraph {
                     StructuralOp::AddEdge { from, to, edge_type } => {
                         adj.entry(*from).or_default().push((*to, *edge_type));
                     }
-                    StructuralOp::RemoveEdge { from, to } => {
-                        if let Some(edges) = adj.get_mut(from) {
-                            edges.retain(|(target, _)| target != to);
-                        }
+                   StructuralOp::RemoveEdge { from, to } => {
+                       if let Some(edges) = adj.get_mut(from) {
+                            edges.retain(|(target, _): &(PageID, EdgeType)| target != to);
+                       }
                     }
                 }
             }
@@ -46,10 +46,10 @@ impl ShadowPageGraph {
         guard.entry(from).or_default().push((to, edge_type));
     }
 
-    pub fn remove_edge(&self, from: PageID, to: PageID) {
-        if let Some(edges) = self.adjacency.write().get_mut(&from) {
-            edges.retain(|(target, _)| target != &to);
-        }
+   pub fn remove_edge(&self, from: PageID, to: PageID) {
+       if let Some(edges) = self.adjacency.write().get_mut(&from) {
+            edges.retain(|(target, _): &(PageID, EdgeType)| target != &to);
+       }
     }
 
     pub fn descendants(&self, root: PageID) -> HashSet<PageID> {

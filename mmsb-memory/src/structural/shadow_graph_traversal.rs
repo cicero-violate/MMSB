@@ -9,10 +9,10 @@ pub fn topological_sort(graph: &ShadowPageGraph) -> Vec<PageID> {
     let mut adjacency = HashMap::new();
 
     {
-        // Build adjacency snapshots
-        for (node, edges) in graph.adjacency.read().iter() {
-            adjacency.insert(*node, edges.clone());
-            in_degree.entry(*node).or_insert(0);
+       // Build adjacency snapshots
+       for (node, edges) in graph.adjacency.read().iter() {
+            adjacency.insert(*node, edges.clone() as Vec<(PageID, crate::dag::EdgeType)>);
+           in_degree.entry(*node).or_insert(0);
             for (child, _) in edges.iter() {
                 *in_degree.entry(*child).or_insert(0) += 1;
             }

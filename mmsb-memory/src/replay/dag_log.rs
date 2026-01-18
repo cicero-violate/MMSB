@@ -1,6 +1,5 @@
 use crate::dag::{DependencyGraph, EdgeType};
 use crate::structural::StructuralOp;
-use std::fmt::Display;  // add this line
 use mmsb_primitives::PageID;
 use std::fs::{File, OpenOptions};
 use std::io::{self, Read, Write, Seek, SeekFrom};

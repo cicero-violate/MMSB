@@ -53,17 +53,17 @@ impl DependencyGraph {
         result
     }
 
-    pub fn has_edge(&self, from: PageID, to: PageID) -> bool {
-        self.adjacency
-            .get(&from)
-            .map(|targets| targets.iter().any(|(t, _)| *t == to))
-            .unwrap_or(false)
+   pub fn has_edge(&self, from: PageID, to: PageID) -> bool {
+       self.adjacency
+           .get(&from)
+            .map(|targets: &Vec<(PageID, EdgeType)>| targets.iter().any(|(t, _)| *t == to))
+           .unwrap_or(false)
     }
 
-    pub fn contains_page(&self, page_id: PageID) -> bool {
-        self.adjacency.contains_key(&page_id)
-            || self.adjacency.values().any(|targets| {
-                targets.iter().any(|(t, _)| *t == page_id)
+   pub fn contains_page(&self, page_id: PageID) -> bool {
+       self.adjacency.contains_key(&page_id)
+            || self.adjacency.values().any(|targets: &Vec<(PageID, EdgeType)>| {
+               targets.iter().any(|(t, _)| *t == page_id)
             })
     }
 
@@ -75,10 +75,10 @@ impl DependencyGraph {
         self.version += 1;
     }
 
-    pub fn remove_edge(&mut self, from: PageID, to: PageID) {
-        if let Some(edges) = self.adjacency.get_mut(&from) {
-            edges.retain(|(target, _)| *target != to);
-        }
+   pub fn remove_edge(&mut self, from: PageID, to: PageID) {
+       if let Some(edges) = self.adjacency.get_mut(&from) {
+            edges.retain(|(target, _): &(PageID, EdgeType)| *target != to);
+       }
         self.version += 1;
     }
 
@@ -90,11 +90,11 @@ impl DependencyGraph {
                         .entry(*from)
                         .or_default()
                         .push((*to, *edge_type));
-                }
-                StructuralOp::RemoveEdge { from, to } => {
-                    if let Some(edges) = self.adjacency.get_mut(from) {
-                        edges.retain(|(target, _)| target != to);
-                    }
+               }
+               StructuralOp::RemoveEdge { from, to } => {
+                   if let Some(edges) = self.adjacency.get_mut(from) {
+                        edges.retain(|(target, _): &(PageID, EdgeType)| target != to);
+                   }
                 }
             }
         }

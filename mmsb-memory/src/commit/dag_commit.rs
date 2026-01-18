@@ -3,7 +3,6 @@ use crate::structural::{StructuralOp, has_cycle, GraphValidator};
 use crate::outcome::DagCommitError;
 use crate::structural::shadow_graph::ShadowPageGraph;
 use crate::replay::dag_log::append_structural_record;
-use sha2::Sha256;
 
 pub fn build_dependency_graph(ops: &[StructuralOp]) -> DependencyGraph {
     let mut dag = DependencyGraph::new();

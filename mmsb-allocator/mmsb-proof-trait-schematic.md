@@ -1,0 +1,1 @@
+../docs/mmsb-proof-trait-schematic.md

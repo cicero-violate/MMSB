@@ -1,6 +1,5 @@
 use crate::dag::DependencyGraph;
 use crate::outcome::DagValidator;
-// use crate::device::DeviceRegistry;
 use crate::page::{PageAllocator, PageError};
 use mmsb_primitives::PageID;
 use crate::epoch::Epoch;
@@ -14,9 +13,8 @@ pub trait Invariant: Send + Sync {
 
 #[derive(Clone)]
 pub struct InvariantContext<'a> {
-    pub allocator: Option<&'a PageAllocator>,
-    pub graph: Option<&'a DependencyGraph>,
-    pub registry: Option<&'a DeviceRegistry>,
+   pub allocator: Option<&'a PageAllocator>,
+   pub graph: Option<&'a DependencyGraph>,
 }
 
 #[derive(Debug, Clone)]

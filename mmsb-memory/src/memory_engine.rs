@@ -36,7 +36,6 @@ use crate::{
 };
 
 use mmsb_events::{ExecutionRequested, MemoryCommitted};
-use mmsb_primitives::PageID;
 use mmsb_proof::{
     AdmissionProof, CommitProof, Hash, JudgmentProof, OutcomeProof, Proof,
 };

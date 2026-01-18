@@ -1,0 +1,317 @@
+//! Memory Engine - Canonical truth owner implementing D, E, F proof production
+//! 
+//! Authority: Truth ownership only
+//! Produces: AdmissionProof (D), CommitProof (E), OutcomeProof (F)
+//! Consumes: JudgmentProof (C)
+//!
+//! The MemoryEngine is the SOLE TRUTH AUTHORITY in MMSB.
+//! It owns canonical time (epochs), structural invariants, and mutation semantics.
+//! It does NOT know about execution runtime, hardware, or scheduling.
+//!
+//! Proof Chain:
+//!   C (JudgmentProof) → D (AdmissionProof) → E (CommitProof) → F (OutcomeProof)
+
+use crate::dag::DependencyGraph;
+use crate::delta::Delta;
+use crate::epoch::EpochCell;
+use crate::outcome::DagValidator;
+use crate::page::{PageAllocator, PageAllocatorConfig};
+use crate::proofs::MmsbExecutionProof;
+use crate::tlog::TransactionLog;
+use mmsb_judgment::JudgmentToken;
+
+use mmsb_events::{ExecutionRequested, MemoryCommitted};
+use mmsb_proof::{
+    Hash, JudgmentProof, AdmissionProof, CommitProof, OutcomeProof,
+    AdmissionStage, CommitStage, OutcomeStage, Proof,
+};
+
+use parking_lot::RwLock;
+use std::path::PathBuf;
+use std::sync::Arc;
+
+/// MemoryEngine - Canonical truth authority
+///
+/// Implements the three proof stages:
+/// - AdmissionStage: Verifies JudgmentProof (C) and produces AdmissionProof (D)
+/// - CommitStage: Applies mutations and produces CommitProof (E)
+/// - OutcomeStage: Validates invariants and produces OutcomeProof (F)
+///
+/// Authority: Truth semantics only (no hardware, no runtime, no scheduling)
+pub struct MemoryEngine {
+    /// Page allocator for memory management
+    allocator: Arc<PageAllocator>,
+    
+    /// Dependency graph (canonical truth)
+    dag: Arc<RwLock<DependencyGraph>>,
+    
+    /// Transaction log
+    tlog: Arc<RwLock<TransactionLog>>,
+    
+    /// Current epoch (canonical time)
+    epoch: Arc<EpochCell>,
+    
+    /// Replay protection (admitted executions)
+    admitted: Arc<RwLock<std::collections::HashSet<Hash>>>,
+}
+
+impl MemoryEngine {
+    /// Create a new MemoryEngine with the given configuration
+    pub fn new(config: MemoryEngineConfig) -> Result<Self, MemoryEngineError> {
+        let allocator = Arc::new(PageAllocator::new(PageAllocatorConfig {
+            default_location: config.default_location,
+        }));
+        
+        let dag = Arc::new(RwLock::new(DependencyGraph::new()));
+        
+        let tlog = Arc::new(RwLock::new(
+            TransactionLog::new(&config.tlog_path)
+                .map_err(|e| MemoryEngineError::TlogOpen(e))?
+        ));
+        
+        let epoch = Arc::new(EpochCell::new(0));
+        let admitted = Arc::new(RwLock::new(std::collections::HashSet::new()));
+        
+        Ok(Self {
+            allocator,
+            dag,
+            tlog,
+            epoch,
+            admitted,
+        })
+    }
+    
+    /// Admission Stage (D): Verify JudgmentProof and admit execution
+    ///
+    /// Verifies:
+    /// - JudgmentProof (C) validity
+    /// - Epoch validity
+    /// - Replay protection (no duplicate admits)
+    fn admit_execution(
+        &self,
+        judgment_proof: &JudgmentProof,
+    ) -> Result<AdmissionProof, AdmissionError> {
+        // Verify JudgmentProof (C)
+        if !self.verify_judgment_proof(judgment_proof) {
+            return Err(AdmissionError::InvalidJudgmentProof);
+        }
+        
+        // Check epoch validity
+        let current_epoch = self.epoch.load();
+        let judgment_epoch = judgment_proof.timestamp;
+        if judgment_epoch < current_epoch.0 as u64 {
+            return Err(AdmissionError::StaleEpoch);
+        }
+        
+        // Replay protection
+        let judgment_hash = judgment_proof.hash();
+        let mut admitted = self.admitted.write();
+        if admitted.contains(&judgment_hash) {
+            return Err(AdmissionError::AlreadyAdmitted);
+        }
+        admitted.insert(judgment_hash);
+        
+        // Produce AdmissionProof (D)
+        Ok(AdmissionProof {
+            judgment_proof_hash: judgment_hash,
+            epoch: current_epoch.0 as u64,
+            nonce: current_epoch.0 as u64,
+        })
+    }
+    
+    /// Commit Stage (E): Apply delta and seal with CommitProof
+    ///
+    /// Applies the mutation and enforces:
+    /// - Structural invariants
+    /// - State invariants
+    /// - Deterministic ordering
+    fn commit_delta(
+        &self,
+        admission_proof: &AdmissionProof,
+        delta: &Delta,
+        token: &JudgmentToken,
+    ) -> Result<CommitProof, CommitError> {
+        // Apply delta to memory
+        // (Actual implementation would interact with allocator)
+        
+        // Increment epoch
+        let new_epoch = self.epoch.increment();
+        
+        // Build execution proof for tlog
+        let execution_proof = MmsbExecutionProof {
+            version: crate::proofs::EXECUTION_PROOF_VERSION,
+            delta_hash: crate::tlog::delta_hash(delta),
+            epoch: new_epoch.0 as u64,
+            output: serde_json::Value::Null,
+            tool_call_id: String::new(),
+            tool_name: String::new(),
+        };
+        
+        // Record in tlog with proper argument order: token, proof, delta
+        self.tlog.write().append(token, &execution_proof, delta.clone())
+            .map_err(|e| CommitError::TlogWrite(e))?;
+        
+        // Compute state hash (placeholder)
+        let state_hash = self.compute_state_hash();
+        
+        // Produce CommitProof (E)
+        Ok(CommitProof {
+            admission_proof_hash: admission_proof.hash(),
+            delta_hash: execution_proof.delta_hash.as_bytes().try_into()
+                .unwrap_or([0u8; 32]),
+            state_hash,
+            invariants_held: true,
+        })
+    }
+    
+    /// Outcome Stage (F): Validate and produce OutcomeProof
+    ///
+    /// Validates:
+    /// - DAG structural integrity
+    /// - Cycle detection
+    /// - Final state consistency
+    fn record_outcome(
+        &self,
+        commit_proof: &CommitProof,
+    ) -> Result<OutcomeProof, OutcomeError> {
+        // Validate DAG state
+        let dag = self.dag.read();
+        let validator = DagValidator::new(&*dag);
+        let report = validator.detect_cycles();
+        
+        if report.has_cycle {
+            return Err(OutcomeError::CycleDetected);
+        }
+        
+        // Produce OutcomeProof (F)
+        Ok(OutcomeProof {
+            commit_proof_hash: commit_proof.hash(),
+            success: true,
+            error_class: None,
+            rollback_hash: None,
+        })
+    }
+    
+    /// Verify JudgmentProof (C) validity
+    fn verify_judgment_proof(&self, judgment_proof: &JudgmentProof) -> bool {
+        // Check basic validity
+        if !judgment_proof.approved {
+            return false;
+        }
+        
+        // In production: verify signature, check authority, validate proof chain
+        // For now: basic approval check
+        true
+    }
+    
+    /// Compute current state hash
+    fn compute_state_hash(&self) -> Hash {
+        // Placeholder implementation
+        // In production: hash DAG state + allocator state
+        [0u8; 32]
+    }
+    
+    /// Process execution request through full pipeline: Admit → Commit → Outcome
+    ///
+    /// This is the main entry point for processing an ExecutionRequested event.
+    /// It orchestrates all three proof stages: D → E → F
+    pub fn process_execution(
+        &self,
+        judgment_proof: JudgmentProof,
+        token: JudgmentToken,
+        delta: Delta,
+    ) -> Result<MemoryCommitted, ProcessError> {
+        // Stage D: Admission
+        let admission_proof = self.admit_execution(&judgment_proof)
+            .map_err(ProcessError::Admission)?;
+        
+        // Stage E: Commit
+        let commit_proof = self.commit_delta(&admission_proof, &delta, &token)
+            .map_err(ProcessError::Commit)?;
+        
+        // Stage F: Outcome
+        let outcome_proof = self.record_outcome(&commit_proof)
+            .map_err(ProcessError::Outcome)?;
+        
+        // Emit MemoryCommitted event
+        let current_epoch = self.epoch.load();
+        let event_id = self.compute_event_hash(&admission_proof, &commit_proof, &outcome_proof);
+        
+        Ok(MemoryCommitted {
+            event_id,
+            timestamp: std::time::SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)
+                .unwrap()
+                .as_secs(),
+            delta_hash: commit_proof.delta_hash,
+            epoch: current_epoch.0 as u64,
+            snapshot_ref: None,
+            admission_proof,
+            commit_proof,
+            outcome_proof,
+        })
+    }
+    
+    /// Compute event hash from proofs
+    fn compute_event_hash(
+        &self,
+        admission: &AdmissionProof,
+        commit: &CommitProof,
+        outcome: &OutcomeProof,
+    ) -> Hash {
+        use sha2::{Digest, Sha256};
+        let mut hasher = Sha256::new();
+        hasher.update(admission.hash());
+        hasher.update(commit.hash());
+        hasher.update(outcome.hash());
+        hasher.finalize().into()
+    }
+    
+    /// Handle ExecutionRequested event
+    pub fn handle_execution_requested(&mut self, _event: ExecutionRequested) {
+        // TODO: Implement full event handling once ExecutionRequested provides all needed data
+        println!("ExecutionRequested received - awaiting full implementation");
+    }
+}
+
+/// Configuration for MemoryEngine
+pub struct MemoryEngineConfig {
+    pub tlog_path: PathBuf,
+    pub default_location: crate::page::PageLocation,
+}
+
+// Error types
+#[derive(Debug)]
+pub enum MemoryEngineError {
+    TlogOpen(std::io::Error),
+}
+
+#[derive(Debug)]
+pub enum AdmissionError {
+    InvalidJudgmentProof,
+    StaleEpoch,
+    AlreadyAdmitted,
+}
+
+#[derive(Debug)]
+pub enum CommitError {
+    TlogWrite(std::io::Error),
+}
+
+#[derive(Debug)]
+pub enum OutcomeError {
+    CycleDetected,
+}
+
+#[derive(Debug)]
+pub enum ProcessError {
+    Admission(AdmissionError),
+    Commit(CommitError),
+    Outcome(OutcomeError),
+}
+
+// Trait implementations per canonical spec
+// These will be fully implemented once mmsb-proof trait interfaces are finalized
+// impl AdmissionStage for MemoryEngine {}
+// impl CommitStage for MemoryEngine {}
+// impl OutcomeStage for MemoryEngine {}

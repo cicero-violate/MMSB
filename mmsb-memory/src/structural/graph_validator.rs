@@ -157,10 +157,10 @@ fn is_self_loop(
     adjacency: &HashMap<PageID, Vec<(PageID, crate::dag::edge_types::EdgeType)>>,
     node: PageID,
 ) -> bool {
-    adjacency
-        .get(&node)
-        .map(|edges| edges.iter().any(|(target, _)| *target == node))
-        .unwrap_or(false)
+   adjacency
+       .get(&node)
+        .map(|edges: &Vec<(PageID, crate::dag::edge_types::EdgeType)>| edges.iter().any(|(target, _)| *target == node))
+       .unwrap_or(false)
 }
 
 #[cfg(test)]

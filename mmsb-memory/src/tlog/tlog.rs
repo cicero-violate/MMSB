@@ -5,15 +5,13 @@
 //! No authority — just durable byte storage under memory's control.
 // Keep only what's used
 use crate::delta::Delta;
-use crate::epoch::Epoch;
-use mmsb_primitives::PageID;
 use mmsb_proof::AdmissionProof;  // ← CORRECT (from the shared proof crate)
 use parking_lot::RwLock;
 use sha2::{Digest, Sha256};
 use std::collections::VecDeque;
 use std::fs::{File, OpenOptions};
-use std::io::{BufReader, BufWriter, Read, Seek, SeekFrom, Write};
-use std::path::{Path, PathBuf};
+use std::io::{BufReader, BufWriter, Read, Write};
+use std::path::PathBuf;
 pub fn delta_hash(delta: &Delta) -> String {
 let mut hasher = Sha256::new();
 hasher.update(&delta.delta_id.0.to_le_bytes());
