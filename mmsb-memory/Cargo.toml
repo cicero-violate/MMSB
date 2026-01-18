@@ -21,4 +21,4 @@ mmsb-proof = { path = "../mmsb-proof" }
 mmsb-authenticate = { path = "../mmsb-authenticate" }
 mmsb-storage = { path = "../mmsb-storage" }
 mmsb-events = { path = "../mmsb-events" }
-mmsb-allocator = { path = "../mmsb-allocator" }
+mmsb-physical = { path = "../mmsb-physical" }
