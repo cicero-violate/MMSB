@@ -129,7 +129,7 @@ impl Page {
    }
 
     /// Create a non-owning view for device operations
-    /// Only memory authority can mint views (pub(crate))
+    /// Only memory authority can mint views (pub(crate)) page_view.rs
     pub(crate) fn view(&self) -> PageView {
         PageView {
             id: self.id,
