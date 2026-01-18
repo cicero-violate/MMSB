@@ -1,1 +1,1 @@
-../../../../../chatgpt-website/chatgpt_agent/MMSB/docs/MMSB-Canonical-Event-Schemas.md
+../docs/MMSB-Canonical-Event-Schemas.md

@@ -1,4 +1,4 @@
-mmsb-allocator/
+mmsb-physical/
 ├── allocator_stats.rs
 ├── memory_pool.rs        // raw ptr + size
 ├── arena.rs              // optional

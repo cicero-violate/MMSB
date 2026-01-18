@@ -1,1 +1,1 @@
-../../../../../chatgpt-website/chatgpt_agent/MMSB/docs/mmsb-proof-chain-definitions.md
+../docs/mmsb-proof-chain-definitions.md

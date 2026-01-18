@@ -295,10 +295,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f52b00d39961fc5b2736ea853c9cc86238e165017a493d1d5c8eac6bdc4cc273"
 
 [[package]]
-name = "mmsb-allocator"
-version = "0.1.0"
-
-[[package]]
 name = "mmsb-authenticate"
 version = "0.1.0"
 dependencies = [
@@ -325,8 +321,8 @@ dependencies = [
 name = "mmsb-device"
 version = "0.1.0"
 dependencies = [
- "mmsb-allocator",
  "mmsb-memory",
+ "mmsb-physical",
  "mmsb-primitives",
  "parking_lot",
 ]
@@ -380,9 +376,9 @@ name = "mmsb-memory"
 version = "0.1.0"
 dependencies = [
  "bincode",
- "mmsb-allocator",
  "mmsb-authenticate",
  "mmsb-events",
+ "mmsb-physical",
  "mmsb-primitives",
  "mmsb-proof",
  "mmsb-storage",
@@ -392,6 +388,13 @@ dependencies = [
  "sha2",
  "thiserror",
  "walkdir",
+]
+
+[[package]]
+name = "mmsb-physical"
+version = "0.1.0"
+dependencies = [
+ "mmsb-primitives",
 ]
 
 [[package]]
@@ -419,6 +422,14 @@ version = "0.1.0"
 dependencies = [
  "serde",
  "serde-big-array",
+]
+
+[[package]]
+name = "mmsb-propagation"
+version = "0.1.0"
+dependencies = [
+ "mmsb-primitives",
+ "parking_lot",
 ]
 
 [[package]]

@@ -1,1 +1,1 @@
-../../../../../chatgpt-website/chatgpt_agent/MMSB/docs/MMSB-Canonical-Specification.md
+../docs/MMSB-Canonical-Specification.md

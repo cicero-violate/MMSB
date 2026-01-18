@@ -1,1 +1,1 @@
-../../../../../chatgpt-website/chatgpt_agent/MMSB/docs/mmsb-proof-trait-schematic.md
+../docs/mmsb-proof-trait-schematic.md

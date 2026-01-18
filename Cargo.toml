@@ -17,7 +17,7 @@ members = [
     "mmsb-intent",
     "mmsb-primitives",
     "mmsb-physical",
-  # "mmsb-propagation",
+    "mmsb-propagation",
     "mmsb-device",
   # "mmsb-optimization",
 ]

@@ -1,1 +1,0 @@
-../docs/mmsb-proof-scope.md

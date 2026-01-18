@@ -1,1 +1,0 @@
-../docs/MMSB-Canonical-Event-Schemas.md
