@@ -6,3 +6,4 @@ edition = "2021"
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
 serde-big-array = "0.5.0"  # ← CORRECT (hyphen), latest version as of 2026
+mmsb-primitives = { path = "../mmsb-primitives" }
