@@ -15,3 +15,5 @@ pub use crate::delta::Delta;
 // IMPORTANT: PageID is now exclusively from mmsb_primitives
 // All files should import it directly: use mmsb_primitives::PageID;
 // No re-export in mod.rs to avoid duplicate name/private import issues
+pub mod page_view;
+pub use page_view::PageView;

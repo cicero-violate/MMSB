@@ -326,6 +326,7 @@ name = "mmsb-device"
 version = "0.1.0"
 dependencies = [
  "mmsb-allocator",
+ "mmsb-memory",
  "mmsb-primitives",
  "parking_lot",
 ]

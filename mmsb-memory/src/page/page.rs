@@ -124,11 +124,23 @@ impl Page {
         })
     }
 
-    pub fn size(&self) -> usize {
-        self.capacity
+   pub fn size(&self) -> usize {
+       self.capacity
+   }
+
+    /// Create a non-owning view for device operations
+    /// Only memory authority can mint views (pub(crate))
+    pub(crate) fn view(&self) -> PageView {
+        PageView {
+            id: self.id,
+            location: self.location,
+            data: self.data,
+            mask: self.mask,
+            len: self.capacity,
+        }
     }
 
-    pub fn location(&self) -> PageLocation {
+   pub fn location(&self) -> PageLocation {
         self.location
     }
 
@@ -348,3 +360,4 @@ fn allocate_zeroed(size: usize, err_code: i32) -> Result<*mut u8, PageError> {
     }
     Ok(ptr)
 }
+use crate::page::page_view::PageView;

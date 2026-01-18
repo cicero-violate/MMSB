@@ -1,17 +1,16 @@
 use mmsb_primitives::PageID;
-use crate::device::Page;
+use mmsb_memory::page::PageView;
 use parking_lot::RwLock;
 use std::collections::HashMap;
-use std::sync::Arc;
 
 #[derive(Debug, Default)]
 pub struct DeviceBufferRegistry {
-    map: RwLock<HashMap<PageID, Arc<Page>>>,
+    map: RwLock<HashMap<PageID, PageView>>,
 }
 
 impl DeviceBufferRegistry {
-    pub fn insert(&self, page: Arc<Page>) {
-        self.map.write().insert(page.id, page);
+    pub fn insert(&self, view: PageView) {
+        self.map.write().insert(view.id, view);
     }
 
     pub fn remove(&self, page_id: PageID) {
@@ -26,7 +25,7 @@ impl DeviceBufferRegistry {
         self.map.read().contains_key(&page_id)
     }
 
-    pub fn get(&self, page_id: PageID) -> Option<Arc<Page>> {
+    pub fn get(&self, page_id: PageID) -> Option<PageView> {
         self.map.read().get(&page_id).cloned()
     }
 }

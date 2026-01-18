@@ -11,3 +11,4 @@ path = "src/lib.rs"
 mmsb-primitives = { path = "../mmsb-primitives" }
 mmsb-allocator = { path = "../mmsb-allocator" }
 parking_lot = "0.12"
+mmsb-memory = { path = "../mmsb-memory" }
