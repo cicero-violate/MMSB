@@ -1,6 +1,6 @@
 pub mod page_types;
 pub mod page;
-pub mod allocator;
+pub mod PageAllocator;
 pub mod lockfree_allocator;
 
 // Re-export public types from submodules — DO NOT include PageID here
