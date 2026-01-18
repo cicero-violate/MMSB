@@ -1,4 +1,5 @@
-use crate::page::{Page, PageID};
+use mmsb_primitives::PageID;
+use crate::device::Page;
 use parking_lot::RwLock;
 use std::collections::HashMap;
 use std::sync::Arc;

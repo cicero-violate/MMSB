@@ -1,10 +1,20 @@
 //! Delta integrity checks covering schema, orphan detection, and epoch ordering.
 
 use super::device_registry::DeviceBufferRegistry;
-use super::delta::Delta;
-use crate::types::{DeltaID, Epoch, PageID};
+use mmsb_primitives::{DeltaID, Epoch, PageID};
 use std::collections::HashMap;
 use std::sync::Arc;
+
+// Placeholder Delta - in full system comes from mmsb-memory
+#[derive(Debug, Clone)]
+pub struct Delta {
+   pub delta_id: DeltaID,
+   pub page_id: PageID,
+   pub epoch: Epoch,
+    pub is_sparse: bool,
+    pub mask: Vec<bool>,
+    pub payload: Vec<u8>,
+}
 
 #[derive(Debug, Clone)]
 pub enum IntegrityViolationKind {

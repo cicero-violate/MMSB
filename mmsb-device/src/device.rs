@@ -1,8 +1,13 @@
-use crate::types::PageID;
-use crate::page::Page;
+use mmsb_primitives::PageID;
 use parking_lot::RwLock;
 use std::collections::HashMap;
 use std::sync::Arc;
+
+// Placeholder - in full system, Page comes from mmsb-memory
+#[derive(Debug, Clone)]
+pub struct Page {
+    pub id: PageID,
+}
 
 #[derive(Debug, Default)]
 pub struct DeviceRegistry {

@@ -322,6 +322,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "mmsb-device"
+version = "0.1.0"
+dependencies = [
+ "mmsb-allocator",
+ "mmsb-primitives",
+ "parking_lot",
+]
+
+[[package]]
 name = "mmsb-events"
 version = "0.1.0"
 dependencies = [

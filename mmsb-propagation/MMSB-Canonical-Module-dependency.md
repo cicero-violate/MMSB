@@ -1,0 +1,1 @@
+../../../../../chatgpt-website/chatgpt_agent/MMSB/docs/MMSB-Canonical-Module-dependency.md
