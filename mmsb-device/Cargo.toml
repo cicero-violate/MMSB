@@ -9,6 +9,6 @@ path = "src/lib.rs"
 
 [dependencies]
 mmsb-primitives = { path = "../mmsb-primitives" }
-mmsb-allocator = { path = "../mmsb-allocator" }
+mmsb-physical = { path = "../mmsb-physical" }
 parking_lot = "0.12"
 mmsb-memory = { path = "../mmsb-memory" }
