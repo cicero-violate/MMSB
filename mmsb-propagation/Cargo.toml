@@ -3,7 +3,9 @@ name = "mmsb-propagation"
 version = "0.1.0"
 edition = "2024"
 
-
+[lib]
+name = "mmsb_propagation"
+path = "src/lib.rs"
 
 [dependencies]
 mmsb-primitives = { path = "../mmsb-primitives" }
