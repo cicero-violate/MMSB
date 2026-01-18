@@ -1,6 +1,5 @@
-use mmsb_memory::page::PageAllocator;
-use mmsb_memory::delta::Delta;
-use mmsb_primitives::PageID;
+use crate::page::{ColumnarDeltaBatch, Delta, PageAllocator, PageError, PageID, merge_deltas};
+use crate::types::DeltaError;
 use std::collections::HashMap;
 use std::sync::mpsc;
 use std::sync::{Arc, Mutex};
@@ -319,6 +318,3 @@ mod tests {
         assert!(metrics.batches >= 1);
     }
 }
-use mmsb_memory::page::PageError;
-use mmsb_memory::delta::ColumnarDeltaBatch;
-use mmsb_memory::delta::{DeltaError, merge_deltas};

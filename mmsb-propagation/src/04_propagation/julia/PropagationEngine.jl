@@ -1,0 +1,473 @@
+# src/05_graph/PropagationEngine.jl
+"""
+PropagationEngine - Propagates changes through dependency graph
+
+When a page changes, propagates invalidation and recomputation
+through dependent pages based on edge types.
+"""
+module PropagationEngine
+
+using Base: time_ns
+using ..PageTypes: PageID, read_page
+using ..MMSBStateTypes: MMSBState, get_page
+using ..GraphTypes: EdgeType, DATA_DEPENDENCY, CONTROL_DEPENDENCY,
+    GPU_SYNC_DEPENDENCY, COMPILER_DEPENDENCY, get_children
+using ..EventSystem: emit_event!, PAGE_INVALIDATED, PAGE_STALE,
+    GPU_SYNC_NEEDED, IR_INVALIDATED
+using ..DeltaRouter: create_delta, route_delta!
+using ..ErrorTypes: PageNotFoundError, InvalidDeltaError
+using ..Monitoring: track_propagation_latency!
+using ..DeltaTypes: Delta as DeltaType
+
+export propagate_change!, schedule_propagation!, execute_propagation!
+export PropagationMode, IMMEDIATE, DEFERRED, BATCH
+export register_recompute_fn!, register_passthrough_recompute!, queue_recomputation!
+export RecomputeSignature, compute_signature
+export enable_graph_capture, disable_graph_capture, replay_cuda_graph
+export batch_route_deltas!, clear_propagation_buffers!
+
+"""
+    RecomputeSignature
+
+Captures dependency state for recompute cache validation.
+Stores parent IDs and their epochs at time of signature creation.
+"""
+struct RecomputeSignature
+    parent_ids::Vector{PageID}
+    parent_epochs::Vector{UInt32}
+end
+
+"""
+    compute_signature(state, page) -> RecomputeSignature
+
+Compute current signature for a page based on its declared dependencies.
+Returns signature with parent IDs and current epochs.
+"""
+function compute_signature(state::MMSBState, page)::RecomputeSignature
+    deps = get(page.metadata, :recompute_deps, PageID[])
+    epochs = map(deps) do parent_id
+        p = get_page(state, parent_id)
+        if p === nothing
+            return UInt32(0)
+        end
+        return get(p.metadata, :epoch_dirty, UInt32(0))
+    end
+    return RecomputeSignature(deps, epochs)
+end
+
+@enum PropagationMode begin
+    IMMEDIATE  # Propagate immediately on change
+    DEFERRED   # Queue for later batch propagation
+    BATCH      # Accumulate and propagate in batches
+end
+
+# CUDA graph capture state
+mutable struct CUDAGraphState
+    enabled::Bool
+    graph::Union{Nothing, Ptr{Cvoid}}
+    graph_exec::Union{Nothing, Ptr{Cvoid}}
+    capture_count::Int
+end
+
+const GRAPH_STATES = IdDict{MMSBState, CUDAGraphState}()
+
+mutable struct PropagationQueue
+    order::Vector{PageID}
+    pending::Set{PageID}
+end
+
+const PROPAGATION_BUFFERS = IdDict{MMSBState, PropagationQueue}()
+
+"""
+    enable_graph_capture(state::MMSBState)
+
+Enable CUDA graph capture for repetitive propagation patterns.
+Captures steady-state propagation into replayable graph.
+"""
+function enable_graph_capture(state::MMSBState)
+    graph_state = get!(GRAPH_STATES, state) do
+        CUDAGraphState(false, nothing, nothing, 0)
+    end
+    graph_state.enabled = true
+end
+
+"""
+    disable_graph_capture(state::MMSBState)
+
+Disable CUDA graph capture and free resources.
+"""
+function disable_graph_capture(state::MMSBState)
+    if haskey(GRAPH_STATES, state)
+        graph_state = GRAPH_STATES[state]
+        graph_state.enabled = false
+        
+        if graph_state.graph_exec !== nothing
+            ccall((:cudaGraphExecDestroy, "libcudart"), Cint,
+                  (Ptr{Cvoid},), graph_state.graph_exec)
+        end
+        if graph_state.graph !== nothing
+            ccall((:cudaGraphDestroy, "libcudart"), Cint,
+                  (Ptr{Cvoid},), graph_state.graph)
+        end
+    end
+end
+
+"""
+    replay_cuda_graph(state::MMSBState, stream::Ptr{Cvoid})
+
+Replay captured CUDA graph on given stream for fast execution.
+"""
+function replay_cuda_graph(state::MMSBState, stream::Ptr{Cvoid})
+    if !haskey(GRAPH_STATES, state)
+        return false
+    end
+    
+    graph_state = GRAPH_STATES[state]
+    if !graph_state.enabled || graph_state.graph_exec === nothing
+        return false
+    end
+    
+    ccall((:cudaGraphLaunch, "libcudart"), Cint,
+          (Ptr{Cvoid}, Ptr{Cvoid}), graph_state.graph_exec, stream)
+    
+    return true
+end
+
+"""
+    batch_route_deltas!(state::MMSBState, deltas::Vector{DeltaType})
+
+Route multiple deltas in a single batch operation to amortize synchronization overhead.
+"""
+function batch_route_deltas!(state::MMSBState, deltas::Vector{DeltaType})
+    if isempty(deltas)
+        return
+    end
+    
+    # Group deltas by target page
+    delta_groups = Dict{PageID, Vector{DeltaType}}()
+    for delta in deltas
+        page_id = delta.page_id
+        if !haskey(delta_groups, page_id)
+            delta_groups[page_id] = DeltaType[]
+        end
+        push!(delta_groups[page_id], delta)
+    end
+    
+    # Route each group
+    for (page_id, group) in delta_groups
+        for delta in group
+            route_delta!(state, delta)
+        end
+    end
+    
+    # Single notification after all routes
+    if haskey(GRAPH_STATES, state)
+        graph_state = GRAPH_STATES[state]
+        if graph_state.enabled
+            # Batch complete - could trigger graph capture
+            graph_state.capture_count += 1
+        end
+    end
+end
+
+"""
+    Fetch (or create) the recomputation queue for a state.
+"""
+function _buffer(state::MMSBState)::PropagationQueue
+    return get!(PROPAGATION_BUFFERS, state) do
+        PropagationQueue(PageID[], Set{PageID}())
+    end
+end
+
+"""
+    register_recompute_fn!(state, page_id, fn)
+
+Attach a recompute function to a page. The function must take `(state, page)` and
+return a `Vector{UInt8}` representing the new page contents.
+"""
+function register_recompute_fn!(state::MMSBState, page_id::PageID, fn::Function)
+    page = get_page(state, page_id)
+    page === nothing && throw(PageNotFoundError(UInt64(page_id), "register_recompute_fn!"))
+    page.metadata[:recompute_fn] = fn
+    return page
+end
+
+"""
+    register_passthrough_recompute!(state, target_page_id, source_page_id; transform=identity)
+
+Registers a recomputation closure that copies `source_page_id` into `target_page_id`
+and optionally applies a `transform` function to the raw bytes.
+"""
+function register_passthrough_recompute!(state::MMSBState, target_page_id::PageID,
+                                         source_page_id::PageID; transform=identity)
+    register_recompute_fn!(state, target_page_id, function (st, _)
+        source = get_page(st, source_page_id)
+        source === nothing && throw(PageNotFoundError(UInt64(source_page_id), "register_passthrough_recompute!"))
+        return Vector{UInt8}(transform(read_page(source)))
+    end)
+    page = get_page(state, target_page_id)
+    if page !== nothing
+        page.metadata[:recompute_deps] = [source_page_id]
+    end
+end
+
+"""
+    queue_recomputation!(state, page_id)
+
+Ensure page_id is scheduled for recomputation exactly once.
+"""
+function queue_recomputation!(state::MMSBState, page_id::PageID)
+    buffer = _buffer(state)
+    if page_id ∉ buffer.pending
+        push!(buffer.order, page_id)
+        push!(buffer.pending, page_id)
+    end
+end
+
+"""
+    propagate_change!(state, changed_page_id, mode)
+
+Propagate change notification through dependency graph.
+"""
+function propagate_change!(state::MMSBState, changed_page_id::PageID,
+                           mode::PropagationMode=IMMEDIATE)
+    propagate_change!(state, PageID[changed_page_id], mode)
+end
+
+function propagate_change!(state::MMSBState, changed_pages::AbstractVector{PageID},
+                           mode::PropagationMode=IMMEDIATE)
+    isempty(changed_pages) && return
+    start_ns = time_ns()
+    commands = _aggregate_children(state, changed_pages)
+    isempty(commands) && return
+    _execute_command_buffer!(state, commands, mode)
+    track_propagation_latency!(state, time_ns() - start_ns)
+end
+
+function _aggregate_children(state::MMSBState, parents::AbstractVector{PageID})
+    commands = Dict{PageID, Set{EdgeType}}()
+    for parent in parents
+        for (child, edge_type) in get_children(state.graph, parent)
+            edges = get!(commands, child) do
+                Set{EdgeType}()
+            end
+            push!(edges, edge_type)
+        end
+    end
+    return commands
+end
+
+function _execute_command_buffer!(state::MMSBState,
+                                  commands::Dict{PageID, Set{EdgeType}},
+                                  mode::PropagationMode)
+    for (page_id, edges) in commands
+        _apply_edges!(state, page_id, edges, mode)
+    end
+end
+
+function _apply_edges!(state::MMSBState, page_id::PageID,
+                       edges::Set{EdgeType}, mode::PropagationMode)
+    if DATA_DEPENDENCY in edges
+        _handle_data_dependency!(state, page_id, mode)
+        delete!(edges, DATA_DEPENDENCY)
+    end
+    for edge_type in edges
+        edge_type == CONTROL_DEPENDENCY && mark_page_stale!(state, page_id)
+        edge_type == GPU_SYNC_DEPENDENCY && schedule_gpu_sync!(state, page_id)
+        edge_type == COMPILER_DEPENDENCY && invalidate_compilation!(state, page_id)
+    end
+end
+
+function _handle_data_dependency!(state::MMSBState, page_id::PageID,
+                                  mode::PropagationMode)
+    emit_event!(state, PAGE_INVALIDATED, page_id)
+    if mode == IMMEDIATE
+        recompute_page!(state, page_id)
+    else
+        queue_recomputation!(state, page_id)
+    end
+end
+
+"""
+Collect all descendants of a set of pages.
+"""
+function _collect_descendants(state::MMSBState, page_id::PageID)::Set{PageID}
+    descendants = Set{PageID}()
+    queue = [page_id]
+    while !isempty(queue)
+        current = popfirst!(queue)
+        for (child, _) in get_children(state.graph, current)
+            if child ∉ descendants
+                push!(descendants, child)
+                push!(queue, child)
+            end
+        end
+    end
+    return descendants
+end
+
+"""
+    schedule_propagation!(state, changed_pages)
+
+Schedule batch propagation for multiple changed pages.
+"""
+function schedule_propagation!(state::MMSBState, changed_pages::Vector{PageID})
+    affected = Set{PageID}()
+    for page_id in changed_pages
+        union!(affected, _collect_descendants(state, page_id))
+    end
+    ordered = topological_order_subset(state, collect(affected))
+    for pid in ordered
+        queue_recomputation!(state, pid)
+    end
+end
+
+"""
+    execute_propagation!(state)
+
+Execute all queued propagation tasks.
+"""
+function execute_propagation!(state::MMSBState)
+    buffer = _buffer(state)
+    while !isempty(buffer.order)
+        page_id = popfirst!(buffer.order)
+        delete!(buffer.pending, page_id)
+        recompute_page!(state, page_id)
+    end
+end
+
+"""
+    recompute_page!(state, page_id)
+
+Recompute page contents based on dependencies.
+"""
+function recompute_page!(state::MMSBState, page_id::PageID)
+    page = get_page(state, page_id)
+    page === nothing && return
+    
+    # T1.2: Signature-based cache validation
+    current_sig = compute_signature(state, page)
+    cached_sig = get(page.metadata, :last_signature, nothing)
+    
+    # Validate dependency set hasn't changed
+    if cached_sig !== nothing
+        if current_sig.parent_ids != cached_sig.parent_ids
+            error("Dependency set changed for page $(page_id): was $(cached_sig.parent_ids), now $(current_sig.parent_ids)")
+        end
+        
+        # Skip recompute if all parent epochs unchanged
+        if current_sig.parent_epochs == cached_sig.parent_epochs
+            page.metadata[:stale] = false
+            return
+        end
+    end
+    
+    recompute_fn = get(page.metadata, :recompute_fn, nothing)
+    recompute_fn === nothing && return
+    
+    baseline = read_page(page)
+    new_data = recompute_fn(state, page)
+    length(new_data) == page.size || throw(InvalidDeltaError("Recompute returned incorrect length", UInt64(page_id)))
+    
+    mask = Vector{Bool}(undef, page.size)
+    @inbounds for i in eachindex(baseline)
+        mask[i] = baseline[i] != new_data[i]
+    end
+    
+    any(mask) || begin
+        page.metadata[:stale] = false
+        page.metadata[:last_signature] = current_sig
+        return
+    end
+    
+    delta = create_delta(state, page_id, mask, new_data; source=:propagation)
+    route_delta!(state, delta)
+    page.metadata[:stale] = false
+    page.metadata[:last_signature] = current_sig
+end
+
+"""
+Mark page as stale (needs recomputation on next access).
+"""
+function mark_page_stale!(state::MMSBState, page_id::PageID)
+    page = get_page(state, page_id)
+    if page !== nothing
+        page.metadata[:stale] = true
+        emit_event!(state, PAGE_STALE, page_id)
+    end
+end
+
+"""
+Schedule GPU synchronization for page.
+"""
+function schedule_gpu_sync!(state::MMSBState, page_id::PageID)
+    page = get_page(state, page_id)
+    page === nothing && return
+    page.metadata[:gpu_sync_pending] = true
+    emit_event!(state, GPU_SYNC_NEEDED, page_id)
+end
+
+"""
+Invalidate compiled IR/artifacts for page.
+"""
+function invalidate_compilation!(state::MMSBState, page_id::PageID)
+    page = get_page(state, page_id)
+    if page !== nothing
+        page.metadata[:ir_valid] = false
+        emit_event!(state, IR_INVALIDATED, page_id)
+    end
+end
+
+"""
+    topological_order_subset(state, subset) -> Vector{PageID}
+
+Compute topological order restricted to subset of nodes.
+"""
+function topological_order_subset(state::MMSBState, subset::Vector{PageID})::Vector{PageID}
+    subset_set = Set(subset)
+    indegree = Dict{PageID, Int}(pid => 0 for pid in subset)
+    for parent in subset
+        for (child, _) in get_children(state.graph, parent)
+            if child ∈ subset_set
+                indegree[child] = get(indegree, child, 0) + 1
+            end
+        end
+    end
+    queue = PageID[]
+    for (pid, deg) in indegree
+        deg == 0 && push!(queue, pid)
+    end
+    ordered = PageID[]
+    while !isempty(queue)
+        current = popfirst!(queue)
+        push!(ordered, current)
+        for (child, _) in get_children(state.graph, current)
+            child ∈ subset_set || continue
+            indegree[child] -= 1
+            indegree[child] == 0 && push!(queue, child)
+        end
+    end
+    return ordered
+end
+
+"""
+    clear_propagation_buffers!(state::MMSBState)
+
+Clear propagation buffers and CUDA graph state for state reset.
+Called by reset!(state) to ensure clean state.
+"""
+function clear_propagation_buffers!(state::MMSBState)
+    # Clear propagation queue
+    if haskey(PROPAGATION_BUFFERS, state)
+        delete!(PROPAGATION_BUFFERS, state)
+    end
+    
+    # Clear CUDA graph state
+    if haskey(GRAPH_STATES, state)
+        delete!(GRAPH_STATES, state)
+    end
+    
+    return nothing
+end
+
+end # module PropagationEngine

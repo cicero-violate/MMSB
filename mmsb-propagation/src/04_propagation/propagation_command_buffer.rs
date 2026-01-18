@@ -1,5 +1,4 @@
-use mmsb_memory::page::Page;
-use mmsb_primitives::PageID;
+use crate::page::{Page, PageID};
 use std::sync::Arc;
 
 #[derive(Debug, Clone)]

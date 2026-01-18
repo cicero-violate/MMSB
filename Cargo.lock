@@ -428,6 +428,7 @@ dependencies = [
 name = "mmsb-propagation"
 version = "0.1.0"
 dependencies = [
+ "mmsb-memory",
  "mmsb-primitives",
  "parking_lot",
 ]

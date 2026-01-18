@@ -1,8 +1,7 @@
 use super::propagation_command_buffer::PropagationCommand;
 use super::propagation_queue::PropagationQueue;
-use mmsb_memory::dag::DependencyGraph;
-use mmsb_memory::page::Page;
-use mmsb_primitives::PageID;
+use crate::dag::DependencyGraph;
+use crate::page::{Page, PageID};
 use parking_lot::RwLock;
 use std::collections::HashMap;
 use std::sync::Arc;
