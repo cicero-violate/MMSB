@@ -1,6 +1,13 @@
 [package]
 name = "mmsb-device"
 version = "0.1.0"
-edition = "2024"
+edition = "2021"
+
+[lib]
+name = "mmsb_device"
+path = "src/lib.rs"
 
 [dependencies]
+mmsb-primitives = { path = "../mmsb-primitives" }
+mmsb-allocator = { path = "../mmsb-allocator" }
+parking_lot = "0.12"
