@@ -19,6 +19,6 @@ members = [
     "mmsb-allocator",
   # "mmsb-physical",
   # "mmsb-propagation",
-  # "mmsb-device",
+  "mmsb-device",
   # "mmsb-optimization",
 ]
