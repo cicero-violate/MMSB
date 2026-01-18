@@ -7,6 +7,5 @@ edition = "2021"
 name = "mmsb_physical"
 path = "src/lib.rs"
 
-
 [dependencies]
 mmsb-primitives = { path = "../mmsb-primitives" }
