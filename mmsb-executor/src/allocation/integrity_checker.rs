@@ -3,6 +3,7 @@
 use super::device_registry::DeviceBufferRegistry;
 use super::delta::Delta;
 use crate::types::{DeltaID, Epoch, PageID};
+use mmsb_primitives::PageID;
 use std::collections::HashMap;
 use std::sync::Arc;
 
