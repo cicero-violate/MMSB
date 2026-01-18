@@ -16,7 +16,7 @@ members = [
     "mmsb-storage",
   "mmsb-intent",
   "mmsb-primitives",
-  "mmsb-allocator",
+  # "mmsb-allocator",
   "mmsb-physical",
   "mmsb-propagation",
   "mmsb-device",
