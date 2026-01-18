@@ -1,6 +1,11 @@
 [package]
 name = "mmsb-physical"
 version = "0.1.0"
-edition = "2024"
+edition = "2021"
+
+[lib]
+name = "mmsb_physical"
+path = "src/lib.rs"
+mmsb-primitives = { path = "../mmsb-primitives" }
 
 [dependencies]
