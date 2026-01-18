@@ -14,5 +14,5 @@ members = [
     "mmsb-authenticate",
     "mmsb-service",
     "mmsb-storage",
-    "mmsb-intent",
+    "mmsb-intent", "mmsb-primitives", "mmsb-allocator", "mmsb-physical", "mmsb-propagation", "mmsb-device", "mmsb-optimization",
 ]
