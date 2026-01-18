@@ -1,4 +1,5 @@
 use crate::types::{PageID, PageLocation};
+use mmsb_primitives::PageID;
 use crate::page::Page;
 use std::sync::atomic::{AtomicPtr, AtomicU64, Ordering};
 use std::ptr;
