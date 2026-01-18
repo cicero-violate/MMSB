@@ -3,5 +3,7 @@ name = "mmsb-propagation"
 version = "0.1.0"
 edition = "2024"
 
+
+
 [dependencies]
 mmsb-primitives = { path = "../mmsb-primitives" }
