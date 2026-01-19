@@ -1,19 +1,13 @@
-pub mod page_types;
-pub mod page;
-pub mod page_allocator;
-pub mod lockfree_allocator;
+pub mod traits;
+pub mod types;
+pub mod view;
+pub mod page_impl;
+pub mod allocator_trait;
+pub mod allocator_impl;
 
-// Re-export public types from submodules — DO NOT include PageID here
-pub use page_types::{PageError, PageLocation};
-pub use page::{Page, Metadata};
-pub use page_allocator::{PageAllocator, PageSnapshotData, PageAllocatorConfig};
-pub use lockfree_allocator::LockFreeAllocator;
-
-// Re-export Delta for convenience
-pub use crate::delta::Delta;
-
-// IMPORTANT: PageID is now exclusively from mmsb_primitives
-// All files should import it directly: use mmsb_primitives::PageID;
-// No re-export in mod.rs to avoid duplicate name/private import issues
-pub mod page_view;
-pub use page_view::PageView;
+pub use traits::*;
+pub use types::*;
+pub use view::*;
+pub use page_impl::Page;
+pub use allocator_trait::*;
+pub use allocator_impl::PageAllocator;
