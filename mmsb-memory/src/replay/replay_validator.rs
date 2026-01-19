@@ -77,7 +77,7 @@ impl ReplayValidator {
     ) -> Result<ReplayReport, PageError> {
         let checkpoint = self
             .checkpoint(checkpoint_id)
-            .ok_or(PageError::MetadataDecode("invalid checkpoint id"))?;
+            .ok_or(PageError::MetadataDecode("invalid checkpoint id".to_string()))?;
         Ok(compare_snapshots(checkpoint, snapshot))
     }
 

@@ -107,8 +107,9 @@ pub struct MemoryEngine {
 impl MemoryEngine {
     /// Initialize a new MemoryEngine
     pub fn new(config: MemoryEngineConfig) -> Result<Self, MemoryEngineError> {
-        let allocator = Arc::new(PageAllocator::new(PageAllocatorConfig {
+        let allocator = Arc::new(PageAllocator::from_config(PageAllocatorConfig {
             default_location: config.default_location,
+            initial_capacity: 1024,
         }));
 
         let dag = Arc::new(RwLock::new(DependencyGraph::new()));

@@ -1,4 +1,5 @@
 use crate::page::Page;
+use crate::page::DeltaAppliable;
 use crate::delta::{DeltaError, Source};
 use crate::epoch::Epoch;
 use crate::page::PageError;
@@ -136,18 +137,9 @@ impl Delta {
     pub fn apply_to(&self, page: &mut Page) -> Result<(), PageError> {
         if let Err(err) = super::delta_validation::validate_delta(self) {
             return Err(match err {
-                DeltaError::SizeMismatch { mask_len, payload_len } => PageError::MaskSizeMismatch {
-                    expected: mask_len,
-                    found: payload_len,
-                },
-                DeltaError::PageIDMismatch { expected, found } => PageError::PageIDMismatch {
-                    expected,
-                    found,
-                },
-                DeltaError::MaskSizeMismatch { expected, found } => PageError::MaskSizeMismatch {
-                    expected,
-                    found,
-                },
+                DeltaError::SizeMismatch { .. } => PageError::MaskSizeMismatch,
+                DeltaError::PageIDMismatch { .. } => PageError::PageIDMismatch,
+                DeltaError::MaskSizeMismatch { .. } => PageError::MaskSizeMismatch,
             });
         }
         page.apply_delta(self)

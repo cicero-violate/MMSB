@@ -1,5 +1,6 @@
 use crate::tlog::TransactionLog;
 use crate::page::{PageAllocator, PageSnapshotData, PageLocation};
+use crate::epoch::Epoch;
 use mmsb_primitives::PageID;
 use std::fs::File;
 use std::io::{BufReader, BufWriter, Read, Write};
@@ -23,12 +24,9 @@ pub fn write_checkpoint(
 
     for page in pages {
         writer.write_all(&page.page_id.0.to_le_bytes())?;
-        writer.write_all(&(page.size as u64).to_le_bytes())?;
-        writer.write_all(&page.epoch.to_le_bytes())?;
+        writer.write_all(&(page.data.len() as u64).to_le_bytes())?;
+        writer.write_all(&page.epoch.0.to_le_bytes())?;
         writer.write_all(&(page.location as i32).to_le_bytes())?;
-
-        writer.write_all(&(page.metadata_blob.len() as u32).to_le_bytes())?;
-        writer.write_all(&page.metadata_blob)?;
 
         writer.write_all(&(page.data.len() as u32).to_le_bytes())?;
         writer.write_all(&page.data)?;
@@ -119,27 +117,18 @@ pub fn load_checkpoint(
 
         snapshots.push(PageSnapshotData {
             page_id: id,
-            size,
-            epoch,
+            epoch: Epoch(epoch),
             location,
-            metadata_blob,
             data,
         });
     }
 
     println!("CALLING allocator.restore_from_snapshot() with {} pages...", snapshots.len());
-    match allocator.restore_from_snapshot(snapshots) {
-        Ok(_) => {
-            println!("restore_from_snapshot() → SUCCESS");
-            Ok(())
-        }
-        Err(e) => {
-            println!("restore_from_snapshot() → FAILED: {e}");
-            println!("THIS IS THE REAL BUG — YOUR ALLOCATOR REJECTED THE SNAPSHOT");
-            Err(std::io::Error::new(
-                std::io::ErrorKind::Other,
-                format!("restore failed: {e}"),
-            ))
-        }
+    for snapshot in snapshots {
+        allocator.restore(&snapshot).map_err(|e| {
+            std::io::Error::new(std::io::ErrorKind::Other, format!("restore failed: {e:?}"))
+        })?;
     }
+    println!("restore_from_snapshot() → SUCCESS");
+    Ok(())
 }

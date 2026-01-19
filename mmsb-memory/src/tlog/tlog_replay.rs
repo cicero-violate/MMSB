@@ -1,9 +1,10 @@
 use crate::delta::Delta;
 use crate::page::Page;
+use crate::page::{DeltaAppliable, PageAccess};
 
 pub fn apply_log(pages: &mut [Page], deltas: &[Delta]) {
     for delta in deltas {
-        if let Some(page) = pages.iter_mut().find(|p| p.id == delta.page_id) {
+        if let Some(page) = pages.iter_mut().find(|p| p.id() == delta.page_id) {
             let _ = page.apply_delta(delta);
         }
     }

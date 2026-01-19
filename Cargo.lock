@@ -337,16 +337,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "mmsb-executor"
-version = "0.1.0"
-dependencies = [
- "mmsb-events",
- "mmsb-proof",
- "parking_lot",
- "serde",
-]
-
-[[package]]
 name = "mmsb-intent"
 version = "0.1.0"
 dependencies = [
@@ -422,6 +412,7 @@ version = "0.1.0"
 dependencies = [
  "serde",
  "serde-big-array",
+ "sha2",
 ]
 
 [[package]]

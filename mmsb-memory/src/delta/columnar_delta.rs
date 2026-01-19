@@ -3,6 +3,7 @@
 use crate::delta::{Delta, Source};
 use crate::epoch::Epoch;
 use crate::page::{Page, PageError};
+use crate::page::DeltaAppliable;
 use mmsb_primitives::{PageID, DeltaID};
 use std::collections::HashMap;
 

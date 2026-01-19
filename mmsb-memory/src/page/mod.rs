@@ -11,3 +11,6 @@ pub use view::*;
 pub use page_impl::Page;
 pub use allocator_trait::*;
 pub use allocator_impl::PageAllocator;
+
+// Re-export for convenience
+pub use crate::delta::Delta;
