@@ -3,9 +3,9 @@ use thiserror::Error;
 
 use serde::{Serialize, Deserialize};  // Required for bincode in tlog
 
-#[repr(transparent)]
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
-pub struct DeltaID(pub u64);
+// #[repr(transparent)]
+// #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+// pub struct DeltaID(pub u64);
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Source(pub String);
