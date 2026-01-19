@@ -1,6 +1,6 @@
-use crate::delta::{Delta, DeltaID, Source};
+use crate::delta::{Delta, Source};
 use crate::epoch::Epoch;
-use mmsb_primitives::PageID;
+use mmsb_primitives::{PageID, DeltaID};
 use std::fs::File;
 use std::io::{BufReader, Read};
 use std::path::Path;
