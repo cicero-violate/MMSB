@@ -1,5 +1,5 @@
 use crate::page::Page;
-use crate::delta::{DeltaError, DeltaID, Source};
+use crate::delta::{DeltaError, Source};
 use crate::epoch::Epoch;
 use crate::page::PageError;
 use mmsb_primitives::{PageID, DeltaID};
