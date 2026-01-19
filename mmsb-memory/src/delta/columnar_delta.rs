@@ -1,9 +1,9 @@
 //! Columnar delta batch representation optimized for SIMD scans.
 
-use crate::delta::{Delta, DeltaID, Source};
+use crate::delta::{Delta, Source};
 use crate::epoch::Epoch;
 use crate::page::{Page, PageError};
-use mmsb_primitives::PageID;
+use mmsb_primitives::{PageID, DeltaID};
 use std::collections::HashMap;
 
 #[derive(Debug, Clone)]
