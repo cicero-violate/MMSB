@@ -1,7 +1,7 @@
 //! StateBus - SOLE WRITER TO MMSB
 
 use mmsb_proof::*;
-use mmsb_primitives::{Hash, Timestamp, EventId};
+use mmsb_primitives::{Hash, Timestamp, EventId, PageID};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -21,6 +21,19 @@ pub struct CommitError(pub String);
 pub struct Delta {
     pub delta_id: u64,
     pub changes: Vec<u8>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct MemoryCommitted {
+    pub event_id: EventId,
+    pub timestamp: Timestamp,
+    pub commit_proof: CommitProof,
+    pub delta_hash: Hash,
+    pub epoch: u64,
+    pub snapshot_ref: Hash,
+    pub admission_proof: AdmissionProof,
+    pub outcome_proof: OutcomeProof,
+    pub affected_page_ids: Vec<PageID>,
 }
 
 pub trait StateBus {

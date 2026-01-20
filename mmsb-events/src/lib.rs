@@ -12,14 +12,9 @@ pub use state_bus::*;
 pub use learning_bus::*;
 pub use mmsb_subscription::*;
 
-/// EventSink - Legacy compatibility (deprecated)
-pub trait EventSink {
-    fn emit(&self, event: JudgmentApproved);
-}
-
 /// Module lifecycle trait
 pub trait Module: Send + Sync {
     fn name(&self) -> &str;
-    fn attach(&mut self, sink: Box<dyn EventSink>);
+    fn attach_judgment_bus(&mut self, bus: Box<dyn JudgmentBus>);
     fn detach(&mut self);
 }

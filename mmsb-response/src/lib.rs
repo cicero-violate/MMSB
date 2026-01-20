@@ -1,26 +1,16 @@
 //! MMSB Response Module
-//! Formats agent-facing responses from MMSB subscriptions
 
-use mmsb_events::{MMSBSubscription, StateQuery, StateProjection, Delta, AnyEvent};
+use mmsb_events::{MMSBSubscription, StateQuery, StateProjection, Delta};
 
-pub struct ResponseModule {
-    subscription: Option<Box<dyn MMSBSubscription>>,
-}
+pub struct ResponseModule;
 
 impl ResponseModule {
     pub fn new() -> Self {
-        Self { subscription: None }
-    }
-    
-    pub fn attach_subscription(&mut self, sub: Box<dyn MMSBSubscription>) {
-        self.subscription = Some(sub);
+        Self
     }
     
     pub fn query(&self, query: StateQuery) -> StateProjection {
-        self.subscription
-            .as_ref()
-            .map(|s| s.project_view(query))
-            .unwrap_or_else(|| StateProjection)
+        StateProjection { data: vec![] }
     }
 }
 

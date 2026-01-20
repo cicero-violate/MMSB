@@ -1,6 +1,6 @@
-//! MMSB Policy Module - implements PolicyStage trait
+//! MMSB Policy Module
 
-use mmsb_events::{EventSink, IntentCreated, PolicyEvaluated};
+use mmsb_events::{IntentCreated, PolicyEvaluated};
 use mmsb_proof::{IntentProof, PolicyCategory, PolicyProof, PolicyStage, Proof, ProduceProof, RiskClass};
 
 pub struct PolicyInput {
@@ -12,8 +12,7 @@ pub struct PolicyInput {
     pub diff_lines: usize,
 }
 
-pub struct PolicyModule<S: EventSink> {
-    sink: Option<S>,
+pub struct PolicyModule {
     logical_time: u64,
     allowed_classes: Vec<String>,
     forbidden_tools: Vec<String>,
@@ -21,10 +20,9 @@ pub struct PolicyModule<S: EventSink> {
     max_diff_lines: usize,
 }
 
-impl<S: EventSink> PolicyModule<S> {
+impl PolicyModule {
     pub fn new() -> Self {
         Self {
-            sink: None,
             logical_time: 0,
             allowed_classes: vec![
                 "formatting".to_string(),
@@ -38,11 +36,6 @@ impl<S: EventSink> PolicyModule<S> {
             max_files_touched: 50,
             max_diff_lines: 2000,
         }
-    }
-
-    pub fn with_sink(mut self, sink: S) -> Self {
-        self.sink = Some(sink);
-        self
     }
 
     fn next_time(&mut self) -> u64 {
@@ -75,30 +68,8 @@ impl<S: EventSink> PolicyModule<S> {
             RiskClass::High | RiskClass::Critical => PolicyCategory::RequiresReview,
         }
     }
-}
 
-impl<S: EventSink> Default for PolicyModule<S> {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-impl<S: EventSink> ProduceProof for PolicyModule<S> {
-    type Input = PolicyInput;
-    type Proof = PolicyProof;
-
-    fn produce_proof(input: &Self::Input) -> Self::Proof {
-        let module = PolicyModule::<S>::new();
-        let risk_class = module.classify_risk(input);
-        let category = Self::determine_category(risk_class.clone());
-        PolicyProof::new(input.intent_proof.hash(), category, risk_class)
-    }
-}
-
-impl<S: EventSink> PolicyStage for PolicyModule<S> {}
-
-impl<S: EventSink> PolicyModule<S> {
-    pub fn handle_intent_created(&mut self, event: IntentCreated) {
+    pub fn handle_intent_created(&mut self, event: IntentCreated) -> PolicyEvaluated {
         let input = PolicyInput {
             intent_proof: event.intent_proof.clone(),
             intent_class: event.intent_class,
@@ -110,16 +81,32 @@ impl<S: EventSink> PolicyModule<S> {
 
         let proof = Self::produce_proof(&input);
 
-        let policy_event = PolicyEvaluated {
+        PolicyEvaluated {
             event_id: event.intent_hash,
             timestamp: self.next_time(),
             intent_hash: event.intent_hash,
             intent_proof: event.intent_proof,
             policy_proof: proof,
-        };
-
-        if let Some(sink) = &self.sink {
-            sink.emit(policy_event);
         }
     }
 }
+
+impl Default for PolicyModule {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl ProduceProof for PolicyModule {
+    type Input = PolicyInput;
+    type Proof = PolicyProof;
+
+    fn produce_proof(input: &Self::Input) -> Self::Proof {
+        let module = PolicyModule::new();
+        let risk_class = module.classify_risk(input);
+        let category = Self::determine_category(risk_class.clone());
+        PolicyProof::new(input.intent_proof.hash(), category, risk_class)
+    }
+}
+
+impl PolicyStage for PolicyModule {}

@@ -1,82 +1,65 @@
 //! MMSB Service Runtime
-//!
-//! Provides event bus and module wiring.
-//! This runtime has ZERO authority - it only routes events.
 
-use mmsb_events::{AnyEvent, EventSink, Module};
+use mmsb_events::{JudgmentApproved, PolicyEvaluated, IntentCreated};
 use tokio::sync::broadcast;
 
-/// Event bus for routing events between modules
 #[derive(Clone)]
 pub struct EventBus {
-    sender: broadcast::Sender<AnyEvent>,
+    judgment_tx: broadcast::Sender<JudgmentApproved>,
+    policy_tx: broadcast::Sender<PolicyEvaluated>,
+    intent_tx: broadcast::Sender<IntentCreated>,
 }
 
 impl EventBus {
-    /// Create a new event bus with specified capacity
     pub fn new(capacity: usize) -> Self {
-        let (sender, _) = broadcast::channel(capacity);
-        Self { sender }
+        let (judgment_tx, _) = broadcast::channel(capacity);
+        let (policy_tx, _) = broadcast::channel(capacity);
+        let (intent_tx, _) = broadcast::channel(capacity);
+        Self { judgment_tx, policy_tx, intent_tx }
     }
     
-    /// Subscribe to all events on this bus
-    pub fn subscribe(&self) -> broadcast::Receiver<AnyEvent> {
-        self.sender.subscribe()
+    pub fn subscribe_judgment(&self) -> broadcast::Receiver<JudgmentApproved> {
+        self.judgment_tx.subscribe()
     }
     
-    /// Emit an event to all subscribers
-    pub fn emit(&self, event: AnyEvent) -> Result<usize, broadcast::error::SendError<AnyEvent>> {
-        self.sender.send(event)
+    pub fn subscribe_policy(&self) -> broadcast::Receiver<PolicyEvaluated> {
+        self.policy_tx.subscribe()
     }
     
-    /// Get the number of active receivers
-    pub fn receiver_count(&self) -> usize {
-        self.sender.receiver_count()
+    pub fn subscribe_intent(&self) -> broadcast::Receiver<IntentCreated> {
+        self.intent_tx.subscribe()
+    }
+    
+    pub fn emit_judgment(&self, event: JudgmentApproved) {
+        let _ = self.judgment_tx.send(event);
+    }
+    
+    pub fn emit_policy(&self, event: PolicyEvaluated) {
+        let _ = self.policy_tx.send(event);
+    }
+    
+    pub fn emit_intent(&self, event: IntentCreated) {
+        let _ = self.intent_tx.send(event);
     }
 }
 
-impl EventSink for EventBus {
-    fn emit(&self, event: AnyEvent) {
-        let _ = self.sender.send(event);
-    }
-}
-
-/// MMSB Service Runtime
 pub struct Runtime {
     event_bus: EventBus,
-    modules: Vec<Box<dyn Module>>,
 }
 
 impl Runtime {
-    /// Create a new runtime with default event bus capacity
     pub fn new() -> Self {
         Self::with_capacity(1024)
     }
     
-    /// Create a new runtime with specified event bus capacity
     pub fn with_capacity(capacity: usize) -> Self {
         Self {
             event_bus: EventBus::new(capacity),
-            modules: Vec::new(),
         }
     }
     
-    /// Register a module with the runtime
-    pub fn register_module(&mut self, mut module: Box<dyn Module>) {
-        module.attach(Box::new(self.event_bus.clone()));
-        self.modules.push(module);
-    }
-    
-    /// Get a reference to the event bus
     pub fn event_bus(&self) -> &EventBus {
         &self.event_bus
-    }
-    
-    /// Shutdown all modules
-    pub fn shutdown(&mut self) {
-        for module in &mut self.modules {
-            module.detach();
-        }
     }
 }
 
@@ -85,3 +68,4 @@ impl Default for Runtime {
         Self::new()
     }
 }
+

@@ -250,7 +250,7 @@ impl MemoryEngine {
                 .as_secs(),
             delta_hash: delta.hash(),
             epoch: epoch.0 as u64,
-            snapshot_ref: None,
+            snapshot_ref: [0u8; 32],
             admission_proof: admission,
             commit_proof: commit,
             outcome_proof: outcome,

@@ -1,19 +1,18 @@
 //! MMSB Replay Module
-//! Historical event stream for replay and audit (read-only)
 
-use mmsb_events::{ReplayProtocol, MMSBSubscription, EventStream, StateSnapshot, Delta, AnyEvent, StateQuery, StateProjection};
+use mmsb_events::{MMSBSubscription, StateQuery, StateProjection, Delta};
 
-pub struct ReplayModule {
-    subscription: Option<Box<dyn MMSBSubscription>>,
-}
+pub struct ReplayModule;
 
 impl ReplayModule {
     pub fn new() -> Self {
-        Self { subscription: None }
+        Self
     }
-    
-    pub fn attach_subscription(&mut self, sub: Box<dyn MMSBSubscription>) {
-        self.subscription = Some(sub);
+}
+
+impl Default for ReplayModule {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
@@ -22,27 +21,7 @@ impl MMSBSubscription for ReplayModule {
         Box::new(std::iter::empty())
     }
     
-    fn subscribe_events(&mut self) -> Box<dyn Iterator<Item = AnyEvent>> {
-        Box::new(std::iter::empty())
-    }
-    
     fn project_view(&self, _query: StateQuery) -> StateProjection {
-        StateProjection
-    }
-}
-
-impl ReplayProtocol for ReplayModule {
-    fn stream_events(&self, _from_epoch: u64, _to_epoch: u64) -> EventStream {
-        EventStream
-    }
-    
-    fn replay_to_state(&mut self, _target_epoch: u64) -> StateSnapshot {
-        StateSnapshot
-    }
-}
-
-impl Default for ReplayModule {
-    fn default() -> Self {
-        Self::new()
+        StateProjection { data: vec![] }
     }
 }
