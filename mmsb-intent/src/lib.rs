@@ -10,8 +10,12 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Intent {
-    pub description: String,
-    pub metadata: String,
+   pub description: String,
+    pub intent_class: String,
+    pub target_paths: Vec<String>,
+    pub tools_used: Vec<String>,
+    pub files_touched: usize,
+    pub diff_lines: usize,
 }
 
 pub struct IntentInput {

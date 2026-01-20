@@ -9,9 +9,13 @@ fn main() {
     
    let intent = Intent {
        description: "allocate 4KB".to_string(),
-       metadata: "{}".to_string(),
+        intent_class: "formatting".to_string(),
+        target_paths: vec!["src/main.rs".to_string()],
+        tools_used: vec!["rustfmt".to_string()],
+        files_touched: 1,
+        diff_lines: 10,
    };
    
-    let proof = intent_module.submit_intent(intent);
+   let proof = intent_module.submit_intent(intent);
     println!("Intent submitted with hash: {:?}", proof.intent_hash);
 }

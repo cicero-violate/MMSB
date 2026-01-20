@@ -43,13 +43,17 @@ async fn main() {
         }
     });
     
-    // Submit intent - this triggers the pipeline
-    let intent = Intent {
-        description: "allocate 4KB".to_string(),
-        metadata: "{}".to_string(),
-    };
-    
-    println!("Submitting intent...");
+   // Submit intent - this triggers the pipeline
+   let intent = Intent {
+       description: "allocate 4KB".to_string(),
+        intent_class: "formatting".to_string(),
+        target_paths: vec!["src/main.rs".to_string()],
+        tools_used: vec!["rustfmt".to_string()],
+        files_touched: 1,
+        diff_lines: 10,
+   };
+   
+   println!("Submitting intent...");
     intent_module.submit_intent(intent);
     
     // Wait for pipeline to complete

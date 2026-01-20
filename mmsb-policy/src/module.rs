@@ -31,12 +31,13 @@ impl<S: EventSink> PolicyModule<S> {
         self.logical_time
     }
 
-    fn classify_risk(_intent_hash: &Hash) -> RiskClass {
-        // Simple risk classification - in production, analyze intent content
-        RiskClass::Low
-    }
+   fn classify_risk(_intent_hash: &Hash) -> RiskClass {
+       // Simple risk classification - in production, analyze intent content
+        // Default: all intents require review unless explicitly in allowed_classes
+        RiskClass::Medium
+   }
 
-    fn determine_category(risk: RiskClass) -> PolicyCategory {
+   fn determine_category(risk: RiskClass) -> PolicyCategory {
         match risk {
             RiskClass::Low => PolicyCategory::AutoApprove,
             RiskClass::Medium => PolicyCategory::RequiresReview,
