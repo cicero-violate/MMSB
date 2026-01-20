@@ -163,7 +163,7 @@ impl<S: EventSink> JudgmentProtocol for JudgmentModule<S> {
     
     fn request_admission(&mut self, event: JudgmentApproved) {
         if let Some(sink) = &self.sink {
-            sink.emit(mmsb_events::AnyEvent::JudgmentApproved(event));
+            sink.emit(event);
         }
     }
 }

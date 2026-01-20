@@ -119,7 +119,7 @@ impl<S: EventSink> PolicyModule<S> {
         };
 
         if let Some(sink) = &self.sink {
-            sink.emit(mmsb_events::AnyEvent::PolicyEvaluated(policy_event));
+            sink.emit(policy_event);
         }
     }
 }

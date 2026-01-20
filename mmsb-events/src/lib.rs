@@ -1,33 +1,25 @@
-//! MMSB Events - Neutral Event Protocol
-//! 
-//! Defines event envelopes and EventSink trait.
-//! NO runtime logic, NO authority.
+//! MMSB Events - Bus Protocol System
 
-pub mod events;
-pub mod bus_traits;
+pub mod judgment_bus;
+pub mod execution_bus;
+pub mod state_bus;
+pub mod learning_bus;
+pub mod mmsb_subscription;
 
-pub use events::*;
-pub use bus_traits::*;
+pub use judgment_bus::*;
+pub use execution_bus::*;
+pub use state_bus::*;
+pub use learning_bus::*;
+pub use mmsb_subscription::*;
 
-/// EventSink - Abstract event emission
-/// 
-/// Semantic modules emit events via this trait.
-/// Runtime (mmsb-service) implements this trait.
+/// EventSink - Legacy compatibility (deprecated)
 pub trait EventSink {
-    fn emit(&self, event: AnyEvent);
+    fn emit(&self, event: JudgmentApproved);
 }
 
 /// Module lifecycle trait
-/// 
-/// Defines how modules participate in MMSB.
-/// Modules attach to an EventSink, not to runtime internals.
 pub trait Module: Send + Sync {
-    /// Module name for identification
     fn name(&self) -> &str;
-    
-    /// Attach module to event sink
     fn attach(&mut self, sink: Box<dyn EventSink>);
-    
-    /// Detach module from event sink
     fn detach(&mut self);
 }

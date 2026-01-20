@@ -4,7 +4,7 @@
 //! Produces: IntentProof (A)
 //! Authority: NONE
 
-use mmsb_events::{EventSink, IntentCreated};
+use mmsb_events::{EventSink, IntentCreated, JudgmentBus};
 use mmsb_proof::{Hash, IntentBounds, IntentProof, IntentStage, ProduceProof};
 use serde::{Deserialize, Serialize};
 
@@ -58,10 +58,10 @@ impl<S: EventSink> IntentModule<S> {
        };
 
        if let Some(sink) = &self.sink {
-            sink.emit(mmsb_events::AnyEvent::IntentCreated(event));
-        }
+            sink.emit(event.clone());
+       }
 
-        proof
+       proof
     }
 }
 
