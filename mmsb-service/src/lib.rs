@@ -7,11 +7,11 @@
 //! All correctness flows through MMSB memory.
 
 mod runtime;
+pub use runtime::Runtime;
 mod protocol_signal_out;
 mod protocol_signal_in;
 mod scheduler;
 
-pub use runtime::Runtime;
 pub use protocol_signal_out::ProtocolSignalOut;
 pub use protocol_signal_in::ProtocolSignalIn;
 pub use scheduler::Scheduler;
