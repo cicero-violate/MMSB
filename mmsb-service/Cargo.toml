@@ -4,10 +4,11 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+tokio = { version = "1", features = ["sync", "rt", "rt-multi-thread", "macros", "time"] }
+futures = "0.3"
 mmsb-proof = { path = "../mmsb-proof" }
 mmsb-events = { path = "../mmsb-events" }
 mmsb-primitives = { path = "../mmsb-primitives" }
-tokio = { version = "1", features = ["sync", "rt", "rt-multi-thread", "macros", "time"] }
 mmsb-intent = { path = "../mmsb-intent" }
 mmsb-policy = { path = "../mmsb-policy" }
 mmsb-judgment = { path = "../mmsb-judgment" }
