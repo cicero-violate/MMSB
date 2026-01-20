@@ -6,7 +6,7 @@ edition = "2021"
 [dependencies]
 mmsb-events = { path = "../mmsb-events" }
 mmsb-primitives = { path = "../mmsb-primitives" }
-mmsb-primitives = { path = "../mmsb-intent" }
+
 
 
 tokio = { version = "1", features = ["sync", "rt"] }
