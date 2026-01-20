@@ -1,4 +1,5 @@
 use mmsb_memory::page::PageAllocator;
+use mmsb_memory::page::DeltaAppliable;
 use mmsb_memory::delta::Delta;
 use mmsb_primitives::PageID;
 use std::collections::HashMap;
@@ -133,9 +134,6 @@ fn process_chunk(
 ) -> Result<usize, PageError> {
     let mut processed = 0usize;
     for (page_id, indexes) in chunk {
-        let ptr = allocator
-            .acquire_page(page_id)
-            .ok_or(PageError::PageNotFound(page_id))?;
         if indexes.is_empty() {
             continue;
         }
@@ -151,9 +149,10 @@ fn process_chunk(
             }
         }
         if let Some(final_delta) = merged {
-            unsafe {
-                (*ptr).apply_delta(&final_delta)?;
-            }
+            allocator.with_page_mut(page_id, |page| {
+                page.apply_delta(&final_delta)
+            })
+            .ok_or(PageError::PageNotFound(page_id))??;
         }
     }
     Ok(processed)
@@ -161,20 +160,9 @@ fn process_chunk(
 
 fn delta_error_to_page(err: DeltaError) -> PageError {
     match err {
-        DeltaError::SizeMismatch { mask_len, payload_len } => {
-            PageError::MaskSizeMismatch {
-                expected: mask_len,
-                found: payload_len,
-            }
-        }
-        DeltaError::PageIDMismatch { expected, found } => PageError::PageIDMismatch {
-            expected,
-            found,
-        },
-        DeltaError::MaskSizeMismatch { expected, found } => PageError::MaskSizeMismatch {
-            expected,
-            found,
-        },
+        DeltaError::SizeMismatch { .. } => PageError::MaskSizeMismatch,
+        DeltaError::PageIDMismatch { .. } => PageError::PageIDMismatch,
+        DeltaError::MaskSizeMismatch { .. } => PageError::MaskSizeMismatch,
     }
 }
 
@@ -273,10 +261,12 @@ mod tests {
         let metrics = engine.process_parallel(deltas).unwrap();
         assert_eq!(metrics.processed, 2);
         unsafe {
-            let page1 = &mut *allocator.acquire_page(PageID(1)).unwrap();
-            let page2 = &mut *allocator.acquire_page(PageID(2)).unwrap();
-            assert_eq!(page1.data_slice(), b"\x01\x02\x03\x04");
-            assert_eq!(page2.data_slice(), b"\xAA\xBB\xCC\xDD");
+            allocator.with_page(PageID(1), |page1| {
+                assert_eq!(page1.data_slice(), b"\x01\x02\x03\x04");
+            }).unwrap();
+            allocator.with_page(PageID(2), |page2| {
+                assert_eq!(page2.data_slice(), b"\xAA\xBB\xCC\xDD");
+            }).unwrap();
         }
     }
 
@@ -294,8 +284,9 @@ mod tests {
         let metrics = engine.process_parallel(deltas).unwrap();
         assert_eq!(metrics.processed, 2);
         unsafe {
-            let page1 = &mut *allocator.acquire_page(PageID(1)).unwrap();
-            assert_eq!(page1.data_slice(), b"\x10\x20\x30\x40");
+            allocator.with_page(PageID(1), |page1| {
+                assert_eq!(page1.data_slice(), b"\x10\x20\x30\x40");
+            }).unwrap();
         }
     }
 

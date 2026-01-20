@@ -6,6 +6,18 @@ use std::sync::atomic::{AtomicU64, Ordering};
 
 static PAGE_COUNTER: AtomicU64 = AtomicU64::new(0);
 
+impl std::fmt::Debug for Page {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("Page")
+            .field("debug_id", &self.debug_id)
+            .field("id", &self.id)
+            .field("epoch", &self.epoch.load())
+            .field("capacity", &self.capacity)
+            .field("location", &self.location)
+            .finish()
+    }
+}
+
 pub struct Page {
     debug_id: u64,
     id: PageID,
