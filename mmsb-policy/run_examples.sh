@@ -12,8 +12,8 @@ echo ""
 echo "=== Running Examples ==="
 echo ""
 
-echo "--- Example 1: Simple Rename ---"
-cargo run --example classify_intent
+echo "--- Example 1: Test Policy ---"
+cargo run --example test_policy
 echo ""
 
 echo ""
