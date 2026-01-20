@@ -1,0 +1,20 @@
+PROJECT LAYOUT REPORT
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Module                         | Struct/Enum/Type          | Trait                | Impl            | Function                                                               | Branch     | State     
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+crate::device                  | struct DeviceRegistry     |                      | DeviceRegistry  | register(self, view: PageView)                                         | 0.00       | -0.00     
+                               |                           |                      |                 | unregister(self, page_id: PageID)                                      | 0.00       | -0.00     
+                               |                           |                      |                 | get(self, page_id: PageID) -> Option                                   | 0.00       | -0.00     
+crate::device_registry         | struct DeviceBufferReg... |                      | DeviceBuffer... | insert(self, view: PageView)                                           | 0.00       | -0.00     
+                               |                           |                      |                 | remove(self, page_id: PageID)                                          | 0.00       | -0.00     
+                               |                           |                      |                 | len(self) -> usize                                                     | 0.00       | -0.00     
+                               |                           |                      |                 | contains(self, page_id: PageID) -> bool                                | 0.00       | -0.00     
+                               |                           |                      |                 | get(self, page_id: PageID) -> Option                                   | 0.00       | -0.00     
+crate::host_device_sync        | struct HostDeviceSync     |                      | HostDeviceSync  | enqueue(self, page_id: PageID)                                         | 0.00       | -0.00     
+                               |                           |                      |                 | drain(self) -> Vec                                                     | 0.00       | -0.00     
+crate::integrity_checker       | IntegrityViolationKind    |                      |                 |                                                                        |            |           
+crate::integrity_checker       | IntegrityViolation        |                      |                 |                                                                        |            |           
+crate::integrity_checker       | struct DeltaIntegrityC... |                      | DeltaIntegri... | new(registry: Arc) -> Self                                             | 0.00       | -0.00     
+crate::integrity_checker       | struct IntegrityReport    |                      | IntegrityReport | passed(self) -> bool                                                   | 0.00       | -0.00     
+crate::simd_mask               |                           |                      | N/A             | generate_mask(old: &Self, new: &Self) -> Vec                           | 0.00       | -0.00     
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════

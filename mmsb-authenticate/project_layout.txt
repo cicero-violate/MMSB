@@ -1,0 +1,13 @@
+PROJECT LAYOUT REPORT
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Module                         | Struct/Enum/Type          | Trait                | Impl            | Function                                                               | Branch     | State     
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+crate                          | enum VerificationError    | fmt::Display         | fmt::Display    | fmt(self, f: &mut fmt::Formatter) -> fmt::Result                       | 2.58       | -0.00     
+                               |                           | std::error::Error    | ✓               |                                                                        |            |           
+crate                          | struct ChainVerifier      | VerifyChain          | VerifyChain     | verify_chain(proofs: &Self) -> Result                                  | 8.30       | -0.00     
+crate                          | enum AnyProof             | Proof                | Proof           | hash(self) -> Hash                                                     | 2.81       | -0.00     
+                               |                           |                      |                 | previous(self) -> Option                                               | 2.81       | -0.00     
+crate                          |                           | VerifyProof          |                 | verify(proof: &P) -> Result                                            |            |           
+crate                          |                           | VerifyChain          |                 | verify_chain(proofs: &Self) -> Result                                  |            |           
+crate                          |                           |                      | N/A             | verify_link<P1, P2>(previous: &P1, current: &P2) -> Result             | 1.50       | -0.00     
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════

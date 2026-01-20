@@ -1,0 +1,14 @@
+PROJECT LAYOUT REPORT
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Module                         | Struct/Enum/Type          | Trait                | Impl            | Function                                                               | Branch     | State     
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+crate::module                  | ExecutionRequest          |                      |                 |                                                                        |            |           
+crate::module                  | Operation                 |                      |                 |                                                                        |            |           
+crate::module                  | OperationType             |                      |                 |                                                                        |            |           
+crate::module                  | struct ExecutorModule     |                      | ExecutorModule  | new() -> Self                                                          | 0.00       | -0.00     
+                               |                           |                      |                 | with_sink(self, sink: S) -> Self                                       | 0.00       | -0.00     
+                               |                           |                      |                 | next_time(self) -> u64                                                 | 0.00       | -0.00     
+                               |                           |                      |                 | prepare_execution_request(intent_hash: Hash, judgment_proof: Judgme... | 0.00       | -0.00     
+                               |                           | Default              | Default         | default() -> Self                                                      | 0.00       | -0.00     
+                               |                           |                      | ExecutorModule  | handle_judgment_approved(self, event: JudgmentApproved)                | 1.00       | -0.00     
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════

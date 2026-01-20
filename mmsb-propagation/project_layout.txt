@@ -1,0 +1,143 @@
+PROJECT LAYOUT REPORT
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Module                         | Struct/Enum/Type          | Trait                | Impl            | Function                                                               | Branch     | State     
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+crate::04_propagation::dag_... |                           |                      | N/A             | compute_affected_pages(dag: &DependencyGraph, changed_pages: &Self)... | 4.80       | 0.00      
+crate::04_propagation::dag_... |                           |                      | N/A             | propagate_delta_to_descendants(dag: &DependencyGraph, source_delta:... | 0.00       | -0.00     
+crate::04_propagation::dag_... |                           |                      | N/A             | compute_affected_includes_descendants()                                | 0.00       | -0.00     
+crate::04_propagation::prop... | PropagationCommand        |                      |                 |                                                                        |            |           
+crate::04_propagation::prop... | Callback                  |                      |                 |                                                                        |            |           
+crate::04_propagation::prop... | struct PropagationEngine  | Default              | Default         | default() -> Self                                                      | 0.00       | -0.00     
+                               |                           |                      | PropagationE... | register_callback(self, page_id: PageID, callback: Callback)           | 0.00       | -0.00     
+                               |                           |                      |                 | enqueue(self, command: PropagationCommand)                             | 0.00       | -0.00     
+                               |                           |                      |                 | drain(self, dag: &DependencyGraph)                                     | 13.59      | -0.00     
+crate::04_propagation::prop... |                           |                      | N/A             | passthrough(_source: &Page, _target: &mut Page)                        | 0.00       | -0.00     
+crate::04_propagation::prop... | struct PropagationQueue   | Default              | Default         | default() -> Self                                                      | 0.00       | -0.00     
+                               |                           | std::fmt::Debug      | std::fmt::Debug | fmt(self, f: &mut std::fmt::Formatter) -> std::fmt::Result             | 0.00       | -0.00     
+                               |                           |                      | PropagationQ... | new() -> Self                                                          | 0.00       | -0.00     
+                               |                           |                      |                 | with_capacity(capacity: usize) -> Self                                 | 0.00       | -0.00     
+                               |                           |                      |                 | push(self, command: PropagationCommand)                                | 0.00       | -0.00     
+                               |                           |                      |                 | pop(self) -> Option                                                    | 1.00       | -0.00     
+                               |                           |                      |                 | push_batch(self, commands: Vec)                                        | 4.80       | -0.00     
+                               |                           |                      |                 | drain_batch(self, max_count: usize) -> Vec                             | 2.50       | -0.00     
+                               |                           |                      |                 | drain_all(self) -> Vec                                                 | 6.30       | 0.00      
+                               |                           |                      |                 | clear(self)                                                            | 0.00       | -0.00     
+                               |                           |                      |                 | is_empty(self) -> bool                                                 | 0.00       | -0.00     
+                               |                           |                      |                 | len(self) -> usize                                                     | 0.00       | -0.00     
+                               |                           |                      |                 | push_internal(self, command: PropagationCommand)                       | 6.30       | 0.00      
+crate::04_propagation::prop... |                           |                      | N/A             | command(id: u64) -> PropagationCommand                                 | 0.00       | -0.00     
+crate::04_propagation::prop... |                           |                      | N/A             | queue_roundtrip()                                                      | 9.59       | 0.00      
+crate::04_propagation::prop... |                           |                      | N/A             | drain_batch_respects_bounds()                                          | 4.80       | 0.00      
+crate::04_propagation::ring... | struct Slot               |                      | Slot            | new(sequence: usize) -> Self                                           | 0.00       | -0.00     
+crate::04_propagation::ring... | struct LockFreeRingBuffer | Send                 | ✓               |                                                                        |            |           
+                               |                           | Sync                 | ✓               |                                                                        |            |           
+                               |                           |                      | LockFreeRing... | new(capacity: usize) -> Self                                           | 0.00       | -0.00     
+                               |                           |                      |                 | capacity(self) -> usize                                                | 0.00       | -0.00     
+                               |                           |                      |                 | is_empty(self) -> bool                                                 | 0.00       | -0.00     
+                               |                           |                      |                 | len(self) -> usize                                                     | 0.00       | -0.00     
+                               |                           |                      |                 | try_push(self, value: T) -> Result                                     | 8.80       | 0.00      
+                               |                           |                      |                 | try_pop(self) -> Option                                                | 8.80       | 0.00      
+                               |                           |                      |                 | push_batch<I>(self, iter: I) -> usize                                  | 6.30       | 0.00      
+                               |                           |                      |                 | pop_batch(self, max: usize) -> Vec                                     | 6.30       | 0.00      
+                               |                           | Drop                 | Drop            | drop(self)                                                             | 4.80       | -0.00     
+                               |                           | FromIterator         | FromIterator    | from_iter<I>(iter: I) -> Self                                          | 0.00       | -0.00     
+crate::04_propagation::ring... | struct CacheLine          |                      | CacheLine       | new(value: T) -> Self                                                  | 0.00       | -0.00     
+                               |                           | std::ops::Deref      | std::ops::Deref | deref(self) -> &Self::Target                                           | 0.00       | -0.00     
+                               |                           | std::ops::DerefMut   | std::ops::De... | deref_mut(self) -> &mut Self::Target                                   | 0.00       | -0.00     
+crate::04_propagation::ring... |                           |                      | N/A             | test_basic_push_pop()                                                  | 0.00       | -0.00     
+crate::04_propagation::ring... |                           |                      | N/A             | test_wraparound_behavior()                                             | 0.00       | -0.00     
+crate::04_propagation::ring... |                           |                      | N/A             | test_concurrent_producers_consumers()                                  | 31.27      | 0.00      
+crate::04_propagation::spar... |                           |                      | N/A             | enqueue_sparse(queue: &PropagationQueue, command: PropagationCommand)  | 0.00       | 0.00      
+crate::04_propagation::thro... | Job                       |                      |                 |                                                                        |            |           
+crate::04_propagation::thro... | Message                   |                      |                 |                                                                        |            |           
+crate::04_propagation::thro... | struct ThroughputEngine   |                      | ThroughputEn... | new(allocator: Arc, workers: usize, batch_size: usize) -> Self         | 0.00       | -0.00     
+                               |                           |                      |                 | process_parallel(self, deltas: Vec) -> Result                          | 14.09      | 0.00      
+crate::04_propagation::thro... | struct ThroughputMetrics  |                      | ThroughputMe... | new(processed: usize, duration: Duration, batch_size: usize) -> Self   | 2.00       | -0.00     
+crate::04_propagation::thro... | struct ThreadPool         |                      | ThreadPool      | new(size: usize) -> Self                                               | 11.09      | 0.00      
+                               |                           |                      |                 | execute<F>(self, job: F)                                               | 0.00       | -0.00     
+                               |                           |                      |                 | worker_count(self) -> usize                                            | 0.00       | -0.00     
+                               |                           | Drop                 | Drop            | drop(self)                                                             | 9.59       | -0.00     
+crate::04_propagation::thro... |                           |                      | N/A             | partition_by_page(batch: &ColumnarDeltaBatch) -> Vec                   | 5.80       | -0.00     
+crate::04_propagation::thro... |                           |                      | N/A             | chunk_partitions(partitions: Vec, workers: usize) -> Vec               | 8.30       | 0.00      
+crate::04_propagation::thro... |                           |                      | N/A             | process_chunk(chunk: Vec, allocator: Arc, batch: Arc) -> Result        | 15.59      | 0.00      
+crate::04_propagation::thro... |                           |                      | N/A             | delta_error_to_page(err: DeltaError) -> PageError                      | 1.58       | -0.00     
+crate::04_propagation::thro... |                           |                      | N/A             | make_delta(id: u64, page: u64, payload: &Self) -> Delta                | 0.00       | -0.00     
+crate::04_propagation::thro... |                           |                      | N/A             | applies_batches_in_parallel()                                          | 0.00       | -0.00     
+crate::04_propagation::thro... |                           |                      | N/A             | merges_multiple_deltas_per_page()                                      | 0.00       | -0.00     
+crate::04_propagation::thro... |                           |                      | N/A             | reports_nonzero_throughput_for_large_batches()                         | 9.59       | 0.00      
+crate::04_propagation::tick... | TickMetrics               |                      |                 |                                                                        |            |           
+crate::04_propagation::tick... | struct TickOrchestrator   |                      | TickOrchestr... | new(throughput: ThroughputEngine, dag: Arc, memory_monitor: Arc) ->... | 0.00       | -0.00     
+                               |                           |                      |                 | execute_tick(self, deltas: Vec) -> Result                              | 0.50       | -0.00     
+                               |                           |                      |                 | budget_ms(self) -> u64                                                 | 0.00       | -0.00     
+crate::04_propagation::tick... | struct TestMemoryHandler  |                      | TestMemoryHa... | new(batch: usize, collect: bool) -> Self                               | 0.00       | -0.00     
+                               |                           | MemoryPressureHan... | MemoryPressu... | incremental_batch_pages(self) -> usize                                 | 0.00       | -0.00     
+                               |                           |                      |                 | run_gc(self, _budget_pages: usize) -> Option                           | 1.50       | -0.00     
+crate::04_propagation::tick... |                           |                      | N/A             | request_commit(log: &TransactionLog, token: &JudgmentToken, admissi... | 0.00       | -0.00     
+crate::04_propagation::tick... |                           |                      | N/A             | submit_intent(_log: &TransactionLog, _delta: Delta) -> std::io::Result | 0.00       | -0.00     
+crate::04_propagation::tick... |                           |                      | N/A             | human_judgment_commit_once() -> std::io::Result                        | 1.00       | -0.00     
+crate::04_propagation::tick... |                           |                      | N/A             | sample_delta(id: u64, page: u64, value: u8) -> Delta                   | 0.00       | -0.00     
+crate::04_propagation::tick... |                           |                      | N/A             | orchestrator(threshold: usize) -> (TickOrchestrator, Arc)              | 4.80       | -0.00     
+crate::04_propagation::tick... |                           |                      | N/A             | tick_metrics_capture_all_phases()                                      | 0.00       | -0.00     
+crate::04_propagation::tick... |                           |                      | N/A             | gc_invoked_when_threshold_low()                                        | 0.00       | -0.00     
+crate::dag_propagation         |                           |                      | N/A             | compute_affected_pages(dag: &DependencyGraph, changed_pages: &Self)... | 4.80       | 0.00      
+crate::dag_propagation         |                           |                      | N/A             | propagate_delta_to_descendants(dag: &DependencyGraph, source_delta:... | 0.00       | -0.00     
+crate::dag_propagation         |                           |                      | N/A             | compute_affected_includes_descendants()                                | 0.00       | -0.00     
+crate::propagation_command_... | PropagationCommand        |                      |                 |                                                                        |            |           
+crate::propagation_engine      | Callback                  |                      |                 |                                                                        |            |           
+crate::propagation_engine      | struct PropagationEngine  | Default              | Default         | default() -> Self                                                      | 0.00       | -0.00     
+                               |                           |                      | PropagationE... | register_callback(self, page_id: PageID, callback: Callback)           | 0.00       | -0.00     
+                               |                           |                      |                 | enqueue(self, command: PropagationCommand)                             | 0.00       | -0.00     
+                               |                           |                      |                 | drain(self, dag: &DependencyGraph)                                     | 13.59      | -0.00     
+crate::propagation_queue       | struct PropagationQueue   | Default              | Default         | default() -> Self                                                      | 0.00       | -0.00     
+                               |                           | std::fmt::Debug      | std::fmt::Debug | fmt(self, f: &mut std::fmt::Formatter) -> std::fmt::Result             | 0.00       | -0.00     
+                               |                           |                      | PropagationQ... | new() -> Self                                                          | 0.00       | -0.00     
+                               |                           |                      |                 | with_capacity(capacity: usize) -> Self                                 | 0.00       | -0.00     
+                               |                           |                      |                 | push(self, command: PropagationCommand)                                | 0.00       | -0.00     
+                               |                           |                      |                 | pop(self) -> Option                                                    | 1.00       | -0.00     
+                               |                           |                      |                 | push_batch(self, commands: Vec)                                        | 4.80       | -0.00     
+                               |                           |                      |                 | drain_batch(self, max_count: usize) -> Vec                             | 2.50       | -0.00     
+                               |                           |                      |                 | drain_all(self) -> Vec                                                 | 6.30       | 0.00      
+                               |                           |                      |                 | clear(self)                                                            | 0.00       | -0.00     
+                               |                           |                      |                 | is_empty(self) -> bool                                                 | 0.00       | -0.00     
+                               |                           |                      |                 | len(self) -> usize                                                     | 0.00       | -0.00     
+                               |                           |                      |                 | push_internal(self, command: PropagationCommand)                       | 6.30       | 0.00      
+crate::propagation_queue       |                           |                      | N/A             | command(id: u64) -> PropagationCommand                                 | 0.00       | -0.00     
+crate::propagation_queue       |                           |                      | N/A             | queue_roundtrip()                                                      | 9.59       | 0.00      
+crate::propagation_queue       |                           |                      | N/A             | drain_batch_respects_bounds()                                          | 4.80       | 0.00      
+crate::ring_buffer             | struct CacheLine          |                      | CacheLine       | new(value: T) -> Self                                                  | 0.00       | -0.00     
+                               |                           | std::ops::Deref      | std::ops::Deref | deref(self) -> &Self::Target                                           | 0.00       | -0.00     
+                               |                           | std::ops::DerefMut   | std::ops::De... | deref_mut(self) -> &mut Self::Target                                   | 0.00       | -0.00     
+crate::ring_buffer             | struct Slot               |                      | Slot            | new(sequence: usize) -> Self                                           | 0.00       | -0.00     
+crate::ring_buffer             | struct LockFreeRingBuffer | Send                 | ✓               |                                                                        |            |           
+                               |                           | Sync                 | ✓               |                                                                        |            |           
+                               |                           |                      | LockFreeRing... | new(capacity: usize) -> Self                                           | 0.00       | -0.00     
+                               |                           |                      |                 | capacity(self) -> usize                                                | 0.00       | -0.00     
+                               |                           |                      |                 | is_empty(self) -> bool                                                 | 0.00       | -0.00     
+                               |                           |                      |                 | len(self) -> usize                                                     | 0.00       | -0.00     
+                               |                           |                      |                 | try_push(self, value: T) -> Result                                     | 8.80       | 0.00      
+                               |                           |                      |                 | try_pop(self) -> Option                                                | 8.80       | 0.00      
+                               |                           |                      |                 | push_batch<I>(self, iter: I) -> usize                                  | 6.30       | 0.00      
+                               |                           |                      |                 | pop_batch(self, max: usize) -> Vec                                     | 6.30       | 0.00      
+                               |                           | Drop                 | Drop            | drop(self)                                                             | 4.80       | -0.00     
+                               |                           | FromIterator         | FromIterator    | from_iter<I>(iter: I) -> Self                                          | 0.00       | -0.00     
+crate::ring_buffer             |                           |                      | N/A             | test_basic_push_pop()                                                  | 0.00       | -0.00     
+crate::ring_buffer             |                           |                      | N/A             | test_wraparound_behavior()                                             | 0.00       | -0.00     
+crate::ring_buffer             |                           |                      | N/A             | test_concurrent_producers_consumers()                                  | 31.27      | 0.00      
+crate::throughput_engine       | Job                       |                      |                 |                                                                        |            |           
+crate::throughput_engine       | Message                   |                      |                 |                                                                        |            |           
+crate::throughput_engine       | struct ThreadPool         |                      | ThreadPool      | new(size: usize) -> Self                                               | 11.09      | 0.00      
+                               |                           |                      |                 | execute<F>(self, job: F)                                               | 0.00       | -0.00     
+                               |                           |                      |                 | worker_count(self) -> usize                                            | 0.00       | -0.00     
+                               |                           | Drop                 | Drop            | drop(self)                                                             | 9.59       | -0.00     
+crate::throughput_engine       | struct ThroughputMetrics  |                      | ThroughputMe... | new(processed: usize, duration: Duration, batch_size: usize) -> Self   | 2.00       | -0.00     
+crate::throughput_engine       | struct ThroughputEngine   |                      | ThroughputEn... | new(allocator: Arc, workers: usize, batch_size: usize) -> Self         | 0.00       | -0.00     
+                               |                           |                      |                 | process_parallel(self, deltas: Vec) -> Result                          | 14.09      | 0.00      
+crate::throughput_engine       |                           |                      | N/A             | partition_by_page(batch: &ColumnarDeltaBatch) -> Vec                   | 5.80       | -0.00     
+crate::throughput_engine       |                           |                      | N/A             | chunk_partitions(partitions: Vec, workers: usize) -> Vec               | 8.30       | 0.00      
+crate::throughput_engine       |                           |                      | N/A             | process_chunk(chunk: Vec, allocator: Arc, batch: Arc) -> Result        | 15.59      | 0.00      
+crate::throughput_engine       |                           |                      | N/A             | delta_error_to_page(err: DeltaError) -> PageError                      | 1.58       | -0.00     
+crate::throughput_engine       |                           |                      | N/A             | make_delta(id: u64, page: u64, payload: &Self) -> Delta                | 0.00       | -0.00     
+crate::throughput_engine       |                           |                      | N/A             | applies_batches_in_parallel()                                          | 0.00       | -0.00     
+crate::throughput_engine       |                           |                      | N/A             | merges_multiple_deltas_per_page()                                      | 0.00       | -0.00     
+crate::throughput_engine       |                           |                      | N/A             | reports_nonzero_throughput_for_large_batches()                         | 9.59       | 0.00      
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════

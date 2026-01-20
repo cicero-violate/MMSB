@@ -1,0 +1,35 @@
+PROJECT LAYOUT REPORT
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Module                         | Struct/Enum/Type          | Trait                | Impl            | Function                                                               | Branch     | State     
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+crate                          | Hash                      |                      |                 |                                                                        |            |           
+crate                          | IntentBounds              |                      |                 |                                                                        |            |           
+crate                          | PolicyCategory            |                      |                 |                                                                        |            |           
+crate                          | RiskClass                 |                      |                 |                                                                        |            |           
+crate                          | ErrorClass                |                      |                 |                                                                        |            |           
+crate                          | struct PolicyProof        |                      | PolicyProof     | new(intent_proof_hash: Hash, category: PolicyCategory, risk_class: ... | 0.00       | -0.00     
+                               |                           | Proof                | Proof           | hash(self) -> Hash                                                     | 0.00       | -0.00     
+                               |                           |                      |                 | previous(self) -> Option                                               | 0.00       | -0.00     
+crate                          | struct AdmissionProof     |                      | AdmissionProof  | new(judgment_proof_hash: Hash, epoch: u64, nonce: u64) -> Self         | 0.00       | -0.00     
+                               |                           | Proof                | Proof           | hash(self) -> Hash                                                     | 0.00       | -0.00     
+                               |                           |                      |                 | previous(self) -> Option                                               | 0.00       | -0.00     
+crate                          | struct CommitProof        |                      | CommitProof     | new(admission_proof_hash: Hash, delta_hash: Hash, state_hash: Hash,... | 0.00       | -0.00     
+                               |                           | Proof                | Proof           | hash(self) -> Hash                                                     | 0.00       | -0.00     
+                               |                           |                      |                 | previous(self) -> Option                                               | 0.00       | -0.00     
+crate                          | struct JudgmentProof      |                      | JudgmentProof   | new(policy_proof_hash: Hash, approved: bool, authority_signature: S... | 0.00       | -0.00     
+                               |                           | Proof                | Proof           | hash(self) -> Hash                                                     | 0.00       | -0.00     
+                               |                           |                      |                 | previous(self) -> Option                                               | 0.00       | -0.00     
+crate                          | struct IntentProof        |                      | IntentProof     | new(intent_hash: Hash, schema_version: u32, bounds: IntentBounds) -... | 0.00       | -0.00     
+                               |                           | Proof                | Proof           | hash(self) -> Hash                                                     | 0.00       | -0.00     
+                               |                           |                      |                 | previous(self) -> Option                                               | 0.00       | -0.00     
+crate                          | struct OutcomeProof       |                      | OutcomeProof    | new(commit_proof_hash: Hash, success: bool, error_class: Option, ro... | 0.00       | -0.00     
+                               |                           | Proof                | Proof           | hash(self) -> Hash                                                     | 0.00       | -0.00     
+                               |                           |                      |                 | previous(self) -> Option                                               | 0.00       | -0.00     
+crate                          | struct KnowledgeProof     |                      | KnowledgeProof  | new(outcome_proof_hash: Hash, pattern_hash: Hash, risk_signal: f64)... | 0.00       | -0.00     
+                               |                           | Proof                | Proof           | hash(self) -> Hash                                                     | 0.00       | -0.00     
+                               |                           |                      |                 | previous(self) -> Option                                               | 0.00       | -0.00     
+crate                          |                           | Proof                |                 | hash(self) -> Hash                                                     |            |           
+crate                          |                           | Proof                |                 | previous(self) -> Option                                               |            |           
+crate                          |                           | ProduceProof         |                 | produce_proof(input: &Self::Input) -> Self::Proof                      |            |           
+crate::examples::intent_proof  |                           |                      | N/A             | main()                                                                 | 0.00       | -0.00     
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,320 @@
+PROJECT LAYOUT REPORT
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Module                         | Struct/Enum/Type          | Trait                | Impl            | Function                                                               | Branch     | State     
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+crate::admission::admission... | AdmissionResult           |                      |                 |                                                                        |            |           
+crate::admission::admission... | AdmissionRejection        |                      |                 |                                                                        |            |           
+crate::admission::admission... | struct AdmissionGate      |                      | AdmissionGate   | new(current_epoch: Epoch) -> Self                                      | 0.00       | -0.00     
+                               |                           |                      |                 | verify(self, judgment_proof: &JudgmentProof) -> AdmissionResult        | 3.00       | -0.00     
+crate::admission::replay_pr... | ReplayError               |                      |                 |                                                                        |            |           
+crate::admission::replay_pr... | struct ReplayProtection   |                      | ReplayProtec... | new() -> Self                                                          | 0.00       | -0.00     
+                               |                           |                      |                 | is_admitted(self, hash: &Hash) -> bool                                 | 0.00       | -0.00     
+                               |                           |                      |                 | mark_admitted(self, hash: Hash) -> Result                              | 1.50       | 0.00      
+                               |                           |                      |                 | clear(self)                                                            | 0.00       | -0.00     
+                               |                           | Default              | Default         | default() -> Self                                                      | 0.00       | -0.00     
+crate::commit::commit_delta    |                           |                      | N/A             | commit_delta(log: &TransactionLog, admission: &AdmissionProof, delt... | 0.00       | -0.00     
+crate::commit::dag_commit      |                           |                      | N/A             | build_dependency_graph(ops: &Self) -> DependencyGraph                  | 0.00       | 0.00      
+crate::commit::dag_commit      |                           |                      | N/A             | apply_ops_unchecked(dag: &mut DependencyGraph, ops: &Self)             | 0.00       | -0.00     
+crate::commit::dag_commit      |                           |                      | N/A             | commit_structural_delta(dag: &mut DependencyGraph, ops: &Self) -> R... | 12.80      | -0.00     
+crate::commit::dag_commit      |                           |                      | N/A             | commit_rejects_empty_ops()                                             | 0.00       | 0.00      
+crate::commit::dag_commit      |                           |                      | N/A             | commit_rejects_invalid_page_reference()                                | 0.00       | 0.00      
+crate::commit::page_commit     |                           |                      | N/A             | commit_delta(log: &TransactionLog, admission_proof: &AdmissionProof... | 0.00       | -0.00     
+crate::commit::page_commit     |                           |                      | N/A             | base_delta() -> Delta                                                  | 0.00       | -0.00     
+crate::commit::page_commit     |                           |                      | N/A             | admission_proof() -> AdmissionProof                                    | 0.00       | -0.00     
+crate::commit::page_commit     |                           |                      | N/A             | commit_without_valid_admission_proof_halts()                           | 0.00       | -0.00     
+crate::commit::page_commit     |                           |                      | N/A             | commit_with_valid_admission_proof_succeeds()                           | 0.00       | -0.00     
+crate::dag::dag_snapshot       |                           |                      | N/A             | write_dag_snapshot(dag: &DependencyGraph, path: Self) -> io::Result    | 9.30       | 0.00      
+crate::dag::dag_snapshot       |                           |                      | N/A             | load_dag_snapshot(path: Self) -> io::Result                            | 12.30      | 0.00      
+crate::dag::dag_snapshot       |                           |                      | N/A             | edge_type_to_byte(edge_type: crate::dag::EdgeType) -> u8               | 2.00       | -0.00     
+crate::dag::dag_snapshot       |                           |                      | N/A             | byte_to_edge_type(byte: u8) -> io::Result                              | 2.32       | -0.00     
+crate::dag::dag_snapshot       |                           |                      | N/A             | snapshot_roundtrip()                                                   | 0.00       | -0.00     
+crate::dag::dependency_graph   | struct DependencyGraph    | Default              | Default         | default() -> Self                                                      | 0.00       | -0.00     
+                               |                           |                      | DependencyGraph | new() -> Self                                                          | 0.00       | -0.00     
+                               |                           |                      |                 | version(self) -> u64                                                   | 0.00       | -0.00     
+                               |                           |                      |                 | descendants(self, root: PageID) -> HashSet                             | 11.59      | 0.00      
+                               |                           |                      |                 | edges(self) -> Vec                                                     | 9.59       | 0.00      
+                               |                           |                      |                 | has_edge(self, from: PageID, to: PageID) -> bool                       | 0.00       | -0.00     
+                               |                           |                      |                 | contains_page(self, page_id: PageID) -> bool                           | 0.00       | -0.00     
+                               |                           |                      |                 | add_edge(self, from: PageID, to: PageID, edge_type: EdgeType)          | 0.00       | -0.00     
+                               |                           |                      |                 | remove_edge(self, from: PageID, to: PageID)                            | 1.00       | -0.00     
+                               |                           |                      |                 | apply_ops(self, ops: &Self)                                            | 6.80       | -0.00     
+                               |                           |                      |                 | snapshot(self) -> Self                                                 | 0.00       | -0.00     
+                               |                           |                      |                 | get_adjacency(self) -> &HashMap                                        | 0.00       | -0.00     
+                               |                           |                      |                 | compute_snapshot_hash(self) -> String                                  | 4.80       | 0.00      
+crate::dag::edge_types         | enum EdgeType             | TryFrom              | TryFrom         | try_from(value: u8) -> Result                                          | 2.32       | -0.00     
+crate::dag::graph_trait        |                           | GraphStructure       |                 | get_edges(self) -> Vec                                                 |            |           
+crate::dag::graph_trait        |                           | GraphStructure       |                 | get_children(self, node: PageID) -> Vec                                |            |           
+crate::delta::columnar_delta   | struct ColumnarDeltaBatch |                      | ColumnarDelt... | new() -> Self                                                          | 0.00       | -0.00     
+                               |                           |                      |                 | from_rows(deltas: Vec) -> Self                                         | 0.00       | 0.00      
+                               |                           |                      |                 | len(self) -> usize                                                     | 0.00       | -0.00     
+                               |                           |                      |                 | is_empty(self) -> bool                                                 | 0.00       | -0.00     
+                               |                           |                      |                 | iter(self) -> Self                                                     | 0.00       | -0.00     
+                               |                           |                      |                 | extend<I>(self, deltas: I)                                             | 5.80       | -0.00     
+                               |                           |                      |                 | to_vec(self) -> Vec                                                    | 0.00       | -0.00     
+                               |                           |                      |                 | filter_epoch_eq(self, epoch: Epoch) -> Vec                             | 23.18      | 0.00      
+                               |                           |                      |                 | scan_page_id(self, target: PageID) -> Vec                              | 23.18      | 0.00      
+                               |                           |                      |                 | apply_to_pages(self, pages: &mut HashMap) -> Result                    | 6.80       | 0.00      
+                               |                           |                      |                 | delta_at(self, idx: usize) -> Option                                   | 0.00       | -0.00     
+                               |                           |                      |                 | page_id_at(self, idx: usize) -> Option                                 | 0.00       | -0.00     
+                               |                           |                      |                 | build_delta(self, idx: usize) -> Delta                                 | 0.00       | -0.00     
+                               |                           |                      |                 | epoch_words(self) -> &Self                                             | 0.00       | -0.00     
+                               |                           |                      |                 | page_words(self) -> &Self                                              | 0.00       | -0.00     
+                               |                           | Default              | Default         | default() -> Self                                                      | 0.00       | -0.00     
+                               |                           | From                 | From            | from(value: Vec) -> Self                                               | 0.00       | -0.00     
+crate::delta::columnar_delta   |                           |                      | N/A             | make_delta(id: u64, page: u64, epoch: u32, payload: &Self) -> Delta    | 0.00       | -0.00     
+crate::delta::columnar_delta   |                           |                      | N/A             | test_roundtrip()                                                       | 0.00       | -0.00     
+crate::delta::columnar_delta   |                           |                      | N/A             | test_epoch_filter()                                                    | 0.00       | -0.00     
+crate::delta::columnar_delta   |                           |                      | N/A             | test_apply_to_pages()                                                  | 0.00       | 0.00      
+crate::delta::delta            | struct Delta              |                      | Delta           | new_dense(delta_id: DeltaID, page_id: PageID, epoch: Epoch, data: V... | 1.50       | -0.00     
+                               |                           |                      |                 | new_sparse(delta_id: DeltaID, page_id: PageID, epoch: Epoch, mask: ... | 1.50       | -0.00     
+                               |                           |                      |                 | merge(self, other: &Delta) -> Result                                   | 8.80       | 0.00      
+                               |                           |                      |                 | to_dense(self) -> Vec                                                  | 7.30       | 0.00      
+                               |                           |                      |                 | apply_to(self, page: &mut Page) -> Result                              | 3.08       | -0.00     
+crate::delta::delta            |                           |                      | N/A             | now_ns() -> u64                                                        | 0.00       | -0.00     
+crate::delta::delta_merge      |                           |                      | N/A             | merge_deltas(first: &Delta, second: &Delta) -> Result                  | 0.00       | -0.00     
+crate::delta::delta_merge      |                           |                      | N/A             | merge_dense_avx2(data_a: &Self, mask_a: &Self, data_b: &Self, mask_... | 20.18      | 0.00      
+crate::delta::delta_merge      |                           |                      | N/A             | merge_dense_avx512(data_a: &Self, mask_a: &Self, data_b: &Self, mas... | 20.18      | 0.00      
+crate::delta::delta_merge      |                           |                      | N/A             | merge_dense_simd(data_a: &Self, mask_a: &Self, data_b: &Self, mask_... | 8.80       | -0.00     
+crate::delta::delta_types      | Source                    |                      |                 |                                                                        |            |           
+crate::delta::delta_types      | DeltaError                |                      |                 |                                                                        |            |           
+crate::delta::delta_validation |                           |                      | N/A             | validate_delta(delta: &Delta) -> Result                                | 4.00       | -0.00     
+crate::epoch::checkpoint       |                           |                      | N/A             | write_checkpoint(allocator: &PageAllocator, tlog: &TransactionLog, ... | 11.30      | 0.00      
+crate::epoch::checkpoint       |                           |                      | N/A             | load_checkpoint(allocator: &PageAllocator, _tlog: &TransactionLog, ... | 20.09      | 0.00      
+crate::epoch::epoch_types      | struct EpochCell          |                      | EpochCell       | new(value: u32) -> Self                                                | 0.00       | -0.00     
+                               |                           |                      |                 | load(self) -> Epoch                                                    | 0.00       | -0.00     
+                               |                           |                      |                 | store(self, value: Epoch)                                              | 0.00       | -0.00     
+                               |                           |                      |                 | increment(self) -> Epoch                                               | 0.00       | -0.00     
+crate::epoch::epoch_types      | struct Epoch              |                      | Epoch           | new(value: u32) -> Self                                                | 0.00       | -0.00     
+crate::epoch::gc               | GCMetrics                 |                      |                 |                                                                        |            |           
+crate::epoch::gc               |                           | MemoryPressureHan... |                 | incremental_batch_pages(self) -> usize                                 |            |           
+crate::epoch::gc               |                           | MemoryPressureHan... |                 | run_gc(self, budget_pages: usize) -> Option                            |            |           
+crate::materialization::pur... | struct MaterializedPag... |                      | Materialized... | empty(page_id: PageID, size: usize) -> Self                            | 0.00       | -0.00     
+                               |                           |                      |                 | size(self) -> usize                                                    | 0.00       | -0.00     
+                               |                           |                      |                 | read_byte(self, offset: usize) -> Option                               | 1.00       | -0.00     
+crate::materialization::pur... |                           |                      | N/A             | materialize_page_state(page_id: PageID, deltas: &Self, page_size: u... | 6.30       | 0.00      
+crate::materialization::pur... |                           |                      | N/A             | apply_delta_to_view(view: &mut MaterializedPageView, delta: &Delta)    | 9.80       | 0.00      
+crate::materialization::pur... |                           |                      | N/A             | materialize_empty_page()                                               | 0.00       | -0.00     
+crate::materialization::pur... |                           |                      | N/A             | materialize_single_delta()                                             | 0.00       | -0.00     
+crate::materialization::pur... |                           |                      | N/A             | materialize_multiple_deltas()                                          | 0.00       | -0.00     
+crate::materialization::pur... |                           |                      | N/A             | materialize_sparse_delta()                                             | 0.00       | -0.00     
+crate::memory_engine           | MemoryEngineConfig        |                      |                 |                                                                        |            |           
+crate::memory_engine           | MemoryEngineError         |                      |                 |                                                                        |            |           
+crate::memory_engine           | AdmissionError            |                      |                 |                                                                        |            |           
+crate::memory_engine           | CommitError               |                      |                 |                                                                        |            |           
+crate::memory_engine           | OutcomeError              |                      |                 |                                                                        |            |           
+crate::memory_engine           | struct MemoryEngine       |                      | MemoryEngine    | new(config: MemoryEngineConfig) -> Result                              | 0.50       | -0.00     
+                               |                           |                      |                 | admit_execution(self, judgment_proof: &JudgmentProof) -> Result        | 4.50       | 0.00      
+                               |                           |                      |                 | verify_judgment_proof(self, proof: &JudgmentProof) -> bool             | 0.00       | -0.00     
+                               |                           |                      |                 | commit_delta(self, admission: &AdmissionProof, delta: &Delta) -> Re... | 0.50       | -0.00     
+                               |                           |                      |                 | record_outcome(self, commit: &CommitProof) -> Result                   | 1.50       | -0.00     
+                               |                           |                      |                 | handle_execution_requested(self, event: ExecutionRequested) -> Result  | 3.00       | -0.00     
+                               |                           |                      |                 | fetch_delta_by_hash(self, _hash: &Hash) -> Option                      | 0.00       | -0.00     
+                               |                           |                      |                 | compute_event_hash(self, admission: &AdmissionProof, commit: &Commi... | 0.00       | 0.00      
+                               |                           |                      |                 | compute_state_hash(self) -> Hash                                       | 0.00       | -0.00     
+crate::memory_engine           | Delta                     |                      | Delta           | hash(self) -> Hash                                                     | 0.00       | 0.00      
+crate::outcome::dag_errors     | DagCommitError            |                      |                 |                                                                        |            |           
+crate::outcome::dag_validator  | struct DagValidator       |                      | DagValidator    | new(dag: &a DependencyGraph) -> Self                                   | 0.00       | -0.00     
+                               |                           |                      |                 | detect_cycles(self) -> GraphValidationReport                           | 7.30       | 0.00      
+crate::outcome::dag_validator  |                           |                      | N/A             | strong_connect(node: PageID, adjacency: &HashMap, index: &mut usize... | 17.59      | 0.00      
+crate::page::allocator_impl    | struct PageAllocator      |                      | PageAllocator   | new(default_location: PageLocation) -> Self                            | 0.00       | -0.00     
+                               |                           |                      |                 | from_config(config: PageAllocatorConfig) -> Self                       | 0.00       | -0.00     
+                               |                           |                      |                 | with_page<F, R>(self, id: PageID, f: F) -> Option                      | 0.00       | -0.00     
+                               |                           |                      |                 | with_page_mut<F, R>(self, id: PageID, f: F) -> Option                  | 0.00       | 0.00      
+                               |                           |                      |                 | snapshot(self, id: PageID) -> Option                                   | 0.00       | -0.00     
+                               |                           |                      |                 | restore(self, snapshot: &PageSnapshotData) -> Result                   | 0.50       | 0.00      
+                               |                           |                      |                 | snapshot_pages(self) -> Vec                                            | 0.00       | -0.00     
+                               |                           |                      |                 | page_infos(self) -> Vec                                                | 0.00       | -0.00     
+                               |                           | PageAllocatorLike    | PageAllocato... | allocate(self, id: PageID, size: usize) -> Result                      | 0.50       | -0.00     
+                               |                           |                      |                 | free(self, id: PageID)                                                 | 0.00       | -0.00     
+                               |                           |                      |                 | get(self, _id: PageID) -> Option                                       | 0.00       | -0.00     
+crate::page::allocator_trait   |                           | PageAllocatorLike    |                 | allocate(self, id: PageID, size: usize) -> Result                      |            |           
+crate::page::allocator_trait   |                           | PageAllocatorLike    |                 | free(self, id: PageID)                                                 |            |           
+crate::page::allocator_trait   |                           | PageAllocatorLike    |                 | get(self, id: PageID) -> Option                                        |            |           
+crate::page::page_impl         | struct Page               |                      | Page            | new(id: PageID, size: usize, location: PageLocation) -> Result         | 3.00       | -0.00     
+                               |                           | PageAccess           | PageAccess      | id(self) -> PageID                                                     | 0.00       | -0.00     
+                               |                           |                      |                 | size(self) -> usize                                                    | 0.00       | -0.00     
+                               |                           |                      |                 | location(self) -> PageLocation                                         | 0.00       | -0.00     
+                               |                           |                      |                 | epoch(self) -> Epoch                                                   | 0.00       | -0.00     
+                               |                           |                      |                 | set_epoch(self, epoch: Epoch)                                          | 0.00       | -0.00     
+                               |                           |                      |                 | data_slice(self) -> &Self                                              | 0.00       | -0.00     
+                               |                           |                      |                 | data_mut_slice(self) -> &mut Self                                      | 0.00       | -0.00     
+                               |                           | DeltaAppliable       | DeltaAppliable  | apply_delta(self, delta: &Delta) -> Result                             | 11.80      | 0.00      
+                               |                           | PageViewProvider     | PageViewProv... | view(self) -> PageView                                                 | 0.00       | -0.00     
+                               |                           | Drop                 | Drop            | drop(self)                                                             | 0.00       | -0.00     
+                               |                           | Send                 | ✓               |                                                                        |            |           
+                               |                           | Sync                 | ✓               |                                                                        |            |           
+crate::page::traits            |                           | PageAccess           |                 | id(self) -> PageID                                                     |            |           
+crate::page::traits            |                           | PageAccess           |                 | size(self) -> usize                                                    |            |           
+crate::page::traits            |                           | PageAccess           |                 | location(self) -> PageLocation                                         |            |           
+crate::page::traits            |                           | PageAccess           |                 | epoch(self) -> Epoch                                                   |            |           
+crate::page::traits            |                           | PageAccess           |                 | set_epoch(self, epoch: Epoch)                                          |            |           
+crate::page::traits            |                           | PageAccess           |                 | data_slice(self) -> &Self                                              |            |           
+crate::page::traits            |                           | PageAccess           |                 | data_mut_slice(self) -> &mut Self                                      |            |           
+crate::page::traits            |                           | DeltaAppliable       |                 | apply_delta(self, delta: &Delta) -> Result                             |            |           
+crate::page::traits            |                           | PageViewProvider     |                 | view(self) -> PageView                                                 |            |           
+crate::page::types             | PageError                 |                      |                 |                                                                        |            |           
+crate::page::types             | PageSnapshotData          |                      |                 |                                                                        |            |           
+crate::page::types             | enum PageLocation         |                      | PageLocation    | from_tag(tag: i32) -> Result                                           | 2.00       | -0.00     
+crate::page::types             | struct PageAllocatorCo... | Default              | Default         | default() -> Self                                                      | 0.00       | -0.00     
+crate::page::view              | struct PageView           |                      | PageView        | data_slice(self) -> &Self                                              | 0.00       | -0.00     
+                               |                           | Send                 | ✓               |                                                                        |            |           
+                               |                           | Sync                 | ✓               |                                                                        |            |           
+crate::proofs::admission_proof | struct AdmissionGate      |                      | AdmissionGate   | new(epoch: Arc, dag: Arc) -> Self                                      | 0.00       | -0.00     
+                               |                           |                      |                 | produce_admission_proof(self, event: &ExecutionRequested) -> Result    | 4.50       | 0.00      
+                               |                           |                      |                 | verify_judgment_proof(self, judgment_proof: &JudgmentProof) -> bool    | 0.00       | -0.00     
+crate::proofs::delta_stream    | MmsbDelta                 |                      |                 |                                                                        |            |           
+crate::proofs::delta_stream    | MmsbDeltaStream           |                      |                 |                                                                        |            |           
+crate::proofs::delta_stream    | MmsbDeltaStreamError      |                      |                 |                                                                        |            |           
+crate::proofs::delta_stream    | MessageEntry              |                      |                 |                                                                        |            |           
+crate::proofs::delta_stream    | PatchDelta                |                      |                 |                                                                        |            |           
+crate::proofs::delta_stream    | PatchOperation            |                      |                 |                                                                        |            |           
+crate::proofs::delta_stream    | DeltaMeta                 |                      |                 |                                                                        |            |           
+crate::proofs::delta_stream    |                           |                      | N/A             | build_delta_streams(base_path: &Path, cwd: &Path) -> Result            | 22.68      | 0.00      
+crate::proofs::delta_stream    |                           |                      | N/A             | order_deltas_with_shadow_page(patch_meta: &Self, cwd: &Path, conver... | 13.09      | 0.00      
+crate::proofs::delta_stream    |                           |                      | N/A             | build_index(base_path: &Path) -> Result                                | 16.80      | -0.00     
+crate::proofs::delta_stream    |                           |                      | N/A             | extract_parent_id(json: &Value) -> Option                              | 10.80      | -0.00     
+crate::proofs::delta_stream    |                           |                      | N/A             | message_chain(messages: &HashMap, start: &str) -> Vec                  | 5.30       | 0.00      
+crate::proofs::delta_stream    |                           |                      | N/A             | list_patch_deltas(dir: &Path) -> Vec                                   | 6.80       | 0.00      
+crate::proofs::delta_stream    |                           |                      | N/A             | parse_patch_seq(path: &Path) -> Option                                 | 2.00       | -0.00     
+crate::proofs::delta_stream    |                           |                      | N/A             | extract_delta_id(raw: &str, path: &Path) -> Result                     | 4.00       | 0.00      
+crate::proofs::delta_stream    |                           |                      | N/A             | extract_patch_text(raw: &str, path: &Path) -> Result                   | 6.80       | -0.00     
+crate::proofs::delta_stream    |                           |                      | N/A             | hash_patch_text(patch_text: &str) -> String                            | 0.00       | -0.00     
+crate::proofs::delta_stream    |                           |                      | N/A             | sha256_hex(bytes: &Self) -> String                                     | 0.00       | 0.00      
+crate::proofs::delta_stream    |                           |                      | N/A             | hash_str_to_u64(input: &str) -> u64                                    | 0.00       | 0.00      
+crate::proofs::execution_proof | MmsbExecutionProof        |                      |                 |                                                                        |            |           
+crate::proofs::execution_proof | MmsbExecutionProofStream  |                      |                 |                                                                        |            |           
+crate::proofs::execution_proof | MmsbExecutionProofError   |                      |                 |                                                                        |            |           
+crate::proofs::execution_proof | PatchApplyFile            |                      |                 |                                                                        |            |           
+crate::proofs::execution_proof | ShellApply                |                      |                 |                                                                        |            |           
+crate::proofs::execution_proof | PlanApply                 |                      |                 |                                                                        |            |           
+crate::proofs::execution_proof | PlanStep                  |                      |                 |                                                                        |            |           
+crate::proofs::execution_proof |                           |                      | N/A             | build_execution_proof_stream(messages_dir: &Path, conversation_id: ... | 25.89      | 0.00      
+crate::proofs::execution_proof |                           |                      | N/A             | patch_output_text_from_apply_file(path: &PathBuf) -> Result            | 16.80      | 0.00      
+crate::proofs::execution_proof |                           |                      | N/A             | load_shell_apply(path: &Path) -> Result                                | 1.00       | -0.00     
+crate::proofs::execution_proof |                           |                      | N/A             | should_skip_shell_apply(apply: &ShellApply) -> bool                    | 1.58       | -0.00     
+crate::proofs::execution_proof |                           |                      | N/A             | list_plan_applies(message_dir: &Path) -> Vec                           | 6.80       | 0.00      
+crate::proofs::execution_proof |                           |                      | N/A             | suffix_from_plan_apply_path(path: &Path) -> Option                     | 1.50       | -0.00     
+crate::proofs::execution_proof |                           |                      | N/A             | load_plan_apply(path: &Path) -> Result                                 | 1.00       | -0.00     
+crate::proofs::structural_p... | struct MmsbStructuralA... |                      | MmsbStructur... | new(ops: &Self, dag_snapshot_hash: Option, conversation_id: String,... | 0.00       | -0.00     
+                               |                           |                      |                 | verify_ops(self, ops: &Self) -> bool                                   | 0.00       | -0.00     
+crate::proofs::structural_p... |                           |                      | N/A             | compute_ops_hash(ops: &Self) -> String                                 | 4.80       | 0.00      
+crate::replay::dag_log         |                           |                      | N/A             | append_structural_record(path: Self, ops: &Self) -> io::Result         | 11.30      | 0.00      
+crate::replay::dag_log         |                           |                      | N/A             | default_structural_log_path() -> PathBuf                               | 0.00       | -0.00     
+crate::replay::dag_log         |                           |                      | N/A             | ensure_log_header(file: &mut File) -> io::Result                       | 7.00       | 0.00      
+crate::replay::dag_log         |                           |                      | N/A             | write_u64(file: &mut File, value: u64) -> io::Result                   | 0.00       | -0.00     
+crate::replay::dag_log         |                           |                      | N/A             | write_u8(file: &mut File, value: u8) -> io::Result                     | 0.00       | -0.00     
+crate::replay::dag_log         |                           |                      | N/A             | read_u64(file: &mut File) -> io::Result                                | 0.50       | 0.00      
+crate::replay::dag_log         |                           |                      | N/A             | read_u8(file: &mut File) -> io::Result                                 | 0.50       | 0.00      
+crate::replay::dag_log         |                           |                      | N/A             | replay_structural_log(path: Self) -> io::Result                        | 18.68      | 0.00      
+crate::replay::dag_log         |                           |                      | N/A             | test_append_and_replay_structural_log()                                | 0.00       | -0.00     
+crate::replay::replay_valid... | ReplayCheckpoint          |                      |                 |                                                                        |            |           
+crate::replay::replay_valid... | struct ReplayReport       |                      | ReplayReport    | passed(self, threshold: f64) -> bool                                   | 0.00       | -0.00     
+crate::replay::replay_valid... | struct ReplayValidator    |                      | ReplayValidator | new(threshold: f64) -> Self                                            | 0.00       | -0.00     
+                               |                           |                      |                 | record_checkpoint(self, allocator: &PageAllocator, tlog: &Transacti... | 0.50       | -0.00     
+                               |                           |                      |                 | checkpoint(self, idx: usize) -> Option                                 | 0.00       | -0.00     
+                               |                           |                      |                 | validate_allocator(self, checkpoint_id: usize, allocator: &PageAllo... | 0.50       | -0.00     
+                               |                           |                      |                 | compare_with_snapshot(self, checkpoint_id: usize, snapshot: &Self) ... | 0.50       | -0.00     
+                               |                           |                      |                 | threshold(self) -> f64                                                 | 0.00       | -0.00     
+crate::replay::replay_valid... |                           |                      | N/A             | compare_snapshots(checkpoint: &ReplayCheckpoint, current: &Self) ->... | 15.39      | 0.00      
+crate::replay::replay_valid... |                           |                      | N/A             | l2_distance(reference: &Self, candidate: &Self) -> (f64, u8)           | 5.80       | 0.00      
+crate::replay::replay_valid... |                           |                      | N/A             | temp_log_path() -> PathBuf                                             | 0.00       | 0.00      
+crate::replay::replay_valid... |                           |                      | N/A             | rand_suffix() -> u64                                                   | 0.00       | -0.00     
+crate::replay::replay_valid... |                           |                      | N/A             | checkpoint_validation_detects_divergence()                             | 0.00       | 0.00      
+crate::semiring::purity_val... | PurityFailure             |                      |                 |                                                                        |            |           
+crate::semiring::purity_val... | struct PurityValidator    |                      | PurityValidator | new(runs: usize) -> Self                                               | 0.00       | -0.00     
+                               |                           |                      |                 | validate_fn<F, I, O>(self, inputs: &Self, func: F) -> PurityReport     | 10.59      | 0.00      
+                               |                           |                      |                 | validate_semiring<S>(self, semiring: &S, samples: &Self) -> bool       | 12.59      | -0.00     
+                               |                           | Default              | Default         | default() -> Self                                                      | 0.00       | -0.00     
+crate::semiring::purity_val... | struct PurityReport       |                      | PurityReport    | is_pure(self) -> bool                                                  | 0.00       | -0.00     
+crate::semiring::semiring_ops  |                           |                      | N/A             | fold_add<S>(semiring: &S, values: Self) -> S::Element                  | 0.00       | -0.00     
+crate::semiring::semiring_ops  |                           |                      | N/A             | fold_mul<S>(semiring: &S, values: Self) -> S::Element                  | 0.00       | -0.00     
+crate::semiring::semiring_ops  |                           |                      | N/A             | accumulate<S>(semiring: &S, left: &S::Element, right: &S::Element) ... | 0.00       | -0.00     
+crate::semiring::semiring_t... |                           | Semiring             |                 | zero(self) -> Self::Element                                            |            |           
+crate::semiring::semiring_t... |                           | Semiring             |                 | one(self) -> Self::Element                                             |            |           
+crate::semiring::semiring_t... |                           | Semiring             |                 | add(self, a: &Self::Element, b: &Self::Element) -> Self::Element       |            |           
+crate::semiring::semiring_t... |                           | Semiring             |                 | mul(self, a: &Self::Element, b: &Self::Element) -> Self::Element       |            |           
+crate::semiring::standard_s... | struct TropicalSemiring   | Semiring             | Semiring        | zero(self) -> Self::Element                                            | 0.00       | -0.00     
+                               |                           |                      |                 | one(self) -> Self::Element                                             | 0.00       | -0.00     
+                               |                           |                      |                 | add(self, a: &Self::Element, b: &Self::Element) -> Self::Element       | 0.00       | -0.00     
+                               |                           |                      |                 | mul(self, a: &Self::Element, b: &Self::Element) -> Self::Element       | 0.00       | -0.00     
+crate::semiring::standard_s... | struct BooleanSemiring    | Semiring             | Semiring        | zero(self) -> Self::Element                                            | 0.00       | -0.00     
+                               |                           |                      |                 | one(self) -> Self::Element                                             | 0.00       | -0.00     
+                               |                           |                      |                 | add(self, a: &Self::Element, b: &Self::Element) -> Self::Element       | 0.00       | -0.00     
+                               |                           |                      |                 | mul(self, a: &Self::Element, b: &Self::Element) -> Self::Element       | 0.00       | -0.00     
+crate::structural::cycle_de... | VisitState                |                      |                 |                                                                        |            |           
+crate::structural::cycle_de... |                           |                      | N/A             | has_cycle(graph: &ShadowPageGraph) -> bool                             | 16.18      | 0.00      
+crate::structural::cycle_de... |                           |                      | N/A             | dfs(node: PageID, adjacency: &HashMap, states: &mut HashMap) -> bool   | 9.88       | 0.00      
+crate::structural::graph_va... | GraphValidationReport     |                      |                 |                                                                        |            |           
+crate::structural::graph_va... | struct GraphValidator     |                      | GraphValidator  | new(graph: &a ShadowPageGraph) -> Self                                 | 0.00       | -0.00     
+                               |                           |                      |                 | detect_cycles(self) -> GraphValidationReport                           | 0.00       | -0.00     
+                               |                           |                      |                 | validate_page(self, root: PageID) -> GraphValidationReport             | 0.00       | -0.00     
+                               |                           |                      |                 | run(self, root: Option) -> GraphValidationReport                       | 8.30       | 0.00      
+crate::structural::graph_va... |                           |                      | N/A             | reachable(adjacency: &HashMap, root: PageID) -> Vec                    | 11.59      | 0.00      
+crate::structural::graph_va... |                           |                      | N/A             | strong_connect(node: PageID, adjacency: &HashMap, index: &mut usize... | 17.59      | 0.00      
+crate::structural::graph_va... |                           |                      | N/A             | is_self_loop(adjacency: &HashMap, node: PageID) -> bool                | 0.00       | -0.00     
+crate::structural::graph_va... |                           |                      | N/A             | detects_cycle()                                                        | 0.00       | -0.00     
+crate::structural::graph_va... |                           |                      | N/A             | per_page_validation()                                                  | 0.00       | -0.00     
+crate::structural::shadow_g... | Edge                      |                      |                 |                                                                        |            |           
+crate::structural::shadow_g... | struct ShadowPageGraph    |                      | ShadowPageGraph | from_dag_and_ops(dag: &DependencyGraph, ops: &Self) -> Self            | 11.59      | 0.00      
+                               |                           |                      |                 | add_edge(self, from: PageID, to: PageID, edge_type: EdgeType)          | 0.00       | 0.00      
+                               |                           |                      |                 | remove_edge(self, from: PageID, to: PageID)                            | 1.00       | -0.00     
+                               |                           |                      |                 | descendants(self, root: PageID) -> HashSet                             | 11.59      | 0.00      
+crate::structural::shadow_g... |                           |                      | N/A             | topological_sort(graph: &ShadowPageGraph) -> Vec                       | 23.18      | 0.00      
+crate::structural::structur... | enum StructuralOp         |                      | StructuralOp    | from_page(self) -> PageID                                              | 1.00       | -0.00     
+                               |                           |                      |                 | to_page(self) -> PageID                                                | 1.00       | -0.00     
+                               |                           |                      |                 | is_add(self) -> bool                                                   | 0.00       | -0.00     
+                               |                           |                      |                 | is_remove(self) -> bool                                                | 0.00       | -0.00     
+crate::tlog::tlog              | TransactionLogReader      |                      |                 |                                                                        |            |           
+crate::tlog::tlog              | LogSummary                |                      |                 |                                                                        |            |           
+crate::tlog::tlog              | struct TransactionLog     |                      | TransactionLog  | new(path: Self) -> std::io::Result                                     | 3.50       | 0.00      
+                               |                           |                      |                 | clear_entries(self)                                                    | 0.00       | -0.00     
+                               |                           |                      |                 | append(self, admission_proof: &AdmissionProof, delta: Delta) -> std... | 4.50       | 0.00      
+                               |                           |                      |                 | summary(self) -> std::io::Result                                       | 0.00       | -0.00     
+                               |                           |                      |                 | replay(self, _start_epoch: u32) -> std::io::Result                     | 0.00       | -0.00     
+                               |                           |                      |                 | current_offset(self) -> std::io::Result                                | 1.00       | -0.00     
+crate::tlog::tlog              |                           |                      | N/A             | delta_hash(delta: &Delta) -> String                                    | 4.80       | 0.00      
+crate::tlog::tlog              |                           |                      | N/A             | check_log_version(reader: &mut BufReader) -> std::io::Result           | 4.00       | 0.00      
+crate::tlog::tlog              |                           |                      | N/A             | base_delta() -> Delta                                                  | 0.50       | -0.00     
+crate::tlog::tlog              |                           |                      | N/A             | dummy_admission_proof() -> AdmissionProof                              | 0.00       | -0.00     
+crate::tlog::tlog              |                           |                      | N/A             | append_with_valid_admission_proof_succeeds()                           | 0.00       | -0.00     
+crate::tlog::tlog_compression  | CompressionMode           |                      |                 |                                                                        |            |           
+crate::tlog::tlog_compression  | CompressionStats          |                      |                 |                                                                        |            |           
+crate::tlog::tlog_compression  |                           |                      | N/A             | encode_rle(mask: &Self) -> Vec                                         | 9.30       | 0.00      
+crate::tlog::tlog_compression  |                           |                      | N/A             | decode_rle(encoded: &Self, output: &mut Self)                          | 10.59      | 0.00      
+crate::tlog::tlog_compression  |                           |                      | N/A             | bitpack_mask(mask: &Self) -> Vec                                       | 5.80       | 0.00      
+crate::tlog::tlog_compression  |                           |                      | N/A             | bitunpack_mask(packed: &Self, output: &mut Self)                       | 5.80       | 0.00      
+crate::tlog::tlog_compression  |                           |                      | N/A             | compress_delta_mask(mask: &Self, mode: CompressionMode) -> (Vec, Co... | 1.58       | -0.00     
+crate::tlog::tlog_compression  |                           |                      | N/A             | compact(deltas: &Self) -> Vec                                          | 10.80      | 0.00      
+crate::tlog::tlog_replay       |                           |                      | N/A             | apply_log(pages: &mut Self, deltas: &Self)                             | 5.80       | 0.00      
+crate::tlog::tlog_serializa... |                           |                      | N/A             | read_log(path: Self) -> std::io::Result                                | 18.30      | 0.00      
+crate::truth::invariant_che... | InvariantContext          |                      |                 |                                                                        |            |           
+crate::truth::invariant_che... | struct InvariantResult    |                      | InvariantResult | ok(name: &static str) -> Self                                          | 0.00       | -0.00     
+                               |                           |                      |                 | fail(name: &static str, msg: Self) -> Self                             | 0.00       | -0.00     
+crate::truth::invariant_che... | struct EpochMonotonicity  | Invariant            | Invariant       | name(self) -> &static str                                              | 0.00       | -0.00     
+                               |                           |                      |                 | check(self, ctx: &InvariantContext) -> InvariantResult                 | 7.80       | 0.00      
+crate::truth::invariant_che... | struct PageConsistency    | Invariant            | Invariant       | name(self) -> &static str                                              | 0.00       | -0.00     
+                               |                           |                      |                 | check(self, ctx: &InvariantContext) -> InvariantResult                 | 6.30       | -0.00     
+crate::truth::invariant_che... | struct GraphAcyclicity    |                      | GraphAcyclicity | new() -> Self                                                          | 0.00       | -0.00     
+                               |                           | Default              | Default         | default() -> Self                                                      | 0.00       | -0.00     
+                               |                           | Invariant            | Invariant       | name(self) -> &static str                                              | 0.00       | -0.00     
+                               |                           |                      |                 | check(self, ctx: &InvariantContext) -> InvariantResult                 | 2.50       | -0.00     
+crate::truth::invariant_che... | struct InvariantChecker   |                      | InvariantChe... | new() -> Self                                                          | 0.00       | -0.00     
+                               |                           |                      |                 | with_builtins() -> Self                                                | 0.00       | 0.00      
+                               |                           |                      |                 | register<I>(self, invariant: I)                                        | 0.00       | -0.00     
+                               |                           |                      |                 | run(self, ctx: &InvariantContext) -> Vec                               | 0.00       | -0.00     
+crate::truth::invariant_che... |                           | Invariant            |                 | name(self) -> &static str                                              |            |           
+crate::truth::invariant_che... |                           | Invariant            |                 | check(self, ctx: &InvariantContext) -> InvariantResult                 |            |           
+crate::truth::invariant_che... |                           |                      | N/A             | validate_metadata_blob(blob: &Self) -> Result                          | 8.80       | 0.00      
+crate::truth::invariant_che... |                           |                      | N/A             | read_u32(blob: &Self, cursor: &mut usize) -> Result                    | 1.50       | -0.00     
+crate::truth::invariant_che... |                           |                      | N/A             | read_bytes(blob: &Self, cursor: &mut usize, len: usize) -> Result      | 1.50       | -0.00     
+crate::truth::invariant_che... |                           |                      | N/A             | epoch_invariant_detects_regressions()                                  | 0.00       | 0.00      
+crate::truth::invariant_che... |                           |                      | N/A             | graph_acyclicity_detects_cycles()                                      | 0.00       | 0.00      
+crate::truth::provenance_tr... | ProvenanceResult          |                      |                 |                                                                        |            |           
+crate::truth::provenance_tr... | struct ProvenanceTracker  |                      | ProvenanceTr... | new(graph: Arc) -> Self                                                | 0.00       | -0.00     
+                               |                           |                      |                 | with_capacity(graph: Arc, capacity: usize, depth_limit: usize) -> Self | 0.00       | -0.00     
+                               |                           |                      |                 | resolve(self, page_id: PageID) -> ProvenanceResult                     | 1.50       | -0.00     
+                               |                           |                      |                 | resolve_uncached(self, page_id: PageID) -> Vec                         | 17.39      | 0.00      
+                               |                           |                      |                 | insert_cache(self, key: PageID, chain: Vec)                            | 6.80       | 0.00      
+crate::truth::provenance_tr... |                           |                      | N/A             | resolves_chain_with_depth_limit()                                      | 0.00       | -0.00     
+crate::truth::provenance_tr... |                           |                      | N/A             | cache_does_not_grow_unbounded()                                        | 4.80       | -0.00     
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════

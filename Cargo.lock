@@ -429,6 +429,8 @@ name = "mmsb-service"
 version = "0.1.0"
 dependencies = [
  "mmsb-events",
+ "mmsb-intent",
+ "mmsb-primitives",
  "tokio",
 ]
 

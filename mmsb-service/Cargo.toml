@@ -10,3 +10,4 @@ mmsb-primitives = { path = "../mmsb-primitives" }
 
 
 tokio = { version = "1", features = ["sync", "rt"] }
+mmsb-intent = { path = "../mmsb-intent" }

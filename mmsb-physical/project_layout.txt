@@ -1,0 +1,27 @@
+PROJECT LAYOUT REPORT
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Module                         | Struct/Enum/Type          | Trait                | Impl            | Function                                                               | Branch     | State     
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+crate::allocator_stats         | struct AllocatorStats     |                      | AllocatorStats  | record_alloc(self)                                                     | 0.00       | -0.00     
+                               |                           |                      |                 | record_free(self)                                                      | 0.00       | -0.00     
+                               |                           |                      |                 | snapshot(self) -> (u64, u64)                                           | 0.00       | -0.00     
+crate::gpu_memory_pool         | Slab                      |                      |                 |                                                                        |            |           
+crate::gpu_memory_pool         | PoolStats                 |                      |                 |                                                                        |            |           
+crate::gpu_memory_pool         | struct GPUMemoryPool      |                      | GPUMemoryPool   | new() -> Self                                                          | 4.80       | 0.00      
+                               |                           |                      |                 | select_slab_size(self, size: usize) -> usize                           | 0.00       | -0.00     
+                               |                           |                      |                 | allocate(self, size: usize) -> Result                                  | 4.50       | 0.00      
+                               |                           |                      |                 | deallocate(self, ptr: Self, size: usize)                               | 1.00       | 0.00      
+                               |                           |                      |                 | get_stats(self) -> PoolStats                                           | 0.00       | -0.00     
+                               |                           |                      |                 | clear(self)                                                            | 9.59       | 0.00      
+                               |                           | Drop                 | Drop            | drop(self)                                                             | 0.00       | 0.00      
+crate::nccl_integration        | NcclComm                  |                      |                 |                                                                        |            |           
+crate::nccl_integration        | NcclUniqueId              |                      |                 |                                                                        |            |           
+crate::nccl_integration        | NcclRedOp                 |                      |                 |                                                                        |            |           
+crate::nccl_integration        | NcclDataType              |                      |                 |                                                                        |            |           
+crate::nccl_integration        | NCCLCommunicator          |                      |                 |                                                                        |            |           
+crate::nccl_integration        | struct NCCLContext        |                      | NCCLContext     | new(_num_gpus: i32) -> Result                                          | 1.50       | 0.00      
+                               |                           |                      |                 | init_communicator(self, rank: i32, world_size: i32) -> Result          | 1.50       | -0.00     
+                               |                           |                      |                 | all_reduce(self, rank: i32, sendbuf: Self, recvbuf: Self, count: us... | 1.50       | -0.00     
+                               |                           |                      |                 | all_gather(self, rank: i32, sendbuf: Self, recvbuf: Self, sendcount... | 1.50       | -0.00     
+                               |                           | Drop                 | Drop            | drop(self)                                                             | 4.80       | -0.00     
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════

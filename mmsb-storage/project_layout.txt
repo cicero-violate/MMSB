@@ -1,0 +1,26 @@
+PROJECT LAYOUT REPORT
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Module                         | Struct/Enum/Type          | Trait                | Impl            | Function                                                               | Branch     | State     
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+crate                          | StorageKey                |                      |                 |                                                                        |            |           
+crate                          | struct MemoryStorage      |                      | MemoryStorage   | new() -> Self                                                          | 0.00       | -0.00     
+                               |                           | Default              | Default         | default() -> Self                                                      | 0.00       | -0.00     
+                               |                           | Storage              | Storage         | store(self, key: &StorageKey, data: &Self) -> Result                   | 0.00       | -0.00     
+                               |                           |                      |                 | retrieve(self, key: &StorageKey) -> Result                             | 0.00       | -0.00     
+                               |                           |                      |                 | exists(self, key: &StorageKey) -> bool                                 | 0.00       | -0.00     
+                               |                           |                      |                 | delete(self, key: &StorageKey) -> Result                               | 0.50       | -0.00     
+crate                          | struct FileStorage        |                      | FileStorage     | new(root_path: PathBuf) -> Self                                        | 0.00       | -0.00     
+                               |                           |                      |                 | key_to_path(self, key: &StorageKey) -> PathBuf                         | 0.00       | -0.00     
+                               |                           | Storage              | Storage         | store(self, key: &StorageKey, data: &Self) -> Result                   | 2.00       | -0.00     
+                               |                           |                      |                 | retrieve(self, key: &StorageKey) -> Result                             | 2.00       | -0.00     
+                               |                           |                      |                 | exists(self, key: &StorageKey) -> bool                                 | 0.00       | -0.00     
+                               |                           |                      |                 | delete(self, key: &StorageKey) -> Result                               | 2.00       | -0.00     
+crate                          | enum StorageError         | From                 | From            | from(e: std::io::Error) -> Self                                        | 0.00       | -0.00     
+                               |                           | From                 | From            | from(e: serde_json::Error) -> Self                                     | 0.00       | -0.00     
+                               |                           | std::fmt::Display    | std::fmt::Di... | fmt(self, f: &mut std::fmt::Formatter) -> std::fmt::Result             | 2.00       | -0.00     
+                               |                           | std::error::Error    | ✓               |                                                                        |            |           
+crate                          |                           | Storage              |                 | store(self, key: &StorageKey, data: &Self) -> Result                   |            |           
+crate                          |                           | Storage              |                 | retrieve(self, key: &StorageKey) -> Result                             |            |           
+crate                          |                           | Storage              |                 | exists(self, key: &StorageKey) -> bool                                 |            |           
+crate                          |                           | Storage              |                 | delete(self, key: &StorageKey) -> Result                               |            |           
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════

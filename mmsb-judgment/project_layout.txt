@@ -1,0 +1,33 @@
+PROJECT LAYOUT REPORT
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Module                         | Struct/Enum/Type          | Trait                | Impl            | Function                                                               | Branch     | State     
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+crate::artifact                | struct JudgmentArtifact   |                      | JudgmentArti... | new(judgment_id: String, token: String, intent_path: String, delta_... | 0.00       | -0.00     
+crate::artifact                |                           |                      | N/A             | judgment_path_for_intent(intent_path: &str) -> PathBuf                 | 0.00       | -0.00     
+crate::artifact                |                           |                      | N/A             | write_artifact_atomic(path: &Path, artifact: &JudgmentArtifact) -> ... | 4.00       | 0.00      
+crate::bin::mmsb-judgment      |                           |                      | N/A             | print_usage()                                                          | 0.00       | -0.00     
+crate::bin::mmsb-judgment      |                           |                      | N/A             | main()                                                                 | 16.88      | 0.00      
+crate::issue                   |                           |                      | N/A             | issue_judgment(_intent_metadata: &str, _delta_hash: &str) -> Judgme... | 0.00       | 0.00      
+crate::issue                   |                           |                      | N/A             | hex_encode(bytes: &Self) -> String                                     | 4.80       | 0.00      
+crate::module                  | JudgmentInput             |                      |                 |                                                                        |            |           
+crate::module                  | ExecutionPlan             |                      |                 |                                                                        |            |           
+crate::module                  | struct JudgmentModule     |                      | JudgmentModule  | new() -> Self                                                          | 0.00       | -0.00     
+                               |                           |                      |                 | with_sink(self, sink: S) -> Self                                       | 0.00       | -0.00     
+                               |                           |                      |                 | next_time(self) -> u64                                                 | 0.00       | -0.00     
+                               |                           |                      |                 | make_judgment(policy_proof: &PolicyProof) -> bool                      | 1.58       | -0.00     
+                               |                           |                      |                 | create_execution_plan(intent_hash: Hash) -> ExecutionPlan              | 0.00       | -0.00     
+                               |                           | Default              | Default         | default() -> Self                                                      | 0.00       | -0.00     
+                               |                           | ProduceProof         | ProduceProof    | produce_proof(input: &Self::Input) -> Self::Proof                      | 1.00       | 0.00      
+                               |                           | JudgmentStage        | ✓               |                                                                        |            |           
+                               |                           |                      | JudgmentModule  | handle_policy_evaluated(self, event: PolicyEvaluated)                  | 2.00       | -0.00     
+crate::tests::issue_cli        |                           |                      | N/A             | sha256_hex(bytes: &Self) -> String                                     | 0.00       | -0.00     
+crate::tests::issue_cli        |                           |                      | N/A             | is_lower_hex_64(value: &str) -> bool                                   | 0.00       | -0.00     
+crate::tests::issue_cli        |                           |                      | N/A             | write_intent_file(dir: &std::path::Path, name: &str, contents: &Sel... | 0.00       | -0.00     
+crate::tests::issue_cli        |                           |                      | N/A             | unique_temp_dir(prefix: &str) -> std::path::PathBuf                    | 0.00       | -0.00     
+crate::tests::issue_cli        |                           |                      | N/A             | find_judgment_bin() -> PathBuf                                         | 5.00       | -0.00     
+crate::tests::issue_cli        |                           |                      | N/A             | issue_fails_on_hash_mismatch()                                         | 0.00       | 0.00      
+crate::tests::issue_cli        |                           |                      | N/A             | issue_writes_artifact_and_outputs_token()                              | 0.50       | -0.00     
+crate::types                   | struct JudgmentToken      |                      | JudgmentToken   | new(token: String) -> Self                                             | 0.00       | -0.00     
+                               |                           |                      |                 | token(self) -> &str                                                    | 0.00       | -0.00     
+                               |                           |                      |                 | test_only() -> Self                                                    | 0.00       | -0.00     
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════

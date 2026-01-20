@@ -1,0 +1,30 @@
+PROJECT LAYOUT REPORT
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Module                         | Struct/Enum/Type          | Trait                | Impl            | Function                                                               | Branch     | State     
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+crate                          | struct Runtime            |                      | Runtime         | new() -> Self                                                          | 0.00       | -0.00     
+                               |                           |                      |                 | with_capacity(capacity: usize) -> Self                                 | 0.00       | -0.00     
+                               |                           |                      |                 | register_module(self, module: Box)                                     | 0.00       | -0.00     
+                               |                           |                      |                 | event_bus(self) -> &EventBus                                           | 0.00       | -0.00     
+                               |                           |                      |                 | shutdown(self)                                                         | 4.80       | -0.00     
+                               |                           | Default              | Default         | default() -> Self                                                      | 0.00       | -0.00     
+crate                          | struct EventBus           |                      | EventBus        | new(capacity: usize) -> Self                                           | 0.00       | -0.00     
+                               |                           |                      |                 | subscribe(self) -> broadcast::Receiver                                 | 0.00       | -0.00     
+                               |                           |                      |                 | emit(self, event: AnyEvent) -> Result                                  | 0.00       | -0.00     
+                               |                           |                      |                 | receiver_count(self) -> usize                                          | 0.00       | -0.00     
+                               |                           | EventSink            | EventSink       | emit(self, event: AnyEvent)                                            | 0.00       | -0.00     
+crate::tick::tick_orchestrator | TickMetrics               |                      |                 |                                                                        |            |           
+crate::tick::tick_orchestrator | struct TickOrchestrator   |                      | TickOrchestr... | new(throughput: ThroughputEngine, dag: Arc, memory_monitor: Arc) ->... | 0.00       | -0.00     
+                               |                           |                      |                 | execute_tick(self, deltas: Vec) -> Result                              | 0.50       | -0.00     
+                               |                           |                      |                 | budget_ms(self) -> u64                                                 | 0.00       | -0.00     
+crate::tick::tick_orchestrator | struct TestMemoryHandler  |                      | TestMemoryHa... | new(batch: usize, collect: bool) -> Self                               | 0.00       | -0.00     
+                               |                           | MemoryPressureHan... | MemoryPressu... | incremental_batch_pages(self) -> usize                                 | 0.00       | -0.00     
+                               |                           |                      |                 | run_gc(self, _budget_pages: usize) -> Option                           | 1.50       | -0.00     
+crate::tick::tick_orchestrator |                           |                      | N/A             | request_commit(log: &TransactionLog, token: &JudgmentToken, admissi... | 0.00       | -0.00     
+crate::tick::tick_orchestrator |                           |                      | N/A             | submit_intent(_log: &TransactionLog, _delta: Delta) -> std::io::Result | 0.00       | -0.00     
+crate::tick::tick_orchestrator |                           |                      | N/A             | human_judgment_commit_once() -> std::io::Result                        | 1.00       | -0.00     
+crate::tick::tick_orchestrator |                           |                      | N/A             | sample_delta(id: u64, page: u64, value: u8) -> Delta                   | 0.00       | -0.00     
+crate::tick::tick_orchestrator |                           |                      | N/A             | orchestrator(threshold: usize) -> (TickOrchestrator, Arc)              | 4.80       | -0.00     
+crate::tick::tick_orchestrator |                           |                      | N/A             | tick_metrics_capture_all_phases()                                      | 0.00       | -0.00     
+crate::tick::tick_orchestrator |                           |                      | N/A             | gc_invoked_when_threshold_low()                                        | 0.00       | -0.00     
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════

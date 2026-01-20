@@ -1,0 +1,16 @@
+PROJECT LAYOUT REPORT
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+Module                         | Struct/Enum/Type          | Trait                | Impl            | Function                                                               | Branch     | State     
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+crate::examples::classify_i... |                           |                      | N/A             | main()                                                                 | 17.39      | 0.00      
+crate::module                  | PolicyInput               |                      |                 |                                                                        |            |           
+crate::module                  | struct PolicyModule       |                      | PolicyModule    | new() -> Self                                                          | 0.00       | -0.00     
+                               |                           |                      |                 | with_sink(self, sink: S) -> Self                                       | 0.00       | -0.00     
+                               |                           |                      |                 | next_time(self) -> u64                                                 | 0.00       | -0.00     
+                               |                           |                      |                 | classify_risk(_intent_hash: &Hash) -> RiskClass                        | 0.00       | -0.00     
+                               |                           |                      |                 | determine_category(risk: RiskClass) -> PolicyCategory                  | 1.58       | -0.00     
+                               |                           | Default              | Default         | default() -> Self                                                      | 0.00       | -0.00     
+                               |                           | ProduceProof         | ProduceProof    | produce_proof(input: &Self::Input) -> Self::Proof                      | 0.00       | -0.00     
+                               |                           | PolicyStage          | ✓               |                                                                        |            |           
+                               |                           |                      | PolicyModule    | handle_intent_created(self, event: IntentCreated)                      | 1.00       | -0.00     
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
