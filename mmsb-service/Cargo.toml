@@ -13,6 +13,4 @@ mmsb-policy = { path = "../mmsb-policy" }
 mmsb-judgment = { path = "../mmsb-judgment" }
 
 
-[Service]
-ExecStart=/usr/bin/mmsb-service
-Restart=always
+
