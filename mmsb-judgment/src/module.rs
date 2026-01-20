@@ -127,3 +127,43 @@ impl<S: EventSink> JudgmentModule<S> {
         }
     }
 }
+
+// Implement JudgmentProtocol
+use mmsb_events::{JudgmentProtocol, IntentCreated, Intent};
+
+impl<S: EventSink> JudgmentProtocol for JudgmentModule<S> {
+    fn submit_intent(&mut self, _intent: Intent) -> IntentCreated {
+        unimplemented!("Intent submission happens in mmsb-intent")
+    }
+    
+    fn evaluate_policy(&mut self, _event: IntentCreated) -> PolicyEvaluated {
+        unimplemented!("Policy evaluation happens in mmsb-policy")
+    }
+    
+    fn exercise_judgment(&mut self, event: PolicyEvaluated) -> Option<JudgmentApproved> {
+        let input = JudgmentInput {
+            intent_hash: event.intent_hash,
+            policy_proof: event.policy_proof.clone(),
+        };
+
+        let judgment_proof = Self::produce_proof(&input);
+        
+        if judgment_proof.approved {
+            Some(JudgmentApproved {
+                event_id: event.intent_hash,
+                timestamp: self.next_time(),
+                intent_hash: event.intent_hash,
+                policy_proof: event.policy_proof,
+                judgment_proof,
+            })
+        } else {
+            None
+        }
+    }
+    
+    fn request_admission(&mut self, event: JudgmentApproved) {
+        if let Some(sink) = &self.sink {
+            sink.emit(mmsb_events::AnyEvent::JudgmentApproved(event));
+        }
+    }
+}

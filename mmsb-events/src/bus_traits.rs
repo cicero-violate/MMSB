@@ -3,6 +3,8 @@
 use mmsb_proof::*;
 use crate::AnyEvent;
 
+use crate::events::{IntentCreated, PolicyEvaluated, JudgmentApproved};
+
 /// MMSBSubscription - read-only projection from MMSB
 /// Edge-triggered notifications, not callbacks with power
 pub trait MMSBSubscription {
@@ -13,10 +15,17 @@ pub trait MMSBSubscription {
 
 /// JudgmentProtocol - authority decision chain (A→B→C)
 pub trait JudgmentProtocol {
-    fn submit_intent(&mut self, intent: Intent) -> IntentProof;
-    fn evaluate_policy(&mut self, intent_proof: IntentProof) -> PolicyProof;
-    fn exercise_judgment(&mut self, policy_proof: PolicyProof) -> Option<JudgmentProof>;
-    fn request_admission(&mut self, judgment_proof: JudgmentProof);
+    /// Submit intent, returns IntentCreated event
+    fn submit_intent(&mut self, intent: Intent) -> IntentCreated;
+    
+    /// Evaluate policy, returns PolicyEvaluated event
+    fn evaluate_policy(&mut self, event: IntentCreated) -> PolicyEvaluated;
+    
+    /// Exercise judgment, returns JudgmentApproved if approved
+    fn exercise_judgment(&mut self, event: PolicyEvaluated) -> Option<JudgmentApproved>;
+    
+    /// Write to StateBus (admission request)
+    fn request_admission(&mut self, event: JudgmentApproved);
 }
 
 /// ExecutionProtocol - mechanical execution of approved actions
