@@ -1,4 +1,4 @@
-//! MMSBSubscription - Read-only projection from MMSB
+//! MMSBSubscription - Read-only projection from MMSB services --> MMSB-memory
 
 use crate::state_bus::Delta;
 use serde::{Deserialize, Serialize};
