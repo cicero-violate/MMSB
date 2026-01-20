@@ -1,4 +1,5 @@
 //! MMSB Service Runtime
+// This file sends and receives signals, not data and not state
 
 use mmsb_events::{JudgmentApproved, PolicyEvaluated, IntentCreated};
 use tokio::sync::broadcast;
