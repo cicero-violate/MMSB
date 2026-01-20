@@ -15,3 +15,12 @@ pub use runtime::Runtime;
 pub use protocol_signal_out::ProtocolSignalOut;
 pub use protocol_signal_in::ProtocolSignalIn;
 pub use scheduler::Scheduler;
+
+// src/lib.rs (additions)
+mod service;
+mod service_context;
+mod wake_source;
+
+pub use service::Service;
+pub use service_context::ServiceContext;
+pub use wake_source::WakeSource;
