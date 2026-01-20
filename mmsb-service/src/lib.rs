@@ -19,15 +19,15 @@ impl EventBus {
         Self { judgment_tx, policy_tx, intent_tx }
     }
     
-    pub fn subscribe_judgment(&self) -> broadcast::Receiver<JudgmentApproved> {
+    pub fn listen_judgment(&self) -> broadcast::Receiver<JudgmentApproved> {
         self.judgment_tx.subscribe()
     }
     
-    pub fn subscribe_policy(&self) -> broadcast::Receiver<PolicyEvaluated> {
+    pub fn listen_policy(&self) -> broadcast::Receiver<PolicyEvaluated> {
         self.policy_tx.subscribe()
     }
     
-    pub fn subscribe_intent(&self) -> broadcast::Receiver<IntentCreated> {
+    pub fn listen_intent(&self) -> broadcast::Receiver<IntentCreated> {
         self.intent_tx.subscribe()
     }
     
