@@ -1,0 +1,9 @@
+[package]
+name = "mmsb-chromium"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+mmsb-events = { path = "../mmsb-events" }
+mmsb-proof = { path = "../mmsb-proof" }
+mmsb-primitives = { path = "../mmsb-primitives" }

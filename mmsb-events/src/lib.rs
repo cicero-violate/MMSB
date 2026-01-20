@@ -4,8 +4,10 @@
 //! NO runtime logic, NO authority.
 
 pub mod events;
+pub mod bus_traits;
 
 pub use events::*;
+pub use bus_traits::*;
 
 /// EventSink - Abstract event emission
 /// 

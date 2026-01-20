@@ -302,6 +302,24 @@ dependencies = [
 ]
 
 [[package]]
+name = "mmsb-chromium"
+version = "0.1.0"
+dependencies = [
+ "mmsb-events",
+ "mmsb-primitives",
+ "mmsb-proof",
+]
+
+[[package]]
+name = "mmsb-compute"
+version = "0.1.0"
+dependencies = [
+ "mmsb-events",
+ "mmsb-primitives",
+ "mmsb-proof",
+]
+
+[[package]]
 name = "mmsb-core"
 version = "0.1.0"
 dependencies = [
@@ -422,6 +440,24 @@ dependencies = [
  "mmsb-memory",
  "mmsb-primitives",
  "parking_lot",
+]
+
+[[package]]
+name = "mmsb-replay"
+version = "0.1.0"
+dependencies = [
+ "mmsb-events",
+ "mmsb-primitives",
+ "mmsb-proof",
+]
+
+[[package]]
+name = "mmsb-response"
+version = "0.1.0"
+dependencies = [
+ "mmsb-events",
+ "mmsb-primitives",
+ "mmsb-proof",
 ]
 
 [[package]]

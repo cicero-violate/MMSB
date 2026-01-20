@@ -1,206 +1,85 @@
-# MMSB Canonical Bus Architecture
+| **Bus**          | **Primary Role**            | **Can Write to StateBus?** | **Write Type**                        | **Requires Judgment?** | **Notes**                                    |
+| ---------------- | --------------------------- | -------------------------- | ------------------------------------- | ---------------------- | -------------------------------------------- |
+| **JudgmentBus**  | Authority / decision making | Yes                        | Approved actions (A)                  | N/A (is judgment)      | Sole source of permission and intent         |
+| **StateBus**     | Canonical state admission   | Yes (exclusive)            | State mutations (\Delta_s), facts (F) | Only validates proofs  | Single writer to MMSB                        |
+| **ExecutionBus** | Mechanical execution        | Yes                        | Facts (F)                             | No                     | Outcomes of already-approved actions         |
+| **LearningBus**  | Derivation / analysis       | Yes                        | Facts (F)                             | No                     | Advisory, non-authoritative                  |
+| **ComputeBus**   | Deterministic computation   | Yes                        | Facts (F)                             | No                     | Pure function outputs                        |
+| **ChromiumBus**  | External I/O observation    | Yes                        | Facts (F)                             | No                     | World-facing effects, sealed as observations |
+| **ReplayBus**    | Observability / audit       | Yes (optional)             | Facts (F)                             | No                     | Historical truth, no causality               |
 
-## Bus Definitions
 
-### JudgmentBus
-**Purpose:** Decision flow - authority approval chain
-**Proof Chain:** A → B → C
-**Modules:**
-```
-mmsb-intent (produces A: IntentProof)
-└── mmsb-policy (produces B: PolicyProof)
-    └── mmsb-judgment (produces C: JudgmentProof - SOLE AUTHORITY)
-```
+### Variables
 
-### ExecutionBus
-**Purpose:** Mechanical execution flow - approved operations
-**Flow:** ExecutionRequest → Execution → Outcome
-**Modules:**
-```
-mmsb-executor (requests execution)
-└── mmsb-device (physical execution)
-    └── mmsb-propagation (state propagation)
-```
+Let
 
-### StateBus
-**Purpose:** Sealed canonical truth - admission and commitment
-**Proof Chain:** D → E
-**Modules:**
-```
-mmsb-memory (produces D: AdmissionProof, E: CommitProof)
-└── mmsb-storage (persistence)
-```
+* ( J ) = JudgmentBus
+* ( S ) = StateBus
+* ( M ) = MMSB
+* ( E ) = ExecutionBus
+* ( L ) = LearningBus
+* ( C ) = ComputeBus
+* ( K ) = ChromiumBus
+* ( R ) = ReplayBus
 
-### LearningBus
-**Purpose:** Advisory derivation - pattern recognition
-**Proof Chain:** F → G
-**Modules:**
-```
-mmsb-learning (produces F: OutcomeProof)
-└── mmsb-knowledge (produces G: KnowledgeProof)
-```
+Let
 
-### ResponseBus
-**Purpose:** Outward-facing views - agent interface
-**Flow:** StateQuery → StateProjection
-**Modules:**
-```
-mmsb-memory (projects state views)
-└── mmsb-response (formats agent responses)
-```
-
-### ComputeBus
-**Purpose:** GPU/CUDA acceleration - parallel computation
-**Flow:** ComputeRequest → GPU execution → Result
-**Modules:**
-```
-mmsb-compute (GPU orchestration)
-└── mmsb-kernel (CUDA kernels)
-```
-
-### ChromiumBus
-**Purpose:** Browser automation - web interaction
-**Flow:** BrowserCommand → Chromium → Result
-**Modules:**
-```
-mmsb-chromium (browser control)
-└── mmsb-web (web scraping/interaction)
-```
-
-### ReplayBus
-**Purpose:** Observability - historical event stream
-**Flow:** Historical events for replay/audit
-**Modules:**
-```
-mmsb-memory (event source)
-└── mmsb-replay (event replay engine)
-```
+* ( A ) = Approved Action
+* ( F ) = Fact / Outcome
+* ( \Delta_s ) = Canonical State Mutation
 
 ---
 
-## Bus Interaction Tree
+### Latent Equations (Reference)
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                      MMSB Runtime                           │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  JudgmentBus                                               │
-│  ┌──────────────────────────────────────────┐             │
-│  │ Intent → Policy → Judgment               │             │
-│  │   (A)      (B)       (C)                 │             │
-│  └──────────────┬───────────────────────────┘             │
-│                 │                                          │
-│                 │ approved                                 │
-│                 ▼                                          │
-│  ExecutionBus                                              │
-│  ┌──────────────────────────────────────────┐             │
-│  │ Executor → Device → Propagation          │             │
-│  └──────────────┬───────────────────────────┘             │
-│                 │                                          │
-│                 │ execution complete                       │
-│                 ▼                                          │
-│  StateBus                                                  │
-│  ┌──────────────────────────────────────────┐             │
-│  │ Memory (Admission D, Commit E)           │             │
-│  │   ↓                                      │             │
-│  │ Storage (persist)                        │             │
-│  └──────────────┬───────────────────────────┘             │
-│                 │                                          │
-│                 ├────────────────────┐                     │
-│                 │                    │                     │
-│                 ▼                    ▼                     │
-│  LearningBus           ResponseBus                         │
-│  ┌──────────────┐     ┌──────────────────┐               │
-│  │ Learning (F) │     │ Response         │               │
-│  │   ↓          │     │   ↓              │               │
-│  │ Knowledge(G) │     │ Agent interface  │               │
-│  └──────────────┘     └──────────────────┘               │
-│                                                            │
-│  ComputeBus            ChromiumBus                         │
-│  ┌──────────────┐     ┌──────────────────┐               │
-│  │ Compute      │     │ Chromium         │               │
-│  │   ↓          │     │   ↓              │               │
-│  │ GPU/CUDA     │     │ Browser control  │               │
-│  └──────────────┘     └──────────────────┘               │
-│                                                            │
-│  ReplayBus                                                 │
-│  ┌──────────────────────────────────────────┐             │
-│  │ Memory → Replay (historical stream)      │             │
-│  └──────────────────────────────────────────┘             │
-│                                                            │
-└─────────────────────────────────────────────────────────────┘
-```
+[
+A : J \rightarrow S \rightarrow M
+]
+
+[
+F : (E,L,C,K,R) \rightarrow S \rightarrow M
+]
+
+[
+F \Rightarrow \Delta_s ;\Longrightarrow; F \rightarrow J \rightarrow S
+]
 
 ---
 
-## Bus Protocol Traits
+### Bus Responsibility Table
 
-Each bus defines a protocol trait that modules must implement:
-
-### `JudgmentProtocol`
-- `submit_intent() -> IntentProof`
-- `evaluate_policy() -> PolicyProof`
-- `exercise_judgment() -> JudgmentProof`
-
-### `ExecutionProtocol`
-- `request_execution() -> ExecutionRequest`
-- `execute() -> ExecutionOutcome`
-
-### `StateProtocol`
-- `admit() -> AdmissionProof`
-- `commit() -> CommitProof`
-
-### `LearningProtocol`
-- `observe_outcome() -> OutcomeProof`
-- `derive_knowledge() -> KnowledgeProof`
-
-### `ResponseProtocol`
-- `query_state() -> StateQuery`
-- `project_view() -> StateProjection`
-
-### `ComputeProtocol`
-- `offload_computation() -> ComputeRequest`
-- `execute_kernel() -> ComputeResult`
-
-### `ChromiumProtocol`
-- `send_command() -> BrowserCommand`
-- `execute_script() -> BrowserResult`
-
-### `ReplayProtocol`
-- `stream_events() -> EventStream`
-- `replay_to_state() -> StateSnapshot`
+| **Bus**          | **Primary Role**            | **Can Write to StateBus?** | **Write Type**                        | **Requires Judgment?** | **Notes**                                    |
+| ---------------- | --------------------------- | -------------------------- | ------------------------------------- | ---------------------- | -------------------------------------------- |
+| **JudgmentBus**  | Authority / decision making | Yes                        | Approved actions (A)                  | N/A (is judgment)      | Sole source of permission and intent         |
+| **StateBus**     | Canonical state admission   | Yes (exclusive)            | State mutations (\Delta_s), facts (F) | Only validates proofs  | Single writer to MMSB                        |
+| **ExecutionBus** | Mechanical execution        | Yes                        | Facts (F)                             | No                     | Outcomes of already-approved actions         |
+| **LearningBus**  | Derivation / analysis       | Yes                        | Facts (F)                             | No                     | Advisory, non-authoritative                  |
+| **ComputeBus**   | Deterministic computation   | Yes                        | Facts (F)                             | No                     | Pure function outputs                        |
+| **ChromiumBus**  | External I/O observation    | Yes                        | Facts (F)                             | No                     | World-facing effects, sealed as observations |
+| **ReplayBus**    | Observability / audit       | Yes (optional)             | Facts (F)                             | No                     | Historical truth, no causality               |
 
 ---
 
-## Module-Bus Mapping
+### English Explanation
 
-| Module | Primary Bus | Secondary Buses |
-|--------|-------------|-----------------|
-| mmsb-intent | JudgmentBus | - |
-| mmsb-policy | JudgmentBus | - |
-| mmsb-judgment | JudgmentBus | ExecutionBus (triggers) |
-| mmsb-executor | ExecutionBus | - |
-| mmsb-device | ExecutionBus | - |
-| mmsb-propagation | ExecutionBus | StateBus (writes) |
-| mmsb-memory | StateBus | ResponseBus, ReplayBus |
-| mmsb-storage | StateBus | - |
-| mmsb-learning | LearningBus | - |
-| mmsb-knowledge | LearningBus | ResponseBus |
-| mmsb-response | ResponseBus | - |
-| mmsb-compute | ComputeBus | - |
-| mmsb-chromium | ChromiumBus | - |
-| mmsb-replay | ReplayBus | - |
+* **Only StateBus writes MMSB** — this invariant never breaks.
+* **JudgmentBus writes intent**, not outcomes.
+* **All other buses may write facts directly to StateBus** because facts contain **no choice**.
+* The moment a fact implies a **new decision or structural change**, it must be routed back through JudgmentBus.
+
+This preserves:
+
+* authority isolation
+* mechanical throughput
+* deterministic replay
+* zero ambiguity over “who decides vs who observes”
 
 ---
 
-## Bus Isolation Properties
+### Optimality Statement
 
-- **JudgmentBus:** Fast, high-priority, synchronous
-- **ExecutionBus:** Slower, isolated failures don't block judgment
-- **StateBus:** Serialized writes, concurrent reads
-- **LearningBus:** Async, non-blocking, advisory only
-- **ResponseBus:** Read-only, no authority
-- **ComputeBus:** Async, GPU-bound workloads
-- **ChromiumBus:** Async, network-bound operations
-- **ReplayBus:** Read-only, historical data
+[
+\max(\text{Intelligence}, \text{Efficiency}, \text{Correctness}, \text{Alignment}, \text{Determinism}) = \textbf{Good}
+]
+
+This table encodes the maximal-good architecture.
