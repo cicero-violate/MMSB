@@ -2,7 +2,8 @@
 
 use mmsb_events::{IntentCreated, Intent};
 use mmsb_proof::{IntentBounds, IntentProof, IntentStage, ProduceProof};
-use serde::{Deserialize, Serialize};
+
+pub use mmsb_events::Intent as IntentType;
 
 pub struct IntentInput {
     pub intent: Intent,

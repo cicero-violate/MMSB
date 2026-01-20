@@ -12,8 +12,8 @@ echo ""
 echo "=== Running Examples ==="
 echo ""
 
-echo "--- Example 1: Test Policy ---"
-cargo run --example issue_cli
+echo "--- Example 1: Test Schema ---"
+cargo run --example test_schema
 echo ""
 
 echo ""
