@@ -43,10 +43,15 @@ pub enum EventType {
 /// IntentCreated - emitted by mmsb-intent
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct IntentCreated {
-    pub event_id: EventId,
-    pub timestamp: Timestamp,
-    pub intent_hash: Hash,
-    pub intent_proof: IntentProof,
+   pub event_id: EventId,
+   pub timestamp: Timestamp,
+   pub intent_hash: Hash,
+   pub intent_proof: IntentProof,
+    pub intent_class: String,
+    pub target_paths: Vec<String>,
+    pub tools_used: Vec<String>,
+    pub files_touched: usize,
+    pub diff_lines: usize,
 }
 
 impl Event for IntentCreated {

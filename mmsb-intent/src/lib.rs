@@ -40,19 +40,24 @@ impl<S: EventSink> IntentModule<S> {
         self
     }
 
-    pub fn submit_intent(&mut self, intent: Intent) -> IntentProof {
-        let input = IntentInput { intent };
-        let proof = Self::produce_proof(&input);
+   pub fn submit_intent(&mut self, intent: Intent) -> IntentProof {
+        let input = IntentInput { intent: intent.clone() };
+       let proof = Self::produce_proof(&input);
 
-        self.time += 1;
-        let event = IntentCreated {
-            event_id: proof.intent_hash,
-            timestamp: self.time,
-            intent_hash: proof.intent_hash,
-            intent_proof: proof.clone(),
-        };
+       self.time += 1;
+       let event = IntentCreated {
+           event_id: proof.intent_hash,
+           timestamp: self.time,
+           intent_hash: proof.intent_hash,
+           intent_proof: proof.clone(),
+            intent_class: intent.intent_class,
+            target_paths: intent.target_paths,
+            tools_used: intent.tools_used,
+            files_touched: intent.files_touched,
+            diff_lines: intent.diff_lines,
+       };
 
-        if let Some(sink) = &self.sink {
+       if let Some(sink) = &self.sink {
             sink.emit(mmsb_events::AnyEvent::IntentCreated(event));
         }
 
