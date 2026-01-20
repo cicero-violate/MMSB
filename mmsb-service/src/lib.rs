@@ -20,6 +20,7 @@ pub use scheduler::Scheduler;
 mod service;
 mod service_context;
 mod wake_source;
+pub mod services;
 
 pub use service::Service;
 pub use service_context::ServiceContext;
