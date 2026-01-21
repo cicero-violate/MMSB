@@ -5,6 +5,7 @@
 
 pub mod module;
 pub mod execution_loop;
+pub mod coordinator;
 // pub mod physical;
 // pub mod device;
 // pub mod propagation;
@@ -12,3 +13,4 @@ pub mod execution_loop;
 
 pub use module::ExecutorModule;
 pub use execution_loop::ExecutionLoop;
+pub use coordinator::ExecutionCoordinator;

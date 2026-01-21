@@ -2,7 +2,6 @@
 
 pub mod judgment_bus;
 pub mod execution_bus;
-pub mod execution_coordinator;
 pub mod state_bus;
 pub mod learning_bus;
 pub mod memory_reader;
@@ -10,7 +9,6 @@ pub mod memory_reader;
 
 pub use judgment_bus::*;
 pub use execution_bus::*;
-pub use execution_coordinator::*;
 pub use state_bus::*;
 pub use learning_bus::*;
 pub use memory_reader::*;

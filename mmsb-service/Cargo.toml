@@ -16,3 +16,6 @@ mmsb-memory = { path = "../mmsb-memory" }
 mmsb-executor = { path = "../mmsb-executor" }
 parking_lot = "0.12"
 
+[dev-dependencies]
+mmsb-propagation = { path = "../mmsb-propagation" }
+tempfile = "3"

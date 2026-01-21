@@ -575,7 +575,9 @@ dependencies = [
  "mmsb-policy",
  "mmsb-primitives",
  "mmsb-proof",
+ "mmsb-propagation",
  "parking_lot",
+ "tempfile",
  "tokio",
 ]
 
