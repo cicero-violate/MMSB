@@ -23,7 +23,7 @@ members = [
     "mmsb-device",
     # "mmsb-response",
     "mmsb-compute",
-    "mmsb-replay",
+    # "mmsb-replay",
     "mmsb-agent",
     "mmsb-prompt-builder",
     "mmsb-intent-ingress",
