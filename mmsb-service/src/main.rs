@@ -4,14 +4,18 @@ use std::path::PathBuf;
 
 use mmsb_events::{ExecutionBus, LearningBus, ExecutionOutcome};
 use mmsb_proof::{AdmissionProof, CommitProof, OutcomeProof, KnowledgeProof};
-use mmsb_memory::{adapter::MemoryAdapter, memory_engine::{MemoryEngine, MemoryEngineConfig}};
-use mmsb_memory::page::PageLocation;
+use mmsb_memory::{
+    adapter::MemoryAdapter,
+    memory_engine::{MemoryEngine, MemoryEngineConfig},
+    notifier::CommitNotifier,
+    page::PageLocation,
+};
 
 use mmsb_service::{
     Runtime,
     RuntimeContext,
     RuntimeScheduler,
-    services::ProposerService,
+    services::{ProposerService, EventListenerService},
 };
 
 // Stub execution and learning buses (to be implemented later)
@@ -40,33 +44,40 @@ impl LearningBus for StubLearningBus {
 
 #[tokio::main]
 async fn main() {
-    // Initialize MemoryEngine
+    println!("🚀 Starting MMSB Service Runtime...");
+    
+    // Step 1: Create CommitNotifier (event infrastructure)
+    let (notifier, _initial_rx) = CommitNotifier::new(1024);
+    let notifier = Arc::new(notifier);
+    println!("✅ Created CommitNotifier (capacity: 1024)");
+    
+    // Step 2: Initialize MemoryEngine with notifier
     let config = MemoryEngineConfig {
         tlog_path: PathBuf::from("/tmp/mmsb_tlog"),
         default_location: PageLocation::Cpu,
     };
     
-    let engine = MemoryEngine::new(config)
+    let engine = MemoryEngine::new(config, notifier.clone())
         .expect("Failed to initialize MemoryEngine");
     
-    // Wrap in Arc<Mutex> for sharing
     let engine = Arc::new(Mutex::new(engine));
+    println!("✅ Initialized MemoryEngine");
     
-    // Create adapter that implements both StateBus and MemoryReader
-    let adapter = MemoryAdapter::new(engine.clone());
+    // Step 3: Create adapters (both use same notifier!)
+    let write_adapter = MemoryAdapter::new(engine.clone(), notifier.clone());
+    let read_adapter = MemoryAdapter::new(engine, notifier);
     
-    // Split into write and read interfaces
-    let state_bus = Arc::new(Mutex::new(adapter));
-    // Clone for reader - both point to same adapter/engine
-    let memory_reader: Arc<dyn mmsb_events::MemoryReader + Send + Sync> = {
-        let adapter = MemoryAdapter::new(engine);
-        Arc::new(adapter)
-    };
+    // Step 4: Split into interfaces
+    let state_bus = Arc::new(Mutex::new(write_adapter));
+    let memory_reader: Arc<dyn mmsb_events::MemoryReader + Send + Sync> = Arc::new(read_adapter);
+    println!("✅ Created MemoryAdapter (StateBus + MemoryReader)");
     
-    // Initialize runtime
+    // Step 5: Initialize runtime
     let (mut runtime, protocol_in) = Runtime::new(1024);
 
     runtime.register(ProposerService::new());
+    runtime.register(EventListenerService::new());
+    println!("✅ Registered services");
 
     let ctx = Arc::new(RuntimeContext::new(
         Arc::new(RuntimeScheduler::default()),
@@ -77,6 +88,13 @@ async fn main() {
         protocol_in,
         None,
     ));
+    
+    println!("✅ RuntimeContext created");
+    println!("🎯 Services can now:");
+    println!("   - Subscribe to commits: ctx.memory_reader().subscribe_commits()");
+    println!("   - Query state: ctx.memory_reader().current_epoch()");
+    println!("   - Write via: ctx.with_state_bus(...)");
+    println!("\n🔥 Running services (Ctrl+C to stop)...\n");
 
     runtime.run(ctx).await;
 }

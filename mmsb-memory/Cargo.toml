@@ -11,6 +11,7 @@ path = "src/lib.rs"
 parking_lot = "0.12"
 thiserror = "1.0"
 sha2 = "0.10"
+tokio = { version = "1", features = ["sync"] }
 walkdir = "2.5"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"

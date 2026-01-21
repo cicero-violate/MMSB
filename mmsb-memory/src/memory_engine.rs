@@ -30,6 +30,7 @@ use crate::{
     dag::DependencyGraph,
     delta::Delta,
     epoch::EpochCell,
+    notifier::CommitNotifier,
     outcome::DagValidator,
     page::{PageAllocator, PageAllocatorConfig, PageLocation},
     tlog::TransactionLog,
@@ -102,11 +103,15 @@ pub struct MemoryEngine {
     epoch: Arc<EpochCell>,
     admitted: Arc<RwLock<HashSet<Hash>>>,
     nonce_counter: AtomicU64,
+    notifier: Arc<CommitNotifier>,
 }
 
 impl MemoryEngine {
     /// Initialize a new MemoryEngine
-    pub fn new(config: MemoryEngineConfig) -> Result<Self, MemoryEngineError> {
+    pub fn new(
+        config: MemoryEngineConfig,
+        notifier: Arc<CommitNotifier>,
+    ) -> Result<Self, MemoryEngineError> {
         let allocator = Arc::new(PageAllocator::from_config(PageAllocatorConfig {
             default_location: config.default_location,
             initial_capacity: 1024,
@@ -126,6 +131,7 @@ impl MemoryEngine {
             epoch: Arc::new(EpochCell::new(0)),
             admitted: Arc::new(RwLock::new(HashSet::new())),
             nonce_counter: AtomicU64::new(0),
+            notifier,
         })
     }
 
@@ -256,7 +262,7 @@ impl MemoryEngine {
             event.affected_page_ids
         };
 
-        Ok(MemoryCommitted {
+        let memory_committed = MemoryCommitted {
             event_id,
             timestamp: SystemTime::now()
                 .duration_since(UNIX_EPOCH)
@@ -269,7 +275,12 @@ impl MemoryEngine {
             commit_proof: commit,
             outcome_proof: outcome,
             affected_page_ids,
-        })
+        };
+        
+        // Emit event to notify subscribers (zero latency!)
+        self.notifier.notify(memory_committed.clone());
+        
+        Ok(memory_committed)
     }
 
     // ─────────────────────────────────────────────────────────────────────

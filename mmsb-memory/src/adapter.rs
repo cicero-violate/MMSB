@@ -6,13 +6,15 @@
 use std::sync::Arc;
 use parking_lot::Mutex;
 
-use mmsb_events::{StateBus, MemoryReader, Fact};
+use mmsb_events::{StateBus, MemoryReader, Fact, MemoryCommitted};
 use mmsb_primitives::{Hash, PageID, DeltaID};
 use mmsb_proof::{AdmissionProof, CommitProof, JudgmentProof};
+use tokio::sync::broadcast;
 
 use crate::memory_engine::MemoryEngine;
 use crate::delta::{Delta, Source};
 use crate::epoch::Epoch;
+use crate::notifier::CommitNotifier;
 
 /// Adapter wrapping MemoryEngine to implement bus traits
 ///
@@ -20,12 +22,13 @@ use crate::epoch::Epoch;
 /// to the canonical memory engine.
 pub struct MemoryAdapter {
     engine: Arc<Mutex<MemoryEngine>>,
+    notifier: Arc<CommitNotifier>,
 }
 
 impl MemoryAdapter {
     /// Create a new adapter wrapping a MemoryEngine
-    pub fn new(engine: Arc<Mutex<MemoryEngine>>) -> Self {
-        Self { engine }
+    pub fn new(engine: Arc<Mutex<MemoryEngine>>, notifier: Arc<CommitNotifier>) -> Self {
+        Self { engine, notifier }
     }
     
     /// Get a reference to the underlying engine (for direct access if needed)
@@ -104,5 +107,9 @@ impl MemoryReader for MemoryAdapter {
         self.engine.lock()
             .fetch_delta_by_hash(&delta_hash)
             .is_some()
+    }
+    
+    fn subscribe_commits(&self) -> broadcast::Receiver<MemoryCommitted> {
+        self.notifier.subscribe()
     }
 }

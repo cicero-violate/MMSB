@@ -35,5 +35,8 @@ pub mod admission;
 pub mod truth;
 pub mod outcome;
 
+// Event notification
+pub mod notifier;
+
 // Bus adapters
 pub mod adapter;

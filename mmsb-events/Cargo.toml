@@ -10,5 +10,6 @@ path = "src/lib.rs"
 [dependencies]
 mmsb-primitives = { path = "../mmsb-primitives" }
 serde = { version = "1.0", features = ["derive"] }
+tokio = { version = "1", features = ["sync"] }
 
 mmsb-proof = { path = "../mmsb-proof" }

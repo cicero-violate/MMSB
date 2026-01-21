@@ -441,6 +441,7 @@ dependencies = [
  "mmsb-primitives",
  "mmsb-proof",
  "serde",
+ "tokio",
 ]
 
 [[package]]
@@ -484,6 +485,7 @@ dependencies = [
  "serde_json",
  "sha2",
  "thiserror",
+ "tokio",
  "walkdir",
 ]
 
