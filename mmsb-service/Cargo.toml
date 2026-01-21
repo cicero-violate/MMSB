@@ -19,3 +19,7 @@ parking_lot = "0.12"
 [dev-dependencies]
 mmsb-propagation = { path = "../mmsb-propagation" }
 tempfile = "3"
+
+[[example]]
+name = "execution_pipeline"
+path = "examples/execution_pipeline.rs"
