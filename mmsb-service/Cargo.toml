@@ -13,6 +13,6 @@ mmsb-intent = { path = "../mmsb-intent" }
 mmsb-policy = { path = "../mmsb-policy" }
 mmsb-judgment = { path = "../mmsb-judgment" }
 mmsb-memory = { path = "../mmsb-memory" }
+mmsb-executor = { path = "../mmsb-executor" }
 parking_lot = "0.12"
-
 

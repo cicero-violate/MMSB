@@ -3,7 +3,7 @@
 //! Receives JudgmentProof, performs side effects, produces ExecutionProof + Delta.
 //! Never mutates canonical state.
 
-use mmsb_proof::{JudgmentProof, Hash};
+use mmsb_proof::{JudgmentProof, Hash, Proof};
 use mmsb_primitives::{PageID, Timestamp, EventId};
 use serde::{Deserialize, Serialize};
 
@@ -11,7 +11,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ExecutionProof {
     pub judgment_hash: Hash,
-    pub execution_id: EventId,
+    pub execution_id: Hash,
     pub timestamp: Timestamp,
     pub success: bool,
     pub result_hash: Hash,
@@ -64,9 +64,13 @@ impl ExecutionLoop {
         // For now, stub implementation
         let result_hash = self.compute_result_hash(judgment);
         
+        // Generate execution ID from counter
+        let mut execution_id = [0u8; 32];
+        execution_id[..8].copy_from_slice(&self.execution_counter.to_be_bytes());
+        
         let proof = ExecutionProof {
             judgment_hash: judgment.hash(),
-            execution_id: self.execution_counter,
+            execution_id,
             timestamp: self.current_timestamp(),
             success: true,
             result_hash,

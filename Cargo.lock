@@ -445,6 +445,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "mmsb-executor"
+version = "0.1.0"
+dependencies = [
+ "mmsb-events",
+ "mmsb-primitives",
+ "mmsb-proof",
+ "parking_lot",
+ "serde",
+]
+
+[[package]]
 name = "mmsb-intent"
 version = "0.1.0"
 dependencies = [
@@ -557,6 +568,7 @@ version = "0.1.0"
 dependencies = [
  "futures",
  "mmsb-events",
+ "mmsb-executor",
  "mmsb-intent",
  "mmsb-judgment",
  "mmsb-memory",

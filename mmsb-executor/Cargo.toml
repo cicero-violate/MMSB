@@ -13,3 +13,4 @@ parking_lot = "0.12"               # ← add this line (or latest version)
 
 mmsb-proof = { path = "../mmsb-proof" }
 mmsb-events = { path = "../mmsb-events" }
+mmsb-primitives = { path = "../mmsb-primitives" }

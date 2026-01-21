@@ -6,7 +6,7 @@ members = [
     "mmsb-judgment",
     "mmsb-memory",
     "mmsb-events",
-  # "mmsb-executor",
+    "mmsb-executor",
     "mmsb-tools/structural_code_indexer",
     "mmsb-tools/structural_code_editor",
     "mmsb-tools/declarative_code_editor",
