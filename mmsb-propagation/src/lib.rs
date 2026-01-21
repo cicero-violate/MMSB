@@ -10,6 +10,7 @@
 //! Authority: NONE (propagation engine only)
 
 pub mod propagation_engine;
+pub mod delta_normalizer;
 pub mod propagation_fastpath;
 pub mod propagation_queue;
 pub mod dag_propagation;
@@ -19,4 +20,5 @@ pub mod throughput_engine;
 pub mod propagation_command_buffer;
 
 pub use propagation_engine::PropagationEngine;
+pub use delta_normalizer::{DeltaNormalizer, NormalizedDelta};
 pub use propagation_queue::PropagationQueue;
