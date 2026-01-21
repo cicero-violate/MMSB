@@ -12,7 +12,6 @@ mod scheduler;
 mod runtime_context;
 mod service;
 mod service_context;
-mod wake_source;
 
 pub mod services;
 
@@ -25,4 +24,3 @@ pub use scheduler::{Scheduler, RuntimeScheduler};
 
 pub use service::Service;
 pub use service_context::ServiceContext;
-pub use wake_source::WakeSource;
