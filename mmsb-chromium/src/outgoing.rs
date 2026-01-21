@@ -13,8 +13,10 @@ impl MessageSender {
     }
     
     /// Send a message to ChatGPT via Chrome
-    pub fn send_message(&mut self, conversation_id: &str, content: &str) -> Result<(), ChromeError> {
+    pub fn send_message(&mut self, tab_id: &str, conversation_id: &str, content: &str) -> Result<(), ChromeError> {
         // Inject message into ChatGPT interface
+        let _ = tab_id; // TODO: use tab_id to target specific tab
+        let _ = conversation_id; // TODO: use conversation_id  
         let script = format!(
             r#"
             (function() {{

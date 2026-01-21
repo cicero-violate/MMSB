@@ -65,6 +65,8 @@ impl MessageCapture {
                     return Ok(Some(ChromeMessage {
                         event_id: Self::generate_event_id(&captured.conversation_id, &captured.message_id),
                         timestamp,
+                        tab_id: "unknown".to_string(), // TODO: get from CDP
+                        website: "chatgpt.com".to_string(), // TODO: detect from URL
                         conversation_id: captured.conversation_id,
                         message_id: captured.message_id,
                         response_text: text,

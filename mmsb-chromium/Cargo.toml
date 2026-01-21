@@ -12,3 +12,7 @@ sha2 = "0.10"
 
 mmsb-events = { path = "../mmsb-events" }
 mmsb-primitives = { path = "../mmsb-primitives" }
+
+[[example]]
+name = "test_chatgpt_roundtrip"
+path = "examples/test_chatgpt_roundtrip.rs"
