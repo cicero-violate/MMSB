@@ -21,7 +21,7 @@ pub use runtime_context::RuntimeContext;
 
 pub use protocol_signal_out::ProtocolSignalOut;
 pub use protocol_signal_in::ProtocolSignalIn;
-pub use scheduler::Scheduler;
+pub use scheduler::{Scheduler, RuntimeScheduler};
 
 pub use service::Service;
 pub use service_context::ServiceContext;

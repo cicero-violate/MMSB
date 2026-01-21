@@ -1,0 +1,49 @@
+*** Begin Patch
+*** Update File: mmsb-service/examples/mmsb_service_example.rs
+@@
+ #[tokio::main]
+ async fn main() {
+     println!("=== MMSB Service Example ===\n");
+ 
+-    let runtime = Runtime::new();
+-    let event_bus = runtime.event_bus().clone();
++    let runtime = Runtime::new(128);
++    let mut listener = runtime.listener();
++    let emitter = runtime.emitter();
+ 
+     let mut intent_module = IntentModule::new();
+     let mut policy_module = PolicyModule::new();
+     let mut judgment_module = JudgmentModule::new();
+ 
+-    let mut intent_rx = event_bus.subscribe_intent();
+-
+     tokio::spawn(async move {
+-        while let Ok(event) = intent_rx.recv().await {
++        loop {
++            if let Some(event) = listener.recv_intent() {
+             let policy_event = policy_module.handle_intent_created(event);
+             println!("  → PolicyEvaluated: {:?} (risk={:?})",
+                      policy_event.policy_proof.category, policy_event.policy_proof.risk_class);
+ 
+             if let Some(_) = judgment_module.handle_policy_evaluated(policy_event) {
+                 println!("  → JudgmentApproved: ✓");
+             }
++            }
+         }
+     });
+@@
+     println!("Test 1: Formatting");
+-    event_bus.emit_intent(intent_module.submit_intent(Intent {
++    emitter.emit_intent(intent_module.submit_intent(Intent {
+         description: "Format".to_string(),
+         intent_class: "formatting".to_string(),
+@@
+     println!("\nTest 2: Structural change");
+-    event_bus.emit_intent(intent_module.submit_intent(Intent {
++    emitter.emit_intent(intent_module.submit_intent(Intent {
+         description: "Refactor".to_string(),
+         intent_class: "structural_change".to_string(),
+@@
+     println!("\nPipeline complete!");
+ }
+*** End Patch

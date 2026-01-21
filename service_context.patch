@@ -1,0 +1,17 @@
+*** Begin Patch
+*** Update File: mmsb-service/src/service_context.rs
+@@
+-    fn state_bus(&self) -> &dyn StateBus;
++    fn state_bus(&self) -> &mut dyn StateBus;
+@@
+-    fn execution_bus(&self) -> &dyn ExecutionBus;
++    fn execution_bus(&self) -> &mut dyn ExecutionBus;
+@@
+-    fn learning_bus(&self) -> &dyn LearningBus;
++    fn learning_bus(&self) -> &mut dyn LearningBus;
+@@
+-    fn judgment_bus(&self) -> Option<&dyn JudgmentBus> {
++    fn judgment_bus(&self) -> Option<&mut dyn JudgmentBus> {
+         None
+     }
+*** End Patch

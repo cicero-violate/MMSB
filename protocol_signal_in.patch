@@ -1,0 +1,11 @@
+*** Begin Patch
+*** Update File: mmsb-service/src/protocol_signal_in.rs
+@@
+-pub struct ProtocolSignalIn {
++#[derive(Clone)]
++pub struct ProtocolSignalIn {
+     pub(crate) judgment_rx: broadcast::Receiver<JudgmentApproved>,
+     pub(crate) policy_rx: broadcast::Receiver<PolicyEvaluated>,
+     pub(crate) intent_rx: broadcast::Receiver<IntentCreated>,
+ }
+*** End Patch

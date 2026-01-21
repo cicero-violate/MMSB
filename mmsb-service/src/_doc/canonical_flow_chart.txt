@@ -1,0 +1,15 @@
+          JudgmentBus
+              ↓
+          StateBus::commit
+              ↓
+        mmsb-memory
+              ↓
+         CommitPulse
+              ↓
+         Scheduler.wake()
+              ↓
+        Service.run()
+              ↓
+        read MMSB state
+              ↓
+      ExecutionBus / LearningBus

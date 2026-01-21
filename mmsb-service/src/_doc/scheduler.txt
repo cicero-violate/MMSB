@@ -1,0 +1,8 @@
+the scheduler lives in the Runtime (mmsb-service), controlling when services run — never what MMSB contains.
+
+Typical responsibilities:
+wake ExecutionService
+rate-limit or batch work
+assign threads / cores / GPUs
+enforce backpressure
+pause / resume services

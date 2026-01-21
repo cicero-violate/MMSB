@@ -1,0 +1,14 @@
+*** Begin Patch
+*** Update File: mmsb-service/src/runtime.rs
+@@
+     pub fn new(capacity: usize) -> Self {
+-        let protocol_out = ProtocolSignalOut::new(capacity);
+-        let protocol_in = protocol_out.subscribe();
++        let (protocol_out, protocol_in) = ProtocolSignalOut::with_capacity(capacity);
+ 
+         Self {
+             protocol_out,
+             protocol_in,
+             services: Vec::new(),
+         }
+*** End Patch

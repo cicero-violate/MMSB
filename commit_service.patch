@@ -1,0 +1,6 @@
+*** Begin Patch
+*** Update File: mmsb-service/src/services/commit_service.rs
+@@
+-        let state = ctx.state_bus();
++        let state = ctx.state_bus();
+*** End Patch

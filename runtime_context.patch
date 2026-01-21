@@ -1,0 +1,16 @@
+*** Begin Patch
+*** Update File: mmsb-service/src/runtime_context.rs
+@@
+ impl RuntimeContext {
++    pub fn new() -> Self {
++        Self {
++            scheduler: Box::new(crate::scheduler::RuntimeScheduler::default()),
++            state_bus: panic!("StateBus not wired yet"),
++            execution_bus: panic!("ExecutionBus not wired yet"),
++            learning_bus: panic!("LearningBus not wired yet"),
++            protocol_in: None,
++            judgment_bus: None,
++        }
++    }
+ }
+*** End Patch

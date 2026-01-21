@@ -1,0 +1,24 @@
+*** Begin Patch
+*** Update File: mmsb-service/src/services/judge_service.rs
+@@
+-use crate::{Service};
++use crate::{Service, ServiceContext};
+ use std::future::Future;
+ use std::pin::Pin;
++use std::sync::Arc;
+@@
+     fn run(
+-        &mut self,
+-        _ctx: std::sync::Arc<dyn ServiceContext>,
++        &mut self,
++        _ctx: Arc<dyn ServiceContext>,
+     ) -> Pin<Box<dyn Future<Output = ()> + Send>> {
+-        Box::pin(async {})
++        Box::pin(async {
++            loop {
++                tokio::time::sleep(std::time::Duration::from_secs(3600)).await;
++            }
++        })
+     }
+ }
+*** End Patch

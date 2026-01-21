@@ -1,0 +1,24 @@
+*** Begin Patch
+*** Update File: mmsb-service/src/services/proposer_service.rs
+@@
+-    fn run(
+-        &mut self,
+-        _ctx: std::sync::Arc<dyn ServiceContext>,
+-    ) -> Pin<Box<dyn Future<Output = ()> + Send>> {
+-        Box::pin(async move {
+-            let jb = ctx.judgment_bus().expect("JudgmentBus required");
++    fn run(
++        &mut self,
++        ctx: std::sync::Arc<dyn ServiceContext>,
++    ) -> Pin<Box<dyn Future<Output = ()> + Send>> {
++        Box::pin(async move {
++            let jb = ctx.judgment_bus().expect("JudgmentBus required");
+@@
+-            futures::future::pending::<()>().await
++            loop {
++                tokio::time::sleep(std::time::Duration::from_secs(3600)).await;
++            }
+         })
+     }
+ }
+*** End Patch

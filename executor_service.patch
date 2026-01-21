@@ -1,0 +1,6 @@
+*** Begin Patch
+*** Update File: mmsb-service/src/services/executor_service.rs
+@@
+-use mmsb_events::AdmissionProof;
++use mmsb_proof::AdmissionProof;
+*** End Patch

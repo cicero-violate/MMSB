@@ -1,0 +1,7 @@
+*** Begin Patch
+*** Update File: mmsb-service/src/lib.rs
+@@
+-mod runtime;
++mod runtime;
++pub use runtime::Runtime;
+*** End Patch

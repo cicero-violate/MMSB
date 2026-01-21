@@ -1,0 +1,92 @@
+*** Begin Patch
+*** Update File: mmsb-service/src/runtime.rs
+@@
+ pub struct Runtime {
+     judgment_tx: broadcast::Sender<JudgmentApproved>,
+     policy_tx: broadcast::Sender<PolicyEvaluated>,
+     intent_tx: broadcast::Sender<IntentCreated>,
+ }
+ 
+ impl Runtime {
+-    pub fn new(capacity: usize) -> Self {
+-        let (judgment_tx, _) = broadcast::channel(capacity);
+-        let (policy_tx, _) = broadcast::channel(capacity);
+-        let (intent_tx, _) = broadcast::channel(capacity);
++    pub fn new() -> Self {
++        Self::with_capacity(1024)
++    }
++
++    pub fn with_capacity(capacity: usize) -> Self {
++        let (judgment_tx, _) = broadcast::channel(capacity);
++        let (policy_tx, _) = broadcast::channel(capacity);
++        let (intent_tx, _) = broadcast::channel(capacity);
+ 
+         Self {
+             judgment_tx,
+             policy_tx,
+             intent_tx,
+         }
+     }
+ 
+-    pub fn emitter(&self) -> RuntimeEmitter {
+-        RuntimeEmitter {
+-            judgment_tx: self.judgment_tx.clone(),
+-            policy_tx: self.policy_tx.clone(),
+-            intent_tx: self.intent_tx.clone(),
+-        }
+-    }
+-
+-    pub fn listener(&self) -> RuntimeListener {
+-        RuntimeListener {
+-            judgment_rx: self.judgment_tx.subscribe(),
+-            policy_rx: self.policy_tx.subscribe(),
+-            intent_rx: self.intent_tx.subscribe(),
+-        }
++    pub fn event_bus(&self) -> EventBus {
++        EventBus {
++            emitter: RuntimeEmitter {
++                judgment_tx: self.judgment_tx.clone(),
++                policy_tx: self.policy_tx.clone(),
++                intent_tx: self.intent_tx.clone(),
++            },
++            judgment_rx: self.judgment_tx.subscribe(),
++            policy_rx: self.policy_tx.subscribe(),
++            intent_rx: self.intent_tx.subscribe(),
++        }
+     }
+ }
++
++#[derive(Clone)]
++pub struct EventBus {
++    emitter: RuntimeEmitter,
++    judgment_rx: broadcast::Receiver<JudgmentApproved>,
++    policy_rx: broadcast::Receiver<PolicyEvaluated>,
++    intent_rx: broadcast::Receiver<IntentCreated>,
++}
++
++impl EventBus {
++    pub fn emit_intent(&self, event: IntentCreated) {
++        self.emitter.emit_intent(event);
++    }
++
++    pub fn emit_policy(&self, event: PolicyEvaluated) {
++        self.emitter.emit_policy(event);
++    }
++
++    pub fn emit_judgment(&self, event: JudgmentApproved) {
++        self.emitter.emit_judgment(event);
++    }
++
++    pub fn subscribe_intent(&self) -> broadcast::Receiver<IntentCreated> {
++        self.intent_rx.resubscribe()
++    }
++
++    pub fn subscribe_policy(&self) -> broadcast::Receiver<PolicyEvaluated> {
++        self.policy_rx.resubscribe()
++    }
++
++    pub fn subscribe_judgment(&self) -> broadcast::Receiver<JudgmentApproved> {
++        self.judgment_rx.resubscribe()
++    }
++}
+*** End Patch

@@ -1,0 +1,10 @@
+*** Begin Patch
+*** Update File: mmsb-service/src/runtime.rs
+@@
+ pub struct Runtime {
+     judgment_tx: broadcast::Sender<JudgmentApproved>,
+     policy_tx: broadcast::Sender<PolicyEvaluated>,
+     intent_tx: broadcast::Sender<IntentCreated>,
++    services: Vec<Box<dyn Service>>,
+ }
+*** End Patch

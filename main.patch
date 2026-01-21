@@ -1,0 +1,13 @@
+*** Begin Patch
+*** Update File: mmsb-service/src/main.rs
+@@
+-    let ctx = Arc::new(RuntimeContext {
++    let ctx: Arc<dyn mmsb_service::ServiceContext> = Arc::new(RuntimeContext {
+         scheduler: todo!("scheduler"),
+         state_bus: todo!("state_bus"),
+         execution_bus: todo!("execution_bus"),
+         learning_bus: todo!("learning_bus"),
+         protocol_in: runtime.protocol_in(),
+         judgment_bus: None,
+     });
+*** End Patch

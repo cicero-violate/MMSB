@@ -1,0 +1,34 @@
+*** Begin Patch
+*** Update File: mmsb-service/src/runtime.rs
+@@
+ impl Runtime {
+@@
+     pub fn protocol_in(&self) -> ProtocolSignalIn {
+         ProtocolSignalIn {
+             judgment_rx: self.judgment_tx.subscribe(),
+             policy_rx: self.policy_tx.subscribe(),
+             intent_rx: self.intent_tx.subscribe(),
+         }
+     }
++
++    /// Register a service with the runtime
++    pub fn register<S>(&mut self, mut service: S)
++    where
++        S: Service + 'static,
++    {
++        service.init();
++        self.services.push(Box::new(service));
++    }
++
++    /// Start all services and never return
++    pub async fn run(mut self) -> ! {
++        for mut service in self.services.drain(..) {
++            tokio::spawn(async move {
++                service.run().await;
++            });
++        }
++
++        futures::future::pending::<()>().await
++    }
+ }
+*** End Patch

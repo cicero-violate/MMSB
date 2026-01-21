@@ -1,0 +1,12 @@
+mmsb-service
+├── Runtime
+│   ├── owns MMSB handle
+│   ├── creates MMSBSubscription(s)
+│   ├── spawns services
+│   └── wires services to subscriptions
+└── services/
+    ├── judgment_service
+    ├── execution_service
+    ├── learning_service
+    ├── compute_service
+    └── chromium_service

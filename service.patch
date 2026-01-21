@@ -1,0 +1,20 @@
+*** Begin Patch
+*** Update File: mmsb-service/src/service.rs
+@@
+-use std::future::Future;
+-use std::pin::Pin;
++use std::future::Future;
++use std::pin::Pin;
++use std::sync::Arc;
++use crate::ServiceContext;
+ 
+ pub trait Service: Send {
+     fn name(&self) -> &str;
+-    fn run(&mut self) -> Pin<Box<dyn Future<Output = ()> + Send>>;
++
++    fn run(
++        &mut self,
++        ctx: Arc<dyn ServiceContext>,
++    ) -> Pin<Box<dyn Future<Output = ()> + Send>>;
+ }
+*** End Patch

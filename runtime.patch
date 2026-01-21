@@ -1,0 +1,32 @@
+*** Begin Patch
+*** Update File: mmsb-service/src/runtime.rs
+@@
+     pub async fn run(mut self, ctx: Arc<dyn ServiceContext>) -> ! {
+-        let mut _handles: Vec<JoinHandle<()>> = Vec::new();
+-
+-        for svc in self.services.iter_mut() {
+-            svc.init(ctx.clone());
+-
+-            let mut svc = svc;
+-            let ctx = ctx.clone();
+-
+-            _handles.push(tokio::spawn(async move {
+-                svc.run(ctx).await;
+-            }));
+-        }
++        let mut services = std::mem::take(&mut self.services);
++
++        for mut svc in services.drain(..) {
++            svc.init(ctx.clone());
++
++            let ctx = ctx.clone();
++            tokio::spawn(async move {
++                svc.run(ctx).await;
++            });
++        }
+ 
+         // Daemon loop
+         loop {
+             tokio::time::sleep(std::time::Duration::from_secs(3600)).await;
+         }
+*** End Patch

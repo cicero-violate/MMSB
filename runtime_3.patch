@@ -1,0 +1,10 @@
+*** Begin Patch
+*** Update File: mmsb-service/src/runtime.rs
+@@
+         Self {
+             judgment_tx,
+             policy_tx,
+             intent_tx,
++            services: Vec::new(),
+         }
+*** End Patch

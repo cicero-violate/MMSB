@@ -1,0 +1,31 @@
+**Architecture Decision:**
+
+`mmsb-service` should be the **orchestration layer** that wires all buses together, not individual services.
+
+**Better structure:**
+
+```
+mmsb-service/           # Runtime orchestration
+├── src/
+│   ├── lib.rs         # EventBus, Runtime
+│   ├── judgment_service.rs
+│   ├── execution_service.rs
+│   ├── learning_service.rs
+│   ├── compute_service.rs
+│   └── chromium_service.rs
+```
+
+Each service:
+- Subscribes to MMSB via MMSBSubscription
+- Runs its bus protocol (JudgmentBus, ExecutionBus, etc)
+- Writes back to StateBus
+
+**Memory subscription:**
+Yes, `mmsb-memory/src/subscription/` is correct place for:
+- `MMSBSubscription` implementation
+- Delta stream
+- State projections
+
+This follows convergence model: all services subscribe to memory, memory is hub.
+
+**Answer:** Keep `mmsb-service` as orchestrator, add service files for each bus. Memory owns subscription implementation.

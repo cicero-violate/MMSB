@@ -1,0 +1,6 @@
+*** Begin Patch
+*** Update File: mmsb-service/Cargo.toml
+@@
+ [dependencies]
++mmsb-proof = { path = "../mmsb-proof" }
+*** End Patch

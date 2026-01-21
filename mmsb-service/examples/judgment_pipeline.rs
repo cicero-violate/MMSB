@@ -6,25 +6,24 @@ use mmsb_events::Intent;
 
 #[tokio::main]
 async fn main() {
-    let runtime = Runtime::new();
-    let event_bus = runtime.event_bus().clone();
-    
+    let runtime = Runtime::new(128);
+    let mut listener = runtime.listener();
+    let emitter = runtime.emitter();
+
     let mut intent_module = IntentModule::new();
     let mut policy_module = PolicyModule::new();
     let mut judgment_module = JudgmentModule::new();
-    
-    let mut intent_rx = event_bus.subscribe_intent();
-    let mut policy_rx = event_bus.subscribe_policy();
-    let mut judgment_rx = event_bus.subscribe_judgment();
-    
+
     tokio::spawn(async move {
-        while let Ok(event) = intent_rx.recv().await {
+        loop {
+            if let Some(event) = listener.recv_intent() {
             println!("  → IntentCreated");
             let policy_event = policy_module.handle_intent_created(event);
             println!("  → PolicyEvaluated: {:?}", policy_event.policy_proof.category);
-            
+
             if let Some(judgment_event) = judgment_module.handle_policy_evaluated(policy_event) {
                 println!("  → JudgmentApproved: ✓");
+            }
             }
         }
     });
@@ -42,8 +41,8 @@ async fn main() {
     
     println!("Submitting intent...");
     let created = intent_module.submit_intent(intent);
-    event_bus.emit_intent(created);
-    
+    emitter.emit_intent(created);
+
     tokio::time::sleep(tokio::time::Duration::from_millis(100)).await;
     println!("Pipeline complete!");
 }

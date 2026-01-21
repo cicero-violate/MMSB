@@ -3,9 +3,9 @@ use mmsb_intent::IntentModule;
 use mmsb_events::Intent;
 
 fn main() {
-    let runtime = Runtime::new();
+    let runtime = Runtime::new(128);
     let mut intent_module = IntentModule::new();
-    
+
     let intent = Intent {
         description: "allocate 4KB".to_string(),
         intent_class: "formatting".to_string(),
@@ -18,6 +18,7 @@ fn main() {
     };
     
     let created = intent_module.submit_intent(intent);
-    runtime.event_bus().emit_intent(created.clone());
+    let emitter = runtime.emitter();
+    emitter.emit_intent(created.clone());
     println!("Intent submitted: {:?}", created.event_id);
 }

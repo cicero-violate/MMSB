@@ -1,0 +1,15 @@
+*** Begin Patch
+*** Update File: mmsb-service/examples/create_intent.rs
+@@
+ fn main() {
+-    let runtime = Runtime::new();
++    let runtime = Runtime::new(128);
+     let mut intent_module = IntentModule::new();
+ 
+@@
+-    runtime.event_bus().emit_intent(created.clone());
++    let emitter = runtime.emitter();
++    emitter.emit_intent(created.clone());
+     println!("Intent submitted: {:?}", created.event_id);
+ }
+*** End Patch

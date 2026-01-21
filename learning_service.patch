@@ -1,0 +1,6 @@
+*** Begin Patch
+*** Update File: mmsb-service/src/services/learning_service.rs
+@@
+-use mmsb_proof::CommitProof;
++use mmsb_proof::CommitProof;
+*** End Patch
