@@ -34,3 +34,6 @@ pub mod replay;
 pub mod admission;
 pub mod truth;
 pub mod outcome;
+
+// Bus adapters
+pub mod adapter;

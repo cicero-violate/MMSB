@@ -1,7 +1,11 @@
-use std::sync::{Arc, Mutex};
+use std::sync::Arc;
+use parking_lot::Mutex;
+use std::path::PathBuf;
 
-use mmsb_events::{StateBus, ExecutionBus, LearningBus, Fact, ExecutionOutcome};
-use mmsb_proof::{AdmissionProof, CommitProof, JudgmentProof, OutcomeProof, KnowledgeProof};
+use mmsb_events::{ExecutionBus, LearningBus, ExecutionOutcome};
+use mmsb_proof::{AdmissionProof, CommitProof, OutcomeProof, KnowledgeProof};
+use mmsb_memory::{adapter::MemoryAdapter, memory_engine::{MemoryEngine, MemoryEngineConfig}};
+use mmsb_memory::page::PageLocation;
 
 use mmsb_service::{
     Runtime,
@@ -10,20 +14,7 @@ use mmsb_service::{
     services::ProposerService,
 };
 
-// Stub implementations for compilation
-struct StubStateBus;
-impl StateBus for StubStateBus {
-    fn admit(&mut self, _: JudgmentProof) -> Result<AdmissionProof, mmsb_events::state_bus::AdmissionError> {
-        unimplemented!("StubStateBus::admit")
-    }
-    fn commit(&mut self, _: Fact) -> Result<CommitProof, mmsb_events::state_bus::CommitError> {
-        unimplemented!("StubStateBus::commit")
-    }
-    fn broadcast_delta(&self, _: mmsb_events::state_bus::Delta) {
-        unimplemented!("StubStateBus::broadcast_delta")
-    }
-}
-
+// Stub execution and learning buses (to be implemented later)
 struct StubExecutionBus;
 impl ExecutionBus for StubExecutionBus {
     fn execute(&mut self, _: AdmissionProof) -> ExecutionOutcome {
@@ -49,13 +40,38 @@ impl LearningBus for StubLearningBus {
 
 #[tokio::main]
 async fn main() {
+    // Initialize MemoryEngine
+    let config = MemoryEngineConfig {
+        tlog_path: PathBuf::from("/tmp/mmsb_tlog"),
+        default_location: PageLocation::Cpu,
+    };
+    
+    let engine = MemoryEngine::new(config)
+        .expect("Failed to initialize MemoryEngine");
+    
+    // Wrap in Arc<Mutex> for sharing
+    let engine = Arc::new(Mutex::new(engine));
+    
+    // Create adapter that implements both StateBus and MemoryReader
+    let adapter = MemoryAdapter::new(engine.clone());
+    
+    // Split into write and read interfaces
+    let state_bus = Arc::new(Mutex::new(adapter));
+    // Clone for reader - both point to same adapter/engine
+    let memory_reader: Arc<dyn mmsb_events::MemoryReader + Send + Sync> = {
+        let adapter = MemoryAdapter::new(engine);
+        Arc::new(adapter)
+    };
+    
+    // Initialize runtime
     let (mut runtime, protocol_in) = Runtime::new(1024);
 
     runtime.register(ProposerService::new());
 
     let ctx = Arc::new(RuntimeContext::new(
         Arc::new(RuntimeScheduler::default()),
-        Arc::new(Mutex::new(StubStateBus)),
+        state_bus,
+        memory_reader,
         Arc::new(Mutex::new(StubExecutionBus)),
         Arc::new(Mutex::new(StubLearningBus)),
         protocol_in,

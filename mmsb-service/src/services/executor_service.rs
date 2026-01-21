@@ -1,4 +1,9 @@
 // Executes approved work → ExecutionBus
+// executor_service
+// Consumes JudgmentProof
+// Cannot re-evaluate policy
+// Cannot invent intent
+
 
 use crate::{RuntimeContext, Service, ServiceContext};
 use mmsb_events::ExecutionBus;

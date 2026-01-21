@@ -130,10 +130,24 @@ impl MemoryEngine {
     }
 
     // ─────────────────────────────────────────────────────────────────────
+    // Public Accessors (for adapter)
+    // ─────────────────────────────────────────────────────────────────────
+    
+    /// Get current epoch value
+    pub fn current_epoch(&self) -> u64 {
+        self.epoch.load().0 as u64
+    }
+    
+    /// Check if a judgment hash has been admitted
+    pub fn check_admitted(&self, judgment_hash: &Hash) -> bool {
+        self.admitted.read().contains(judgment_hash)
+    }
+
+    // ─────────────────────────────────────────────────────────────────────
     // Admission Stage (D)
     // ─────────────────────────────────────────────────────────────────────
 
-    fn admit_execution(
+    pub fn admit_execution(
         &self,
         judgment_proof: &JudgmentProof,
     ) -> Result<AdmissionProof, AdmissionError> {
@@ -173,7 +187,7 @@ impl MemoryEngine {
     // Commit Stage (E)
     // ─────────────────────────────────────────────────────────────────────
 
-    fn commit_delta(
+    pub fn commit_delta(
         &self,
         admission: &AdmissionProof,
         delta: &Delta,
@@ -197,7 +211,7 @@ impl MemoryEngine {
     // Outcome Stage (F)
     // ─────────────────────────────────────────────────────────────────────
 
-    fn record_outcome(
+    pub fn record_outcome(
         &self,
         commit: &CommitProof,
     ) -> Result<OutcomeProof, OutcomeError> {
@@ -262,7 +276,7 @@ impl MemoryEngine {
     // Utilities
     // ─────────────────────────────────────────────────────────────────────
 
-    fn fetch_delta_by_hash(&self, _hash: &Hash) -> Option<Delta> {
+    pub fn fetch_delta_by_hash(&self, _hash: &Hash) -> Option<Delta> {
         // TODO: Implement real lookup (storage / tlog)
         None
     }

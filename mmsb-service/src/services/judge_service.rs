@@ -1,4 +1,11 @@
 // Policy / judgment authority (pure JudgmentBus choreography)
+// judge_service
+// Runs the full pipeline:
+// mmsb-intent (normalize / validate intent)
+// mmsb-policy (evaluate constraints)
+// mmsb-judgment (issue JudgmentProof)
+// Is the only service allowed to produce judgments
+
 
 use crate::{RuntimeContext, Service};
 use std::future::Future;

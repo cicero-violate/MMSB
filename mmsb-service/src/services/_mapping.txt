@@ -1,0 +1,7 @@
+| Pipeline Stage       | MMSB Module     | Service            |
+| -------------------- | --------------- | ------------------ |
+| Intent normalization | `mmsb-intent`   | `judge_service`    |
+| Policy evaluation    | `mmsb-policy`   | `judge_service`    |
+| Judgment issuance    | `mmsb-judgment` | `judge_service`    |
+| Execution            | `mmsb-executor` | `executor_service` |
+| Commit               | `mmsb-memory`   | `commit_service`   |

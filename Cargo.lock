@@ -557,9 +557,11 @@ dependencies = [
  "mmsb-events",
  "mmsb-intent",
  "mmsb-judgment",
+ "mmsb-memory",
  "mmsb-policy",
  "mmsb-primitives",
  "mmsb-proof",
+ "parking_lot",
  "tokio",
 ]
 

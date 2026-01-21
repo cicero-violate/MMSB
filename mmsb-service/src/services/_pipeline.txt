@@ -1,0 +1,1 @@
+commit --> learn --> propose --> judge --> execute --> commit
