@@ -7,6 +7,8 @@ members = [
     "mmsb-memory",
     "mmsb-events",
     "mmsb-executor",
+    "mmsb-chromium",
+    "mmsb-parser",
     "mmsb-tools/structural_code_indexer",
     "mmsb-tools/structural_code_editor",
     "mmsb-tools/declarative_code_editor",

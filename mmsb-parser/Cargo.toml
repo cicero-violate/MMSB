@@ -1,14 +1,13 @@
 [package]
-name = "mmsb-chromium"
+name = "mmsb-parser"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
-tokio = { version = "1", features = ["sync", "net", "io-util"] }
-thiserror = "1.0"
-sha2 = "0.10"
+regex = "1"
 
 mmsb-events = { path = "../mmsb-events" }
 mmsb-primitives = { path = "../mmsb-primitives" }
+mmsb-intent = { path = "../mmsb-intent" }

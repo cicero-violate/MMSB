@@ -5,6 +5,8 @@ pub mod execution_bus;
 pub mod state_bus;
 pub mod learning_bus;
 pub mod memory_reader;
+pub mod chrome_protocol;
+pub mod parser_bus;
 // pub mod mmsb_subscription;
 
 pub use judgment_bus::*;
@@ -12,6 +14,8 @@ pub use execution_bus::*;
 pub use state_bus::*;
 pub use learning_bus::*;
 pub use memory_reader::*;
+pub use chrome_protocol::*;
+pub use parser_bus::*;
 // pub use mmsb_subscription::*;
 
 /// Module lifecycle trait

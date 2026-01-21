@@ -18,27 +18,41 @@ use mmsb_service::{
     services::{ProposerService, EventListenerService},
 };
 
-// Stub execution and learning buses (to be implemented later)
-struct StubExecutionBus;
-impl ExecutionBus for StubExecutionBus {
-    fn execute(&mut self, _: AdmissionProof) -> ExecutionOutcome {
-        unimplemented!("StubExecutionBus::execute")
+// TODO: Replace with real implementation
+struct PlaceholderExecutionBus;
+impl ExecutionBus for PlaceholderExecutionBus {
+    fn execute(&mut self, _admission: AdmissionProof) -> ExecutionOutcome {
+        ExecutionOutcome {
+            event_id: [0u8; 32],
+            timestamp: 0,
+            success: true,
+            result_hash: [0u8; 32],
+        }
     }
-    fn report_outcome(&mut self, _: ExecutionOutcome) {
-        unimplemented!("StubExecutionBus::report_outcome")
+    fn report_outcome(&mut self, _outcome: ExecutionOutcome) {
+        // Placeholder - will be replaced with real implementation
     }
 }
 
-struct StubLearningBus;
-impl LearningBus for StubLearningBus {
+struct PlaceholderLearningBus;
+impl LearningBus for PlaceholderLearningBus {
     fn observe_outcome(&mut self, _: CommitProof) -> OutcomeProof {
-        unimplemented!("StubLearningBus::observe_outcome")
+        OutcomeProof {
+            commit_proof_hash: [0u8; 32],
+            success: true,
+            error_class: None,
+            rollback_hash: None,
+        }
     }
     fn derive_knowledge(&mut self, _: OutcomeProof) -> KnowledgeProof {
-        unimplemented!("StubLearningBus::derive_knowledge")
+        KnowledgeProof {
+            outcome_proof_hash: [0u8; 32],
+            knowledge_hash: [0u8; 32],
+            confidence: 1.0,
+        }
     }
     fn report_knowledge(&mut self, _: KnowledgeProof) {
-        unimplemented!("StubLearningBus::report_knowledge")
+        // Placeholder
     }
 }
 
@@ -83,8 +97,8 @@ async fn main() {
         Arc::new(RuntimeScheduler::default()),
         state_bus,
         memory_reader,
-        Arc::new(Mutex::new(StubExecutionBus)),
-        Arc::new(Mutex::new(StubLearningBus)),
+        Arc::new(Mutex::new(PlaceholderExecutionBus)),
+        Arc::new(Mutex::new(PlaceholderLearningBus)),
         protocol_in,
         None,
     ));
